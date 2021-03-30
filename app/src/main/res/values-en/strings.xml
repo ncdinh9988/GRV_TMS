@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
+    <!-- config  for all language begin -->
+    <string name="app_name">TMS</string>
+
+    <string name="errorCheck">Can\'t choose more than&#160;</string>
+    <string name="ChooseOrderCap">Can\'t take photo , please choose page order </string>
+    <string name="OrderCap">Take Photo </string>
+    <string name="Home">Home</string>
+    <string name="AddCustomer">Add Customer</string>
+    <string name="PutAway">Put Away</string>
+
+    <string name="SaveCustomer">Save Successful</string>
+    <string name="Uploading">Uploading....</string>
+
+
+    <string name="routes">&#160;rotes</string>
+    <!-- config -->
+    <string name="packageNameDDMS">comColgateDMS.org</string>
+    <string name="fivescenter">5S Call Center</string>
+
+    <string name="UploadResult">Upload Successful</string>
+
+    <string name="Condition">Please fill completely information</string>
+
+    <string name="LocationFileSystem">fsys</string>
+    <string name="PathFolderPicture">ImageTMS</string>
+    <string name="PathFolderSalePicture">ImageTMS/imageOrder</string>
+    <string name="PathFolderInputFiles">Inputfiles</string>
+    <string name="PathFolderOutputFiles">Outputfiles</string>
+    <string name="PathFolderCPInputFiles">HH5S/Inputfiles</string>
+    <string name="edtDeviceId">Device ID : </string>
+    <string name="FileNameInfoCustomer">CUSTOMER.TXT</string>
+    <string name="FilenameInFoCustomerPoc" translatable="false">CUSTOMERPOC.TXT</string>
+    <string name="FileNameInfoCustomerRoute">ROUTE.TXT</string>
+    <string name="FileNameInfoSTOCKIEST" translatable="false">STOCKIEST.TXT</string>
+    <string name="FileNameUpdateSuccess">apk</string>
+    <string name="FileNameInfoProduct">PRODUCT.txt</string>
+    <string name="FileNameMTD">MTDSales.TXT</string>
+    <string name="msgInfoProd">Customer haven\'t Infomation of require stock</string>
+    <!-- Outputfile -->
+    <string name="FileNameCUSTBRD">CUSTBRD.txt</string>
+    <string name="FileNameCUSTSKU">CUSTSKU.txt</string>
+    <string name="FileNameSalesman" translatable="false">SALESMAN.txt</string>
+    <string name="FileNameInfoPalmOrdDet">PALM_ORD_DET.txt</string>
+    <string name="FileNameInfoPalmOrd">PALM_ORDER.txt</string>
+    <string name="FileNameInfoCsetup">Csetup.txt</string>
+    <string name="FileNameInfoPALM_COLLECTION">PALM_COLLECTION.txt</string>
+    <string name="FileNameInfoPalm_DocNo">Palm_DocNo.txt</string>
+    <string name="FileNameInfoPALM_INV_Collection">PALM_INV_Collection.txt</string>
+    <string name="FileNameInfoPALM_TBCN">PALM_TBCN.txt</string>
+    <string name="FileNameInfoPALM_TBCN_DET">PALM_TBCN_DET.txt</string>
+    <string name="OrderTemp">Outputfiles</string>
+    <string name="P5Distribute">P5Distribute</string>
+    <string name="POCDistribute">POCDistribute</string>
+    <!-- string-array loại KH -->
+    <string-array name="customerChainCodeArray">
+        <item>SGN</item>
+        <item>CVN</item>
+        <item>PHN</item>
+        <item>BGN</item>
+        <item>MSN</item>
+        <item>SMN</item>
+        <item>WSN</item>
+        <item>WDS</item>
+        <item>WSS</item>
+        <item>SGS</item>
+        <item>BGS</item>
+        <item>MSS</item>
+    </string-array>
+    <string-array name="EluckyReason">
+        <item>Chọn lý do</item>
+        <item>Giải thưởng quá thấp</item>
+        <item>Thủ tục nhận giải phức tạp</item>
+        <item>Khác</item>
+    </string-array>
+    <string-array name="Order">
+        <item>All</item>
+        <item>Customers have order</item>
+        <item>Customers havent order</item>
+    </string-array>
+    <!-- config  for all language end -->
+
+    <!-- string-array gridView main cho Việt Nam -->
+    <string-array name="mainMenuArray">
+        <item>In-Range</item>
+        <item>Out-Range</item>
+        <item>Reports</item>
+        <item>Take Photo</item>
+        <item>Sync</item>
+        <item>Config</item>
+        <item>Add Customer</item>
+        <item>Message</item>
+        <item>eLucky</item>
+        <item>Order</item>
+        <item>5P Tracking</item>
+        <item>POC</item>
+        <item>@string/TitleMyFile</item>
+        <item>Survey</item>
+        <item>Route On Map</item>
+        <item>Messenger</item>
+    </string-array>
+    <!-- string-array gridView main cho Thái Lan-->
+    <string-array name="mainMenuArrayforCPTH">
+        <item>In-range</item>
+        <item>Out-range</item>
+        <item>Reports</item>
+        <item>Take photo</item>
+        <item>Sync</item>
+        <item>Config</item>
+        <!--        <item>Add customer</item>-->
+        <item>Messenger</item>
+        <!--        <item>eLucky</item>-->
+        <!--        <item>Order</item>-->
+        <!--        <item>5P Tracking</item>-->
+        <!--        <item>POC</item>-->
+        <!--        <item>@string/TitleMyFile</item>-->
+        <!--        <item>Survey</item>-->
+        <item>Route On Map</item>
+    </string-array>
+
+    <!-- string-array arrHeaderC -->
+    <string-array name="arrHeaderC">
+        <item>01.RL</item>
+        <item>03.% ECC</item>
+        <item>04.Orders</item>
+        <item>11.ActiveAcc MF allsize</item>
+        <item>08.Gross TB</item>
+        <item>07.Gross TP</item>
+        <item>09.Gross MW</item>
+        <item>06.Netsales</item>
+        <item>05.Gross_Sales</item>
+        <item>02.ActiveAcc</item>
+        <item>12.ActiveAcc CDC allsize</item>
+        <item>13.ActiveAcc _NEW CDC vs last 3m</item>
+        <item>18.Netsales _KID TB</item>
+        <item>17.Netsales _Premium TB</item>
+        <item>15.Netsales _Premium TP</item>
+        <item>16.Netsales _S.Premium TB</item>
+        <item>19.Netsales Key TB</item>
+        <item>20.Gross FB</item>
+        <item>21.Distribution- CDC from 80K -MTD</item>
+        <item>22.Distribution- CDC vs last 3m</item>
+        <item>23.Distribution- MF from 120K -MTD</item>
+        <item>24.Distribution- MF vs last 3m</item>
+        <item>25.Distribution- Premium TB from 130K -MTD</item>
+        <item>26.Distribution- TB Premium vs last 3m</item>
+    </string-array>
+    <!-- string-array arrValue -->
+    <string-array name="arrValueC">
+        <item>54</item>
+        <item>0.57</item>
+        <item>36</item>
+        <item> 7</item>
+        <item>48904642.14</item>
+        <item>55407919.33</item>
+        <item>3587986.6</item>
+        <item>103207051.9</item>
+        <item>110163539.6</item>
+        <item>31</item>
+        <item>6</item>
+        <item>1</item>
+        <item>993600</item>
+        <item>3364756.68</item>
+        <item>30131950.88</item>
+        <item>41609891.46</item>
+        <item>45968248.14</item>
+        <item>45968248.14</item>
+        <item>5</item>
+        <item>1</item>
+        <item>6</item>
+        <item>1</item>
+        <item>5</item>
+        <item>1</item>
+    </string-array>
+    <!-- string-array month -->
+    <string-array name="monthInYear">
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <!-- string-array gridView reports for CPVN-->
+    <string-array name="reportsMenuArray">
+        <item>Time in</item>
+        <item>Sales Mtd</item>
+        <item>KPI</item>
+        <item>Report KPI</item>
+        <item>Not Bought</item>
+        <item>Ranking Report</item>
+    </string-array>
+
+    <!-- string-array gridView reports for CPTH-->
+    <string-array name="reportsMenuArrayForCPTH">
+        <item>Report KPI</item>
+        <item>Salary</item>
+    </string-array>
+
+    <!-- string-array loại Photo -->
+    <string-array name="customerTypePhotoArray">
+        <item>All</item>
+        <item>Have take photo</item>
+        <item>No take Photo</item>
+    </string-array>
+
+    <!-- setting đa ngôn ngữ msg -->
+    <string name="msgSurvey">You do not have a survey program.</string>
+    <string name="msgSurvey1">This program has been block</string>
+    <string name="msgPlayElucky">Please TimeIn or ReTimeIn before using this feature.</string>
+    <string name="msgPlayEluckySync">Hiện tại chưa có chương trình quay số nào đang chạy, vui lòng liên hệ bộ phận hỗ trợ hoặc Giám sát phụ trách hoặc chọn Edit - Home - Sync để  đồng bộ lại	</string>
+    <string name="TextVieweEluckyReason">Reason if no taking Prize</string>
+    <string name="ButtonTrial">Trial</string>
+    <string name="msgSystemParameter">System parameter: ....</string>
+    <string name="msgOrderList">Order list: ....</string>
+    <string name="msgCustomerlist">Customer list - POC: ....</string>
+    <string name="msgTimeInList">TimeIn list: ....</string>
+    <string name="msgRoute">Route list: ....</string>
+    <string name="msgPhoto">Photo list: ....</string>
+    <string name="msgSalesRoute">Sales Route: ....</string>
+    <string name="msgUpdateVersion">Update Version APK ( Pls wait ! ): ....</string>
+    <string name="msgReportAndNotification">Report and Notification: ....</string>
+    <string name="msgAdvertiseFile">Advertise file: ....</string>
+    <string name="msgPasswdIncorrect"> incorrect  Password!.</string>
+    <string name="msgInactivesuccessfully">Inactive success!.</string>
+    <string name="msgActivesuccessfully">Active success!.</string>
+    <string name="msgGetGPSFaild2">Connect satellite failed, get GEO code failed, pls try again!</string>
+    <string name="msgGPSWifiNotTurnOn">Connect satellite failed, Get GEO code failed, pls connect to a Wifi (not 3GP) !</string>
+    <string name="msgNotAllowUploadBy3G">Upload failed, pls connect to a wifi!</string>
+    <string name="msgUploadFaildWithSignal">Upload failed, pls verify network signal!</string>
+    <string name="msgSynchronizing">System is processing data , pls try again in 5 minutes !.</string>
+    <string name="msgDownLoadSuccess">Download successfully!</string>
+    <string name="msgDownLoadFaildBy3G">Download failed, pls connect to a wifi!</string>
+    <string name="msgDownloadFaildWithSignal">Download failed, pls verify network signal!</string>
+    <string name="msgGetLocationWithAccuraycToLarge">Collecting location failed. The current location accuracy (@0 m) is greater than which the system allows (@1 m). Please move to another location.</string>
+    <string name="msgUpdateSuccess">Updated successfully!</string>
+    <string name="msgUpdateFaild">Update failed, pls try again!</string>
+    <string name="msgDeleteSuccess">Delete successfully!</string>
+    <string name="msgDeleteFaild">Update failed, pls try again!</string>
+    <string name="msgInsertFaild">Insert failed, pls try again!</string>
+    <string name="msgInsertSuccess">Insert Successfully!</string>
+    <string name="msgDownloadFolderDSPSuccess">Download route Successfully!</string>
+    <string name="msgUploadFolderDSPSuccess">Upload order Successfully!</string>
+    <string name="msgDownloadFolderDSPFaild">There no new route to download!</string>
+    <string name="msgUploadFolderDSPFaild">There no new order to upload!</string>
+    <string name="msgUploadSuccess">Uploaded successfully!</string>
+    <string name="msgNoCustomerToDelete">No customer for deleting!.</string>
+    <string name="msgCustomerCodeExist">Please, try again. Customer code has been existed!</string>
+    <string name="msgCustomerCode">Please, Customer code cannot be left blank!</string>
+    <string name="msgCustomerName">Please, Customer name cannot be left blank!</string>
+    <string name="msgCustomerAddress">Please, Customer address cannot be left blank!</string>
+    <string name="msgCustomerGeocode">Please, GEO code cannot be left blank!</string>
+    <string name="msgGetGeoCodeSuccessul">Get GEO code successful!</string>
+    <string name="msgCustomerNotSelectToEdit">Pls select customer to edit information !</string>
+    <string name="msgSetTimeOutSuccess">Set TimeOut Successfully !</string>
+    <string name="msgSetTimeInSuccess">Set TimeIn Successfully !</string>
+    <string name="msgDialogTryingGetGeocode">Try to get Geocode</string>
+    <string name="msgGetGeocodeSale">Try to get Geocode</string>
+    <string name="msgDialogTryingGetGeocodeAgain">Do you want to get Geo code again</string>
+    <string name="msgTitleErrorGPS">
+        Can\'t get your location!\nSome cases can happen:
+    </string>
+    <string name="msgErrorGPS">
+        1) Please check your GPS mode.\n2) May be due to bad weather or in a high-rise building
+    </string>
+    <string name="msgPleaseWaitting">Please wait ...</string>
+    <string name="msgPreventGetGeoCode">This user can not get geocode, because it is clocked by admin</string>
+    <string name="msgDialogSynchronize">Synchronization</string>
+    <string name="msgDialogRefesh">Refresh</string>
+    <string name="msgDialogRefeshWaitting">Please wait to refresh ...</string>
+    <string name="msgDialogSynchronizeWaittingUpload">Please wait  to upload ...</string>
+    <string name="msgDialogSynchronizeWaittingDownload">Please wait to download...</string>
+    <string name="msgDialogTimeIn">Do you want to TimeIn ?</string>
+    <string name="msgDialogDeletePhoto">Delete photo</string>
+    <string name="msgDialogSaveCustomer">Save customer info </string>
+    <string name="msgDialogDeleteCustomer">Delete customer selected</string>
+    <string name="msgDialogDeleteAllCustomerHasBeenSynch">Do you want to detete all customer synchronized ?</string>
+    <string name="msgAreYouSure">Are you sure ?</string>
+    <string name="msgYes">Yes</string>
+    <string name="msgNo">No</string>
+    <string name="tvMonthViewReport">Customer not order in:</string>
+    <string name="msgNoData">No data</string>
+    <string name="MonthViewReport">Total:</string>
+    <string name="MonthvsYear">Month/Year: </string>
+    <string name="msgPDADateTimeValid">Time of PDA is invalid, please reset time.</string>
+    <string name="msgDBNotValid">Invalid configuration , please contact the Helpdesk team .</string>
+    <string name="msgIsValidSalesCode">This device is already registered with another account, please contact the Helpdesk team .</string>
+    <string name="MgsErrorWhenSyncImeiNoActive">IMEI not valid, please contact the Helpdesk team .</string>
+    <string name="msgDownloadFolderSPINSuccess">Download Elucky success!.</string>
+    <string name="MgsUploadeLuckyDialog">Hiện tại chưa có chương trình eLucky nào đang chạy.\n\t- Vui lòng đồng bộ lại bằng cách nhấn nút \"Đồng ý\" nếu có chương trình eLucky.\n\t- Nhấn nút \"Hủy bỏ\" nếu bạn không thực sự muốn vào eLucky</string>
+    <string name="invalidTime">Your time is invalid.\n FPIT does not allow to perform this action.</string>
+    <!-- setting đa ngôn ngữ main.xml -->
+    <string name="ButtonExit">Exit</string>
+    <string name="ButtonActive">Active</string>
+    <string name="ButtonInActive">Inactive</string>
+    <string name="ButtonHome">Back</string>
+    <string name="btnRefesh">My location</string>
+    <string name="ButtonRefeshReport">Refresh</string>
+    <string name="ButtonSave">Save</string>
+    <string name="ButtonPlay">Play</string>
+    <string name="ButtonView">View</string>
+    <string name="ButtonConfirm">Confirm</string>
+
+    <!-- setting đa ngôn ngữ main.xml -->
+    <string name="TextViewUserCode">User:</string>
+
+    <!-- setting đa ngôn ngữ configuration.xml -->
+    <string name="TextViewConfiguration">Configuration</string>
+    <string name="TextVieweLucky">eLucky</string>
+    <string name="TextVieweLuckyResult">Result</string>
+    <string name="TextViewePlayer">PLAYER</string>
+    <string name="TextViewPassword">Password</string>
+
+    <!-- setting đa ngôn ngữ customer_layout.xml -->
+    <string name="TextViewCaptionCustomerInRange">In-range customer</string>
+    <string name="TextViewCaptionCustomerOutRange">Out-range customer  </string>
+    <string name="TextViewFilter">Filter</string>
+    <string name="TextViewTextHintSearch">Customer...</string>
+    <string name="ButtonTimeIn">TimeIn</string>
+    <string name="ButtonTimeOut">TimeOut</string>
+    <string name="ButtonEdit">Edit</string>
+    <string name="ButtonUpdate">Update</string>
+    <string name="ButtonAddNew">Add new</string>
+    <string name="ButtonShowCustomerWhenLocationIsNull">Show customer</string>
+    <string name="ButtonDeleteAll">Delete</string>
+    <string name="ButtonSummary">Summary</string>
+
+    <!-- setting đa ngôn ngữ customer_layout_header.xml -->
+    <string name="TextViewHeaderActive">Active:</string>
+    <string name="TextViewHeaderCustomerCode">Code:</string>
+    <string name="TextViewHeaderCustomerName">Name:</string>
+    <string name="TextViewHeaderCustomerCategory">RE:</string>
+    <string name="TextViewHeaderCustomerAddress">Address:</string>
+    <string name="TextViewHeaderCustomerDistance">Distance (m):</string>
+    <string name="TextViewHeaderCustomerMtd">Mtd:</string>
+    <string name="TextViewHeaderCustomer2M">- 2M:</string>
+    <string name="TextViewHeaderCustomer3M">- 3M:</string>
+
+    <!-- setting đa ngôn ngữ customer_take_photo_layout.xml -->
+    <string name="TextViewCustomerAllowTakePhoto">Customer allow  take photo</string>
+    <string name="TextViewFilterbyCustomerType">Type</string>
+    <string name="ButtonTakePhoto">Take photo</string>
+
+    <!-- setting đa ngôn ngữ customer_take_photo_layout_header.xml -->
+    <string name="TextViewDateTakePhoto">Date</string>
+    <string name="TextViewFileNamePhoto">Files</string>
+
+    <!-- setting đa ngôn ngữ customer_take_photo_layout_edit.xml -->
+    <string name="TextViewCaptionLayoutPhotoEdit">Taking picture</string>
+    <string name="TextViewCustomerNameLayoutPhotoEdit">Customer</string>
+    <string name="TextViewTradeProgramLayoutPhotoEdit">Program</string>
+    <string name="MsgTakePhotoError">Error taking photos, please try again!.</string>
+    <string name="TextViewNotesLayoutPhotoEdit1">Notes1</string>
+    <string name="TextViewNotesLayoutPhotoEdit2">Notes2</string>
+    <string name="TextViewNotesLayoutPhotoEdit3">Notes3</string>
+    <string name="TextViewNotesLayoutPhotoEdit4">Notes4</string>
+    <string name="TextViewNotesLayoutPhotoEdit5">Notes5</string>
+    <string name="ButtonCaptureLayoutPhotoEdit">Capture</string>
+
+    <!-- setting đa ngôn ngữ reports_layout.xml -->
+    <string name="TextViewCaptionLayoutReport">Reports</string>
+
+    <!-- setting đa ngôn ngữ customer_timein_layout.xml -->
+    <string name="TextViewCaptionLayoutTimein">Customer time in</string>
+    <string name="TextViewTotalVisitedStored">Total stores visited >= </string>
+
+    <!-- setting đa ngôn ngữ customer_timein_layout_header.xml -->
+    <string name="TextViewHeaderDateTimeinOut">Date:</string>
+    <string name="TextViewHeaderTimeIn">Time In:</string>
+    <string name="TextViewHeaderTimeOut">Time Out:</string>
+    <string name="TextViewHeaderDuration">Duration:</string>
+
+    <!-- setting đa ngôn ngữ customer_layout_edit.xml -->
+    <string name="ButtonConfirmAndElucky">"Confirm &amp; Elucky"</string>
+    <string name="TextViewCaptionLayoutCustomerEdit_Edit">Edit Customer</string>
+    <string name="TextViewCaptionLayoutCustomerEdit_Add">Add Customer</string>
+    <string name="TextViewCustomerCodeLayoutCustomerEdit">Customer code</string>
+    <string name="TextViewCustomerNameLayoutCustomerEdit">Customer Name</string>
+    <string name="TextViewCustomerPhoneNumberLayoutCustomerEdit">Phone Number</string>
+    <string name="TextViewCustomerChannelLayoutCustomerEdit">Channel</string>
+    <string name="TextViewCustomerAddressLayoutCustomerEdit">Address</string>
+    <string name="TextViewCustomerActiveLayoutCustomerEdit">Active</string>
+    <string name="TextViewCustomerGeocodeLayoutCustomerEdit">Geo code</string>
+    <string name="TextViewCustomerAccuracyLayoutCustomerEdit">Accuracy</string>
+    <string name="TextViewCustomerInfo1">Info 1</string>
+    <string name="TextViewCustomerInfo2">Info 2</string>
+    <string name="TextViewCustomerInfo3">Info 3</string>
+    <string name="TextViewCustomerInfo4">Info 4</string>
+    <string name="TextViewCustomerInfo5">Info 5</string>
+
+    <!-- setting đa ngôn ngữ customer_layout_addnew.xml -->
+    <string name="TextViewCaptionLayoutCustomerAddnew"> Add new Customer </string>
+    <string name="TextViewCustomerAddnew"> Add new </string>
+
+    <!-- setting đa ngôn ngữ customer_layout_addnew_edit.xml -->
+    <string name="TextViewCaptionLayoutCustomerAddnewEdit">Add Customer</string>
+    <string name="TextViewRouteLayoutCustomerAddnewEdit">Route</string>
+    <string name="TextViewMsgNoRoute">Pls, select route!.</string>
+
+    <!-- setting đa ngôn ngữ TextViewCaptionLayoutReport.xml -->
+    <string name="TextViewCaptionLayoutSynchronize">Synchronization</string>
+
+    <!-- setting đa ngôn ngữ report_sales_mtd_layout.xml -->
+    <string name="TextViewCaptionLayoutReportSalesMtd">Sales Mtd update</string>
+    <string name="TextViewCaptionLayoutReportIncentiveSalary">Incentive &amp; Salary</string>
+    <string name="msgRefeshFaildWithSignal">Refesh failed, pls connect to a wifi!.</string>
+    <string name="msgRefeshSuccessfullyl">Refesh Successfully!.</string>
+    <string name="TextViewRefeshReportDateTitle">Update: </string>
+    <string name="TextViewMonthToDateSales">Sale Mtd: </string>
+    <string name="TextViewKPISALE">Sale: </string>
+    <string name="msgReportOnlyForDSR">Only DSR view this report!.</string>
+    <string name="TextViewTarget">Target</string>
+    <string name="TextViewActual">Actual</string>
+    <string name="TextViewActualAchived">% Achieved </string>
+    <string name="TextViewActualTotalOrders">Total Order</string>
+    <string name="TextViewRLCount">RL count</string>
+    <string name="TextViewVisited">Visited</string>
+    <string name="TextViewStoresVisitedAndSold">Stores visited and sold</string>
+    <string name="TextViewStoresNotVisitedButSold">Stores not visited but sold</string>
+    <string name="TextViewPWD">Storesnotvisitedbutsold</string>
+    <string name="TextViewNotVisited">Not visited</string>
+    <string name="TextViewPercentageVisited">% Visited</string>
+    <string name="MsgViewStoreNotVisiteded">Stores not visited but sold %</string>
+    <string name="TextViewPercentageECC">% ECC</string>
+    <string name="TextViewRotateTimes">Số lần quay</string>
+
+    <!-- setting đa ngôn ngữ report_target_layout.xml -->
+    <string name="TextViewCaptionLayoutReportTarget">KPI Report</string>
+    <string name="TextViewNotOrder">Customer Not Order</string>
+    <string name="TextViewTargetMonthReport">Target month</string>
+
+    <!-- setting đa ngôn ngữ message_layout.xml -->
+    <string name="TextViewCaptionLayoutMessage">Message</string>
+    <string name="TextViewHeaderMessageIsRead">IsRead</string>
+    <string name="TextViewHeaderMessageDateCreated">Create Date:</string>
+    <string name="TextViewHeaderMessageContent">Content: </string>
+    <string name="msgMessageNotSelectToView">Pls select message to view !</string>
+    <string name="msgCheckInvalid">This is  private application. The Application allow to access your location.</string>
+    <string name="msgAllowMockLocationTurnOn">Pls, turn off Allow mock locations!.</string>
+
+    <!-- setting đa ngôn ngữ new apk need upgrade -->
+    <string name="msgInfoNewVersionApkDetail">There is a new version of FPIT available. Please follow these steps:
+        									\n1) Click on button Yes.
+											\n2) Click on button Install.
+											\n3) Click on button Open to open application FPIT.</string>
+    <string name="msgInfoNewVersionApkTitle">Notification</string>
+    <string name="messagePackageInfo">Application need to remove</string>
+    <string name="TextViewMsgResultTrial"> (The results will not recognize)</string>
+    <string name="title_activity_alert_dialog_class">AlertDialogClass</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="msgUsernotCDS">User is not CDS,ASM</string>
+
+    <!-- Order -->
+    <string name="title_activity_ddms">DDMSActivity</string>
+    <string name="title_activity_create">CreateActivity</string>
+    <string name="title_activity_order">OrderActivity</string>
+    <string name="title_activity_order_product">OrderProductActivity</string>
+    <string name="title_activity_order_bought">OrderBoughtActivity</string>
+    <string name="title_activity_summary_order">SummaryOrderActivity</string>
+    <string name="Notice">Notice</string>
+    <string name="NoticeNotEnoughOrder"> Please make atleast one order</string>
+    <string name="NoticeOverQuanlity"> The quanlity cannot be greater then stock quantity</string>
+    <string name="NoticeConfirm"> Are you sure want to save the data?</string>
+    <string name="NoticeConfirmAndElucky"> Bạn có chắc chắn muốn lưu đơn hàng để vào elucky</string><!-- v.7.7.180201 -->
+    <string name="TotalMoney"> Total sale value: </string>
+    <string name="OrderCreated"> An Order was created by this customer </string>
+    <string name="SellingPrice"> Value </string>
+    <string name="TextViewCustomerOrder">ORDER BOOKING</string>
+    <string name="TextViewStock">Input Stock Customers</string>
+    <string name="TextViewSurveyCust">SURVEY CUSTOMERS</string>
+    <string name="TitleMyFile">My Files</string>
+    <string name="mess">Messenger</string>
+    <string name="TextView5P">5P TRACKING</string>
+    <string name="TextViewSurvey">SURVEY CUSTOMERS</string>
+    <string name="BtnConfirmAndTimeOut">Confirm &amp; TimeOut</string>
+    <string name="BtnConfirmAndTimeIn">Order &amp; TimeIn</string>
+    <string name="SumOrder">Number of order</string>
+    <string name="UpdateOrderBeforeDownload">Fail, Please upload an order.</string>
+    <string name="LostOrderWhenDownload">Some orders have not been synchronized yet that will be deleted if the download is performed. Are you sure to perform download?</string>
+    <string name="LostRequiWhenDownload">A little "Stock Count" data have not been synchronized yet that will be deleted if the download is performed. Are you sure to perform download?</string>
+    <string name="BackOrderWhenBought">Do you want to return to order without saving?</string>
+    <string name="Order">Order</string>
+    <string name="Direction">Direction</string>
+    <string name="Stock">Stock Count</string>
+    <string name="Back">Back</string>
+    <string name="Code">Code</string>
+    <string name="SKU">SKU</string>
+    <string name="Product">Product</string>
+    <string name="Qty">Qty</string>
+    <string name="Net">Stock Count</string>
+    <string name="NetDefault">Require</string>
+    <string name="Short">Various</string>
+    <string name="NameCustomer">Customer Name</string>
+    <string name="Category">Category</string>
+    <string name="survey">Customers Survey</string>
+    <string name="title_activity_shelf_tracking">ShelfTrackingActivity</string>
+    <string name="title_activity_distribution_tracking">DistributionTrackingActivity</string>
+    <string name="title_activity_survey">SurveyActivity</string>
+    <string name="title_activity_list_survey">ListSurveyActivity</string>
+    <string name="edtSalecode">Input your sale Code</string>
+    <string name="msgSuccess">Change your sale code success</string>
+    <string name="title_activity_poc">POC</string>
+    <string name="SynchronizeOrdered">This order was sysnchrozied, You can not edit</string>
+    <string name="msgPreventUserOrderTool">You can not use this function,Because it is blocked</string>
+    <string name="TextViewUploadGeocode">Upload Geocodes</string>
+    <string name="TextViewUploadImage">Upload Images</string>
+    <string name="msgOrders">Order: ....</string>
+    <string name="msgGetGPSFaild">Connect satellite failed, get GEO code failed, pls try again!</string>
+    <string name="warning_survey">Please choose Customer before click Survey</string>
+    <string name="warning_surveylist">Don\'t have Survey Program</string>
+    <string name="checkNetwork">Device\'s Internet connection might be unstable. Please check your connection or contact 5S Call Center for support. Thank you.</string>
+    <string name="checkSaleCode">Please! Check your sale code or call for team support</string>
+    <string name="btnRestart">Try again....</string>
+    <!--Check Sale Code-->
+    <string name="titleCheckSale">Wait for checking your sale code</string>
+    <string name="msgCheckSale">Please wait for a minute! System is checking your saleman code</string>
+    <string name="checkErrorSaleCode">
+        Device\'s internet connection might be lost.
+        \n- If you want to keep using FPIT without internet connection, please touch \"Continue\".
+        \n- Or contact 5S Call Center - 028 730 95 950 - for support.
+        \nThank you.
+    </string>
+    <string name="msgCheckComplete">Checked! Your saleman code has changed success</string>
+    <string name="msgCheckNotchange">Your saleman code hasn\'t change</string>
+    <string name="msgNotification">Enter your saleman code to continue the program.</string>
+    <string name="errorNull">Please! Input your saleman code then click Submit</string>
+    <string name="errorInput">Please! Don\'t input Special Character</string>
+    <string name="errorNetwork">Please! Check your network.</string>
+    <string name="btnSubmit">OK</string>
+    <string name="btnSetting">Setting</string>
+    <string name="btnExit">Cancel</string>
+    <string name="btnContinue">Continue</string>
+    <string name="btnConfirm">Save</string>
+    <string name="UsesPermission">You need to allow some permissions for our application</string>
+    <string name="mrgErrorActive">Failed to sync, Please contact support</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="msgErrorCheck">Sale Code is change, Pls call support team</string>
+    <string name="title_activity_maps2">Map</string>
+    <string name="msgCustomerNotGeoCode">Customer not geocode.</string>
+    <string name="btnDownload">Download</string>
+    <string name="btnUpload">Upload</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="msgLoading">Loading....</string>
+    <string name="customer_layout_Active">Active</string>
+    <string name="customer_layout_Inactive">Inactive</string>
+    <string name="txtCountry">Country:</string>
+    <string name="txtRegion">Region:</string>
+    <string name="txtArea">Area:</string>
+    <string name="txtDistributor">Distributor:</string>
+    <string name="txtUserID">User ID</string>
+    <string name="txtPosition">Position</string>
+    <string name="txtSelectDSR">Select DSR:</string>
+    <string name="msgSaveSuccess">Save Success</string>
+    <string name="mapbox_access_token">pk.eyJ1Ijoibmd1eWVudGhhbmh0YW4xMjk4IiwiYSI6ImNraG45Z2kzYTEwNW0yd251czRwZnJucnAifQ.qPHjv3CdOtgNSKHBSOh4WA</string>
+    <string name="google_map_api_key">AIzaSyCS2xm9XB-_87ELqkR9CpDKoER6n8kS2Vs</string>
+
+</resources>

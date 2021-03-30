@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".SelectPropertiesProductActivity">
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="Chọn Thuộc Tính Sản Phẩm"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:background="@color/blue2"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_above="@+id/layout_bottom"
+        android:layout_below="@+id/tvTitle"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Tên sản phẩm:"
+                android:layout_margin="5dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold">
+
+            </TextView>
+            <TextView
+                android:id="@+id/tvSelectProductName"
+                android:layout_width="0dp"
+                android:layout_weight="7"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Tên sản phẩm:"
+                android:layout_margin="5dp"
+                android:textColor="@color/black"
+                android:textSize="18sp">
+
+            </TextView>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Hạn sử dụng:"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7">
+                <EditText
+                    android:paddingLeft="2dp"
+                    android:background="@drawable/bg_edittext"
+                    android:textColor="@color/black"
+                    android:id="@+id/edtSelectProductExpiredDate"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:hint="Nhấn vào để chọn ngày" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:text="Ngày sản xuất:     "
+                android:layout_margin="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="7"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:paddingLeft="2dp"
+                    android:background="@drawable/bg_edittext"
+                    android:textColor="@color/black"
+                    android:id="@+id/edtSelectProductStockinDate"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:hint="Nhấn vào để chọn ngày" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="Đơn vị tính: "
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="7"
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/spinnerProductUnit"
+                    android:layout_height="50dp"
+                    android:layout_width="200dp"
+                    android:backgroundTint="@color/black"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:textColor="@color/white"
+            android:id="@+id/btnBackSelectProductProperties"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:text="Trở về" />
+
+        <Button
+            android:textColor="@color/white"
+            android:id="@+id/btnConfirmProductProperties"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/bg_button"
+            android:text="Xác nhận" />
+    </LinearLayout>
+</RelativeLayout>

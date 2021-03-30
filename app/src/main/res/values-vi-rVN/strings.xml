@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources tools:ignore="ExtraTranslation" xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">TMS</string>
+    <!-- string-array loại Photo -->
+    <string-array name="customerTypePhotoArray">
+        <item>Tất cả</item>
+        <item>Đã chụp hình</item>
+        <item>Chưa chụp hình</item>
+    </string-array>
+
+    <!-- string-array gridView main -->
+    <string name="fivescenter">5S Call Center</string>
+    <string name="ChooseOrderCap">Chưa thể chụp ảnh , chọn trang đặt hàng để chụp ảnh</string>
+    <string name="OrderCap">Chụp ảnh</string>
+
+    <string name="errorCheck">Không thể chọn hơn&#160;</string>
+    <string name="routes">&#160;tuyến</string>
+    <string-array name="mainMenuArray">
+        <item>Trong khu vực</item>
+        <item>Ngoài Khu vực</item>
+        <item>Báo cáo</item>
+        <item>Chụp hình</item>
+        <item>Đồng bộ</item>
+        <item>Hệ thống</item>
+        <item>Thêm KH</item>
+        <item>Thông báo</item>
+        <item>eLucky</item>
+        <item>Đơn hàng</item>
+        <item>5P Tracking</item>
+        <item>POC</item>
+        <item>@string/TitleMyFile</item>
+        <item>Khảo sát</item>
+        <item>Bản đồ</item>
+        <item>Messenger</item>
+    </string-array>
+    <!-- string-array gridView main cho Thái Lan-->
+    <string-array name="mainMenuArrayforCPTH">
+        <item>In-range</item>
+        <item>Out-range</item>
+        <item>Reports</item>
+        <item>Take photo</item>
+        <item>Sync</item>
+        <item>Config</item>
+        <!--        <item>Add customer</item>-->
+        <item>Messenger</item>
+        <!--        <item>eLucky</item>-->
+        <!--        <item>Order</item>-->
+        <!--        <item>5P Tracking</item>-->
+        <!--        <item>POC</item>-->
+        <!--        <item>@string/TitleMyFile</item>-->
+        <!--        <item>Survey</item>-->
+        <item>Route On Map</item>
+    </string-array>
+
+
+    <!-- string-array gridView reports -->
+    <string-array name="reportsMenuArray">
+        <item>DS ghi nhận Tg đến</item>
+        <item>Sales Mtd</item>
+        <item>Bc các chỉ tiêu</item>
+        <item>Bc Hiệu suất CV</item>
+        <item>Không Giao Dịch</item>
+        <item>Xếp hạng</item>
+    </string-array>
+
+    <!-- string-array gridView reports for CPTH-->
+    <string-array name="reportsMenuArrayForCPTH">
+        <item>Report KPI</item>
+        <item>Salary</item>
+    </string-array>
+
+    <string-array name="EluckyReason">
+        <item>Chọn lý do</item>
+        <item>Giải thưởng quá thấp</item>
+        <item>Thủ tục nhận giải phức tạp</item>
+        <item>Khác</item>
+    </string-array>
+    <string-array name="Order">
+        <item>Tất cả</item>
+        <item>Có order</item>
+        <item>Chưa có order</item>
+    </string-array>
+    <!-- setting đa ngôn ngữ msg -->
+    <string name="msgSurvey">Hiện tại, bạn không có chương trình khảo sát.</string>
+    <string name="msgSurvey1">Hiện tại, chương trình đang khóa</string>
+    <string name="msgPlayElucky">Vui lòng TimeIn hoặc TimeIn lại trước khi sử dụng tính năng này.</string>
+    <string name="msgPlayEluckySync">Hiện tại chưa có chương trình quay số nào đang chạy, vui lòng liên hệ bộ phận hỗ trợ hoặc Giám sát phụ trách hoặc chọn Chỉnh sửa - Home - Đồng bộ để  đồng bộ lại	</string> <!-- v.7.7.180201 -->
+    <string name="TextVieweEluckyReason">Lý do nếu không nhân thưởng</string>
+    <string name="ButtonTrial">Trial</string>
+    <string name="Stock">Kiểm kho CH</string>
+    <string name="TextViewStock">Nhập SLSP Khách hàng</string>
+    <string name="ButtonPlay">Play</string>
+    <string name="TextViewePlayer">PLAYER</string>
+    <string name="msgSystemParameter">Thông số hệ thống: ....</string>
+    <string name="msgOrders">Đơn hàng: ....</string>
+    <string name="msgCustomerlist">DSKH: ....</string>
+    <string name="msgTimeInList">DS ghi nhận TG đến: ....</string>
+    <string name="msgRoute">Tuyến đường đi: ....</string>
+    <string name="msgPhoto">Hình ảnh: ....</string>
+    <string name="msgSalesRoute">Tuyến bán hàng: ....</string>
+    <string name="msgUpdateVersion">Cập nhập phiên bản mới (Vui lòng chờ): ....</string>
+    <string name="msgReportAndNotification">Báo cáo &amp; Thông báo ....</string>
+    <string name="msgAdvertiseFile">File quảng cáo: ....</string>
+    <string name="msgPasswdIncorrect">Mật khẩu không chính xác!.</string>
+    <string name="msgInactivesuccessfully">Bỏ kích hoạt thành công!.</string>
+    <string name="msgActivesuccessfully">Kích hoạt thành công!.</string>
+    <string name="msgGetGPSFaild">Không kết nối được vệ tinh, lấy tọa độ điểm bán thất bại, vui lòng thử lại!.</string>
+    <string name="msgGPSWifiNotTurnOn">Không kết nối được vệ tinh, lấy tọa độ điểm bán thất bại, vui lòng thử lại với kết nối wifi (trừ 3G)!.</string>
+    <string name="msgNotAllowUploadBy3G">Upload thất bại, vui lòng thử lại với kết nối wifi!.</string>
+    <string name="msgUploadFaildWithSignal">Upload thất bại, vui lòng thử kểm tra lại tính hiệu mạng!.</string>
+    <string name="msgSynchronizing">Hệ thống đang xử lý dữ liệu, vui lòng thử lại sau 5 phút !.</string>
+    <string name="msgDownLoadSuccess">Download thành công!</string>
+    <string name="msgDownLoadFaildBy3G">Download thất bại, vui lòng thử lại với kết nối wifi!</string>
+    <string name="msgDownloadFaildWithSignal">Download thất bại,  vui lòng thử lại tính hiệu mạng!</string>
+    <string name="msgGetLocationWithAccuraycToLarge">Lấy tọa độ thất bại. Vị trí đứng hiện tại có độ sai số (@0 m) lớn hơn sự cho phép của hệ thống (@1 m). Vui lòng di chuyển sang vị trí khác.</string>
+    <string name="msgUpdateSuccess">Cập nhật thành công!</string>
+    <string name="msgUpdateFaild">Cập nhật thất bại, vui lòng thử lại!</string>
+    <string name="msgDeleteSuccess">Xóa thành công!</string>
+    <string name="msgDeleteFaild">Xóa thất bại, vui lòng thử lại!</string>
+    <string name="msgInsertFaild">Thêm thất bại, vui lòng thử lại!</string>
+    <string name="msgInsertSuccess">Thêm thành công!</string>
+    <string name="msgUploadSuccess">Upload thành công!</string>
+    <string name="msgNoCustomerToDelete">Không có KH nào cần xóa!.</string>
+    <string name="msgCustomerCodeExist">Mã Kh đã tồn tại!</string>
+    <string name="msgCustomerCode">Mã KH không được trống!</string>
+    <string name="msgCustomerName">Tên KH không được trống!</string>
+    <string name="msgCustomerAddress">Địa chỉ KH không được trống!</string>
+    <string name="msgCustomerGeocode">Tọa độ KH không được trống!</string>
+    <string name="msgGetGeoCodeSuccessul">Lấy tọa độ điểm bán hàng thành công!</string>
+    <string name="msgCustomerNotSelectToEdit">Vui lòng chọn Kh để chỉnh sửa!</string>
+    <string name="msgSetTimeOutSuccess">Thiết lập thời đi thành công!</string>
+    <string name="msgSetTimeInSuccess">Thiết lập thời đến thành công!</string>
+    <string name="msgDialogTryingGetGeocode">Đang thử lấy tọa độ điểm bán hàng</string>
+    <string name="msgGetGeocodeSale">Đang thử lấy vị trí hiện tại</string>
+    <string name="msgDialogTryingGetGeocodeAgain">Bạn có muốn thử lấy lại tọa độ điểm bán hàng</string>
+    <string name="msgTitleErrorGPS">
+        Không thể định vị được vị trí của bạn!\nCác trường hợp có thể xảy ra:
+    </string>
+    <string name="msgErrorGPS">
+        1) Kiểm tra lại chế độ định vị đã được bật hay chưa.\n2) Có thể do thời tiết xấu hoặc đang ở trong tòa nhà cao tầng
+    </string>
+    <string name="msgPleaseWaitting">Vui lòng chờ...</string>
+    <string name="msgPreventGetGeoCode">KH này không thể lấy tọa độ điểm bán hàng vì tính năng này đã được khóa bởi admin</string>
+    <string name="msgDownloadFolderDSPSuccess">Download tuyến bán hàng thành công!</string>
+    <string name="msgDownloadFolderSPINSuccess">Download Elucky thành công!</string>
+    <string name="msgUploadFolderDSPSuccess">Upload đơn hàng thành công!</string>
+    <string name="msgDownloadFolderDSPFaild">Không có tuyến bán hàng mới để download!</string>
+    <string name="msgUploadFolderDSPFaild">Không có đơn hàng mới để upload!</string>
+    <string name="msgDialogSynchronize">Đồng bộ dữ liệu</string>
+    <string name="msgDialogRefesh">Làm mới dữ liệu</string>
+    <string name="msgDialogRefeshWaitting">Đang làm mới dữ liệu vui lòng chờ...</string>
+    <string name="msgDialogSynchronizeWaittingUpload">Đang upload dữ liệu vui lòng chờ...</string>
+    <string name="msgDialogSynchronizeWaittingDownload">Đang download dữ liệu vui lòng chờ...</string>
+    <string name="msgDialogTimeIn">Thiết lập thời gian đến</string>
+    <string name="msgDialogDeletePhoto">Xóa hình ảnh đang chọn</string>
+    <string name="msgDialogSaveCustomer">Lưu thông tin khách hàng</string>
+    <string name="msgDialogDeleteCustomer">Xóa khách hàng đang chọn</string>
+    <string name="msgDialogDeleteAllCustomerHasBeenSynch">Xóa tất cả các Kh đã được đồng bộ về server ?</string>
+    <string name="msgAreYouSure">Bạn có chắc không?</string>
+    <string name="msgYes">Đồng ý</string>
+    <string name="msgNo">Hủy bỏ</string>
+    <string name="tvMonthViewReport">Khách hàng không đặt hàng trong:</string>
+    <string name="msgNoData">Không có dữ liệu</string>
+    <string name="msgPDADateTimeValid">Thời gian của PDA không hợp lệ, vui lòng chỉnh lại giờ.</string>
+    <string name="msgDBNotValid">Cấu hình không hợp lệ, vui lòng liên hệ đội hỗ trợ .</string>
+    <string name="msgIsValidSalesCode">Thiết bị này đã được đăng ký với tài khoản khác, vui lòng liên hệ đội hỗ trợ.!"</string>
+    <string name="MgsErrorWhenSyncImeiNoActive">IMEI không hợp lệ, vui lòng liên hệ đội hỗ trợ .</string>
+    <string name="invalidTime">Thời gian của bạn sai giờ của hệ thống.\n FPIT sẽ không cho phép bạn sử dụng chức năng này</string>
+    <string name="MgsUploadeLuckyDialog">Hiện tại chưa có chương trình eLucky nào đang chạy.\n\t- Vui lòng đồng bộ lại bằng cách nhấn nút \"Đồng ý\" nếu có chương trình eLucky.\n\t- Nhấn nút \"Hủy bỏ\" nếu bạn không thực sự muốn vào eLucky</string>
+    <!-- setting đa ngôn ngữ main.xml -->
+    <string name="ButtonExit">Thoát</string>
+    <string name="ButtonActive">Kích hoạt</string>
+    <string name="ButtonInActive">Bỏ kích hoạt</string>
+    <string name="ButtonHome">Trở về</string>
+    <string name="btnRefesh">Vị trí hiện tại</string>
+    <string name="ButtonRefeshReport">Cập nhật dữ liệu</string>
+    <string name="ButtonSave">Lưu</string>
+    <string name="ButtonSummary">Tổng kết</string>
+
+    <!-- setting đa ngôn ngữ main.xml -->
+    <string name="TextViewUserCode">Nhân viên:</string>
+
+    <!-- setting đa ngôn ngữ configuration.xml -->
+    <string name="TextViewConfiguration">Cấu hình</string>
+    <string name="TextVieweLucky">eLucky</string>
+    <string name="TextViewPassword">Mật khẩu</string>
+
+    <!-- setting đa ngôn ngữ customer_layout.xml -->
+    <string name="TextViewCaptionCustomerInRange">KH trong khu vực</string>
+    <string name="TextViewCaptionCustomerOutRange">KH ngoài khu vực</string>
+    <string name="TextViewFilter">Tìm kiếm</string>
+    <string name="TextViewTextHintSearch">Tên khách hàng...</string>
+    <string name="ButtonTimeIn">Ghi TG đến</string>
+    <string name="ButtonTimeOut">Ghi TG đi</string>
+    <string name="ButtonEdit">Chỉnh sửa</string>
+    <string name="ButtonUpdate">Cập nhật</string>
+    <string name="ButtonAddNew">Thêm mới</string>
+    <string name="ButtonShowCustomerWhenLocationIsNull">Hiển thị khách hàng</string>
+    <string name="ButtonDeleteAll">Xóa</string>
+    <string name="ButtonView">Xem</string>
+
+    <!-- setting đa ngôn ngữ customer_layout_header.xml -->
+    <string name="TextViewHeaderActive">Kích hoạt:</string>
+    <string name="TextViewHeaderCustomerCode">Mã:</string>
+    <string name="TextViewHeaderCustomerName">Tên:</string>
+    <string name="TextViewHeaderCustomerCategory">Kênh:</string>
+    <string name="TextViewHeaderCustomerAddress">Đ.chỉ:</string>
+    <string name="TextViewHeaderCustomerDistance">K.cách (m):</string>
+    <string name="TextViewHeaderCustomerMtd">Mtd:</string>
+    <string name="TextViewHeaderCustomer2M">- 2M:</string>
+    <string name="TextViewHeaderCustomer3M">- 3M:</string>
+
+    <!-- setting đa ngôn ngữ customer_take_photo_layout.xml -->
+    <string name="TextViewCustomerAllowTakePhoto">Danh sách khách hàng</string>
+    <string name="TextViewFilterbyCustomerType">Loại</string>
+    <string name="ButtonTakePhoto">Chụp ảnh</string>
+
+    <!-- setting đa ngôn ngữ customer_take_photo_layout_header.xml -->
+    <string name="TextViewDateTakePhoto">Ngày</string>
+    <string name="TextViewFileNamePhoto">Tên hình</string>
+
+    <!-- setting đa ngôn ngữ customer_take_photo_layout_edit.xml -->
+    <string name="TextViewCaptionLayoutPhotoEdit">Chụp ảnh</string>
+    <string name="TextViewCustomerNameLayoutPhotoEdit">Khách hàng</string>
+    <string name="TextViewTradeProgramLayoutPhotoEdit">Chương trình</string>
+    <string name="MsgTakePhotoError">Có lỗi khi chụp ảnh, vui lòng thử lại !.</string>
+    <string name="TextViewNotesLayoutPhotoEdit1">Ghi chú 1</string>
+    <string name="TextViewNotesLayoutPhotoEdit2">Ghi chú 2</string>
+    <string name="TextViewNotesLayoutPhotoEdit3">Ghi chú 3</string>
+    <string name="TextViewNotesLayoutPhotoEdit4">Ghi chú 4</string>
+    <string name="TextViewNotesLayoutPhotoEdit5">Ghi chú 5</string>
+    <string name="ButtonCaptureLayoutPhotoEdit">Chụp</string>
+
+    <!-- setting đa ngôn ngữ reports_layout.xml -->
+    <string name="TextViewCaptionLayoutReport">Báo cáo</string>
+
+    <!-- setting đa ngôn ngữ customer_timein_layout.xml -->
+    <string name="TextViewCaptionLayoutTimein">Ds KH được ghi nhận</string>
+    <string name="TextViewTotalVisitedStored">Tổng số KH viếng thăm  >= </string>
+
+    <!-- setting đa ngôn ngữ customer_timein_layout_header.xml -->
+    <string name="TextViewHeaderDateTimeinOut">Ngày:</string>
+    <string name="TextViewHeaderTimeIn">TG đến:</string>
+    <string name="TextViewHeaderTimeOut">TG đi:</string>
+    <string name="TextViewHeaderDuration">TG:</string>
+
+    <!-- setting đa ngôn ngữ customer_layout_edit.xml -->
+    <string name="TextViewCaptionLayoutCustomerEdit_Edit">Chỉnh sửa KH</string>
+    <string name="TextViewCaptionLayoutCustomerEdit_Add">Thêm KH</string>
+    <string name="TextViewCustomerCodeLayoutCustomerEdit">Mã KH</string>
+    <string name="TextViewCustomerNameLayoutCustomerEdit">Tên KH</string>
+    <string name="TextViewCustomerChannelLayoutCustomerEdit">Kênh</string>
+    <string name="TextViewCustomerAddressLayoutCustomerEdit">Địa chỉ</string>
+    <string name="TextViewCustomerActiveLayoutCustomerEdit">TThái</string>
+    <string name="TextViewCustomerGeocodeLayoutCustomerEdit">Lấy tọa độ điểm bán</string>
+    <string name="TextViewCustomerAccuracyLayoutCustomerEdit">Độ chính xác</string>
+    <string name="TextViewCustomerInfo1">Thông tin 1</string>
+    <string name="TextViewCustomerInfo2">Thông tin 2</string>
+    <string name="TextViewCustomerInfo3">Thông tin 3</string>
+    <string name="TextViewCustomerInfo4">Thông tin 4</string>
+    <string name="TextViewCustomerInfo5">Thông tin 5</string>
+    <string name="TextViewRotateTimes">Số lần quay</string>
+
+    <!-- setting đa ngôn ngữ customer_layout_addnew.xml -->
+    <string name="TextViewCaptionLayoutCustomerAddnew">DS KH THÊM MỚI</string>
+
+    <!-- setting đa ngôn ngữ customer_layout_addnew_edit.xml -->
+    <string name="TextViewCaptionLayoutCustomerAddnewEdit">THÊM MỚI KHÁCH HÀNG</string>
+    <string name="TextViewRouteLayoutCustomerAddnewEdit">Tuyến BH</string>
+    <string name="TextViewMsgNoRoute">Tuyến BH không được bỏ trống.!</string>
+
+    <!-- setting đa ngôn ngữ TextViewCaptionLayoutReport.xml -->
+    <string name="TextViewCaptionLayoutSynchronize">Đồng bộ hóa dữ liệu</string>
+
+    <!-- setting đa ngôn ngữ report_sales_mtd_layout.xml -->
+    <string name="msgRefeshFaildWithSignal">Làm mới thất bại, vui lòng thử kểm tra lại tính hiệu mạng!.</string>
+    <string name="msgRefeshSuccessfullyl">Làm mới thành công!.</string>
+    <string name="TextViewRefeshReportDateTitle">Cập nhật: </string>
+    <string name="TextViewMonthToDateSales">DS đến : </string>
+    <string name="TextViewKPISALE">Sale : </string>
+
+    <string name="msgReportOnlyForDSR">Chỉ có DSR mới xem được báo cáo này!.</string>
+    <string name="TextViewTarget">Chỉ Tiêu</string>
+    <string name="TextViewActual">Thực đạt</string>
+    <string name="TextViewActualAchived">% đạt</string>
+    <string name="TextViewActualTotalOrders">Tổng đơn hàng</string>
+    <string name="TextViewRLCount">Tổng số KH</string>
+    <string name="TextViewVisited">Số KH đã thăm</string>
+    <string name="TextViewNotVisited">Số KH chưa thăm</string>
+    <string name="TextViewPercentageVisited">% KH đã thăm</string>
+    <string name="TextViewPercentageECC">% KH mua hàng</string>
+    <string name="TextViewStoresVisitedAndSold">Số KH viếng thăm và mua hàng</string>
+    <string name="TextViewStoresNotVisitedButSold">Số KH không viếng thăm nhưng mua hàng</string>
+
+    <!-- setting đa ngôn ngữ report_target_layout.xml -->
+    <string name="TextViewCaptionLayoutReportTarget">Báo cáo các chỉ tiêu</string>
+
+    <!-- setting đa ngôn ngữ message_layout.xml -->
+    <string name="TextViewCaptionLayoutMessage">Thông báo</string>
+    <string name="TextViewHeaderMessageIsRead">Đọc</string>
+    <string name="TextViewHeaderMessageDateCreated">Ngày tạo:</string>
+    <string name="TextViewHeaderMessageContent">Nội dung: </string>
+    <string name="msgMessageNotSelectToView">Vui lòng chọn thông báo để xem !</string>
+    <string name="msgCheckInvalid">Đây là ứng dụng nội bộ. Ứng dụng này chưa được phép truy cập vị trí của người dùng.</string>
+    <string name="checkSaleCode">Vui Lòng kiểm tra lại mã NVBH, hoặc có thể liên hệ đội hỗ trợ!</string>
+    <string name="edtSalecode">Nhập mã NVBH</string>
+    <string name="msgSuccess">Nhập mã NVBH mới thành công</string>
+    <string name="msgAllowMockLocationTurnOn">Vui lòng tắt tính năng cho phép giả lập vị trí !.</string>
+
+    <!-- setting đa ngôn ngữ new apk need upgrade -->
+    <string name="msgInfoNewVersionApkDetail">FPIT có version mới cần cập nhật. Vui lòng làm theo các bước sau:
+        									\n1) Nhấn vào nút Đồng Ý.
+											\n2) Nhấn vào nút Cài đặt.
+											\n3) Nhấn vào nút Mở để mở ứng dụng FPIT và kết thúc cập nhật. </string>
+    <string name="msgInfoNewVersionApkTitle">Thông báo</string>
+    <string name="messagePackageInfo">Các ứng dụng cần xóa</string>
+    <string name="TextViewMsgResultTrial">(Kết Quả Sẽ Không Được Công Nhận)</string>
+    <string name="Notice">Thông báo</string>
+    <string name="NoticeNotEnoughOrder"> Vui lòng tạo ít nhất 1 hóa đơn</string>
+    <string name="ButtonConfirm">Xác nhận</string>
+    <string name="ButtonConfirmAndElucky">"Xác nhận &amp; Elucky"</string>
+    <string name="NoticeOverQuanlity"> Số lượng vướt quá số lượng tồn kho</string>
+    <string name="NoticeConfirm"> Bạn có chắc chắn muốn lưu</string>
+    <string name="NoticeConfirmAndElucky">"Bạn muốn lưu đơn hàng và quay số may mắn cho khách hàng?</string><!-- v.7.7.180201 -->
+    <string name="TotalMoney"> Tổng doanh số: </string>
+    <string name="OrderCreated"> Khách hàng đã tạo đơn hàng </string>
+    <string name="SellingPrice"> Giá </string>
+    <string name="TextViewCustomerOrder">Đơn hàng</string>
+    <string name="TextView5P">5P TRACKING</string>
+    <string name="TextViewSurvey">SURVEY CUSTOMERS</string>
+    <string name="TextViewSurveyCust">SURVEY CUSTOMERS</string>
+    <string name="title_activity_list_survey">ListSurveyActivity</string>
+    <string name="warning_survey">Hãy chọn khách hàng cần khảo sát !!!</string>
+    <string name="warning_surveylist">Hiện tại chưa có chương trình khảo sát!!</string>
+    <string name="BtnConfirmAndTimeOut">Xác nhận &amp; Thời gian đi</string>
+    <string name="BtnConfirmAndTimeIn">Đơn hàng &amp; Thời gian đến</string>
+    <string name="SumOrder">Số hóa đơn </string>
+    <string name="UpdateOrderBeforeDownload">Lỗi, Bạn chưa upload đơn hàng.</string>
+    <string name="LostOrderWhenDownload">"Đơn hàng sẽ không được đồng bộ mà sẽ bị mất ! Bạn có muốn tiếp tục?"</string>
+    <string name="LostRequiWhenDownload">"Hiện bạn đang có dữ liệu kiểm kho chưa đồng bộ, đồng bô tuyến mới bạn sẽ bị mất dữ liệu! Bạn có muốn tiếp tục?"</string>
+    <string name="BackOrderWhenBought">Bạn có muốn quay lại mà không lưu đơn hàng?</string>
+    <string name="Order">Đơn hàng</string>
+    <string name="Direction">Chỉ Đường</string>
+    <string name="Back">Quay lại</string>
+    <string name="Code">Mã</string>
+    <string name="Net">Stock Count</string>
+    <string name="NetDefault">Require</string>
+    <string name="Short">Various</string>
+    <string name="TextViewNotOrder">Khách Hàng Không Đặt Hàng</string>
+    <string name="Product">Sản Phẩm</string>
+    <string name="Qty">Số lượng</string>
+    <string name="NameCustomer">Tên KH</string>
+    <string name="Category">Kênh</string>
+    <string name="SynchronizeOrdered">Đơn hàng này đã được đồng bộ, không thể chỉnh sửa</string>
+    <string name="msgPreventUserOrderTool">Hiện tại bạn không thể sử dụng chức năng này. Vì tính năng này đã được khóa.</string>
+
+    <string name="TextViewUploadGeocode">Upload Geocodes</string>
+    <string name="TextViewUploadImage">Upload Images</string>
+    <string name="msgOrderList">Order list: ....</string>
+    <string name="msgGetGPSFaild2">Kết nối satellite thất bại, không thể lấy GEO code ,vui lòng thử lại!</string>
+    <string name="MonthViewReport">Tống số KH:</string>
+    <string name="TextVieweLuckyResult">Kết quả</string>
+    <string name="TextViewCustomerPhoneNumberLayoutCustomerEdit">Số điện thoại</string>
+    <string name="TextViewCaptionLayoutReportSalesMtd">Cập nhật Sales Mtd</string>
+    <string name="TextViewPWD">Storesnotvisitedbutsold</string>
+    <string name="MsgViewStoreNotVisiteded">Cửa hàng chưa được thăm nhưng đã bán %</string>
+    <string name="title_activity_alert_dialog_class">AlertDialogClass</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_shelf_tracking">ShelfTrackingActivity</string>
+    <string name="title_activity_distribution_tracking">DistributionTrackingActivity</string>
+    <string name="title_activity_survey">SurveyActivity</string>
+    <string name="title_activity_poc">POC</string>
+    <string name="survey">Khảo sát khách hàng</string>
+    <string name="msgCustomerNotGeoCode">Khách hàng này chưa có toạ độ,hãy cập nhật toạ độ để sử dụng tính năng này.</string>
+
+    <!-- Order -->
+    <string name="title_activity_ddms">DDMSActivity</string>
+    <string name="title_activity_create">CreateActivity</string>
+    <string name="title_activity_order">OrderActivity</string>
+    <string name="title_activity_order_product">OrderProductActivity</string>
+    <string name="title_activity_order_bought">OrderBoughtActivity</string>
+    <string name="title_activity_summary_order">SummaryOrderActivity</string>
+
+    <!-- setting đa ngôn ngữ report_target_layout.xml -->
+    <string name="TextViewTargetMonthReport">Mục tiêu tháng</string>
+
+    <!-- config -->
+    <string name="packageNameDDMS">comColgateDMS.org</string>
+    <string name="LocationFileSystem">fsys</string>
+    <string name="PathFolderPicture">ImageTMS</string>
+
+    <string name="PathFolderInputFiles">Inputfiles</string>
+    <string name="PathFolderOutputFiles">Outputfiles</string>
+    <string name="PathFolderCPInputFiles">HH5S/Inputfiles</string>
+    <string name="FileNameInfoCustomer">CUSTOMER.TXT</string>
+    <string name="FileNameInfoCustomerRoute">ROUTE.TXT</string>
+    <string name="FileNameUpdateSuccess">apk</string>
+    <string name="FileNameInfoProduct">PRODUCT.txt</string>
+    <string name="FileNameMTD">MTDSales.TXT</string>
+    <!-- Outputfile -->
+    <string name="FileNameCUSTBRD">CUSTBRD.txt</string>
+    <string name="FileNameCUSTSKU">CUSTSKU.txt</string>
+    <string name="FileNameInfoPalmOrdDet">PALM_ORD_DET.txt</string>
+    <string name="FileNameInfoPalmOrd">PALM_ORDER.txt</string>
+    <string name="FileNameInfoCsetup">Csetup.txt</string>
+    <string name="FileNameInfoPALM_COLLECTION">PALM_COLLECTION.txt</string>
+    <string name="FileNameInfoPalm_DocNo">Palm_DocNo.txt</string>
+    <string name="FileNameInfoPALM_INV_Collection">PALM_INV_Collection.txt</string>
+    <string name="FileNameInfoPALM_TBCN">PALM_TBCN.txt</string>
+    <string name="FileNameInfoPALM_TBCN_DET">PALM_TBCN_DET.txt</string>
+    <string name="OrderTemp">Outputfiles</string>
+    <string name="P5Distribute">P5Distribute</string>
+
+    <string name="TitleMyFile">My Files</string>
+    <!-- string-array loại KH -->
+    <string-array name="customerChainCodeArray">
+        <item>SGN</item>
+        <item>CVN</item>
+        <item>PHN</item>
+        <item>BGN</item>
+        <item>MSN</item>
+        <item>SMN</item>
+        <item>WSN</item>
+        <item>WDS</item>
+        <item>WSS</item>
+        <item>SGS</item>
+        <item>BGS</item>
+        <item>MSS</item>
+    </string-array>
+    <!-- string-array month -->
+    <string-array name="monthInYear">
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string name="msgInfoProd">Khách hàng này hiện không có thông tin nhập kho</string>
+    <string name="titleCheckSale">Vui lòng chờ hệ thống kiểm tra mã NVBH</string>
+    <string name="msgCheckSale">Vui lòng chờ trong giây lát! Hệ thống đang kiểm tra Mã NVBH</string>
+    <string name="msgCheckComplete">Kiểm tra xong! Mã NVBH mới của bạn đã được kích hoạt</string>
+    <string name="msgCheckNotchange">Mã NVBH của bạn không có thay đổi</string>
+    <string name="msgErrorCheck">Mã NVBH đã thay đôi nhưng chưa được kích hoạt, vui lòng liên hệ đội hỗ trợ!</string>
+    <string name="checkNetwork">
+        Kết nối Internet của thiết bị có thể không ổn định. Vui lòng kiểm tra lại kết nối hoặc liên lạc 5S Call Center để được hỗ trợ. Xin cảm ơn.
+    </string>
+    <string name="checkErrorSaleCode">
+       Thiết bị có thể đang không được kết nối internet.
+        \n- Nếu bạn vẫn muốn sử dụng FPIT mà không cần internet thì vui lòng nhấn "Tiếp tục".
+        \n- Hoặc liên lạc 5S Call Center - 028 730 95 950 - để được hỗ trợ.
+        \nXin cảm ơn.
+    </string>
+    <string name="msgNotification">Nhập mã NVBH của bạn để tiếp tục chương trình</string>
+    <string name="errorNull">Vui lòng nhập mã NVBH trước khi nhấn nút Submit</string>
+    <string name="errorNetwork">Vui lòng kiểm tra lại Internet, đường truyền kết nối thất bại</string>
+    <string name="errorInput">Không được nhập ký tự đặc biệt</string>
+    <string name="btnSubmit">Đồng ý</string>
+    <string name="btnSetting">Cấu hình</string>
+    <string name="btnContinue">Tiếp tục</string>
+    <string name="btnExit">Hủy</string>
+    <string name="btnConfirm">Lưu</string>
+    <string name="UsesPermission">Bạn cần cung cấp một số quyền cho ứng dụng</string>
+    <string name="mrgErrorActive">Không đồng bộ được, Vui lòng liên hệ đội hỗ trợ</string>
+    <string name="TextViewCaptionLayoutReportIncentiveSalary">Báo cáo lương</string>
+    <string name="msgSaveSuccess">Lưu thành công</string>
+    <string name="TextViewCustomerAddnew"> Thêm mới KH </string>
+    <string name="PathFolderSalePicture">ImageTMS/imageOrder</string>
+
+    <string name="Home">Trang chủ</string>
+    <string name="AddCustomer">Thêm KH</string>
+    <string name="PutAway">Put Away</string>
+
+    <string name="SaveCustomer">Lưu thành công</string>
+
+    <string name="UploadResult">Đồng bộ thành công</string>
+
+    <string name="Condition">Vui lòng điền đầy đủ thông tin</string>
+
+    <string name="Uploading">Đang đồng bộ</string>
+    <string name="mapbox_access_token">pk.eyJ1Ijoibmd1eWVudGhhbmh0YW4xMjk4IiwiYSI6ImNraG45Z2kzYTEwNW0yd251czRwZnJucnAifQ.qPHjv3CdOtgNSKHBSOh4WA</string>
+    <string name="google_map_api_key">AIzaSyCS2xm9XB-_87ELqkR9CpDKoER6n8kS2Vs</string>
+
+
+</resources>

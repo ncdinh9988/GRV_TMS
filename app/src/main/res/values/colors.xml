@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="survey_toplist_item">#EFEDEC</color>
+    <color name="survey_alternate_color">#FFFFFF</color>
+    <color name="white">#ffffff</color>
+    <color name="itemselected">#81D4FA</color>
+    <color name="header">#329cd0</color>
+    <color name="login_hover">#81D4FA</color>
+    <color name="sign_out_color">#81D4FA</color>
+    <color name="grey05">#9E9E9E</color>
+    <color name="grey03">#A49E9E9E</color>
+    <color name="grey04">#729E9E9E</color>
+    <color name="bluebtn">#3399FF</color>
+    <color name="orange4">#FF9800</color>
+    <color name="orange5">#FFE0B2</color>
+    <color name="blue2">#0288D1</color>
+    <color name="black">#0b0b0b</color>
+    <color name="blue25">#80D8FF</color>
+    <color name="yellow1">#FFC400</color>
+    <color name="yellow2">#FFD740</color>
+    <color name="red">#fd0400</color>
+    <color name="blue_map">#669df6</color>
+    <color name="light_purple">#CC99FF</color>
+    <color name="dark_violet">#9966FF</color>
+
+    <color name="mapboxWhite">#ffffff</color>
+    <color name="mapboxBlue">#4264fb</color>
+    <color name="mapboxGrayLight">#c6d2e1</color>
+</resources>

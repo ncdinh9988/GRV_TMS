@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_warehouse"
+        android:icon="@drawable/ic_baseline_house_24"
+        android:title="PickList"/>
+
+    <item
+        android:id="@+id/navigation_PO"
+        android:icon="@drawable/ic_baseline_house_24"
+        android:title="Nhập Kho"/>
+<!--    <item-->
+<!--        android:id="@+id/navigation_Put_Away"-->
+<!--        android:icon="@drawable/transport"-->
+<!--        android:title="Put away"/>-->
+    <item
+        android:id="@+id/navigation_More"
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="Xem Thêm"/>
+</menu>

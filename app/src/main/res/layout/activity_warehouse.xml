@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <!--    <WebView-->
+
+    <!--        android:id="@+id/webViewWarehouse"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="500dp"-->
+    <!--       />-->
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+
+    <include layout="@layout/layout_more" android:visibility="gone"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_warehouse"
+        android:layout_width="match_parent"
+
+        android:layout_height="90dp"
+        android:layout_gravity="bottom"
+        android:background="#ffffff"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/header"
+        app:itemTextColor="#000000"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/navigation_warehouse"></com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+</LinearLayout>

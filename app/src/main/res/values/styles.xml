@@ -1,0 +1,41 @@
+<resources>
+
+    <style name="Theme.Transparent" parent="android:Theme">
+        <!--
+        <item name="android:windowIsTranslucent">true</item>
+	    <item name="android:windowBackground">@android:color/transparent</item>
+	    <item name="android:windowContentOverlay">@null</item>
+	    <item name="android:windowNoTitle">true</item>
+	    <item name="android:windowIsFloating">true</item>
+	    <item name="android:backgroundDimEnabled">false</item>
+
+        -->
+    </style>
+
+    <!-- Blue Color -->
+    <style name="headerText">
+        <item name="android:textColor">#000000</item>
+        <!-- <item name="android:textStyle">bold</item> -->
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="AudioFileInfoOverlayText">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:shadowColor">#D50000</item>
+        <item name="android:shadowDx">4</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">5</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/bg_label_floatingbutton</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="SpinnerTheme">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

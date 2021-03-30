@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#329cd0">
+        <TextView
+            android:id="@+id/tv"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="KÍCH HOẠT NHÂN VIÊN"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <TextView
+        android:textSize="20sp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/editTextInputCode"
+        android:text="Mã nhân viên"
+        android:textColor="#000"/>
+
+    <EditText
+        android:id="@+id/editTextInputCode"
+        android:hint="Nhập mã nhân viên"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="#000"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_edittext"
+        android:padding="5dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/editTextInputCode"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true">
+                <CheckBox
+                    android:id="@+id/ckshipper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shipper"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"
+                    android:textSize="16sp"/>
+                <CheckBox
+                    android:id="@+id/ckadmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thủ Kho"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/black"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+        <Button
+            android:text="Truy cập"
+            android:id="@+id/buttonSaveCode"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_button"/>
+        <TextView
+            android:id="@+id/tvDeviceId"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:text=""
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/buttonSaveCode"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <TextView
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Version: "
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewVersionApp"/>
+
+</RelativeLayout>

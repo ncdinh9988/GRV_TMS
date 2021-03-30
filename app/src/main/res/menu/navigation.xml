@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_baseline_house_24"
+        android:title="Điểm giao hàng"/>
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_baseline_person_add_24"
+        android:title="Khách hàng mới"/>
+
+    <item
+        android:id="@+id/navigation_capture"
+        android:icon="@drawable/ic_baseline_camera_alt_24"
+        android:title="Chụp đơn giao hàng"
+        android:visible="false"/>
+    <item
+        android:id="@+id/navigation_update"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="Chỉnh sửa thông tin KH"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_baseline_place_24"
+        android:title="Bản đồ"
+        android:visible="true"/>
+</menu>

@@ -1,0 +1,175 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:visibility="gone" />
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefesh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/progressbar"
+        android:layout_above="@+id/layout">
+        <WebView
+            android:id="@+id/wvContent_warehome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"></WebView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:visibility="visible">
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:background="@drawable/bg_button"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:layout_margin="5dp"
+            android:text="Quét mã hàng"
+            />
+        <Button
+            android:id="@+id/btnlpn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:background="@drawable/bg_button"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:layout_margin="5dp"
+            android:text="LPN"
+            />
+        <Button
+            android:id="@+id/btnShow"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_button"
+            android:textColor="@color/white"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:text="Xem Danh Sách Quét"
+            />
+
+        <Button
+            android:id="@+id/btnback"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_button"
+            android:textColor="@color/white"
+            android:visibility="visible"
+            android:text="TRỞ VỀ"
+            />
+    </LinearLayout>
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/menu_floating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_labelsPosition="left"
+        fab:fab_addButtonColorNormal="#427EBA"
+        android:visibility="gone">
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_warehouse_adjustment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/menu_floating"
+            android:layout_alignParentRight="true"
+            fab:fab_icon="@drawable/warehouse"
+            fab:fab_title="Chỉnh Kho" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_inventory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/menu_floating"
+            android:layout_alignParentRight="true"
+            fab:fab_icon="@drawable/warehouse"
+            fab:fab_title="Kiểm Tồn" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_LPN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/menu_floating"
+            android:layout_alignParentRight="true"
+            fab:fab_icon="@drawable/warehouse"
+            fab:fab_title="LPN" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_pickList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/menu_floating"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            fab:fab_icon="@drawable/warehouse"
+            fab:fab_title="PickList" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_PO"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/menu_floating"
+            android:layout_alignParentRight="true"
+            fab:fab_icon="@drawable/warehouse"
+            fab:fab_title="Nhập Kho" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_put_away"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/menu_floating"
+            android:layout_alignParentRight="true"
+            fab:fab_icon="@drawable/transport"
+            fab:fab_title="Put Away" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_letdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/floating_put_away"
+            android:layout_alignParentRight="true"
+            fab:fab_icon="@drawable/change_loction"
+            fab:fab_title="Let Down" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_change_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/floating_export_ware"
+            android:layout_alignParentRight="true"
+            fab:fab_icon="@drawable/export_ware"
+            fab:fab_title="Chuyển Vị Trí" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_export_ware"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/floating_letdown"
+            android:layout_alignParentRight="true"
+            fab:fab_icon="@drawable/export_ware"
+            fab:fab_title="Xuất Kho" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+</RelativeLayout>
