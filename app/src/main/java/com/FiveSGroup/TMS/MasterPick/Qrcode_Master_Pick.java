@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
 import com.FiveSGroup.TMS.global;
 import com.google.android.gms.vision.CameraSource;
@@ -37,34 +40,32 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClickListener {
-
-
+public class Qrcode_Master_Pick extends AppCompatActivity {
     private SurfaceView surfaceView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
+    private CheckBox checkBoxGetDVT, checkBoxGetLPN;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     private ToneGenerator toneGen1;
     private TextView barcodeText;
     private String barcodeData;
-    private CheckBox checkBoxGetDVT, checkBoxGetLPN;
+    Button btnTruyCap;
+    String value1 = "";
+    String value2 = "";
     boolean check = false;
     Intent intent;
     String position = "";
     String product_cd = "";
-    String master_pick = "";
+    String stock = "";
     String expiredDate = " ";
     String ea_unit_position = " ";
     String stockinDate = "";
     String checkToFinish = "";
-
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
-    View viewScan;
-    Button buttonBack;
-
-    private boolean isUp;
+    private Button buttonBack, btnSend;
+    private EditText edtBarcode;;
 
     @Override
     protected void onStart() {
@@ -76,11 +77,8 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_load_camera);
         init();
-        isUp = false;
         try {
             initialiseDetectorsAndSources();
 
@@ -90,17 +88,43 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
         check = true;
         getDataFromIntent();
 
-        buttonBack.setOnClickListener(this);
-
         setCheckBox();
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (position != null || checkToFinish != null) {
+                    Intent intent = new Intent(Qrcode_Master_Pick.this, List_Master_Pick.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    finish();
+                }
+            }
+        });
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    CmnFns.hideSoftKeyboard(Qrcode_Master_Pick.this);
+                }catch (Exception e){
+
+                }
+                String barcode = edtBarcode.getText().toString();
+                GetData(barcode);
+            }
+        });
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
-    private void init(){
+    private void init() {
         toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-        surfaceView = findViewById(R.id.surface_view);
-        barcodeText = findViewById(R.id.barcode_text);
+        btnSend = findViewById(R.id.btnSend);
+        edtBarcode = findViewById(R.id.edtBarcode);
         checkBoxGetDVT = findViewById(R.id.checkBoxGetDVT);
         checkBoxGetLPN = findViewById(R.id.checkBoxGetLPN);
+        surfaceView = findViewById(R.id.surface_view);
+        barcodeText = findViewById(R.id.barcode_text);
         textViewTitle = findViewById(R.id.tvTitle);
         textViewTitle.setText("QUÉT MÃ - MASTER PICK");
         buttonBack = findViewById(R.id.buttonQRBack);
@@ -133,7 +157,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
         // được tuyền qua từ adapter
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
-        master_pick = intent.getStringExtra("master_pick");
+        stock = intent.getStringExtra("stock");
 
         // expiredDate truyền từ adapter để xử lí from - to
         expiredDate = intent.getStringExtra("c");
@@ -153,9 +177,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
             checkBoxGetLPN.setVisibility(View.VISIBLE);
             textViewTitle.setText("QUÉT MÃ - MASTER PICK");
         }
-
     }
-
 
     private void initialiseDetectorsAndSources() {
 
@@ -165,10 +187,9 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setRequestedPreviewSize(1920, 1080)
-                .setRequestedFps(30.0f)
                 .setAutoFocusEnabled(true) //you should add this feature
+                .setRequestedFps(30.0f)
                 .build();
-
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -206,7 +227,6 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-                Log.d("TAG", "receiveDetections: " + barcodes);
 
                 if (barcodes.size() != 0) {
                     if (check == true) {
@@ -223,138 +243,19 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
                                     Log.e("barcode2", "" + barcodeData);
 
                                     if (barcodeData != null) {
-                                        String texxt = CmnFns.readDataAdmin();
-//*****************************
-                                        if (checkBoxGetLPN.isChecked()) {
-                                            if (expiredDate != null) {
-                                                Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
-                                                intentt.putExtra("lpn", "444");
-                                                intentt.putExtra("btn1", barcodeData);
-                                                intentt.putExtra("returnposition", position);
-                                                intentt.putExtra("return_ea_unit_position", ea_unit_position);
-                                                intentt.putExtra("returnCD", product_cd);
-                                                intentt.putExtra("returnStock", master_pick);
-                                                intentt.putExtra("master_picklist", "333");
-
-                                                // truyền qua cho ListQRCode để xử lí from - to
-                                                intentt.putExtra("expdate", expiredDate);
-                                                intentt.putExtra("stockin_date", stockinDate);
-
-                                                Log.e("barcodeData1", "" + barcodeData);
-                                                Log.e("nhận từ 2 nút", "" + position);
-                                                startActivity(intentt);
-                                                DatabaseHelper.getInstance().deleteallExp_date();
-                                                DatabaseHelper.getInstance().deleteallEa_Unit();
-                                                //editor.commit();
-                                                finish();
-
-
-                                            } else {
-                                                Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
-                                                intentt.putExtra("lpn", "444");
-                                                intentt.putExtra("btn1", barcodeData);
-                                                intentt.putExtra("master_picklist", "333");
-                                                startActivity(intentt);
-                                                finish();
-                                            }
-
-                                        } else {
-                                            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WMP", 0, global.getMasterPickCd());
-                                            if (statusGetCustt != 1) {
-                                                ReturnPosition(barcodeData, stockinDate);
-                                            } else {
-                                                // expiredDate nhận giá trị từ adapter để xử lí position
-                                                if (expiredDate != null) {
-
-                                                    ReturnPosition(barcodeData, stockinDate);
-
-                                                } else {
-                                                    try {
-                                                        // lấy tất cả hạn sử dụng trong database ra
-                                                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
-
-                                                        if (expired_date.size() > 1) {
-                                                            final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Master_Pick.this);
-                                                            builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
-
-                                                            final ArrayList<String> exp_date = new ArrayList<>();
-                                                            for (int i = 0; i < expired_date.size(); i++) {
-                                                                exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
-                                                                //    exp_date.add(expired_date.get(i).getSTOCKIN_DATE_TAM());
-
-                                                            }
-
-                                                            // chuyển đổi exp_date thành mảng chuỗi String
-                                                            String[] mStringArray = new String[exp_date.size()];
-                                                            mStringArray = exp_date.toArray(mStringArray);
-
-                                                            final String[] mString = mStringArray;
-                                                            builder.setItems(mString, new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which) {
-                                                                    String expDate = mString[which];
-
-                                                                    dialog.dismiss(); // Close Dialog
-
-                                                                    if (expDate != "") {
-                                                                        // expDateTemp2 lấy giá trị HSD được người dùng chọn
-                                                                        expDateTemp2 = expDate;
-                                                                        String[] chuoi = expDateTemp2.split(" - ");
-                                                                        if (!checkBoxGetDVT.isChecked()) {
-                                                                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
-
-                                                                        } else {
-                                                                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
-                                                                        }
-
-                                                                    }
-                                                                    Toast.makeText(Qrcode_Master_Pick.this, "You select: " + expDate,
-                                                                            Toast.LENGTH_LONG).show();
-
-                                                                }
-                                                            });
-                                                            AlertDialog alertDialog = builder.create();
-                                                            alertDialog.show();
-                                                        } else if (expired_date.size() == 1) {
-                                                            String expDatetemp = "";
-                                                            try {
-                                                                expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
-                                                            } catch (Exception e) {
-
-                                                            }
-                                                            String[] chuoi = expDatetemp.split(" - ");
-
-                                                            if (!checkBoxGetDVT.isChecked()) {
-                                                                ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
-                                                            } else {
-                                                                ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
-                                                            }
-                                                        } else {
-                                                            Toast.makeText(Qrcode_Master_Pick.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                                                            Intent intent = new Intent(Qrcode_Master_Pick.this, List_Master_Pick.class);
-                                                            intent.putExtra("master_picklist", "333");
-                                                            intent.putExtra("btn1", barcodeData);
-                                                            startActivity(intent);
-                                                            finish();
-                                                        }
-                                                    } catch (Exception e) {
-                                                        Toast.makeText(Qrcode_Master_Pick.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                                                        Log.d("#778:", e.getMessage());
-                                                    }
-
-                                                }
-                                            }
-
-                                        }
-
+                                        edtBarcode.setText(barcodeData);
+                                        GetData(barcodeData);
                                     }
                                 } catch (Exception e) {
                                     Toast.makeText(Qrcode_Master_Pick.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                                    Log.d("#777: ", e.getMessage());
+                                    Log.d("#777", e.getMessage());
                                     Intent intent = new Intent(Qrcode_Master_Pick.this, List_Master_Pick.class);
+                                    intent.putExtra("master_picklist", "333");
                                     startActivity(intent);
                                     finish();
                                 }
+
+
                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
                             }
                         });
@@ -362,71 +263,189 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
 
 
                 }
-
             }
         });
     }
 
-    private void ReturnPosition(String barcode, String stockinDateShow) {
+    private void GetData(final String barcodeData){
+        String texxt = CmnFns.readDataAdmin();
+
+        if (checkBoxGetLPN.isChecked()) {
+            if (expiredDate != null) {
+                Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
+                intentt.putExtra("lpn", "444");
+                intentt.putExtra("btn1", barcodeData);
+                intentt.putExtra("returnposition", position);
+                intentt.putExtra("return_ea_unit_position", ea_unit_position);
+                intentt.putExtra("returnCD", product_cd);
+                intentt.putExtra("returnStock", stock);
+                intentt.putExtra("master_picklist", "333");
+
+                // truyền qua cho ListQRCode để xử lí from - to
+                intentt.putExtra("expdate", expiredDate);
+                intentt.putExtra("stockin_date", stockinDate);
+
+                startActivity(intentt);
+                DatabaseHelper.getInstance().deleteallExp_date();
+                DatabaseHelper.getInstance().deleteallEa_Unit();
+                //editor.commit();
+                finish();
+
+
+            } else {
+                Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
+                intentt.putExtra("lpn", "444");
+                intentt.putExtra("btn1", barcodeData);
+                intentt.putExtra("master_picklist", "333");
+                startActivity(intentt);
+                finish();
+            }
+
+        } else {
+            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WMP", 0, global.getMasterPickCd());
+            if (statusGetCustt != 1) {
+                ReturnPosition(barcodeData);
+            } else {
+                if (expiredDate != null) {
+
+                    ReturnPosition(barcodeData);
+
+                } else {
+                    // lấy tất cả hạn `sử dụng trong database ra
+                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
+
+
+                    if (expired_date.size() > 1) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Master_Pick.this);
+                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
+
+                        final ArrayList<String> exp_date = new ArrayList<>();
+                        for (int i = 0; i < expired_date.size(); i++) {
+                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
+                        }
+
+                        // chuyển đổi exp_date thành mảng chuỗi String
+                        String[] mStringArray = new String[exp_date.size()];
+                        mStringArray = exp_date.toArray(mStringArray);
+
+                        final String[] mString = mStringArray;
+                        builder.setItems(mString, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String expDate = mString[which];
+
+                                dialog.dismiss(); // Close Dialog
+
+                                if (expDate != "") {
+                                    expDateTemp2 = expDate; //TEST
+                                    String chuoi[] = expDateTemp2.split(" - ");
+                                    if (chuoi[0].equals("Khác")){
+                                        Intent intent = new Intent(Qrcode_Master_Pick.this, SelectPropertiesProductActivity.class);
+                                        intent.putExtra("typeScan", "scan_from_master_picklist");
+                                        intent.putExtra("btn1", barcodeData);
+                                        intent.putExtra("returnposition", position);
+                                        intent.putExtra("returnCD", product_cd);
+                                        intent.putExtra("returnStock", stock);
+                                        DatabaseHelper.getInstance().deleteallExp_date();
+                                        DatabaseHelper.getInstance().deleteallEa_Unit();
+                                        startActivity(intent);
+                                        finish();
+                                        return;
+                                    }
+                                    if (!checkBoxGetDVT.isChecked()) {
+                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                                        //ReturnProduct(barcodeData,expDateTemp2,"");
+                                    } else {
+                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                                    }
+
+                                }
+                                // Do some thing....
+                                // For example: Call method of MainActivity.
+                                Toast.makeText(Qrcode_Master_Pick.this, "You select: " + expDate,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    } else if (expired_date.size() == 1) {
+                        String expDatetemp = "";
+                        try {
+                            expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                        } catch (Exception e) {
+
+                        }
+                        String chuoi[] = expDatetemp.split(" - ");
+
+                        if (!checkBoxGetDVT.isChecked()) {
+                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                        } else {
+                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                        }
+
+                    } else {
+                        Toast.makeText(Qrcode_Master_Pick.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Qrcode_Master_Pick.this, List_Master_Pick.class);
+                        intent.putExtra("master_picklist", "333");
+                        intent.putExtra("btn1", barcodeData);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                }
+            }
+
+
+        }
+    }
+    private void ReturnPosition(String barcode) {
         Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
-        intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
-        intentt.putExtra("returnStock", master_pick);
+        intentt.putExtra("returnStock", stock);
         intentt.putExtra("master_picklist", "333");
-        intentt.putExtra("stockin_date", stockinDateShow);
-
-
         // truyền qua cho ListQRCode để xử lí from - to
         intentt.putExtra("expdate", expiredDate);
+        intentt.putExtra("return_ea_unit_position", ea_unit_position);
+        intentt.putExtra("stockin_date", stockinDate);
 
-        Log.e("barcodeData1", "" + barcodeData);
-        Log.e("nhận từ 2 nút", "" + position);
+
         startActivity(intentt);
         DatabaseHelper.getInstance().deleteallExp_date();
         DatabaseHelper.getInstance().deleteallEa_Unit();
-        //editor.commit();
         finish();
 
     }
 
-    private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow) {
-
+    private void ReturnProduct(String barcode, String expDatetemp ,String stockinDateShow) {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
-        intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
-        intentt.putExtra("returnStock", master_pick);
+        intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("master_picklist", "333");
+        intentt.putExtra("ea_unit", ea_unit_tams.get(0).getEA_UNIT_TAM());
+        intentt.putExtra("return_ea_unit_position", ea_unit_position);
         if (stockinDate == null) {
             intentt.putExtra("stockin_date", stockinDateShow);
 
         } else {
             intentt.putExtra("stockin_date", stockinDate);
         }
-        if (ea_unit_tams.size() > 0) {
-            intentt.putExtra("ea_unit", ea_unit_tams.get(0).getEA_UNIT_TAM());
-        } else {
-            intentt.putExtra("ea_unit", " ");
-        }
 
-        Log.e("barcodeData1", "" + barcodeData);
-        Log.e("nhận từ 2 nút", "" + position);
         startActivity(intentt);
-        DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
-        //editor.commit();
+        DatabaseHelper.getInstance().deleteallEa_Unit();
         finish();
     }
 
 
-    private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow) {
+    private void ShowDialogUnit(final String barcode, final String expDateTemp2 , final String stockinDateShow) {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData, "2");
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
@@ -447,7 +466,6 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
         mStringArray = ea_unit.toArray(mStringArray);
         final String[] mString = mStringArray;
 
-
         AlertDialog.Builder builderDVT = new AlertDialog.Builder(Qrcode_Master_Pick.this);
         builderDVT.setTitle("CHỌN ĐƠN VỊ TÍNH");
         builderDVT.setCancelable(false);
@@ -458,25 +476,25 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
                 Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
-                intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
-                intentt.putExtra("master_picklist", "333");
-                intentt.putExtra("returnStock", master_pick);
+                intentt.putExtra("returnStock", stock);
+                intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 if (stockinDate == null) {
                     intentt.putExtra("stockin_date", stockinDateShow);
 
                 } else {
                     intentt.putExtra("stockin_date", stockinDate);
-                }                // truyền qua cho ListQRcode để add vào text HSD
+                }
+
+                intentt.putExtra("master_picklist", "333");
+                // truyền qua cho ListQRcode để add vào text HSD
                 intentt.putExtra("exp_date", expDateTemp2);
                 intentt.putExtra("ea_unit", mString[which]);
-
-
                 Log.e("barcodeData1", "" + barcodeData);
                 Log.e("nhận từ 2 nút", "" + position);
                 startActivity(intentt);
-                DatabaseHelper.getInstance().deleteallEa_Unit();
                 DatabaseHelper.getInstance().deleteallExp_date();
+                DatabaseHelper.getInstance().deleteallEa_Unit();
                 finish();
             }
         }).show();
@@ -484,7 +502,6 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }
-
 
     @Override
     protected void onPause() {
@@ -506,23 +523,8 @@ public class Qrcode_Master_Pick extends AppCompatActivity implements View.OnClic
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        DatabaseHelper.getInstance().deleteallExp_date();
         DatabaseHelper.getInstance().deleteallEa_Unit();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.buttonQRBack:
-                if (position != null || checkToFinish != null) {
-                    Intent intent = new Intent(Qrcode_Master_Pick.this, List_Master_Pick.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    finish();
-                }
-                break;
-        }
+        DatabaseHelper.getInstance().deleteallExp_date();
     }
 }
 

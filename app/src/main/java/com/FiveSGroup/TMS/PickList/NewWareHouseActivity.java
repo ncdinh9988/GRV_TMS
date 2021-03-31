@@ -207,7 +207,7 @@ public class NewWareHouseActivity extends AppCompatActivity implements View.OnCl
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
 
-            if (url.contains("WarehousePickListOrderForAppItem.aspx?PICKLIST_ORDER_CD")) {
+            if (url.contains("WarehousePickListOrderForAppItem.aspx?PickListOrderCD")) {
 
                 String chuoi[] = url.split("=");
                 String code = chuoi[1];

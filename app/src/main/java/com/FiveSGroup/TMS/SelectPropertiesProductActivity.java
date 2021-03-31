@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.LetDown.LetDownActivity;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
+import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.RemoveFromLPN.List_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.List_Return_WareHouse;
@@ -68,6 +69,9 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
                 setProductName(typeScan);
                 break;
             case "scan_from_load_pallet":
+                setProductName(typeScan);
+                break;
+            case "scan_from_master_picklist":
                 setProductName(typeScan);
                 break;
             case "scan_from_pick_list":
@@ -180,6 +184,9 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
                 break;
             case "scan_from_load_pallet":
                 createProduct(LoadPalletActivity.class, "load_pallet");
+                break;
+            case "scan_from_master_picklist":
+                createProduct(List_Master_Pick.class, "master_picklist");
                 break;
             case "scan_from_pick_list":
                 createProduct(ListPickList.class, "pick_list");

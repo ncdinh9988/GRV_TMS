@@ -396,8 +396,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_Warehouse_Adjustment warehouse_Adjustment = new Product_Warehouse_Adjustment();
-                warehouse_Adjustment.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_WAREHOUSE_ADJUSTMENT))));
+
                 warehouse_Adjustment.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_WAREHOUSE_ADJUSTMENT))));
                 warehouse_Adjustment.setPRODUCT_CODE((c.getString(c
@@ -949,8 +948,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_Return_WareHouse return_warehouse = new Product_Return_WareHouse();
-                return_warehouse.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_RETURN_WAREHOUSE))));
+
                 return_warehouse.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_RETURN_WAREHOUSE))));
                 return_warehouse.setPRODUCT_CODE((c.getString(c
@@ -1292,8 +1290,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_Master_Pick masterPick = new Product_Master_Pick();
-                masterPick.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_MASTER_PICK))));
+
                 masterPick.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_MASTER_PICK))));
                 masterPick.setPRODUCT_CODE((c.getString(c
@@ -1682,8 +1679,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 PickList product = new PickList();
-                product.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_PICKLIST))));
+
                 product.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_PICKLIST))));
                 product.setPRODUCT_CODE((c.getString(c
@@ -2087,8 +2083,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_LoadPallet product_loadPallet = new Product_LoadPallet();
-                product_loadPallet.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_LOAD_PALLET))));
+
                 product_loadPallet.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_LOAD_PALLET))));
                 product_loadPallet.setPRODUCT_CODE((c.getString(c
@@ -2345,8 +2340,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_Remove_LPN remove = new Product_Remove_LPN();
-                remove.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_REMOVE_LPN))));
+
                 remove.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_REMOVE_LPN))));
                 remove.setPRODUCT_CODE((c.getString(c
@@ -2668,8 +2662,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_StockTransfer stock = new Product_StockTransfer();
-                stock.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_STOCK_TRANSFER))));
+
                 stock.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_STOCK_TRANSFER))));
                 stock.setPRODUCT_CODE((c.getString(c
@@ -2949,8 +2942,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_StockOut stock = new Product_StockOut();
-                stock.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_STOCK_OUT))));
+
                 stock.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_STOCK_OUT))));
                 stock.setPRODUCT_CODE((c.getString(c
@@ -3280,8 +3272,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 ProductLetDown qrcode = new ProductLetDown();
-                qrcode.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_LETDOWN))));
+
                 qrcode.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_LETDOWN))));
                 qrcode.setPRODUCT_CODE((c.getString(c
@@ -3711,8 +3702,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_PutAway qrcode_putaway = new Product_PutAway();
-                qrcode_putaway.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_PUT_AWAY))));
                 qrcode_putaway.setUNIQUE_CODE_PUTAWAY((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_PUTAWAY))));
                 qrcode_putaway.setPRODUCT_CODE_PUTAWAY((c.getString(c
@@ -4246,8 +4235,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_Qrcode qrcodeq = new Product_Qrcode();
-                qrcodeq.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_PO))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
@@ -5318,8 +5305,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 InventoryProduct product = new InventoryProduct();
-                product.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_INVENTORY))));
+
                 product.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_INVENTORY))));
                 product.setPRODUCT_CODE((c.getString(c
