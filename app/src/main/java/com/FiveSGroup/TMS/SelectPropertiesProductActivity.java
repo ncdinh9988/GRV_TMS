@@ -214,10 +214,13 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
     }
 
     private void createProduct(Class activity, String type) {
-        if (edtSelectProductExpiredDate.getText().toString().trim().isEmpty() ||
-                edtSelectProductStockinDate.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn hạn sử dụng và ngày nhập", Toast.LENGTH_SHORT).show();
-        } else {
+//        if (edtSelectProductExpiredDate.getText().toString().trim().isEmpty() ||
+//                edtSelectProductStockinDate.getText().toString().trim().isEmpty()) {
+//            Toast.makeText(this, "Vui lòng chọn hạn sử dụng và ngày nhập", Toast.LENGTH_SHORT).show();
+//        } else {
+        if(spinnerProductUnit.getSelectedItem().toString().isEmpty()) {
+            Toast.makeText(this, "Vui lòng chọn đơn vị ", Toast.LENGTH_SHORT).show();
+        }else{
             String expiredDate = edtSelectProductExpiredDate.getText().toString().trim();
             String stockinDate = edtSelectProductStockinDate.getText().toString().trim();
             String unit = spinnerProductUnit.getSelectedItem().toString();
@@ -234,6 +237,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             startActivity(intent);
             finish();
         }
+//        }
     }
 
     private void selectDate(final int viewId) {

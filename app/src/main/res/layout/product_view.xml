@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="2dp"
-            android:layout_weight="3"
+            android:layout_weight="2.7"
             android:orientation="vertical">
 
             <TextView
@@ -84,12 +84,12 @@
         </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="10dp"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-        android:layout_weight="1"
+        android:layout_weight="1.7"
         android:background="@drawable/bg_edt_sl"
         android:orientation="vertical">
         <EditText
@@ -99,11 +99,11 @@
             android:gravity="bottom|center_horizontal"
             android:padding="5dp"
             android:inputType="number"
-            android:maxLength="3"
+            android:maxLength="5"
             android:text="1"
             android:background="@null"
             android:textColor="@color/black"
-            android:textSize="25sp"/>
+            android:textSize="18sp"/>
     </LinearLayout>
         <TextView
             android:id="@+id/tvUnit"
@@ -123,7 +123,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:layout_gravity="bottom"
-            android:layout_weight="2"
+            android:layout_weight="1.8"
             android:gravity="bottom"
             android:orientation="vertical">
 
@@ -162,7 +162,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="2"
+            android:layout_weight="1.8"
             android:gravity="bottom"
             android:orientation="vertical"
             android:weightSum="2">
