@@ -696,6 +696,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<LPN>
+    getAllLpn(String lpn_date) {
+        ArrayList<LPN> lpn = new ArrayList<LPN>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT * FROM " + O_LPN + " WHERE " + LPN_DATE + " like '%" + lpn_date + "%'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                LPN lpn1 = new LPN();
+                lpn1.setLPN_NUMBER((c.getString(c
+                        .getColumnIndex(LPN_NUMBER))));
+                lpn1.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE))));
+                lpn1.setLPN_DATE((c.getString(c
+                        .getColumnIndex(LPN_DATE))));
+                lpn.add(lpn1);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return lpn;
+    }
+
+    public ArrayList<LPN>
     getAllLpn() {
         ArrayList<LPN> lpn = new ArrayList<LPN>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);

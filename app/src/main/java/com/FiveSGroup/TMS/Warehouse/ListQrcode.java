@@ -285,7 +285,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
     private boolean isNotScanFromOrToWarehouse() {
         boolean check = false;
-        List<Product_Qrcode> product = DatabaseHelper.getInstance().getAllProduct_Qrcode();
+        List<Product_Qrcode> product = DatabaseHelper.getInstance().getAllProduct_Qrcode(global.getStockReceiptCd());
 
         for (int i = 0; i < product.size(); i++) {
             Product_Qrcode product_qrcode = product.get(i);

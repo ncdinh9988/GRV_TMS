@@ -213,7 +213,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:text="Vị trí gợi ý: "
+            android:text="Vị trí lấy hàng: "
             android:textColor="@color/black" />
         <TextView
             android:textColor="@color/black"

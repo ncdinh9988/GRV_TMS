@@ -5,17 +5,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,17 +29,24 @@ import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletQRCode;
 import com.FiveSGroup.TMS.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class LPNActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonBack, btnCreateLPN, buttonPutToPallet;
     private ProgressDialog progressSyncProgram;
+    private TextView createDate;
     private RecyclerView rvListLPN;
     private SwipeRefreshLayout swipeRefesh;
+    private String chooseDate;
     ArrayList<LPN> arrListLPN;
     private ItemLPNAdapter adapter;
     private Spinner spinner;
+    final Calendar myCalendar = Calendar.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +61,9 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 //        taskCanceler = new TaskSyncProgramCanceler(syncProgram);
 //        handler.postDelayed(taskCanceler, 1000 * 40);
         syncProgram.execute();
+
+
+
 
         RefeshData();
     }
@@ -73,7 +87,8 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 
     private void init() {
         buttonPutToPallet = findViewById(R.id.buttonPutToPallet);
-        spinner = findViewById(R.id.spinner);
+        createDate = findViewById(R.id.priceproduct);
+//        spinner = findViewById(R.id.spinner);
         buttonBack = findViewById(R.id.buttonBack);
         btnCreateLPN = findViewById(R.id.btnCreateLPN);
         rvListLPN = findViewById(R.id.rvListLPn);
@@ -85,6 +100,103 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
         buttonPutToPallet.setOnClickListener(this);
 
 
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+        createDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(LPNActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
+    }
+
+    public void updateLabel() {
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        chooseDate = sdf.format(myCalendar.getTime());
+        Log.d("logggggggg", "" + chooseDate);
+
+        createDate.setText(sdf.format(myCalendar.getTime()));
+
+        SyncDate syncDate = new SyncDate();
+        syncDate.execute();
+
+    }
+
+    class SyncDate extends AsyncTask<Void, Integer, Integer> {
+
+        public boolean isSyncSuccess = false;
+
+        @Override
+        protected void onPreExecute() {
+            CmnFns cmnFns = new CmnFns();
+            int status = cmnFns.allowSynchronizeBy3G();
+            if (status == 1) {
+                progressSyncProgram = new ProgressDialog(LPNActivity.this);
+                progressSyncProgram.setMessage("Đang load thông tin...");
+                progressSyncProgram.setCancelable(false);
+                progressSyncProgram.setCanceledOnTouchOutside(false);
+                progressSyncProgram.show();
+
+
+            } else if (status == 102) {
+                Toast.makeText(LPNActivity.this, "Vui lòng kiểm tra kết nối mạng", Toast.LENGTH_LONG).show();
+                //progressSyncProgram.dismiss();
+
+            }
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            // thực thi hàm lấy thông tin LPN
+            DatabaseHelper.getInstance().deleteallProduct_LPN();
+            int status = new CmnFns().synchronizeGetLPN(getApplication());
+
+            return status;
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            if (integer == -1) {
+                progressSyncProgram.dismiss();
+                Toast.makeText(LPNActivity.this, "Đồng bộ dữ liệu không thành công", Toast.LENGTH_SHORT).show();
+                this.cancel(true);
+                isSyncSuccess = false;
+
+            } else {
+                progressSyncProgram.dismiss();
+                Toast.makeText(LPNActivity.this, "Đồng bộ dữ liệu thành công", Toast.LENGTH_SHORT).show();
+                this.cancel(true);
+
+//                SetDataSpinner();
+                arrListLPN = DatabaseHelper.getInstance().getAllLpn(chooseDate);
+                adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
+                rvListLPN.setLayoutManager(layoutManager);
+                rvListLPN.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                isSyncSuccess = true;
+            }
+        }
     }
 
     private void SetDataSpinner() {
@@ -203,7 +315,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 
             } else if (status == 102) {
                 Toast.makeText(LPNActivity.this, "Vui lòng kiểm tra kết nối mạng", Toast.LENGTH_LONG).show();
-                progressSyncProgram.dismiss();
+               // progressSyncProgram.dismiss();
 
             }
         }
@@ -232,16 +344,14 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(LPNActivity.this, "Đồng bộ dữ liệu thành công", Toast.LENGTH_SHORT).show();
                 this.cancel(true);
 
-                SetDataSpinner();
-
-
-                //               arrListLPN = DatabaseHelper.getInstance().getAllLpn();
-//                adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
-//                LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
-//                rvListLPN.setLayoutManager(layoutManager);
-//                rvListLPN.setAdapter(adapter);
-//                adapter.notifyDataSetChanged();
-//                isSyncSuccess = true;
+//                SetDataSpinner();
+                arrListLPN = DatabaseHelper.getInstance().getAllLpn();
+                adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
+                rvListLPN.setLayoutManager(layoutManager);
+                rvListLPN.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                isSyncSuccess = true;
             }
         }
     }
@@ -253,23 +363,29 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.btnCreateLPN:
-//                int status = new CmnFns().synchronizeCreate_LPN(getApplication());
-//                if (status == -1) {
-//                    Toast.makeText(this, "Tạo Barcode Thất Bại", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(this, "Tạo Barcode Thành Công", Toast.LENGTH_LONG).show();
-//                    arrListLPN.clear();
-//                    arrListLPN = DatabaseHelper.getInstance().getAllLpn();
-//
-//                    adapter = new ItemLPNAdapter(this, arrListLPN);
+                int status = new CmnFns().synchronizeCreate_LPN(getApplication());
+                if (status == -1) {
+                    Toast.makeText(this, "Tạo Barcode Thất Bại", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Tạo Barcode Thành Công", Toast.LENGTH_LONG).show();
+                    arrListLPN.clear();
+                    arrListLPN = DatabaseHelper.getInstance().getAllLpn();
+                    createDate.setText("Ngày Tạo");
+
+                    adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
+                    SyncProgram syncProgram = new SyncProgram();
+                    syncProgram.execute();
+//                    LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
+//                    rvListLPN.setLayoutManager(layoutManager);
 //                    rvListLPN.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
 //                    // lầy giá trị được chọn của spinner
 
 
-                ReloadCreateLPN reloadCreateLPN = new ReloadCreateLPN();
-                reloadCreateLPN.execute();
+//                ReloadCreateLPN reloadCreateLPN = new ReloadCreateLPN();
+//                reloadCreateLPN.execute();
 
-                // }
+                 }
                 break;
             case R.id.buttonPutToPallet:
                 Intent intent = new Intent(LPNActivity.this, LoadPalletQRCode.class);
@@ -330,7 +446,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
                 try {
                     DatabaseHelper.getInstance().deleteallProduct_LPN();
                     int status = new CmnFns().synchronizeGetLPN(getApplication());
-                    SetDataSpinner();
+//                    SetDataSpinner();
                 } catch (Exception e) {
 
                 }

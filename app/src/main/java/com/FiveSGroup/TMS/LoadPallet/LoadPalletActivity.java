@@ -1,6 +1,7 @@
 package com.FiveSGroup.TMS.LoadPallet;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.MainActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
@@ -169,6 +171,41 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             startActivity(intent);
             finish();
         }
+    }
+    private void actionSyn(){
+        // Build an AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoadPalletActivity.this);
+
+        // Set a title for alert dialog
+        // builder.setTitle(".");
+
+        // Ask the final question
+        builder.setMessage("Bạn Có Chắc Chắn?");
+
+        // Set the alert dialog yes button click listener
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when user clicked the Yes button
+                // Set the TextView visibility GONE
+                synchronizeToServer();
+            }
+        });
+
+        // Set the alert dialog no button click listener
+        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do something when No button clicked
+//                        Toast.makeText(getApplicationContext(),
+//                                "No Button Clicked",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        // Display the alert dialog on interface
+        dialog.show();
+
     }
 
     private void actionBack() {
@@ -397,7 +434,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 actionBack();
                 break;
             case R.id.buttonOK:
-                synchronizeToServer();
+                actionSyn();
                 break;
         }
     }

@@ -50,14 +50,18 @@
             android:gravity="center"
             android:textSize="16sp"
             android:text="Ngày Tạo"
-            android:visibility="gone"/>
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="2"
-            android:backgroundTint="@color/black"
-            android:spinnerMode="dropdown"/>
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:visibility="visible"/>
+<!--        <Spinner-->
+<!--            android:id="@+id/spinner"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_weight="2"-->
+<!--            android:backgroundTint="@color/black"-->
+<!--            android:spinnerMode="dropdown"/>-->
 
 
     </LinearLayout>
