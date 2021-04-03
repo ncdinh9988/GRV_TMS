@@ -178,11 +178,11 @@ public class LoadPalletQRCode extends AppCompatActivity {
         if (!(position == null)) {
             checkBoxGetDVT.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
-
+            checkBoxGetLPN.setChecked(false);
 
             if (position.equals("1")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
-                checkBoxGetLPN.setChecked(false);
+                checkBoxGetLPN.setEnabled(false);
             } else if (position.equals("2")) {
                 checkBoxGetLPN.setVisibility(View.VISIBLE);
                 checkBoxGetLPN.setChecked(true);
@@ -191,8 +191,9 @@ public class LoadPalletQRCode extends AppCompatActivity {
             }
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
-            checkBoxGetLPN.setVisibility(View.INVISIBLE);
+            checkBoxGetLPN.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setChecked(false);
+            checkBoxGetLPN.setEnabled(false);
 
             textViewTitle.setText("QUÉT MÃ - CHẤT HÀNG LÊN PALLET");
         }

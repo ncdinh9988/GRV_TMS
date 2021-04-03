@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
@@ -388,9 +389,46 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.buttonOK:
-                SynchronizeToServer();
+                actionSyn();
                 break;
         }
+    }
+
+    private void actionSyn(){
+        try {
+            LayoutInflater factory = LayoutInflater.from(LetDownActivity.this);
+            View layout_cus = factory.inflate(R.layout.layout_request, null);
+            final AlertDialog dialog = new AlertDialog.Builder(LetDownActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+            InsetDrawable inset = new InsetDrawable(back, 64);
+            dialog.getWindow().setBackgroundDrawable(inset);
+            dialog.setView(layout_cus);
+
+            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+            TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+
+
+            btnNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+
+                }
+            });
+            btnYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    SynchronizeToServer();
+                }
+            });
+            dialog.show();
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
+
     }
 
     public void alert_show_position(int isLPN) {
@@ -427,94 +465,106 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         }
+        try {
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLD", isLPN);
 
-        String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLD", isLPN);
+            Dialog dialog = new Dialog(LetDownActivity.this);
 
-        Dialog dialog = new Dialog(LetDownActivity.this);
+            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                dialog.showDialog(LetDownActivity.this, "Vui Lòng Thử Lại");
 
-        if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-            dialog.showDialog(LetDownActivity.this, "Vui Lòng Thử Lại");
+            } else if (postitionDes.equals("-3")) {
+                dialog.showDialog(LetDownActivity.this, "Vị trí từ không hợp lệ");
 
-        } else if (postitionDes.equals("-3")) {
-            dialog.showDialog(LetDownActivity.this, "Vị trí từ không hợp lệ");
+            } else if (postitionDes.equals("-6")) {
+                dialog.showDialog(LetDownActivity.this, "Vị trí đến không hợp lệ");
 
-        } else if (postitionDes.equals("-6")) {
-            dialog.showDialog(LetDownActivity.this, "Vị trí đến không hợp lệ");
+            } else if (postitionDes.equals("-5")) {
+                dialog.showDialog(LetDownActivity.this, "Vị trí từ trùng vị trí đến");
 
-        } else if (postitionDes.equals("-5")) {
-            dialog.showDialog(LetDownActivity.this, "Vị trí từ trùng vị trí đến");
+            } else if (postitionDes.equals("-14")) {
+                dialog.showDialog(LetDownActivity.this, "Vị trí đến trùng vị trí từ");
 
-        } else if (postitionDes.equals("-14")) {
-            dialog.showDialog(LetDownActivity.this, "Vị trí đến trùng vị trí từ");
+            } else if (postitionDes.equals("-15")) {
+                dialog.showDialog(LetDownActivity.this, "Vị trí từ không có trong hệ thống");
 
-        } else if (postitionDes.equals("-15")) {
-            dialog.showDialog(LetDownActivity.this, "Vị trí từ không có trong hệ thống");
+            } else if (postitionDes.equals("-10")) {
+                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong hệ thống");
 
-        } else if (postitionDes.equals("-10")) {
-            dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong hệ thống");
+            } else if (postitionDes.equals("-17")) {
+                dialog.showDialog(LetDownActivity.this, "LPN từ trùng LPN đến");
 
-        } else if (postitionDes.equals("-17")) {
-            dialog.showDialog(LetDownActivity.this, "LPN từ trùng LPN đến");
+            } else if (postitionDes.equals("-18")) {
+                dialog.showDialog(LetDownActivity.this, "LPN đến trùng LPN từ");
 
-        } else if (postitionDes.equals("-18")) {
-            dialog.showDialog(LetDownActivity.this, "LPN đến trùng LPN từ");
+            } else if (postitionDes.equals("-19")) {
+                dialog.showDialog(LetDownActivity.this, "Vị trí đến không có trong hệ thống");
 
-        } else if (postitionDes.equals("-19")) {
-            dialog.showDialog(LetDownActivity.this, "Vị trí đến không có trong hệ thống");
+            } else if (postitionDes.equals("-12")) {
+                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong tồn kho");
 
-        } else if (postitionDes.equals("-12")) {
-            dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong tồn kho");
-
-        } else {
-            return;
+            } else {
+                return;
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
+
 
     }
 
     public void alert_show_SP(int isLPN) {
-        int postitionDes = new CmnFns().synchronizeGETProductByZoneLetDown(LetDownActivity.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+        try {
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneLetDown(LetDownActivity.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
 
-        Dialog dialog = new Dialog(LetDownActivity.this);
-
-
-        if (postitionDes == 1) {
-            return;
-        } else if (postitionDes == -1) {
-            dialog.showDialog(LetDownActivity.this, "Vui Lòng Thử Lại");
-
-        } else if (postitionDes == -8) {
-            dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trên phiếu");
+            Dialog dialog = new Dialog(LetDownActivity.this);
 
 
-        } else if (postitionDes == -10) {
-            dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong hệ thống");
+            if (postitionDes == 1) {
+                return;
+            } else if (postitionDes == -1) {
+                dialog.showDialog(LetDownActivity.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes == -11) {
+            } else if (postitionDes == -8) {
+                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trên phiếu");
 
-            dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong kho");
+
+            } else if (postitionDes == -10) {
+                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong hệ thống");
+
+            } else if (postitionDes == -11) {
+
+                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong kho");
 
 
-        } else if (postitionDes == -12) {
+            } else if (postitionDes == -12) {
 
-            dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong kho");
+                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong kho");
 
-        } else if (postitionDes == -16) {
+            } else if (postitionDes == -16) {
 
-            dialog.showDialog(LetDownActivity.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(LetDownActivity.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
-        } else if (postitionDes == -20) {
+            } else if (postitionDes == -20) {
 
-            dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong hệ thống");
 
-        } else if (postitionDes == -21) {
+            } else if (postitionDes == -21) {
 
-            dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong zone reserve");
+                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong zone reserve");
 
-        } else if (postitionDes == -22) {
+            } else if (postitionDes == -22) {
 
-            dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong zone reserve");
+                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong zone reserve");
 
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
 
 
     }

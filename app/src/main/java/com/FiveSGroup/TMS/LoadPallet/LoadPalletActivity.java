@@ -173,38 +173,39 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         }
     }
     private void actionSyn(){
-        // Build an AlertDialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoadPalletActivity.this);
+        try {
+            LayoutInflater factory = LayoutInflater.from(LoadPalletActivity.this);
+            View layout_cus = factory.inflate(R.layout.layout_request, null);
+            final AlertDialog dialog = new AlertDialog.Builder(LoadPalletActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+            InsetDrawable inset = new InsetDrawable(back, 64);
+            dialog.getWindow().setBackgroundDrawable(inset);
+            dialog.setView(layout_cus);
 
-        // Set a title for alert dialog
-        // builder.setTitle(".");
+            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+            TextView textView = layout_cus.findViewById(R.id.tvTextBack);
 
-        // Ask the final question
-        builder.setMessage("Bạn Có Chắc Chắn?");
 
-        // Set the alert dialog yes button click listener
-        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do something when user clicked the Yes button
-                // Set the TextView visibility GONE
-                synchronizeToServer();
-            }
-        });
+            btnNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
 
-        // Set the alert dialog no button click listener
-        builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do something when No button clicked
-//                        Toast.makeText(getApplicationContext(),
-//                                "No Button Clicked",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        // Display the alert dialog on interface
-        dialog.show();
+                }
+            });
+            btnYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    synchronizeToServer();
+                }
+            });
+            dialog.show();
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
 
     }
 
@@ -282,51 +283,58 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                     dialog.showDialog(LoadPalletActivity.this, "Số lượng SP không được bằng 0");
 
                 } else {
-                    int result = new CmnFns().synchronizeData(saleCode, "WPP", "");
+                    try {
+                        int result = new CmnFns().synchronizeData(saleCode, "WPP", "");
 
-                    switch (result) {
-                        case 1:
-                            ShowSuccessMessage("Lưu Thành Công");
-                            //Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                            break;
-                        case -1:
-                            ShowErrorMessage("Lưu thất bại");
-                            break;
-                        case -2:
-                            ShowErrorMessage("Số lượng không đủ trong tồn kho");
-                            break;
-                        case -3:
-                            ShowErrorMessage("Vị trí từ không hợp lệ");
-                            break;
-                        case -4:
-                            ShowErrorMessage("Trạng thái phiếu không hợp lệ");
-                            break;
-                        case -5:
-                            ShowErrorMessage("Vị trí từ trùng vị trí đến");
-                            break;
-                        case -6:
-                            ShowErrorMessage("Vị trí đến không hợp lệ");
-                            break;
-                        case -7:
-                            ShowErrorMessage("Cập nhật trạng thái của phiếu thất bại");
-                            break;
-                        case -8:
-                            ShowErrorMessage("Sản phẩm không có thông tin trên phiếu");
-                            break;
-                        case -13:
-                            ShowErrorMessage("Dữ liệu không hợp lệ");
-                            break;
-                        default:
-                            if (result >= 1) {
-                                Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                                DatabaseHelper.getInstance().deleteProduct_LoadPallet();
-                                loadPallets.clear();
-                                loadPalletAdapter.notifyDataSetChanged();
-                                finish();
-                            } else {
+                        switch (result) {
+                            case 1:
+                                ShowSuccessMessage("Lưu Thành Công");
+                                //Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                                break;
+                            case -1:
                                 ShowErrorMessage("Lưu thất bại");
-                            }
+                                break;
+                            case -2:
+                                ShowErrorMessage("Số lượng không đủ trong tồn kho");
+                                break;
+                            case -3:
+                                ShowErrorMessage("Vị trí từ không hợp lệ");
+                                break;
+                            case -4:
+                                ShowErrorMessage("Trạng thái phiếu không hợp lệ");
+                                break;
+                            case -5:
+                                ShowErrorMessage("Vị trí từ trùng vị trí đến");
+                                break;
+                            case -6:
+                                ShowErrorMessage("Vị trí đến không hợp lệ");
+                                break;
+                            case -7:
+                                ShowErrorMessage("Cập nhật trạng thái của phiếu thất bại");
+                                break;
+                            case -8:
+                                ShowErrorMessage("Sản phẩm không có thông tin trên phiếu");
+                                break;
+                            case -13:
+                                ShowErrorMessage("Dữ liệu không hợp lệ");
+                                break;
+                            default:
+                                if (result >= 1) {
+                                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                                    DatabaseHelper.getInstance().deleteProduct_LoadPallet();
+                                    loadPallets.clear();
+                                    loadPalletAdapter.notifyDataSetChanged();
+                                    finish();
+                                } else {
+                                    ShowErrorMessage("Lưu thất bại");
+                                }
+                        }
+
+                    }catch (Exception e){
+                        Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+                        return ;
                     }
+
                 }
             } else {
                 dialog.showDialog(LoadPalletActivity.this, "Không có sản phẩm");
@@ -474,86 +482,98 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
 
             }
         }
-        String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPP", isLPN);
+        try {
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPP", isLPN);
 
-        Dialog dialog = new Dialog(LoadPalletActivity.this);
+            Dialog dialog = new Dialog(LoadPalletActivity.this);
 
-        if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-            dialog.showDialog(LoadPalletActivity.this, "Vui Lòng Thử Lại");
+            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                dialog.showDialog(LoadPalletActivity.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes.equals("-3")) {
-            dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không hợp lệ");
+            } else if (postitionDes.equals("-3")) {
+                dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không hợp lệ");
 
-        } else if (postitionDes.equals("-6")) {
-            dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không hợp lệ");
+            } else if (postitionDes.equals("-6")) {
+                dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không hợp lệ");
 
-        } else if (postitionDes.equals("-5")) {
-            dialog.showDialog(LoadPalletActivity.this, "Vị trí từ trùng vị trí đến");
+            } else if (postitionDes.equals("-5")) {
+                dialog.showDialog(LoadPalletActivity.this, "Vị trí từ trùng vị trí đến");
 
-        } else if (postitionDes.equals("-14")) {
-            dialog.showDialog(LoadPalletActivity.this, "Vị trí đến trùng vị trí từ");
+            } else if (postitionDes.equals("-14")) {
+                dialog.showDialog(LoadPalletActivity.this, "Vị trí đến trùng vị trí từ");
 
-        } else if (postitionDes.equals("-15")) {
-            dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không có trong hệ thống");
+            } else if (postitionDes.equals("-15")) {
+                dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không có trong hệ thống");
 
-        } else if (postitionDes.equals("-10")) {
-            dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong hệ thống");
+            } else if (postitionDes.equals("-10")) {
+                dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong hệ thống");
 
-        } else if (postitionDes.equals("-17")) {
-            dialog.showDialog(LoadPalletActivity.this, "LPN từ trùng LPN đến");
+            } else if (postitionDes.equals("-17")) {
+                dialog.showDialog(LoadPalletActivity.this, "LPN từ trùng LPN đến");
 
-        } else if (postitionDes.equals("-18")) {
-            dialog.showDialog(LoadPalletActivity.this, "LPN đến trùng LPN từ");
+            } else if (postitionDes.equals("-18")) {
+                dialog.showDialog(LoadPalletActivity.this, "LPN đến trùng LPN từ");
 
-        } else if (postitionDes.equals("-19")) {
-            dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không có trong hệ thống");
+            } else if (postitionDes.equals("-19")) {
+                dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không có trong hệ thống");
 
-        } else if (postitionDes.equals("-12")) {
-            dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong tồn kho");
+            } else if (postitionDes.equals("-12")) {
+                dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong tồn kho");
 
-        } else {
-            return;
+            } else {
+                return;
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
 
 
     }
 
     public void alert_show_SP(int isLPN) {
-        int postitionDes = new CmnFns().synchronizeGETProductByZoneLoadPallet(LoadPalletActivity.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+        try {
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneLoadPallet(LoadPalletActivity.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
 
 
-        Dialog dialog = new Dialog(LoadPalletActivity.this);
+            Dialog dialog = new Dialog(LoadPalletActivity.this);
 
 
-        if (postitionDes == 1) {
-            return;
-        } else if (postitionDes == -1) {
-            dialog.showDialog(LoadPalletActivity.this, "Vui Lòng Thử Lại");
+            if (postitionDes == 1) {
+                return;
+            } else if (postitionDes == -1) {
+                dialog.showDialog(LoadPalletActivity.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes == -8) {
-            dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trên phiếu");
-
-
-        } else if (postitionDes == -10) {
-            dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong hệ thống");
-
-        } else if (postitionDes == -11) {
-
-            dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trong kho");
+            } else if (postitionDes == -8) {
+                dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trên phiếu");
 
 
-        } else if (postitionDes == -12) {
+            } else if (postitionDes == -10) {
+                dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong hệ thống");
 
-            dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong kho");
+            } else if (postitionDes == -11) {
 
-        } else if (postitionDes == -16) {
+                dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trong kho");
 
-            dialog.showDialog(LoadPalletActivity.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
-        } else if (postitionDes == -20) {
+            } else if (postitionDes == -12) {
 
-            dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong kho");
 
+            } else if (postitionDes == -16) {
+
+                dialog.showDialog(LoadPalletActivity.this, "Sản phẩm đã quét không nằm trong LPN nào");
+
+            } else if (postitionDes == -20) {
+
+                dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trong hệ thống");
+
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
     }
 }

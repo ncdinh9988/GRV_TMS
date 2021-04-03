@@ -242,47 +242,50 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
                 dialog.showDialog(List_Return_WareHouse.this,"Số lượng SP không được bằng 0");
 
             }else{
-                int result = new CmnFns().synchronizeData(saleCode, "WRW", global.getReturnCD());
-                if (result >= 1) {
-                    ShowSuccessMessage("Lưu thành công");
-                } else {
+                try {
+                    int result = new CmnFns().synchronizeData(saleCode, "WRW", global.getReturnCD());
+                    if (result >= 1) {
+                        ShowSuccessMessage("Lưu thành công");
+                    } else {
 
-                    if (result == -1) {
-                        dialog.showDialog(List_Return_WareHouse.this,"Lưu thất bại");
-                    }else if(result == -2){
-                        dialog.showDialog(List_Return_WareHouse.this,"Số lượng không đủ trong tồn kho");
+                        if (result == -1) {
+                            dialog.showDialog(List_Return_WareHouse.this,"Lưu thất bại");
+                        }else if(result == -2){
+                            dialog.showDialog(List_Return_WareHouse.this,"Số lượng không đủ trong tồn kho");
 
-                    }else if(result == -3){
-                        dialog.showDialog(List_Return_WareHouse.this,"Vị trí từ không hợp lệ");
+                        }else if(result == -3){
+                            dialog.showDialog(List_Return_WareHouse.this,"Vị trí từ không hợp lệ");
 
-                    }else if(result == -4){
-                        dialog.showDialog(List_Return_WareHouse.this,"Trạng thái của phiếu không hợp lệ");
+                        }else if(result == -4){
+                            dialog.showDialog(List_Return_WareHouse.this,"Trạng thái của phiếu không hợp lệ");
 
-                    }else if(result == -5){
-                        dialog.showDialog(List_Return_WareHouse.this,"Vị trí từ trùng vị trí đên");
+                        }else if(result == -5){
+                            dialog.showDialog(List_Return_WareHouse.this,"Vị trí từ trùng vị trí đên");
 
-                    }else if(result == -6){
-                        dialog.showDialog(List_Return_WareHouse.this,"Vị trí đến không hợp lệ");
+                        }else if(result == -6){
+                            dialog.showDialog(List_Return_WareHouse.this,"Vị trí đến không hợp lệ");
 
-                    }else if(result == -7){
-                        dialog.showDialog(List_Return_WareHouse.this,"Cập nhật trạng thái thất bại");
+                        }else if(result == -7){
+                            dialog.showDialog(List_Return_WareHouse.this,"Cập nhật trạng thái thất bại");
 
-                    }else if(result == -8){
-                        dialog.showDialog(List_Return_WareHouse.this,"Sản phẩm không có thông tin trên phiếu ");
+                        }else if(result == -8){
+                            dialog.showDialog(List_Return_WareHouse.this,"Sản phẩm không có thông tin trên phiếu ");
 
-                    } else if (result == -13) {
-                        dialog.showDialog(List_Return_WareHouse.this,"Dữ liệu không hợp lệ");
+                        } else if (result == -13) {
+                            dialog.showDialog(List_Return_WareHouse.this,"Dữ liệu không hợp lệ");
+
+                        }
 
                     }
-
+                }catch (Exception e){
+                    Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+                    return ;
                 }
+
             }
         }else{
             dialog.showDialog(List_Return_WareHouse.this,"Không có sản phẩm");
-
         }
-
-
     }
 
     private void ShowSuccessMessage(String message) {
@@ -356,94 +359,106 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
                 positionFrom = return_wareHouse.getPOSITION_FROM_CODE();
             }
         }
+        try {
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WRW",isLPN);
 
-        String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WRW",isLPN);
+            Dialog dialog = new Dialog(List_Return_WareHouse.this);
 
-        Dialog dialog = new Dialog(List_Return_WareHouse.this);
+            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Vui Lòng Thử Lại");
 
-        if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-            dialog.showDialog(List_Return_WareHouse.this, "Vui Lòng Thử Lại");
+            } else if (postitionDes.equals("-3")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Vị trí từ không hợp lệ");
 
-        } else if (postitionDes.equals("-3")) {
-            dialog.showDialog(List_Return_WareHouse.this, "Vị trí từ không hợp lệ");
+            } else if (postitionDes.equals("-6")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Vị trí đến không hợp lệ");
 
-        } else if (postitionDes.equals("-6")) {
-            dialog.showDialog(List_Return_WareHouse.this, "Vị trí đến không hợp lệ");
+            } else if (postitionDes.equals("-5")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Vị trí từ trùng vị trí đến");
 
-        } else if (postitionDes.equals("-5")) {
-            dialog.showDialog(List_Return_WareHouse.this, "Vị trí từ trùng vị trí đến");
+            } else if (postitionDes.equals("-14")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Vị trí đến trùng vị trí từ");
 
-        } else if (postitionDes.equals("-14")) {
-            dialog.showDialog(List_Return_WareHouse.this, "Vị trí đến trùng vị trí từ");
+            } else if (postitionDes.equals("-15")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Vị trí từ không có trong hệ thống");
 
-        } else if (postitionDes.equals("-15")) {
-            dialog.showDialog(List_Return_WareHouse.this, "Vị trí từ không có trong hệ thống");
+            }else if (postitionDes.equals("-10")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong hệ thống");
 
-        }else if (postitionDes.equals("-10")) {
-            dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong hệ thống");
+            }else if (postitionDes.equals("-17")) {
+                dialog.showDialog(List_Return_WareHouse.this, "LPN từ trùng LPN đến");
 
-        }else if (postitionDes.equals("-17")) {
-            dialog.showDialog(List_Return_WareHouse.this, "LPN từ trùng LPN đến");
+            }else if (postitionDes.equals("-18")) {
+                dialog.showDialog(List_Return_WareHouse.this, "LPN đến trùng LPN từ");
 
-        }else if (postitionDes.equals("-18")) {
-            dialog.showDialog(List_Return_WareHouse.this, "LPN đến trùng LPN từ");
+            }else if (postitionDes.equals("-19")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Vị trí đến không có trong hệ thống");
 
-        }else if (postitionDes.equals("-19")) {
-            dialog.showDialog(List_Return_WareHouse.this, "Vị trí đến không có trong hệ thống");
+            }else if (postitionDes.equals("-12")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong tồn kho");
 
-        }else if (postitionDes.equals("-12")) {
-            dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong tồn kho");
-
-        }else {
-            return;
+            }else {
+                return;
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
+
 
     }
 
     public void alert_show_SP(int isLPN){
-        int postitionDes = new CmnFns().synchronizeGETProductByZoneReturnWareHouse(List_Return_WareHouse.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate,global.getReturnCD(),isLPN);
+        try {
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneReturnWareHouse(List_Return_WareHouse.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate,global.getReturnCD(),isLPN);
 
-        Dialog dialog = new Dialog(List_Return_WareHouse.this);
-
-
-        if (postitionDes == 1) {
-            return;
-        } else if (postitionDes == -1) {
-            dialog.showDialog(List_Return_WareHouse.this, "Vui Lòng Thử Lại");
-
-        } else if (postitionDes == -8) {
-            dialog.showDialog(List_Return_WareHouse.this, "Mã sản phẩm không có trên phiếu");
+            Dialog dialog = new Dialog(List_Return_WareHouse.this);
 
 
-        }else if (postitionDes == -10) {
-            dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong hệ thống");
+            if (postitionDes == 1) {
+                return;
+            } else if (postitionDes == -1) {
+                dialog.showDialog(List_Return_WareHouse.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes == -11) {
+            } else if (postitionDes == -8) {
+                dialog.showDialog(List_Return_WareHouse.this, "Mã sản phẩm không có trên phiếu");
 
-            dialog.showDialog(List_Return_WareHouse.this, "Mã sản phẩm không có trong kho");
+
+            }else if (postitionDes == -10) {
+                dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong hệ thống");
+
+            } else if (postitionDes == -11) {
+
+                dialog.showDialog(List_Return_WareHouse.this, "Mã sản phẩm không có trong kho");
 
 
-        } else if (postitionDes == -12) {
+            } else if (postitionDes == -12) {
 
-            dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong kho");
+                dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong kho");
 
-        }else if (postitionDes == -16) {
+            }else if (postitionDes == -16) {
 
-            dialog.showDialog(List_Return_WareHouse.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(List_Return_WareHouse.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
-        } else if (postitionDes == -20) {
+            } else if (postitionDes == -20) {
 
-            dialog.showDialog(List_Return_WareHouse.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(List_Return_WareHouse.this, "Mã sản phẩm không có trong hệ thống");
 
-        }else if (postitionDes == -21) {
+            }else if (postitionDes == -21) {
 
-            dialog.showDialog(List_Return_WareHouse.this, "Mã sản phẩm không có trong trả hàng");
+                dialog.showDialog(List_Return_WareHouse.this, "Mã sản phẩm không có trong trả hàng");
 
-        }else if (postitionDes == -22) {
+            }else if (postitionDes == -22) {
 
-            dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong trả hàng");
+                dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong trả hàng");
 
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
 
     }
 }

@@ -150,7 +150,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
             int status = cmnFns.allowSynchronizeBy3G();
             if (status == 1) {
                 progressSyncProgram = new ProgressDialog(LPNActivity.this);
-                progressSyncProgram.setMessage("Đang load thông tin...");
+                progressSyncProgram.setMessage("Đang tải thông tin...");
                 progressSyncProgram.setCancelable(false);
                 progressSyncProgram.setCanceledOnTouchOutside(false);
                 progressSyncProgram.show();
@@ -307,7 +307,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
             int status = cmnFns.allowSynchronizeBy3G();
             if (status == 1) {
                 progressSyncProgram = new ProgressDialog(LPNActivity.this);
-                progressSyncProgram.setMessage("Đang load thông tin...");
+                progressSyncProgram.setMessage("Đang tải thông tin...");
                 progressSyncProgram.setCancelable(false);
                 progressSyncProgram.setCanceledOnTouchOutside(false);
                 progressSyncProgram.show();
@@ -356,46 +356,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.buttonBack:
-                finish();
-                break;
-            case R.id.btnCreateLPN:
-                int status = new CmnFns().synchronizeCreate_LPN(getApplication());
-                if (status == -1) {
-                    Toast.makeText(this, "Tạo Barcode Thất Bại", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(this, "Tạo Barcode Thành Công", Toast.LENGTH_LONG).show();
-                    arrListLPN.clear();
-                    arrListLPN = DatabaseHelper.getInstance().getAllLpn();
-                    createDate.setText("Ngày Tạo");
-
-                    adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
-                    SyncProgram syncProgram = new SyncProgram();
-                    syncProgram.execute();
-//                    LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
-//                    rvListLPN.setLayoutManager(layoutManager);
-//                    rvListLPN.setAdapter(adapter);
-//                    adapter.notifyDataSetChanged();
-//                    // lầy giá trị được chọn của spinner
-
-
-//                ReloadCreateLPN reloadCreateLPN = new ReloadCreateLPN();
-//                reloadCreateLPN.execute();
-
-                 }
-                break;
-            case R.id.buttonPutToPallet:
-                Intent intent = new Intent(LPNActivity.this, LoadPalletQRCode.class);
-                startActivity(intent);
-                break;
-        }
-    }
-
-    //đồng bộ param chương trình
-    class ReloadCreateLPN extends AsyncTask<Void, Integer, Integer> {
+    class Syncbarcode extends AsyncTask<Void, Integer, Integer> {
 
         public boolean isSyncSuccess = false;
 
@@ -405,7 +366,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
             int status = cmnFns.allowSynchronizeBy3G();
             if (status == 1) {
                 progressSyncProgram = new ProgressDialog(LPNActivity.this);
-                progressSyncProgram.setMessage("Đang tạo mã...");
+                progressSyncProgram.setMessage("Đang tạo mã ...");
                 progressSyncProgram.setCancelable(false);
                 progressSyncProgram.setCanceledOnTouchOutside(false);
                 progressSyncProgram.show();
@@ -413,14 +374,16 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 
             } else if (status == 102) {
                 Toast.makeText(LPNActivity.this, "Vui lòng kiểm tra kết nối mạng", Toast.LENGTH_LONG).show();
-                progressSyncProgram.dismiss();
+                // progressSyncProgram.dismiss();
 
             }
         }
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            int status = new CmnFns().synchronizeCreate_LPN(getApplication());
+            // thực thi hàm lấy thông tin LPN
+            DatabaseHelper.getInstance().deleteallProduct_LPN();
+            int status = new CmnFns().synchronizeGetLPN(getApplication());
 
             return status;
 
@@ -431,30 +394,73 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
             super.onPostExecute(integer);
             if (integer == -1) {
                 progressSyncProgram.dismiss();
-                Toast.makeText(LPNActivity.this, "Tạo barcode không thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LPNActivity.this, "Đồng bộ dữ liệu không thành công", Toast.LENGTH_SHORT).show();
                 this.cancel(true);
                 isSyncSuccess = false;
 
             } else {
                 progressSyncProgram.dismiss();
-                Toast.makeText(LPNActivity.this, "Tạo barcode thành công", Toast.LENGTH_SHORT).show();
-                 this.cancel(true);
+                Toast.makeText(LPNActivity.this, "Đồng bộ dữ liệu thành công", Toast.LENGTH_SHORT).show();
+                this.cancel(true);
 
-                if (arrListLPN.size() > 0) {
-                    arrListLPN.clear();
-                }
-                try {
-                    DatabaseHelper.getInstance().deleteallProduct_LPN();
-                    int status = new CmnFns().synchronizeGetLPN(getApplication());
-//                    SetDataSpinner();
-                } catch (Exception e) {
-
-                }
-
-
+//                SetDataSpinner();
+                arrListLPN = DatabaseHelper.getInstance().getAllLpn();
+                adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
+                rvListLPN.setLayoutManager(layoutManager);
+                rvListLPN.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                isSyncSuccess = true;
             }
         }
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonBack:
+                finish();
+                break;
+            case R.id.btnCreateLPN:
+                try {
+                    int status = new CmnFns().synchronizeCreate_LPN(getApplication());
+                    if (status == -1) {
+                        Toast.makeText(this, "Tạo Barcode Thất Bại", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Tạo Barcode Thành Công", Toast.LENGTH_LONG).show();
+                        arrListLPN.clear();
+                        arrListLPN = DatabaseHelper.getInstance().getAllLpn();
+                        createDate.setText("Ngày Tạo");
+
+                        adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
+                        Syncbarcode syncProgram = new Syncbarcode();
+                        syncProgram.execute();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+
+//                    LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
+//                    rvListLPN.setLayoutManager(layoutManager);
+//                    rvListLPN.setAdapter(adapter);
+//                    adapter.notifyDataSetChanged();
+//                    // lầy giá trị được chọn của spinner
+
+
+//                ReloadCreateLPN reloadCreateLPN = new ReloadCreateLPN();
+//                reloadCreateLPN.execute();
+
+
+                break;
+            case R.id.buttonPutToPallet:
+                Intent intent = new Intent(LPNActivity.this, LoadPalletQRCode.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+
 
     @Override
     public void onBackPressed() {

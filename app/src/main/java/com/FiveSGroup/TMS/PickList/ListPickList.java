@@ -275,44 +275,50 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                     dialog.showDialog(ListPickList.this,"Số lượng SP không được bằng 0");
 
                 }else{
-                    result = new CmnFns().synchronizeData(saleCode, "WPL", global.getPickListCD());
+                    try {
+                        result = new CmnFns().synchronizeData(saleCode, "WPL", global.getPickListCD());
 
-                    if (result >= 1) {
-                        ShowSuccessMessage("Lưu thành công");
+                        if (result >= 1) {
+                            ShowSuccessMessage("Lưu thành công");
 //                        Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
 
-                    } else {
+                        } else {
 
-                        if (result == -1) {
-                            dialog.showDialog(ListPickList.this,"Lưu thất bại");
-                        }else if(result == -2){
-                            dialog.showDialog(ListPickList.this,"Số lượng không đủ trong tồn kho");
+                            if (result == -1) {
+                                dialog.showDialog(ListPickList.this,"Lưu thất bại");
+                            }else if(result == -2){
+                                dialog.showDialog(ListPickList.this,"Số lượng không đủ trong tồn kho");
 
-                        }else if(result == -3){
-                            dialog.showDialog(ListPickList.this,"Vị trí từ không hợp lệ");
+                            }else if(result == -3){
+                                dialog.showDialog(ListPickList.this,"Vị trí từ không hợp lệ");
 
-                        }else if(result == -4){
-                            dialog.showDialog(ListPickList.this,"Trạng thái của phiếu không hợp lệ");
+                            }else if(result == -4){
+                                dialog.showDialog(ListPickList.this,"Trạng thái của phiếu không hợp lệ");
 
-                        }else if(result == -5){
-                            dialog.showDialog(ListPickList.this,"Vị trí từ trùng vị trí đên");
+                            }else if(result == -5){
+                                dialog.showDialog(ListPickList.this,"Vị trí từ trùng vị trí đên");
 
-                        }else if(result == -6){
-                            dialog.showDialog(ListPickList.this,"Vị trí đến không hợp lệ");
+                            }else if(result == -6){
+                                dialog.showDialog(ListPickList.this,"Vị trí đến không hợp lệ");
 
-                        }else if(result == -7){
-                            dialog.showDialog(ListPickList.this,"Cập nhật trạng thái thất bại");
+                            }else if(result == -7){
+                                dialog.showDialog(ListPickList.this,"Cập nhật trạng thái thất bại");
 
-                        }else if(result == -8){
-                            dialog.showDialog(ListPickList.this,"Sản phẩm không có thông tin trên phiếu ");
+                            }else if(result == -8){
+                                dialog.showDialog(ListPickList.this,"Sản phẩm không có thông tin trên phiếu ");
 
-                        } else if (result == -13) {
-                            dialog.showDialog(ListPickList.this,"Dữ liệu không hợp lệ");
+                            } else if (result == -13) {
+                                dialog.showDialog(ListPickList.this,"Dữ liệu không hợp lệ");
+
+                            }
+
 
                         }
-
-
+                    }catch (Exception e){
+                        Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+                        return ;
                     }
+
                 }
             }else{
 
@@ -413,94 +419,106 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
-        String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WPL",isLPN);
+        try {
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WPL",isLPN);
 
-        Dialog dialog = new Dialog(ListPickList.this);
+            Dialog dialog = new Dialog(ListPickList.this);
 
-        if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-            dialog.showDialog(ListPickList.this, "Vui Lòng Thử Lại");
+            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                dialog.showDialog(ListPickList.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes.equals("-3")) {
-            dialog.showDialog(ListPickList.this, "Vị trí từ không hợp lệ");
+            } else if (postitionDes.equals("-3")) {
+                dialog.showDialog(ListPickList.this, "Vị trí từ không hợp lệ");
 
-        }else if (postitionDes.equals("-6")) {
-            dialog.showDialog(ListPickList.this, "Vị trí đến không hợp lệ");
+            }else if (postitionDes.equals("-6")) {
+                dialog.showDialog(ListPickList.this, "Vị trí đến không hợp lệ");
 
-        } else if (postitionDes.equals("-5")) {
-            dialog.showDialog(ListPickList.this, "Vị trí từ trùng vị trí đến");
+            } else if (postitionDes.equals("-5")) {
+                dialog.showDialog(ListPickList.this, "Vị trí từ trùng vị trí đến");
 
-        } else if (postitionDes.equals("-14")) {
-            dialog.showDialog(ListPickList.this, "Vị trí đến trùng vị trí từ");
+            } else if (postitionDes.equals("-14")) {
+                dialog.showDialog(ListPickList.this, "Vị trí đến trùng vị trí từ");
 
-        } else if (postitionDes.equals("-15")) {
-            dialog.showDialog(ListPickList.this, "Vị trí từ không có trong hệ thống");
+            } else if (postitionDes.equals("-15")) {
+                dialog.showDialog(ListPickList.this, "Vị trí từ không có trong hệ thống");
 
-        }else if (postitionDes.equals("-10")) {
-            dialog.showDialog(ListPickList.this, "Mã LPN không có trong hệ thống");
+            }else if (postitionDes.equals("-10")) {
+                dialog.showDialog(ListPickList.this, "Mã LPN không có trong hệ thống");
 
-        }else if (postitionDes.equals("-17")) {
-            dialog.showDialog(ListPickList.this, "LPN từ trùng LPN đến");
+            }else if (postitionDes.equals("-17")) {
+                dialog.showDialog(ListPickList.this, "LPN từ trùng LPN đến");
 
-        }else if (postitionDes.equals("-18")) {
-            dialog.showDialog(ListPickList.this, "LPN đến trùng LPN từ");
+            }else if (postitionDes.equals("-18")) {
+                dialog.showDialog(ListPickList.this, "LPN đến trùng LPN từ");
 
-        }else if (postitionDes.equals("-19")) {
-            dialog.showDialog(ListPickList.this, "Vị trí đến không có trong hệ thống");
+            }else if (postitionDes.equals("-19")) {
+                dialog.showDialog(ListPickList.this, "Vị trí đến không có trong hệ thống");
 
-        } else if (postitionDes.equals("-12")) {
-            dialog.showDialog(ListPickList.this, "Mã LPN không có trong tồn kho");
+            } else if (postitionDes.equals("-12")) {
+                dialog.showDialog(ListPickList.this, "Mã LPN không có trong tồn kho");
 
-        }else {
-            return;
+            }else {
+                return;
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
 
 
     }
 
     public void alert_show_SP(int isLPN){
-        int postitionDes = new CmnFns().synchronizeGETProductByZonePickList(ListPickList.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WPL", global.getPickListCD(), stockinDate ,isLPN);
+        try {
+            int postitionDes = new CmnFns().synchronizeGETProductByZonePickList(ListPickList.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WPL", global.getPickListCD(), stockinDate ,isLPN);
 
-        Dialog dialog = new Dialog(ListPickList.this);
-
-
-        if (postitionDes == 1) {
-            return;
-        } else if (postitionDes == -1) {
-            dialog.showDialog(ListPickList.this, "Vui Lòng Thử Lại");
-
-        } else if (postitionDes == -8) {
-            dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trên phiếu");
+            Dialog dialog = new Dialog(ListPickList.this);
 
 
-        }else if (postitionDes == -10) {
-            dialog.showDialog(ListPickList.this, "Mã LPN không có trong hệ thống");
+            if (postitionDes == 1) {
+                return;
+            } else if (postitionDes == -1) {
+                dialog.showDialog(ListPickList.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes == -11) {
+            } else if (postitionDes == -8) {
+                dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trên phiếu");
 
-            dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong kho");
+
+            }else if (postitionDes == -10) {
+                dialog.showDialog(ListPickList.this, "Mã LPN không có trong hệ thống");
+
+            } else if (postitionDes == -11) {
+
+                dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong kho");
 
 
-        } else if (postitionDes == -12) {
+            } else if (postitionDes == -12) {
 
-            dialog.showDialog(ListPickList.this, "Mã LPN không có trong kho");
+                dialog.showDialog(ListPickList.this, "Mã LPN không có trong kho");
 
-        }else if (postitionDes == -16) {
+            }else if (postitionDes == -16) {
 
-            dialog.showDialog(ListPickList.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(ListPickList.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
-        } else if (postitionDes == -20) {
+            } else if (postitionDes == -20) {
 
-            dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong hệ thống");
 
-        }else if (postitionDes == -21) {
+            }else if (postitionDes == -21) {
 
-            dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong zone pick hoặc zone cross dock");
+                dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong zone pick hoặc zone cross dock");
 
-        }else if (postitionDes == -22) {
+            }else if (postitionDes == -22) {
 
-            dialog.showDialog(ListPickList.this, "Mã LPN không có trong zone pick hoặc zone cross dock");
+                dialog.showDialog(ListPickList.this, "Mã LPN không có trong zone pick hoặc zone cross dock");
 
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
 
     }
 }

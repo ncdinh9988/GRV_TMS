@@ -405,86 +405,96 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
 
             }
         }
-        String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLP", isLPN);
+        try {
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLP", isLPN);
 
-        Dialog dialog = new Dialog(List_Remove_LPN.this);
+            Dialog dialog = new Dialog(List_Remove_LPN.this);
 
-        if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-            dialog.showDialog(List_Remove_LPN.this, "Vui Lòng Thử Lại");
+            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                dialog.showDialog(List_Remove_LPN.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes.equals("-3")) {
-            dialog.showDialog(List_Remove_LPN.this, "Vị trí từ không hợp lệ");
+            } else if (postitionDes.equals("-3")) {
+                dialog.showDialog(List_Remove_LPN.this, "Vị trí từ không hợp lệ");
 
-        } else if (postitionDes.equals("-6")) {
-            dialog.showDialog(List_Remove_LPN.this, "Vị trí đến không hợp lệ");
+            } else if (postitionDes.equals("-6")) {
+                dialog.showDialog(List_Remove_LPN.this, "Vị trí đến không hợp lệ");
 
-        } else if (postitionDes.equals("-5")) {
-            dialog.showDialog(List_Remove_LPN.this, "Vị trí từ trùng vị trí đến");
+            } else if (postitionDes.equals("-5")) {
+                dialog.showDialog(List_Remove_LPN.this, "Vị trí từ trùng vị trí đến");
 
-        } else if (postitionDes.equals("-14")) {
-            dialog.showDialog(List_Remove_LPN.this, "Vị trí đến trùng vị trí từ");
+            } else if (postitionDes.equals("-14")) {
+                dialog.showDialog(List_Remove_LPN.this, "Vị trí đến trùng vị trí từ");
 
-        } else if (postitionDes.equals("-15")) {
-            dialog.showDialog(List_Remove_LPN.this, "Vị trí từ không có trong hệ thống");
+            } else if (postitionDes.equals("-15")) {
+                dialog.showDialog(List_Remove_LPN.this, "Vị trí từ không có trong hệ thống");
 
-        } else if (postitionDes.equals("-10")) {
-            dialog.showDialog(List_Remove_LPN.this, "Mã LPN không có trong hệ thống");
+            } else if (postitionDes.equals("-10")) {
+                dialog.showDialog(List_Remove_LPN.this, "Mã LPN không có trong hệ thống");
 
-        } else if (postitionDes.equals("-17")) {
-            dialog.showDialog(List_Remove_LPN.this, "LPN từ trùng LPN đến");
+            } else if (postitionDes.equals("-17")) {
+                dialog.showDialog(List_Remove_LPN.this, "LPN từ trùng LPN đến");
 
-        } else if (postitionDes.equals("-18")) {
-            dialog.showDialog(List_Remove_LPN.this, "LPN đến trùng LPN từ");
+            } else if (postitionDes.equals("-18")) {
+                dialog.showDialog(List_Remove_LPN.this, "LPN đến trùng LPN từ");
 
-        } else if (postitionDes.equals("-19")) {
-            dialog.showDialog(List_Remove_LPN.this, "Vị trí đến không có trong hệ thống");
+            } else if (postitionDes.equals("-19")) {
+                dialog.showDialog(List_Remove_LPN.this, "Vị trí đến không có trong hệ thống");
 
-        } else if (postitionDes.equals("-12")) {
-            dialog.showDialog(List_Remove_LPN.this, "Mã LPN không có trong tồn kho");
+            } else if (postitionDes.equals("-12")) {
+                dialog.showDialog(List_Remove_LPN.this, "Mã LPN không có trong tồn kho");
 
-        } else {
-            return;
+            } else {
+                return;
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
 
     }
 
     public void alert_show_SP(int isLPN) {
-        int postitionDes = new CmnFns().synchronizeGETProductByZoneRemoveLPN(List_Remove_LPN.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+        try {
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneRemoveLPN(List_Remove_LPN.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
 
-        Dialog dialog = new Dialog(List_Remove_LPN.this);
-
-
-        if (postitionDes == 1) {
-            return;
-        } else if (postitionDes == -1) {
-            dialog.showDialog(List_Remove_LPN.this, "Vui Lòng Thử Lại");
-
-        } else if (postitionDes == -8) {
-            dialog.showDialog(List_Remove_LPN.this, "Mã sản phẩm không có trên phiếu");
+            Dialog dialog = new Dialog(List_Remove_LPN.this);
 
 
-        } else if (postitionDes == -10) {
-            dialog.showDialog(List_Remove_LPN.this, "Mã LPN không có trong hệ thống");
+            if (postitionDes == 1) {
+                return;
+            } else if (postitionDes == -1) {
+                dialog.showDialog(List_Remove_LPN.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes == -11) {
+            } else if (postitionDes == -8) {
+                dialog.showDialog(List_Remove_LPN.this, "Mã sản phẩm không có trên phiếu");
 
-            dialog.showDialog(List_Remove_LPN.this, "Mã sản phẩm không có trong kho");
+
+            } else if (postitionDes == -10) {
+                dialog.showDialog(List_Remove_LPN.this, "Mã LPN không có trong hệ thống");
+
+            } else if (postitionDes == -11) {
+
+                dialog.showDialog(List_Remove_LPN.this, "Mã sản phẩm không có trong kho");
 
 
-        } else if (postitionDes == -12) {
+            } else if (postitionDes == -12) {
 
-            dialog.showDialog(List_Remove_LPN.this, "Mã LPN không có trong kho");
+                dialog.showDialog(List_Remove_LPN.this, "Mã LPN không có trong kho");
 
-        } else if (postitionDes == -16) {
+            } else if (postitionDes == -16) {
 
-            dialog.showDialog(List_Remove_LPN.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(List_Remove_LPN.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
-        } else if (postitionDes == -20) {
+            } else if (postitionDes == -20) {
 
-            dialog.showDialog(List_Remove_LPN.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(List_Remove_LPN.this, "Mã sản phẩm không có trong hệ thống");
 
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
-
 
     }
 }

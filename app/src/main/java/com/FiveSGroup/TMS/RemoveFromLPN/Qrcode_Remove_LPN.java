@@ -171,6 +171,8 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
             checkBoxGetLPN.setChecked(false);
             if (position.equals("1")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
+                checkBoxGetLPN.setChecked(true);
+                checkBoxGetLPN.setEnabled(false);
             } else if (position.equals("2")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ ĐẾN");
             }

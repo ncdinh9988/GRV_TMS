@@ -248,54 +248,58 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
 
                 } else {
                     //TODO
-                    result = new CmnFns().synchronizeData(saleCode, "WST", global.getInventoryCD());
-
-                    switch (result) {
-                        case 1:
-                            ShowSuccessMessage("Lưu thành công");
-                            // Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                            break;
-                        case -1:
-                            ShowErrorMessage("Lưu thất bại");
-                            break;
-                        case -2:
-                            ShowErrorMessage("Số lượng không đủ trong tồn kho");
-                            break;
-                        case -3:
-                            ShowErrorMessage("Vị trí từ không hợp lệ");
-                            break;
-                        case -4:
-                            ShowErrorMessage("Trạng thái phiếu không hợp lệ");
-                            break;
-                        case -5:
-                            ShowErrorMessage("Vị trí từ trùng vị trí đến");
-                            break;
-                        case -6:
-                            ShowErrorMessage("Vị trí đến không hợp lệ");
-                            break;
-                        case -7:
-                            ShowErrorMessage("Cập nhật trạng thái của phiếu thất bại");
-                            break;
-                        case -8:
-                            ShowErrorMessage("Sản phẩm không có thông tin trên phiếu");
-                            break;
-                        case -13:
-                            ShowErrorMessage("Dữ liệu không hợp lệ");
-                            break;
-                        default:
-                            if (result >= 1) {
-                                Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                                if (inventory != null) {
-                                    DatabaseHelper.getInstance().deleteProduct_Inventory_CD(global.getInventoryCD());
-                                    inventoryList.clear();
-                                    inventoryAdapter.notifyDataSetChanged();
-                                    finish();
-                                }
-                            } else {
+                    try {
+                        result = new CmnFns().synchronizeData(saleCode, "WST", global.getInventoryCD());
+                        switch (result) {
+                            case 1:
+                                ShowSuccessMessage("Lưu thành công");
+                                // Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                                break;
+                            case -1:
                                 ShowErrorMessage("Lưu thất bại");
-                            }
+                                break;
+                            case -2:
+                                ShowErrorMessage("Số lượng không đủ trong tồn kho");
+                                break;
+                            case -3:
+                                ShowErrorMessage("Vị trí từ không hợp lệ");
+                                break;
+                            case -4:
+                                ShowErrorMessage("Trạng thái phiếu không hợp lệ");
+                                break;
+                            case -5:
+                                ShowErrorMessage("Vị trí từ trùng vị trí đến");
+                                break;
+                            case -6:
+                                ShowErrorMessage("Vị trí đến không hợp lệ");
+                                break;
+                            case -7:
+                                ShowErrorMessage("Cập nhật trạng thái của phiếu thất bại");
+                                break;
+                            case -8:
+                                ShowErrorMessage("Sản phẩm không có thông tin trên phiếu");
+                                break;
+                            case -13:
+                                ShowErrorMessage("Dữ liệu không hợp lệ");
+                                break;
+                            default:
+                                if (result >= 1) {
+                                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                                    if (inventory != null) {
+                                        DatabaseHelper.getInstance().deleteProduct_Inventory_CD(global.getInventoryCD());
+                                        inventoryList.clear();
+                                        inventoryAdapter.notifyDataSetChanged();
+                                        finish();
+                                    }
+                                } else {
+                                    ShowErrorMessage("Lưu thất bại");
+                                }
+                        }
                     }
-
+                    catch (Exception e){
+                        Toast.makeText(this,"Vui Lòng Thử Lại" ,Toast.LENGTH_SHORT).show();
+                       return ;
+                    }
                 }
             } else {
                 dialog.showDialog(InventoryListProduct.this, "Không có sản phẩm");
@@ -410,86 +414,99 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
 
             }
         }
-        String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WST", isLPN);
+        try {
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WST", isLPN);
 
-        Dialog dialog = new Dialog(InventoryListProduct.this);
+            Dialog dialog = new Dialog(InventoryListProduct.this);
 
-        if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-            dialog.showDialog(InventoryListProduct.this, "Vui Lòng Thử Lại");
+            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                dialog.showDialog(InventoryListProduct.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes.equals("-3")) {
-            dialog.showDialog(InventoryListProduct.this, "Vị trí từ không hợp lệ");
+            } else if (postitionDes.equals("-3")) {
+                dialog.showDialog(InventoryListProduct.this, "Vị trí từ không hợp lệ");
 
-        } else if (postitionDes.equals("-6")) {
-            dialog.showDialog(InventoryListProduct.this, "Vị trí đến không hợp lệ");
+            } else if (postitionDes.equals("-6")) {
+                dialog.showDialog(InventoryListProduct.this, "Vị trí đến không hợp lệ");
 
-        } else if (postitionDes.equals("-5")) {
-            dialog.showDialog(InventoryListProduct.this, "Vị trí từ trùng vị trí đến");
+            } else if (postitionDes.equals("-5")) {
+                dialog.showDialog(InventoryListProduct.this, "Vị trí từ trùng vị trí đến");
 
-        } else if (postitionDes.equals("-14")) {
-            dialog.showDialog(InventoryListProduct.this, "Vị trí đến trùng vị trí từ");
+            } else if (postitionDes.equals("-14")) {
+                dialog.showDialog(InventoryListProduct.this, "Vị trí đến trùng vị trí từ");
 
-        } else if (postitionDes.equals("-15")) {
-            dialog.showDialog(InventoryListProduct.this, "Vị trí từ không có trong hệ thống");
+            } else if (postitionDes.equals("-15")) {
+                dialog.showDialog(InventoryListProduct.this, "Vị trí từ không có trong hệ thống");
 
-        } else if (postitionDes.equals("-10")) {
-            dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong hệ thống");
+            } else if (postitionDes.equals("-10")) {
+                dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong hệ thống");
 
-        } else if (postitionDes.equals("-17")) {
-            dialog.showDialog(InventoryListProduct.this, "LPN từ trùng LPN đến");
+            } else if (postitionDes.equals("-17")) {
+                dialog.showDialog(InventoryListProduct.this, "LPN từ trùng LPN đến");
 
-        } else if (postitionDes.equals("-18")) {
-            dialog.showDialog(InventoryListProduct.this, "LPN đến trùng LPN từ");
+            } else if (postitionDes.equals("-18")) {
+                dialog.showDialog(InventoryListProduct.this, "LPN đến trùng LPN từ");
 
-        } else if (postitionDes.equals("-19")) {
-            dialog.showDialog(InventoryListProduct.this, "Vị trí đến không có trong hệ thống");
+            } else if (postitionDes.equals("-19")) {
+                dialog.showDialog(InventoryListProduct.this, "Vị trí đến không có trong hệ thống");
 
-        } else if (postitionDes.equals("-12")) {
-            dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong tồn kho");
+            } else if (postitionDes.equals("-12")) {
+                dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong tồn kho");
 
-        } else {
-            return;
+            } else {
+                return;
+            }
+
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
 
 
     }
 
     public void alert_show_SP(int isLPN) {
-        int postitionDes = new CmnFns().synchronizeGETProductByZoneInventory(value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WST", global.getInventoryCD(), stockinDate, isLPN);
+        try {
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneInventory(value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WST", global.getInventoryCD(), stockinDate, isLPN);
 
-        Dialog dialog = new Dialog(InventoryListProduct.this);
-
-
-        if (postitionDes == 1) {
-            return;
-        } else if (postitionDes == -1) {
-            dialog.showDialog(InventoryListProduct.this, "Vui Lòng Thử Lại");
-
-        } else if (postitionDes == -8) {
-            dialog.showDialog(InventoryListProduct.this, "Mã sản phẩm không có trên phiếu");
+            Dialog dialog = new Dialog(InventoryListProduct.this);
 
 
-        } else if (postitionDes == -10) {
-            dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong hệ thống");
+            if (postitionDes == 1) {
+                return;
+            } else if (postitionDes == -1) {
+                dialog.showDialog(InventoryListProduct.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes == -11) {
+            } else if (postitionDes == -8) {
+                dialog.showDialog(InventoryListProduct.this, "Mã sản phẩm không có trên phiếu");
 
-            dialog.showDialog(InventoryListProduct.this, "Mã sản phẩm không có trong kho");
+
+            } else if (postitionDes == -10) {
+                dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong hệ thống");
+
+            } else if (postitionDes == -11) {
+
+                dialog.showDialog(InventoryListProduct.this, "Mã sản phẩm không có trong kho");
 
 
-        } else if (postitionDes == -12) {
+            } else if (postitionDes == -12) {
 
-            dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong kho");
+                dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong kho");
 
-        } else if (postitionDes == -16) {
+            } else if (postitionDes == -16) {
 
-            dialog.showDialog(InventoryListProduct.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(InventoryListProduct.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
-        } else if (postitionDes == -20) {
+            } else if (postitionDes == -20) {
 
-            dialog.showDialog(InventoryListProduct.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(InventoryListProduct.this, "Mã sản phẩm không có trong hệ thống");
 
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
 
     }
 }

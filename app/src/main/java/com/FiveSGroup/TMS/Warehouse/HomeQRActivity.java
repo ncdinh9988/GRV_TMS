@@ -37,6 +37,7 @@ public class HomeQRActivity extends AppCompatActivity {
     String value1 = "", value2 = "";
     SharedPreferences sharedPref;
     String urlStockReceipt = "";
+    String urlStockin = "";
     ValueEventbus eventbus;
     static String value = "";
     String value3 = "";
@@ -85,8 +86,9 @@ public class HomeQRActivity extends AppCompatActivity {
             }
         });
 
+        urlStockin = urlStockReceipt + "?USER_CODE=" + CmnFns.readDataAdmin();
 
-        addEvents(urlStockReceipt);
+        addEvents(urlStockin);
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +104,7 @@ public class HomeQRActivity extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                addEvents(urlStockReceipt);
+                addEvents(urlStockin);
                 refreshLayout.setRefreshing(false);
 
             }

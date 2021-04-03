@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.PutAway.Product_PutAway;
 import com.FiveSGroup.TMS.PutAway.PutAwayAdapter;
@@ -418,8 +419,6 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
                     if (result >= 1) {
                         ShowSuccessMessage("Lưu thành công");
-
-
                     } else {
                         if (result == -2) {
                             dialog.showDialog(ListQrcode.this, "Số lượng không đủ trong tồn kho");
@@ -437,7 +436,6 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                             dialog.showDialog(ListQrcode.this, "Sản phẩm không có thông tin trên phiếu ");
                         } else if (result == -13) {
                             dialog.showDialog(ListQrcode.this, "Dữ liệu không hợp lệ");
-
                         } else {
                             dialog.showDialog(ListQrcode.this, "Lưu thất bại");
                         }
@@ -451,6 +449,10 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         } catch (Exception e) {
 
         }
+
+    }
+    private void synchronizeseverputawway(){
+        Dialog dialog = new Dialog(ListQrcode.this);
         try {
             if (putaway.size() > 0) {
                 if (isNotScanFromOrTo()) {
@@ -461,35 +463,41 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
                 } else {
                     if (put_away != null) {
-                        String saleCode = CmnFns.readDataAdmin();
-                        result = new CmnFns().synchronizeData(saleCode, "WPA", "");
+                        try {
+                            String saleCode = CmnFns.readDataAdmin();
+                            result = new CmnFns().synchronizeData(saleCode, "WPA", "");
 
-                        if (result >= 1) {
-                            ShowSuccessMessage("Lưu thành công");
-
-                        } else {
-                            if (result == -2) {
-                                dialog.showDialog(ListQrcode.this, "Số lượng không đủ trong tồn kho");
-                            } else if (result == -3) {
-                                dialog.showDialog(ListQrcode.this, "Vị trí từ không hợp lệ");
-                            } else if (result == -4) {
-                                dialog.showDialog(ListQrcode.this, "Trạng thái của phiếu không hợp lệ");
-                            } else if (result == -5) {
-                                dialog.showDialog(ListQrcode.this, "Vị trí từ trùng vị trí đên");
-                            } else if (result == -6) {
-                                dialog.showDialog(ListQrcode.this, "Vị trí đến không hợp lệ");
-                            } else if (result == -7) {
-                                dialog.showDialog(ListQrcode.this, "Cập nhật trạng thái thất bại");
-                            } else if (result == -8) {
-                                dialog.showDialog(ListQrcode.this, "Sản phẩm không có thông tin trên phiếu ");
-                            } else if (result == -13) {
-                                dialog.showDialog(ListQrcode.this, "Dữ liệu không hợp lệ");
+                            if (result >= 1) {
+                                ShowSuccessMessage("Lưu thành công");
 
                             } else {
-                                dialog.showDialog(ListQrcode.this, "Lưu thất bại");
-                            }
+                                if (result == -2) {
+                                    dialog.showDialog(ListQrcode.this, "Số lượng không đủ trong tồn kho");
+                                } else if (result == -3) {
+                                    dialog.showDialog(ListQrcode.this, "Vị trí từ không hợp lệ");
+                                } else if (result == -4) {
+                                    dialog.showDialog(ListQrcode.this, "Trạng thái của phiếu không hợp lệ");
+                                } else if (result == -5) {
+                                    dialog.showDialog(ListQrcode.this, "Vị trí từ trùng vị trí đên");
+                                } else if (result == -6) {
+                                    dialog.showDialog(ListQrcode.this, "Vị trí đến không hợp lệ");
+                                } else if (result == -7) {
+                                    dialog.showDialog(ListQrcode.this, "Cập nhật trạng thái thất bại");
+                                } else if (result == -8) {
+                                    dialog.showDialog(ListQrcode.this, "Sản phẩm không có thông tin trên phiếu ");
+                                } else if (result == -13) {
+                                    dialog.showDialog(ListQrcode.this, "Dữ liệu không hợp lệ");
 
+                                } else {
+                                    dialog.showDialog(ListQrcode.this, "Lưu thất bại");
+                                }
+
+                            }
+                        }catch (Exception e){
+                            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+                            return ;
                         }
+
                     }
                 }
             } else {
@@ -499,8 +507,6 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         } catch (Exception e) {
 
         }
-
-
     }
 
     private void ShowSuccessMessage(String message) {
@@ -573,9 +579,50 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                 actionBack();
                 break;
             case R.id.buttonOK:
-                synchronizeToServer();
+                if(put_away!=null){
+                    actionSyn();
+                }else{
+                    synchronizeToServer();
+                }
                 break;
         }
+    }
+
+    private void actionSyn(){
+        try {
+            LayoutInflater factory = LayoutInflater.from(ListQrcode.this);
+            View layout_cus = factory.inflate(R.layout.layout_request, null);
+            final AlertDialog dialog = new AlertDialog.Builder(ListQrcode.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+            InsetDrawable inset = new InsetDrawable(back, 64);
+            dialog.getWindow().setBackgroundDrawable(inset);
+            dialog.setView(layout_cus);
+
+            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+            TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+
+
+            btnNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+
+                }
+            });
+            btnYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    synchronizeseverputawway();
+                }
+            });
+            dialog.show();
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
+
     }
 
 
@@ -617,51 +664,55 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                 }
             }
         }
+        try {
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
 
-        String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
+            Dialog dialog = new Dialog(ListQrcode.this);
 
-        Dialog dialog = new Dialog(ListQrcode.this);
+            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
 
-        if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-            dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
+            } else if (postitionDes.equals("-9")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí không hợp lệ");
 
-        } else if (postitionDes.equals("-9")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí không hợp lệ");
+            } else if (postitionDes.equals("-3")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí từ không hợp lệ");
 
-        } else if (postitionDes.equals("-3")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí từ không hợp lệ");
+            } else if (postitionDes.equals("-6")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí đến không hợp lệ");
 
-        } else if (postitionDes.equals("-6")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí đến không hợp lệ");
+            } else if (postitionDes.equals("-5")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí từ trùng vị trí đến");
 
-        } else if (postitionDes.equals("-5")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí từ trùng vị trí đến");
+            } else if (postitionDes.equals("-14")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí đến trùng vị trí từ");
 
-        } else if (postitionDes.equals("-14")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí đến trùng vị trí từ");
+            } else if (postitionDes.equals("-15")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí từ không có trong hệ thống");
 
-        } else if (postitionDes.equals("-15")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí từ không có trong hệ thống");
+            } else if (postitionDes.equals("-10")) {
+                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong hệ thống");
 
-        } else if (postitionDes.equals("-10")) {
-            dialog.showDialog(ListQrcode.this, "Mã LPN không có trong hệ thống");
+            } else if (postitionDes.equals("-17")) {
+                dialog.showDialog(ListQrcode.this, "LPN từ trùng LPN đến");
 
-        } else if (postitionDes.equals("-17")) {
-            dialog.showDialog(ListQrcode.this, "LPN từ trùng LPN đến");
+            } else if (postitionDes.equals("-18")) {
+                dialog.showDialog(ListQrcode.this, "LPN đến trùng LPN từ");
 
-        } else if (postitionDes.equals("-18")) {
-            dialog.showDialog(ListQrcode.this, "LPN đến trùng LPN từ");
+            } else if (postitionDes.equals("-19")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí đến không có trong hệ thống");
 
-        } else if (postitionDes.equals("-19")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí đến không có trong hệ thống");
+            } else if (postitionDes.equals("-12")) {
+                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong tồn kho");
 
-        } else if (postitionDes.equals("-12")) {
-            dialog.showDialog(ListQrcode.this, "Mã LPN không có trong tồn kho");
+            } else {
+                return;
+            }
 
-        } else {
-            return;
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
-
 
     }
 
@@ -692,125 +743,138 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                 }
             }
         }
+        try {
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate, ea_unit, stockinDate, positionFrom, positionTo, "WSI", isLPN);
 
-        String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate, ea_unit, stockinDate, positionFrom, positionTo, "WSI", isLPN);
+            Dialog dialog = new Dialog(ListQrcode.this);
 
-        Dialog dialog = new Dialog(ListQrcode.this);
+            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
 
-        if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-            dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
+            } else if (postitionDes.equals("-9")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí không hợp lệ");
 
-        } else if (postitionDes.equals("-9")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí không hợp lệ");
+            } else if (postitionDes.equals("-3")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí từ không hợp lệ");
 
-        } else if (postitionDes.equals("-3")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí từ không hợp lệ");
+            } else if (postitionDes.equals("-6")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí đến không hợp lệ");
 
-        } else if (postitionDes.equals("-6")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí đến không hợp lệ");
+            } else if (postitionDes.equals("-5")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí từ trùng vị trí đến");
 
-        } else if (postitionDes.equals("-5")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí từ trùng vị trí đến");
+            } else if (postitionDes.equals("-14")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí đến trùng vị trí từ");
 
-        } else if (postitionDes.equals("-14")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí đến trùng vị trí từ");
+            } else if (postitionDes.equals("-15")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí từ không có trong hệ thống");
 
-        } else if (postitionDes.equals("-15")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí từ không có trong hệ thống");
+            } else if (postitionDes.equals("-10")) {
+                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong hệ thống");
 
-        } else if (postitionDes.equals("-10")) {
-            dialog.showDialog(ListQrcode.this, "Mã LPN không có trong hệ thống");
+            } else if (postitionDes.equals("-17")) {
+                dialog.showDialog(ListQrcode.this, "LPN từ trùng LPN đến");
 
-        } else if (postitionDes.equals("-17")) {
-            dialog.showDialog(ListQrcode.this, "LPN từ trùng LPN đến");
+            } else if (postitionDes.equals("-18")) {
+                dialog.showDialog(ListQrcode.this, "LPN đến trùng LPN từ");
 
-        } else if (postitionDes.equals("-18")) {
-            dialog.showDialog(ListQrcode.this, "LPN đến trùng LPN từ");
+            } else if (postitionDes.equals("-19")) {
+                dialog.showDialog(ListQrcode.this, "Vị trí đến không có trong hệ thống");
 
-        } else if (postitionDes.equals("-19")) {
-            dialog.showDialog(ListQrcode.this, "Vị trí đến không có trong hệ thống");
+            } else if (postitionDes.equals("-12")) {
+                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong tồn kho");
 
-        } else if (postitionDes.equals("-12")) {
-            dialog.showDialog(ListQrcode.this, "Mã LPN không có trong tồn kho");
-
-        } else {
-            return;
+            } else {
+                return;
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
-
 
     }
 
     public void alert_show_SP(int isLPN) {
-        int postitionDes = new CmnFns().synchronizeGETProductByZonePutaway(ListQrcode.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+        try {
+            int postitionDes = new CmnFns().synchronizeGETProductByZonePutaway(ListQrcode.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
 
-        Dialog dialog = new Dialog(ListQrcode.this);
-
-
-        if (postitionDes == 1) {
-            return;
-        } else if (postitionDes == -1) {
-            dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
-
-        } else if (postitionDes == -8) {
-            dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trên phiếu");
+            Dialog dialog = new Dialog(ListQrcode.this);
 
 
-        } else if (postitionDes == -10) {
-            dialog.showDialog(ListQrcode.this, "Mã LPN không có trong hệ thống");
+            if (postitionDes == 1) {
+                return;
+            } else if (postitionDes == -1) {
+                dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
 
-        } else if (postitionDes == -11) {
+            } else if (postitionDes == -8) {
+                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trên phiếu");
 
-            dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong kho");
+
+            } else if (postitionDes == -10) {
+                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong hệ thống");
+
+            } else if (postitionDes == -11) {
+
+                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong kho");
 
 
-        } else if (postitionDes == -12) {
+            } else if (postitionDes == -12) {
 
-            dialog.showDialog(ListQrcode.this, "Mã LPN không có trong kho");
+                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong kho");
 
-        } else if (postitionDes == -16) {
+            } else if (postitionDes == -16) {
 
-            dialog.showDialog(ListQrcode.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(ListQrcode.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
-        } else if (postitionDes == -20) {
+            } else if (postitionDes == -20) {
 
-            dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong hệ thống");
 
-        } else if (postitionDes == -21) {
+            } else if (postitionDes == -21) {
 
-            dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong zone nhập");
+                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong zone nhập");
 
-        } else if (postitionDes == -22) {
+            } else if (postitionDes == -22) {
 
-            dialog.showDialog(ListQrcode.this, "Mã LPN không có trong zone nhập");
+                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong zone nhập");
 
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
+
 
     }
 
     public void alert_show_SP_Stock_in() {
-        SharedPreferences sharedPreferences = getSharedPreferences("stockReceipt", Context.MODE_PRIVATE);
-        String stockReceipt = sharedPreferences.getString("stock", "");
+        try {
+            SharedPreferences sharedPreferences = getSharedPreferences("stockReceipt", Context.MODE_PRIVATE);
+            String stockReceipt = sharedPreferences.getString("stock", "");
 
-        int statusGetCust = new CmnFns().synchronizeGETProductInfo(value1, stockReceipt, expDate, stockinDate, ea_unit, positonReceive);
+            int statusGetCust = new CmnFns().synchronizeGETProductInfo(value1, stockReceipt, expDate, stockinDate, ea_unit, positonReceive);
 
-        Dialog dialog = new Dialog(ListQrcode.this);
-
-
-        if (statusGetCust == 1) {
-            return;
-        } else if (statusGetCust == -1) {
-            dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
-
-        } else if (statusGetCust == -8) {
-            dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trên phiếu");
+            Dialog dialog = new Dialog(ListQrcode.this);
 
 
-        } else if (statusGetCust == -20) {
+            if (statusGetCust == 1) {
+                return;
+            } else if (statusGetCust == -1) {
+                dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
 
-            dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong hệ thống");
+            } else if (statusGetCust == -8) {
+                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trên phiếu");
 
+
+            } else if (statusGetCust == -20) {
+
+                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong hệ thống");
+
+            }
+        }catch (Exception e){
+            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+            return ;
         }
-
 
     }
 
