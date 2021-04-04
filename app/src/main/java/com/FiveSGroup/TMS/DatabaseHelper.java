@@ -480,9 +480,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + O_LETDOWN_SUGGEST_AMOUNT + " TEXT, "
             + O_LETDOWN_SUGGEST_UNIT + " TEXT, "
             + O_LETDOWN_SUGGEST_POSITION_FROM + " TEXT, "
-            + O_LETDOWN_SUGGEST_POSITION_TO + " TEXT, "
-            + O_LETDOWN_SUGGEST_EXP_DATE + " TEXT, "
-            + O_LETDOWN_SUGGEST_STOCK_DATE + " TEXT"
+            + O_LETDOWN_SUGGEST_POSITION_TO + " TEXT "
+//            + O_LETDOWN_SUGGEST_EXP_DATE + " TEXT, "
+//            + O_LETDOWN_SUGGEST_STOCK_DATE + " TEXT"
             + ")";
 
     public ArrayList<LetDownProductSuggest> getAllLetDownProductSuggest() {
@@ -508,10 +508,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(O_LETDOWN_SUGGEST_POSITION_FROM))));
                 productSuggest.setProductPositionTo((c.getString(c
                         .getColumnIndex(O_LETDOWN_SUGGEST_POSITION_TO))));
-                productSuggest.setProductExpDate((c.getString(c
-                        .getColumnIndex(O_LETDOWN_SUGGEST_EXP_DATE))));
-                productSuggest.setProductStockDate((c.getString(c
-                        .getColumnIndex(O_LETDOWN_SUGGEST_STOCK_DATE))));
+//                productSuggest.setProductExpDate((c.getString(c
+//                        .getColumnIndex(O_LETDOWN_SUGGEST_EXP_DATE))));
+//                productSuggest.setProductStockDate((c.getString(c
+//                        .getColumnIndex(O_LETDOWN_SUGGEST_STOCK_DATE))));
 
                 productSuggests.add(productSuggest);
             } while (c.moveToNext());
@@ -532,8 +532,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(O_LETDOWN_SUGGEST_UNIT, productSuggest.getProductUnit());
         values.put(O_LETDOWN_SUGGEST_POSITION_FROM, productSuggest.getProductPositionFrom());
         values.put(O_LETDOWN_SUGGEST_POSITION_TO, productSuggest.getProductPositionTo());
-        values.put(O_LETDOWN_SUGGEST_EXP_DATE, productSuggest.getProductExpDate());
-        values.put(O_LETDOWN_SUGGEST_STOCK_DATE, productSuggest.getProductStockDate());
+//        values.put(O_LETDOWN_SUGGEST_EXP_DATE, productSuggest.getProductExpDate());
+//        values.put(O_LETDOWN_SUGGEST_STOCK_DATE, productSuggest.getProductStockDate());
         // insert row
         long id = db.insert(O_LETDOWN_SUGGEST, null, values);
         return id;

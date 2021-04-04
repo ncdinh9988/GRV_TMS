@@ -3720,8 +3720,8 @@ public class CmnFns {
                 String product_unit = jsonobj.getString("UNIT");
                 String product_position_from = jsonobj.getString("POSITION_CODE");
                 String product_position_to = jsonobj.getString("VTGY");
-                String product_exp_date = jsonobj.getString("EXPIRY_DATE");
-                String product_stock_date = jsonobj.getString("STOCKIN_DATE");
+//                String product_exp_date = jsonobj.getString("EXPIRY_DATE");
+//                String product_stock_date = jsonobj.getString("STOCKIN_DATE");
 
                 LetDownProductSuggest productSuggest = new LetDownProductSuggest();
                 productSuggest.setProductSTT(product_no);
@@ -3731,8 +3731,8 @@ public class CmnFns {
                 productSuggest.setProductUnit(product_unit);
                 productSuggest.setProductPositionFrom(product_position_from);
                 productSuggest.setProductPositionTo(product_position_to);
-                productSuggest.setProductExpDate(product_exp_date);
-                productSuggest.setProductStockDate(product_stock_date);
+//                productSuggest.setProductExpDate(product_exp_date);
+//                productSuggest.setProductStockDate(product_stock_date);
 
                 DatabaseHelper.getInstance().insertLetDownSuggest(productSuggest);
 
