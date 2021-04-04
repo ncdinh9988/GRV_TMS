@@ -5,16 +5,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +33,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletQRCode;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,7 +44,8 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 
     private Button buttonBack, btnCreateLPN, buttonPutToPallet;
     private ProgressDialog progressSyncProgram;
-    private TextView createDate;
+    private TextView createDate , idbarcode;
+    String  press ="";
     private RecyclerView rvListLPN;
     private SwipeRefreshLayout swipeRefesh;
     private String chooseDate;
@@ -88,6 +95,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
     private void init() {
         buttonPutToPallet = findViewById(R.id.buttonPutToPallet);
         createDate = findViewById(R.id.priceproduct);
+        idbarcode = findViewById(R.id.idproduct);
 //        spinner = findViewById(R.id.spinner);
         buttonBack = findViewById(R.id.buttonBack);
         btnCreateLPN = findViewById(R.id.btnCreateLPN);
@@ -99,6 +107,44 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
         btnCreateLPN.setOnClickListener(this);
         buttonPutToPallet.setOnClickListener(this);
 
+
+
+        idbarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater factory = LayoutInflater.from(LPNActivity.this);
+                View layout_cus = factory.inflate(R.layout.layout_find, null);
+                final AlertDialog dialog = new AlertDialog.Builder(LPNActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                InsetDrawable inset = new InsetDrawable(back, 64);
+                dialog.getWindow().setBackgroundDrawable(inset);
+                dialog.setView(layout_cus);
+
+                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                final EditText editText = layout_cus.findViewById(R.id.tvTextBack);
+
+
+
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+
+                    }
+                });
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        press = editText.getText().toString();
+                        updateBarcode();
+                    }
+                });
+                dialog.show();
+            }
+        });
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -125,7 +171,13 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
         });
 
 
+
     }
+    public void updateBarcode(){
+        Syncbarcodedata syncbarcodedata = new Syncbarcodedata();
+        syncbarcodedata.execute();
+    }
+
 
     public void updateLabel() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
@@ -138,6 +190,65 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
         SyncDate syncDate = new SyncDate();
         syncDate.execute();
 
+    }
+
+    class Syncbarcodedata extends AsyncTask<Void, Integer, Integer> {
+
+        public boolean isSyncSuccess = false;
+
+        @Override
+        protected void onPreExecute() {
+            CmnFns cmnFns = new CmnFns();
+            int status = cmnFns.allowSynchronizeBy3G();
+            if (status == 1) {
+                progressSyncProgram = new ProgressDialog(LPNActivity.this);
+                progressSyncProgram.setMessage("Đang tải thông tin...");
+                progressSyncProgram.setCancelable(false);
+                progressSyncProgram.setCanceledOnTouchOutside(false);
+                progressSyncProgram.show();
+
+
+            } else if (status == 102) {
+                Toast.makeText(LPNActivity.this, "Vui lòng kiểm tra kết nối mạng", Toast.LENGTH_LONG).show();
+                //progressSyncProgram.dismiss();
+
+            }
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            // thực thi hàm lấy thông tin LPN
+            DatabaseHelper.getInstance().deleteallProduct_LPN();
+            int status = new CmnFns().synchronizeGetLPN(getApplication());
+
+            return status;
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            if (integer == -1) {
+                progressSyncProgram.dismiss();
+                Toast.makeText(LPNActivity.this, "Đồng bộ dữ liệu không thành công", Toast.LENGTH_SHORT).show();
+                this.cancel(true);
+                isSyncSuccess = false;
+
+            } else {
+                progressSyncProgram.dismiss();
+                Toast.makeText(LPNActivity.this, "Đồng bộ dữ liệu thành công", Toast.LENGTH_SHORT).show();
+                this.cancel(true);
+
+//                SetDataSpinner();
+                arrListLPN = DatabaseHelper.getInstance().getAllLpnBarcode(press);
+                adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
+                rvListLPN.setLayoutManager(layoutManager);
+                rvListLPN.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                isSyncSuccess = true;
+            }
+        }
     }
 
     class SyncDate extends AsyncTask<Void, Integer, Integer> {

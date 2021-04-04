@@ -21,7 +21,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:gravity="center"
-                android:text="Thông báo"
+                android:text="Nhập Mã Barcode Để Tìm"
                 android:textAlignment="center"
                 android:textColor="#D3000000"
                 android:textSize="20sp"
@@ -38,10 +38,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp">
+            android:layout_height="60dp">
 
-            <TextView
-                android:text="Xác Nhận Giao Dịch ?"
+            <EditText
                 android:id="@+id/tvTextBack"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -51,7 +50,6 @@
                 android:gravity="center"
                 android:textColor="#000"
                 android:textSize="20sp" />
-
 
         </RelativeLayout>
 

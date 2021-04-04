@@ -37,43 +37,43 @@
                 android:text="ProductName"
                 android:textColor="@color/black" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="HSD: "
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="HSD: "-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textStyle="bold" />-->
 
-                <TextView
-                    android:id="@+id/tvProductSuggestExpDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="1111111111"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nhập: "
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tvProductSuggestExpDate"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="1111111111"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textStyle="bold" />-->
+<!--            </LinearLayout>-->
+<!--&lt;!&ndash;            <LinearLayout&ndash;&gt;-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Nhập: "-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textStyle="bold" />-->
 
-                <TextView
-                    android:text="111111"
-                    android:id="@+id/tvProductSuggestStockDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:text="111111"-->
+<!--                    android:id="@+id/tvProductSuggestStockDate"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textStyle="bold" />-->
+<!--            </LinearLayout>-->
 
         </LinearLayout>
 
@@ -106,7 +106,7 @@
             android:padding="10dp"
             android:text="VT Cần Châm"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvProductSuggestPositionTo"
@@ -116,7 +116,7 @@
             android:gravity="center"
             android:text="VT Gợi Ý"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
 
     </LinearLayout>

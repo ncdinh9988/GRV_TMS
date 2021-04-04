@@ -65,8 +65,8 @@ public class LetDownProductSuggestionsAdapter extends BaseAdapter {
             viewHolder.tvProductSuggestionAmount = convertView.findViewById(R.id.tvProductSuggestAmount);
             viewHolder.tvProductSuggestionPositionFrom = convertView.findViewById(R.id.tvProductSuggestPositionFrom);
             viewHolder.tvProductSuggestionPositionTo = convertView.findViewById(R.id.tvProductSuggestPositionTo);
-            viewHolder.tvProductSuggestionExpDate = convertView.findViewById(R.id.tvProductSuggestExpDate);
-            viewHolder.tvProductSuggestionStockDate = convertView.findViewById(R.id.tvProductSuggestStockDate);
+//            viewHolder.tvProductSuggestionExpDate = convertView.findViewById(R.id.tvProductSuggestExpDate);
+//            viewHolder.tvProductSuggestionStockDate = convertView.findViewById(R.id.tvProductSuggestStockDate);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -79,8 +79,8 @@ public class LetDownProductSuggestionsAdapter extends BaseAdapter {
         viewHolder.tvProductSuggestUnit.setText(productSuggest.getProductUnit());
         viewHolder.tvProductSuggestionPositionFrom.setText(productSuggest.getProductPositionFrom());
         viewHolder.tvProductSuggestionPositionTo.setText(productSuggest.getProductPositionTo());
-        viewHolder.tvProductSuggestionExpDate.setText(productSuggest.getProductExpDate());
-        viewHolder.tvProductSuggestionStockDate.setText(productSuggest.getProductStockDate());
+//        viewHolder.tvProductSuggestionExpDate.setText(productSuggest.getProductExpDate());
+//        viewHolder.tvProductSuggestionStockDate.setText(productSuggest.getProductStockDate());
 
         return convertView;
     }
