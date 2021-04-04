@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
+import com.FiveSGroup.TMS.Inventory.InventoryProduct;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
@@ -116,14 +118,45 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                Toast.makeText(LetDownActivity.this, "Đã xóa ", Toast.LENGTH_SHORT).show();
-                //Remove swiped item from list and notify the RecyclerView
-                int position = viewHolder.getAdapterPosition();
-                ProductLetDown product = letDowns.get(position);
-                letDowns.remove(position);
-                DatabaseHelper.getInstance().deleteProduct_Letdown_Specific(product.getAUTOINCREMENT());
-                letDownAdapter.notifyItemRemoved(position);
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                LayoutInflater factory = LayoutInflater.from(LetDownActivity.this);
+                View layout_cus = factory.inflate(R.layout.layout_delete, null);
+                final AlertDialog dialog = new AlertDialog.Builder(LetDownActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                InsetDrawable inset = new InsetDrawable(back, 64);
+                dialog.getWindow().setBackgroundDrawable(inset);
+                dialog.setView(layout_cus);
+
+                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+
+
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        letDownAdapter.notifyDataSetChanged();
+
+                    }
+                });
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Remove swiped item from list and notify the RecyclerView
+                        dialog.dismiss();
+                        //Remove swiped item from list and notify the RecyclerView
+                        int position = viewHolder.getAdapterPosition();
+                        ProductLetDown product = letDowns.get(position);
+                        letDowns.remove(position);
+                        DatabaseHelper.getInstance().deleteProduct_Letdown_Specific(product.getAUTOINCREMENT());
+                        letDownAdapter.notifyItemRemoved(position);
+                    }
+                });
+                dialog.show();
+
+
 
             }
         };

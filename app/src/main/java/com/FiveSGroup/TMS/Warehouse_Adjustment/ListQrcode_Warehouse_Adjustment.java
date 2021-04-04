@@ -26,7 +26,9 @@ import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
+import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
+import com.FiveSGroup.TMS.Warehouse.Product_Qrcode;
 import com.FiveSGroup.TMS.global;
 
 import java.util.ArrayList;
@@ -136,14 +138,44 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                Toast.makeText(ListQrcode_Warehouse_Adjustment.this, "Đã xóa ", Toast.LENGTH_SHORT).show();
-                //Remove swiped item from list and notify the RecyclerView
-                int position = viewHolder.getAdapterPosition();
-                Product_Warehouse_Adjustment product = Warehouse_Adjustment.get(position);
-                Warehouse_Adjustment.remove(position);
-                DatabaseHelper.getInstance().deleteProduct_Warehouse_Adjustment_Specific(product.getAUTOINCREMENT());
-                Warehouse_Adjustment_ListAdapter.notifyItemRemoved(position);
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                LayoutInflater factory = LayoutInflater.from(ListQrcode_Warehouse_Adjustment.this);
+                View layout_cus = factory.inflate(R.layout.layout_delete, null);
+                final AlertDialog dialog = new AlertDialog.Builder(ListQrcode_Warehouse_Adjustment.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                InsetDrawable inset = new InsetDrawable(back, 64);
+                dialog.getWindow().setBackgroundDrawable(inset);
+                dialog.setView(layout_cus);
+
+                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+
+
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        Warehouse_Adjustment_ListAdapter.notifyDataSetChanged();
+
+                    }
+                });
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Remove swiped item from list and notify the RecyclerView
+                        dialog.dismiss();
+
+                        int position = viewHolder.getAdapterPosition();
+                        Product_Warehouse_Adjustment product = Warehouse_Adjustment.get(position);
+                        Warehouse_Adjustment.remove(position);
+                        DatabaseHelper.getInstance().deleteProduct_Warehouse_Adjustment_Specific(product.getAUTOINCREMENT());
+                        Warehouse_Adjustment_ListAdapter.notifyItemRemoved(position);
+                    }
+                });
+                dialog.show();
+
 
             }
         };

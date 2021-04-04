@@ -27,6 +27,8 @@ import com.FiveSGroup.TMS.LetDown.LetDownActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
+import com.FiveSGroup.TMS.StockOut.ListQrcode_Stockout;
+import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.Warehouse.Wv_ShowResultQrode;
 
 import java.util.ArrayList;
@@ -332,14 +334,44 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                Toast.makeText(ListStockTransfer.this, "Đã xóa ", Toast.LENGTH_SHORT).show();
-                //Remove swiped item from list and notify the RecyclerView
-                int position = viewHolder.getAdapterPosition();
-                Product_StockTransfer product = stockTransfers.get(position);
-                stockTransfers.remove(position);
-                DatabaseHelper.getInstance().deleteProduct_StockTransfer_Specific(product.getAUTOINCREMENT());
-                stockTransferAdapter.notifyItemRemoved(position);
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                LayoutInflater factory = LayoutInflater.from(ListStockTransfer.this);
+                View layout_cus = factory.inflate(R.layout.layout_delete, null);
+                final AlertDialog dialog = new AlertDialog.Builder(ListStockTransfer.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                InsetDrawable inset = new InsetDrawable(back, 64);
+                dialog.getWindow().setBackgroundDrawable(inset);
+                dialog.setView(layout_cus);
+
+                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+
+
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        stockTransferAdapter.notifyDataSetChanged();
+
+                    }
+                });
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Remove swiped item from list and notify the RecyclerView
+                        dialog.dismiss();
+
+                        int position = viewHolder.getAdapterPosition();
+                        Product_StockTransfer product = stockTransfers.get(position);
+                        stockTransfers.remove(position);
+                        DatabaseHelper.getInstance().deleteProduct_StockTransfer_Specific(product.getAUTOINCREMENT());
+                        stockTransferAdapter.notifyItemRemoved(position);
+                    }
+                });
+                dialog.show();
+
 
             }
         };

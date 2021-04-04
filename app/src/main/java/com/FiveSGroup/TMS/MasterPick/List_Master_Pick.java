@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
+import com.FiveSGroup.TMS.LoadPallet.Product_LoadPallet;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
@@ -137,14 +139,45 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
             }
 
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                Toast.makeText(List_Master_Pick.this, "Đã xóa ", Toast.LENGTH_SHORT).show();
-                //Remove swiped item from list and notify the RecyclerView
-                int position = viewHolder.getAdapterPosition();
-                Product_Master_Pick product = masterPicks.get(position);
-                masterPicks.remove(position);
-                DatabaseHelper.getInstance().deleteProduct_Master_Pick_Specific(product.getAUTOINCREMENT());
-                MasterPickAdapter.notifyItemRemoved(position);
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                LayoutInflater factory = LayoutInflater.from(List_Master_Pick.this);
+                View layout_cus = factory.inflate(R.layout.layout_delete, null);
+                final AlertDialog dialog = new AlertDialog.Builder(List_Master_Pick.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                InsetDrawable inset = new InsetDrawable(back, 64);
+                dialog.getWindow().setBackgroundDrawable(inset);
+                dialog.setView(layout_cus);
+
+                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+
+
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        MasterPickAdapter.notifyDataSetChanged();
+
+                    }
+                });
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Remove swiped item from list and notify the RecyclerView
+                        dialog.dismiss();
+
+                        int position = viewHolder.getAdapterPosition();
+                        Product_Master_Pick product = masterPicks.get(position);
+                        masterPicks.remove(position);
+                        DatabaseHelper.getInstance().deleteProduct_Master_Pick_Specific(product.getAUTOINCREMENT());
+                        MasterPickAdapter.notifyItemRemoved(position);
+                    }
+                });
+                dialog.show();
+
+
 
             }
         };

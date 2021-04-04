@@ -334,15 +334,45 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
                 return false;
             }
 
+
             @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                Toast.makeText(List_Remove_LPN.this, "Đã xóa ", Toast.LENGTH_SHORT).show();
-                //Remove swiped item from list and notify the RecyclerView
-                int position = viewHolder.getAdapterPosition();
-                Product_Remove_LPN product = remove_lpn.get(position);
-                remove_lpn.remove(position);
-                DatabaseHelper.getInstance().deleteProduct_remove_lpn_Specific(product.getAUTOINCREMENT());
-                remove_LPN_Adapter.notifyItemRemoved(position);
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                LayoutInflater factory = LayoutInflater.from(List_Remove_LPN.this);
+                View layout_cus = factory.inflate(R.layout.layout_delete, null);
+                final AlertDialog dialog = new AlertDialog.Builder(List_Remove_LPN.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                InsetDrawable inset = new InsetDrawable(back, 64);
+                dialog.getWindow().setBackgroundDrawable(inset);
+                dialog.setView(layout_cus);
+
+                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+
+
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        remove_LPN_Adapter.notifyDataSetChanged();
+
+                    }
+                });
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Remove swiped item from list and notify the RecyclerView
+                        dialog.dismiss();
+                        int position = viewHolder.getAdapterPosition();
+                        Product_Remove_LPN product = remove_lpn.get(position);
+                        remove_lpn.remove(position);
+                        DatabaseHelper.getInstance().deleteProduct_remove_lpn_Specific(product.getAUTOINCREMENT());
+                        remove_LPN_Adapter.notifyItemRemoved(position);
+                    }
+                });
+                dialog.show();
+
 
             }
         };
