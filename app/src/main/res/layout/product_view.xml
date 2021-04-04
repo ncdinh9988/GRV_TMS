@@ -200,7 +200,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layout__"
+        android:id="@+id/layout__let"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -217,7 +217,7 @@
             android:textColor="@color/black" />
         <TextView
             android:textColor="@color/black"
-            android:id="@+id/tvPositionSuggest"
+            android:id="@+id/tvPositionSuggestlet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -225,6 +225,34 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/grey05"
-        android:layout_below="@+id/layout__"
+        android:layout_below="@+id/layout__let"
+        android:layout_marginBottom="2dp"/>
+    <LinearLayout
+        android:id="@+id/layout__put"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_"
+        android:visibility="gone"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:text="Vị trí gợi ý: "
+            android:textColor="@color/black" />
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/tvPositionSuggestput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey05"
+        android:layout_below="@+id/layout__let"
         android:layout_marginBottom="2dp"/>
 </RelativeLayout>

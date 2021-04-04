@@ -191,7 +191,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
             }
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
-            checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetLPN.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setChecked(false);
             checkBoxGetLPN.setEnabled(false);
 

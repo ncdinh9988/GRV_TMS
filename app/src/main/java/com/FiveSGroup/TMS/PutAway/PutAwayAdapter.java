@@ -72,7 +72,7 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
         holder.tvExpired.setText(product.getEXPIRED_DATE_PUTAWAY());
         holder.tvStockin.setText(product.getSTOCKIN_DATE_PUTAWAY());
         holder.tvPutAwayPositionSuggest.setText(product.getSUGGESTION_POSITION());
-        holder.layout__.setVisibility(View.VISIBLE);
+        holder.layout__put.setVisibility(View.VISIBLE);
 
 
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +192,7 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct, tvPutAwayPositionSuggest;
         TextView tvExpired, tvStockin;
         EditText edt;
-        LinearLayout layout__;
+        LinearLayout layout__put;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -202,8 +202,8 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
-            tvPutAwayPositionSuggest = itemView.findViewById(R.id.tvPositionSuggest);
-            layout__ = itemView.findViewById(R.id.layout__);
+            tvPutAwayPositionSuggest = itemView.findViewById(R.id.tvPositionSuggestput);
+            layout__put = itemView.findViewById(R.id.layout__put);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);

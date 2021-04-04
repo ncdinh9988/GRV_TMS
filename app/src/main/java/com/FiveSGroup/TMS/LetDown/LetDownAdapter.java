@@ -74,7 +74,7 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
 
         holder.tvLetDownPositionSuggest.setText(product.getSUGGESTION_POSITION());
-        holder.layout__.setVisibility(View.VISIBLE);
+        holder.layout__let.setVisibility(View.VISIBLE);
 
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,7 +235,7 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct, tvLetDownPositionSuggest;
         TextView tvExpired, tvStockin;
         EditText edt;
-        LinearLayout layout__;
+        LinearLayout layout__let;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             btnvtden = itemView.findViewById(R.id.btnvtden);
@@ -244,8 +244,8 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
-            tvLetDownPositionSuggest =itemView.findViewById(R.id.tvPositionSuggest);
-            layout__ = itemView.findViewById(R.id.layout__);
+            tvLetDownPositionSuggest =itemView.findViewById(R.id.tvPositionSuggestlet);
+            layout__let = itemView.findViewById(R.id.layout__let);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);
