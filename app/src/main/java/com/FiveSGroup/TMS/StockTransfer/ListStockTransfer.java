@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.LetDown.LetDownActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
@@ -368,9 +369,46 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
                 actionBack();
                 break;
             case R.id.buttonOK:
-                synchronizeToServer();
+                actionSyn();
                 break;
         }
+    }
+
+    private void actionSyn(){
+        try {
+            LayoutInflater factory = LayoutInflater.from(ListStockTransfer.this);
+            View layout_cus = factory.inflate(R.layout.layout_request, null);
+            final AlertDialog dialog = new AlertDialog.Builder(ListStockTransfer.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+            InsetDrawable inset = new InsetDrawable(back, 64);
+            dialog.getWindow().setBackgroundDrawable(inset);
+            dialog.setView(layout_cus);
+
+            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+            TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+
+
+            btnNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+
+                }
+            });
+            btnYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    synchronizeToServer();
+                }
+            });
+            dialog.show();
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
+
     }
 
     public void alert_show_position(int isLPN) {

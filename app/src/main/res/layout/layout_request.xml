@@ -41,7 +41,7 @@
             android:layout_height="150dp">
 
             <TextView
-                android:text="Xác Nhận Chất Hàng"
+                android:text="Xác Nhận Giao Dịch ?"
                 android:id="@+id/tvTextBack"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
