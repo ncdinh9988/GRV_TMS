@@ -219,43 +219,47 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
                     dialog.showDialog(List_Remove_LPN.this, "Số lượng SP không được bằng 0");
 
                 } else {
-                    int result = new CmnFns().synchronizeData(saleCode, "WLP", "");
+                    try {
+                        int result = new CmnFns().synchronizeData(saleCode, "WLP", "");
 
-                    if (result >= 1) {
-                        ShowSuccessMessage("Lưu thành công");
+                        if (result >= 1) {
+                            ShowSuccessMessage("Lưu thành công");
 //                        Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
 
-                    } else {
-                        if (result == -1) {
-                            dialog.showDialog(List_Remove_LPN.this, "Lưu thất bại");
-                        } else if (result == -2) {
-                            dialog.showDialog(List_Remove_LPN.this, "Số lượng không đủ trong tồn kho");
+                        } else {
+                            if (result == -1) {
+                                dialog.showDialog(List_Remove_LPN.this, "Lưu thất bại");
+                            } else if (result == -2) {
+                                dialog.showDialog(List_Remove_LPN.this, "Số lượng không đủ trong tồn kho");
 
-                        } else if (result == -3) {
-                            dialog.showDialog(List_Remove_LPN.this, "Vị trí từ không hợp lệ");
+                            } else if (result == -3) {
+                                dialog.showDialog(List_Remove_LPN.this, "Vị trí từ không hợp lệ");
 
-                        } else if (result == -4) {
-                            dialog.showDialog(List_Remove_LPN.this, "Trạng thái của phiếu không hợp lệ");
+                            } else if (result == -4) {
+                                dialog.showDialog(List_Remove_LPN.this, "Trạng thái của phiếu không hợp lệ");
 
-                        } else if (result == -5) {
-                            dialog.showDialog(List_Remove_LPN.this, "Vị trí từ trùng vị trí đên");
+                            } else if (result == -5) {
+                                dialog.showDialog(List_Remove_LPN.this, "Vị trí từ trùng vị trí đên");
 
-                        } else if (result == -6) {
-                            dialog.showDialog(List_Remove_LPN.this, "Vị trí đến không hợp lệ");
+                            } else if (result == -6) {
+                                dialog.showDialog(List_Remove_LPN.this, "Vị trí đến không hợp lệ");
 
-                        } else if (result == -7) {
-                            dialog.showDialog(List_Remove_LPN.this, "Cập nhật trạng thái thất bại");
+                            } else if (result == -7) {
+                                dialog.showDialog(List_Remove_LPN.this, "Cập nhật trạng thái thất bại");
 
-                        } else if (result == -8) {
-                            dialog.showDialog(List_Remove_LPN.this, "Sản phẩm không có thông tin trên phiếu ");
+                            } else if (result == -8) {
+                                dialog.showDialog(List_Remove_LPN.this, "Sản phẩm không có thông tin trên phiếu ");
 
-                        } else if (result == -13) {
-                            dialog.showDialog(List_Remove_LPN.this, "Dữ liệu không hợp lệ");
+                            } else if (result == -13) {
+                                dialog.showDialog(List_Remove_LPN.this, "Dữ liệu không hợp lệ");
 
+                            }
                         }
-
-
+                    }catch (Exception e){
+                        Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+                        finish();
                     }
+
                 }
             } else {
                 dialog.showDialog(List_Remove_LPN.this, "Không có sản phẩm");
@@ -448,7 +452,7 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -493,7 +497,7 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
     }

@@ -316,7 +316,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                         }
                     }catch (Exception e){
                         Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-                        return ;
+                        finish();
                     }
 
                 }
@@ -462,7 +462,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -516,7 +516,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 

@@ -298,7 +298,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                     }
                     catch (Exception e){
                         Toast.makeText(this,"Vui Lòng Thử Lại" ,Toast.LENGTH_SHORT).show();
-                       return ;
+                       finish();
                     }
                 }
             } else {
@@ -458,7 +458,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
 
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -504,7 +504,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 

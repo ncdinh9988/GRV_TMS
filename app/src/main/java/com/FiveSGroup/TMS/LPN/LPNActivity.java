@@ -438,7 +438,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
                     }
                 }catch (Exception e){
                     Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-                    return ;
+                    finish();
                 }
 
 //                    LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);

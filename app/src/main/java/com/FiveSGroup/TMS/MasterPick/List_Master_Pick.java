@@ -285,7 +285,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                     }
                 }catch (Exception e){
                     Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-                    return ;
+                    finish();
                 }
 
             }
@@ -428,7 +428,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -481,7 +481,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 

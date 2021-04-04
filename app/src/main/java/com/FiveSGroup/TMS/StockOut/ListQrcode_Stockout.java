@@ -281,7 +281,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
                     }
                 }catch (Exception e){
                     Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-                    return ;
+                    finish();
                 }
 
             }
@@ -424,7 +424,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -478,7 +478,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 

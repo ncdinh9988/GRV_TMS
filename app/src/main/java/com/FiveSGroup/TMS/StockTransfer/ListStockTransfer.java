@@ -253,7 +253,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
                     }
                 }catch (Exception e){
                     Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-                    return ;
+                    finish();
                 }
 
             }
@@ -448,7 +448,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -493,7 +493,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
     }

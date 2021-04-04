@@ -322,7 +322,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
                     }
                 }catch (Exception e){
                     Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-                    return ;
+                    finish();
                 }
 
             }
@@ -436,7 +436,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -484,7 +484,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
 
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 

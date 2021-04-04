@@ -332,7 +332,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
 
                     }catch (Exception e){
                         Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-                        return ;
+                        finish();
                     }
 
                 }
@@ -525,7 +525,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -572,7 +572,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
     }

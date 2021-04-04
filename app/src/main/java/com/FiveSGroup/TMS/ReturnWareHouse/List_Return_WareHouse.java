@@ -279,7 +279,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
                     }
                 }catch (Exception e){
                     Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-                    return ;
+                    finish();
                 }
 
             }
@@ -402,7 +402,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -456,7 +456,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 

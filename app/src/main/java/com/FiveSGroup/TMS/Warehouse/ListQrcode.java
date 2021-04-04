@@ -711,7 +711,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
     }
@@ -789,7 +789,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
     }
@@ -841,7 +841,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
 
@@ -873,7 +873,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-            return ;
+            finish();
         }
 
     }
