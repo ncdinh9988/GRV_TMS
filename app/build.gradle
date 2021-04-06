@@ -9,7 +9,7 @@ android {
         targetSdkVersion 29
         versionCode 7826
         // ngày _ web _ apk
-        versionName "TMS_210404_7846_7826"
+        versionName "TMS_210404_7849_7826"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

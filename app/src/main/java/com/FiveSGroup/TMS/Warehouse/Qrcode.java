@@ -267,7 +267,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 //editor.commit();
                 finish();
             } else {
-                int statusGetCustt = new CmnFns().getExpDateFromServer(barcodeData, global.getStockReceiptCd());
+                int statusGetCustt = new CmnFns().getExpDateFromServer(global.getAdminCode(),barcodeData, global.getStockReceiptCd());
                 if (statusGetCustt != 1) {
                     ReturnPosition(barcodeData);
                 } else {

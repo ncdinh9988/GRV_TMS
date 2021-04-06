@@ -16,6 +16,15 @@ public class Product_Qrcode {
     private String POSITION_CODE ;
     private String POSITION_DESCRIPTION ;
     private String STOCKIN_DATE;
+    private String WAREHOUSE_POSITION_CD;
+
+    public String getWAREHOUSE_POSITION_CD() {
+        return WAREHOUSE_POSITION_CD;
+    }
+
+    public void setWAREHOUSE_POSITION_CD(String WAREHOUSE_POSITION_CD) {
+        this.WAREHOUSE_POSITION_CD = WAREHOUSE_POSITION_CD;
+    }
 
     public String getAUTOINCREMENT() {
         return AUTOINCREMENT;

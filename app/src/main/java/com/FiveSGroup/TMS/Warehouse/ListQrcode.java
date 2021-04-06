@@ -61,7 +61,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
     String lpn = "";
 
     int result;
-
+    String saleCode = CmnFns.readDataAdmin();
     int statusGetCust;
     Product_Qrcode product_qrcode;
 
@@ -476,7 +476,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
                 } else {
 
-                    result = new CmnFns().synchronizeStockReceiptChecked(ListQrcode.this);
+                    result = new CmnFns().synchronizeStockReceiptChecked(ListQrcode.this,saleCode);
 
                     if (result >= 1) {
                         ShowSuccessMessage("Lưu thành công");
@@ -525,7 +525,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                 } else {
                     if (put_away != null) {
                         try {
-                            String saleCode = CmnFns.readDataAdmin();
+
                             result = new CmnFns().synchronizeData(saleCode, "WPA", "");
 
                             if (result >= 1) {
@@ -913,7 +913,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
             SharedPreferences sharedPreferences = getSharedPreferences("stockReceipt", Context.MODE_PRIVATE);
             String stockReceipt = sharedPreferences.getString("stock", "");
 
-            int statusGetCust = new CmnFns().synchronizeGETProductInfo(value1, stockReceipt, expDate, stockinDate, ea_unit, positonReceive);
+            int statusGetCust = new CmnFns().synchronizeGETProductInfo(saleCode ,value1, stockReceipt, expDate, stockinDate, ea_unit, positonReceive);
 
             Dialog dialog = new Dialog(ListQrcode.this);
 

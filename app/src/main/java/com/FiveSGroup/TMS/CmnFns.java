@@ -1207,14 +1207,14 @@ public class CmnFns {
     }
 
 
-    public int getExpDateFromServer(String barcodeData, String stockReceipt) {
+    public int getExpDateFromServer(String usercode,String barcodeData, String stockReceipt) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
 
         Webservice webService = new Webservice();
-        String result = webService.synchronizeGETProductInfoo(barcodeData, stockReceipt);
+        String result = webService.synchronizeGETProductInfoo(usercode,barcodeData, stockReceipt);
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
         if (result.equals("-1")) {
             return -1;
@@ -1272,7 +1272,7 @@ public class CmnFns {
         String result = "";
         switch (typeScan) {
             case "scan_from_stock_in":
-                result = webService.synchronizeGETProductInfoo(barcodeData, cd);
+                result = webService.synchronizeGETProductInfoo(global.getAdminCode(),barcodeData, cd);
                 break;
             case "scan_from_inventory":
                 result = webService.GetProductByZone(barcodeData, global.getAdminCode(), "WST", 0, global.getInventoryCD());
@@ -1342,14 +1342,14 @@ public class CmnFns {
         return "-1";
     }
 
-    public int synchronizeGETProductInfo(String qrcode, String stock, String expDate, String stockinDate, String unit, String positonReceive) {
+    public int synchronizeGETProductInfo(String usercode,String qrcode, String stock, String expDate, String stockinDate, String unit, String positonReceive) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
 
         Webservice webService = new Webservice();
-        String result = webService.synchronizeGETProductInfoo(qrcode, stock);
+        String result = webService.synchronizeGETProductInfoo(usercode,qrcode, stock);
         if (result.equals("-1")) {
             return -1;
         } else if (result.equals("-8")) {
@@ -1375,6 +1375,7 @@ public class CmnFns {
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
                     String pro_name = jsonobj.getString("_PRODUCT_NAME");
                     String pro_exp = jsonobj.getString("_EXPIRED_DATE");
+                    String pro_warehouse = jsonobj.getString("_WAREHOUSE_POSITION_CD");
                     String pro_position_code = jsonobj.getString("_POSITION_CODE");
                     String pro_position_des = jsonobj.getString("_POSITION_DESCRIPTION");
                     String stockin_date = stockinDate;
@@ -1384,8 +1385,9 @@ public class CmnFns {
                     qrcode1.setPRODUCT_CD(pro_cd);
                     qrcode1.setPRODUCT_CODE(pro_code);
                     qrcode1.setPRODUCT_NAME(pro_name);
-                    qrcode1.setPOSITION_CODE("");
-                    qrcode1.setPOSITION_DESCRIPTION("");
+                    qrcode1.setWAREHOUSE_POSITION_CD(pro_warehouse);
+                    qrcode1.setPOSITION_CODE(pro_position_code);
+                    qrcode1.setPOSITION_DESCRIPTION(pro_position_des);
                     qrcode1.setSL_SET(String.valueOf(pro_set));
 
                     qrcode1.setEA_UNIT(unit);
@@ -2585,7 +2587,7 @@ public class CmnFns {
     }
 
 
-    public int synchronizeStockReceiptChecked(Context context) {
+    public int synchronizeStockReceiptChecked(Context context , String usercode) {
         try {
 
             int status = this.allowSynchronizeBy3G();
@@ -2620,7 +2622,7 @@ public class CmnFns {
             Gson gson = new GsonBuilder().create();
 
             String jsonData = gson.toJson(product);
-            String result = Webservice.synchronizeStockReceiptChecked(jsonData);
+            String result = Webservice.synchronizeStockReceiptChecked(jsonData,usercode);
             if (result.equals("1")) {
                 // đã đồng bộ thành công update để lần sau không đồng bộ lại
                 //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );

@@ -345,7 +345,7 @@ public class Webservice {
 
 
 
-    public String synchronizeGETProductInfoo(String qrcode, String stock) {
+    public String synchronizeGETProductInfoo(String usercode,String qrcode, String stock) {
 
 
         String webServiceFunc = "synchronizeGETProductInfo";
@@ -363,6 +363,12 @@ public class Webservice {
         param2.setValue(stock);
         param2.setType(String.class);
         request.addProperty(param2);
+        //         Param 3
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("Usercode");
+        param3.setValue(usercode);
+        param3.setType(String.class);
+        request.addProperty(param3);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);
@@ -521,7 +527,7 @@ public class Webservice {
         }
     }
 
-    public String synchronizeStockReceiptChecked(String json) {
+    public String synchronizeStockReceiptChecked(String json , String usercode) {
 
 
         String webServiceFunc = "synchronizeStockReceiptChecked";
@@ -532,6 +538,12 @@ public class Webservice {
         param1.setValue(json);
         param1.setType(String.class);
         request.addProperty(param1);
+
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("Usercode");
+        param2.setValue(usercode);
+        param2.setType(String.class);
+        request.addProperty(param2);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);

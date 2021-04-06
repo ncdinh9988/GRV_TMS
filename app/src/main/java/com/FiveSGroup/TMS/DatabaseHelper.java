@@ -115,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 66; // version của DB khi thay
+    public static final int DATABASE_VERSION = 67; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -171,6 +171,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //version DB 64
         try {
             db.execSQL(CREATE_TABLE_O_DATE_LPN);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_QRCODE + " ADD COLUMN  "
+                    + WAREHOUSE_POSITION_CD + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -3928,6 +3936,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String STOCK_RECEIPT_CD = "STOCK_RECEIPT_CD";
     public static final String PRODUCT_NAME = "PRODUCT_NAME";
     public static final String PRODUCT_CD = "PRODUCT_CD";
+    public static final String WAREHOUSE_POSITION_CD = "WAREHOUSE_POSITION_CD";
     public static final String SET_UNIT = "SET_UNIT";
     public static final String EA_UNIT = "EA_UNIT";
     public static final String POSITION_FROM = "POSITION_FROM";
@@ -3945,6 +3954,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + PRODUCT_CODE + " TEXT,"
             + PRODUCT_CD + " TEXT,"
             + PRODUCT_NAME + " TEXT,"
+            + WAREHOUSE_POSITION_CD + " TEXT,"
             + EXPIRED_DATE + " TEXT,"
             + SET_UNIT + " TEXT,"
             + EA_UNIT + " TEXT,"
@@ -3965,7 +3975,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(STOCK_RECEIPT_CD, qrcode.getSTOCK_RECEIPT_CD());
         values.put(PRODUCT_CODE, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME, qrcode.getPRODUCT_NAME());
-
+        values.put(WAREHOUSE_POSITION_CD, qrcode.getWAREHOUSE_POSITION_CD());
         values.put(EXPIRED_DATE, qrcode.getEXPIRED_DATE());
         values.put(SET_UNIT, qrcode.getSL_SET());
         values.put(EA_UNIT, qrcode.getEA_UNIT());
@@ -3988,6 +3998,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(PRODUCT_CODE, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME, qrcode.getPRODUCT_NAME());
         values.put(EXPIRED_DATE, exp_date);
+        values.put(WAREHOUSE_POSITION_CD, qrcode.getWAREHOUSE_POSITION_CD());
         values.put(SET_UNIT, qrcode.getSL_SET());
         values.put(EA_UNIT, qrcode.getEA_UNIT());
         values.put(POSITION_FROM, qrcode.getPRODUCT_FROM());
@@ -4147,6 +4158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(STOCK_RECEIPT_CD, qrcode.getSTOCK_RECEIPT_CD());
         values.put(PRODUCT_CODE, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME, qrcode.getPRODUCT_NAME());
+        values.put(WAREHOUSE_POSITION_CD,qrcode.getWAREHOUSE_POSITION_CD());
         values.put(EXPIRED_DATE, qrcode.getEXPIRED_DATE());
         values.put(EA_UNIT, qrcode.getEA_UNIT());
         values.put(SET_UNIT, sl);
@@ -4188,6 +4200,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_CODE))));
                 qrcodeq.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME))));
+                qrcodeq.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD))));
                 qrcodeq.setEXPIRED_DATE((c.getString(c
                         .getColumnIndex(EXPIRED_DATE))));
                 qrcodeq.setSL_SET((c.getString(c
@@ -4241,6 +4255,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_CODE))));
                 qrcodeq.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME))));
+                qrcodeq.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD))));
                 qrcodeq.setEXPIRED_DATE((c.getString(c
                         .getColumnIndex(EXPIRED_DATE))));
                 qrcodeq.setSL_SET((c.getString(c
@@ -4287,6 +4303,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_CODE))));
                 qrcodeq.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME))));
+                qrcodeq.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD))));
                 qrcodeq.setEXPIRED_DATE((c.getString(c
                         .getColumnIndex(EXPIRED_DATE))));
                 qrcodeq.setSL_SET((c.getString(c
@@ -4298,7 +4316,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 qrcodeq.setPRODUCT_FROM((c.getString(c
                         .getColumnIndex(POSITION_FROM))));
                 qrcodeq.setPRODUCT_TO((c.getString(c
-                        .getColumnIndex(POSITION_TO))));
+                        .getColumnIndex(WAREHOUSE_POSITION_CD))));
                 qrcodeq.setPOSITION_CODE((c.getString(c
                         .getColumnIndex(POSITION_CODE))));
                 qrcodeq.setPOSITION_DESCRIPTION((c.getString(c
@@ -4328,6 +4346,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Qrcode qrcodeq = new Product_Qrcode();
                 qrcodeq.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_PO))));
+                qrcodeq.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
