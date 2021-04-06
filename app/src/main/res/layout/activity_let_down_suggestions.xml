@@ -38,7 +38,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="SL"
+            android:text="Tồn"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -71,7 +71,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="VT Lấy Hàng"
+            android:text="VT Lấy Hàng : SL"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />

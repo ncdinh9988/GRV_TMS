@@ -7,9 +7,9 @@ android {
         applicationId "com.FiveSGroup.TMS"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 7826
+        versionCode 7827
         // ngày _ web _ apk
-        versionName "TMS_210404_7849_7826"
+        versionName "TMS_210406_7850_7827"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

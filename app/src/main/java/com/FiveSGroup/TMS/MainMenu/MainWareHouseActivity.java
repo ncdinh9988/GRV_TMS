@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.global;
 
 import java.util.ArrayList;
 
@@ -66,7 +67,15 @@ public class MainWareHouseActivity extends AppCompatActivity {
             MenuItemObject object = new MenuItemObject();
             object.setNameItem(name[i]);
             object.setImageItem(images[i]);
-            arrItem.add(object);
+            if (global.getHide_Warehouse_Adjustment().equals("pro")){
+                if(i==9){
+
+                }else{
+                    arrItem.add(object);
+                }
+            }else{
+                arrItem.add(object);
+            }
         }
     }
 

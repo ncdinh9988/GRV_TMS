@@ -65,7 +65,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.tvExpired.setText(product.getEXPIRED_DATE());
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
 
-//        holder.btnvtdi.setEnabled(false);
+        holder.btnvtdi.setEnabled(false);
         holder.btnvtden.setEnabled(false);
 
         holder.layoutFrom.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));

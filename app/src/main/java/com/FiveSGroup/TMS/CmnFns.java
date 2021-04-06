@@ -931,6 +931,9 @@ public class CmnFns {
                 return Integer.parseInt(result);
             } else {
                 // Gán các URL(kết nối tới server nào), Username, Pass từ FSID do getInfo lấy được
+                if(result.contains("grv.fieldvision.com.vn:54573")){
+                    global.setHide_Warehouse_Adjustment("pro");
+                }
                 String[] arr = result.split(global.SPLIT_KEY);
                 global.setUrlWebserviceToSynchronize(arr[0]);
                 global.setUserNameAuthWebsevice(arr[1]);

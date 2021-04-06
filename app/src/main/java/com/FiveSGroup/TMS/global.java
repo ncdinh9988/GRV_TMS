@@ -164,6 +164,16 @@ public class global extends Application {
         MasterPickCd = masterPickCd;
     }
 
+    private static String Hide_Warehouse_Adjustment ="";
+
+    public static String getHide_Warehouse_Adjustment() {
+        return Hide_Warehouse_Adjustment;
+    }
+
+    public static void setHide_Warehouse_Adjustment(String hide_Warehouse_Adjustment) {
+        Hide_Warehouse_Adjustment = hide_Warehouse_Adjustment;
+    }
+
     private static String ReturnCD = "";
 
     public static String getReturnCD() {
