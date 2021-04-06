@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="2dp"
-            android:layout_weight="3"
+            android:layout_weight="2.4"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -81,42 +81,44 @@
             android:id="@+id/tvProductSuggestAmount"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
-            android:text="SL"
+            android:text="SL-ĐV"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tvProductSuggestUnit"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="Đơn vị"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/tvProductSuggestUnit"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="2"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Đơn vị"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="16sp" />-->
 
         <TextView
             android:id="@+id/tvProductSuggestPositionFrom"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="2.8"
             android:gravity="center"
             android:padding="10dp"
+            android:textStyle="bold"
             android:text="VT Cần Châm"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvProductSuggestPositionTo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="2.8"
             android:gravity="center"
+            android:textStyle="bold"
             android:text="VT Gợi Ý"
             android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
 
     </LinearLayout>

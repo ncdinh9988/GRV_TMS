@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
+import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.global;
 
@@ -62,12 +63,12 @@ public class MainWareHouseActivity extends AppCompatActivity {
         int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho, R.drawable.ic_putaway, R.drawable.ic_letdown,
                 R.drawable.ic_chuyen_vi_tri,  R.drawable.ic_master_pick , R.drawable.ic_picklist, R.drawable.ic_xuat_kho,
                 R.drawable.ic_kiem_ton, R.drawable.ic_chinh_kho , R.drawable.ic_go_san_pham, R.drawable.ic_tra_hang};
-
+        String Lock_Wh_Adjustment = DatabaseHelper.getInstance().getParamByKey("LOCK_WH_Adjustment").getValue();
         for(int i = 0; i < name.length; i ++){
             MenuItemObject object = new MenuItemObject();
             object.setNameItem(name[i]);
             object.setImageItem(images[i]);
-            if (global.getHide_Warehouse_Adjustment().equals("pro")){
+            if (Lock_Wh_Adjustment.equals("1")){
                 if(i==9){
 
                 }else{

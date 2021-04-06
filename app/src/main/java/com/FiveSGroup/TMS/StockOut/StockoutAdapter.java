@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,8 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
         if(!product.getLPN_CODE().equals("")){
             holder.edt.setEnabled(false);
         }
+        holder.btnvtdi.setEnabled(false);
+        holder.layoutTo.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
 
         holder.tvExpired.setText(product.getEXPIRED_DATE());
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
@@ -228,6 +231,7 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
         TextView tvExpired, tvStockin;
         EditText edt;
+        LinearLayout layoutTo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -237,6 +241,7 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
+            layoutTo = itemView.findViewById(R.id.layoutTo);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);

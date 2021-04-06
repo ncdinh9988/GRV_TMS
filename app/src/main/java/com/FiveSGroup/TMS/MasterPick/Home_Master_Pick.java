@@ -64,7 +64,7 @@ public class Home_Master_Pick extends AppCompatActivity {
         btnShow = findViewById(R.id.btnShow);
         btnLpn = findViewById(R.id.btnlpn);
         layout = findViewById(R.id.layout);
-        urlStockReceipt = DatabaseHelper.getInstance().getParamByKey("URL_PickListHH").getValue();;
+        urlStockReceipt = DatabaseHelper.getInstance().getParamByKey("URL_PickListHH").getValue();
         btnLpn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

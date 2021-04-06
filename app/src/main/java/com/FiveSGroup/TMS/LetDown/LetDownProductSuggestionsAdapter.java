@@ -61,7 +61,7 @@ public class LetDownProductSuggestionsAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(layout, null);
             viewHolder.tvProductSuggestionName= convertView.findViewById(R.id.tvProductSuggestName);
             viewHolder.tvCodeProductSuggest = convertView.findViewById(R.id.tvCodeProductSuggest);
-            viewHolder.tvProductSuggestUnit = convertView.findViewById(R.id.tvProductSuggestUnit);
+//            viewHolder.tvProductSuggestUnit = convertView.findViewById(R.id.tvProductSuggestUnit);
             viewHolder.tvProductSuggestionAmount = convertView.findViewById(R.id.tvProductSuggestAmount);
             viewHolder.tvProductSuggestionPositionFrom = convertView.findViewById(R.id.tvProductSuggestPositionFrom);
             viewHolder.tvProductSuggestionPositionTo = convertView.findViewById(R.id.tvProductSuggestPositionTo);
@@ -75,8 +75,8 @@ public class LetDownProductSuggestionsAdapter extends BaseAdapter {
         LetDownProductSuggest productSuggest = (LetDownProductSuggest) getItem(position);
         viewHolder.tvProductSuggestionName.setText(productSuggest.getProductName());
         viewHolder.tvCodeProductSuggest.setText(productSuggest.getProductCode());
-        viewHolder.tvProductSuggestionAmount.setText(productSuggest.getProductAmount());
-        viewHolder.tvProductSuggestUnit.setText(productSuggest.getProductUnit());
+        viewHolder.tvProductSuggestionAmount.setText(productSuggest.getProductAmount()+" "+productSuggest.getProductUnit());
+//        viewHolder.tvProductSuggestUnit.setText(productSuggest.getProductUnit());
         viewHolder.tvProductSuggestionPositionFrom.setText(productSuggest.getProductPositionFrom());
         viewHolder.tvProductSuggestionPositionTo.setText(productSuggest.getProductPositionTo());
 //        viewHolder.tvProductSuggestionExpDate.setText(productSuggest.getProductExpDate());

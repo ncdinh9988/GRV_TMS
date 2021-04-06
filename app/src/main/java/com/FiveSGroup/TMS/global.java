@@ -14,7 +14,8 @@ public class global extends Application {
     // tham số này được lấy từ Server
     private static String UserNameAuthWebsevice = "";
     private static String PasswordNameAuthWebsevice = "";
-    //http:///Webservice/Synchronize.asmx
+
+//http:///Webservice/Synchronize.asmx
 //    private static String UrlDeliveryCusomerList = "http://grv.fieldvision.com.vn:54573/TMS/DeliveryCustomerList.aspx?deliverer=";
 
 //   private static String UrlDeliveryCusomerList = "http://111.222.3.199:54572/TMS/DeliveryCustomerList.aspx?deliverer=";

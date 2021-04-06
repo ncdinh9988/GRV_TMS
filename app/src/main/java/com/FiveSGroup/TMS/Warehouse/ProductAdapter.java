@@ -69,6 +69,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.btnvtden.setEnabled(false);
 
         holder.layoutFrom.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
+        holder.layoutTo.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
 
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,7 +231,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
         TextView tvExpired, tvStockin;
         EditText edt;
-        LinearLayout layoutFrom;
+        LinearLayout layoutFrom , layoutTo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -243,6 +244,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
 
             layoutFrom = itemView.findViewById(R.id.layoutFrom);
+            layoutTo = itemView.findViewById(R.id.layoutTo);
             tvUnit = itemView.findViewById(R.id.tvUnit);
 
             tvStockin = itemView.findViewById(R.id.tvStockin);

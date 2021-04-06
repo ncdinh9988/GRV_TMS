@@ -931,9 +931,6 @@ public class CmnFns {
                 return Integer.parseInt(result);
             } else {
                 // Gán các URL(kết nối tới server nào), Username, Pass từ FSID do getInfo lấy được
-                if(result.contains("grv.fieldvision.com.vn:54573")){
-                    global.setHide_Warehouse_Adjustment("pro");
-                }
                 String[] arr = result.split(global.SPLIT_KEY);
                 global.setUrlWebserviceToSynchronize(arr[0]);
                 global.setUserNameAuthWebsevice(arr[1]);
@@ -2873,6 +2870,18 @@ public class CmnFns {
 
                 JSONObject jsonobj = jsonarray.getJSONObject(i);
                 if (jsonobj.getString("ParamKey").toString().equals("URL_Delivery")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+
+//                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
+                if (jsonobj.getString("ParamKey").toString().equals("LOCK_WH_Adjustment")) {
                     CParam param = new CParam();
                     param.setKey(jsonobj.getString("ParamKey"));
                     param.setValue(jsonobj.getString("ParamValue"));
