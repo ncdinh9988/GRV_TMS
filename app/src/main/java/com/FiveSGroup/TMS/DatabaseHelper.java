@@ -115,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 67; // version của DB khi thay
+    public static final int DATABASE_VERSION = 69; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -183,6 +183,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             // TODO: handle exception
         }
+        try {
+            db.execSQL("ALTER TABLE " + O_QRCODE + " ADD COLUMN  "
+                    + MANUFACTURING_DATE_WST + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_STOCK_OUT + " ADD COLUMN  "
+                    + WAREHOUSE_POSITION_CD_STOCK_OUT + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
 
     }
 
@@ -2791,6 +2807,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //DATABASE PUT STOCK_OUT
     public static final String O_STOCK_OUT = "O_STOCK_OUT";
+    public static final String WAREHOUSE_POSITION_CD_STOCK_OUT = "WAREHOUSE_POSITION_CD_STOCK_OUT";
     public static final String AUTOINCREMENT_STOCK_OUT = "AUTOINCREMENT_STOCK_OUT";
     public static final String PRODUCT_CODE_STOCK_OUT = "PRODUCT_CODE";
     public static final String PRODUCT_NAME_STOCK_OUT = "PRODUCT_NAME";
@@ -2817,6 +2834,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + O_STOCK_OUT + "("
             + AUTOINCREMENT_STOCK_OUT + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
             + PRODUCT_CD_STOCK_OUT + " TEXT,"
+            + WAREHOUSE_POSITION_CD_STOCK_OUT + " TEXT,"
             + PRODUCT_NAME_STOCK_OUT + " TEXT,"
             + PRODUCT_CODE_STOCK_OUT + " TEXT,"
             + QTY_EA_AVAILABLE_STOCK_OUT + " TEXT,"
@@ -2847,6 +2865,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(UNIQUE_CODE_STOCK_OUT, stockOut.getUNIT());
         values.put(PRODUCT_CODE_STOCK_OUT, stockOut.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_STOCK_OUT, stockOut.getPRODUCT_NAME());
+        values.put(WAREHOUSE_POSITION_CD_STOCK_OUT, stockOut.getWAREHOUSE_POSITION_CD());
         values.put(PRODUCT_CD_STOCK_OUT, stockOut.getPRODUCT_CD());
         values.put(QTY_SET_AVAILABLE_STOCK_OUT, stockOut.getQTY());
         values.put(STOCKIN_DATE_STOCK_OUT, stockOut.getSTOCKIN_DATE());
@@ -2960,6 +2979,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_StockOut stockOut = new Product_StockOut();
                 stockOut.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_STOCK_OUT))));
+                stockOut.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_STOCK_OUT))));
                 stockOut.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_STOCK_OUT))));
                 stockOut.setPRODUCT_CODE((c.getString(c
@@ -2989,7 +3010,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_Stockout_Sync(String stockout_cd) {
         ArrayList<Product_StockOut> stockOuts = new ArrayList<Product_StockOut>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_STOCK_OUT + " where " + STOCKOUT_CD + " = " + stockout_cd;
+        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
+                "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
+                "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_STOCK_OUT +
+                " where " + STOCKOUT_CD + " = " + stockout_cd;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -2999,6 +3023,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 stock.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_STOCK_OUT))));
+                stock.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_STOCK_OUT))));
                 stock.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_STOCK_OUT))));
                 stock.setPRODUCT_NAME((c.getString(c
@@ -3056,6 +3082,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_StockOut stock = new Product_StockOut();
                 stock.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_STOCK_OUT))));
+                stock.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_STOCK_OUT))));
                 stock.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_STOCK_OUT))));
                 stock.setPRODUCT_CODE((c.getString(c
@@ -3931,6 +3959,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Table O_QRCODE dành cho Nhập Kho trong THỦ KHO
 
     public static final String O_QRCODE = "O_QRCODE";
+    public static final String MANUFACTURING_DATE_WST = "MANUFACTURING_DATE_WST";
     public static final String AUTOINCREMENT_PO = "AUTOINCREMENT_PO";
     public static final String PRODUCT_CODE = "PRODUCT_CODE";
     public static final String STOCK_RECEIPT_CD = "STOCK_RECEIPT_CD";
@@ -3951,6 +3980,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + O_QRCODE + "("
             + AUTOINCREMENT_PO + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
             + STOCK_RECEIPT_CD + " TEXT,"
+            + MANUFACTURING_DATE_WST + " TEXT,"
             + PRODUCT_CODE + " TEXT,"
             + PRODUCT_CD + " TEXT,"
             + PRODUCT_NAME + " TEXT,"
@@ -3972,6 +4002,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(AUTOINCREMENT_PO, qrcode.getAUTOINCREMENT());
         values.put(PRODUCT_CD, qrcode.getPRODUCT_CD());
+        values.put(MANUFACTURING_DATE_WST, qrcode.getMANUFACTURING_DATE());
         values.put(STOCK_RECEIPT_CD, qrcode.getSTOCK_RECEIPT_CD());
         values.put(PRODUCT_CODE, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME, qrcode.getPRODUCT_NAME());
@@ -3989,7 +4020,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public int updateProduct_Qrcode(Product_Qrcode qrcode, String PRODUCT_CD, String stock, String exp_date, String ea_unit) {
+    public int updateProduct_Qrcode(Product_Qrcode qrcode, String PRODUCT_CD, String stock, String exp_date, String ea_unit , String stockindate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -3997,6 +4028,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(STOCK_RECEIPT_CD, qrcode.getSTOCK_RECEIPT_CD());
         values.put(PRODUCT_CODE, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME, qrcode.getPRODUCT_NAME());
+        values.put(MANUFACTURING_DATE_WST, qrcode.getMANUFACTURING_DATE());
         values.put(EXPIRED_DATE, exp_date);
         values.put(WAREHOUSE_POSITION_CD, qrcode.getWAREHOUSE_POSITION_CD());
         values.put(SET_UNIT, qrcode.getSL_SET());
@@ -4005,8 +4037,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO, qrcode.getPRODUCT_TO());
         values.put(STOCKIN_DATE, qrcode.getSTOCKIN_DATE());
         // updating row
-        return db.update(O_QRCODE, values, "PRODUCT_CD" + " = ?" + " AND STOCK_RECEIPT_CD = ? AND EXPIRED_DATE = ?  AND EA_UNIT = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(stock), String.valueOf(exp_date), String.valueOf(ea_unit)});
+        return db.update(O_QRCODE, values, "PRODUCT_CD" + " = ?" + " AND STOCK_RECEIPT_CD = ? AND EXPIRED_DATE = ? AND STOCKIN_DATE = ?  AND EA_UNIT = ?",
+                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(stock), String.valueOf(exp_date),String.valueOf(stockindate) ,String.valueOf(ea_unit)});
 
     }
 
@@ -4158,6 +4190,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(STOCK_RECEIPT_CD, qrcode.getSTOCK_RECEIPT_CD());
         values.put(PRODUCT_CODE, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME, qrcode.getPRODUCT_NAME());
+        values.put(MANUFACTURING_DATE_WST, qrcode.getMANUFACTURING_DATE());
         values.put(WAREHOUSE_POSITION_CD,qrcode.getWAREHOUSE_POSITION_CD());
         values.put(EXPIRED_DATE, qrcode.getEXPIRED_DATE());
         values.put(EA_UNIT, qrcode.getEA_UNIT());
@@ -4194,6 +4227,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Qrcode qrcodeq = new Product_Qrcode();
                 qrcodeq.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_PO))));
+                qrcodeq.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_WST))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
@@ -4249,6 +4284,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Qrcode qrcodeq = new Product_Qrcode();
                 qrcodeq.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_PO))));
+                qrcodeq.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_WST))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
@@ -4289,7 +4326,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_Qrcode_Sync(String stock) {
         ArrayList<Product_Qrcode> qrcode = new ArrayList<Product_Qrcode>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT WAREHOUSE_POSITION_CD, STOCK_RECEIPT_CD, PRODUCT_CD, PRODUCT_CODE, PRODUCT_NAME, SET_UNIT, POSITION_FROM, POSITION_TO" +
+        String selectQuery = "SELECT MANUFACTURING_DATE_WST , WAREHOUSE_POSITION_CD, STOCK_RECEIPT_CD, PRODUCT_CD, PRODUCT_CODE, PRODUCT_NAME, SET_UNIT, POSITION_FROM, POSITION_TO" +
                 ", POSITION_CODE, POSITION_DESCRIPTION, EA_UNIT , REPLACE(EXPIRED_DATE,'------','') as EXPIRED_DATE, REPLACE(STOCKIN_DATE,'------','') as STOCKIN_DATE FROM " + O_QRCODE + " " + " WHERE " + STOCK_RECEIPT_CD + " = " + stock;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -4299,6 +4336,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Qrcode qrcodeq = new Product_Qrcode();
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD))));
+                qrcodeq.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_WST))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE))));
                 qrcodeq.setPRODUCT_NAME((c.getString(c
@@ -4346,6 +4385,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Qrcode qrcodeq = new Product_Qrcode();
                 qrcodeq.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_PO))));
+                qrcodeq.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_WST))));
                 qrcodeq.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
@@ -5211,7 +5252,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
             do {
-
                 InventoryProduct qrcodeq = new InventoryProduct();
                 qrcodeq.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_INVENTORY))));
@@ -5231,8 +5271,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(POSITION_FROM_CODE_INVENTORY))));
                 qrcodeq.setPOSITION_TO_CODE((c.getString(c
                         .getColumnIndex(POSITION_TO_CODE_INVENTORY))));
-
-
                 qrcode.add(qrcodeq);
             } while (c.moveToNext());
         }
@@ -5254,7 +5292,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 InventoryProduct product = new InventoryProduct();
                 product.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_INVENTORY))));
-
                 product.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_INVENTORY))));
                 product.setPRODUCT_CODE((c.getString(c

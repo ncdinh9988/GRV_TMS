@@ -1342,7 +1342,8 @@ public class CmnFns {
         return "-1";
     }
 
-    public int synchronizeGETProductInfo(String usercode,String qrcode, String stock, String expDate, String stockinDate, String unit, String positonReceive) {
+    public int synchronizeGETProductInfo(String usercode,String qrcode, String stock, String expDate, String stockinDate,
+                                         String unit, String positonReceive ) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -1374,11 +1375,11 @@ public class CmnFns {
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
                     String pro_name = jsonobj.getString("_PRODUCT_NAME");
-                    String pro_exp = jsonobj.getString("_EXPIRED_DATE");
+//                    String pro_exp = jsonobj.getString("_EXPIRED_DATE");
                     String pro_warehouse = jsonobj.getString("_WAREHOUSE_POSITION_CD");
                     String pro_position_code = jsonobj.getString("_POSITION_CODE");
                     String pro_position_des = jsonobj.getString("_POSITION_DESCRIPTION");
-                    String stockin_date = stockinDate;
+
                     int pro_set = 1;
 
                     Product_Qrcode qrcode1 = new Product_Qrcode();
@@ -1389,9 +1390,11 @@ public class CmnFns {
                     qrcode1.setPOSITION_CODE(pro_position_code);
                     qrcode1.setPOSITION_DESCRIPTION(pro_position_des);
                     qrcode1.setSL_SET(String.valueOf(pro_set));
+                    qrcode1.setMANUFACTURING_DATE(stockinDate);
+
 
                     qrcode1.setEA_UNIT(unit);
-                    qrcode1.setSTOCKIN_DATE(stockin_date);
+                    qrcode1.setSTOCKIN_DATE(stockinDate);
 
 
                     qrcode1.setEXPIRED_DATE(expDate);
@@ -1416,7 +1419,7 @@ public class CmnFns {
 
                     if (expDate != null) {
                         ArrayList<Product_Qrcode> product_qrcodes = DatabaseHelper.getInstance().
-                                getoneProduct_Qrcode(qrcode1.getPRODUCT_CD(), qrcode1.getSTOCK_RECEIPT_CD(), expDate, qrcode1.getEA_UNIT(), stockin_date);
+                                getoneProduct_Qrcode(qrcode1.getPRODUCT_CD(), qrcode1.getSTOCK_RECEIPT_CD(), expDate, qrcode1.getEA_UNIT(), stockinDate);
                         if (product_qrcodes.size() > 0) {
                             Product_Qrcode product = product_qrcodes.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getEA_UNIT()))) {
@@ -1425,7 +1428,7 @@ public class CmnFns {
                                 product_set += pro_set;
                                 product_qrcodes.get(i).setSL_SET(String.valueOf(product_set));
                                 DatabaseHelper.getInstance().updateProduct_Qrcode(updateProductQR, updateProductQR.getPRODUCT_CD(),
-                                        updateProductQR.getSTOCK_RECEIPT_CD(), updateProductQR.getEXPIRED_DATE(), updateProductQR.getEA_UNIT());
+                                        updateProductQR.getSTOCK_RECEIPT_CD(), updateProductQR.getEXPIRED_DATE(), updateProductQR.getEA_UNIT(),updateProductQR.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().CreateProduct_Qrcode(qrcode1);
                             }
@@ -1670,7 +1673,7 @@ public class CmnFns {
                     return_wareHouse.setLPN_CODE(lpnCode);
 
                     return_wareHouse.setPOSITION_TO_CODE(positionTo);
-                    return_wareHouse.setPOSITION_TO_DESCRIPTION("---");
+                    return_wareHouse.setPOSITION_TO_DESCRIPTION("");
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -1819,7 +1822,7 @@ public class CmnFns {
                     masterPick.setLPN_CODE(lpnCode);
 
                     masterPick.setPOSITION_TO_CODE(positionTo);
-                    masterPick.setPOSITION_TO_DESCRIPTION("---");
+                    masterPick.setPOSITION_TO_DESCRIPTION("");
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -1960,6 +1963,7 @@ public class CmnFns {
                     stockOut.setPOSITION_FROM_CD(warePosition);
                     stockOut.setPOSITION_TO_CD(warePosition);
                     stockOut.setSTOCKOUT_CD(stockoutCD);
+                    stockOut.setWAREHOUSE_POSITION_CD(warePosition);
                     String positionTo = "---";
                     String positionFrom = "---";
                     String lpn_From = "";
@@ -1969,7 +1973,7 @@ public class CmnFns {
                     stockOut.setLPN_CODE(lpnCode);
 
                     stockOut.setPOSITION_TO_CODE(positionTo);
-                    stockOut.setPOSITION_TO_DESCRIPTION("---");
+                    stockOut.setPOSITION_TO_DESCRIPTION("");
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -2009,7 +2013,6 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().CreateSTOCK_OUT(stockOut);
                             }
-
                         } else {
                             DatabaseHelper.getInstance().CreateSTOCK_OUT(stockOut);
                         }
@@ -2131,7 +2134,7 @@ public class CmnFns {
                     putAway.setLPN_CODE(lpnCode);
 
                     putAway.setPOSITION_TO_CODE(positionTo);
-                    putAway.setPOSITION_TO_DESCRIPTION("---");
+                    putAway.setPOSITION_TO_DESCRIPTION("");
                     putAway.setSUGGESTION_POSITION(suggestionPosition);
 
                     // 1 là LPN
@@ -2292,7 +2295,7 @@ public class CmnFns {
                     pickList.setLPN_CODE(lpnCode);
 
                     pickList.setPOSITION_TO_CODE(positionTo);
-                    pickList.setPOSITION_TO_DESCRIPTION("---");
+                    pickList.setPOSITION_TO_DESCRIPTION("");
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -3093,7 +3096,7 @@ public class CmnFns {
 
                     product_loadPallet.setPOSITION_TO_CODE(positionTo);
 
-                    product_loadPallet.setPOSITION_TO_DESCRIPTION("---");
+                    product_loadPallet.setPOSITION_TO_DESCRIPTION("");
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -3245,7 +3248,7 @@ public class CmnFns {
 
                     productStockTransfer.setPOSITION_TO_CODE(positionTo);
 
-                    productStockTransfer.setPOSITION_TO_DESCRIPTION("---");
+                    productStockTransfer.setPOSITION_TO_DESCRIPTION("");
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -3395,7 +3398,7 @@ public class CmnFns {
 
                     productRemoveLpn.setPOSITION_TO_CODE(positionTo);
 
-                    productRemoveLpn.setPOSITION_TO_DESCRIPTION("---");
+                    productRemoveLpn.setPOSITION_TO_DESCRIPTION("");
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -3552,7 +3555,7 @@ public class CmnFns {
                     letDown.setLPN_CODE(lpnCode);
 
                     letDown.setPOSITION_TO_CODE(positionTo);
-                    letDown.setPOSITION_TO_DESCRIPTION("---");
+                    letDown.setPOSITION_TO_DESCRIPTION("");
 
                     letDown.setSUGGESTION_POSITION(suggestionPosition);
 

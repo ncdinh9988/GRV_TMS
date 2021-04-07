@@ -198,7 +198,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
             String value0 = "---";
             String valueAm1 = "-1";
             String valueFromCode = stockOut.getPOSITION_FROM_CODE();
-            String valueToCode = stockOut.getPOSITION_TO_CODE();
+//            String valueToCode = stockOut.getPOSITION_TO_CODE();
             String positionCode = stockOut.getPOSITION_FROM_CODE();
             String valueCode = stockOut.getLPN_CODE();
             if (valueFromCode.equals("") || valueFromCode.equals("---")) {
@@ -206,7 +206,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
                     check = true;
                 }
             }else {
-                if ((valueFromCode.equals("")) ||(valueToCode.equals("---"))) {
+                if (valueFromCode.equals("")) {
                     check = true;
                 }
             }

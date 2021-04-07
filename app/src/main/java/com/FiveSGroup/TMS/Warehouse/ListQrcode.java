@@ -56,6 +56,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
     String ea_unit_position = "";
     String stockinDate = "";
 
+
     String clickShowListCode = "";
 
     String lpn = "";
@@ -273,6 +274,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         expDate1 = intent.getStringExtra("expdate");
         put_away = intent.getStringExtra("put_away");
         ea_unit = intent.getStringExtra("ea_unit");
+
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         stockinDate = intent.getStringExtra("stockin_date");
         lpn = intent.getStringExtra("lpn");
@@ -857,7 +859,8 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZonePutaway(ListQrcode.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+            int postitionDes = new CmnFns().synchronizeGETProductByZonePutaway(ListQrcode.this, value1,
+                    CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN );
 
             Dialog dialog = new Dialog(ListQrcode.this);
 
@@ -913,7 +916,8 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
             SharedPreferences sharedPreferences = getSharedPreferences("stockReceipt", Context.MODE_PRIVATE);
             String stockReceipt = sharedPreferences.getString("stock", "");
 
-            int statusGetCust = new CmnFns().synchronizeGETProductInfo(saleCode ,value1, stockReceipt, expDate, stockinDate, ea_unit, positonReceive);
+            int statusGetCust = new CmnFns().synchronizeGETProductInfo(saleCode ,value1, stockReceipt, expDate, stockinDate,
+                    ea_unit, positonReceive );
 
             Dialog dialog = new Dialog(ListQrcode.this);
 

@@ -28,24 +28,33 @@ import com.FiveSGroup.TMS.StockTransfer.ListStockTransfer;
 import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.ListQrcode_Warehouse_Adjustment;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class SelectPropertiesProductActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private TextView tvProductSelectName;
-    private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate;
+    private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate , edtSelectShelfLife;
     private Spinner spinnerProductUnit;
     private DatePickerDialog pickerDialog;
     private ArrayList<String> units;
     private ArrayAdapter<String> adapter;
     private Button btnBack, btnConfirm;
+    private Date date ;
+    private Integer shelfLife1  ;
     private String barcode = "",
             returnposition = "",
             returnCD = "",
             returnStock = "",
             selectedUnit = "",
-            typeScan = "";
+            stockinDate = "",
+            shelfLife = "",
+            typeScan = "" ,
+            exp_date = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +142,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         tvProductSelectName = findViewById(R.id.tvSelectProductName);
         edtSelectProductExpiredDate = findViewById(R.id.edtSelectProductExpiredDate);
         edtSelectProductStockinDate = findViewById(R.id.edtSelectProductStockinDate);
+        edtSelectShelfLife = findViewById(R.id.edtSelectShelfLife);
         spinnerProductUnit = findViewById(R.id.spinnerProductUnit);
         edtSelectProductExpiredDate.setOnClickListener(this);
         edtSelectProductStockinDate.setOnClickListener(this);
@@ -168,8 +178,10 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             case R.id.btnConfirmProductProperties:
                 savePropertiesToProduct();
                 break;
+
         }
     }
+
 
     private void savePropertiesToProduct() {
         switch (typeScan) {
@@ -221,16 +233,37 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         if(spinnerProductUnit.getSelectedItem().toString().isEmpty()) {
             Toast.makeText(this, "Vui lòng chọn đơn vị ", Toast.LENGTH_SHORT).show();
         }else{
+
             String expiredDate = edtSelectProductExpiredDate.getText().toString().trim();
-            String stockinDate = edtSelectProductStockinDate.getText().toString().trim();
+            stockinDate = edtSelectProductStockinDate.getText().toString().trim();
+            shelfLife = edtSelectShelfLife.getText().toString().trim();
             String unit = spinnerProductUnit.getSelectedItem().toString();
+            try {
+                date =new SimpleDateFormat("dd/MM/yyyy").parse(stockinDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if(!expiredDate.equals("")){
+                exp_date = expiredDate;
+            }else if((!stockinDate.equals("")) && (!shelfLife.equals(""))){
+                shelfLife1 = Integer.valueOf(shelfLife);
+                SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                //Convert Date to Calendar
+                Calendar calendar = obj.dateToCalendar(date);
+                calendar.add(Calendar.MONTH, shelfLife1);
+                // Convert Calendar to Date
+                Date newDate = obj.calendarToDate(calendar);
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                exp_date = dateFormat.format(newDate);
+            }
 
             Intent intent = new Intent(SelectPropertiesProductActivity.this, activity);
             intent.putExtra("btn1", barcode);
             intent.putExtra("returnposition", returnposition);
             intent.putExtra("returnCD", returnCD);
             intent.putExtra("returnStock", returnStock);
-            intent.putExtra("exp_date", expiredDate);
+            intent.putExtra("exp_date", exp_date);
             intent.putExtra("stockin_date", stockinDate);
             intent.putExtra("ea_unit", unit);
             intent.putExtra(type, type);
@@ -240,6 +273,18 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
 //        }
     }
 
+    //Convert Calendar to Date
+    private Date calendarToDate(Calendar calendar) {
+        return calendar.getTime();
+    }
+    //Convert Date to Calendar
+    private Calendar dateToCalendar(Date date) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+
+    }
     private void selectDate(final int viewId) {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);

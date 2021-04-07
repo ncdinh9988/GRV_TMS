@@ -17,6 +17,15 @@ public class Product_Qrcode {
     private String POSITION_DESCRIPTION ;
     private String STOCKIN_DATE;
     private String WAREHOUSE_POSITION_CD;
+    private String MANUFACTURING_DATE ;
+
+    public String getMANUFACTURING_DATE() {
+        return MANUFACTURING_DATE;
+    }
+
+    public void setMANUFACTURING_DATE(String MANUFACTURING_DATE) {
+        this.MANUFACTURING_DATE = MANUFACTURING_DATE;
+    }
 
     public String getWAREHOUSE_POSITION_CD() {
         return WAREHOUSE_POSITION_CD;
