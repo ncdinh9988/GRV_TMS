@@ -26,6 +26,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -56,6 +57,7 @@ import com.FiveSGroup.TMS.Webservice.Webservice;
 import com.FiveSGroup.TMS.Webservice.WebserviceAuth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -2625,6 +2627,21 @@ public class CmnFns {
             Gson gson = new GsonBuilder().create();
 
             String jsonData = gson.toJson(product);
+            try {
+                    JSONArray jsonarray = new JSONArray(jsonData);
+                    for (int j = 0; j < jsonarray.length(); j++) {
+                        // lấy một đối tượng json để
+                        JSONObject jsonobj = jsonarray.getJSONObject(j);
+                        String sl_set = jsonobj.getString("SL_SET");
+                        Log.d("ddddddd", sl_set);
+                        if (sl_set.equals("0") || sl_set.equals("") || sl_set.equals("00") || sl_set.equals("000")) {
+                            return -24;
+                        }
+
+                    }
+            }catch (Exception e){
+
+            }
             String result = Webservice.synchronizeStockReceiptChecked(jsonData,usercode);
             if (result.equals("1")) {
                 // đã đồng bộ thành công update để lần sau không đồng bộ lại
@@ -2642,8 +2659,8 @@ public class CmnFns {
 
     }
 
-
     public int synchronizeData(String usercode, String type, String CD) {
+
         try {
 
             int status = this.allowSynchronizeBy3G();
@@ -2716,6 +2733,25 @@ public class CmnFns {
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
+            }
+
+            try {
+
+                if((!type.equals("WWA")) || (!type.equals("WST"))) {
+                    JSONArray jsonarray = new JSONArray(jsonData);
+                    for (int j = 0; j < jsonarray.length(); j++) {
+                        // lấy một đối tượng json để
+                        JSONObject jsonobj = jsonarray.getJSONObject(j);
+                        String qty = jsonobj.getString("QTY");
+                        Log.d("ddddddd", qty);
+                        if (qty.equals("0") || qty.equals("") || qty.equals("00") || qty.equals("000")) {
+                            return -24;
+                        }
+
+                    }
+                }
+            }catch (Exception e){
+
             }
 
             // lấy các khách hàng chưa đồng bộ, đã

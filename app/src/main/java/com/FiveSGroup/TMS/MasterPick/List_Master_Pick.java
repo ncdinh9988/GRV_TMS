@@ -313,6 +313,9 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                         } else if (result == -13) {
                             dialog.showDialog(List_Master_Pick.this, "Dữ liệu không hợp lệ");
 
+                        }else if (result == -24) {
+                            dialog.showDialog(List_Master_Pick.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
                         }
 
                     }

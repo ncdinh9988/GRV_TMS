@@ -28,6 +28,7 @@ import com.FiveSGroup.TMS.Inventory.InventoryProduct;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.RemoveFromLPN.List_Remove_LPN;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.Wv_ShowResultQrode;
 
@@ -288,7 +289,10 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                         } else if (result == -13) {
                             dialog.showDialog(LetDownActivity.this, "Dữ liệu không hợp lệ");
 
-                        } else {
+                        } else if (result == -24) {
+                            dialog.showDialog(LetDownActivity.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
+                        }else {
                             dialog.showDialog(LetDownActivity.this, "Lưu thất bại");
                         }
 

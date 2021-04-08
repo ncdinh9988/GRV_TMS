@@ -189,15 +189,14 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
 
     private boolean isQuanityZero() {
         boolean check = false;
-        List<Product_StockTransfer> product = DatabaseHelper.getInstance().getAllProduct_StockTransfer();
+        List<Product_Remove_LPN> product = DatabaseHelper.getInstance().getAllProduct_Remove_LPN();
         for (int i = 0; i < product.size(); i++) {
-            Product_StockTransfer putAway = product.get(i);
-            String valueQty = putAway.getQTY();
-            if (valueQty.equals("0") || valueQty.equals("")) {
+            Product_Remove_LPN remove_LPN = product.get(i);
+            String valueQty = remove_LPN.getQTY();
+            if (valueQty.equals("0") || valueQty.equals("") || valueQty.equals("00") || valueQty.equals("000")) {
                 check = true;
             }
         }
-
 
         if (check == true) {
             return true;
@@ -253,6 +252,9 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
 
                             } else if (result == -13) {
                                 dialog.showDialog(List_Remove_LPN.this, "Dữ liệu không hợp lệ");
+
+                            }else if (result == -24) {
+                                dialog.showDialog(List_Remove_LPN.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                             }
                         }

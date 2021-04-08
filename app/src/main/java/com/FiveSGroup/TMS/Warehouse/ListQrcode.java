@@ -499,7 +499,9 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                             dialog.showDialog(ListQrcode.this, "Sản phẩm không có thông tin trên phiếu ");
                         } else if (result == -13) {
                             dialog.showDialog(ListQrcode.this, "Dữ liệu không hợp lệ");
-                        } else {
+                        } else if (result == -24) {
+                            dialog.showDialog(ListQrcode.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+                        }else {
                             dialog.showDialog(ListQrcode.this, "Lưu thất bại");
                         }
 
@@ -550,6 +552,9 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                                     dialog.showDialog(ListQrcode.this, "Sản phẩm không có thông tin trên phiếu ");
                                 } else if (result == -13) {
                                     dialog.showDialog(ListQrcode.this, "Dữ liệu không hợp lệ");
+
+                                }else if (result == -24) {
+                                    dialog.showDialog(ListQrcode.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                                 } else {
                                     dialog.showDialog(ListQrcode.this, "Lưu thất bại");

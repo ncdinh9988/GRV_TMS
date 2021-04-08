@@ -158,13 +158,13 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                                 event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     if (event == null || !event.isShiftPressed()) {
 
-
-                        if (holder.edt.getText().toString().equals("")) {
-                            // the user is done typing.
-
-                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_Inventory(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
-                        }
+//
+//                        if (holder.edt.getText().toString().equals("")) {
+//                            // the user is done typing.
+//
+//                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
+//                            DatabaseHelper.getInstance().updateProduct_Inventory(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
+//                        }
 //                        else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))) {
 //                            // the user is done typing.
 //                            Toast.makeText(context, "Số lượng không được bằng không ", Toast.LENGTH_SHORT).show();
@@ -173,7 +173,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 //                            DatabaseHelper.getInstance().updateProduct_Inventory(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
 //                            hideSoftKeyboard(view);
 //                        }
-                        else {
+//                        else {
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
 
                             // the user is done typing.
@@ -181,7 +181,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
                             hideSoftKeyboard(view);
 
-                        }
+//                        }
                         return true; // consume.
 
 

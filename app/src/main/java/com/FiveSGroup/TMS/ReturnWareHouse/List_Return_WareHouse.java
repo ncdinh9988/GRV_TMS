@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.PickList.PickList;
 import com.FiveSGroup.TMS.R;
@@ -305,6 +306,9 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
 
                         } else if (result == -13) {
                             dialog.showDialog(List_Return_WareHouse.this,"Dữ liệu không hợp lệ");
+
+                        }else if (result == -24) {
+                            dialog.showDialog(List_Return_WareHouse.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                         }
 
