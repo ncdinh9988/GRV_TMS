@@ -3,6 +3,7 @@ package com.FiveSGroup.TMS.LetDown;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -74,6 +75,7 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
 
         holder.tvLetDownPositionSuggest.setText(product.getSUGGESTION_POSITION());
+        holder.tvLetDownPositionSuggest.setTextColor(Color.rgb(255, 51, 0));
         holder.layout__let.setVisibility(View.VISIBLE);
 
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {

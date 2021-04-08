@@ -160,6 +160,7 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
             checkBoxGetLPN.setChecked(false);
             if (position.equals("1")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
+                checkBoxGetLPN.setVisibility(View.INVISIBLE);
             } else if (position.equals("2")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ ĐẾN");
             }
