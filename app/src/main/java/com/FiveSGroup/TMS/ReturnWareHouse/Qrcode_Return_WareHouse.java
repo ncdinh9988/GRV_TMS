@@ -156,16 +156,19 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
         stockinDate = intent.getStringExtra("stockin_date");
         if (!(position == null)) {
             checkBoxGetDVT.setVisibility(View.INVISIBLE);
-            checkBoxGetLPN.setVisibility(View.INVISIBLE);
+            checkBoxGetLPN.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setChecked(false);
             if (position.equals("1")) {
+
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
             } else if (position.equals("2")) {
+
                 textViewTitle.setText("QUÉT VỊ TRÍ ĐẾN");
             }
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
+            checkBoxGetLPN.setChecked(false);
             textViewTitle.setText("QUÉT MÃ - TRẢ HÀNG");
         }
 

@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
     final ArrayList<Product_Return_WareHouse> return_wareHouses;
     Context context;
     View view;
+
 
     public Return_Warehouse_Adapter(Context context, ArrayList<Product_Return_WareHouse> return_wareHouses) {
         this.context = context;
@@ -56,7 +58,7 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
         if(!product.getLPN_FROM().equals("")){
             holder.tvFrom.setText(product.getLPN_FROM());
         }else {
-            holder.tvFrom.setText(product.getPOSITION_FROM_CODE() + " - " + product.getPOSITION_FROM_DESCRIPTION());
+            holder.tvFrom.setText(product.getPOSITION_FROM_CODE());
         }
 
         if(!product.getLPN_TO().equals("")){
@@ -68,6 +70,11 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
         if(!product.getLPN_CODE().equals("")){
             holder.edt.setEnabled(false);
         }
+        holder.btnvtdi.setEnabled(false);
+        holder.btnvtden.setEnabled(false);
+
+        holder.layoutTo.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
+        holder.layoutFrom.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
 
         holder.tvExpired.setText(product.getEXPIRED_DATE());
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
@@ -183,6 +190,7 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
         TextView tvExpired, tvStockin;
         EditText edt;
+        LinearLayout layoutTo , layoutFrom;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -192,6 +200,8 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
+            layoutTo = itemView.findViewById(R.id.layoutTo);
+            layoutFrom = itemView.findViewById(R.id.layoutFrom);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);

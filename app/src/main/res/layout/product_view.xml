@@ -213,7 +213,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:text="Vị trí lấy hàng: "
+            android:text="Vị Trí Lấy Hàng: "
             android:textColor="@color/black" />
         <TextView
             android:textColor="@color/black"
@@ -221,11 +221,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout__goiy"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout__let"
+        android:visibility="gone"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:text="Vị Trí Cần Châm: "
+            android:textColor="@color/black" />
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/tvPositionSuggestto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/grey05"
-        android:layout_below="@+id/layout__let"
+        android:layout_below="@+id/layout__goiy"
         android:layout_marginBottom="2dp"/>
     <LinearLayout
         android:id="@+id/layout__put"
@@ -252,7 +275,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:id="@+id/layout_putaway"
+        android:visibility="gone"
         android:background="@color/grey05"
-        android:layout_below="@+id/layout__let"
+        android:layout_below="@+id/layout__put"
         android:layout_marginBottom="2dp"/>
 </RelativeLayout>

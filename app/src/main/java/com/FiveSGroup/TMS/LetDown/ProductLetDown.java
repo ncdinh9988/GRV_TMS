@@ -24,6 +24,15 @@ public class ProductLetDown {
     private String LPN_FROM;
     private String LPN_TO;
     private String SUGGESTION_POSITION;
+    private String SUGGESTION_POSITION_TO;
+
+    public String getSUGGESTION_POSITION_TO() {
+        return SUGGESTION_POSITION_TO;
+    }
+
+    public void setSUGGESTION_POSITION_TO(String SUGGESTION_POSITION_TO) {
+        this.SUGGESTION_POSITION_TO = SUGGESTION_POSITION_TO;
+    }
 
     public String getAUTOINCREMENT() {
         return AUTOINCREMENT;

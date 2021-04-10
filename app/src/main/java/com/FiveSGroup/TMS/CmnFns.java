@@ -2,6 +2,7 @@ package com.FiveSGroup.TMS;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -15,6 +16,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -25,7 +28,12 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -352,6 +360,60 @@ public class CmnFns {
             // CmnFns.writeLogError("Connection: Failed  " + e.getMessage() );
             return -1;
         }
+    }
+
+    public void showDialog(Context context, String text){
+
+        LayoutInflater factory = LayoutInflater.from(context);
+        View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
+        final AlertDialog dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+        InsetDrawable inset = new InsetDrawable(back, 64);
+        dialog.getWindow().setBackgroundDrawable(inset);
+        dialog.setView(layout_cus);
+
+        Button btnClose = layout_cus.findViewById(R.id.btnHuy);
+        TextView textView = layout_cus.findViewById(R.id.tvText);
+
+        textView.setText(text);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+
+    }
+
+    public String synchronizeGet_Status_Stock_Out(String order_Cd) {
+        try {
+
+            int status = this.allowSynchronizeBy3G();
+            if (status == 102 || status == -1) {
+                return "-1";
+            }
+
+
+            Webservice Webservice = new Webservice();
+
+            String result = Webservice.Get_Status_Stock_Out(order_Cd);
+            if (result.equals("1")) {
+
+                return "1";
+            } else {
+                // đồng bộ không thành công
+                return "-1";
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            return "-1";
+        }
+
     }
 
     // hàm đưa dữ liệu khách hàng đc User thêm mới
@@ -1644,13 +1706,17 @@ public class CmnFns {
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
                     String pro_name = jsonobj.getString("_PRODUCT_NAME");
+                    // mô tả VT đến
                     String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
                     String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
                     String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
                     String ea_unit = jsonobj.getString("_UNIT");
+                    // VT đến
                     String position_code = jsonobj.getString("_POSITION_CODE");
                     String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                    // VT từ kèm theo mô tả
                     String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                    // VT từ
                     String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
                     String lpnCode = jsonobj.getString("_LPN_CODE");
 
@@ -1674,8 +1740,8 @@ public class CmnFns {
                     return_wareHouse.setLPN_TO(lpn_To);
                     return_wareHouse.setLPN_CODE(lpnCode);
 
-                    return_wareHouse.setPOSITION_TO_CODE(positionTo);
-                    return_wareHouse.setPOSITION_TO_DESCRIPTION("");
+                    return_wareHouse.setPOSITION_TO_CODE(quanity_ea);
+                    return_wareHouse.setPOSITION_TO_DESCRIPTION(quanity);
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -1685,9 +1751,9 @@ public class CmnFns {
                         return_wareHouse.setUNIT(unit);
                         return_wareHouse.setQTY(String.valueOf(pro_set));
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ---
-                        return_wareHouse.setPOSITION_FROM_CODE(positionFrom);
+                        return_wareHouse.setPOSITION_FROM_CODE(description);
                         return_wareHouse.setLPN_FROM(lpn_From);
-                        return_wareHouse.setPOSITION_FROM_DESCRIPTION("---");
+                        return_wareHouse.setPOSITION_FROM_DESCRIPTION("");
                     } else if (isLPN == 1) {
                         return_wareHouse.setSTOCKIN_DATE(strokinDate);
                         return_wareHouse.setEXPIRED_DATE(exxpiredDate);
@@ -1947,14 +2013,15 @@ public class CmnFns {
                     String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
                     String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
                     String ea_unit = jsonobj.getString("_UNIT");
+                    // VT đến
                     String position_code = jsonobj.getString("_POSITION_CODE");
                     String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                    // Mô tả VT đến
                     String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                    // VT đến
                     String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
                     String lpnCode = jsonobj.getString("_LPN_CODE");
-
                     int pro_set = 1;
-
 
                     Product_StockOut stockOut = new Product_StockOut();
                     stockOut.setPRODUCT_CD(pro_cd);
@@ -1974,8 +2041,8 @@ public class CmnFns {
                     stockOut.setLPN_TO(lpn_To);
                     stockOut.setLPN_CODE(lpnCode);
 
-                    stockOut.setPOSITION_TO_CODE(positionTo);
-                    stockOut.setPOSITION_TO_DESCRIPTION("");
+                    stockOut.setPOSITION_TO_CODE(position_code);
+                    stockOut.setPOSITION_TO_DESCRIPTION(description);
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -1987,7 +2054,7 @@ public class CmnFns {
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ---
                         stockOut.setPOSITION_FROM_CODE(positionFrom);
                         stockOut.setLPN_FROM(lpn_From);
-                        stockOut.setPOSITION_FROM_DESCRIPTION("---");
+                        stockOut.setPOSITION_FROM_DESCRIPTION("");
                     } else if (isLPN == 1) {
                         stockOut.setSTOCKIN_DATE(strokinDate);
                         stockOut.setEXPIRED_DATE(exxpiredDate);
@@ -3568,6 +3635,18 @@ public class CmnFns {
                     String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
                     String lpnCode = jsonobj.getString("_LPN_CODE");
                     String suggestionPosition = jsonobj.getString("_Suggest_Position");
+                    String suggestionPosition_from = "";
+                    String suggestionPosition_to = "";
+                    String chuoi[] = suggestionPosition.split("≡");
+                    if (!suggestionPosition.equals("≡")){
+                        if(chuoi.length > 1){
+                            suggestionPosition_from = chuoi[0];
+                            suggestionPosition_to = chuoi[1];
+                        }else{
+                            suggestionPosition_from = chuoi[0];
+                        }
+                    }
+
 
                     int pro_set = 1;
 
@@ -3593,7 +3672,8 @@ public class CmnFns {
                     letDown.setPOSITION_TO_CODE(positionTo);
                     letDown.setPOSITION_TO_DESCRIPTION("");
 
-                    letDown.setSUGGESTION_POSITION(suggestionPosition);
+                    letDown.setSUGGESTION_POSITION(suggestionPosition_from);
+                    letDown.setSUGGESTION_POSITION_TO(suggestionPosition_to);
 
                     if (isLPN == 0) {
                         if (stockDate != null) {

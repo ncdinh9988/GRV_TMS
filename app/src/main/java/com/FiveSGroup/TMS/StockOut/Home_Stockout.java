@@ -1,13 +1,19 @@
 package com.FiveSGroup.TMS.StockOut;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -16,16 +22,21 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.FiveSGroup.TMS.AddCustomerFragment.FCustomerAddNewEdit;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.ValueEventbus;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
+import com.FiveSGroup.TMS.Webservice.Webservice;
 import com.FiveSGroup.TMS.global;
 
 import org.greenrobot.eventbus.EventBus;
@@ -64,13 +75,25 @@ public class Home_Stockout extends AppCompatActivity {
         layout = findViewById(R.id.layout);
         urlStockReceipt = DatabaseHelper.getInstance().getParamByKey("URL_StockOut").getValue();;
 
+
+
+        String urlStockOut =  urlStockReceipt + "?USER_CODE=" + CmnFns.readDataAdmin();
+        addEvents(urlStockOut);
+
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Stockout.this, Qrcode_Stock_Out.class);
-                intent.putExtra("qrcode1", "qrcode1");
-                // Log.e("barcodeData",""+ barcodeData);
-                startActivity(intent);
+                String check_stockout = new CmnFns().synchronizeGet_Status_Stock_Out(global.getStockoutCD());
+                if(check_stockout.equals("1")){
+                    Intent intent = new Intent(Home_Stockout.this, Qrcode_Stock_Out.class);
+                    intent.putExtra("qrcode1", "qrcode1");
+                    // Log.e("barcodeData",""+ barcodeData);
+                    startActivity(intent);
+                }else{
+                    Dialog dialog = new Dialog(Home_Stockout.this);
+                    dialog.showDialog(Home_Stockout.this, "Vui Lòng Tiếp Nhận Xuất Hàng Trước Khi Quét Mã");
+                }
+
             }
         });
         btnShow.setOnClickListener(new View.OnClickListener() {
@@ -82,8 +105,8 @@ public class Home_Stockout extends AppCompatActivity {
             }
         });
 
-        String urlStockOut =  urlStockReceipt + "?USER_CODE=" + CmnFns.readDataAdmin();
-        addEvents(urlStockOut);
+
+
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +115,33 @@ public class Home_Stockout extends AppCompatActivity {
         });
 
         RefeshData();
+
+    }
+
+    public void showDialog(Context context, String text){
+
+        LayoutInflater factory = LayoutInflater.from(context);
+        View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
+        final AlertDialog dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+        InsetDrawable inset = new InsetDrawable(back, 64);
+        dialog.getWindow().setBackgroundDrawable(inset);
+        dialog.setView(layout_cus);
+
+        Button btnClose = layout_cus.findViewById(R.id.btnHuy);
+        TextView textView = layout_cus.findViewById(R.id.tvText);
+
+        textView.setText(text);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
 
     }
     private void RefeshData() {

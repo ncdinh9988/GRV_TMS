@@ -28,6 +28,7 @@ import com.FiveSGroup.TMS.ReturnWareHouse.List_Return_WareHouse;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
+import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
 import com.FiveSGroup.TMS.global;
 
@@ -236,12 +237,18 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
     }
 
     private void startScan() {
-        DatabaseHelper.getInstance().deleteallEa_Unit();
-        DatabaseHelper.getInstance().deleteallExp_date();
-        Intent intent = new Intent(ListQrcode_Stockout.this, Qrcode_Stock_Out.class);
-        intent.putExtra("check_to_finish_at_list", "check");
-        startActivity(intent);
-        finish();
+        String check_stockout = new CmnFns().synchronizeGet_Status_Stock_Out(global.getStockoutCD());
+        if(check_stockout.equals("1")) {
+            DatabaseHelper.getInstance().deleteallEa_Unit();
+            DatabaseHelper.getInstance().deleteallExp_date();
+            Intent intent = new Intent(ListQrcode_Stockout.this, Qrcode_Stock_Out.class);
+            intent.putExtra("check_to_finish_at_list", "check");
+            startActivity(intent);
+            finish();
+        }else{
+            Dialog dialog = new Dialog(ListQrcode_Stockout.this);
+            dialog.showDialog(ListQrcode_Stockout.this, "Vui Lòng Tiếp Nhận Xuất Hàng Trước Khi Quét Mã");
+        }
     }
     private boolean isQuanityZero() {
         boolean check = false;

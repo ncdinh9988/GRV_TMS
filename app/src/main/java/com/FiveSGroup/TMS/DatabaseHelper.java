@@ -115,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 69; // version của DB khi thay
+    public static final int DATABASE_VERSION = 71; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -191,9 +191,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // TODO: handle exception
         }
 
+
         try {
             db.execSQL("ALTER TABLE " + O_STOCK_OUT + " ADD COLUMN  "
                     + WAREHOUSE_POSITION_CD_STOCK_OUT + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_LET_DOWN + " ADD COLUMN  "
+                    + SUGGESTION_POSITION_LETDOWN_TO + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -3161,6 +3170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //DATABASE LET_DOWN
     public static final String O_LET_DOWN = "O_LET_DOWN";
     public static final String AUTOINCREMENT_LETDOWN = "AUTOINCREMENT_LETDOWN";
+    public static final String SUGGESTION_POSITION_LETDOWN_TO = "SUGGESTION_POSITION_TO";
     public static final String PRODUCT_CODE_LETDOWN = "PRODUCT_CODE";
     public static final String PRODUCT_NAME_LETDOWN = "PRODUCT_NAME";
     public static final String PRODUCT_CD_LETDOWN = "PRODUCT_CD";
@@ -3204,7 +3214,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + LPN_CODE_LETDOWN + " TEXT ,"
             + LPN_FROM_LETDOWN + " TEXT ,"
             + LPN_TO_LETDOWN + " TEXT ,"
-            + SUGGESTION_POSITION_LETDOWN + " TEXT"
+            + SUGGESTION_POSITION_LETDOWN + " TEXT ,"
+            + SUGGESTION_POSITION_LETDOWN_TO + " TEXT"
             + ")";
 
 
@@ -3232,6 +3243,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_FROM_LETDOWN, qrcode.getLPN_FROM());
         values.put(LPN_TO_LETDOWN, qrcode.getLPN_TO());
         values.put(SUGGESTION_POSITION_LETDOWN, qrcode.getSUGGESTION_POSITION());
+        values.put(SUGGESTION_POSITION_LETDOWN_TO, qrcode.getSUGGESTION_POSITION_TO());
 
         // insert row
         long id = db.insert(O_LET_DOWN, null, values);
@@ -3334,6 +3346,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(LPN_CODE_LETDOWN))));
                 qrcode.setSUGGESTION_POSITION((c.getString(c
                         .getColumnIndex(SUGGESTION_POSITION_LETDOWN))));
+                qrcode.setSUGGESTION_POSITION_TO((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_LETDOWN_TO))));
                 putaway.add(qrcode);
             } while (c.moveToNext());
         }
@@ -3393,6 +3407,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(LPN_CODE_LETDOWN))));
                 qrcode.setSUGGESTION_POSITION((c.getString(c
                         .getColumnIndex(SUGGESTION_POSITION_LETDOWN))));
+                qrcode.setSUGGESTION_POSITION_TO((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_LETDOWN_TO))));
                 letdowns.add(qrcode);
             } while (c.moveToNext());
         }

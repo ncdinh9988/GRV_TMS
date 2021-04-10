@@ -12,9 +12,11 @@ public class Product_Return_WareHouse {
     private String QTY;
     private String EXPIRED_DATE ;
     private String STOCKIN_DATE;
+    //VT từ
     private String WAREHOUSE_POSITION_CD;
     private String UNIQUE_CODE;
     private String POSITION_FROM_CODE;
+    //VT đến là POSITION_CODE khi quét sản phẩm
     private String POSITION_TO_CODE;
     private String UNIT;
     private String POSITION_FROM_DESCRIPTION;
