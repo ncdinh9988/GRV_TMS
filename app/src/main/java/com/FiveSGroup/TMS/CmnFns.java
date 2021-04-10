@@ -2051,7 +2051,7 @@ public class CmnFns {
                         stockOut.setEXPIRED_DATE(expDate);
                         stockOut.setUNIT(unit);
                         stockOut.setQTY(String.valueOf(pro_set));
-                        // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ---
+                        // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
                         stockOut.setPOSITION_FROM_CODE(positionFrom);
                         stockOut.setLPN_FROM(lpn_From);
                         stockOut.setPOSITION_FROM_DESCRIPTION("");
@@ -2524,7 +2524,7 @@ public class CmnFns {
                             }
 
                         } else if (type.equals("WMP")) {
-                            //Xuất kho
+                            //
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {

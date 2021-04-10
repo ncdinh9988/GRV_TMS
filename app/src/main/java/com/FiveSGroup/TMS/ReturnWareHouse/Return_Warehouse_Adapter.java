@@ -80,37 +80,37 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
 
 
-        holder.btnvtden.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(context, Qrcode_Return_WareHouse.class);
-                intent.putExtra("position", "1");
-                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                intent.putExtra("c", holder.tvExpired.getText());
-                intent.putExtra("ea_unit_position", product.getUNIT());
-                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-
-                context.startActivity(intent);
-
-                ((Activity) context).finish();
-            }
-        });
-        holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, Qrcode_Return_WareHouse.class);
-                intent.putExtra("position", "2");
-                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                intent.putExtra("c", holder.tvExpired.getText());
-                intent.putExtra("ea_unit_position", product.getUNIT());
-                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-
-                context.startActivity(intent);
-
-                ((Activity) context).finish();
-            }
-        });
+//        holder.btnvtden.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(context, Qrcode_Return_WareHouse.class);
+//                intent.putExtra("position", "1");
+//                intent.putExtra("product_cd", product.getPRODUCT_CD());
+//                intent.putExtra("c", holder.tvExpired.getText());
+//                intent.putExtra("ea_unit_position", product.getUNIT());
+//                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+//
+//                context.startActivity(intent);
+//
+//                ((Activity) context).finish();
+//            }
+//        });
+//        holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, Qrcode_Return_WareHouse.class);
+//                intent.putExtra("position", "2");
+//                intent.putExtra("product_cd", product.getPRODUCT_CD());
+//                intent.putExtra("c", holder.tvExpired.getText());
+//                intent.putExtra("ea_unit_position", product.getUNIT());
+//                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+//
+//                context.startActivity(intent);
+//
+//                ((Activity) context).finish();
+//            }
+//        });
         final String oldValue = holder.edt.getText().toString();
 
         holder.edt.addTextChangedListener(new TextWatcher() {
