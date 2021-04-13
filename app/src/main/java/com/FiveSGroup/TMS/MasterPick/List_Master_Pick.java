@@ -37,6 +37,7 @@ import java.util.List;
 public class List_Master_Pick extends AppCompatActivity implements View.OnClickListener {
     Button buttonBack, btnok;
     ImageButton btnscan_barcode;
+    TextView nameproduct;
     //ProductListViewAdapter productListViewAdapter;
     ProductAdapter productListViewAdapter;
     RecyclerView listViewProduct;
@@ -130,6 +131,13 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         listViewProduct.setAdapter(MasterPickAdapter);
         MasterPickAdapter.notifyDataSetChanged();
         master_picklist = "";
+
+        nameproduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
             @Override
@@ -230,6 +238,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
     private void init() {
         btnscan_barcode = findViewById(R.id.buttonScan_Barcode);
+        nameproduct = findViewById(R.id.nameproduct);
         buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setText("Trở Về");
         btnok = findViewById(R.id.buttonOK);
