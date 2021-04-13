@@ -2796,8 +2796,8 @@ public class CmnFns {
                 jsonData = gson.toJson(product);
             }
             else if (type.equals("WMP")) {
-                List<Product_Master_Pick> check = DatabaseHelper.getInstance().getAllProduct_Master_Pick_Sync(CD);
-                if (check == null || check.size() == 0){
+                int check = DatabaseHelper.getInstance().getMaxID();
+                if (check >= 1){
                     return -35;
                 }
                 List<Product_Master_Pick> product = DatabaseHelper.getInstance().getAllProduct_Master_Pick_Sync(CD);

@@ -1355,6 +1355,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return masterPicks;
     }
 
+    public int getMaxID(){
+        String selectQuery = "SELECT PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) FROM "
+                + O_MASTER_PICK + " GROUP BY PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT(*) > 1" ;
+        SQLiteDatabase db = this.getReadableDatabase(DatabaseHelper.PWD);
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        return cursor.getCount();
+    }
+
 
     public ArrayList<Product_Master_Pick>
     getAllProduct_Master_Pick_Sync(String master_pick_cd) {

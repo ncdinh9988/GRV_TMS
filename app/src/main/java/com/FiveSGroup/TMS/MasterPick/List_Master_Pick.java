@@ -292,7 +292,6 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
             } else {
                 try {
-                    String postitionDes = new CmnFns().check_Duplicate(unique_id, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WMP", isLPN);
 
                     int result = new CmnFns().synchronizeData(saleCode, "WMP", global.getMasterPickCd());
                     if (result >= 1) {
