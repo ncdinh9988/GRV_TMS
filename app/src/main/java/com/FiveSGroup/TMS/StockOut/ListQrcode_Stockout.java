@@ -424,7 +424,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WSO",isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WSO",isLPN);
 
             Dialog dialog = new Dialog(ListQrcode_Stockout.this);
 

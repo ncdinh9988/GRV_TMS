@@ -2440,7 +2440,7 @@ public class CmnFns {
         return 1;
     }
 
-    public String synchronizeGETPositionInfoo(String userCode, String barcode, String positionReceive, String productCd, String expDate, String ea_unit, String stockin, String positionFrom, String positionTo, String type, int isLPN) {
+    public String synchronizeGETPositionInfoo(String unique_id , String userCode, String barcode, String positionReceive, String productCd, String expDate, String ea_unit, String stockin, String positionFrom, String positionTo, String type, int isLPN) {
 
         String postitionDes = " ";
         Webservice webService = new Webservice();
@@ -2528,7 +2528,7 @@ public class CmnFns {
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_masterPick(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_masterPick(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WSO")) {
@@ -2599,7 +2599,7 @@ public class CmnFns {
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionTo_masterPick_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_masterPick(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_masterPick(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WPA")) {
                             if (isLPN == 1) {
@@ -2796,6 +2796,10 @@ public class CmnFns {
                 jsonData = gson.toJson(product);
             }
             else if (type.equals("WMP")) {
+                List<Product_Master_Pick> check = DatabaseHelper.getInstance().getAllProduct_Master_Pick_Sync(CD);
+                if (check == null || check.size() == 0){
+                    return -35;
+                }
                 List<Product_Master_Pick> product = DatabaseHelper.getInstance().getAllProduct_Master_Pick_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;

@@ -55,6 +55,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
     boolean check = false;
     Intent intent;
     String position = "";
+    String unique_id = "";
     String product_cd = "";
     String stock = "";
     String expiredDate = " ";
@@ -154,6 +155,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
         ea_unit_position = intent.getStringExtra("ea_unit_position");
         // position được truyền qua để định danh nó được bấm from hay to
         position = intent.getStringExtra("position");
+        unique_id = intent.getStringExtra("unique_id");
         // được tuyền qua từ adapter
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
@@ -276,6 +278,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("returnposition", position);
+                intentt.putExtra("unique_id", unique_id);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
@@ -344,6 +347,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
                                         intent.putExtra("typeScan", "scan_from_master_picklist");
                                         intent.putExtra("btn1", barcodeData);
                                         intent.putExtra("returnposition", position);
+                                        intent.putExtra("unique_id", unique_id);
                                         intent.putExtra("returnCD", product_cd);
                                         intent.putExtra("returnStock", stock);
                                         DatabaseHelper.getInstance().deleteallExp_date();
@@ -402,6 +406,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
         Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
+        intentt.putExtra("unique_id", unique_id);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("master_picklist", "333");
@@ -425,6 +430,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
         Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
+        intentt.putExtra("unique_id", unique_id);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
@@ -476,6 +482,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
                 Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
+                intentt.putExtra("unique_id", unique_id);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);

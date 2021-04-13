@@ -736,7 +736,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
 
             Dialog dialog = new Dialog(ListQrcode.this);
 
@@ -815,7 +815,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate, ea_unit, stockinDate, positionFrom, positionTo, "WSI", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate, ea_unit, stockinDate, positionFrom, positionTo, "WSI", isLPN);
 
             Dialog dialog = new Dialog(ListQrcode.this);
 

@@ -519,7 +519,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPP", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPP", isLPN);
 
             Dialog dialog = new Dialog(LoadPalletActivity.this);
 

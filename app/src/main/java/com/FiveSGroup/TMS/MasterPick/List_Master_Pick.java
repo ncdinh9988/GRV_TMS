@@ -52,6 +52,8 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
     String ea_unit_position = "";
     String stockinDate = "";
     String lpn = "";
+    String unique_id = "" ;
+
 
     int statusGetCust;
     Product_Master_Pick product_qrcode;
@@ -95,6 +97,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         master_picklist = intent.getStringExtra("master_picklist");
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
+        unique_id = intent.getStringExtra("unique_id");
         lpn = intent.getStringExtra("lpn");
 
         stockinDate = intent.getStringExtra("stockin_date");
@@ -289,6 +292,8 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
             } else {
                 try {
+                    String postitionDes = new CmnFns().check_Duplicate(unique_id, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WMP", isLPN);
+
                     int result = new CmnFns().synchronizeData(saleCode, "WMP", global.getMasterPickCd());
                     if (result >= 1) {
                         ShowSuccessMessage("Lưu thành công");
@@ -431,7 +436,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WMP", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(unique_id, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WMP", isLPN);
 
             Dialog dialog = new Dialog(List_Master_Pick.this);
 

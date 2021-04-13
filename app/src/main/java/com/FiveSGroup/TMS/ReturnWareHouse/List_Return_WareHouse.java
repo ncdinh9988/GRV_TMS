@@ -396,7 +396,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WRW",isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WRW",isLPN);
 
             Dialog dialog = new Dialog(List_Return_WareHouse.this);
 

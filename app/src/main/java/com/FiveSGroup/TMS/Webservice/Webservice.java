@@ -574,7 +574,7 @@ public class Webservice {
         request.addProperty(param1);
 
         PropertyInfo param2 = new PropertyInfo();
-        param2.setName("Usercode");
+        param2.setName("UserCode");
         param2.setValue(usercode);
         param2.setType(String.class);
         request.addProperty(param2);

@@ -1214,7 +1214,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_MASTER_PICK , masterPick.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_MASTER_PICK , masterPick.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_MASTER_PICK, masterPick.getUNIT());
         values.put(PRODUCT_CODE_MASTER_PICK, masterPick.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_MASTER_PICK, masterPick.getPRODUCT_NAME());
@@ -1258,7 +1258,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public int updatePositionFrom_masterPick(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_masterPick(String unique_id, String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -1270,9 +1270,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // updating row
-        return db.update(O_MASTER_PICK, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_MASTER_PICK + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_MASTER_PICK, values,
+                         AUTOINCREMENT_MASTER_PICK + " = ? ",
+                new String[]{String.valueOf(unique_id)});
 
     }
 
@@ -1295,7 +1295,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updatePositionTo_masterPick(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_masterPick(String unique_id,String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -1306,9 +1306,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(POSITION_TO_DESCRIPTION_MASTER_PICK, descreption);
         // updating row
-        return db.update(O_MASTER_PICK, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_MASTER_PICK + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_MASTER_PICK, values,
+                        AUTOINCREMENT_MASTER_PICK + " = ? ",
+                new String[]{String.valueOf(unique_id)});
 
 
     }
@@ -1369,7 +1369,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_Master_Pick masterPick = new Product_Master_Pick();
-
+                masterPick.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_MASTER_PICK))));
                 masterPick.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_MASTER_PICK))));
                 masterPick.setPRODUCT_CODE((c.getString(c

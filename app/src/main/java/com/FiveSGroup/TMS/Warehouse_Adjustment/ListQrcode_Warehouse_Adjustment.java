@@ -425,7 +425,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WWA", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WWA", isLPN);
 
 
             Dialog dialog = new Dialog(ListQrcode_Warehouse_Adjustment.this);
