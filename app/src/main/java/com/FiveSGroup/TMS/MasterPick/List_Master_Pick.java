@@ -132,12 +132,12 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         MasterPickAdapter.notifyDataSetChanged();
         master_picklist = "";
 
-        nameproduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        nameproduct.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
             @Override
