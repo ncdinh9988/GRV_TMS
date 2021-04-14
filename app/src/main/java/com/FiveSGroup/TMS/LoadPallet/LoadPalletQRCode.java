@@ -61,6 +61,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
     String expiredDate = " ";
     String ea_unit_position = " ";
     String stockinDate = "";
+    String unique_id = "";
 
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
@@ -166,6 +167,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
         ea_unit_position = intent.getStringExtra("ea_unit_position");
         // position được truyền qua để định danh nó được bấm from hay to
         position = intent.getStringExtra("position");
+        unique_id = intent.getStringExtra("unique_id");
         // được tuyền qua từ adapter
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
@@ -366,6 +368,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("returnposition", position);
+                intentt.putExtra("unique_id", unique_id);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
@@ -438,6 +441,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
                                             intent.putExtra("typeScan", "scan_from_load_pallet");
                                             intent.putExtra("btn1", barcodeData);
                                             intent.putExtra("returnposition", position);
+                                            intent.putExtra("unique_id", unique_id);
                                             intent.putExtra("returnCD", product_cd);
                                             intent.putExtra("returnStock", stock);
                                             DatabaseHelper.getInstance().deleteallExp_date();
@@ -504,6 +508,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
         Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
+        intentt.putExtra("unique_id", unique_id);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
@@ -529,6 +534,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
         Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
+        intentt.putExtra("unique_id", unique_id);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
@@ -589,6 +595,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
                 Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
+                intentt.putExtra("unique_id", unique_id);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("load_pallet", "333");

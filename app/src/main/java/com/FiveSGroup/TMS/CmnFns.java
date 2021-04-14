@@ -2500,7 +2500,7 @@ public class CmnFns {
                             }
 
                         } else if (type.equals("WRW")) {
-                            //Chỉnh kho
+                            //Trả Hàng
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionFrom_returnWarehouse_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
@@ -2557,11 +2557,11 @@ public class CmnFns {
 
                         } else if (type.equals("WPP")) {
                             //load pallet
-                            if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
-                            } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
-                            }
+//                            if (isLPN == 1) {
+//                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+//                            } else {
+                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+//                            }
 
                         } else if (type.equals("WST")) {
                             //Kiểm kho
@@ -2628,11 +2628,12 @@ public class CmnFns {
                                 DatabaseHelper.getInstance().updatePositionTo_PickList(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WPP")) {
-                            if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
-                            } else {
-                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
-                            }
+//                            if (isLPN == 1) {
+                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet_LPN(unique_id ,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+//                            }
+//                            else {
+//                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+//                            }
                         } else if (type.equals("WLP")) {
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionTo_Remove_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
@@ -2714,7 +2715,9 @@ public class CmnFns {
                 // đã đồng bộ thành công update để lần sau không đồng bộ lại
                 //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
                 return 1;
-            } else {
+            }else if(result.equals("-25")) {
+                return -25;
+            }else {
                 // đồng bộ không thành công
                 return -1;
             }
@@ -2780,6 +2783,15 @@ public class CmnFns {
                     return 1;
                 jsonData = gson.toJson(product);
             } else if (type.equals("WPP")) {
+                try {
+                    int check = DatabaseHelper.getInstance().getDuplicate_LoadPallet();
+                    if (check > 1 ){
+                        return -36;
+                    }
+
+                }catch (Exception e){
+
+                }
                 List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync();
                 if (product == null || product.size() == 0)
                     return 1;
@@ -2797,7 +2809,7 @@ public class CmnFns {
             }
             else if (type.equals("WMP")) {
                 try {
-                    int check = DatabaseHelper.getInstance().getMaxID();
+                    int check = DatabaseHelper.getInstance().getDuplicate_MasterPick();
                     if (check > 1 ){
                         return -36;
                     }
@@ -3217,25 +3229,26 @@ public class CmnFns {
                             product_loadPallet.setSTOCKIN_DATE(stockDate);
                         }
                         product_loadPallet.setEXPIRED_DATE(expDate);
-                        product_loadPallet.setUNIT(unit);
+                        product_loadPallet.setUNIT(ea_unit);
                         product_loadPallet.setQTY(String.valueOf(pro_set));
 
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ---
                         product_loadPallet.setPOSITION_FROM_CODE(positionFrom);
                         product_loadPallet.setLPN_FROM(lpn_From);
                         product_loadPallet.setPOSITION_FROM_DESCRIPTION("---");
-                    } else if (isLPN == 1) {
-
-                        product_loadPallet.setSTOCKIN_DATE(strokinDate);
-                        product_loadPallet.setEXPIRED_DATE(exxpiredDate);
-                        product_loadPallet.setUNIT(ea_unit);
-                        product_loadPallet.setQTY(quanity);
-
-                        product_loadPallet.setPOSITION_FROM_CODE(position_code);
-                        product_loadPallet.setLPN_FROM(lpnCode);
-                        product_loadPallet.setPOSITION_FROM_DESCRIPTION(description);
-
                     }
+//                    else if (isLPN == 1) {
+//
+//                        product_loadPallet.setSTOCKIN_DATE(strokinDate);
+//                        product_loadPallet.setEXPIRED_DATE(exxpiredDate);
+//                        product_loadPallet.setUNIT(ea_unit);
+//                        product_loadPallet.setQTY(quanity);
+//
+//                        product_loadPallet.setPOSITION_FROM_CODE(position_code);
+//                        product_loadPallet.setLPN_FROM(lpnCode);
+//                        product_loadPallet.setPOSITION_FROM_DESCRIPTION(description);
+//
+//                    }
 
                     if (isLPN == 0) {
                         ArrayList<Product_LoadPallet> loadPallets = DatabaseHelper.getInstance().

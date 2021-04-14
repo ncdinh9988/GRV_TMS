@@ -1355,7 +1355,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return masterPicks;
     }
 
-    public int getMaxID(){
+    public int getDuplicate_LoadPallet(){
+        String selectQuery = "SELECT STOCKIN_DATE ,PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT FROM "
+                + O_LOAD_PALLET + " GROUP BY STOCKIN_DATE , PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT(*) > " + 1 ;
+        SQLiteDatabase db = this.getReadableDatabase(DatabaseHelper.PWD);
+//        Cursor cursor = db.rawQuery(selectQuery, null);
+//        int count = cursor.getColumnIndex(PRODUCT_NAME);
+//        cursor.close();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+// Iterate through cursor
+        cursor.moveToFirst();
+        int count_check = cursor.getInt(7);
+        return count_check;
+    }
+
+    public int getDuplicate_MasterPick(){
         String selectQuery = "SELECT STOCKIN_DATE ,PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT FROM "
                 + O_MASTER_PICK + " GROUP BY STOCKIN_DATE , PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT(*) > " + 1 ;
         SQLiteDatabase db = this.getReadableDatabase(DatabaseHelper.PWD);
@@ -1366,10 +1381,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 // Iterate through cursor
         cursor.moveToFirst();
-
         int count_check = cursor.getInt(7);
-
-
         return count_check;
     }
 
@@ -1385,7 +1397,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
             do {
-
                 Product_Master_Pick masterPick = new Product_Master_Pick();
                 masterPick.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_MASTER_PICK))));
@@ -2050,7 +2061,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_LOAD_PALLET, product_loadPallet.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_LOAD_PALLET, product_loadPallet.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_LOAD_PALLET, product_loadPallet.getUNIT());
         values.put(PRODUCT_CODE_LOAD_PALLET, product_loadPallet.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_LOAD_PALLET, product_loadPallet.getPRODUCT_NAME());
@@ -5147,7 +5158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
     }
 
-    public int updatePositionFrom_LoadPallet(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_LoadPallet(String unique_id,String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -5158,12 +5169,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_FROM_DESCRIPTION_LOAD_PALLET, descreption);
 
         // updating row
-        return db.update(O_LOAD_PALLET, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_LOAD_PALLET + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_LOAD_PALLET, values,
+                AUTOINCREMENT_LOAD_PALLET + " = ? ",
+                new String[]{String.valueOf(unique_id)});
     }
 
-    public int updatePositionTo_LoadPallet_LPN(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_LoadPallet_LPN(String unique_id , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -5172,12 +5183,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_TO_LOAD_PALLET, to);
         values.put(POSITION_TO_CODE_LOAD_PALLET, to);
         // updating row
-        return db.update(O_LOAD_PALLET, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_LOAD_PALLET + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_LOAD_PALLET, values,
+                        AUTOINCREMENT_LOAD_PALLET + " = ?",
+                new String[]{String.valueOf(unique_id)});
     }
 
-    public int updatePositionTo_LoadPallet(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_LoadPallet(String unique_id,String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -5187,9 +5198,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(POSITION_TO_DESCRIPTION_LOAD_PALLET, descreption);
         // updating row
-        return db.update(O_LOAD_PALLET, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
+        return db.update(O_LOAD_PALLET, values,
                         STOCKIN_DATE_LOAD_PALLET + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+                new String[]{String.valueOf(unique_id)});
     }
 
     //------------------------------------------------------------------------------------------------------------------

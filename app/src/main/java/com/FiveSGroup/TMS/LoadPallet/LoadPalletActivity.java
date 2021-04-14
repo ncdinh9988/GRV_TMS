@@ -47,6 +47,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
     String ea_unit_position = "";
     String stockinDate = "";
     String lpn = "";
+    String unique_id = "" ;
 
     ArrayList<Product_LoadPallet> loadPallets;
     TextView tvTitle;
@@ -77,6 +78,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         Intent intent = getIntent();
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
+        unique_id = intent.getStringExtra("unique_id");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
@@ -323,6 +325,9 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                             case -24:
                                 ShowErrorMessage("Vui Lòng Kiểm Tra Lại Số Lượng");
                                 break;
+                            case -36:
+                                ShowErrorMessage("Trùng Dữ Liệu Vui Lòng Kiểm Tra Lại");
+                                break;
                             default:
                                 if (result >= 1) {
                                     Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
@@ -345,7 +350,6 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 dialog.showDialog(LoadPalletActivity.this, "Không có sản phẩm");
 
             }
-
 
         }
     }
@@ -475,10 +479,24 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 startScan();
                 break;
             case R.id.buttonBack:
+                loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet();
+                //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
+                loadPalletAdapter = new LoadPalletAdapter(loadPallets, this);
+                LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+                listViewProduct.setLayoutManager(layoutManager1);
+                listViewProduct.setAdapter(loadPalletAdapter);
+                loadPalletAdapter.notifyDataSetChanged();
                 actionBack();
                 break;
             case R.id.buttonOK:
                 actionSyn();
+                loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet();
+                //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
+                loadPalletAdapter = new LoadPalletAdapter(loadPallets, this);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+                listViewProduct.setLayoutManager(layoutManager);
+                listViewProduct.setAdapter(loadPalletAdapter);
+                loadPalletAdapter.notifyDataSetChanged();
                 break;
         }
     }
@@ -519,7 +537,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPP", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(unique_id ,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPP", isLPN);
 
             Dialog dialog = new Dialog(LoadPalletActivity.this);
 

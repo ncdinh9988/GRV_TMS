@@ -122,6 +122,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                                 DatabaseHelper.getInstance().CreateMaster_Pick(product);
                                 Intent intent = new Intent(context, List_Master_Pick.class);
                                 context.startActivity(intent);
+                                ((Activity) context).finish();
                             }
                         });
                         dialog.show();
@@ -184,6 +185,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                                 DatabaseHelper.getInstance().CreateMaster_Pick(product);
                                 Intent intent = new Intent(context, List_Master_Pick.class);
                                 context.startActivity(intent);
+                                ((Activity) context).finish();
                             }
                         });
                         dialog.show();

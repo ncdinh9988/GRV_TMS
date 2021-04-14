@@ -384,7 +384,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
     private void actionBack() {
         try {
-            finish();
+            List_Master_Pick.this.finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }
@@ -525,11 +525,11 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
             } else if (postitionDes == -21) {
 
-                dialog.showDialog(List_Master_Pick.this, "Mã sản phẩm không có trong zone reserve");
+                dialog.showDialog(List_Master_Pick.this, "Mã sản phẩm không có trong zone");
 
             } else if (postitionDes == -22) {
 
-                dialog.showDialog(List_Master_Pick.this, "Mã LPN không có trong zone reserve");
+                dialog.showDialog(List_Master_Pick.this, "Mã LPN không có trong zone ");
 
             }
         }catch (Exception e){
