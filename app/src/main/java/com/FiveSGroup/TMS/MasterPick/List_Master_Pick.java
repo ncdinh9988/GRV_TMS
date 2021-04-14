@@ -329,6 +329,10 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                         }else if (result == -24) {
                             dialog.showDialog(List_Master_Pick.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
+                        }else if (result == -36) {
+                            dialog.showDialog(List_Master_Pick.this, "Trùng Dữ Liệu Vui Lòng Kiểm Tra Lại");
+                        }else{
+                            dialog.showDialog(List_Master_Pick.this, "Vui Lòng Thử Lại");
                         }
 
                     }

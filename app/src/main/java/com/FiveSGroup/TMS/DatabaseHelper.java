@@ -1356,29 +1356,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getMaxID(){
-        String selectQuery = "SELECT PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT FROM "
-                + O_MASTER_PICK + " GROUP BY PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT  > 1" ;
+        String selectQuery = "SELECT STOCKIN_DATE ,PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT FROM "
+                + O_MASTER_PICK + " GROUP BY STOCKIN_DATE , PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT(*) > " + 1 ;
         SQLiteDatabase db = this.getReadableDatabase(DatabaseHelper.PWD);
 //        Cursor cursor = db.rawQuery(selectQuery, null);
 //        int count = cursor.getColumnIndex(PRODUCT_NAME);
 //        cursor.close();
-        Cursor cursor = db.rawQuery(selectQuery, new String [] {});
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
 // Iterate through cursor
-        if(cursor.moveToFirst())
-        {
-            do
-            {
-                Integer lat = cursor.getInt(0);
-                Integer lng = cursor.getInt(1);
-                Integer count = cursor.getInt(2);
+        cursor.moveToFirst();
 
-                // Do something here with lat, lng, count
+        int count_check = cursor.getInt(7);
 
-            }
-            while(cursor.moveToNext());
-        }
-        return cursor.getColumnIndex(PRODUCT_NAME);
+
+        return count_check;
     }
 
 

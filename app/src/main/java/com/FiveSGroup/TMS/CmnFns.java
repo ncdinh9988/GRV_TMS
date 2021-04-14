@@ -2796,14 +2796,21 @@ public class CmnFns {
                 jsonData = gson.toJson(product);
             }
             else if (type.equals("WMP")) {
-                int check = DatabaseHelper.getInstance().getMaxID();
-                if (check >= 1){
-                    return -35;
+                try {
+                    int check = DatabaseHelper.getInstance().getMaxID();
+                    if (check > 1 ){
+                        return -36;
+                    }
+
+                }catch (Exception e){
+
                 }
+
                 List<Product_Master_Pick> product = DatabaseHelper.getInstance().getAllProduct_Master_Pick_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
+
             }
 
             try {
