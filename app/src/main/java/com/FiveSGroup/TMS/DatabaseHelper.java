@@ -1506,7 +1506,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updateProduct_Master_Pick(Product_Master_Pick masterPick, String PRODUCT_CD, String sl, String ea_unit, String stock, String master_pick_cd) {
+    public int updateProduct_Master_Pick(Product_Master_Pick masterPick, String auto_incre,String PRODUCT_CD, String sl, String ea_unit, String stock, String master_pick_cd) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(PRODUCT_CD_MASTER_PICK, PRODUCT_CD);
@@ -1518,9 +1518,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(MASTER_PICK_CD, master_pick_cd);
 
         // updating row
-        return db.update(O_MASTER_PICK, values, PRODUCT_CD_MASTER_PICK + " = ?" + " AND " + EXPIRED_DATE_MASTER_PICK + " = ?"
-                        + " AND " + EA_UNIT_MASTER_PICK + " = ?" + " AND " + STOCKIN_DATE_MASTER_PICK + " = ?" + " AND " + MASTER_PICK_CD + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(masterPick.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(stock), master_pick_cd});
+        return db.update(O_MASTER_PICK, values,  AUTOINCREMENT_MASTER_PICK + " = ?",
+                new String[]{String.valueOf(auto_incre)});
 
     }
 
@@ -2236,7 +2235,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return loadPallets;
     }
 
-    public int updateProduct_LoadPallet(Product_LoadPallet product_loadPallet, String PRODUCT_CD, String sl, String ea_unit, String stock) {
+    public int updateProduct_LoadPallet(Product_LoadPallet product_loadPallet,String auto_incre, String PRODUCT_CD, String sl, String ea_unit, String stock) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(PRODUCT_CD_LOAD_PALLET, PRODUCT_CD);
@@ -2247,9 +2246,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(QTY_SET_AVAILABLE_LOAD_PALLET, sl);
 
         // updating row
-        return db.update(O_LOAD_PALLET, values, PRODUCT_CD_LOAD_PALLET + " = ?" + " AND " + EXPIRED_DATE_LOAD_PALLET + " = ?"
-                        + " AND " + EA_UNIT_LOAD_PALLET + " = ?" + " AND " + STOCKIN_DATE_LOAD_PALLET + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(product_loadPallet.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(stock)});
+        return db.update(O_LOAD_PALLET, values,  AUTOINCREMENT_LOAD_PALLET + " = ?",
+                new String[]{String.valueOf(auto_incre)});
 
     }
 

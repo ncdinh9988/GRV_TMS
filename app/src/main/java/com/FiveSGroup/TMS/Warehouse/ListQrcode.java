@@ -158,6 +158,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                         @Override
                         public void onClick(View view) {
                             dialog.dismiss();
+                            DatabaseHelper.getInstance().getAllProduct_PutAway();
                             putAwayListAdapter.notifyDataSetChanged();
 
                         }

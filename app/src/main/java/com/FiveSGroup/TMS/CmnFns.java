@@ -1925,7 +1925,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(Product_Master_Picks.get(0).getQTY());
                                 int sl = product_set + 1;
                                 Product_Master_Picks.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Master_Pick(updateProductQR, updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Master_Pick(updateProductQR,updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), masterPick.getSTOCKIN_DATE(), masterPickCD);
                             } else {
                                 DatabaseHelper.getInstance().CreateMaster_Pick(masterPick);
@@ -3261,7 +3261,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(loadPallets.get(0).getQTY());
                                 int sl = product_set + 1;
                                 loadPallets.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_LoadPallet(updateProduct_loadPallet, updateProduct_loadPallet.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_LoadPallet(updateProduct_loadPallet,updateProduct_loadPallet.getAUTOINCREMENT(), updateProduct_loadPallet.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProduct_loadPallet.getUNIT(), product_loadPallet.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().CreateLOAD_PALLET(product_loadPallet);

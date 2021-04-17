@@ -138,6 +138,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
+                        DatabaseHelper.getInstance().getAllProductLetDown();
                         letDownAdapter.notifyDataSetChanged();
 
                     }

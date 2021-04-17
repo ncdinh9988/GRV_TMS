@@ -168,8 +168,10 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.dismiss();
+                        dialog.dismiss();DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
                         MasterPickAdapter.notifyDataSetChanged();
+
+
 
                     }
                 });
