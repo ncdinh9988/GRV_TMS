@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.global;
 
 import java.util.ArrayList;
 
@@ -252,9 +253,11 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                            // DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
                         } else {
 
-                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+
                             // the user is done typing.
                             DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+                            DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
+                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                             hideSoftKeyboard(view);
 
                         }

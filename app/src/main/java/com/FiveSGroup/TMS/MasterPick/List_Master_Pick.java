@@ -135,12 +135,6 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         MasterPickAdapter.notifyDataSetChanged();
         master_picklist = "";
 
-//        nameproduct.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
             @Override
@@ -168,9 +162,10 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.dismiss();DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
-                        MasterPickAdapter.notifyDataSetChanged();
-
+                        dialog.dismiss();
+                        finish();
+                        Intent i = new Intent(List_Master_Pick.this,List_Master_Pick.class);
+                        startActivity(i);
 
 
                     }
