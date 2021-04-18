@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
+import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.StockTransfer.ListStockTransfer;
@@ -166,7 +167,11 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
             btnNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                     dialog.dismiss();
+                    finish();
+                    Intent i = new Intent(List_Remove_LPN.this,List_Remove_LPN.class);
+                    startActivity(i);
 
                 }
             });
@@ -193,7 +198,7 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
         for (int i = 0; i < product.size(); i++) {
             Product_Remove_LPN remove_LPN = product.get(i);
             String valueQty = remove_LPN.getQTY();
-            if (valueQty.equals("0") || valueQty.equals("") || valueQty.equals("00") || valueQty.equals("000")) {
+            if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
             }
         }

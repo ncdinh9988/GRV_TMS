@@ -27,6 +27,7 @@ import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.PickList.PickList;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.RemoveFromLPN.List_Remove_LPN;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
@@ -157,8 +158,11 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
-                        return_warehouse_adapter.notifyDataSetChanged();
+                        finish();
+                        Intent i = new Intent(List_Return_WareHouse.this,List_Return_WareHouse.class);
+                        startActivity(i);
 
                     }
                 });
@@ -250,7 +254,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
         for (int i = 0; i < product.size(); i++) {
             Product_Return_WareHouse return_wareHouse = product.get(i);
             String valueQty = return_wareHouse.getQTY();
-            if (valueQty.equals("0") || valueQty.equals("") || valueQty.equals("00") || valueQty.equals("000")) {
+            if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
             }
         }
@@ -358,7 +362,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
 
     private void actionBack() {
         try {
-            finish();
+            List_Return_WareHouse.this.finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }

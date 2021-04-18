@@ -127,10 +127,10 @@ public class PickListAdapter extends RecyclerView.Adapter<PickListAdapter.ViewHo
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().equals("")) {
-                    DatabaseHelper.getInstance().updateProduct_PickList(product, product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getPickListCD());
+                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+                    DatabaseHelper.getInstance().updateProduct_PickList(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getPickListCD());
                 } else {
-                    DatabaseHelper.getInstance().updateProduct_PickList(product, product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getPickListCD());
+                    DatabaseHelper.getInstance().updateProduct_PickList(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getPickListCD());
                 }
             }
         });
@@ -151,19 +151,19 @@ public class PickListAdapter extends RecyclerView.Adapter<PickListAdapter.ViewHo
                             // the user is done typing.
 
                             Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_PickList(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getPickListCD());
-                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))) {
+//                            DatabaseHelper.getInstance().updateProduct_PickList(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getPickListCD());
+                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
                             // the user is done typing.
 
                             Toast.makeText(context, "Số lượng không được bằng không ", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_PickList(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getPickListCD());
+//                            DatabaseHelper.getInstance().updateProduct_PickList(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getPickListCD());
                         } else {
 
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
 
 
                             // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_PickList(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getPickListCD());
+                            DatabaseHelper.getInstance().updateProduct_PickList(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getPickListCD());
 
                             hideSoftKeyboard(view);
 

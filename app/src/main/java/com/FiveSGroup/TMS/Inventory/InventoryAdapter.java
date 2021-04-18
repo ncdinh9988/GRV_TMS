@@ -140,9 +140,9 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             public void afterTextChanged(Editable s) {
                 if (s.toString().equals("")) {
                     // trong KT khi để sl rỗng thì phải cập nhật "" để phân biệt giữa 0 và ""
-                    DatabaseHelper.getInstance().updateProduct_Inventory(product, product.getPRODUCT_CD(), "", product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
+                    DatabaseHelper.getInstance().updateProduct_Inventory(product,product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "", product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
                 } else {
-                    DatabaseHelper.getInstance().updateProduct_Inventory(product, product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
+                    DatabaseHelper.getInstance().updateProduct_Inventory(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
                 }
             }
         });
@@ -177,7 +177,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
 
                             // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_Inventory(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
+                            DatabaseHelper.getInstance().updateProduct_Inventory(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
 
                             hideSoftKeyboard(view);
 

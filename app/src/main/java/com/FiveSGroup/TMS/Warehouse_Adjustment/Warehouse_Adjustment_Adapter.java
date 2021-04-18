@@ -123,9 +123,9 @@ public class Warehouse_Adjustment_Adapter extends RecyclerView.Adapter<Warehouse
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().equals("")) {
-                    DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product, product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
+                    DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
                 } else {
-                    DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product, product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
+                    DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
                 }
             }
         });
@@ -157,7 +157,7 @@ public class Warehouse_Adjustment_Adapter extends RecyclerView.Adapter<Warehouse
 
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                             // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
+                            DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
 
                             hideSoftKeyboard(view);
 

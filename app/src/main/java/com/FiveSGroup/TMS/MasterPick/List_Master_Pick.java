@@ -162,6 +162,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //Khi nhấn no dữ liệu sẽ trả về đơn vị là 1 cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
                         finish();
                         Intent i = new Intent(List_Master_Pick.this,List_Master_Pick.class);
@@ -262,7 +263,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         for (int i = 0; i < product.size(); i++) {
             Product_Master_Pick putAway = product.get(i);
             String valueQty = putAway.getQTY();
-            if (valueQty.equals("0") || valueQty.equals("") || valueQty.equals("00") || valueQty.equals("000")) {
+            if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
             }
         }

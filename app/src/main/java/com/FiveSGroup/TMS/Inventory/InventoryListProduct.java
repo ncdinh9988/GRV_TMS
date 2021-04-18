@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.RemoveFromLPN.List_Remove_LPN;
 import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
@@ -160,8 +161,11 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
-                        inventoryAdapter.notifyDataSetChanged();
+                        finish();
+                        Intent i = new Intent(InventoryListProduct.this,InventoryListProduct.class);
+                        startActivity(i);
 
                     }
                 });
@@ -243,7 +247,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
 
     private void actionBack() {
         try {
-            finish();
+            InventoryListProduct.this.finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }

@@ -26,9 +26,7 @@ import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
-import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
-import com.FiveSGroup.TMS.Warehouse.Product_Qrcode;
 import com.FiveSGroup.TMS.global;
 
 import java.util.ArrayList;
@@ -156,8 +154,11 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
-                        Warehouse_Adjustment_ListAdapter.notifyDataSetChanged();
+                        finish();
+                        Intent i = new Intent(ListQrcode_Warehouse_Adjustment.this,ListQrcode_Warehouse_Adjustment.class);
+                        startActivity(i);
 
                     }
                 });
@@ -368,7 +369,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
 
     private void actionBack() {
         try {
-            finish();
+            ListQrcode_Warehouse_Adjustment.this.finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }

@@ -223,7 +223,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().equals("")) {
+                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
                     DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
                 } else {
                     DatabaseHelper.getInstance().updateProduct_Master_Pick(product,product.getAUTOINCREMENT() , product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
@@ -246,17 +246,14 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                             // the user is done typing.
                             Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
                           //  DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
-                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))) {
+                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
                             // the user is done typing.
-
                             Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
                            // DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
                         } else {
-
-
                             // the user is done typing.
                             DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
-                            DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
+                            //DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                             hideSoftKeyboard(view);
 

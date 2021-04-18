@@ -125,10 +125,10 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().equals("")) {
-                    DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product, product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
+                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+                    DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
                 } else {
-                    DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product, product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
+                    DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
                 }
             }
         });
@@ -147,17 +147,17 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
                         if (holder.edt.getText().toString().equals("")) {
                             // the user is done typing.
                             Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getRETURN_CD());
-                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))) {
+//                            DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getRETURN_CD());
+                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
                             // the user is done typing.
 
                             Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getRETURN_CD());
+//                            DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getRETURN_CD());
                         } else {
 
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                             // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
+                            DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
 
                             hideSoftKeyboard(view);
 

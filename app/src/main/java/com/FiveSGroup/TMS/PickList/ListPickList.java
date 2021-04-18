@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
 import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.MasterPick.Product_Master_Pick;
 import com.FiveSGroup.TMS.R;
@@ -160,8 +161,11 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                     btnNo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                             dialog.dismiss();
-                            pickListAdapter.notifyDataSetChanged();
+                            finish();
+                            Intent i = new Intent(ListPickList.this,ListPickList.class);
+                            startActivity(i);
 
                         }
                     });
@@ -180,38 +184,6 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                     });
                     dialog.show();
 
-
-                }
-            };
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-            itemTouchHelper.attachToRecyclerView(listViewProduct);
-        }else{
-            //int statusGetCust = new CmnFns().synchronizeGETProductByZonePickList(value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WPL", global.getPickListCD(), stockinDate,0);
-            pickList = DatabaseHelper.getInstance().getAllProduct_PickList_Show(global.getPickListCD());
-            //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
-            pickListAdapter = new PickListAdapter(this, pickList);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-            listViewProduct.setLayoutManager(layoutManager);
-            listViewProduct.setAdapter(pickListAdapter);
-            pickListAdapter.notifyDataSetChanged();
-            pick_list = "";
-            ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-
-                @Override
-                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                    Toast.makeText(ListPickList.this, "on Move", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-
-                @Override
-                public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                    Toast.makeText(ListPickList.this, "Đã xóa ", Toast.LENGTH_SHORT).show();
-                    //Remove swiped item from list and notify the RecyclerView
-                    int position = viewHolder.getAdapterPosition();
-                    PickList product = pickList.get(position);
-                    pickList.remove(position);
-                    DatabaseHelper.getInstance().deleteProduct_PickList_Specific(product.getAUTOINCREMENT());
-                    pickListAdapter.notifyItemRemoved(position);
 
                 }
             };
@@ -273,7 +245,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
 
     private void actionBack() {
         try {
-            finish();
+            ListPickList.this.finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }
@@ -284,7 +256,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < product.size(); i++) {
             PickList putAway = product.get(i);
             String valueQty = putAway.getQTY_SET_AVAILABLE();
-            if (valueQty.equals("0") || valueQty.equals("") ||valueQty.equals("00") || valueQty.equals("000") ) {
+            if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
             }
         }

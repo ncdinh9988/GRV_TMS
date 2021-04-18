@@ -127,10 +127,10 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().equals("")) {
-                    DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), "0", product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
+                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+                    DatabaseHelper.getInstance().updateProduct_PutAway(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD_PUTAWAY(), "0", product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
                 } else {
-                    DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), s.toString(), product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
+                    DatabaseHelper.getInstance().updateProduct_PutAway(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD_PUTAWAY(), s.toString(), product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
                 }
             }
         });
@@ -151,20 +151,20 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
                             // the user is done typing.
 
                             Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE_PUTAWAY());
+//                            DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE_PUTAWAY());
 
-                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))) {
+                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
                             // the user is done typing.
 
                             Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE_PUTAWAY());
+//                            DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE_PUTAWAY());
                         } else {
 
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
 
 
                             // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
+                            DatabaseHelper.getInstance().updateProduct_PutAway(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
 
                             hideSoftKeyboard(view);
 

@@ -278,7 +278,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getUNIT());
         values.put(PRODUCT_CODE_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getPRODUCT_NAME());
@@ -477,7 +477,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updateProduct_Warehouse_Adjustment(Product_Warehouse_Adjustment warehouse_Adjustment, String PRODUCT_CD, String sl, String ea_unit, String warehouse, String warehouse_Adjustment_cd) {
+    public int updateProduct_Warehouse_Adjustment(Product_Warehouse_Adjustment warehouse_Adjustment,String incre_wa, String PRODUCT_CD, String sl, String ea_unit, String warehouse, String warehouse_Adjustment_cd) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(PRODUCT_CD_WAREHOUSE_ADJUSTMENT, PRODUCT_CD);
@@ -489,9 +489,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(warehouse_Adjustment_CD, warehouse_Adjustment_cd);
 
         // updating row
-        return db.update(O_WAREHOUSE_ADJUSTMENT, values, PRODUCT_CD_WAREHOUSE_ADJUSTMENT + " = ?" + " AND " + EXPIRED_DATE_WAREHOUSE_ADJUSTMENT + " = ?"
-                        + " AND " + EA_UNIT_WAREHOUSE_ADJUSTMENT + " = ?" + " AND " + STOCKIN_DATE_WAREHOUSE_ADJUSTMENT + " = ?" + " AND " + warehouse_Adjustment_CD + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(warehouse_Adjustment.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(warehouse), warehouse_Adjustment_cd});
+        return db.update(O_WAREHOUSE_ADJUSTMENT, values,  AUTOINCREMENT_WAREHOUSE_ADJUSTMENT + " = ?",
+                new String[]{String.valueOf(incre_wa)});
 
     }
 
@@ -874,7 +873,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_RETURN_WAREHOUSE,returnWarehouse.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_RETURN_WAREHOUSE,returnWarehouse.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_RETURN_WAREHOUSE, returnWarehouse.getUNIT());
         values.put(PRODUCT_CODE_RETURN_WAREHOUSE, returnWarehouse.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_RETURN_WAREHOUSE, returnWarehouse.getPRODUCT_NAME());
@@ -1134,7 +1133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updateProduct_Return_WareHouse(Product_Return_WareHouse returnWarehouse, String PRODUCT_CD, String sl, String ea_unit, String return_warehouse, String returnWarehouse_cd) {
+    public int updateProduct_Return_WareHouse(Product_Return_WareHouse returnWarehouse,String incre_rw, String PRODUCT_CD, String sl, String ea_unit, String return_warehouse, String returnWarehouse_cd) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(PRODUCT_CD_RETURN_WAREHOUSE, PRODUCT_CD);
@@ -1146,9 +1145,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(RETURN_CD, returnWarehouse_cd);
 
         // updating row
-        return db.update(O_RETURN_WAREHOUSE, values, PRODUCT_CD_RETURN_WAREHOUSE + " = ?" + " AND " + EXPIRED_DATE_RETURN_WAREHOUSE + " = ?"
-                        + " AND " + EA_UNIT_RETURN_WAREHOUSE + " = ?" + " AND " + STOCKIN_DATE_RETURN_WAREHOUSE + " = ?" + " AND " + RETURN_CD + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(returnWarehouse.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(return_warehouse), returnWarehouse_cd});
+        return db.update(O_RETURN_WAREHOUSE, values,  AUTOINCREMENT_RETURN_WAREHOUSE + " = ?",
+                new String[]{String.valueOf(incre_rw)});
 
     }
 
@@ -1834,7 +1832,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return picklist;
     }
 
-    public int updateProduct_PickList(PickList picklist, String PRODUCT_CD, String sl, String ea_unit, String stock, String pickListCD) {
+    public int updateProduct_PickList(PickList picklist,String incre_pl, String PRODUCT_CD, String sl, String ea_unit, String stock, String pickListCD) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -1849,9 +1847,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // updating row
-        return db.update(O_PICK_LIST, values, PRODUCT_CD_PICKLIST + " = ?" + " AND " + EXPIRED_DATE_PICKLIST + " = ?"
-                        + " AND " + EA_UNIT_PICKLIST + " = ?" + " AND " + STOCKIN_DATE_PICKLIST + " = ?" + " AND " + PICKLIST_CD + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(picklist.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(stock), String.valueOf(pickListCD)});
+        return db.update(O_PICK_LIST, values,  AUTOINCREMENT_PICKLIST + " = ?",
+                new String[]{String.valueOf(incre_pl)});
 
     }
 
@@ -2311,7 +2308,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_REMOVE_LPN,remove_lpn.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_REMOVE_LPN,remove_lpn.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_REMOVE_LPN, remove_lpn.getUNIT());
         values.put(PRODUCT_CODE_REMOVE_LPN, remove_lpn.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_remove_TRANSFER, remove_lpn.getPRODUCT_NAME());
@@ -2491,7 +2488,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return remove_lpns;
     }
 
-    public int updateProduct_Remove_LPN(Product_Remove_LPN remove_lpn, String PRODUCT_CD, String sl, String ea_unit, String remove) {
+    public int updateProduct_Remove_LPN(Product_Remove_LPN remove_lpn,String incre_rl, String PRODUCT_CD, String sl, String ea_unit, String remove) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(PRODUCT_CD_REMOVE_LPN, PRODUCT_CD);
@@ -2502,9 +2499,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(QTY_SET_AVAILABLE_REMOVE_LPN, sl);
 
         // updating row
-        return db.update(O_REMOVE_LPN, values, PRODUCT_CD_REMOVE_LPN + " = ?" + " AND " + EXPIRED_DATE_REMOVE_LPN + " = ?"
-                        + " AND " + EA_UNIT_REMOVE_LPN + " = ?" + " AND " + STOCKIN_DATE_REMOVE_LPN + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(remove_lpn.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(remove)});
+        return db.update(O_REMOVE_LPN, values, AUTOINCREMENT_REMOVE_LPN + " = ?",
+                new String[]{String.valueOf(incre_rl)});
 
     }
 
@@ -2633,7 +2629,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_STOCK_TRANSFER, stockTransfer.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_STOCK_TRANSFER, stockTransfer.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_STOCK_TRANSFER, stockTransfer.getUNIT());
         values.put(PRODUCT_CODE_STOCK_TRANSFER, stockTransfer.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_STOCK_TRANSFER, stockTransfer.getPRODUCT_NAME());
@@ -2813,7 +2809,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return stockTransfers;
     }
 
-    public int updateProduct_StockTransfer(Product_StockTransfer stockTransfer, String PRODUCT_CD, String sl, String ea_unit, String stock) {
+    public int updateProduct_StockTransfer(Product_StockTransfer stockTransfer,String incre_st, String PRODUCT_CD, String sl, String ea_unit, String stock) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(PRODUCT_CD_STOCK_TRANSFER, PRODUCT_CD);
@@ -2824,9 +2820,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(QTY_SET_AVAILABLE_STOCK_TRANSFER, sl);
 
         // updating row
-        return db.update(O_STOCK_TRANSFER, values, PRODUCT_CD_STOCK_TRANSFER + " = ?" + " AND " + EXPIRED_DATE_STOCK_TRANSFER + " = ?"
-                        + " AND " + EA_UNIT_STOCK_TRANSFER + " = ?" + " AND " + STOCKIN_DATE_STOCK_TRANSFER + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(stockTransfer.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(stock)});
+        return db.update(O_STOCK_TRANSFER, values, AUTOINCREMENT_STOCK_TRANSFER + " = ?",
+                new String[]{String.valueOf(incre_st)});
 
     }
 
@@ -2898,7 +2893,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_STOCK_OUT, stockOut.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_STOCK_OUT, stockOut.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_STOCK_OUT, stockOut.getUNIT());
         values.put(PRODUCT_CODE_STOCK_OUT, stockOut.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_STOCK_OUT, stockOut.getPRODUCT_NAME());
@@ -3168,7 +3163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updateProduct_Stockout(Product_StockOut stockOut, String PRODUCT_CD, String sl, String ea_unit, String stock, String stockout_cd) {
+    public int updateProduct_Stockout(Product_StockOut stockOut,String incre_so, String PRODUCT_CD, String sl, String ea_unit, String stock, String stockout_cd) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(PRODUCT_CD_STOCK_OUT, PRODUCT_CD);
@@ -3180,9 +3175,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(STOCKOUT_CD, stockout_cd);
 
         // updating row
-        return db.update(O_STOCK_OUT, values, PRODUCT_CD_STOCK_OUT + " = ?" + " AND " + EXPIRED_DATE_STOCK_OUT + " = ?"
-                        + " AND " + EA_UNIT_STOCK_OUT + " = ?" + " AND " + STOCKIN_DATE_STOCK_OUT + " = ?" + " AND " + STOCKOUT_CD + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(stockOut.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(stock), stockout_cd});
+        return db.update(O_STOCK_OUT, values,  AUTOINCREMENT_STOCK_OUT + " = ?",
+                new String[]{String.valueOf(incre_so)});
 
     }
 
@@ -3251,7 +3245,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_LETDOWN, qrcode.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_LETDOWN, qrcode.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_LETDOWN, qrcode.getUNIT());
         values.put(PRODUCT_CODE_LETDOWN, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_LETDOWN, qrcode.getPRODUCT_NAME());
@@ -3444,7 +3438,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return letdowns;
     }
 
-    public int updateProduct_LetDown(ProductLetDown letdown, String PRODUCT_CD, String sl, String ea_unit, String stock) {
+    public int updateProduct_LetDown(ProductLetDown letdown,String incre_ld, String PRODUCT_CD, String sl, String ea_unit, String stock) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(PRODUCT_CD_LETDOWN, PRODUCT_CD);
@@ -3455,9 +3449,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(QTY_SET_AVAILABLE_LETDOWN, sl);
 
         // updating row
-        return db.update(O_LET_DOWN, values, PRODUCT_CD_LETDOWN + " = ?" + " AND " + EXPIRED_DATE_LETDOWN + " = ?"
-                        + " AND " + EA_UNIT_LETDOWN + " = ?" + " AND " + STOCKIN_DATE_LETDOWN + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(letdown.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(stock)});
+        return db.update(O_LET_DOWN, values,  AUTOINCREMENT_LETDOWN + " = ?",
+                new String[]{String.valueOf(incre_ld)});
 
     }
 
@@ -3687,7 +3680,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_PUT_AWAY,qrcode.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_PUT_AWAY,qrcode.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_PUTAWAY, qrcode.getUNIQUE_CODE_PUTAWAY());
         values.put(PRODUCT_CODE_PUTAWAY, qrcode.getPRODUCT_CODE_PUTAWAY());
         values.put(PRODUCT_NAME_PUTAWAY, qrcode.getPRODUCT_NAME_PUTAWAY());
@@ -3874,7 +3867,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return putaway;
     }
 
-    public int updateProduct_PutAway(Product_PutAway putAway, String PRODUCT_CD, String sl, String ea_unit, String stock) {
+    public int updateProduct_PutAway(Product_PutAway putAway,String incre_pa, String PRODUCT_CD, String sl, String ea_unit, String stock) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -3888,9 +3881,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // updating row
-        return db.update(O_PUT_AWAY, values, PRODUCT_CD_PUTAWAY + " = ?" + " AND " + EXPIRED_DATE_PUTAWAY + " = ?"
-                        + " AND " + EA_UNIT_PUTAWAY + " = ?" + " AND " + STOCKIN_DATE_PUTAWAY + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(putAway.getEXPIRED_DATE_PUTAWAY()), String.valueOf(ea_unit), String.valueOf(stock)});
+        return db.update(O_PUT_AWAY, values,  AUTOINCREMENT_PUT_AWAY + " = ?",
+                new String[]{String.valueOf(incre_pa)});
 
     }
 
@@ -4044,7 +4036,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_PO, qrcode.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_PO, qrcode.getAUTOINCREMENT());
         values.put(PRODUCT_CD, qrcode.getPRODUCT_CD());
         values.put(MANUFACTURING_DATE_WST, qrcode.getMANUFACTURING_DATE());
         values.put(STOCK_RECEIPT_CD, qrcode.getSTOCK_RECEIPT_CD());
@@ -4226,7 +4218,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updateProduct_Qrcode_SL(Product_Qrcode qrcode, String PRODUCT_CD, String stock, String sl, String ea_unit, String stocking_date) {
+    public int updateProduct_Qrcode_SL(Product_Qrcode qrcode,String incre_si, String PRODUCT_CD, String stock, String sl, String ea_unit, String stocking_date) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -4245,9 +4237,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Log.d("so luong : ", sl);
         // updating row
-        return db.update(O_QRCODE, values, "PRODUCT_CD" + " = ?" + " AND STOCK_RECEIPT_CD = ?"
-                        + " AND EXPIRED_DATE =  ?" + " AND STOCKIN_DATE = ?" + " AND EA_UNIT =  ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(stock), String.valueOf(qrcode.getEXPIRED_DATE()), String.valueOf(stocking_date), String.valueOf(ea_unit)});
+        return db.update(O_QRCODE, values, AUTOINCREMENT_PO + " = ?",
+                new String[]{String.valueOf(incre_si)});
 
 
     }
@@ -5255,7 +5246,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
-        values.put(AUTOINCREMENT_INVENTORY, qrcode.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_INVENTORY, qrcode.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_INVENTORY, qrcode.getUNIQUE_CODE());
         values.put(PRODUCT_CODE_INVENTORY, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_INVENTORY, qrcode.getPRODUCT_NAME());
@@ -5499,7 +5490,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return INVENTORY;
     }
 
-    public int updateProduct_Inventory(InventoryProduct INVENTORY, String PRODUCT_CD, String sl, String ea_unit, String stock, String INVENTORYCD) {
+    public int updateProduct_Inventory(InventoryProduct INVENTORY, String incre_iv,String PRODUCT_CD, String sl, String ea_unit, String stock, String INVENTORYCD) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -5514,9 +5505,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // updating row
-        return db.update(O_INVENTORY, values, PRODUCT_CD_INVENTORY + " = ?" + " AND " + EXPIRED_DATE_INVENTORY + " = ?"
-                        + " AND " + EA_UNIT_INVENTORY + " = ?" + " AND " + STOCKIN_DATE_INVENTORY + " = ?" + " AND " + STOCK_TAKE_CD + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(INVENTORY.getEXPIRED_DATE()), String.valueOf(ea_unit), String.valueOf(stock), String.valueOf(INVENTORYCD)});
+        return db.update(O_INVENTORY, values,  AUTOINCREMENT_INVENTORY + " = ?",
+                new String[]{String.valueOf(incre_iv)});
 
     }
 

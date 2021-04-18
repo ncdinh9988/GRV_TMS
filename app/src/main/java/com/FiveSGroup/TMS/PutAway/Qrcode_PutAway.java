@@ -30,7 +30,6 @@ import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
-import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -94,7 +93,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (position != null || checkToFinish != null) {
-                    Intent intent = new Intent(Qrcode_PutAway.this, ListQrcode.class);
+                    Intent intent = new Intent(Qrcode_PutAway.this, List_PutAway.class);
                     intent.putExtra("put_away", "333");
                     startActivity(intent);
                     finish();
@@ -261,7 +260,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                                 } catch (Exception e) {
                                     Toast.makeText(Qrcode_PutAway.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                                     Log.d("#777: ", e.getMessage());
-                                    Intent intent = new Intent(Qrcode_PutAway.this, ListQrcode.class);
+                                    Intent intent = new Intent(Qrcode_PutAway.this, List_PutAway.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -280,7 +279,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
 
         if (checkBoxGetLPN.isChecked()) {
             if (expiredDate != null) {
-                Intent intentt = new Intent(getApplication(), ListQrcode.class);
+                Intent intentt = new Intent(getApplication(), List_PutAway.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("returnposition", position);
@@ -289,7 +288,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("put_away", "333");
 
-                // truyền qua cho ListQRCode để xử lí from - to
+                // truyền qua cho List_PutAway để xử lí from - to
                 intentt.putExtra("expdate", expiredDate);
                 intentt.putExtra("stockin_date", stockinDate);
 
@@ -303,7 +302,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
 
 
             } else {
-                Intent intentt = new Intent(Qrcode_PutAway.this, ListQrcode.class);
+                Intent intentt = new Intent(Qrcode_PutAway.this, List_PutAway.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("put_away", "333");
@@ -406,7 +405,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                             }
                         } else {
                             Toast.makeText(Qrcode_PutAway.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(Qrcode_PutAway.this, ListQrcode.class);
+                            Intent intent = new Intent(Qrcode_PutAway.this, List_PutAway.class);
                             intent.putExtra("btn1", barcodeData);
                             intent.putExtra("put_away", "333");
                             startActivity(intent);
@@ -424,7 +423,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
         }
     }
     private void ReturnPosition(String barcode) {
-        Intent intentt = new Intent(getApplication(), ListQrcode.class);
+        Intent intentt = new Intent(getApplication(), List_PutAway.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
@@ -432,7 +431,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("put_away", "333");
 
-        // truyền qua cho ListQRCode để xử lí from - to
+        // truyền qua cho List_PutAway để xử lí from - to
         intentt.putExtra("expdate", expiredDate);
         intentt.putExtra("stockin_date", stockinDate);
 
@@ -450,7 +449,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
-        Intent intentt = new Intent(getApplication(), ListQrcode.class);
+        Intent intentt = new Intent(getApplication(), List_PutAway.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
@@ -509,14 +508,14 @@ public class Qrcode_PutAway extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(Qrcode_PutAway.this, mString[which], Toast.LENGTH_LONG).show();
-                Intent intentt = new Intent(getApplication(), ListQrcode.class);
+                Intent intentt = new Intent(getApplication(), List_PutAway.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("put_away", "333");
                 intentt.putExtra("returnStock", stock);
-                // truyền qua cho ListQRcode để add vào text HSD
+                // truyền qua cho List_PutAway để add vào text HSD
                 intentt.putExtra("exp_date", expDateTemp2);
                 intentt.putExtra("ea_unit", mString[which]);
                 intentt.putExtra("stock_in", stockinDate);

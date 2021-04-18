@@ -1620,7 +1620,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_warehouse_adjustments.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_warehouse_adjustments.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(updateProductQR, updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(updateProductQR,updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), warehouseAdjustment.getSTOCKIN_DATE(), warehouseCD);
                             } else {
                                 DatabaseHelper.getInstance().CreateWAREHOUSE_ADJUSTMENT(warehouseAdjustment);
@@ -1776,7 +1776,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_return_wareHouses.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_return_wareHouses.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Return_WareHouse(updateProductQR, updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Return_WareHouse(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), return_wareHouse.getSTOCKIN_DATE(), returnCD);
                             } else {
                                 DatabaseHelper.getInstance().Createreturn_warehouse_OUT(return_wareHouse);
@@ -2077,7 +2077,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_stockOuts.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_stockOuts.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Stockout(updateProductQR, updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Stockout(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), stockOut.getSTOCKIN_DATE(), stockoutCD);
                             } else {
                                 DatabaseHelper.getInstance().CreateSTOCK_OUT(stockOut);
@@ -2239,7 +2239,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_putaway.get(0).getQTY_SET_AVAILABLE());
                                 int sl = product_set + 1;
                                 product_putaway.get(i).setQTY_SET_AVAILABLE(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_PutAway(updateProductQR, updateProductQR.getPRODUCT_CD_PUTAWAY(),
+                                DatabaseHelper.getInstance().updateProduct_PutAway(updateProductQR,updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD_PUTAWAY(),
                                         String.valueOf(sl), updateProductQR.getEA_UNIT_PUTAWAY(), putAway.getSTOCKIN_DATE_PUTAWAY());
                             } else {
                                 DatabaseHelper.getInstance().CreatePutAway(putAway);
@@ -2400,7 +2400,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_pickList.get(0).getQTY_SET_AVAILABLE());
                                 int sl = product_set + 1;
                                 product_pickList.get(i).setQTY_SET_AVAILABLE(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_PickList(updateProductQR, updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_PickList(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), pickList.getSTOCKIN_DATE(), PickListCD);
                             } else {
                                 DatabaseHelper.getInstance().CreatePickList(pickList);
@@ -3412,7 +3412,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_stockTransfers.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_stockTransfers.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_StockTransfer(updateProduct_stockTransfer, updateProduct_stockTransfer.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_StockTransfer(updateProduct_stockTransfer,updateProduct_stockTransfer.getAUTOINCREMENT(), updateProduct_stockTransfer.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProduct_stockTransfer.getUNIT(), productStockTransfer.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().CreateSTOCK_TRANSFER(productStockTransfer);
@@ -3563,7 +3563,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_remove_lpn.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_remove_lpn.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Remove_LPN(updateProduct_remove_lpn, updateProduct_remove_lpn.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Remove_LPN(updateProduct_remove_lpn, updateProduct_remove_lpn.getAUTOINCREMENT(),updateProduct_remove_lpn.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProduct_remove_lpn.getUNIT(), productRemoveLpn.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().Create_Remove_LPN(productRemoveLpn);
@@ -3733,7 +3733,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_letdown.get(0).getQTY_SET_AVAILABLE());
                                 int sl = product_set + 1;
                                 product_letdown.get(i).setQTY_SET_AVAILABLE(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_LetDown(updateProductQR, updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_LetDown(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), letDown.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().CreateLetDown(letDown);
@@ -4079,7 +4079,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(inventoryProducts.get(0).getQTY());
                                 int sl = product_set + 1;
                                 inventoryProducts.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Inventory(updateProductQR, updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Inventory(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), inventoryProduct.getSTOCKIN_DATE(), inventoryCD);
                             } else {
                                 DatabaseHelper.getInstance().CreateInventory(inventoryProduct);

@@ -165,10 +165,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().equals("")) {
-                    DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), "0", product.getEA_UNIT(), product.getSTOCKIN_DATE());
+                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+                    DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), "0", product.getEA_UNIT(), product.getSTOCKIN_DATE());
                 }else {
-                    DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), s.toString(), product.getEA_UNIT(), product.getSTOCKIN_DATE());
+                    DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), s.toString(), product.getEA_UNIT(), product.getSTOCKIN_DATE());
                 }
             }
         });
@@ -186,16 +186,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                         if (holder.edt.getText().toString().equals("")) {
                             // the user is done typing.
                             Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), "0", product.getEA_UNIT(), product.getSTOCKIN_DATE());
-                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))) {
+//                            DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), "0", product.getEA_UNIT(), product.getSTOCKIN_DATE());
+                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
 
                             Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), "0", product.getEA_UNIT(), product.getSTOCKIN_DATE());
+//                            DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), "0", product.getEA_UNIT(), product.getSTOCKIN_DATE());
 
                         } else {
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
 
-                            DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), holder.edt.getText().toString(), product.getEA_UNIT(), product.getSTOCKIN_DATE());
+                            DatabaseHelper.getInstance().updateProduct_Qrcode_SL(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), product.getSTOCK_RECEIPT_CD(), holder.edt.getText().toString(), product.getEA_UNIT(), product.getSTOCKIN_DATE());
 
                             hideSoftKeyboard(view);
                         }

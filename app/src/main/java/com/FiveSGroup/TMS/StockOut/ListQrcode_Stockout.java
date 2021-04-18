@@ -157,8 +157,11 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
-                        StockoutListAdapter.notifyDataSetChanged();
+                        finish();
+                        Intent i = new Intent(ListQrcode_Stockout.this,ListQrcode_Stockout.class);
+                        startActivity(i);
 
                     }
                 });
@@ -256,7 +259,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
         for (int i = 0; i < product.size(); i++) {
             Product_StockOut putAway = product.get(i);
             String valueQty = putAway.getQTY();
-            if (valueQty.equals("0") || valueQty.equals("") || valueQty.equals("00") || valueQty.equals("000")) {
+            if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
             }
         }
@@ -369,7 +372,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
 
     private void actionBack() {
         try {
-            finish();
+            ListQrcode_Stockout.this.finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }

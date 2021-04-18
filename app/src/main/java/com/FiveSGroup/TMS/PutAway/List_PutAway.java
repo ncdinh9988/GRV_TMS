@@ -1,4 +1,4 @@
-package com.FiveSGroup.TMS.LetDown;
+package com.FiveSGroup.TMS.PutAway;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -23,19 +23,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
-import com.FiveSGroup.TMS.Inventory.InventoryProduct;
-import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
-import com.FiveSGroup.TMS.RemoveFromLPN.List_Remove_LPN;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.Wv_ShowResultQrode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LetDownActivity extends AppCompatActivity implements View.OnClickListener {
+public class List_PutAway extends AppCompatActivity implements View.OnClickListener {
     Button buttonBack, btnok, buttonBackList;
     ImageButton btnscan_barcode;
     RecyclerView listViewProduct;
@@ -45,19 +41,18 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
     String stock = "";
     String expDate = "";
     String expDate1 = "";
-    String let_down = "";
+    String put_away = "";
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
     TextView tvTitle;
-    String fromLetDownSuggestionsActivity = "";
     String lpn = "";
     int result;
 
 
-    ArrayList<ProductLetDown> letDowns;
+    ArrayList<Product_PutAway> putAways;
 
-    LetDownAdapter letDownAdapter;
+    PutAwayAdapter putAwayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,26 +98,26 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                 alert_show_position(0);
             }
         }
-        letDowns = DatabaseHelper.getInstance().getAllProductLetDown();
-        letDownAdapter = new LetDownAdapter(this, letDowns);
+        putAways = DatabaseHelper.getInstance().getAllProduct_PutAway();
+        putAwayAdapter = new PutAwayAdapter(this, putAways);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         listViewProduct.setLayoutManager(layoutManager);
-        listViewProduct.setAdapter(letDownAdapter);
-        letDownAdapter.notifyDataSetChanged();
-        let_down = "";
+        listViewProduct.setAdapter(putAwayAdapter);
+        putAwayAdapter.notifyDataSetChanged();
+        put_away = "";
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                Toast.makeText(LetDownActivity.this, "on Move", Toast.LENGTH_SHORT).show();
+                Toast.makeText(List_PutAway.this, "on Move", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                LayoutInflater factory = LayoutInflater.from(LetDownActivity.this);
+                LayoutInflater factory = LayoutInflater.from(List_PutAway.this);
                 View layout_cus = factory.inflate(R.layout.layout_delete, null);
-                final AlertDialog dialog = new AlertDialog.Builder(LetDownActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                final AlertDialog dialog = new AlertDialog.Builder(List_PutAway.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
                 InsetDrawable inset = new InsetDrawable(back, 64);
@@ -140,7 +135,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                         //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
                         finish();
-                        Intent i = new Intent(LetDownActivity.this,LetDownActivity.class);
+                        Intent i = new Intent(List_PutAway.this,List_PutAway.class);
                         startActivity(i);
 
                     }
@@ -152,10 +147,10 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                         dialog.dismiss();
                         //Remove swiped item from list and notify the RecyclerView
                         int position = viewHolder.getAdapterPosition();
-                        ProductLetDown product = letDowns.get(position);
-                        letDowns.remove(position);
-                        DatabaseHelper.getInstance().deleteProduct_Letdown_Specific(product.getAUTOINCREMENT());
-                        letDownAdapter.notifyItemRemoved(position);
+                        Product_PutAway product = putAways.get(position);
+                        putAways.remove(position);
+                        DatabaseHelper.getInstance().deleteProduct_PutAway_Specific(product.getAUTOINCREMENT());
+                        putAwayAdapter.notifyItemRemoved(position);
                     }
                 });
                 dialog.show();
@@ -175,10 +170,10 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         btnok = findViewById(R.id.buttonOK);
         listViewProduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Danh Sách SP Let Down");
+        tvTitle.setText("Danh Sách SP Put Away");
         btnscan_barcode.setOnClickListener(this);
 
-        buttonBackList.setVisibility(View.VISIBLE);
+//        buttonBackList.setVisibility(View.VISIBLE);
         buttonBack.setOnClickListener(this);
         buttonBackList.setOnClickListener(this);
 
@@ -188,7 +183,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
     private void getValueFromIntent() {
         Intent intent = getIntent();
-        // value1 : giá trị barcode truyền từ LetDownQrCodeActivity
+        // value1 : giá trị barcode truyền từ PutaWayQrCodeActivity
         value1 = intent.getStringExtra("btn1");
         // xác định vị trí là from hay to
         positonReceive = intent.getStringExtra("returnposition");
@@ -198,22 +193,21 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         expDate = intent.getStringExtra("exp_date");
         //  expdate1 xử lí position from - to
         expDate1 = intent.getStringExtra("expdate");
-        let_down = intent.getStringExtra("let_down");
-        // ea_unit : đơn vị trả về từ LetDownQRCodeActivity
+        put_away = intent.getStringExtra("put_away");
+        // ea_unit : đơn vị trả về từ PutaWayQrCodeActivity
         ea_unit = intent.getStringExtra("ea_unit");
         lpn = intent.getStringExtra("lpn");
 
         stockinDate = intent.getStringExtra("stockin_date");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
-        fromLetDownSuggestionsActivity = intent.getStringExtra("fromLetDownSuggestionsActivity");
     }
 
 
     private void ShowNoti() {
         try {
-            LayoutInflater factory = LayoutInflater.from(LetDownActivity.this);
+            LayoutInflater factory = LayoutInflater.from(List_PutAway.this);
             View layout_cus = factory.inflate(R.layout.layout_back_putaway, null);
-            final AlertDialog dialog = new AlertDialog.Builder(LetDownActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+            final AlertDialog dialog = new AlertDialog.Builder(List_PutAway.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
             InsetDrawable inset = new InsetDrawable(back, 64);
@@ -235,12 +229,11 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             btnYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseHelper.getInstance().deleteProduct_Letdown();
+                    DatabaseHelper.getInstance().deleteProduct_PutAway();
                     DatabaseHelper.getInstance().deleteallEa_Unit();
                     DatabaseHelper.getInstance().deleteallExp_date();
                     dialog.dismiss();
-//                    if (fromLetDownSuggestionsActivity!=null){
-                    Intent intent = new Intent(LetDownActivity.this, MainWareHouseActivity.class);
+                    Intent intent = new Intent(List_PutAway.this, MainWareHouseActivity.class);
                     startActivity(intent);
                     finish();
                     //  }
@@ -256,53 +249,53 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
     private void SynchronizeToServer() {
 
-        Dialog dialog = new Dialog(LetDownActivity.this);
+        Dialog dialog = new Dialog(List_PutAway.this);
 
-        if (let_down != null) {
+        if (put_away != null) {
             String saleCode = CmnFns.readDataAdmin();
 
-            if (letDowns.size() > 0) {
+            if (putAways.size() > 0) {
                 if (isNotScanFromOrTo()) {
 
-                    dialog.showDialog(LetDownActivity.this, "Chưa có VT Từ hoặc VT Đến");
+                    dialog.showDialog(List_PutAway.this, "Chưa có VT Từ hoặc VT Đến");
 
                 } else if (isQuanityZero()) {
-                    dialog.showDialog(LetDownActivity.this, "Số lượng SP không được bằng 0");
+                    dialog.showDialog(List_PutAway.this, "Số lượng SP không được bằng 0");
 
                 } else {
-                    result = new CmnFns().synchronizeData(saleCode, "WLD", "");
+                    result = new CmnFns().synchronizeData(saleCode, "WPA", "");
                     if (result >= 1) {
                         ShowSuccessMessage("Lưu thành công");
                     } else {
 
                         if (result == -2) {
-                            dialog.showDialog(LetDownActivity.this, "Số lượng không đủ trong tồn kho");
+                            dialog.showDialog(List_PutAway.this, "Số lượng không đủ trong tồn kho");
                         } else if (result == -3) {
-                            dialog.showDialog(LetDownActivity.this, "Vị trí từ không hợp lệ");
+                            dialog.showDialog(List_PutAway.this, "Vị trí từ không hợp lệ");
                         } else if (result == -4) {
-                            dialog.showDialog(LetDownActivity.this, "Trạng thái của phiếu không hợp lệ");
+                            dialog.showDialog(List_PutAway.this, "Trạng thái của phiếu không hợp lệ");
                         } else if (result == -5) {
-                            dialog.showDialog(LetDownActivity.this, "Vị trí từ trùng vị trí đên");
+                            dialog.showDialog(List_PutAway.this, "Vị trí từ trùng vị trí đên");
                         } else if (result == -6) {
-                            dialog.showDialog(LetDownActivity.this, "Vị trí đến không hợp lệ");
+                            dialog.showDialog(List_PutAway.this, "Vị trí đến không hợp lệ");
                         } else if (result == -7) {
-                            dialog.showDialog(LetDownActivity.this, "Cập nhật trạng thái thất bại");
+                            dialog.showDialog(List_PutAway.this, "Cập nhật trạng thái thất bại");
                         } else if (result == -8) {
-                            dialog.showDialog(LetDownActivity.this, "Sản phẩm không có thông tin trên phiếu ");
+                            dialog.showDialog(List_PutAway.this, "Sản phẩm không có thông tin trên phiếu ");
                         } else if (result == -13) {
-                            dialog.showDialog(LetDownActivity.this, "Dữ liệu không hợp lệ");
+                            dialog.showDialog(List_PutAway.this, "Dữ liệu không hợp lệ");
 
                         } else if (result == -24) {
-                            dialog.showDialog(LetDownActivity.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+                            dialog.showDialog(List_PutAway.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                         }else {
-                            dialog.showDialog(LetDownActivity.this, "Lưu thất bại");
+                            dialog.showDialog(List_PutAway.this, "Lưu thất bại");
                         }
 
                     }
                 }
             } else {
-                dialog.showDialog(LetDownActivity.this, "Không có sản phẩm");
+                dialog.showDialog(List_PutAway.this, "Không có sản phẩm");
 
             }
 
@@ -311,9 +304,9 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void ShowSuccessMessage(String message) {
-        LayoutInflater factory = LayoutInflater.from(LetDownActivity.this);
+        LayoutInflater factory = LayoutInflater.from(List_PutAway.this);
         View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
-        final AlertDialog dialog = new AlertDialog.Builder(LetDownActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        final AlertDialog dialog = new AlertDialog.Builder(List_PutAway.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
         InsetDrawable inset = new InsetDrawable(back, 64);
@@ -332,13 +325,13 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 dialog.dismiss();
 //                        Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                DatabaseHelper.getInstance().deleteProduct_Letdown();
-                letDowns.clear();
-                letDownAdapter.notifyDataSetChanged();
+                DatabaseHelper.getInstance().deleteProduct_PutAway();
+                putAways.clear();
+                putAwayAdapter.notifyDataSetChanged();
 
-                Intent intentToHomeQRActivity = new Intent(LetDownActivity.this, Wv_ShowResultQrode.class);
-                intentToHomeQRActivity.putExtra("result_WLD", result);
-                intentToHomeQRActivity.putExtra("type_WLD", "WLD");
+                Intent intentToHomeQRActivity = new Intent(List_PutAway.this, Wv_ShowResultQrode.class);
+                intentToHomeQRActivity.putExtra("result_WPA", result);
+                intentToHomeQRActivity.putExtra("type_WPA", "WPA");
                 startActivity(intentToHomeQRActivity);
                 finish();
             }
@@ -348,10 +341,10 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
     private boolean isQuanityZero() {
         boolean check = false;
-        List<ProductLetDown> product = DatabaseHelper.getInstance().getAllProductLetDown();
+        List<Product_PutAway> product = DatabaseHelper.getInstance().getAllProduct_PutAway();
         for (int i = 0; i < product.size(); i++) {
-            ProductLetDown productLetDown = product.get(i);
-            String valueQty = productLetDown.getQTY_SET_AVAILABLE();
+            Product_PutAway product_putAway = product.get(i);
+            String valueQty = product_putAway.getQTY_SET_AVAILABLE();
             if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
             }
@@ -373,16 +366,16 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
     private boolean isNotScanFromOrTo() {
         boolean check = false;
-        List<ProductLetDown> product = DatabaseHelper.getInstance().getAllProductLetDown();
+        List<Product_PutAway> product = DatabaseHelper.getInstance().getAllProduct_PutAway();
 
         for (int i = 0; i < product.size(); i++) {
-            ProductLetDown letDown = product.get(i);
+            Product_PutAway putAway = product.get(i);
             String value0 = "---";
             String valueAm1 = "-1";
-            String valueFromCode = letDown.getPOSITION_FROM_CODE();
-            String valueToCode = letDown.getPOSITION_TO_CODE();
-            String positionCode = letDown.getPOSITION_FROM_CODE();
-            String valueCode = letDown.getLPN_CODE();
+            String valueFromCode = putAway.getPOSITION_FROM_CODE();
+            String valueToCode = putAway.getPOSITION_TO_CODE();
+            String positionCode = putAway.getPOSITION_FROM_CODE();
+            String valueCode = putAway.getLPN_CODE();
             if (valueFromCode.equals("") || valueFromCode.equals("---")) {
                 if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
                     check = true;
@@ -412,8 +405,8 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.buttonScan_Barcode:
                 DatabaseHelper.getInstance().deleteallEa_Unit();
                 DatabaseHelper.getInstance().deleteallExp_date();
-                if (let_down != null) {
-                    Intent intent = new Intent(LetDownActivity.this, LetDownQrCodeActivity.class);
+                if (put_away != null) {
+                    Intent intent = new Intent(List_PutAway.this, Qrcode_PutAway.class);
                     intent.putExtra("check_to_finish_at_list", "check");
                     startActivity(intent);
                     finish();
@@ -423,11 +416,6 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                 ShowNoti();
 
                 break;
-            case R.id.buttonBackList:
-                Intent intent = new Intent(this, LetDownSuggestionsActivity.class);
-                startActivity(intent);
-                finish();
-                break;
             case R.id.buttonOK:
                 actionSyn();
                 break;
@@ -436,9 +424,9 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
     private void actionSyn(){
         try {
-            LayoutInflater factory = LayoutInflater.from(LetDownActivity.this);
+            LayoutInflater factory = LayoutInflater.from(List_PutAway.this);
             View layout_cus = factory.inflate(R.layout.layout_request, null);
-            final AlertDialog dialog = new AlertDialog.Builder(LetDownActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+            final AlertDialog dialog = new AlertDialog.Builder(List_PutAway.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
             InsetDrawable inset = new InsetDrawable(back, 64);
@@ -474,22 +462,22 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
     public void alert_show_position(int isLPN) {
         String positionTo = "";
         String positionFrom = "";
-        ArrayList<ProductLetDown> letDowns = new ArrayList<>();
-        letDowns = DatabaseHelper.getInstance().getAllProduct_LetDown_Sync();
-        for (int i = 0; i < letDowns.size(); i++) {
-            ProductLetDown letDown = letDowns.get(i);
-            if (productCd.equals(letDown.getPRODUCT_CD()) &&
-                    expDate1.equals(letDown.getEXPIRED_DATE()) &&
-                    stockinDate.equals(letDown.getSTOCKIN_DATE()) &&
-                    ea_unit_position.equals(letDown.getUNIT())) {
+        ArrayList<Product_PutAway> putAways = new ArrayList<>();
+        putAways = DatabaseHelper.getInstance().getAllProduct_PutAway_Sync();
+        for (int i = 0; i < putAways.size(); i++) {
+            Product_PutAway putAway = putAways.get(i);
+            if (productCd.equals(putAway.getPRODUCT_CD_PUTAWAY()) &&
+                    expDate1.equals(putAway.getEXPIRED_DATE_PUTAWAY()) &&
+                    stockinDate.equals(putAway.getSTOCKIN_DATE_PUTAWAY()) &&
+                    ea_unit_position.equals(putAway.getEA_UNIT_PUTAWAY())) {
 
-                if (!letDown.getLPN_FROM().equals("") || !letDown.getLPN_TO().equals("")) {
-                    positionTo = letDown.getLPN_TO();
-                    positionFrom = letDown.getLPN_FROM();
+                if (!putAway.getLPN_FROM().equals("") || !putAway.getLPN_TO().equals("")) {
+                    positionTo = putAway.getLPN_TO();
+                    positionFrom = putAway.getLPN_FROM();
                 }
-                if (!letDown.getPOSITION_FROM_CODE().equals("") || !letDown.getPOSITION_TO_CODE().equals("")) {
-                    positionTo = letDown.getPOSITION_TO_CODE();
-                    positionFrom = letDown.getPOSITION_FROM_CODE();
+                if (!putAway.getPOSITION_FROM_CODE().equals("") || !putAway.getPOSITION_TO_CODE().equals("")) {
+                    positionTo = putAway.getPOSITION_TO_CODE();
+                    positionFrom = putAway.getPOSITION_FROM_CODE();
                 }
 
                 // if này là để trả lại giá trị from và to nếu người dùng muốn quét lại VTT và VTĐ
@@ -506,42 +494,42 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLD", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
 
-            Dialog dialog = new Dialog(LetDownActivity.this);
+            Dialog dialog = new Dialog(List_PutAway.this);
 
             if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-                dialog.showDialog(LetDownActivity.this, "Vui Lòng Thử Lại");
+                dialog.showDialog(List_PutAway.this, "Vui Lòng Thử Lại");
 
             } else if (postitionDes.equals("-3")) {
-                dialog.showDialog(LetDownActivity.this, "Vị trí từ không hợp lệ");
+                dialog.showDialog(List_PutAway.this, "Vị trí từ không hợp lệ");
 
             } else if (postitionDes.equals("-6")) {
-                dialog.showDialog(LetDownActivity.this, "Vị trí đến không hợp lệ");
+                dialog.showDialog(List_PutAway.this, "Vị trí đến không hợp lệ");
 
             } else if (postitionDes.equals("-5")) {
-                dialog.showDialog(LetDownActivity.this, "Vị trí từ trùng vị trí đến");
+                dialog.showDialog(List_PutAway.this, "Vị trí từ trùng vị trí đến");
 
             } else if (postitionDes.equals("-14")) {
-                dialog.showDialog(LetDownActivity.this, "Vị trí đến trùng vị trí từ");
+                dialog.showDialog(List_PutAway.this, "Vị trí đến trùng vị trí từ");
 
             } else if (postitionDes.equals("-15")) {
-                dialog.showDialog(LetDownActivity.this, "Vị trí từ không có trong hệ thống");
+                dialog.showDialog(List_PutAway.this, "Vị trí từ không có trong hệ thống");
 
             } else if (postitionDes.equals("-10")) {
-                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong hệ thống");
+                dialog.showDialog(List_PutAway.this, "Mã LPN không có trong hệ thống");
 
             } else if (postitionDes.equals("-17")) {
-                dialog.showDialog(LetDownActivity.this, "LPN từ trùng LPN đến");
+                dialog.showDialog(List_PutAway.this, "LPN từ trùng LPN đến");
 
             } else if (postitionDes.equals("-18")) {
-                dialog.showDialog(LetDownActivity.this, "LPN đến trùng LPN từ");
+                dialog.showDialog(List_PutAway.this, "LPN đến trùng LPN từ");
 
             } else if (postitionDes.equals("-19")) {
-                dialog.showDialog(LetDownActivity.this, "Vị trí đến không có trong hệ thống");
+                dialog.showDialog(List_PutAway.this, "Vị trí đến không có trong hệ thống");
 
             } else if (postitionDes.equals("-12")) {
-                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong tồn kho");
+                dialog.showDialog(List_PutAway.this, "Mã LPN không có trong tồn kho");
 
             } else {
                 return;
@@ -557,47 +545,47 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneLetDown(LetDownActivity.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+            int postitionDes = new CmnFns().synchronizeGETProductByZonePutaway(List_PutAway.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
 
-            Dialog dialog = new Dialog(LetDownActivity.this);
+            Dialog dialog = new Dialog(List_PutAway.this);
 
 
             if (postitionDes == 1) {
                 return;
             } else if (postitionDes == -1) {
-                dialog.showDialog(LetDownActivity.this, "Vui Lòng Thử Lại");
+                dialog.showDialog(List_PutAway.this, "Vui Lòng Thử Lại");
 
             } else if (postitionDes == -8) {
-                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trên phiếu");
+                dialog.showDialog(List_PutAway.this, "Mã sản phẩm không có trên phiếu");
 
 
             } else if (postitionDes == -10) {
-                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong hệ thống");
+                dialog.showDialog(List_PutAway.this, "Mã LPN không có trong hệ thống");
 
             } else if (postitionDes == -11) {
 
-                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong kho");
+                dialog.showDialog(List_PutAway.this, "Mã sản phẩm không có trong kho");
 
 
             } else if (postitionDes == -12) {
 
-                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong kho");
+                dialog.showDialog(List_PutAway.this, "Mã LPN không có trong kho");
 
             } else if (postitionDes == -16) {
 
-                dialog.showDialog(LetDownActivity.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(List_PutAway.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
             } else if (postitionDes == -20) {
 
-                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(List_PutAway.this, "Mã sản phẩm không có trong hệ thống");
 
             } else if (postitionDes == -21) {
 
-                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong zone reserve");
+                dialog.showDialog(List_PutAway.this, "Mã sản phẩm không có trong zone reserve");
 
             } else if (postitionDes == -22) {
 
-                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong zone reserve");
+                dialog.showDialog(List_PutAway.this, "Mã LPN không có trong zone reserve");
 
             }
         }catch (Exception e){

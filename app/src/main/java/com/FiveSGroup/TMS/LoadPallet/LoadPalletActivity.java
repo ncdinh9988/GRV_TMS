@@ -24,9 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.LetDown.LetDownActivity;
-import com.FiveSGroup.TMS.LetDown.ProductLetDown;
-import com.FiveSGroup.TMS.MainActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
@@ -259,7 +256,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         for (int i = 0; i < product.size(); i++) {
             Product_LoadPallet product_loadPallet = product.get(i);
             String valueQty = product_loadPallet.getQTY();
-            if (valueQty.equals("0") || valueQty.equals("") || valueQty.equals("00") || valueQty.equals("000")) {
+            if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
             }
         }
@@ -430,8 +427,11 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
-                        loadPalletAdapter.notifyDataSetChanged();
+                        finish();
+                        Intent i = new Intent(LoadPalletActivity.this,LoadPalletActivity.class);
+                        startActivity(i);
 
                     }
                 });
@@ -479,13 +479,6 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 startScan();
                 break;
             case R.id.buttonBack:
-                loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet();
-                //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
-                loadPalletAdapter = new LoadPalletAdapter(loadPallets, this);
-                LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-                listViewProduct.setLayoutManager(layoutManager1);
-                listViewProduct.setAdapter(loadPalletAdapter);
-                loadPalletAdapter.notifyDataSetChanged();
                 actionBack();
                 break;
             case R.id.buttonOK:
