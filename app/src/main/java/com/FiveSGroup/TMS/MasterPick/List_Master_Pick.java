@@ -27,6 +27,7 @@ import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
 import com.FiveSGroup.TMS.LoadPallet.Product_LoadPallet;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
+import com.FiveSGroup.TMS.StockOut.ListQrcode_Stockout;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
 import com.FiveSGroup.TMS.global;
@@ -212,6 +213,8 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
             String valueFromCode = masterPick.getPOSITION_FROM_CODE();
             String valueToCode = masterPick.getPOSITION_TO_CODE();
             String positionCode = masterPick.getPOSITION_FROM_CODE();
+            String lpn_from = masterPick.getLPN_FROM();
+            String lpn_to = masterPick.getLPN_TO();
             String valueCode = masterPick.getLPN_CODE();
             if (valueFromCode.equals("") || valueFromCode.equals("---")) {
                 if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
@@ -326,6 +329,9 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
                         }else if (result == -24) {
                             dialog.showDialog(List_Master_Pick.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
+                        }else if (result == -26) {
+                            dialog.showDialog(List_Master_Pick.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
                         }else if (result == -36) {
                             dialog.showDialog(List_Master_Pick.this, "Trùng Dữ Liệu Vui Lòng Kiểm Tra Lại");

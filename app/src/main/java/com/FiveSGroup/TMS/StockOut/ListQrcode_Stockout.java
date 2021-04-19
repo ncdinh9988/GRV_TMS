@@ -321,6 +321,9 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
                         }else if (result == -24) {
                             dialog.showDialog(ListQrcode_Stockout.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
+                        }else if (result == -26) {
+                            dialog.showDialog(ListQrcode_Stockout.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
                         }
 
                     }
