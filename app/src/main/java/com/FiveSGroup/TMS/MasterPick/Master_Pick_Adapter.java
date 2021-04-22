@@ -85,52 +85,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!product.getPOSITION_FROM_CODE().equals("---")) {
-                    try {
-                        LayoutInflater factory = LayoutInflater.from(context);
-                        View layout_cus = factory.inflate(R.layout.layout_back_putaway, null);
-                        final AlertDialog dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
-                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
-                        InsetDrawable inset = new InsetDrawable(back, 64);
-                        dialog.getWindow().setBackgroundDrawable(inset);
-                        dialog.setView(layout_cus);
-
-                        Button btnNo = layout_cus.findViewById(R.id.btnNo);
-                        Button btnYes = layout_cus.findViewById(R.id.btnYes);
-                        final TextView textView = layout_cus.findViewById(R.id.tvTextBack);
-                        textView.setText("Nhân đôi sản phẩm " + product.getPRODUCT_NAME() + " không?");
-                        btnNo.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                dialog.dismiss();
-                                Intent intent = new Intent(context, Qrcode_Master_Pick.class);
-                                intent.putExtra("position", "1");
-                                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                                intent.putExtra("c", holder.tvExpired.getText());
-                                intent.putExtra("ea_unit_position", product.getUNIT());
-                                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-                                intent.putExtra("unique_id", product.getAUTOINCREMENT());
-                                context.startActivity(intent);
-                                ((Activity) context).finish();
-
-                            }
-                        });
-                        btnYes.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                                DatabaseHelper.getInstance().CreateMaster_Pick(product);
-                                Intent intent = new Intent(context, List_Master_Pick.class);
-                                context.startActivity(intent);
-                                ((Activity) context).finish();
-                            }
-                        });
-                        dialog.show();
-                    } catch (Exception e) {
-                        Log.e("Exception", e.getMessage());
-                    }
-                }else{
+                if(!product.getLPN_CODE().equals("")){
                     Intent intent = new Intent(context, Qrcode_Master_Pick.class);
                     intent.putExtra("position", "1");
                     intent.putExtra("product_cd", product.getPRODUCT_CD());
@@ -141,59 +96,71 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
 
                     context.startActivity(intent);
                     ((Activity) context).finish();
-                }
+                }else{
+                    if(!product.getPOSITION_FROM_CODE().equals("---")) {
+                        try {
+                            LayoutInflater factory = LayoutInflater.from(context);
+                            View layout_cus = factory.inflate(R.layout.layout_back_putaway, null);
+                            final AlertDialog dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                            InsetDrawable inset = new InsetDrawable(back, 64);
+                            dialog.getWindow().setBackgroundDrawable(inset);
+                            dialog.setView(layout_cus);
 
+                            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                            final TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+                            textView.setText("Nhân đôi sản phẩm " + product.getPRODUCT_NAME() + " không?");
+                            btnNo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialog.dismiss();
+                                    Intent intent = new Intent(context, Qrcode_Master_Pick.class);
+                                    intent.putExtra("position", "1");
+                                    intent.putExtra("product_cd", product.getPRODUCT_CD());
+                                    intent.putExtra("c", holder.tvExpired.getText());
+                                    intent.putExtra("ea_unit_position", product.getUNIT());
+                                    intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                                    intent.putExtra("unique_id", product.getAUTOINCREMENT());
+                                    context.startActivity(intent);
+                                    ((Activity) context).finish();
+
+                                }
+                            });
+                            btnYes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    DatabaseHelper.getInstance().CreateMaster_Pick(product);
+                                    Intent intent = new Intent(context, List_Master_Pick.class);
+                                    context.startActivity(intent);
+                                    ((Activity) context).finish();
+                                }
+                            });
+                            dialog.show();
+                        } catch (Exception e) {
+                            Log.e("Exception", e.getMessage());
+                        }
+                    }else{
+                        Intent intent = new Intent(context, Qrcode_Master_Pick.class);
+                        intent.putExtra("position", "1");
+                        intent.putExtra("product_cd", product.getPRODUCT_CD());
+                        intent.putExtra("c", holder.tvExpired.getText());
+                        intent.putExtra("ea_unit_position", product.getUNIT());
+                        intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                        intent.putExtra("unique_id", product.getAUTOINCREMENT());
+
+                        context.startActivity(intent);
+                        ((Activity) context).finish();
+                    }
+                }
             }
         });
         holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!product.getPOSITION_TO_CODE().equals("---")) {
-                    try {
-                        LayoutInflater factory = LayoutInflater.from(context);
-                        View layout_cus = factory.inflate(R.layout.layout_back_putaway, null);
-                        final AlertDialog dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
-                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
-                        InsetDrawable inset = new InsetDrawable(back, 64);
-                        dialog.getWindow().setBackgroundDrawable(inset);
-                        dialog.setView(layout_cus);
-
-                        Button btnNo = layout_cus.findViewById(R.id.btnNo);
-                        Button btnYes = layout_cus.findViewById(R.id.btnYes);
-                        final TextView textView = layout_cus.findViewById(R.id.tvTextBack);
-                        textView.setText("Nhân đôi sản phẩm " + product.getPRODUCT_NAME() + " không?");
-                        btnNo.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                dialog.dismiss();
-                                Intent intent = new Intent(context, Qrcode_Master_Pick.class);
-                                intent.putExtra("position", "2");
-                                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                                intent.putExtra("c", holder.tvExpired.getText());
-                                intent.putExtra("ea_unit_position", product.getUNIT());
-                                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-                                intent.putExtra("unique_id", product.getAUTOINCREMENT());
-                                context.startActivity(intent);
-                                ((Activity) context).finish();
-
-                            }
-                        });
-                        btnYes.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                                DatabaseHelper.getInstance().CreateMaster_Pick(product);
-                                Intent intent = new Intent(context, List_Master_Pick.class);
-                                context.startActivity(intent);
-                                ((Activity) context).finish();
-                            }
-                        });
-                        dialog.show();
-                    } catch (Exception e) {
-                        Log.e("Exception", e.getMessage());
-                    }
-                }else {
+                if(!product.getLPN_CODE().equals("")){
                     Intent intent = new Intent(context, Qrcode_Master_Pick.class);
                     intent.putExtra("position", "2");
                     intent.putExtra("product_cd", product.getPRODUCT_CD());
@@ -205,7 +172,67 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                     context.startActivity(intent);
 
                     ((Activity) context).finish();
+                }else{
+                    if(!product.getPOSITION_TO_CODE().equals("---")) {
+                        try {
+                            LayoutInflater factory = LayoutInflater.from(context);
+                            View layout_cus = factory.inflate(R.layout.layout_back_putaway, null);
+                            final AlertDialog dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                            InsetDrawable inset = new InsetDrawable(back, 64);
+                            dialog.getWindow().setBackgroundDrawable(inset);
+                            dialog.setView(layout_cus);
+
+                            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                            final TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+                            textView.setText("Nhân đôi sản phẩm " + product.getPRODUCT_NAME() + " không?");
+                            btnNo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialog.dismiss();
+                                    Intent intent = new Intent(context, Qrcode_Master_Pick.class);
+                                    intent.putExtra("position", "2");
+                                    intent.putExtra("product_cd", product.getPRODUCT_CD());
+                                    intent.putExtra("c", holder.tvExpired.getText());
+                                    intent.putExtra("ea_unit_position", product.getUNIT());
+                                    intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                                    intent.putExtra("unique_id", product.getAUTOINCREMENT());
+                                    context.startActivity(intent);
+                                    ((Activity) context).finish();
+
+                                }
+                            });
+                            btnYes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    DatabaseHelper.getInstance().CreateMaster_Pick(product);
+                                    Intent intent = new Intent(context, List_Master_Pick.class);
+                                    context.startActivity(intent);
+                                    ((Activity) context).finish();
+                                }
+                            });
+                            dialog.show();
+                        } catch (Exception e) {
+                            Log.e("Exception", e.getMessage());
+                        }
+                    }else {
+                        Intent intent = new Intent(context, Qrcode_Master_Pick.class);
+                        intent.putExtra("position", "2");
+                        intent.putExtra("product_cd", product.getPRODUCT_CD());
+                        intent.putExtra("c", holder.tvExpired.getText());
+                        intent.putExtra("ea_unit_position", product.getUNIT());
+                        intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                        intent.putExtra("unique_id", product.getAUTOINCREMENT());
+
+                        context.startActivity(intent);
+
+                        ((Activity) context).finish();
+                    }
                 }
+
             }
         });
         final String oldValue = holder.edt.getText().toString();

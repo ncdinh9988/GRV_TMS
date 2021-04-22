@@ -1354,8 +1354,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getDuplicate_LoadPallet(){
-        String selectQuery = "SELECT STOCKIN_DATE ,PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT FROM "
-                + O_LOAD_PALLET + " GROUP BY STOCKIN_DATE , PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT(*) > " + 1 ;
+        String selectQuery =         "SELECT STOCKIN_DATE , PRODUCT_CODE , EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT FROM "
+                + O_LOAD_PALLET + " GROUP BY STOCKIN_DATE , PRODUCT_CODE , EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT(*) > " + 1 ;
         SQLiteDatabase db = this.getReadableDatabase(DatabaseHelper.PWD);
 //        Cursor cursor = db.rawQuery(selectQuery, null);
 //        int count = cursor.getColumnIndex(PRODUCT_NAME);
@@ -1369,8 +1369,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getDuplicate_MasterPick(){
-        String selectQuery = "SELECT STOCKIN_DATE ,PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT FROM "
-                + O_MASTER_PICK + " GROUP BY STOCKIN_DATE , PRODUCT_CODE ,EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT(*) > " + 1 ;
+        String selectQuery =         "SELECT STOCKIN_DATE , PRODUCT_CODE , EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT FROM "
+                + O_MASTER_PICK + " GROUP BY STOCKIN_DATE , PRODUCT_CODE , EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT(*) > " + 1 ;
         SQLiteDatabase db = this.getReadableDatabase(DatabaseHelper.PWD);
 //        Cursor cursor = db.rawQuery(selectQuery, null);
 //        int count = cursor.getColumnIndex(PRODUCT_NAME);
