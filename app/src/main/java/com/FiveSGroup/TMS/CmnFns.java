@@ -1303,12 +1303,21 @@ public class CmnFns {
                 JSONObject jsonobj = jsonarray.getJSONObject(i);
                 String pro_exp = jsonobj.getString("_EXPIRED_DATE");
                 String pro_stockin = jsonobj.getString("_STOCKIN_DATE");
+
+                String total_shelf_life = jsonobj.getString("_TOTAL_SHELF_LIFE");
+                String shelf_life_type = jsonobj.getString("_SHELF_LIFE_TYPE");
+                String min_rem_shelf_life = jsonobj.getString("_MIN_REM_SHELF_LIFE");
+
+
                 Exp_Date_Tam exp_date_tam = new Exp_Date_Tam();
                 if (pro_stockin.equals("")) {
                     exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + "---");
                 } else {
                     exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
                 }
+                exp_date_tam.setTOTAL_SHELF_LIFE(total_shelf_life);
+                exp_date_tam.setSHELF_LIFE_TYPE(shelf_life_type);
+                exp_date_tam.setMIN_REM_SHELF_LIFE(min_rem_shelf_life);
 
 
                 //exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);

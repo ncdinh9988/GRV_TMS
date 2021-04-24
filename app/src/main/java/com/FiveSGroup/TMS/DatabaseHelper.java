@@ -115,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 71; // version của DB khi thay
+    public static final int DATABASE_VERSION = 72; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -207,6 +207,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             // TODO: handle exception
         }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_EXP + " ADD COLUMN  "
+                    + TOTAL_SHELF_LIFE + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_EXP + " ADD COLUMN  "
+                    + SHELF_LIFE_TYPE + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_EXP + " ADD COLUMN  "
+                    + MIN_REM_SHELF_LIFE + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
 
 
     }
@@ -3946,8 +3971,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String O_EXP = "O_EXP";
     public static final String EXPIRED_DATE_TAM = "EXPIRED_DATE_TAM";
     public static final String STOCKIN_DATE_TAM = "STOCKIN_DATE_TAM";
+    public static final String TOTAL_SHELF_LIFE = "TOTAL_SHELF_LIFE";
+    public static final String SHELF_LIFE_TYPE = "SHELF_LIFE_TYPE";
+    public static final String MIN_REM_SHELF_LIFE = "MIN_REM_SHELF_LIFE";
+
     public static final String CREATE_TABLE_O_EXP = "CREATE TABLE "
             + O_EXP + "("
+            + TOTAL_SHELF_LIFE + " TEXT,"
+            + SHELF_LIFE_TYPE + " TEXT,"
+            + MIN_REM_SHELF_LIFE + " TEXT,"
             + EXPIRED_DATE_TAM + " TEXT" + ")";
 
     public long CreateExp_date(Exp_Date_Tam exp) {
@@ -3955,6 +3987,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         //values.put(QRCODE, qrcode.getQRCODE());
+        values.put(TOTAL_SHELF_LIFE, exp.getEXPIRED_DATE_TAM());
+        values.put(SHELF_LIFE_TYPE, exp.getEXPIRED_DATE_TAM());
+        values.put(MIN_REM_SHELF_LIFE, exp.getEXPIRED_DATE_TAM());
         values.put(EXPIRED_DATE_TAM, exp.getEXPIRED_DATE_TAM());
         // values.put(STOCKIN_DATE_TAM, exp.getSTOCKIN_DATE_TAM());
         // insert row
@@ -3974,6 +4009,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Exp_Date_Tam expd = new Exp_Date_Tam();
                 expd.setEXPIRED_DATE_TAM((c.getString(c
                         .getColumnIndex(EXPIRED_DATE_TAM))));
+                expd.setTOTAL_SHELF_LIFE((c.getString(c
+                        .getColumnIndex(TOTAL_SHELF_LIFE))));
+                expd.setSHELF_LIFE_TYPE((c.getString(c
+                        .getColumnIndex(SHELF_LIFE_TYPE))));
+                expd.setMIN_REM_SHELF_LIFE((c.getString(c
+                        .getColumnIndex(MIN_REM_SHELF_LIFE))));
 //                expd.setSTOCKIN_DATE_TAM((c.getString(c
 //                        .getColumnIndex(STOCKIN_DATE_TAM))));
                 exp.add(expd);

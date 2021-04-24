@@ -44,7 +44,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
     private ArrayList<String> units;
     private ArrayAdapter<String> adapter;
     private Button btnBack, btnConfirm;
-    private Date date ;
+    private Date date ,date2;
     private Integer shelfLife1 , shelfLife2 ;
     private String barcode = "",
             returnposition = "",
@@ -56,6 +56,9 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             shelfLifeDate = "",
             typeScan = "" ,
             exp_date = "";
+    String total_shelf_life = "";
+    String shelf_life_type = "";
+    String min_rem_shelf_life = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +140,10 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         returnposition = intent.getStringExtra("returnposition");
         returnCD = global.getStockReceiptCd();
         returnStock = intent.getStringExtra("returnStock");
+        total_shelf_life = intent.getStringExtra("total_shelf_life");
+        shelf_life_type = intent.getStringExtra("shelf_life_type");
+        min_rem_shelf_life= intent.getStringExtra("min_rem_shelf_life");
+
     }
 
     private void init() {
@@ -150,6 +157,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         edtSelectProductStockinDate.setOnClickListener(this);
         edtSelectProductStockinDate.setInputType(InputType.TYPE_NULL);
         edtSelectProductExpiredDate.setInputType(InputType.TYPE_NULL);
+        //set unit in adapter
         units = new ArrayList<>();
         units = new CmnFns().getEa_Unit(barcode, "2");
         if (units == null) {
@@ -159,6 +167,14 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spinnerProductUnit.setAdapter(adapter);
         spinnerProductUnit.setOnItemSelectedListener(this);
+        //set text in adapter
+        if(shelf_life_type.equals("MONTH"))
+        {
+            edtSelectShelfLife.setText(total_shelf_life);
+        }else {
+            edtSelectShelfLifeDate.setText(total_shelf_life);
+        }
+
         btnBack = findViewById(R.id.btnBackSelectProductProperties);
         btnConfirm = findViewById(R.id.btnConfirmProductProperties);
         btnBack.setOnClickListener(this);
@@ -250,22 +266,41 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             if(!expiredDate.equals("")){
                 exp_date = expiredDate;
             }else{
-                SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
-                Calendar calendar = obj.dateToCalendar(date);
                 //Nếu có stockindate
                 if(!stockinDate.equals("")){
                     //Nếu có ngày ShelfLife
                     if(!shelfLifeDate.equals("")){
                         //Nếu có tháng ShelfLife
                         if(!shelfLife.equals("")){
+                            //Bước 1 : Lấy String của exp_date sau khi đã tính dc dựa trên ngày shelflife
                             shelfLife2 = Integer.valueOf(shelfLifeDate);
+                            SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                            Calendar calendar = obj.dateToCalendar(date);
                             calendar.add(Calendar.DATE, shelfLife2);
+                            Date newDate = obj.calendarToDate(calendar);
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            exp_date = dateFormat.format(newDate);
+                            //Bước 2 chuyển String exp_date sang date
+                            try {
+                                date2 =new SimpleDateFormat("dd/MM/yyyy").parse(exp_date);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                             shelfLife1 = Integer.valueOf(shelfLife);
-                            calendar.add(Calendar.MONTH, shelfLife1);
+                            Calendar calendar2 = obj.dateToCalendar(date2);
+                            calendar2.add(Calendar.MONTH, shelfLife1);
+                            Date newDate2 = obj.calendarToDate(calendar2);
+                            DateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy");
+                            exp_date = dateFormat2.format(newDate2);
                             //Ngược lại không có tháng Shelflife
                         }else {
                             shelfLife2 = Integer.valueOf(shelfLifeDate);
+                            SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                            Calendar calendar = obj.dateToCalendar(date);
                             calendar.add(Calendar.DATE, shelfLife2);
+                            Date newDate = obj.calendarToDate(calendar);
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            exp_date = dateFormat.format(newDate);
                         }
                       //Ngược lại không có ngày ShelfLife
                     }else{
@@ -273,13 +308,16 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
                         if (!shelfLife.equals("")){
 
                             shelfLife1 = Integer.valueOf(shelfLife);
+                            SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                            Calendar calendar = obj.dateToCalendar(date);
                             calendar.add(Calendar.MONTH, shelfLife1);
+                            Date newDate = obj.calendarToDate(calendar);
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            exp_date = dateFormat.format(newDate);
                         }
                     }
                 }
-                Date newDate = obj.calendarToDate(calendar);
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                exp_date = dateFormat.format(newDate);
+
             }
 
             Intent intent = new Intent(SelectPropertiesProductActivity.this, activity);

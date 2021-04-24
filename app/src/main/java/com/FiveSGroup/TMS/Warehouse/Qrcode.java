@@ -68,6 +68,10 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     String exp_date;
     String stockin_date;
     String ea_unit;
+    String total_shelf_life = "";
+    String shelf_life_type = "";
+    String min_rem_shelf_life = "";
+
 
 
     @Override
@@ -279,6 +283,11 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     } else {
                         // lấy tất cả hạn `sử dụng trong database ra
                         final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
+                        for (int i = 0; i < expired_date.size(); i++) {
+                                                            total_shelf_life = expired_date.get(i).getTOTAL_SHELF_LIFE();
+                            shelf_life_type = expired_date.get(i).getSHELF_LIFE_TYPE();
+                            min_rem_shelf_life = expired_date.get(i).getMIN_REM_SHELF_LIFE();
+                                                        }
 
 
 //                                                        final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode.this);
@@ -342,6 +351,9 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                         intent.putExtra("typeScan", "scan_from_stock_in");
                         intent.putExtra("btn1", barcodeData);
                         intent.putExtra("stock_in", "333");
+                        intent.putExtra("total_shelf_life", total_shelf_life);
+                        intent.putExtra("shelf_life_type", shelf_life_type);
+                        intent.putExtra("min_rem_shelf_life", min_rem_shelf_life);
                         intent.putExtra("returnposition", position);
                         intent.putExtra("returnCD", product_cd);
                         intent.putExtra("returnStock", stock);
