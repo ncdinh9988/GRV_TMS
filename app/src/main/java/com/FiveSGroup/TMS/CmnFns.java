@@ -2029,7 +2029,7 @@ public class CmnFns {
                     stockOut.setPRODUCT_NAME(pro_name);
                     stockOut.setQTY(String.valueOf(pro_set));
                     stockOut.setQTY_EA_AVAILABLE(quanity_ea);
-                    stockOut.setPOSITION_FROM_CD(warePosition);
+
                     stockOut.setPOSITION_TO_CD(warePosition);
                     stockOut.setSTOCKOUT_CD(stockoutCD);
                     stockOut.setWAREHOUSE_POSITION_CD(warePosition);
@@ -2051,6 +2051,7 @@ public class CmnFns {
                         stockOut.setEXPIRED_DATE(expDate);
                         stockOut.setUNIT(unit);
                         stockOut.setQTY(String.valueOf(pro_set));
+                        stockOut.setPOSITION_FROM_CD(warePosition);
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
                         stockOut.setPOSITION_FROM_CODE(positionFrom);
                         stockOut.setLPN_FROM(lpn_From);
@@ -2060,10 +2061,11 @@ public class CmnFns {
                         stockOut.setEXPIRED_DATE(exxpiredDate);
                         stockOut.setUNIT(ea_unit);
                         stockOut.setQTY(quanity);
+                        stockOut.setPOSITION_FROM_CD(lpn_From);
 
-                        stockOut.setPOSITION_FROM_CODE(position_code);
+                        stockOut.setPOSITION_FROM_CODE(lpn_From);
                         stockOut.setLPN_FROM(lpnCode);
-                        stockOut.setPOSITION_FROM_DESCRIPTION(description);
+                        stockOut.setPOSITION_FROM_DESCRIPTION(lpn_From);
                     }
 
                     if (isLPN == 0) {

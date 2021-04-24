@@ -689,8 +689,6 @@ public class Webservice {
 
 
 
-
-
     public String GetHH_Param_Temp(String saleCode) {
 
         String webServiceFunc = "getInfoParam";

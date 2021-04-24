@@ -38,14 +38,14 @@ import java.util.Date;
 public class SelectPropertiesProductActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private TextView tvProductSelectName;
-    private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate , edtSelectShelfLife;
+    private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate , edtSelectShelfLife , edtSelectShelfLifeDate;
     private Spinner spinnerProductUnit;
     private DatePickerDialog pickerDialog;
     private ArrayList<String> units;
     private ArrayAdapter<String> adapter;
     private Button btnBack, btnConfirm;
     private Date date ;
-    private Integer shelfLife1  ;
+    private Integer shelfLife1 , shelfLife2 ;
     private String barcode = "",
             returnposition = "",
             returnCD = "",
@@ -53,6 +53,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             selectedUnit = "",
             stockinDate = "",
             shelfLife = "",
+            shelfLifeDate = "",
             typeScan = "" ,
             exp_date = "";
 
@@ -142,6 +143,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         tvProductSelectName = findViewById(R.id.tvSelectProductName);
         edtSelectProductExpiredDate = findViewById(R.id.edtSelectProductExpiredDate);
         edtSelectProductStockinDate = findViewById(R.id.edtSelectProductStockinDate);
+        edtSelectShelfLifeDate = findViewById(R.id.edtSelectShelfLifeDate);
         edtSelectShelfLife = findViewById(R.id.edtSelectShelfLife);
         spinnerProductUnit = findViewById(R.id.spinnerProductUnit);
         edtSelectProductExpiredDate.setOnClickListener(this);
@@ -237,6 +239,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             String expiredDate = edtSelectProductExpiredDate.getText().toString().trim();
             stockinDate = edtSelectProductStockinDate.getText().toString().trim();
             shelfLife = edtSelectShelfLife.getText().toString().trim();
+            shelfLifeDate = edtSelectShelfLifeDate.getText().toString().trim();
             String unit = spinnerProductUnit.getSelectedItem().toString();
             try {
                 date =new SimpleDateFormat("dd/MM/yyyy").parse(stockinDate);
@@ -246,13 +249,34 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
 
             if(!expiredDate.equals("")){
                 exp_date = expiredDate;
-            }else if((!stockinDate.equals("")) && (!shelfLife.equals(""))){
-                shelfLife1 = Integer.valueOf(shelfLife);
+            }else{
                 SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
-                //Convert Date to Calendar
                 Calendar calendar = obj.dateToCalendar(date);
-                calendar.add(Calendar.MONTH, shelfLife1);
-                // Convert Calendar to Date
+                //Nếu có stockindate
+                if(!stockinDate.equals("")){
+                    //Nếu có ngày ShelfLife
+                    if(!shelfLifeDate.equals("")){
+                        //Nếu có tháng ShelfLife
+                        if(!shelfLife.equals("")){
+                            shelfLife2 = Integer.valueOf(shelfLifeDate);
+                            calendar.add(Calendar.DATE, shelfLife2);
+                            shelfLife1 = Integer.valueOf(shelfLife);
+                            calendar.add(Calendar.MONTH, shelfLife1);
+                            //Ngược lại không có tháng Shelflife
+                        }else {
+                            shelfLife2 = Integer.valueOf(shelfLifeDate);
+                            calendar.add(Calendar.DATE, shelfLife2);
+                        }
+                      //Ngược lại không có ngày ShelfLife
+                    }else{
+                        //Nếu có tháng ShelfLife
+                        if (!shelfLife.equals("")){
+
+                            shelfLife1 = Integer.valueOf(shelfLife);
+                            calendar.add(Calendar.MONTH, shelfLife1);
+                        }
+                    }
+                }
                 Date newDate = obj.calendarToDate(calendar);
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 exp_date = dateFormat.format(newDate);
