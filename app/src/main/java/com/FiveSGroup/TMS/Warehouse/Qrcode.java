@@ -284,9 +284,9 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                         // lấy tất cả hạn `sử dụng trong database ra
                         final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
                         for (int i = 0; i < expired_date.size(); i++) {
-                                                            total_shelf_life = expired_date.get(i).getTOTAL_SHELF_LIFE();
-                            shelf_life_type = expired_date.get(i).getSHELF_LIFE_TYPE();
-                            min_rem_shelf_life = expired_date.get(i).getMIN_REM_SHELF_LIFE();
+                            total_shelf_life = expired_date.get(0).getTOTAL_SHELF_LIFE();
+                            shelf_life_type = expired_date.get(0).getSHELF_LIFE_TYPE();
+                            min_rem_shelf_life = expired_date.get(0).getMIN_REM_SHELF_LIFE();
                                                         }
 
 

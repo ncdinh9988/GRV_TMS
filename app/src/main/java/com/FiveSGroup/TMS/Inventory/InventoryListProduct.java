@@ -255,7 +255,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
 
     private boolean isQuanityZero() {
         boolean check = false;
-        List<InventoryProduct> product = DatabaseHelper.getInstance().getAllProduct_Inventory();
+        List<InventoryProduct> product = DatabaseHelper.getInstance().getAllProduct_Inventory(global.getInventoryCD());
         for (int i = 0; i < product.size(); i++) {
             InventoryProduct inventory = product.get(i);
             String valueQty = inventory.getQTY();

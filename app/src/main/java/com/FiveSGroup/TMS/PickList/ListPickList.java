@@ -252,7 +252,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     }
     private boolean isQuanityZero() {
         boolean check = false;
-        List<PickList> product = DatabaseHelper.getInstance().getAllProduct_PickList();
+        List<PickList> product = DatabaseHelper.getInstance().getAllProduct_PickList(global.getPickListCD());
         for (int i = 0; i < product.size(); i++) {
             PickList putAway = product.get(i);
             String valueQty = putAway.getQTY_SET_AVAILABLE();

@@ -1682,10 +1682,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<PickList>
-    getAllProduct_PickList() {
+    getAllProduct_PickList(String pick) {
         ArrayList<PickList> picklist = new ArrayList<PickList>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  *  FROM " + O_PICK_LIST;
+        String selectQuery = "SELECT  *  FROM " + O_PICK_LIST + " WHERE " + PICKLIST_CD + " = " + pick;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -3987,11 +3987,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         //values.put(QRCODE, qrcode.getQRCODE());
-        values.put(TOTAL_SHELF_LIFE, exp.getEXPIRED_DATE_TAM());
-        values.put(SHELF_LIFE_TYPE, exp.getEXPIRED_DATE_TAM());
-        values.put(MIN_REM_SHELF_LIFE, exp.getEXPIRED_DATE_TAM());
+        values.put(TOTAL_SHELF_LIFE, exp.getTOTAL_SHELF_LIFE());
+        values.put(SHELF_LIFE_TYPE, exp.getSHELF_LIFE_TYPE());
+        values.put(MIN_REM_SHELF_LIFE, exp.getMIN_REM_SHELF_LIFE());
         values.put(EXPIRED_DATE_TAM, exp.getEXPIRED_DATE_TAM());
-        // values.put(STOCKIN_DATE_TAM, exp.getSTOCKIN_DATE_TAM());
         // insert row
         long id = db.insert(O_EXP, null, values);
         return id;
@@ -4001,7 +4000,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getallExp_date() {
         ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT DISTINCT CASE WHEN EXPIRED_DATE_TAM = '' THEN '------' ELSE EXPIRED_DATE_TAM END AS EXPIRED_DATE_TAM FROM " + O_EXP;
+        String selectQuery = "SELECT * FROM " + O_EXP;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -4015,8 +4014,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(SHELF_LIFE_TYPE))));
                 expd.setMIN_REM_SHELF_LIFE((c.getString(c
                         .getColumnIndex(MIN_REM_SHELF_LIFE))));
-//                expd.setSTOCKIN_DATE_TAM((c.getString(c
-//                        .getColumnIndex(STOCKIN_DATE_TAM))));
+
                 exp.add(expd);
             } while (c.moveToNext());
         }
@@ -5356,10 +5354,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<InventoryProduct>
-    getAllProduct_Inventory() {
+    getAllProduct_Inventory(String inventory) {
         ArrayList<InventoryProduct> INVENTORY = new ArrayList<>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  *  FROM " + O_INVENTORY;
+        String selectQuery = "SELECT  *  FROM " + O_INVENTORY + " WHERE " + STOCK_TAKE_CD + " = " + inventory;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {

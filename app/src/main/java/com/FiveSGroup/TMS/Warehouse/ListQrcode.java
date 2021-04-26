@@ -305,7 +305,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 //                }
 //            }
 //        } else {
-            List<Product_Qrcode> product = DatabaseHelper.getInstance().getAllProduct_Qrcode();
+            List<Product_Qrcode> product = DatabaseHelper.getInstance().getAllProduct_Qrcode(global.getStockReceiptCd());
             for (int i = 0; i < product.size(); i++) {
                 Product_Qrcode putAway = product.get(i);
                 String valueQty = putAway.getSL_SET();
