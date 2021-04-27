@@ -489,6 +489,9 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
             } else if (postitionDes.equals("-12")) {
                 dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong tồn kho");
 
+            }else if (postitionDes.equals("-27")) {
+                dialog.showDialog(InventoryListProduct.this, "Vị trí từ chưa có sản phẩm");
+
             } else {
                 return;
             }

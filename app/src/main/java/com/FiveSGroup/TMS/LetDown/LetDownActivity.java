@@ -543,6 +543,9 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             } else if (postitionDes.equals("-12")) {
                 dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong tồn kho");
 
+            }else if (postitionDes.equals("-27")) {
+                dialog.showDialog(LetDownActivity.this, "Vị trí từ chưa có sản phẩm");
+
             } else {
                 return;
             }

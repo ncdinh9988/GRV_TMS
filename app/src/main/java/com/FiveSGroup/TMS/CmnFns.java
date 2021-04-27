@@ -2480,6 +2480,8 @@ public class CmnFns {
             return "-19";
         } else if (result.equals("-12")) {
             return "-12";
+        }else if (result.equals("-27")) {
+            return "-27";
         }
         try {
             JSONArray jsonarray = new JSONArray(result);

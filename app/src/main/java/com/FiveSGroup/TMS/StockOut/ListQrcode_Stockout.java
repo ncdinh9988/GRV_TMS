@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ReturnWareHouse.List_Return_WareHouse;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
@@ -466,6 +467,9 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
 
             }else if (postitionDes.equals("-12")) {
                 dialog.showDialog(ListQrcode_Stockout.this, "Mã LPN không có trong tồn kho");
+
+            }else if (postitionDes.equals("-27")) {
+                dialog.showDialog(ListQrcode_Stockout.this, "Vị trí từ chưa có sản phẩm");
 
             }else {
                 return;

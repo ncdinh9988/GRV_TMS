@@ -2,14 +2,23 @@ package com.FiveSGroup.TMS;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -24,6 +33,7 @@ import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.RemoveFromLPN.List_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.List_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.ListQrcode_Stockout;
+import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.ListStockTransfer;
 import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.ListQrcode_Warehouse_Adjustment;
@@ -31,34 +41,42 @@ import com.FiveSGroup.TMS.Warehouse_Adjustment.ListQrcode_Warehouse_Adjustment;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class SelectPropertiesProductActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private TextView tvProductSelectName;
-    private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate , edtSelectShelfLife , edtSelectShelfLifeDate;
+    private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate, edtSelectShelfLife, edtSelectShelfLifeDate;
     private Spinner spinnerProductUnit;
     private DatePickerDialog pickerDialog;
     private ArrayList<String> units;
     private ArrayAdapter<String> adapter;
     private Button btnBack, btnConfirm;
-    private Date date ,date2;
-    private Integer shelfLife1 , shelfLife2 ;
+    private Date date, date2, date_exp, date_current, newDate_curent;
+    private Integer shelfLife1, shelfLife2;
+    private CheckBox checkBoxDate, checkBoxMonth;
     private String barcode = "",
             returnposition = "",
             returnCD = "",
             returnStock = "",
             selectedUnit = "",
+            currentDateandTime = "",
             stockinDate = "",
+            expiredDate = "",
             shelfLife = "",
             shelfLifeDate = "",
-            typeScan = "" ,
+            typeScan = "",
+            stockin = "",
             exp_date = "";
     String total_shelf_life = "";
     String shelf_life_type = "";
     String min_rem_shelf_life = "";
+    int min_to_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +86,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         getDataFromWareHouseScanCode();
         init();
         getProductName();
+        setCheckBox();
     }
 
     private void getProductName() {
@@ -140,17 +159,20 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         returnposition = intent.getStringExtra("returnposition");
         returnCD = global.getStockReceiptCd();
         returnStock = intent.getStringExtra("returnStock");
+        stockin = intent.getStringExtra("stockin");
+
         total_shelf_life = intent.getStringExtra("total_shelf_life");
         shelf_life_type = intent.getStringExtra("shelf_life_type");
-        min_rem_shelf_life= intent.getStringExtra("min_rem_shelf_life");
+        min_rem_shelf_life = intent.getStringExtra("min_rem_shelf_life");
 
     }
 
     private void init() {
+        checkBoxDate = findViewById(R.id.checkBoxDate);
+        checkBoxMonth = findViewById(R.id.checkBoxMonth);
         tvProductSelectName = findViewById(R.id.tvSelectProductName);
         edtSelectProductExpiredDate = findViewById(R.id.edtSelectProductExpiredDate);
         edtSelectProductStockinDate = findViewById(R.id.edtSelectProductStockinDate);
-        edtSelectShelfLifeDate = findViewById(R.id.edtSelectShelfLifeDate);
         edtSelectShelfLife = findViewById(R.id.edtSelectShelfLife);
         spinnerProductUnit = findViewById(R.id.spinnerProductUnit);
         edtSelectProductExpiredDate.setOnClickListener(this);
@@ -167,18 +189,50 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spinnerProductUnit.setAdapter(adapter);
         spinnerProductUnit.setOnItemSelectedListener(this);
-        //set text in adapter
-        if(shelf_life_type.equals("MONTH"))
-        {
-            edtSelectShelfLife.setText(total_shelf_life);
-        }else {
-            edtSelectShelfLifeDate.setText(total_shelf_life);
-        }
 
         btnBack = findViewById(R.id.btnBackSelectProductProperties);
         btnConfirm = findViewById(R.id.btnConfirmProductProperties);
         btnBack.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
+    }
+
+    private void setCheckBox() {
+        checkBoxDate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    checkBoxMonth.setChecked(false);
+                }
+
+            }
+        });
+        checkBoxMonth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    checkBoxDate.setChecked(false);
+                }
+            }
+        });
+//set text in adapter
+        if (shelf_life_type.equals("MONTH")) {
+            if (!total_shelf_life.equals("0")) {
+                edtSelectShelfLife.setText(total_shelf_life);
+                checkBoxMonth.setChecked(true);
+                checkBoxDate.setChecked(false);
+//                checkBoxDate.setEnabled(false);
+//                checkBoxMonth.setEnabled(false);
+            }
+
+        } else if (shelf_life_type.equals("DAY")) {
+            if (!total_shelf_life.equals("0")) {
+                edtSelectShelfLife.setText(total_shelf_life);
+                checkBoxDate.setChecked(true);
+                checkBoxMonth.setChecked(false);
+//                checkBoxDate.setEnabled(false);
+//                checkBoxMonth.setEnabled(false);
+            }
+        }
     }
 
     @Override
@@ -243,102 +297,227 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
 
     }
 
-    private void createProduct(Class activity, String type) {
-//        if (edtSelectProductExpiredDate.getText().toString().trim().isEmpty() ||
-//                edtSelectProductStockinDate.getText().toString().trim().isEmpty()) {
-//            Toast.makeText(this, "Vui lòng chọn hạn sử dụng và ngày nhập", Toast.LENGTH_SHORT).show();
-//        } else {
-        if(spinnerProductUnit.getSelectedItem().toString().isEmpty()) {
+    private void createProduct(final Class activity, final String type) {
+        if (spinnerProductUnit.getSelectedItem().toString().isEmpty()) {
             Toast.makeText(this, "Vui lòng chọn đơn vị ", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
 
-            String expiredDate = edtSelectProductExpiredDate.getText().toString().trim();
+
+            expiredDate = edtSelectProductExpiredDate.getText().toString().trim();
             stockinDate = edtSelectProductStockinDate.getText().toString().trim();
             shelfLife = edtSelectShelfLife.getText().toString().trim();
-            shelfLifeDate = edtSelectShelfLifeDate.getText().toString().trim();
-            String unit = spinnerProductUnit.getSelectedItem().toString();
+//            shelfLifeDate = edtSelectShelfLifeDate.getText().toString().trim();
+            final String unit = spinnerProductUnit.getSelectedItem().toString();
+
             try {
-                date =new SimpleDateFormat("dd/MM/yyyy").parse(stockinDate);
+                min_to_date = Integer.parseInt(min_rem_shelf_life);
+                if (!stockinDate.equals("")) {
+                    date = new SimpleDateFormat("dd/MM/yyyy").parse(stockinDate);
+                }
+                if (!expiredDate.equals("")) {
+                    date_exp = new SimpleDateFormat("dd/MM/yyyy").parse(expiredDate);
+                }
+                //Lấy ngày hiện tại
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                currentDateandTime = sdf.format(Calendar.getInstance().getTime());
+                date_current = new SimpleDateFormat("dd/MM/yyyy").parse(currentDateandTime);
+
+                if ((!expiredDate.equals("")) && (!stockinDate.equals(""))) {
+                    if (date.compareTo(date_exp) > 0) {
+                        Toast.makeText(this, "Ngày Sản Xuất Lớn Hơn Hạn Sử Dụng ", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            if(!expiredDate.equals("")){
+            if (!expiredDate.equals("")) {
                 exp_date = expiredDate;
-            }else{
-                //Nếu có stockindate
-                if(!stockinDate.equals("")){
-                    //Nếu có ngày ShelfLife
-                    if(!shelfLifeDate.equals("")){
-                        //Nếu có tháng ShelfLife
-                        if(!shelfLife.equals("")){
-                            //Bước 1 : Lấy String của exp_date sau khi đã tính dc dựa trên ngày shelflife
-                            shelfLife2 = Integer.valueOf(shelfLifeDate);
-                            SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
-                            Calendar calendar = obj.dateToCalendar(date);
-                            calendar.add(Calendar.DATE, shelfLife2);
-                            Date newDate = obj.calendarToDate(calendar);
-                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                            exp_date = dateFormat.format(newDate);
-                            //Bước 2 chuyển String exp_date sang date
-                            try {
-                                date2 =new SimpleDateFormat("dd/MM/yyyy").parse(exp_date);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            shelfLife1 = Integer.valueOf(shelfLife);
-                            Calendar calendar2 = obj.dateToCalendar(date2);
-                            calendar2.add(Calendar.MONTH, shelfLife1);
-                            Date newDate2 = obj.calendarToDate(calendar2);
-                            DateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy");
-                            exp_date = dateFormat2.format(newDate2);
-                            //Ngược lại không có tháng Shelflife
-                        }else {
-                            shelfLife2 = Integer.valueOf(shelfLifeDate);
-                            SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
-                            Calendar calendar = obj.dateToCalendar(date);
-                            calendar.add(Calendar.DATE, shelfLife2);
-                            Date newDate = obj.calendarToDate(calendar);
-                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                            exp_date = dateFormat.format(newDate);
-                        }
-                      //Ngược lại không có ngày ShelfLife
-                    }else{
-                        //Nếu có tháng ShelfLife
-                        if (!shelfLife.equals("")){
+                //Lấy ngày nằm trong khoảng cảnh báo bằng hạn sử dụng trừ đi min_to_date so sánh với ngày hiện tại
 
-                            shelfLife1 = Integer.valueOf(shelfLife);
-                            SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
-                            Calendar calendar = obj.dateToCalendar(date);
-                            calendar.add(Calendar.MONTH, shelfLife1);
-                            Date newDate = obj.calendarToDate(calendar);
-                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                            exp_date = dateFormat.format(newDate);
-                        }
-                    }
+                if (checkBoxDate.isChecked()) {
+                    SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                    Calendar calendar = obj.dateToCalendar(date_exp);
+                    calendar.add(Calendar.DATE, (-min_to_date));
+                    newDate_curent = obj.calendarToDate(calendar);
+                } else if (checkBoxMonth.isChecked()) {
+                    SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                    Calendar calendar = obj.dateToCalendar(date_exp);
+                    calendar.add(Calendar.MONTH, (-min_to_date));
+                    newDate_curent = obj.calendarToDate(calendar);
                 }
 
-            }
+                if (date_current.compareTo(newDate_curent) > 0) {
+                    LayoutInflater factory = LayoutInflater.from(SelectPropertiesProductActivity.this);
+                    View layout_cus = factory.inflate(R.layout.layout_warn, null);
+                    final AlertDialog dialog = new AlertDialog.Builder(SelectPropertiesProductActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                    InsetDrawable inset = new InsetDrawable(back, 64);
+                    dialog.getWindow().setBackgroundDrawable(inset);
+                    dialog.setView(layout_cus);
 
-            Intent intent = new Intent(SelectPropertiesProductActivity.this, activity);
-            intent.putExtra("btn1", barcode);
-            intent.putExtra("returnposition", returnposition);
-            intent.putExtra("returnCD", returnCD);
-            intent.putExtra("returnStock", returnStock);
-            intent.putExtra("exp_date", exp_date);
-            intent.putExtra("stockin_date", stockinDate);
-            intent.putExtra("ea_unit", unit);
-            intent.putExtra(type, type);
-            startActivity(intent);
-            finish();
+                    Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                    Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                    btnNo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
+                            dialog.dismiss();
+                        }
+                    });
+                    btnYes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //Remove swiped item from list and notify the RecyclerView
+                            dialog.dismiss();
+                            IntentActivity(activity, type, unit);
+                        }
+                    });
+                    dialog.show();
+                } else {
+                    IntentActivity(activity, type, unit);
+                }
+
+            } else {
+                //Nếu có stockindate
+                if (!stockinDate.equals("")) {
+                    //Nếu có ngày ShelfLife
+                    if (checkBoxDate.isChecked()) {
+                        shelfLife2 = Integer.valueOf(shelfLife);
+                        SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                        Calendar calendar = obj.dateToCalendar(date);
+                        calendar.add(Calendar.DATE, shelfLife2);
+                        Date newDate = obj.calendarToDate(calendar);
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        exp_date = dateFormat.format(newDate);
+                        try {
+                            date_exp = new SimpleDateFormat("dd/MM/yyyy").parse(exp_date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        SelectPropertiesProductActivity objvs = new SelectPropertiesProductActivity();
+                        Calendar calendar1 = objvs.dateToCalendar(date_exp);
+                        calendar1.add(Calendar.DATE, (-min_to_date));
+                        newDate_curent = objvs.calendarToDate(calendar1);
+
+                        if (date_current.compareTo(newDate_curent) > 0) {
+                            LayoutInflater factory = LayoutInflater.from(SelectPropertiesProductActivity.this);
+                            View layout_cus = factory.inflate(R.layout.layout_warn, null);
+                            final AlertDialog dialog = new AlertDialog.Builder(SelectPropertiesProductActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                            InsetDrawable inset = new InsetDrawable(back, 64);
+                            dialog.getWindow().setBackgroundDrawable(inset);
+                            dialog.setView(layout_cus);
+
+                            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                            btnNo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
+                                    dialog.dismiss();
+                                }
+                            });
+                            btnYes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //Remove swiped item from list and notify the RecyclerView
+                                    dialog.dismiss();
+                                    IntentActivity(activity, type, unit);
+
+                                }
+                            });
+                            dialog.show();
+                        } else {
+                            IntentActivity(activity, type, unit);
+                        }
+
+                    }
+
+                    if (checkBoxMonth.isChecked()) {
+                        shelfLife1 = Integer.valueOf(shelfLife);
+                        SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                        Calendar calendar = obj.dateToCalendar(date);
+                        calendar.add(Calendar.MONTH, shelfLife1);
+                        Date newDate = obj.calendarToDate(calendar);
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        exp_date = dateFormat.format(newDate);
+
+                        try {
+                            date_exp = new SimpleDateFormat("dd/MM/yyyy").parse(exp_date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        SelectPropertiesProductActivity objvs = new SelectPropertiesProductActivity();
+                        Calendar calendar1 = objvs.dateToCalendar(date_exp);
+                        calendar1.add(Calendar.MONTH, (-min_to_date));
+                        newDate_curent = objvs.calendarToDate(calendar1);
+                        if (date_current.compareTo(newDate_curent) > 0) {
+
+                            LayoutInflater factory = LayoutInflater.from(SelectPropertiesProductActivity.this);
+                            View layout_cus = factory.inflate(R.layout.layout_warn, null);
+                            final AlertDialog dialog = new AlertDialog.Builder(SelectPropertiesProductActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                            InsetDrawable inset = new InsetDrawable(back, 64);
+                            dialog.getWindow().setBackgroundDrawable(inset);
+                            dialog.setView(layout_cus);
+
+                            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                            btnNo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
+                                    dialog.dismiss();
+                                }
+                            });
+                            btnYes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    //Remove swiped item from list and notify the RecyclerView
+                                    dialog.dismiss();
+                                    IntentActivity(activity, type, unit);
+                                }
+                            });
+                            dialog.show();
+                        } else {
+                            IntentActivity(activity, type, unit);
+                        }
+                    }
+                } else {
+                    IntentActivity(activity, type, unit);
+                }
+            }
         }
-//        }
     }
+
+    private void IntentActivity(final Class activity, final String type, final String unit) {
+        Intent intent = new Intent(SelectPropertiesProductActivity.this, activity);
+        intent.putExtra("btn1", barcode);
+        intent.putExtra("returnposition", returnposition);
+        intent.putExtra("returnCD", returnCD);
+        intent.putExtra("returnStock", returnStock);
+        intent.putExtra("exp_date", exp_date);
+        intent.putExtra("stockin_date", stockinDate);
+        intent.putExtra("ea_unit", unit);
+        intent.putExtra(type, type);
+        startActivity(intent);
+        finish();
+    }
+
 
     //Convert Calendar to Date
     private Date calendarToDate(Calendar calendar) {
         return calendar.getTime();
     }
+
     //Convert Date to Calendar
     private Calendar dateToCalendar(Date date) {
 
@@ -347,6 +526,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         return calendar;
 
     }
+
     private void selectDate(final int viewId) {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
@@ -463,6 +464,9 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
 
             }else if (postitionDes.equals("-12")) {
                 dialog.showDialog(ListQrcode_Warehouse_Adjustment.this, "Mã LPN không có trong tồn kho");
+
+            }else if (postitionDes.equals("-27")) {
+                dialog.showDialog(ListQrcode_Warehouse_Adjustment.this, "Vị trí từ chưa có sản phẩm");
 
             }else {
                 return;

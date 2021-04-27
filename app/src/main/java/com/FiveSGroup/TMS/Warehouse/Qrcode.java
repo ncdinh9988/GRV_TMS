@@ -282,7 +282,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
 
                     } else {
                         // lấy tất cả hạn `sử dụng trong database ra
-                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
+                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValueStockin();
                         for (int i = 0; i < expired_date.size(); i++) {
                             total_shelf_life = expired_date.get(0).getTOTAL_SHELF_LIFE();
                             shelf_life_type = expired_date.get(0).getSHELF_LIFE_TYPE();
@@ -350,6 +350,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                         Intent intent = new Intent(Qrcode.this, SelectPropertiesProductActivity.class);
                         intent.putExtra("typeScan", "scan_from_stock_in");
                         intent.putExtra("btn1", barcodeData);
+                        intent.putExtra("stockin", "444");
                         intent.putExtra("stock_in", "333");
                         intent.putExtra("total_shelf_life", total_shelf_life);
                         intent.putExtra("shelf_life_type", shelf_life_type);

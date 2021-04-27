@@ -357,6 +357,10 @@ public class InventoryScanCode extends AppCompatActivity {
                                         Intent intent = new Intent(InventoryScanCode.this, SelectPropertiesProductActivity.class);
                                         intent.putExtra("typeScan", "scan_from_inventory");
                                         intent.putExtra("btn1", barcodeData);
+                                        intent.putExtra("stockin", "");
+                                        intent.putExtra("total_shelf_life", "0");
+                                        intent.putExtra("shelf_life_type", "");
+                                        intent.putExtra("min_rem_shelf_life", "0");
                                         intent.putExtra("returnposition", position);
                                         intent.putExtra("returnCD", product_cd);
                                         intent.putExtra("returnStock", stock);

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.R;
@@ -521,6 +522,9 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
 
             } else if (postitionDes.equals("-12")) {
                 dialog.showDialog(List_Remove_LPN.this, "Mã LPN không có trong tồn kho");
+
+            }else if (postitionDes.equals("-27")) {
+                dialog.showDialog(List_Remove_LPN.this, "Vị trí từ chưa có sản phẩm");
 
             } else {
                 return;

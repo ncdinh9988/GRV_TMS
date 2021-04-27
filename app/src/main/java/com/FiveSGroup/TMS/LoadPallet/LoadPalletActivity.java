@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
@@ -566,6 +567,9 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
 
             } else if (postitionDes.equals("-12")) {
                 dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong tồn kho");
+
+            }else if (postitionDes.equals("-27")) {
+                dialog.showDialog(LoadPalletActivity.this, "Vị trí từ chưa có sản phẩm");
 
             } else {
                 return;

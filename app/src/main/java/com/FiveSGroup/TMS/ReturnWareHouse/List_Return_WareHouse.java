@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.PickList.PickList;
@@ -436,6 +437,9 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
 
             }else if (postitionDes.equals("-12")) {
                 dialog.showDialog(List_Return_WareHouse.this, "Mã LPN không có trong tồn kho");
+
+            }else if (postitionDes.equals("-27")) {
+                dialog.showDialog(List_Return_WareHouse.this, "Vị trí từ chưa có sản phẩm");
 
             }else {
                 return;

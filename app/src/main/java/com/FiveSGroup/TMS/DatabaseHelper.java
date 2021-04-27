@@ -3997,7 +3997,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Exp_Date_Tam>
-    getallExp_date() {
+    getallValueStockin() {
         ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT * FROM " + O_EXP;
@@ -4014,6 +4014,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(SHELF_LIFE_TYPE))));
                 expd.setMIN_REM_SHELF_LIFE((c.getString(c
                         .getColumnIndex(MIN_REM_SHELF_LIFE))));
+
+                exp.add(expd);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return exp;
+    }
+
+    public ArrayList<Exp_Date_Tam>
+    getallExp_date() {
+        ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT DISTINCT CASE WHEN EXPIRED_DATE_TAM = '' THEN '------' ELSE EXPIRED_DATE_TAM END AS EXPIRED_DATE_TAM FROM " + O_EXP;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Exp_Date_Tam expd = new Exp_Date_Tam();
+                expd.setEXPIRED_DATE_TAM((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TAM))));
 
                 exp.add(expd);
             } while (c.moveToNext());
