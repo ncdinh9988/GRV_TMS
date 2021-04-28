@@ -148,21 +148,22 @@
                 android:layout_width="0dp"
                 android:layout_weight="7"
                 android:layout_height="wrap_content">
+
                 <EditText
-                    android:inputType="number"
-                    android:paddingLeft="2dp"
-                    android:background="@drawable/bg_edittext"
-                    android:textColor="@color/black"
                     android:id="@+id/edtSelectShelfLife"
-                    android:layout_width="80dp"
+                    android:layout_width="70dp"
                     android:layout_height="50dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="Nhấn vào để chọn ngày"
+                    android:inputType="number"
                     android:padding="5dp"
-                    android:hint="Nhấn vào để chọn ngày" />
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/black" />
+
                 <CheckBox
                     android:id="@+id/checkBoxMonth"
-                    android:layout_width="100dp"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:buttonTint="#000"
                     android:text="Tháng"
                     android:textColor="#000"
@@ -171,9 +172,8 @@
 
                 <CheckBox
                     android:id="@+id/checkBoxDate"
-                    android:layout_width="100dp"
+                    android:layout_width="85dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:buttonTint="#000"
                     android:text="Ngày"
                     android:textColor="#000"

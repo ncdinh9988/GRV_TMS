@@ -413,8 +413,6 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
                     IntentActivity(activity, type, unit);
                 }
 
-
-
             } else {
                 //Nếu có stockindate
                 if (!stockinDate.equals("")) {
