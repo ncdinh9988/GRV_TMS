@@ -2822,7 +2822,7 @@ public class CmnFns {
             }
             else if (type.equals("WMP")) {
                 try {
-                    int check = DatabaseHelper.getInstance().getDuplicate_MasterPick();
+                    int check = DatabaseHelper.getInstance().getDuplicate_MasterPick(CD);
                     if (check > 1 ){
                         return -36;
                     }

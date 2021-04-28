@@ -1393,8 +1393,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count_check;
     }
 
-    public int getDuplicate_MasterPick(){
-        String selectQuery =         "SELECT STOCKIN_DATE , PRODUCT_CODE , EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT FROM "
+    public int getDuplicate_MasterPick(String masterCD){
+        String selectQuery =         "SELECT STOCKIN_DATE , PRODUCT_CODE , EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE , COUNT(*) AS COUNT  where " + MASTER_PICK_CD + " = " + masterCD + " FROM "
                 + O_MASTER_PICK + " GROUP BY STOCKIN_DATE , PRODUCT_CODE , EXPIRY_DATE , PRODUCT_NAME , EA_UNIT , POSITION_FROM_CODE , POSITION_TO_CODE  HAVING COUNT(*) > " + 1 ;
         SQLiteDatabase db = this.getReadableDatabase(DatabaseHelper.PWD);
 //        Cursor cursor = db.rawQuery(selectQuery, null);
