@@ -2539,7 +2539,7 @@ public class CmnFns {
                         } else if (type.equals("WMP")) {
                             //
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_masterPick(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -2610,7 +2610,7 @@ public class CmnFns {
 
                         } else if (type.equals("WMP")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_masterPick_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_masterPick_LPN(unique_id,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_masterPick(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
