@@ -372,19 +372,16 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < product.size(); i++) {
             Product_PutAway putAway = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
             String valueFromCode = putAway.getPOSITION_FROM_CODE();
             String valueToCode = putAway.getPOSITION_TO_CODE();
-            String positionCode = putAway.getPOSITION_FROM_CODE();
-            String valueCode = putAway.getLPN_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            } else {
-                if ((valueFromCode.equals("")) || (valueToCode.equals("---"))) {
-                    check = true;
-                }
+            String lpn_from = putAway.getLPN_FROM();
+            String lpn_to = putAway.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {

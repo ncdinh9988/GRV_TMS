@@ -104,19 +104,16 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
         for (int i = 0; i < product.size(); i++) {
             Product_StockTransfer stockTransfer = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
             String valueFromCode = stockTransfer.getPOSITION_FROM_CODE();
             String valueToCode = stockTransfer.getPOSITION_TO_CODE();
-            String positionCode = stockTransfer.getPOSITION_FROM_CODE();
-            String valueCode = stockTransfer.getLPN_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            } else {
-                if ((valueFromCode.equals("")) ||(valueToCode.equals("---"))) {
-                    check = true;
-                }
+            String lpn_from = stockTransfer.getLPN_FROM();
+            String lpn_to = stockTransfer.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {

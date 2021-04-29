@@ -201,19 +201,16 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
         for (int i = 0; i < product.size(); i++) {
             Product_StockOut stockOut = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
             String valueFromCode = stockOut.getPOSITION_FROM_CODE();
-//            String valueToCode = stockOut.getPOSITION_TO_CODE();
-            String positionCode = stockOut.getPOSITION_FROM_CODE();
-            String valueCode = stockOut.getLPN_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            }else {
-                if (valueFromCode.equals("")) {
-                    check = true;
-                }
+            String valueToCode = stockOut.getPOSITION_TO_CODE();
+            String lpn_from = stockOut.getLPN_FROM();
+            String lpn_to = stockOut.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {

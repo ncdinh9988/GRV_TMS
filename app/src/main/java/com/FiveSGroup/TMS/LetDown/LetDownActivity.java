@@ -378,19 +378,16 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         for (int i = 0; i < product.size(); i++) {
             ProductLetDown letDown = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
             String valueFromCode = letDown.getPOSITION_FROM_CODE();
             String valueToCode = letDown.getPOSITION_TO_CODE();
-            String positionCode = letDown.getPOSITION_FROM_CODE();
-            String valueCode = letDown.getLPN_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            } else {
-                if ((valueFromCode.equals("")) || (valueToCode.equals("---"))) {
-                    check = true;
-                }
+            String lpn_from = letDown.getLPN_FROM();
+            String lpn_to = letDown.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {

@@ -210,22 +210,41 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         for (int i = 0; i < product.size(); i++) {
             Product_Master_Pick masterPick = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
+//            String valueAm1 = "-1";
             String valueFromCode = masterPick.getPOSITION_FROM_CODE();
             String valueToCode = masterPick.getPOSITION_TO_CODE();
-            String positionCode = masterPick.getPOSITION_FROM_CODE();
+//            String positionCode = masterPick.getPOSITION_FROM_CODE();
             String lpn_from = masterPick.getLPN_FROM();
             String lpn_to = masterPick.getLPN_TO();
-            String valueCode = masterPick.getLPN_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            } else {
-                if ((valueFromCode.equals("")) || (valueToCode.equals("---"))) {
-                    check = true;
-                }
+//            String valueCode = masterPick.getLPN_CODE();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
             }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
+            }
+
+//            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
+//                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
+//                    check = true;
+//                }
+//            } else {
+//                if ((valueFromCode.equals("")) || (valueToCode.equals("---"))) {
+//                    check = true;
+//                }
+//            }
+//
+//            if(lpn_from.equals("")){
+//                if ((valueFromCode.equals("") || valueFromCode.equals("---"))){
+//                    check = true;
+//                }
+//            }else{
+//                if((lpn_to.equals("") && valueToCode.equals(""))){
+//                    check = true ;
+//                }
+//            }
+
         }
         if (check == true) {
             return true;

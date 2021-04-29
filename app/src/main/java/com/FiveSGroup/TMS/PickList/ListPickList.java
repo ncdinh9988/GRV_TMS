@@ -205,19 +205,16 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         for (int i = 0; i < product.size(); i++) {
             PickList pickList = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
             String valueFromCode = pickList.getPOSITION_FROM_CODE();
             String valueToCode = pickList.getPOSITION_TO_CODE();
-            String positionCode = pickList.getPOSITION_FROM_CODE();
-            String valueCode = pickList.getLPN_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            } else {
-                if ((valueFromCode.equals("")) ||(valueToCode.equals("---"))) {
-                    check = true;
-                }
+            String lpn_from = pickList.getLPN_FROM();
+            String lpn_to = pickList.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {

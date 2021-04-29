@@ -202,19 +202,16 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
         for (int i = 0; i < product.size(); i++) {
             Product_Return_WareHouse return_wareHouse = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
             String valueFromCode = return_wareHouse.getPOSITION_FROM_CODE();
             String valueToCode = return_wareHouse.getPOSITION_TO_CODE();
-            String positionCode = return_wareHouse.getPOSITION_FROM_CODE();
-            String valueCode = return_wareHouse.getLPN_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            }else {
-                if ((valueFromCode.equals("")) ||(valueToCode.equals("---"))) {
-                    check = true;
-                }
+            String lpn_from = return_wareHouse.getLPN_FROM();
+            String lpn_to = return_wareHouse.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {

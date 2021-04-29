@@ -206,19 +206,16 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         for (int i = 0; i < product.size(); i++) {
             InventoryProduct inventory = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
-            String valueFromCode = inventory.getLPN_FROM();
-            String positionCode = inventory.getPOSITION_FROM_CODE();
-            String valueCode = inventory.getLPN_CODE();
+            String valueFromCode = inventory.getPOSITION_FROM_CODE();
             String valueToCode = inventory.getPOSITION_TO_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            } else {
-                if ((valueFromCode.equals("")) || (valueToCode.equals("---"))) {
-                    check = true;
-                }
+            String lpn_from = inventory.getLPN_FROM();
+            String lpn_to = inventory.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {

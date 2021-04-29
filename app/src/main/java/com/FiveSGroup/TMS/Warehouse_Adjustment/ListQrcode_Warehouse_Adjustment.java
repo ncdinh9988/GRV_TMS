@@ -197,20 +197,17 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
 
         for (int i = 0; i < product.size(); i++) {
             Product_Warehouse_Adjustment warehouse_adjustment = product.get(i);
-            String value0 = "";
-            String valueAm1 = "-1";
-            String valueFromCode = warehouse_adjustment.getLPN_FROM();
-            String positionCode = warehouse_adjustment.getPOSITION_FROM_CODE();
-            String valueCode = warehouse_adjustment.getLPN_CODE();
+            String value0 = "---";
+            String valueFromCode = warehouse_adjustment.getPOSITION_FROM_CODE();
             String valueToCode = warehouse_adjustment.getPOSITION_TO_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            } else {
-                if (((valueCode.equals("") && valueFromCode.equals("")))) {
-                    check = true;
-                }
+            String lpn_from = warehouse_adjustment.getLPN_FROM();
+            String lpn_to = warehouse_adjustment.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {

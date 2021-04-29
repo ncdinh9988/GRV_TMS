@@ -105,19 +105,16 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         for (int i = 0; i < product.size(); i++) {
             Product_LoadPallet product_loadPallet = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
             String valueFromCode = product_loadPallet.getPOSITION_FROM_CODE();
             String valueToCode = product_loadPallet.getPOSITION_TO_CODE();
-            String positionCode = product_loadPallet.getPOSITION_FROM_CODE();
-            String valueCode = product_loadPallet.getLPN_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            } else {
-                if ((valueFromCode.equals("")) || (valueToCode.equals("---"))) {
-                    check = true;
-                }
+            String lpn_from = product_loadPallet.getLPN_FROM();
+            String lpn_to = product_loadPallet.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {

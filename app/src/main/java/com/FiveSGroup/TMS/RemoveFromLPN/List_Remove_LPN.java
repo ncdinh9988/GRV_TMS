@@ -110,19 +110,16 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
         for (int i = 0; i < product.size(); i++) {
             Product_Remove_LPN remove_lpn = product.get(i);
             String value0 = "---";
-            String valueAm1 = "-1";
-            String valueFromCode = remove_lpn.getLPN_FROM();
-            String positionCode = remove_lpn.getPOSITION_FROM_CODE();
-            String valueCode = remove_lpn.getLPN_CODE();
+            String valueFromCode = remove_lpn.getPOSITION_FROM_CODE();
             String valueToCode = remove_lpn.getPOSITION_TO_CODE();
-            if (valueFromCode.equals("") || valueFromCode.equals("---")) {
-                if ((positionCode.equals(value0) || (positionCode.equals(valueAm1)))) {
-                    check = true;
-                }
-            } else {
-                if ((valueFromCode.equals("")) || (valueToCode.equals("---"))) {
-                    check = true;
-                }
+            String lpn_from = remove_lpn.getLPN_FROM();
+            String lpn_to = remove_lpn.getLPN_TO();
+
+            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+                check = true;
+            }
+            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+                check = true;
             }
         }
         if (check == true) {
