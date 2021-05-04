@@ -206,9 +206,9 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
             if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
                 check = true;
             }
-            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
-                check = true;
-            }
+//            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+//                check = true;
+//            }
         }
         if (check == true) {
             return true;
