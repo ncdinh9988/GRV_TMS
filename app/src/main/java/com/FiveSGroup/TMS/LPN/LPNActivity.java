@@ -52,6 +52,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
     ArrayList<LPN> arrListLPN;
     private ItemLPNAdapter adapter;
     private Spinner spinner;
+    String number = "100";
     final Calendar myCalendar = Calendar.getInstance();
 
 
@@ -299,7 +300,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
                 this.cancel(true);
 
 //                SetDataSpinner();
-                arrListLPN = DatabaseHelper.getInstance().getAllLpn(chooseDate);
+                arrListLPN = DatabaseHelper.getInstance().getAllLpn_date(chooseDate);
                 adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
                 rvListLPN.setLayoutManager(layoutManager);
@@ -456,7 +457,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
                 this.cancel(true);
 
 //                SetDataSpinner();
-                arrListLPN = DatabaseHelper.getInstance().getAllLpn();
+                arrListLPN = DatabaseHelper.getInstance().getAllLpn_limit();
                 adapter = new ItemLPNAdapter(LPNActivity.this, arrListLPN);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(LPNActivity.this, RecyclerView.VERTICAL, false);
                 rvListLPN.setLayoutManager(layoutManager);

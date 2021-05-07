@@ -454,7 +454,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_Warehouse_Adjustment warehouse_Adjustment = new Product_Warehouse_Adjustment();
-
+                warehouse_Adjustment.setAUTOINCREMENT(c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_WAREHOUSE_ADJUSTMENT)));
                 warehouse_Adjustment.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_WAREHOUSE_ADJUSTMENT))));
                 warehouse_Adjustment.setPRODUCT_CODE((c.getString(c
@@ -776,7 +777,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<LPN>
-    getAllLpn(String lpn_date) {
+    getAllLpn_date(String lpn_date) {
         ArrayList<LPN> lpn = new ArrayList<LPN>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT * FROM " + O_LPN + " WHERE " + LPN_DATE + " like '%" + lpn_date + "%'";
@@ -799,10 +800,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<LPN>
+    getAllLpn_limit() {
+        ArrayList<LPN> lpn = new ArrayList<LPN>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT * FROM " + O_LPN + " LIMIT 100" ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                LPN lpn1 = new LPN();
+                lpn1.setLPN_NUMBER((c.getString(c
+                        .getColumnIndex(LPN_NUMBER))));
+                lpn1.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE))));
+                lpn1.setLPN_DATE((c.getString(c
+                        .getColumnIndex(LPN_DATE))));
+                lpn.add(lpn1);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return lpn;
+    }
+
+    public ArrayList<LPN>
     getAllLpn() {
         ArrayList<LPN> lpn = new ArrayList<LPN>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT * FROM " + O_LPN;
+        String selectQuery = "SELECT * FROM " + O_LPN ;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -1811,7 +1835,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 PickList product = new PickList();
-
+                product.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_PICKLIST))));
                 product.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_PICKLIST))));
                 product.setPRODUCT_CODE((c.getString(c
@@ -2215,6 +2240,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 Product_LoadPallet product_loadPallet = new Product_LoadPallet();
 
+                product_loadPallet.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_LOAD_PALLET))));
                 product_loadPallet.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_LOAD_PALLET))));
                 product_loadPallet.setPRODUCT_CODE((c.getString(c
@@ -2470,7 +2497,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_Remove_LPN remove = new Product_Remove_LPN();
-
+                remove.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_REMOVE_LPN))));
                 remove.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_REMOVE_LPN))));
                 remove.setPRODUCT_CODE((c.getString(c
@@ -2791,7 +2819,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_StockTransfer stock = new Product_StockTransfer();
-
+                stock.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_STOCK_TRANSFER))));
                 stock.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_STOCK_TRANSFER))));
                 stock.setPRODUCT_CODE((c.getString(c
@@ -3077,49 +3106,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c != null && c.moveToFirst()) {
             do {
 
-                Product_StockOut stock = new Product_StockOut();
-
-                stock.setUNIQUE_CODE((c.getString(c
+                Product_StockOut stockOut = new Product_StockOut();
+                stockOut.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_STOCK_OUT))));
+                stockOut.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_STOCK_OUT))));
-                stock.setWAREHOUSE_POSITION_CD((c.getString(c
+                stockOut.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD_STOCK_OUT))));
-                stock.setPRODUCT_CODE((c.getString(c
+                stockOut.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_STOCK_OUT))));
-                stock.setPRODUCT_NAME((c.getString(c
+                stockOut.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_STOCK_OUT))));
-                stock.setPRODUCT_CD((c.getString(c
+                stockOut.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_STOCK_OUT))));
-                stock.setQTY((c.getString(c
+                stockOut.setQTY((c.getString(c
                         .getColumnIndex(QTY_SET_AVAILABLE_STOCK_OUT))));
-                stock.setSTOCKIN_DATE((c.getString(c
+                stockOut.setSTOCKIN_DATE((c.getString(c
                         .getColumnIndex(STOCKIN_DATE_STOCK_OUT))));
-                stock.setQTY_EA_AVAILABLE((c.getString(c
+                stockOut.setQTY_EA_AVAILABLE((c.getString(c
                         .getColumnIndex(QTY_EA_AVAILABLE_STOCK_OUT))));
-                stock.setEXPIRED_DATE((c.getString(c
+                stockOut.setEXPIRED_DATE((c.getString(c
                         .getColumnIndex(EXPIRED_DATE_STOCK_OUT))));
-                stock.setUNIT((c.getString(c
+                stockOut.setUNIT((c.getString(c
                         .getColumnIndex(EA_UNIT_STOCK_OUT))));
-                stock.setPOSITION_FROM_CD((c.getString(c
+                stockOut.setPOSITION_FROM_CD((c.getString(c
                         .getColumnIndex(POSITION_FROM_STOCK_OUT))));
-                stock.setPOSITION_TO_CD((c.getString(c
+                stockOut.setPOSITION_TO_CD((c.getString(c
                         .getColumnIndex(POSITION_TO_STOCK_OUT))));
-                stock.setPOSITION_FROM_CODE((c.getString(c
+                stockOut.setPOSITION_FROM_CODE((c.getString(c
                         .getColumnIndex(POSITION_FROM_CODE_STOCK_OUT))));
-                stock.setPOSITION_TO_CODE((c.getString(c
+                stockOut.setPOSITION_TO_CODE((c.getString(c
                         .getColumnIndex(POSITION_TO_CODE_STOCK_OUT))));
-                stock.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                stockOut.setPOSITION_FROM_DESCRIPTION((c.getString(c
                         .getColumnIndex(POSITION_FROM_DESCRIPTION_STOCK_OUT))));
-                stock.setPOSITION_TO_DESCRIPTION((c.getString(c
+                stockOut.setPOSITION_TO_DESCRIPTION((c.getString(c
                         .getColumnIndex(POSITION_TO_DESCRIPTION_STOCK_OUT))));
-                stock.setSTOCKOUT_CD((c.getString(c
+                stockOut.setSTOCKOUT_CD((c.getString(c
                         .getColumnIndex(STOCKOUT_CD))));
-                stock.setLPN_FROM((c.getString(c
+                stockOut.setLPN_FROM((c.getString(c
                         .getColumnIndex(LPN_FROM_STOCK_OUT))));
-                stock.setLPN_TO((c.getString(c
+                stockOut.setLPN_TO((c.getString(c
                         .getColumnIndex(LPN_TO_STOCK_OUT))));
-                stock.setLPN_CODE((c.getString(c
+                stockOut.setLPN_CODE((c.getString(c
                         .getColumnIndex(LPN_CODE_STOCK_OUT))));
-                stockOuts.add(stock);
+                stockOuts.add(stockOut);
             } while (c.moveToNext());
         }
 
@@ -3416,7 +3446,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 ProductLetDown qrcode = new ProductLetDown();
-
+                qrcode.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_LETDOWN))));
                 qrcode.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_LETDOWN))));
                 qrcode.setPRODUCT_CODE((c.getString(c
@@ -3570,7 +3601,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(productCode)});
 
     }
-
 
 
     public void deleteProduct_Letdown() {
@@ -3847,6 +3877,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_PutAway qrcode_putaway = new Product_PutAway();
+                qrcode_putaway.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_PUT_AWAY))));
                 qrcode_putaway.setUNIQUE_CODE_PUTAWAY((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_PUTAWAY))));
                 qrcode_putaway.setPRODUCT_CODE_PUTAWAY((c.getString(c
@@ -4430,6 +4462,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
 
                 Product_Qrcode qrcodeq = new Product_Qrcode();
+                qrcodeq.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_PO))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD))));
                 qrcodeq.setMANUFACTURING_DATE((c.getString(c
