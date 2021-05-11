@@ -438,6 +438,9 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
             }else if (postitionDes.equals("-27")) {
                 dialog.showDialog(List_Return_WareHouse.this, "Vị trí từ chưa có sản phẩm");
 
+            }else if (postitionDes.equals("-28")) {
+                dialog.showDialog(List_Return_WareHouse.this, "LPN đến có vị trí không hợp lệ");
+
             }else {
                 return;
             }

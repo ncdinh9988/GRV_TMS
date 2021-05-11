@@ -27,6 +27,7 @@ import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
+import com.FiveSGroup.TMS.StockOut.ListQrcode_Stockout;
 import com.FiveSGroup.TMS.Warehouse.Wv_ShowResultQrode;
 
 import java.util.ArrayList;
@@ -516,6 +517,9 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
 
             }else if (postitionDes.equals("-27")) {
                 dialog.showDialog(ListStockTransfer.this, "Vị trí từ chưa có sản phẩm");
+
+            }else if (postitionDes.equals("-28")) {
+                dialog.showDialog(ListStockTransfer.this, "LPN đến có vị trí không hợp lệ");
 
             }else {
                 return;

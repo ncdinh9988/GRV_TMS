@@ -27,6 +27,7 @@ import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
+import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
 import com.FiveSGroup.TMS.global;
 
@@ -465,7 +466,10 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
             }else if (postitionDes.equals("-27")) {
                 dialog.showDialog(ListQrcode_Warehouse_Adjustment.this, "Vị trí từ chưa có sản phẩm");
 
-            }else {
+            }else if (postitionDes.equals("-28")) {
+                dialog.showDialog(ListQrcode_Warehouse_Adjustment.this, "LPN đến có vị trí không hợp lệ");
+
+            } else {
                 return;
             }
         }catch (Exception e){

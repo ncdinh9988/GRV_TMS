@@ -2482,6 +2482,8 @@ public class CmnFns {
             return "-12";
         }else if (result.equals("-27")) {
             return "-27";
+        }else if (result.equals("-28")) {
+            return "-28";
         }
         try {
             JSONArray jsonarray = new JSONArray(result);

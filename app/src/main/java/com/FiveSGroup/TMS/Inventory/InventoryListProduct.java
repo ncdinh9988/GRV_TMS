@@ -489,6 +489,9 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
             }else if (postitionDes.equals("-27")) {
                 dialog.showDialog(InventoryListProduct.this, "Vị trí từ chưa có sản phẩm");
 
+            } else if (postitionDes.equals("-28")) {
+                dialog.showDialog(InventoryListProduct.this, "LPN đến có vị trí không hợp lệ");
+
             } else {
                 return;
             }

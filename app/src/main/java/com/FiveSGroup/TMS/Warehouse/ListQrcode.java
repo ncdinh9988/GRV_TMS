@@ -29,6 +29,7 @@ import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
+import com.FiveSGroup.TMS.StockTransfer.ListStockTransfer;
 import com.FiveSGroup.TMS.global;
 
 import java.util.ArrayList;
@@ -865,6 +866,9 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
             }else if (postitionDes.equals("-27")) {
                 dialog.showDialog(ListQrcode.this, "Vị trí từ chưa có sản phẩm");
+
+            }else if (postitionDes.equals("-28")) {
+                dialog.showDialog(ListQrcode.this, "LPN đến có vị trí không hợp lệ");
 
             } else {
                 return;

@@ -503,6 +503,9 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
             }else if (postitionDes.equals("-27")) {
                 dialog.showDialog(List_Master_Pick.this, "Vị trí từ chưa có sản phẩm");
 
+            }else if (postitionDes.equals("-28")) {
+                dialog.showDialog(List_Master_Pick.this, "LPN đến có vị trí không hợp lệ");
+
             } else {
                 return;
             }

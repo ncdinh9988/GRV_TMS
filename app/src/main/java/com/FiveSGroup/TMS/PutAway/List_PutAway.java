@@ -25,6 +25,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
+import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.Wv_ShowResultQrode;
@@ -531,6 +532,9 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
 
             }else if (postitionDes.equals("-27")) {
                 dialog.showDialog(List_PutAway.this, "Vị trí từ chưa có sản phẩm");
+
+            }else if (postitionDes.equals("-28")) {
+                dialog.showDialog(List_PutAway.this, "LPN đến có vị trí không hợp lệ");
 
             } else {
                 return;

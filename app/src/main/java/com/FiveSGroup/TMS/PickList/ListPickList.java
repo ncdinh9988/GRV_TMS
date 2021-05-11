@@ -462,7 +462,10 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             }else if (postitionDes.equals("-27")) {
                 dialog.showDialog(ListPickList.this, "Vị trí từ chưa có sản phẩm");
 
-            }else {
+            }else if (postitionDes.equals("-28")) {
+                dialog.showDialog(ListPickList.this, "LPN đến có vị trí không hợp lệ");
+
+            } else {
                 return;
             }
         }catch (Exception e){

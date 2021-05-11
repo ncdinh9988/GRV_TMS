@@ -468,6 +468,9 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
             }else if (postitionDes.equals("-27")) {
                 dialog.showDialog(ListQrcode_Stockout.this, "Vị trí từ chưa có sản phẩm");
 
+            }else if (postitionDes.equals("-28")) {
+                dialog.showDialog(ListQrcode_Stockout.this, "LPN đến có vị trí không hợp lệ");
+
             }else {
                 return;
             }
