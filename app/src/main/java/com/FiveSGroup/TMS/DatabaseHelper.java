@@ -3598,9 +3598,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.delete(O_WAREHOUSE_ADJUSTMENT, AUTOINCREMENT_WAREHOUSE_ADJUSTMENT + " = ?" ,
-                new String[]{String.valueOf(productCode)});
+                new String[]{String.valueOf(productCode) });
 
     }
+
 
 
     public void deleteProduct_Letdown() {

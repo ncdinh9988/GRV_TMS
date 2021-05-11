@@ -476,10 +476,6 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
             finish();
         }
-
-
-
-
     }
 
     public void alert_show_SP(int isLPN) {
