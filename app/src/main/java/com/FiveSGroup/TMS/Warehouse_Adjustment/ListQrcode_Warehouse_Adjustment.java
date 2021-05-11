@@ -307,11 +307,6 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
                         case 1:
                             ShowErrorMessage("Lưu thành công");
 //                        Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().deleteProduct_Warehouse_Adjustment();
-                            Warehouse_Adjustment.clear();
-                            Warehouse_Adjustment_ListAdapter.notifyDataSetChanged();
-
-                            finish();
                             break;
                         case -1:
                             ShowErrorMessage("Lưu thất bại");
@@ -337,8 +332,12 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
                         case -8:
                             ShowErrorMessage("Sản phẩm không có thông tin trên phiếu");
                             break;
+
                         case -13:
                             ShowErrorMessage("Dữ liệu không hợp lệ");
+                            break;
+                        case -24:
+                            ShowErrorMessage("Vui Lòng Kiểm Tra Lại Số Lượng");
                             break;
                         default:
                             if (result >= 1) {

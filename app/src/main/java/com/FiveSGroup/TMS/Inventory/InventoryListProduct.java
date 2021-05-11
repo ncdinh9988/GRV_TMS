@@ -316,6 +316,9 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                             case -13:
                                 ShowErrorMessage("Dữ liệu không hợp lệ");
                                 break;
+                            case -24:
+                                ShowErrorMessage("Vui Lòng Kiểm Tra Lại Số Lượng");
+                                break;
                             default:
                                 if (result >= 1) {
                                     Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
