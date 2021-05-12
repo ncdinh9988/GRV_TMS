@@ -521,10 +521,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void deleteProduct_Warehouse_Adjustment() {
+
+
+    public void deleteProduct_Warehouse_Adjustment(String warehouse) {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-        db.execSQL("delete from " + O_WAREHOUSE_ADJUSTMENT);
+        db.execSQL("delete from " + O_WAREHOUSE_ADJUSTMENT + " WHERE " + warehouse_Adjustment_CD + " = " + warehouse);
     }
 
     //Done table O_Warehouse_Adjustment

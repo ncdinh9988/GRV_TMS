@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.Inventory.InventoryHome;
 import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
@@ -287,6 +288,38 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
         });
         dialog.show();
     }
+    private void ShowSuccessMessage(String message) {
+        LayoutInflater factory = LayoutInflater.from(ListQrcode_Warehouse_Adjustment.this);
+        View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
+        final AlertDialog dialog = new AlertDialog.Builder(ListQrcode_Warehouse_Adjustment.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+        InsetDrawable inset = new InsetDrawable(back, 64);
+        dialog.getWindow().setBackgroundDrawable(inset);
+        dialog.setView(layout_cus);
+        dialog.setCancelable(false);
+
+        Button btnClose = layout_cus.findViewById(R.id.btnHuy);
+        TextView textView = layout_cus.findViewById(R.id.tvText);
+        btnClose.setText("OK");
+
+
+        textView.setText(message);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                if (warehouse_adjustment != null) {
+                    DatabaseHelper.getInstance().deleteProduct_Warehouse_Adjustment(global.getWarehouse_AdjustmentCD());
+                    Warehouse_Adjustment.clear();
+                    Warehouse_Adjustment_ListAdapter.notifyDataSetChanged();
+                    startActivity(new Intent(ListQrcode_Warehouse_Adjustment.this, Warehouse_Adjustment.class));
+                    finish();
+                }
+            }
+        });
+        dialog.show();
+    }
 
     private void synchronizeToService() {
         String saleCode = CmnFns.readDataAdmin();
@@ -305,8 +338,8 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
 
                     switch (result) {
                         case 1:
-                            ShowErrorMessage("Lưu thành công");
-//                        Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                            ShowSuccessMessage("Lưu thành công");
+                            // Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
                             break;
                         case -1:
                             ShowErrorMessage("Lưu thất bại");
@@ -341,8 +374,9 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
                             break;
                         default:
                             if (result >= 1) {
+                                DatabaseHelper.getInstance().deleteProduct_Warehouse_Adjustment(global.getWarehouse_AdjustmentCD());
                                 Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                                DatabaseHelper.getInstance().deleteProduct_Warehouse_Adjustment();
+
                                 Warehouse_Adjustment.clear();
                                 Warehouse_Adjustment_ListAdapter.notifyDataSetChanged();
 
