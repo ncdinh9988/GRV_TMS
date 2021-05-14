@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.InsetDrawable;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -174,6 +176,11 @@ public class Home_Stockout extends AppCompatActivity {
                     super.onPageStarted(view, url, favicon);
 
                     progressBar.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                    handler.proceed(); // Ignore SSL certificate errors
                 }
 
                 public void onPageFinished(WebView view, String url) {

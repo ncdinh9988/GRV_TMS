@@ -169,6 +169,7 @@ public class NewWareHouseActivity extends AppCompatActivity implements View.OnCl
                     return super.onJsAlert(view, url, message, result);
                 }
 
+
                 @Override
                 public void onProgressChanged(WebView view, int newProgress) {
                     super.onProgressChanged(view, newProgress);

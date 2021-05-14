@@ -334,6 +334,7 @@ public class Home_Main extends androidx.fragment.app.Fragment {
                     return super.onJsAlert(view, url, message, result);
                 }
 
+
                 @Override
                 public void onProgressChanged(WebView view, int newProgress) {
                     super.onProgressChanged(view, newProgress);

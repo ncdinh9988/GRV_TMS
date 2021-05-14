@@ -180,6 +180,8 @@ public class Wv_ShowResultQrode  extends AppCompatActivity {
                     return super.onJsAlert(view, url, message, result);
                 }
 
+
+
                 @Override
                 public void onProgressChanged(WebView view, int newProgress) {
                     super.onProgressChanged(view, newProgress);

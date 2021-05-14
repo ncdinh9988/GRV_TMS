@@ -91,6 +91,7 @@ public class Home_Ware extends Fragment {
             webViewPickList.loadUrl(url);
             webViewPickList.setWebViewClient(new MyBrowser());
             webViewPickList.setWebChromeClient(new WebChromeClient() {
+
                 @Override
                 public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
                     //Required functionality here
