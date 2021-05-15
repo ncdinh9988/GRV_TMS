@@ -251,6 +251,11 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
                         }else if (result == -24) {
                             dialog.showDialog(ListStockTransfer.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
+                        }else if (result == -26) {
+                            dialog.showDialog(ListStockTransfer.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
+                        }else {
+                            dialog.showDialog(ListStockTransfer.this, "Lưu thất bại");
                         }
                     }
                 }catch (Exception e){

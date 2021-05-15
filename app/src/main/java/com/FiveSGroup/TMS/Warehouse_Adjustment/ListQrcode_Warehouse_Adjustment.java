@@ -372,6 +372,10 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
                         case -24:
                             ShowErrorMessage("Vui Lòng Kiểm Tra Lại Số Lượng");
                             break;
+                        case -26:
+                            ShowErrorMessage("Số Lượng Vượt Quá Yêu Cầu Trên SO");
+                            break;
+
                         default:
                             if (result >= 1) {
                                 DatabaseHelper.getInstance().deleteProduct_Warehouse_Adjustment(global.getWarehouse_AdjustmentCD());

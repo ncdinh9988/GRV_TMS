@@ -27,6 +27,7 @@ import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
 import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.MasterPick.Product_Master_Pick;
+import com.FiveSGroup.TMS.PutAway.List_PutAway;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
@@ -312,6 +313,14 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                             } else if (result == -13) {
                                 dialog.showDialog(ListPickList.this,"Dữ liệu không hợp lệ");
 
+                            }else if (result == -24) {
+                                dialog.showDialog(ListPickList.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
+                            }else if (result == -26) {
+                                dialog.showDialog(ListPickList.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
+                            }else {
+                                dialog.showDialog(ListPickList.this, "Lưu thất bại");
                             }
 
 

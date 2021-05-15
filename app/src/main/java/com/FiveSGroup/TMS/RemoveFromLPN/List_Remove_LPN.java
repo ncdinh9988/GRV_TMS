@@ -260,6 +260,11 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
                             }else if (result == -24) {
                                 dialog.showDialog(List_Remove_LPN.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
+                            }else if (result == -26) {
+                                dialog.showDialog(List_Remove_LPN.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
+                            }else {
+                                dialog.showDialog(List_Remove_LPN.this, "Lưu thất bại");
                             }
                         }
                     }catch (Exception e){

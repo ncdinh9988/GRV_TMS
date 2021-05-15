@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
+import com.FiveSGroup.TMS.LetDown.LetDownActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.R;
@@ -289,6 +290,9 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
 
                         } else if (result == -24) {
                             dialog.showDialog(List_PutAway.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
+                        }else if (result == -26) {
+                            dialog.showDialog(List_PutAway.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
                         }else {
                             dialog.showDialog(List_PutAway.this, "Lưu thất bại");

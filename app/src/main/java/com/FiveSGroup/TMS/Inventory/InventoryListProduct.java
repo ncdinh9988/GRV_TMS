@@ -319,6 +319,9 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                             case -24:
                                 ShowErrorMessage("Vui Lòng Kiểm Tra Lại Số Lượng");
                                 break;
+                            case -26:
+                                ShowErrorMessage("Số Lượng Vượt Quá Yêu Cầu Trên SO");
+                                break;
                             default:
                                 if (result >= 1) {
                                     Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
