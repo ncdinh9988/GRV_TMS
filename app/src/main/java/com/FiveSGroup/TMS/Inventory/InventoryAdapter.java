@@ -101,6 +101,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_IVT", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 
@@ -117,6 +118,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
                 intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_IVT", product.getAUTOINCREMENT());
+
 
                 context.startActivity(intent);
 

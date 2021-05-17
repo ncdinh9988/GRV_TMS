@@ -58,6 +58,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
     String ea_unit_position = " ";
     String stockinDate = "";
     String checkToFinish = "";
+    String id_unique_LD = "" ;
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
@@ -167,6 +168,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
         stock = intent.getStringExtra("stock");
+        id_unique_LD = intent.getStringExtra("id_unique_LD");
 
         // stockindate truyền từ adapter để xử lí from - to
         stockinDate = intent.getStringExtra("stockin_date");
@@ -270,6 +272,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
+                intentt.putExtra("id_unique_LD", id_unique_LD);
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("let_down", "333");
 
@@ -291,6 +294,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("let_down", "333");
+                intentt.putExtra("id_unique_LD", id_unique_LD);
                 startActivity(intentt);
                 finish();
             }
@@ -345,6 +349,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                                             intent.putExtra("btn1", barcodeData);
                                             intent.putExtra("returnposition", position);
                                             intent.putExtra("returnCD", product_cd);
+                                            intent.putExtra("id_unique_LD", id_unique_LD);
                                             intent.putExtra("returnStock", stock);
                                             DatabaseHelper.getInstance().deleteallExp_date();
                                             DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -390,6 +395,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                             intent.putExtra("returnCD", product_cd);
                             intent.putExtra("returnStock", stock);
                             intent.putExtra("let_down", "333");
+                            intent.putExtra("id_unique_LD", id_unique_LD);
 
                             // truyền qua cho letdowmQrCode để xử lí from - to
 
@@ -418,7 +424,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("stockin_date", stockinDate);
         intentt.putExtra("let_down", "333");
-
+        intentt.putExtra("id_unique_LD", id_unique_LD);
         // truyền qua cho letdowmQrCode để xử lí from - to
 
         intentt.putExtra("expdate", expiredDate);
@@ -445,6 +451,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("stock_in", stockinDate);
+        intentt.putExtra("id_unique_LD", id_unique_LD);
         if (stockinDate == null) {
             intentt.putExtra("stockin_date", stockinDateShow);
 
@@ -497,6 +504,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                 intentt.putExtra("let_down", "333");
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("stock_in", stockinDate);
+                intentt.putExtra("id_unique_LD", id_unique_LD);
                 // truyền qua cho ListQRcode để add vào text HSD
                 intentt.putExtra("exp_date", expDateTemp2);
                 intentt.putExtra("ea_unit", mString[which]);

@@ -57,6 +57,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
     String ea_unit_position = " ";
     TextView textViewTitle;
     String stockinDate = "";
+    String id_unique_PAW = "";
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     View viewScan;
@@ -159,6 +160,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
         stock = intent.getStringExtra("stock");
+        id_unique_PAW = intent.getStringExtra("id_unique_PAW");
 
         // expiredDate truyền từ adapter để xử lí from - to
         expiredDate = intent.getStringExtra("c");
@@ -287,6 +289,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("put_away", "333");
+                intentt.putExtra("id_unique_PAW", id_unique_PAW);
 
                 // truyền qua cho List_PutAway để xử lí from - to
                 intentt.putExtra("expdate", expiredDate);
@@ -306,6 +309,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("put_away", "333");
+                intentt.putExtra("id_unique_PAW", id_unique_PAW);
                 startActivity(intentt);
                 finish();
             }
@@ -357,6 +361,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                                             intent.putExtra("btn1", barcodeData);
                                             intent.putExtra("returnposition", position);
                                             intent.putExtra("returnCD", product_cd);
+                                            intent.putExtra("id_unique_PAW", id_unique_PAW);
                                             intent.putExtra("returnStock", stock);
                                             DatabaseHelper.getInstance().deleteallExp_date();
                                             DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -408,6 +413,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                             Intent intent = new Intent(Qrcode_PutAway.this, List_PutAway.class);
                             intent.putExtra("btn1", barcodeData);
                             intent.putExtra("put_away", "333");
+                            intent.putExtra("id_unique_PAW", id_unique_PAW);
                             startActivity(intent);
                             finish();
 
@@ -429,6 +435,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("id_unique_PAW", id_unique_PAW);
         intentt.putExtra("put_away", "333");
 
         // truyền qua cho List_PutAway để xử lí from - to
@@ -454,6 +461,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
         intentt.putExtra("returnposition", position);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
+        intentt.putExtra("id_unique_PAW", id_unique_PAW);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("put_away", "333");
@@ -514,6 +522,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("put_away", "333");
+                intentt.putExtra("id_unique_PAW", id_unique_PAW);
                 intentt.putExtra("returnStock", stock);
                 // truyền qua cho List_PutAway để add vào text HSD
                 intentt.putExtra("exp_date", expDateTemp2);

@@ -48,6 +48,8 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
+    String id_unique_PAW = "";
+
     TextView tvTitle;
     String lpn = "";
     int result;
@@ -196,6 +198,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
         //  expdate1 xử lí position from - to
         expDate1 = intent.getStringExtra("expdate");
         put_away = intent.getStringExtra("put_away");
+        id_unique_PAW = intent.getStringExtra("id_unique_PAW");
         // ea_unit : đơn vị trả về từ PutaWayQrCodeActivity
         ea_unit = intent.getStringExtra("ea_unit");
         lpn = intent.getStringExtra("lpn");
@@ -496,7 +499,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("", CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_PAW, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
 
             Dialog dialog = new Dialog(List_PutAway.this);
 

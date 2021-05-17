@@ -93,6 +93,7 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
                 intent.putExtra("experied_letdown", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_LD", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 
@@ -108,6 +109,7 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
                 intent.putExtra("experied_letdown", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_LD", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 

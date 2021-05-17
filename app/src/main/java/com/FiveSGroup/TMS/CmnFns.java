@@ -2510,9 +2510,9 @@ public class CmnFns {
                         //letdown
                         if (type.equals("WLD")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFromLetDown_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFromLetDown_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFromLetDown(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFromLetDown(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WRW")) {
@@ -2534,9 +2534,9 @@ public class CmnFns {
                         } else if (type.equals("WPA")) {
                             //putaway
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_LPN(unique_id ,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WMP")) {
@@ -2600,9 +2600,9 @@ public class CmnFns {
                     } else if (positionReceive.equals("2") && productCd != null) {
                         if (type.equals("WLD")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionToLetDown_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionToLetDown_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionToLetDown(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionToLetDown(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WRW")) {
                             if (isLPN == 1) {
@@ -2619,9 +2619,9 @@ public class CmnFns {
                             }
                         } else if (type.equals("WPA")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WSO")) {
                             if (isLPN == 1) {

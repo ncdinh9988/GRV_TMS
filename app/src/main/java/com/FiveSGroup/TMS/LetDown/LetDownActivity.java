@@ -49,7 +49,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
     String let_down = "";
     String ea_unit = "";
     String ea_unit_position = "";
-    String stockinDate = "";
+    String stockinDate = "" , id_unique_LD = "";
     TextView tvTitle;
     String fromLetDownSuggestionsActivity = "";
     String lpn = "";
@@ -197,6 +197,8 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         stock = intent.getStringExtra("returnStock");
         // expDate - hiển thị HSD cho người dùng trong list sản phẩm
         expDate = intent.getStringExtra("exp_date");
+        id_unique_LD = intent.getStringExtra("id_unique_LD");
+
         //  expdate1 xử lí position from - to
         expDate1 = intent.getStringExtra("expdate");
         let_down = intent.getStringExtra("let_down");
@@ -507,7 +509,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLD", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_LD,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLD", isLPN);
 
             Dialog dialog = new Dialog(LetDownActivity.this);
 
