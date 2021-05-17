@@ -290,10 +290,10 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
                         } else if (result == -24) {
                             dialog.showDialog(List_PutAway.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
-                        } else if (result == -26) {
+                        }else if (result == -26) {
                             dialog.showDialog(List_PutAway.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
-                        } else {
+                        }else {
                             dialog.showDialog(List_PutAway.this, "Lưu thất bại");
                         }
 

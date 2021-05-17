@@ -321,6 +321,10 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                             case -24:
                                 ShowErrorMessage("Vui Lòng Kiểm Tra Lại Số Lượng");
                                 break;
+                            case -26:
+                                ShowErrorMessage("Số Lượng Vượt Quá Yêu Cầu Trên SO");
+                                break;
+
                             case -36:
                                 ShowErrorMessage("Trùng Dữ Liệu Vui Lòng Kiểm Tra Lại");
                                 break;

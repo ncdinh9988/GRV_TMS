@@ -313,7 +313,11 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
                             dialog.showDialog(List_Return_WareHouse.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                         }else if (result == -26) {
-                            dialog.showDialog(List_Return_WareHouse.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
+                            dialog.showDialog(List_Return_WareHouse.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
+                        }else {
+                            dialog.showDialog(List_Return_WareHouse.this, "Lưu thất bại");
 
                         }
 
