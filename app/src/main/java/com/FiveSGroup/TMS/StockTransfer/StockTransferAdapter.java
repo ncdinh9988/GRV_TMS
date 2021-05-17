@@ -83,6 +83,7 @@ public class StockTransferAdapter extends RecyclerView.Adapter<StockTransferAdap
                 intent.putExtra("c_position", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date_position", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_STF", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 
@@ -98,6 +99,7 @@ public class StockTransferAdapter extends RecyclerView.Adapter<StockTransferAdap
                 intent.putExtra("c_position", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date_position", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_STF", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 

@@ -46,6 +46,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
     String stockinDate = "";
     String turn_off_alert = "";
     String lpn = "";
+    String id_unique_STF = "";
 
     int result;
     ArrayList<Product_StockTransfer> stockTransfers;
@@ -81,6 +82,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
+        id_unique_STF = intent.getStringExtra("id_unique_STF");
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
@@ -250,6 +252,9 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
 
                         }else if (result == -24) {
                             dialog.showDialog(ListStockTransfer.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
+                        }else if (result == -26) {
+                            dialog.showDialog(ListStockTransfer.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
                         }
                     }
@@ -478,7 +483,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WOI", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_STF,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WOI", isLPN);
 
             Dialog dialog = new Dialog(ListStockTransfer.this);
 

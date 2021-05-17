@@ -261,6 +261,10 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
                                 dialog.showDialog(List_Remove_LPN.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                             }
+                            else if (result == -26) {
+                                dialog.showDialog(List_Remove_LPN.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
+                            }
                         }
                     }catch (Exception e){
                         Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();

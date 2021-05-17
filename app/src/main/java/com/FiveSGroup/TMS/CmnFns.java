@@ -1715,17 +1715,18 @@ public class CmnFns {
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
                     String pro_name = jsonobj.getString("_PRODUCT_NAME");
-                    // mô tả VT đến
+
                     String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+                    // mô tả VT đến (POSITION_TO_CODE)
                     String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
                     String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
                     String ea_unit = jsonobj.getString("_UNIT");
-                    // VT đến
+                    // VT đến ( bỏ vào POSITION_TO_CD)
                     String position_code = jsonobj.getString("_POSITION_CODE");
                     String strokinDate = jsonobj.getString("_STOCKIN_DATE");
-                    // VT từ kèm theo mô tả
+                    // VT từ (POSITION_FROM_CODE)
                     String description = jsonobj.getString("_POSITION_DESCRIPTION");
-                    // VT từ
+                    // VT từ (bỏ vào POSITION_FROM_CD)
                     String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
                     String lpnCode = jsonobj.getString("_LPN_CODE");
 
@@ -1739,7 +1740,7 @@ public class CmnFns {
                     return_wareHouse.setQTY(String.valueOf(pro_set));
                     return_wareHouse.setQTY_EA_AVAILABLE(quanity_ea);
                     return_wareHouse.setPOSITION_FROM_CD(warePosition);
-                    return_wareHouse.setPOSITION_TO_CD(warePosition);
+                    return_wareHouse.setPOSITION_TO_CD(position_code);
                     return_wareHouse.setRETURN_CD(returnCD);
                     String positionTo = "---";
                     String positionFrom = "---";
@@ -2557,9 +2558,9 @@ public class CmnFns {
                         } else if (type.equals("WOI")) {
                             //Chuyển vị trí
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WPL")) {
@@ -2631,9 +2632,9 @@ public class CmnFns {
 
                         } else if (type.equals("WOI")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer_LPN(unique_id ,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WPL")) {

@@ -4208,7 +4208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
 
     }
-    public int updatePositionFrom_StockTransfer_LPN(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_StockTransfer_LPN(String unique_id , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -4220,13 +4220,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_FROM_STOCK_TRANSFER, from);
 
         // updating row
-        return db.update(O_STOCK_TRANSFER, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_STOCK_TRANSFER + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_STOCK_TRANSFER, values,
+                         AUTOINCREMENT_STOCK_TRANSFER + " = ? ",
+                new String[]{String.valueOf(unique_id)});
     }
 
 
-    public int updatePositionFrom_StockTransfer(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_StockTransfer(String unique_id , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -4237,9 +4237,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_FROM_DESCRIPTION_STOCK_TRANSFER, descreption);
 
         // updating row
-        return db.update(O_STOCK_TRANSFER, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_STOCK_TRANSFER + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_STOCK_TRANSFER, values,
+                        AUTOINCREMENT_STOCK_TRANSFER + " = ? ",
+                new String[]{String.valueOf(unique_id)});
     }
 
     public int updatePositionTo_LPN(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
@@ -4277,7 +4277,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     }
-    public int updatePositionTo_StockTransfer_LPN(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_StockTransfer_LPN(String unique_id , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -4288,14 +4288,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(POSITION_TO_CODE_STOCK_TRANSFER, to);
         // updating row
-        return db.update(O_STOCK_TRANSFER, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_STOCK_TRANSFER + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_STOCK_TRANSFER, values,
+                        AUTOINCREMENT_STOCK_TRANSFER + " = ?",
+                new String[]{String.valueOf(unique_id)});
 
 
     }
 
-    public int updatePositionTo_StockTransfer(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_StockTransfer(String unique_id , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -4306,9 +4306,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(POSITION_TO_DESCRIPTION_STOCK_TRANSFER, descreption);
         // updating row
-        return db.update(O_STOCK_TRANSFER, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_STOCK_TRANSFER + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_STOCK_TRANSFER, values,
+                        AUTOINCREMENT_STOCK_TRANSFER + " = ?",
+                new String[]{String.valueOf(unique_id)});
 
 
     }

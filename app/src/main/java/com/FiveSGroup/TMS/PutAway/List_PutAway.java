@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
+import com.FiveSGroup.TMS.LetDown.LetDownActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.R;
@@ -137,7 +138,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
                         //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
                         finish();
-                        Intent i = new Intent(List_PutAway.this,List_PutAway.class);
+                        Intent i = new Intent(List_PutAway.this, List_PutAway.class);
                         startActivity(i);
 
                     }
@@ -156,7 +157,6 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
                     }
                 });
                 dialog.show();
-
 
 
             }
@@ -290,7 +290,10 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
                         } else if (result == -24) {
                             dialog.showDialog(List_PutAway.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
-                        }else {
+                        } else if (result == -26) {
+                            dialog.showDialog(List_PutAway.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
+                        } else {
                             dialog.showDialog(List_PutAway.this, "Lưu thất bại");
                         }
 
@@ -378,10 +381,10 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
             String lpn_from = putAway.getLPN_FROM();
             String lpn_to = putAway.getLPN_TO();
 
-            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+            if ((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))) {
                 check = true;
             }
-            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+            if ((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))) {
                 check = true;
             }
         }
@@ -421,7 +424,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void actionSyn(){
+    private void actionSyn() {
         try {
             LayoutInflater factory = LayoutInflater.from(List_PutAway.this);
             View layout_cus = factory.inflate(R.layout.layout_request, null);
@@ -493,7 +496,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("", CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
 
             Dialog dialog = new Dialog(List_PutAway.this);
 
@@ -530,20 +533,19 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
             } else if (postitionDes.equals("-12")) {
                 dialog.showDialog(List_PutAway.this, "Mã LPN không có trong tồn kho");
 
-            }else if (postitionDes.equals("-27")) {
+            } else if (postitionDes.equals("-27")) {
                 dialog.showDialog(List_PutAway.this, "Vị trí từ chưa có sản phẩm");
 
-            }else if (postitionDes.equals("-28")) {
+            } else if (postitionDes.equals("-28")) {
                 dialog.showDialog(List_PutAway.this, "LPN đến có vị trí không hợp lệ");
 
             } else {
                 return;
             }
-        }catch (Exception e){
-            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();
         }
-
 
 
     }
@@ -593,11 +595,10 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
                 dialog.showDialog(List_PutAway.this, "Mã LPN không có trong zone reserve");
 
             }
-        }catch (Exception e){
-            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();
         }
-
 
 
     }

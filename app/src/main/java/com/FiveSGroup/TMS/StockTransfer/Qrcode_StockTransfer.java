@@ -61,6 +61,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
     String expiredDate = " ";
     String ea_unit_position = " ";
     String stockinDate = "";
+    String id_unique_STF="";
 
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
@@ -168,6 +169,8 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
         expiredDate = intent.getStringExtra("c_position");
         // stockindate truyền từ adapter để xử lí from - to
         stockinDate = intent.getStringExtra("stockin_date_position");
+
+        id_unique_STF = intent.getStringExtra("id_unique_STF");
 
 
         // được truyền qua từ adapter
@@ -354,7 +357,9 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
             if (expiredDate != null) {
                 Intent intentt = new Intent(getApplication(), ListStockTransfer.class);
                 intentt.putExtra("lpn", "444");
+
                 intentt.putExtra("btn1", barcodeData);
+                intentt.putExtra("id_unique_STF", id_unique_STF);
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
@@ -378,6 +383,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
                 Intent intentt = new Intent(getApplication(), ListStockTransfer.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
+                intentt.putExtra("id_unique_STF", id_unique_STF);
                 //intentt.putExtra("stock_transfer", "333");
                 startActivity(intentt);
                 finish();
@@ -430,6 +436,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
                                             intent.putExtra("btn1", barcodeData);
                                             intent.putExtra("returnposition", position);
                                             intent.putExtra("returnCD", product_cd);
+                                            intent.putExtra("id_unique_STF", id_unique_STF);
                                             intent.putExtra("returnStock", stock);
                                             DatabaseHelper.getInstance().deleteallExp_date();
                                             DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -493,6 +500,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("stock_transfer", "333");
+        intentt.putExtra("id_unique_STF", id_unique_STF);
         intentt.putExtra("stockin_date", stockinDate);
 
         // truyền qua cho ListQRCode để xử lí from - to
@@ -516,6 +524,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
         Intent intentt = new Intent(getApplication(), ListStockTransfer.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
+        intentt.putExtra("id_unique_STF", id_unique_STF);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
@@ -579,6 +588,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
                 //intentt.putExtra("stock_transfer", "333");
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("stock_in", stockinDate);
+                intentt.putExtra("id_unique_STF", id_unique_STF);
                 // truyền qua cho ListQRcode để add vào text HSD
                 intentt.putExtra("exp_date", expDateTemp2);
                 intentt.putExtra("ea_unit", mString[which]);

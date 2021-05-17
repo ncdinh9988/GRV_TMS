@@ -30,6 +30,7 @@ import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.RemoveFromLPN.List_Remove_LPN;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
+import com.FiveSGroup.TMS.StockTransfer.ListStockTransfer;
 import com.FiveSGroup.TMS.Warehouse.Wv_ShowResultQrode;
 
 import java.util.ArrayList;
@@ -294,6 +295,9 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
                         } else if (result == -24) {
                             dialog.showDialog(LetDownActivity.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
+                        }else if (result == -26) {
+                            dialog.showDialog(LetDownActivity.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
                         }else {
                             dialog.showDialog(LetDownActivity.this, "Lưu thất bại");
