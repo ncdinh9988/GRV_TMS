@@ -48,7 +48,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
     String inventory = "";
     String ea_unit = "";
     String ea_unit_position = "";
-    String stockinDate = "";
+    String stockinDate = "", id_unique_IVT = "";
     String lpn = "";
 
 
@@ -96,6 +96,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
+        id_unique_IVT = intent.getStringExtra("id_unique_IVT");
         inventory = intent.getStringExtra("inventory");
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
@@ -164,7 +165,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                         //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
                         finish();
-                        Intent i = new Intent(InventoryListProduct.this,InventoryListProduct.class);
+                        Intent i = new Intent(InventoryListProduct.this, InventoryListProduct.class);
                         startActivity(i);
 
                     }
@@ -183,7 +184,6 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                     }
                 });
                 dialog.show();
-
 
 
             }
@@ -211,7 +211,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
             String lpn_from = inventory.getLPN_FROM();
             String lpn_to = inventory.getLPN_TO();
 
-            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+            if ((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))) {
                 check = true;
             }
 //            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
@@ -335,10 +335,9 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                                     ShowErrorMessage("Lưu thất bại");
                                 }
                         }
-                    }
-                    catch (Exception e){
-                        Toast.makeText(this,"Vui Lòng Thử Lại" ,Toast.LENGTH_SHORT).show();
-                       finish();
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Vui Lòng Thử Lại", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 }
             } else {
@@ -455,7 +454,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WST", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_IVT, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WST", isLPN);
 
             Dialog dialog = new Dialog(InventoryListProduct.this);
 
@@ -492,7 +491,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
             } else if (postitionDes.equals("-12")) {
                 dialog.showDialog(InventoryListProduct.this, "Mã LPN không có trong tồn kho");
 
-            }else if (postitionDes.equals("-27")) {
+            } else if (postitionDes.equals("-27")) {
                 dialog.showDialog(InventoryListProduct.this, "Vị trí từ chưa có sản phẩm");
 
             } else if (postitionDes.equals("-28")) {
@@ -502,11 +501,10 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                 return;
             }
 
-        }catch (Exception e){
-            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();
         }
-
 
 
     }
@@ -548,8 +546,8 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                 dialog.showDialog(InventoryListProduct.this, "Mã sản phẩm không có trong hệ thống");
 
             }
-        }catch (Exception e){
-            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();
         }
 

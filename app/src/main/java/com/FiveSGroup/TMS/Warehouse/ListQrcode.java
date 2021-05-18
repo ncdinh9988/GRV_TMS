@@ -50,7 +50,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
     String stock_in = "";
     String ea_unit = "";
     String ea_unit_position = "";
-    String stockinDate = "";
+    String stockinDate = "" , id_unique_SI = "";
 
 
     String clickShowListCode = "";
@@ -283,6 +283,8 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         expDate1 = intent.getStringExtra("expdate");
         stock_in = intent.getStringExtra("stock_in");
         ea_unit = intent.getStringExtra("ea_unit");
+        id_unique_SI = intent.getStringExtra("id_unique_SI");
+
 
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         stockinDate = intent.getStringExtra("stockin_date");
@@ -827,7 +829,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate, ea_unit, stockinDate, positionFrom, positionTo, "WSI", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SI ,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate, ea_unit, stockinDate, positionFrom, positionTo, "WSI", isLPN);
 
             Dialog dialog = new Dialog(ListQrcode.this);
 

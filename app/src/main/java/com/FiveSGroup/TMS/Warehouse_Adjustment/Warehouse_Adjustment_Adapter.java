@@ -85,6 +85,7 @@ public class Warehouse_Adjustment_Adapter extends RecyclerView.Adapter<Warehouse
                 intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_WA", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 
@@ -101,6 +102,7 @@ public class Warehouse_Adjustment_Adapter extends RecyclerView.Adapter<Warehouse
                 intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_WA", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 

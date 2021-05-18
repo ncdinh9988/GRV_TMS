@@ -87,6 +87,7 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
                 intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 
@@ -102,6 +103,8 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
                 intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+
 
                 context.startActivity(intent);
 

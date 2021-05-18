@@ -51,7 +51,8 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
-    String lpn = "";
+    String lpn = "" , id_unique_WA = "";
+
 
     int statusGetCust;
     Product_Warehouse_Adjustment product_qrcode;
@@ -90,6 +91,8 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        id_unique_WA = intent.getStringExtra("id_unique_WA");
+
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
         warehouse_adjustment = intent.getStringExtra("warehouse_adjustment");
@@ -462,7 +465,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WWA", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_WA,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WWA", isLPN);
 
 
             Dialog dialog = new Dialog(ListQrcode_Warehouse_Adjustment.this);

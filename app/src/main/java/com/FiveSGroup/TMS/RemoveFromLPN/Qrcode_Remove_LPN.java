@@ -62,7 +62,8 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
     View viewScan;
     Button buttonBack, btnSend;
     private EditText edtBarcode;;
-    String checkToFinish = "";
+    String checkToFinish = "" , id_unique_RML = "";
+
 
     private boolean isUp;
 
@@ -159,6 +160,8 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
         stock = intent.getStringExtra("stock");
+        id_unique_RML = intent.getStringExtra("id_unique_RML");
+
 
         // expiredDate truyền từ adapter để xử lí from - to
         expiredDate = intent.getStringExtra("c");
@@ -289,7 +292,10 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
+                intentt.putExtra("id_unique_RML", id_unique_RML);
+
                 intentt.putExtra("remove_lpn", "333");
+
 
                 // truyền qua cho ListQRCode để xử lí from - to
                 intentt.putExtra("expdate", expiredDate);
@@ -309,6 +315,7 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("remove_lpn", "333");
+                intentt.putExtra("id_unique_RML", id_unique_RML);
                 startActivity(intentt);
                 finish();
             }
@@ -363,6 +370,7 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
                                                 intent.putExtra("btn1", barcodeData);
                                                 intent.putExtra("returnposition", position);
                                                 intent.putExtra("returnCD", product_cd);
+                                                intent.putExtra("id_unique_RML", id_unique_RML);
                                                 intent.putExtra("returnStock", stock);
                                                 DatabaseHelper.getInstance().deleteallExp_date();
                                                 DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -413,6 +421,7 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
                                 Toast.makeText(Qrcode_Remove_LPN.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(Qrcode_Remove_LPN.this, List_Remove_LPN.class);
                                 intent.putExtra("put_away", "333");
+                                intent.putExtra("id_unique_RML", id_unique_RML);
                                 startActivity(intent);
                                 finish();
 
@@ -437,6 +446,7 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("remove_lpn", "333");
+        intentt.putExtra("id_unique_RML", id_unique_RML);
 
         // truyền qua cho ListQRCode để xử lí from - to
         intentt.putExtra("expdate", expiredDate);
@@ -462,6 +472,7 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("id_unique_RML", id_unique_RML);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("remove_lpn", "333");
         intentt.putExtra("stock_in", stockinDate);
@@ -521,6 +532,7 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("remove_lpn", "333");
+                intentt.putExtra("id_unique_RML", id_unique_RML);
                 intentt.putExtra("returnStock", stock);
                 // truyền qua cho ListQRcode để add vào text HSD
                 intentt.putExtra("exp_date", expDateTemp2);

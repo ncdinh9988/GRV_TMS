@@ -49,10 +49,11 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     String expDate1 = "";
     String pick_list = "";
     String ea_unit = "";
-    String ea_unit_position = "";
+    String ea_unit_position = "" ,id_unique_PL = "";
     String stockinDate = "";
     String lpn = "";
     String postitionDess = "";
+
 
     int statusGetCust;
     Product_Qrcode product_qrcode;
@@ -98,8 +99,9 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        id_unique_PL = intent.getStringExtra("id_unique_PL");
         expDate = intent.getStringExtra("exp_date");
-        expDate1 = intent.getStringExtra("expdate");
+               expDate1 = intent.getStringExtra("expdate");
         pick_list = intent.getStringExtra("pick_list");
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
@@ -431,7 +433,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WPL",isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_PL,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WPL",isLPN);
 
             Dialog dialog = new Dialog(ListPickList.this);
 

@@ -328,7 +328,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public int updatePositionFrom_warehouse_Adjustment_LPN(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String warehouse_AdjustmentinDate) {
+    public int updatePositionFrom_warehouse_Adjustment_LPN(String id_unique_WA , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String warehouse_AdjustmentinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -340,13 +340,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // updating row
-        return db.update(O_WAREHOUSE_ADJUSTMENT, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_WAREHOUSE_ADJUSTMENT + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(warehouse_AdjustmentinDate)});
+        return db.update(O_WAREHOUSE_ADJUSTMENT, values, AUTOINCREMENT_WAREHOUSE_ADJUSTMENT + " = ? ",
+                new String[]{String.valueOf(id_unique_WA)});
 
     }
 
-    public int updatePositionFrom_warehouse_Adjustment(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String warehouse_AdjustmentinDate) {
+    public int updatePositionFrom_warehouse_Adjustment(String id_unique_WA , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String warehouse_AdjustmentinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -358,9 +357,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // updating row
-        return db.update(O_WAREHOUSE_ADJUSTMENT, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_WAREHOUSE_ADJUSTMENT + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(warehouse_AdjustmentinDate)});
+        return db.update(O_WAREHOUSE_ADJUSTMENT, values,  AUTOINCREMENT_WAREHOUSE_ADJUSTMENT + " = ? ",
+                new String[]{String.valueOf(id_unique_WA)});
 
     }
 
@@ -1911,7 +1909,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.execSQL("delete from " + O_PICK_LIST + " WHERE " + PICKLIST_CD + " = " + pickListCD);
     }
-    public int updatePositionFrom_PickList_LPN(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_PickList_LPN(String id_unique_PL , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -1922,13 +1920,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_FROM_PICKLIST, from);
 
         // updating row
-        return db.update(O_PICK_LIST, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_PICKLIST + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_PICK_LIST, values,  AUTOINCREMENT_PICKLIST + " = ? ",
+                new String[]{String.valueOf(id_unique_PL)});
 
     }
 
-    public int updatePositionFrom_PickList(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_PickList(String id_unique_PL , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -1939,13 +1936,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_FROM_DESCRIPTION_PICKLIST, descreption);
 
         // updating row
-        return db.update(O_PICK_LIST, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_PICKLIST + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_PICK_LIST, values, AUTOINCREMENT_PICKLIST + " = ? ",
+                new String[]{String.valueOf(id_unique_PL)});
 
     }
 
-    public int updatePositionTo_PickList_LPN(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_PickList_LPN(String id_unique_PL , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -1956,15 +1952,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(POSITION_TO_CODE_PICKLIST, to);
         // updating row
-        return db.update(O_PICK_LIST, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_PICKLIST + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_PICK_LIST, values,
+                        AUTOINCREMENT_PICKLIST + " = ?",
+                new String[]{String.valueOf(id_unique_PL)});
 
 
     }
 
 
-    public int updatePositionTo_PickList(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_PickList(String id_unique_PL , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -1975,10 +1971,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(POSITION_TO_DESCRIPTION_PICKLIST, descreption);
         // updating row
-        return db.update(O_PICK_LIST, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_PICKLIST + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
-
+        return db.update(O_PICK_LIST, values,
+                        AUTOINCREMENT_PICKLIST + " = ?",
+                new String[]{String.valueOf(id_unique_PL)});
 
     }
     //end table PICK_LIST
@@ -2560,7 +2555,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public int updatePositionFrom_Remove(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_Remove(String id_unique_RML , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -2571,13 +2566,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_FROM_DESCRIPTION_REMOVE_LPN, descreption);
 
         // updating row
-        return db.update(O_REMOVE_LPN, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_REMOVE_LPN + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_REMOVE_LPN, values,  AUTOINCREMENT_REMOVE_LPN + " = ? ",
+                new String[]{String.valueOf(id_unique_RML)});
 
     }
 
-    public int updatePositionFrom_Remove_LPN(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_Remove_LPN(String id_unique_RML , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -2589,13 +2583,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_FROM_REMOVE_LPN, from);
 
         // updating row
-        return db.update(O_REMOVE_LPN, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_REMOVE_LPN + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_REMOVE_LPN, values, AUTOINCREMENT_REMOVE_LPN + " = ? ",
+                new String[]{String.valueOf(id_unique_RML)});
 
     }
 
-    public int updatePositionTo_Remove_LPN(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_Remove_LPN(String id_unique_RML , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -2604,11 +2597,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_TO_REMOVE_LPN, to);
         values.put(POSITION_TO_CODE_REMOVE_LPN, to);
         // updating row
-        return db.update(O_REMOVE_LPN, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_REMOVE_LPN + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_REMOVE_LPN, values,
+                        AUTOINCREMENT_REMOVE_LPN + " = ?",
+                new String[]{String.valueOf(id_unique_RML)});
     }
-    public int updatePositionTo_Remove(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_Remove(String id_unique_RML , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -2618,9 +2611,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(POSITION_TO_DESCRIPTION_REMOVE_LPN, descreption);
         // updating row
-        return db.update(O_REMOVE_LPN, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_REMOVE_LPN + " = ?",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_REMOVE_LPN, values,
+                        AUTOINCREMENT_REMOVE_LPN + " = ?",
+                new String[]{String.valueOf(id_unique_RML)});
     }
 
     public void deleteProduct_Remove_LPN() {
@@ -2976,7 +2969,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public int updatePositionFrom_StockOut_LPN(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_StockOut_LPN(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -2989,13 +2982,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // updating row
-        return db.update(O_STOCK_OUT, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_STOCK_OUT + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_STOCK_OUT, values, AUTOINCREMENT_STOCK_OUT + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
 
     }
 
-    public int updatePositionFrom_StockOut(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_StockOut(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -3007,13 +2999,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         // updating row
-        return db.update(O_STOCK_OUT, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_STOCK_OUT + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_STOCK_OUT, values, AUTOINCREMENT_STOCK_OUT + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
 
     }
 
-    public int updatePositionTo_StockOut_LPN(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_StockOut_LPN(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -3024,15 +3015,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(POSITION_TO_CODE_STOCK_OUT, to);
         // updating row
-        return db.update(O_STOCK_OUT, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_STOCK_OUT + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_STOCK_OUT, values,
+                        AUTOINCREMENT_STOCK_OUT + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
 
 
     }
 
 
-    public int updatePositionTo_StockOut(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_StockOut(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
@@ -3043,9 +3034,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(POSITION_TO_DESCRIPTION_STOCK_OUT, descreption);
         // updating row
-        return db.update(O_STOCK_OUT, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                        STOCKIN_DATE_STOCK_OUT + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_STOCK_OUT, values,
+                        AUTOINCREMENT_STOCK_OUT + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
 
 
     }
@@ -5608,7 +5599,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.execSQL("delete from " + O_INVENTORY + " WHERE " + STOCK_TAKE_CD + " = " + INVENTORYCD);
     }
-    public int updatePositionFrom_Inventory_LPN(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_Inventory_LPN(String id_unique_IVT , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -5620,13 +5611,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_FROM_INVENTORY, from);
 
         // updating row
-        return db.update(O_INVENTORY, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_INVENTORY + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_INVENTORY, values, AUTOINCREMENT_INVENTORY + " = ? ",
+                new String[]{String.valueOf(id_unique_IVT)});
 
     }
 
-    public int updatePositionFrom_Inventory(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_Inventory(String id_unique_IVT , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -5637,9 +5627,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_FROM_DESCRIPTION_INVENTORY, descreption);
 
         // updating row
-        return db.update(O_INVENTORY, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_INVENTORY + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_INVENTORY, values, AUTOINCREMENT_INVENTORY + " = ? ",
+                new String[]{String.valueOf(id_unique_IVT)});
 
     }
 
@@ -5688,7 +5677,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public int updatePositionTo_Stockin(String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String description, String ea_unit, String stockinDate) {
+    public int updatePositionTo_Stockin(String id_unique_SI , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String description, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -5698,9 +5687,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // updating row
         try {
-            return db.update(O_QRCODE, values, "PRODUCT_CD" + " = ?" + " AND EXPIRED_DATE = ?  AND EA_UNIT = ?" + " AND " +
-                            STOCKIN_DATE + " = ?",
-                    new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+            return db.update(O_QRCODE, values,
+                            AUTOINCREMENT_PO + " = ?",
+                    new String[]{String.valueOf(id_unique_SI)});
         }catch (Exception e){
             Log.d("update vi tri nhap kho", e.getMessage());
         }

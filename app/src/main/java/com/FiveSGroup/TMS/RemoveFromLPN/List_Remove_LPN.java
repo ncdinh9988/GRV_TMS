@@ -47,7 +47,8 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
-    String lpn = "";
+    String lpn = "" , id_unique_RML = "";
+
 
     ArrayList<Product_Remove_LPN> remove_lpn;
     TextView tvTitle;
@@ -86,6 +87,8 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        id_unique_RML = intent.getStringExtra("id_unique_RML");
+
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
         removeLPN = intent.getStringExtra("remove_lpn");
@@ -263,13 +266,13 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
                             }else if (result == -26) {
                                 dialog.showDialog(List_Remove_LPN.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
+                            }else if (result == -26) {
+                                dialog.showDialog(List_Remove_LPN.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
                             }else {
                                 dialog.showDialog(List_Remove_LPN.this, "Lưu thất bại");
                             }
-                            else if (result == -26) {
-                                dialog.showDialog(List_Remove_LPN.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
-                            }
                         }
                     }catch (Exception e){
                         Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
@@ -493,7 +496,7 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLP", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_RML,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLP", isLPN);
 
             Dialog dialog = new Dialog(List_Remove_LPN.this);
 

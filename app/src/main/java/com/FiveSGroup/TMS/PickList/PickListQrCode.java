@@ -60,12 +60,12 @@ public class PickListQrCode extends AppCompatActivity {
     String expiredDate = " ";
     String ea_unit_position = " ";
     String stockinDate = "";
-    String checkToFinish = "";
+    String checkToFinish = "" , id_unique_PL = "";
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     private Button buttonBack, btnSend;
-    private EditText edtBarcode;;
+    private EditText edtBarcode;
 
     @Override
     protected void onStart() {
@@ -158,6 +158,8 @@ public class PickListQrCode extends AppCompatActivity {
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
         stock = intent.getStringExtra("stock");
+        id_unique_PL = intent.getStringExtra("id_unique_PL");
+
 
         // expiredDate truyền từ adapter để xử lí from - to
         expiredDate = intent.getStringExtra("c");
@@ -251,6 +253,8 @@ public class PickListQrCode extends AppCompatActivity {
                                         Log.d("#777", e.getMessage());
                                         Intent intent = new Intent(PickListQrCode.this, ListPickList.class);
                                         intent.putExtra("pick_list", "333");
+                                        intent.putExtra("id_unique_PL", id_unique_PL);
+
                                         startActivity(intent);
                                         finish();
                                     }
@@ -280,6 +284,7 @@ public class PickListQrCode extends AppCompatActivity {
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("pick_list", "333");
+                intentt.putExtra("id_unique_PL", id_unique_PL);
 
                 // truyền qua cho ListQRCode để xử lí from - to
                 intentt.putExtra("expdate", expiredDate);
@@ -297,6 +302,7 @@ public class PickListQrCode extends AppCompatActivity {
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("pick_list", "333");
+                intentt.putExtra("id_unique_PL", id_unique_PL);
                 startActivity(intentt);
                 finish();
             }
@@ -345,6 +351,7 @@ public class PickListQrCode extends AppCompatActivity {
                                         intent.putExtra("btn1", barcodeData);
                                         intent.putExtra("returnposition", position);
                                         intent.putExtra("returnCD", product_cd);
+                                        intent.putExtra("id_unique_PL", id_unique_PL);
                                         intent.putExtra("returnStock", stock);
                                         DatabaseHelper.getInstance().deleteallExp_date();
                                         DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -388,6 +395,7 @@ public class PickListQrCode extends AppCompatActivity {
                         Intent intent = new Intent(PickListQrCode.this, ListPickList.class);
                         intent.putExtra("pick_list", "333");
                         intent.putExtra("btn1", barcodeData);
+                        intent.putExtra("id_unique_PL", id_unique_PL);
                         startActivity(intent);
                         finish();
                     }
@@ -405,6 +413,7 @@ public class PickListQrCode extends AppCompatActivity {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("pick_list", "333");
+        intentt.putExtra("id_unique_PL", id_unique_PL);
         // truyền qua cho ListQRCode để xử lí from - to
         intentt.putExtra("expdate", expiredDate);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
@@ -428,6 +437,7 @@ public class PickListQrCode extends AppCompatActivity {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
+        intentt.putExtra("id_unique_PL", id_unique_PL);
         intentt.putExtra("pick_list", "333");
         intentt.putExtra("ea_unit", ea_unit_tams.get(0).getEA_UNIT_TAM());
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
@@ -478,6 +488,7 @@ public class PickListQrCode extends AppCompatActivity {
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
+                intentt.putExtra("id_unique_PL", id_unique_PL);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 if (stockinDate == null) {
                     intentt.putExtra("stockin_date", stockinDateShow);

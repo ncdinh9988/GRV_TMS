@@ -52,7 +52,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
-    String lpn = "";
+    String lpn = "" , id_unique_SO = "";
 
     int statusGetCust;
     Product_StockOut product_qrcode;
@@ -97,6 +97,8 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
+        id_unique_SO = intent.getStringExtra("id_unique_SO");
+
 
         stockinDate = intent.getStringExtra("stockin_date");
         DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -430,7 +432,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WSO",isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SO,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WSO",isLPN);
 
             Dialog dialog = new Dialog(ListQrcode_Stockout.this);
 

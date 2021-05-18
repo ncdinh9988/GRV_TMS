@@ -57,7 +57,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
     String expiredDate = " ";
     String ea_unit_position = " ";
     String stockinDate = "";
-    String checkToFinish = "";
+    String checkToFinish = "" , id_unique_WA = "";
 
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
@@ -150,6 +150,8 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
         stock = intent.getStringExtra("stock");
+        id_unique_WA = intent.getStringExtra("id_unique_WA");
+
 
         // expiredDate truyền từ adapter để xử lí from - to
         expiredDate = intent.getStringExtra("c");
@@ -273,7 +275,9 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
+
                 intentt.putExtra("returnStock", stock);
+                intentt.putExtra("id_unique_WA", id_unique_WA);
                 intentt.putExtra("warehouse_adjustment", "333");
 
 
@@ -294,6 +298,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
                 Intent intentt = new Intent(getApplication(), ListQrcode_Warehouse_Adjustment.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
+                intentt.putExtra("id_unique_WA", id_unique_WA);
                 intentt.putExtra("warehouse_adjustment", "333");
                 startActivity(intentt);
                 finish();
@@ -348,6 +353,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
                                             intent.putExtra("returnposition", position);
                                             intent.putExtra("returnCD", product_cd);
                                             intent.putExtra("returnStock", stock);
+                                            intent.putExtra("id_unique_WA", id_unique_WA);
                                             DatabaseHelper.getInstance().deleteallExp_date();
                                             DatabaseHelper.getInstance().deleteallEa_Unit();
                                             startActivity(intent);
@@ -407,6 +413,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("id_unique_WA", id_unique_WA);
         intentt.putExtra("warehouse_adjustment", "333");
         intentt.putExtra("stockin_date", stockinDateShow);
 
@@ -433,6 +440,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("id_unique_WA", id_unique_WA);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("warehouse_adjustment", "333");
         if (stockinDate == null) {
@@ -489,6 +497,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
+                intentt.putExtra("id_unique_WA", id_unique_WA);
                 intentt.putExtra("warehouse_adjustment", "333");
                 intentt.putExtra("returnStock", stock);
                 if (stockinDate == null) {

@@ -80,6 +80,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 intent.putExtra("product_cd", product.getPRODUCT_CD());
                 intent.putExtra("stock", product.getSTOCK_RECEIPT_CD());
                 intent.putExtra("c", holder.tvExpired.getText());
+                intent.putExtra("id_unique_SI", product.getAUTOINCREMENT());
 
 
                 Log.d("theo doi position : ", "from");
@@ -96,6 +97,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 intent.putExtra("product_cd", product.getPRODUCT_CD());
                 intent.putExtra("stock", product.getSTOCK_RECEIPT_CD());
                 intent.putExtra("c", holder.tvExpired.getText());
+                intent.putExtra("id_unique_SI", product.getAUTOINCREMENT());
 
                 intent.putExtra("exp_date", product.getEXPIRED_DATE());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());

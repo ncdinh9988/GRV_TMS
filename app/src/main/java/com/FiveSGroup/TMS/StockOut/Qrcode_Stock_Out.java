@@ -58,14 +58,16 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
     String expiredDate = " ";
     String ea_unit_position = " ";
     String stockinDate = "";
-    String checkToFinish = "";
+    String checkToFinish = "", id_unique_SO = "";
+
 
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     View viewScan;
     Button buttonBack, btnSend;
-    private EditText edtBarcode;;
+    private EditText edtBarcode;
+    ;
 
     private boolean isUp;
 
@@ -97,9 +99,9 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
+                try {
                     CmnFns.hideSoftKeyboard(Qrcode_Stock_Out.this);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
                 String barcode = edtBarcode.getText().toString();
@@ -109,7 +111,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
         setCheckBox();
     }
 
-    private void init(){
+    private void init() {
         toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
         btnSend = findViewById(R.id.btnSend);
         edtBarcode = findViewById(R.id.edtBarcode);
@@ -121,6 +123,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
         textViewTitle.setText("QUÉT MÃ - XUẤT KHO");
         buttonBack = findViewById(R.id.buttonQRBack);
     }
+
     private void setCheckBox() {
         checkBoxGetDVT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -140,6 +143,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
             }
         });
     }
+
     private void getDataFromIntent() {
         intent = getIntent();
         checkToFinish = intent.getStringExtra("check_to_finish_at_list");
@@ -150,6 +154,8 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
         stock = intent.getStringExtra("stock");
+        id_unique_SO = intent.getStringExtra("id_unique_SO");
+
 
         // expiredDate truyền từ adapter để xử lí from - to
         expiredDate = intent.getStringExtra("c");
@@ -261,7 +267,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    private void GetData(final String barcodeData){
+    private void GetData(final String barcodeData) {
         String texxt = CmnFns.readDataAdmin();
 //*****************************
         if (checkBoxGetLPN.isChecked()) {
@@ -273,6 +279,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
+                intentt.putExtra("id_unique_SO", id_unique_SO);
                 intentt.putExtra("stock_out", "333");
 
                 // truyền qua cho ListQRCode để xử lí from - to
@@ -293,6 +300,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("stock_out", "333");
+                intentt.putExtra("id_unique_SO", id_unique_SO);
                 startActivity(intentt);
                 finish();
             }
@@ -339,13 +347,14 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
                                         // expDateTemp2 lấy giá trị HSD được người dùng chọn
                                         expDateTemp2 = expDate;
                                         String[] chuoi = expDateTemp2.split(" - ");
-                                        if (chuoi[0].equals("Khác")){
+                                        if (chuoi[0].equals("Khác")) {
                                             Intent intent = new Intent(Qrcode_Stock_Out.this, SelectPropertiesProductActivity.class);
                                             intent.putExtra("typeScan", "scan_from_stock_out");
                                             intent.putExtra("btn1", barcodeData);
                                             intent.putExtra("returnposition", position);
                                             intent.putExtra("returnCD", product_cd);
                                             intent.putExtra("returnStock", stock);
+                                            intent.putExtra("id_unique_SO", id_unique_SO);
                                             DatabaseHelper.getInstance().deleteallExp_date();
                                             DatabaseHelper.getInstance().deleteallEa_Unit();
                                             startActivity(intent);
@@ -386,6 +395,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
                             Intent intent = new Intent(Qrcode_Stock_Out.this, ListQrcode_Stockout.class);
                             intent.putExtra("stock_out", "333");
                             intent.putExtra("btn1", barcodeData);
+                            intent.putExtra("id_unique_SO", id_unique_SO);
                             startActivity(intent);
                             finish();
                         }
@@ -399,6 +409,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
 
         }
     }
+
     private void ReturnPosition(String barcode, String stockinDateShow) {
         Intent intentt = new Intent(getApplication(), ListQrcode_Stockout.class);
         intentt.putExtra("btn1", barcode);
@@ -408,6 +419,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("stock_out", "333");
         intentt.putExtra("stockin_date", stockinDateShow);
+        intentt.putExtra("id_unique_SO", id_unique_SO);
 
 
         // truyền qua cho ListQRCode để xử lí from - to
@@ -434,6 +446,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("stock_out", "333");
         if (stockinDate == null) {
@@ -491,6 +504,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("stock_out", "333");
+                intentt.putExtra("id_unique_SO", id_unique_SO);
                 intentt.putExtra("returnStock", stock);
                 if (stockinDate == null) {
                     intentt.putExtra("stockin_date", stockinDateShow);
@@ -540,7 +554,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.buttonQRBack:
                 if (position != null || checkToFinish != null) {
                     Intent intent = new Intent(Qrcode_Stock_Out.this, ListQrcode_Stockout.class);

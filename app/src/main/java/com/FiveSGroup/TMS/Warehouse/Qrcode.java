@@ -58,7 +58,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     String stock_in = "";
     String expiredDate = " ";
     String ea_unit_position = " ";
-    String stockinDate = "";
+    String stockinDate = "" , id_unique_SI = "";
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
@@ -139,6 +139,8 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
         stock = intent.getStringExtra("stock");
+        id_unique_SI = intent.getStringExtra("id_unique_SI");
+
 
         exp_date = intent.getStringExtra("exp_date");
         stockin_date = intent.getStringExtra("stockin_date");
@@ -258,6 +260,8 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("stock_in", "333");
+                intentt.putExtra("id_unique_SI", id_unique_SI);
+
 
                 // truyền qua cho ListQRCode để xử lí from - to
                 intentt.putExtra("exp_date", exp_date);
@@ -352,6 +356,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                         intent.putExtra("btn1", barcodeData);
                         intent.putExtra("stockin", "444");
                         intent.putExtra("stock_in", "333");
+                        intent.putExtra("id_unique_SI", id_unique_SI);
                         intent.putExtra("total_shelf_life", total_shelf_life);
                         intent.putExtra("shelf_life_type", shelf_life_type);
                         intent.putExtra("min_rem_shelf_life", min_rem_shelf_life);
@@ -491,6 +496,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("stock_in", "333");
+        intentt.putExtra("id_unique_SI", id_unique_SI);
         // truyền qua cho ListQRCode để xử lí from - to
 //        intentt.putExtra("expdate", expiredDate);
 //        intentt.putExtra("stockin_date", stockinDate);
@@ -517,6 +523,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
+        intentt.putExtra("id_unique_SI", id_unique_SI);
         if (stockinDate == null) {
             intentt.putExtra("stockin_date", stockinDateShow);
 
@@ -570,6 +577,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
+                intentt.putExtra("id_unique_SI", id_unique_SI);
                 // truyền qua cho ListQRcode để add vào text HSD
                 intentt.putExtra("exp_date", expDateTemp2);
                 intentt.putExtra("ea_unit", mString[which]);
@@ -621,6 +629,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 if (position != null || checkToFinish != null) {
                     Intent intent = new Intent(Qrcode.this, ListQrcode.class);
                     intent.putExtra("btn1", "");
+                    intent.putExtra("id_unique_SI", id_unique_SI);
                     intent.putExtra("clickShowListCode","yes");
                     startActivity(intent);
                     finish();

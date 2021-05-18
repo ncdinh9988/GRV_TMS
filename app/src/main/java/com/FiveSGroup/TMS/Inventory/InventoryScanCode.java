@@ -60,7 +60,7 @@ public class InventoryScanCode extends AppCompatActivity {
     String expiredDate = " ";
     String ea_unit_position = " ";
     String stockinDate = "";
-    String checkToFinish = "";
+    String checkToFinish = "" , id_unique_IVT = "";
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
@@ -165,6 +165,7 @@ public class InventoryScanCode extends AppCompatActivity {
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
         stock = intent.getStringExtra("stock");
+        id_unique_IVT = intent.getStringExtra("id_unique_IVT");
 
         // expiredDate truyền từ adapter để xử lí from - to
         expiredDate = intent.getStringExtra("c");
@@ -288,6 +289,7 @@ public class InventoryScanCode extends AppCompatActivity {
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
+                intentt.putExtra("id_unique_IVT", id_unique_IVT);
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("inventory", "333");
 
@@ -362,6 +364,7 @@ public class InventoryScanCode extends AppCompatActivity {
                                         intent.putExtra("shelf_life_type", "");
                                         intent.putExtra("min_rem_shelf_life", "0");
                                         intent.putExtra("returnposition", position);
+                                        intent.putExtra("id_unique_IVT", id_unique_IVT);
                                         intent.putExtra("returnCD", product_cd);
                                         intent.putExtra("returnStock", stock);
                                         DatabaseHelper.getInstance().deleteallExp_date();
@@ -406,6 +409,7 @@ public class InventoryScanCode extends AppCompatActivity {
                         Toast.makeText(InventoryScanCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(InventoryScanCode.this, InventoryListProduct.class);
                         intent.putExtra("inventory", "333");
+                        intent.putExtra("id_unique_IVT", id_unique_IVT);
                         startActivity(intent);
                         finish();
                     }
@@ -424,6 +428,7 @@ public class InventoryScanCode extends AppCompatActivity {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("inventory", "333");
+        intentt.putExtra("id_unique_IVT", id_unique_IVT);
         // truyền qua cho ListQRCode để xử lí from - to
         intentt.putExtra("expdate", expiredDate);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
@@ -446,6 +451,7 @@ public class InventoryScanCode extends AppCompatActivity {
         intentt.putExtra("returnposition", position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("id_unique_IVT", id_unique_IVT);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("inventory", "333");
         intentt.putExtra("ea_unit", ea_unit_tams.get(0).getEA_UNIT_TAM());
@@ -498,6 +504,7 @@ public class InventoryScanCode extends AppCompatActivity {
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("returnCD", product_cd);
+                intentt.putExtra("id_unique_IVT", id_unique_IVT);
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 if (stockinDate == null) {

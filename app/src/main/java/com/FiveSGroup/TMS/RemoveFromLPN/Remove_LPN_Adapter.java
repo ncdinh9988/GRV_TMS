@@ -83,6 +83,7 @@ public class Remove_LPN_Adapter extends RecyclerView.Adapter<Remove_LPN_Adapter.
                 intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_RML", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 
@@ -98,6 +99,7 @@ public class Remove_LPN_Adapter extends RecyclerView.Adapter<Remove_LPN_Adapter.
                 intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                intent.putExtra("id_unique_RML", product.getAUTOINCREMENT());
 
                 context.startActivity(intent);
 
