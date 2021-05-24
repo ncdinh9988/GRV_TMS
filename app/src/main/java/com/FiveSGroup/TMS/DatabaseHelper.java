@@ -4046,12 +4046,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return exp;
     }
-
+//Date date1 ;
     public ArrayList<Exp_Date_Tam>
     getallExp_date() {
         ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT DISTINCT CASE WHEN EXPIRED_DATE_TAM = '' THEN '------' ELSE EXPIRED_DATE_TAM END AS EXPIRED_DATE_TAM FROM " + O_EXP;
+//        try {
+//            date1 =new SimpleDateFormat("dd/MM/yyyy").parse(EXPIRED_DATE_TAM);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+        //12/02/2001
+        String selectQuery = "SELECT DISTINCT CASE WHEN EXPIRED_DATE_TAM = '' THEN '------' ELSE EXPIRED_DATE_TAM END AS EXPIRED_DATE_TAM ," +
+                " substr(" + EXPIRED_DATE_TAM + ",7,4) AS year  , substr(" + EXPIRED_DATE_TAM + ",4,2) AS mon , substr(" + EXPIRED_DATE_TAM + ",1,2) AS day FROM "
+//        String selectQuery = "SELECT " + EXPIRED_DATE_TAM +  " , substr(" + EXPIRED_DATE_TAM + ",7,4) AS year  , substr(" + EXPIRED_DATE_TAM + ",4,2) AS mon , substr(" + EXPIRED_DATE_TAM + ",1,2) AS day FROM "
+                + O_EXP + " ORDER BY year ASC , mon ASC , day ASC";
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
