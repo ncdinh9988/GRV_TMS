@@ -602,11 +602,11 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
             } else if (postitionDes == -21) {
 
-                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong zone reserve");
+                dialog.showDialog(LetDownActivity.this, "Mã sản phẩm không có trong zone");
 
             } else if (postitionDes == -22) {
 
-                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong zone reserve");
+                dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong zone");
 
             }
         }catch (Exception e){

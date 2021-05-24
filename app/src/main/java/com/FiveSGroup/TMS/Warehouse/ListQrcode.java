@@ -924,11 +924,11 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 //
 //            } else if (postitionDes == -21) {
 //
-//                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong zone nhập");
+//                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong zone");
 //
 //            } else if (postitionDes == -22) {
 //
-//                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong zone nhập");
+//                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong zone");
 //
 //            }
 //        }catch (Exception e){

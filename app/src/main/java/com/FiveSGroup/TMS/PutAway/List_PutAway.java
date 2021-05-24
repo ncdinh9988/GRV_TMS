@@ -591,11 +591,11 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
 
             } else if (postitionDes == -21) {
 
-                dialog.showDialog(List_PutAway.this, "Mã sản phẩm không có trong zone reserve");
+                dialog.showDialog(List_PutAway.this, "Mã sản phẩm không có trong zone");
 
             } else if (postitionDes == -22) {
 
-                dialog.showDialog(List_PutAway.this, "Mã LPN không có trong zone reserve");
+                dialog.showDialog(List_PutAway.this, "Mã LPN không có trong zone");
 
             }
         } catch (Exception e) {

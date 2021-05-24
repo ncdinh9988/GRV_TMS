@@ -525,11 +525,11 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
 
             }else if (postitionDes == -21) {
 
-                dialog.showDialog(ListQrcode_Stockout.this, "Mã sản phẩm không có trong zone xuất");
+                dialog.showDialog(ListQrcode_Stockout.this, "Mã sản phẩm không có trong zone");
 
             }else if (postitionDes == -22) {
 
-                dialog.showDialog(ListQrcode_Stockout.this, "Mã LPN không có trong zone xuất");
+                dialog.showDialog(ListQrcode_Stockout.this, "Mã LPN không có trong zone");
 
             }
         }catch (Exception e){

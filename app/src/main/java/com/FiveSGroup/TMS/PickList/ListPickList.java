@@ -526,11 +526,11 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
 
             }else if (postitionDes == -21) {
 
-                dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong zone pick hoặc zone cross dock");
+                dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong zone");
 
             }else if (postitionDes == -22) {
 
-                dialog.showDialog(ListPickList.this, "Mã LPN không có trong zone pick hoặc zone cross dock");
+                dialog.showDialog(ListPickList.this, "Mã LPN không có trong zone");
 
             }
         }catch (Exception e){
