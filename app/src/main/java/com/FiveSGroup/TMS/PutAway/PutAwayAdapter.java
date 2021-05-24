@@ -3,6 +3,7 @@ package com.FiveSGroup.TMS.PutAway;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -72,6 +73,7 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
         holder.tvExpired.setText(product.getEXPIRED_DATE_PUTAWAY());
         holder.tvStockin.setText(product.getSTOCKIN_DATE_PUTAWAY());
         holder.tvPutAwayPositionSuggest.setText(product.getSUGGESTION_POSITION());
+        holder.tvPutAwayPositionSuggest.setTextColor(Color.rgb(255, 51, 0));
         holder.layout__put.setVisibility(View.VISIBLE);
         holder.layout_putaway.setVisibility(View.VISIBLE);
         holder.layout__goiy.setVisibility(View.INVISIBLE);

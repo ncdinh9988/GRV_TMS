@@ -51,7 +51,8 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
-    String lpn = "" , id_unique_WA = "";
+    String lpn = "" , id_unique_WA = "" ;
+    TextView nameproduct ;
 
 
     int statusGetCust;
@@ -233,6 +234,8 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
         btnscan_barcode = findViewById(R.id.buttonScan_Barcode);
         buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setText("Trở Về");
+        nameproduct = findViewById(R.id.nameproduct);
+        nameproduct.setText("Vị Trí Chỉnh");
         btnok = findViewById(R.id.buttonOK);
         listViewProduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);

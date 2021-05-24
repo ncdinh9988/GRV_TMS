@@ -162,7 +162,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
             checkBoxGetLPN.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setChecked(false);
             if (position.equals("1")) {
-                textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
+                textViewTitle.setText("QUÉT VỊ TRÍ CHỈNH");
             } else if (position.equals("2")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ ĐẾN");
             }
