@@ -2130,7 +2130,7 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZonePutaway(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, int isLNP) {
+    public int synchronizeGETProductByZonePutaway( Context context, String qrcode, String admin, String expDate, String unit, String stockDate, int isLNP) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -2254,11 +2254,41 @@ public class CmnFns {
                                 DatabaseHelper.getInstance().updateProduct_PutAway(updateProductQR,updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD_PUTAWAY(),
                                         String.valueOf(sl), updateProductQR.getEA_UNIT_PUTAWAY(), putAway.getSTOCKIN_DATE_PUTAWAY());
                             } else {
+                                ArrayList<Product_PutAway> getpossition_putaway = DatabaseHelper.getInstance().getposition_PutAway();
                                 DatabaseHelper.getInstance().CreatePutAway(putAway);
+                                try {
+                                    int id_1 = Integer.parseInt(getpossition_putaway.get(0).getAUTOINCREMENT());
+                                    if (id_1 >= 1){
+                                        ArrayList<Product_PutAway> getpossition_putaway2 = DatabaseHelper.getInstance().getautoProduct_PutAway();
+                                        String id_3 = getpossition_putaway2.get(0).getAUTOINCREMENT();
+
+                                        DatabaseHelper.getInstance().updatePositionFrom(id_3 , getpossition_putaway.get(0).getPOSITION_FROM_CODE(),
+                                                getpossition_putaway.get(0).getPOSITION_FROM_PUTAWAY(), "", "",
+                                                getpossition_putaway.get(0).getPOSITION_FROM_DESCRIPTION(), "", "");
+                                    }
+                                }catch (Exception e){
+
+                                }
+
                             }
 
                         } else {
+                            ArrayList<Product_PutAway> getpossition_putaway = DatabaseHelper.getInstance().getposition_PutAway();
                             DatabaseHelper.getInstance().CreatePutAway(putAway);
+                            try {
+                                int id_1 = Integer.parseInt(getpossition_putaway.get(0).getAUTOINCREMENT());
+                                if (id_1 >= 1){
+                                    ArrayList<Product_PutAway> getpossition_putaway2 = DatabaseHelper.getInstance().getautoProduct_PutAway();
+                                    String id_3 = getpossition_putaway2.get(0).getAUTOINCREMENT();
+
+                                    DatabaseHelper.getInstance().updatePositionFrom(id_3 , getpossition_putaway.get(0).getPOSITION_FROM_CODE(),
+                                            getpossition_putaway.get(0).getPOSITION_FROM_PUTAWAY(), "", "",
+                                            getpossition_putaway.get(0).getPOSITION_FROM_DESCRIPTION(), "", "");
+                                }
+                            }catch (Exception e){
+
+                            }
+
                         }
                     } else if (isLNP == 1) {
                         boolean isExistLPN = false;
@@ -3752,11 +3782,39 @@ public class CmnFns {
                                 DatabaseHelper.getInstance().updateProduct_LetDown(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), letDown.getSTOCKIN_DATE());
                             } else {
+                                ArrayList<ProductLetDown> getpossition_letdown = DatabaseHelper.getInstance().getposition_Letdown();
                                 DatabaseHelper.getInstance().CreateLetDown(letDown);
+                                try {
+                                    int id_1 = Integer.parseInt(getpossition_letdown.get(0).getAUTOINCREMENT());
+                                    if (id_1 >= 1){
+                                        ArrayList<ProductLetDown> getpossition_letdown_2 = DatabaseHelper.getInstance().getautoProduct_Letdown();
+                                        String id_3 = getpossition_letdown_2.get(0).getAUTOINCREMENT();
+
+                                        DatabaseHelper.getInstance().updatePositionFromLetDown(id_3 , getpossition_letdown.get(0).getPOSITION_FROM_CODE(),
+                                                getpossition_letdown.get(0).getPOSITION_FROM_CD(), "", "",
+                                                getpossition_letdown.get(0).getPOSITION_FROM_DESCRIPTION(), "", "");
+                                    }
+                                }catch (Exception e){
+
+                                }
                             }
 
                         } else {
+                            ArrayList<ProductLetDown> getpossition_letdown = DatabaseHelper.getInstance().getposition_Letdown();
                             DatabaseHelper.getInstance().CreateLetDown(letDown);
+                            try {
+                                int id_1 = Integer.parseInt(getpossition_letdown.get(0).getAUTOINCREMENT());
+                                if (id_1 >= 1){
+                                    ArrayList<ProductLetDown> getpossition_letdown_2 = DatabaseHelper.getInstance().getautoProduct_Letdown();
+                                    String id_3 = getpossition_letdown_2.get(0).getAUTOINCREMENT();
+
+                                    DatabaseHelper.getInstance().updatePositionFromLetDown(id_3 , getpossition_letdown.get(0).getPOSITION_FROM_CODE(),
+                                            getpossition_letdown.get(0).getPOSITION_FROM_CD(), "", "",
+                                            getpossition_letdown.get(0).getPOSITION_FROM_DESCRIPTION(), "", "");
+                                }
+                            }catch (Exception e){
+
+                            }
 
                         }
                     } else if (isLPN == 1) {

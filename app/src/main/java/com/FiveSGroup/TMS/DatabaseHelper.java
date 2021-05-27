@@ -578,6 +578,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return productSuggests;
     }
 
+    public ArrayList<ProductLetDown>
+    getautoProduct_Letdown() {
+        ArrayList<ProductLetDown> letdown = new ArrayList<ProductLetDown>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *  FROM " + O_LET_DOWN + " ORDER BY " + AUTOINCREMENT_LETDOWN + " DESC LIMIT 1 ";;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                ProductLetDown qrcode_letdown = new ProductLetDown();
+                qrcode_letdown.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_LETDOWN))));
+                letdown.add(qrcode_letdown);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return letdown;
+    }
+
+    public ArrayList<ProductLetDown>
+    getposition_Letdown() {
+        ArrayList<ProductLetDown> qrcode = new ArrayList<ProductLetDown>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_LET_DOWN + " ORDER BY " + AUTOINCREMENT_LETDOWN + " DESC LIMIT 1 ";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                ProductLetDown qrcode_letdown = new ProductLetDown();
+
+                qrcode_letdown.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_LETDOWN))));
+
+                qrcode_letdown.setPOSITION_FROM_CD(c.getString(c
+                        .getColumnIndex(POSITION_FROM_LETDOWN)));
+
+                qrcode_letdown.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_LETDOWN))));
+
+                qrcode_letdown.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_LETDOWN))));
+
+
+                qrcode.add(qrcode_letdown);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
     // insert O_LETDOWN_SUGGEST
     public long insertLetDownSuggest(LetDownProductSuggest productSuggest) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
@@ -3754,6 +3808,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Product_PutAway>
+    getposition_PutAway() {
+        ArrayList<Product_PutAway> qrcode = new ArrayList<Product_PutAway>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_PUT_AWAY + " ORDER BY " + AUTOINCREMENT_PUT_AWAY + " DESC LIMIT 1 ";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_PutAway qrcode_putaway = new Product_PutAway();
+
+                qrcode_putaway.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_PUT_AWAY))));
+
+                qrcode_putaway.setPOSITION_FROM_PUTAWAY((c.getString(c
+                        .getColumnIndex(POSITION_FROM_PUTAWAY))));
+
+                qrcode_putaway.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE))));
+
+                qrcode_putaway.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION))));
+
+
+                qrcode.add(qrcode_putaway);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+    public ArrayList<Product_PutAway>
     getoneProduct_PutAway(String CD, String expDate, String ea_unit, String stockinDate) {
         ArrayList<Product_PutAway> qrcode = new ArrayList<Product_PutAway>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
@@ -3794,6 +3881,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         c.close();
         return qrcode;
+    }
+
+    public ArrayList<Product_PutAway>
+    getautoProduct_PutAway() {
+        ArrayList<Product_PutAway> putaway = new ArrayList<Product_PutAway>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *  FROM " + O_PUT_AWAY + " ORDER BY " + AUTOINCREMENT_PUT_AWAY + " DESC LIMIT 1 ";;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_PutAway qrcode_putaway = new Product_PutAway();
+                qrcode_putaway.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_PUT_AWAY))));
+                putaway.add(qrcode_putaway);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return putaway;
     }
 
 
