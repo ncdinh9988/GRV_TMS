@@ -5474,6 +5474,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<InventoryProduct>
+    getautoProduct_Inventory() {
+        ArrayList<InventoryProduct> inventory = new ArrayList<InventoryProduct>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *  FROM " + O_INVENTORY + " ORDER BY " + AUTOINCREMENT_INVENTORY + " DESC LIMIT 1 ";;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                InventoryProduct inventoryProduct = new InventoryProduct();
+                inventoryProduct.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_INVENTORY))));
+                inventory.add(inventoryProduct);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return inventory;
+    }
+
+    public ArrayList<InventoryProduct>
+    getposition_Inventory() {
+        ArrayList<InventoryProduct> qrcode = new ArrayList<InventoryProduct>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_INVENTORY + " ORDER BY " + AUTOINCREMENT_INVENTORY + " DESC LIMIT 1 ";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                InventoryProduct inventoryProduct = new InventoryProduct();
+
+                inventoryProduct.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_INVENTORY))));
+
+                inventoryProduct.setPOSITION_FROM_CD(c.getString(c
+                        .getColumnIndex(POSITION_FROM_INVENTORY)));
+
+                inventoryProduct.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_INVENTORY))));
+
+                inventoryProduct.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_INVENTORY))));
+
+
+                qrcode.add(inventoryProduct);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+    public ArrayList<InventoryProduct>
     getoneProduct_Inventory(String CD, String expDate, String ea_unit, String INVENTORYCD, String stockindate) {
         ArrayList<InventoryProduct> qrcode = new ArrayList<>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);

@@ -507,6 +507,8 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         }
 
 
+
+
     }
 
     public void alert_show_SP(int isLPN) {
