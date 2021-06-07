@@ -418,108 +418,116 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
                 if (!stockinDate.equals("")) {
                     //Nếu có ngày ShelfLife
                     if (checkBoxDate.isChecked()) {
-                        shelfLife2 = Integer.valueOf(shelfLife);
-                        SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
-                        Calendar calendar = obj.dateToCalendar(date);
-                        calendar.add(Calendar.DATE, shelfLife2);
-                        Date newDate = obj.calendarToDate(calendar);
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                        exp_date = dateFormat.format(newDate);
-                        try {
-                            date_exp = new SimpleDateFormat("dd/MM/yyyy").parse(exp_date);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        if(!shelfLife.equals("")){
+                            shelfLife2 = Integer.valueOf(shelfLife);
+                            SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                            Calendar calendar = obj.dateToCalendar(date);
+                            calendar.add(Calendar.DATE, shelfLife2);
+                            Date newDate = obj.calendarToDate(calendar);
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            exp_date = dateFormat.format(newDate);
+                            try {
+                                date_exp = new SimpleDateFormat("dd/MM/yyyy").parse(exp_date);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
 
-                        SelectPropertiesProductActivity objvs = new SelectPropertiesProductActivity();
-                        Calendar calendar1 = objvs.dateToCalendar(date_exp);
-                        calendar1.add(Calendar.DATE, (-min_to_date));
-                        newDate_curent = objvs.calendarToDate(calendar1);
+                            SelectPropertiesProductActivity objvs = new SelectPropertiesProductActivity();
+                            Calendar calendar1 = objvs.dateToCalendar(date_exp);
+                            calendar1.add(Calendar.DATE, (-min_to_date));
+                            newDate_curent = objvs.calendarToDate(calendar1);
 
-                        if (date_current.compareTo(newDate_curent) > 0) {
-                            LayoutInflater factory = LayoutInflater.from(SelectPropertiesProductActivity.this);
-                            View layout_cus = factory.inflate(R.layout.layout_warn, null);
-                            final AlertDialog dialog = new AlertDialog.Builder(SelectPropertiesProductActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
-                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
-                            InsetDrawable inset = new InsetDrawable(back, 64);
-                            dialog.getWindow().setBackgroundDrawable(inset);
-                            dialog.setView(layout_cus);
+                            if (date_current.compareTo(newDate_curent) > 0) {
+                                LayoutInflater factory = LayoutInflater.from(SelectPropertiesProductActivity.this);
+                                View layout_cus = factory.inflate(R.layout.layout_warn, null);
+                                final AlertDialog dialog = new AlertDialog.Builder(SelectPropertiesProductActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                                InsetDrawable inset = new InsetDrawable(back, 64);
+                                dialog.getWindow().setBackgroundDrawable(inset);
+                                dialog.setView(layout_cus);
 
-                            Button btnNo = layout_cus.findViewById(R.id.btnNo);
-                            Button btnYes = layout_cus.findViewById(R.id.btnYes);
-                            btnNo.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
-                                    dialog.dismiss();
-                                }
-                            });
-                            btnYes.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    //Remove swiped item from list and notify the RecyclerView
-                                    dialog.dismiss();
-                                    IntentActivity(activity, type, unit);
+                                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                                btnNo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
+                                        dialog.dismiss();
+                                    }
+                                });
+                                btnYes.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //Remove swiped item from list and notify the RecyclerView
+                                        dialog.dismiss();
+                                        IntentActivity(activity, type, unit);
 
-                                }
-                            });
-                            dialog.show();
-                        } else {
+                                    }
+                                });
+                                dialog.show();
+                            } else {
+                                IntentActivity(activity, type, unit);
+                            }
+                        }else{
                             IntentActivity(activity, type, unit);
                         }
-
                     }else if (checkBoxMonth.isChecked()) {
-                        shelfLife1 = Integer.valueOf(shelfLife);
-                        SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
-                        Calendar calendar = obj.dateToCalendar(date);
-                        calendar.add(Calendar.MONTH, shelfLife1);
-                        Date newDate = obj.calendarToDate(calendar);
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                        exp_date = dateFormat.format(newDate);
+                        if (checkBoxDate.isChecked()) {
+                            shelfLife1 = Integer.valueOf(shelfLife);
+                            SelectPropertiesProductActivity obj = new SelectPropertiesProductActivity();
+                            Calendar calendar = obj.dateToCalendar(date);
+                            calendar.add(Calendar.MONTH, shelfLife1);
+                            Date newDate = obj.calendarToDate(calendar);
+                            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            exp_date = dateFormat.format(newDate);
 
-                        try {
-                            date_exp = new SimpleDateFormat("dd/MM/yyyy").parse(exp_date);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                            try {
+                                date_exp = new SimpleDateFormat("dd/MM/yyyy").parse(exp_date);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
 
-                        SelectPropertiesProductActivity objvs = new SelectPropertiesProductActivity();
-                        Calendar calendar1 = objvs.dateToCalendar(date_exp);
-                        calendar1.add(Calendar.MONTH, (-min_to_date));
-                        newDate_curent = objvs.calendarToDate(calendar1);
-                        if (date_current.compareTo(newDate_curent) > 0) {
+                            SelectPropertiesProductActivity objvs = new SelectPropertiesProductActivity();
+                            Calendar calendar1 = objvs.dateToCalendar(date_exp);
+                            calendar1.add(Calendar.MONTH, (-min_to_date));
+                            newDate_curent = objvs.calendarToDate(calendar1);
+                            if (date_current.compareTo(newDate_curent) > 0) {
 
-                            LayoutInflater factory = LayoutInflater.from(SelectPropertiesProductActivity.this);
-                            View layout_cus = factory.inflate(R.layout.layout_warn, null);
-                            final AlertDialog dialog = new AlertDialog.Builder(SelectPropertiesProductActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
-                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
-                            InsetDrawable inset = new InsetDrawable(back, 64);
-                            dialog.getWindow().setBackgroundDrawable(inset);
-                            dialog.setView(layout_cus);
+                                LayoutInflater factory = LayoutInflater.from(SelectPropertiesProductActivity.this);
+                                View layout_cus = factory.inflate(R.layout.layout_warn, null);
+                                final AlertDialog dialog = new AlertDialog.Builder(SelectPropertiesProductActivity.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                                InsetDrawable inset = new InsetDrawable(back, 64);
+                                dialog.getWindow().setBackgroundDrawable(inset);
+                                dialog.setView(layout_cus);
 
-                            Button btnNo = layout_cus.findViewById(R.id.btnNo);
-                            Button btnYes = layout_cus.findViewById(R.id.btnYes);
-                            btnNo.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
-                                    dialog.dismiss();
-                                }
-                            });
-                            btnYes.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    //Remove swiped item from list and notify the RecyclerView
-                                    dialog.dismiss();
-                                    IntentActivity(activity, type, unit);
-                                }
-                            });
-                            dialog.show();
-                        } else {
+                                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                                btnNo.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
+                                        dialog.dismiss();
+                                    }
+                                });
+                                btnYes.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //Remove swiped item from list and notify the RecyclerView
+                                        dialog.dismiss();
+                                        IntentActivity(activity, type, unit);
+                                    }
+                                });
+                                dialog.show();
+                            } else {
+                                IntentActivity(activity, type, unit);
+                            }
+                        }else{
                             IntentActivity(activity, type, unit);
                         }
+
                     }else{
                         IntentActivity(activity, type, unit);
                     }
