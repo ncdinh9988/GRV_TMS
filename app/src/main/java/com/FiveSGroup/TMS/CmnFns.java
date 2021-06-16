@@ -2467,6 +2467,9 @@ public class CmnFns {
         }
         return 1;
     }
+//    public String Check_Suggest_Position_Master_Pick(String userCode,String ProductCode, String ea_unit ,String LPNCode,String PositionCode,String stockin,String expDate ,String CD){
+//
+//    }
 
     public String synchronizeGETPositionInfoo(String unique_id , String userCode, String barcode, String positionReceive, String productCd, String expDate, String ea_unit, String stockin, String positionFrom, String positionTo, String type, int isLPN) {
 
@@ -2502,6 +2505,7 @@ public class CmnFns {
         }else if (result.equals("-28")) {
             return "-28";
         }
+
         try {
             JSONArray jsonarray = new JSONArray(result);
 
