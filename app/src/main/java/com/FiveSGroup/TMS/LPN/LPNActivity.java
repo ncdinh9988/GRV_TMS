@@ -33,6 +33,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletQRCode;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.Warehouse.HomeQRActivity;
 import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 
 import java.text.SimpleDateFormat;
@@ -563,16 +564,22 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 //                ReloadCreateLPN reloadCreateLPN = new ReloadCreateLPN();
 //                reloadCreateLPN.execute();
 
-
                 break;
             case R.id.buttonPutToPallet:
-                Intent intent = new Intent(LPNActivity.this, LoadPalletQRCode.class);
-                startActivity(intent);
-                break;
+//                final int block_Warehouse_WPP = new CmnFns().Block_Function_By_Warehouse();
+//                if(block_Warehouse_WPP == -29){
+//                    Toast.makeText(this,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                    break;
+//                }else if(block_Warehouse_WPP == -1){
+//                    Toast.makeText(this,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                    break;
+//                }else if(block_Warehouse_WPP == 1){
+                    Intent intent = new Intent(LPNActivity.this, LoadPalletQRCode.class);
+                    startActivity(intent);
+                    break;
+//                }
         }
     }
-
-
 
     @Override
     public void onBackPressed() {

@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.AddBarcode.ListProductBarcodeActivity;
+import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.Inventory.InventoryHome;
 import com.FiveSGroup.TMS.LPN.LPNActivity;
 import com.FiveSGroup.TMS.LetDown.LetDownSuggestionsActivity;
@@ -60,6 +61,7 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
         holder.tvNameItem.setText(object.getNameItem());
         holder.imageItem.setImageResource(object.getImageItem());
 
+//        final int block_Warehouse = new CmnFns().Block_Function_By_Warehouse();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,45 +75,136 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
                         context.startActivity(intent);
                         break;
                     case "Put Away":
-                        Intent intentt = new Intent(context, Qrcode_PutAway.class);
-                        context.startActivity(intentt);
-                        break;
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intentt = new Intent(context, Qrcode_PutAway.class);
+                            context.startActivity(intentt);
+                            break;
+//                        }
+
                     case "Let Down":
-                        Intent intent1 = new Intent(context, LetDownSuggestionsActivity.class);
-                        context.startActivity(intent1);
-                        break;
+
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intent1 = new Intent(context, LetDownSuggestionsActivity.class);
+                            context.startActivity(intent1);
+                            break;
+//                        }
+
                     case "Chuyển Vị Trí":
-                        Intent intent3 = new Intent(context, Qrcode_StockTransfer.class);
-                        context.startActivity(intent3);
-                        break;
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intent3 = new Intent(context, Qrcode_StockTransfer.class);
+                            context.startActivity(intent3);
+                            break;
+//                        }
+
                     case "Master Pick":
-                        Intent intent_master = new Intent(context, Home_Master_Pick.class);
-                        context.startActivity(intent_master);
-                        break;
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intent_master = new Intent(context, Home_Master_Pick.class);
+                            context.startActivity(intent_master);
+                            break;
+//                        }
+
                     case "PickList":
-                        Intent intent4 = new Intent(context, NewWareHouseActivity.class);
-                        context.startActivity(intent4);
-                        break;
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intent4 = new Intent(context, NewWareHouseActivity.class);
+                            context.startActivity(intent4);
+                            break;
+//                        }
+
                     case "Xuất Kho":
-                        Intent intent2 = new Intent(context, Home_Stockout.class);
-                        context.startActivity(intent2);
-                        break;
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intent2 = new Intent(context, Home_Stockout.class);
+                            context.startActivity(intent2);
+                            break;
+//                        }
+
                     case "Kiểm Tồn":
-                        Intent intent_ivt = new Intent(context, InventoryHome.class);
-                        context.startActivity(intent_ivt);
-                        break;
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intent_ivt = new Intent(context, InventoryHome.class);
+                            context.startActivity(intent_ivt);
+                            break;
+//                        }
+
                     case "Chỉnh Kho":
-                        Intent intent_ajm = new Intent(context, Warehouse_Adjustment.class);
-                        context.startActivity(intent_ajm);
-                        break;
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intent_ajm = new Intent(context, Warehouse_Adjustment.class);
+                            context.startActivity(intent_ajm);
+                            break;
+//                        }
+
                     case "Gỡ Sản Phẩm":
-                        Intent intent_remove = new Intent(context, Qrcode_Remove_LPN.class);
-                        context.startActivity(intent_remove);
-                        break;
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intent_remove = new Intent(context, Qrcode_Remove_LPN.class);
+                            context.startActivity(intent_remove);
+                            break;
+//                        }
+
                     case "Trả Hàng":
-                        Intent intent_return = new Intent(context, Home_Return_WareHouse.class);
-                        context.startActivity(intent_return);
-                        break;
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                            Intent intent_return = new Intent(context, Home_Return_WareHouse.class);
+                            context.startActivity(intent_return);
+                            break;
+//                        }
+
 //                    case "Thêm Mã Barcode":
 //                        Toast.makeText(context, "Tính năng đang phát triển trong thời gian tới", Toast.LENGTH_LONG).show();
 ////                        Intent intent_add_barcode = new Intent(context, ListProductBarcodeActivity.class);

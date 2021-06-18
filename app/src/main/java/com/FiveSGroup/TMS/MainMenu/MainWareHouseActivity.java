@@ -45,6 +45,7 @@ public class MainWareHouseActivity extends AppCompatActivity {
         }else if(CmnFns.isCheckAdmin()){
             tvSale.setText(CmnFns.readDataShipper());
         }
+
         adpater = new MenuItemAdpater(this, arrItem);
         LinearLayoutManager layoutManager = new GridLayoutManager(this, 3);
         int spanCount = 3; // 3 columns

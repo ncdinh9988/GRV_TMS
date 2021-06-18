@@ -85,6 +85,7 @@ import java.lang.reflect.Method;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -2467,9 +2468,7 @@ public class CmnFns {
         }
         return 1;
     }
-//    public String Check_Suggest_Position_Master_Pick(String userCode,String ProductCode, String ea_unit ,String LPNCode,String PositionCode,String stockin,String expDate ,String CD){
-//
-//    }
+
 
     public String synchronizeGETPositionInfoo(String unique_id , String userCode, String barcode, String positionReceive, String productCd, String expDate, String ea_unit, String stockin, String positionFrom, String positionTo, String type, int isLPN) {
 
@@ -2506,6 +2505,8 @@ public class CmnFns {
             return "-28";
         }
 
+
+
         try {
             JSONArray jsonarray = new JSONArray(result);
 
@@ -2527,6 +2528,7 @@ public class CmnFns {
 
                 if (positionReceive != null && expDate != null) {
                     if (positionReceive.equals("1") && productCd != null) {
+
                         //letdown
                         if (type.equals("WLD")) {
                             if (isLPN == 1) {
@@ -2560,6 +2562,18 @@ public class CmnFns {
                             }
 
                         } else if (type.equals("WMP")) {
+                            // master pick
+                            ArrayList<Product_Master_Pick> listSP = new ArrayList<>();
+                            listSP = DatabaseHelper.getInstance().getoneListSP_Master_Pick(unique_id);
+                            String ProductCode = listSP.get(0).getPRODUCT_CODE();
+                            String LPNCode = listSP.get(0).getLPN_CODE();
+                            String PositionCode = listSP.get(0).getPOSITION_FROM_CODE();
+                            String check_position = webService.Check_Suggest_Position_Master_Pick(userCode,ProductCode, ea_unit,LPNCode,PositionCode,stockin,expDate ,global.getMasterPickCd());
+                            if (check_position.equals("-1")) {
+                                return "-1";
+                            } else if (result.equals("0")) {
+                                return "0";
+                            }
                             //
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
@@ -3638,6 +3652,23 @@ public class CmnFns {
 
         return 1;
 
+    }
+    public int Block_Function_By_Warehouse(){
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+
+        String result = webService.Block_Function_By_Warehouse();
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("-29")) {
+            return -29;
+        }else if (result.equals("1")) {
+            return 1;
+        }
+        return 1;
     }
 
     public int synchronizeGETProductByZoneLetDown(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, int isLPN) {

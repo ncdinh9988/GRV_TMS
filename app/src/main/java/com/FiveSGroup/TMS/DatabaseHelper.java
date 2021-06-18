@@ -1414,6 +1414,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<Product_Master_Pick>
+    getoneListSP_Master_Pick(String unique_id) {
+        ArrayList<Product_Master_Pick> masterPicks = new ArrayList<Product_Master_Pick>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_MASTER_PICK + " " + " WHERE "
+                + AUTOINCREMENT_MASTER_PICK + " = " + unique_id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product_Master_Pick masterPick = new Product_Master_Pick();
+                masterPick.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_MASTER_PICK))));
+                masterPick.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_MASTER_PICK))));
+                masterPick.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_MASTER_PICK))));
+                masterPick.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_MASTER_PICK))));
+                masterPick.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_MASTER_PICK))));
+                masterPick.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_MASTER_PICK))));
+                masterPick.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_MASTER_PICK))));
+                masterPick.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_MASTER_PICK))));
+                masterPick.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_MASTER_PICK))));
+                masterPick.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_MASTER_PICK))));
+                masterPick.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_MASTER_PICK))));
+                masterPick.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_MASTER_PICK))));
+                masterPick.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_MASTER_PICK))));
+                masterPick.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_MASTER_PICK))));
+                masterPick.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_MASTER_PICK))));
+                masterPick.setMASTER_PICK_CD((c.getString(c
+                        .getColumnIndex(MASTER_PICK_CD))));
+                masterPick.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_MASTER_PICK))));
+                masterPick.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_MASTER_PICK))));
+                masterPick.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_MASTER_PICK))));
+                masterPicks.add(masterPick);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return masterPicks;
+    }
+
 
     public ArrayList<Product_Master_Pick>
     getoneProduct_Master_Pick(String CD, String expDate, String ea_unit, String stockinDate, String master_pick_cd) {

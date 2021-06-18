@@ -470,7 +470,10 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
             if (postitionDes.equals("1") || postitionDes.equals("-1")) {
                 dialog.showDialog(List_Master_Pick.this, "Vui Lòng Thử Lại");
 
-            } else if (postitionDes.equals("-3")) {
+            } else if (postitionDes.equals("0")) {
+                dialog.showDialog(List_Master_Pick.this, "Sai vị trí gợi ý");
+
+            }else if (postitionDes.equals("-3")) {
                 dialog.showDialog(List_Master_Pick.this, "Vị trí từ không hợp lệ");
 
             } else if (postitionDes.equals("-6")) {

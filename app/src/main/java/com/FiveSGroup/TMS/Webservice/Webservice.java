@@ -69,6 +69,45 @@ public class Webservice {
         }
     }
 
+    public String Block_Function_By_Warehouse(){
+        String webServiceFunc = "Block_Function_By_Warehouse";
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+
+        //         Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("Usercode");
+        param1.setValue(global.getAdminCode());
+        param1.setType(String.class);
+        request.addProperty(param1);
+//
+//        //         Param 1
+//        PropertyInfo param2 = new PropertyInfo();
+//        param2.setName("type");
+//        param2.setValue(type);
+//        param2.setType(String.class);
+//        request.addProperty(param2);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                global.getUrlWebserviceToSynchronize(), timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
 
     public String synchronizeCustomerAddNew(String json) {
 
@@ -483,6 +522,90 @@ public class Webservice {
             return "-1";
         }
     }
+
+    public String Check_Suggest_Position_Master_Pick(String UserCode, String ProductCode, String Unit ,
+                                                     String LPNCode, String PositionCode, String Stockin, String Expired , String CD) {
+
+        String webServiceFunc = "synchronizeGETPositionInfo";
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("UserCode");
+        param1.setValue(UserCode);
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+        // Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("ProductCode");
+        param2.setValue(ProductCode);
+        param2.setType(String.class);
+        request.addProperty(param2);
+
+        // Param 3
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("Unit");
+        param3.setValue(Unit);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+        // Param 4
+        PropertyInfo param4 = new PropertyInfo();
+        param4.setName("LPNCode");
+        param4.setValue(LPNCode);
+        param4.setType(String.class);
+        request.addProperty(param4);
+
+        // Param 5
+        PropertyInfo param5 = new PropertyInfo();
+        param5.setName("PositionCode");
+        param5.setValue(PositionCode);
+        param5.setType(String.class);
+        request.addProperty(param5);
+
+        // Param 5
+        PropertyInfo param6 = new PropertyInfo();
+        param6.setName("Stockin");
+        param6.setValue(Stockin);
+        param6.setType(String.class);
+        request.addProperty(param6);
+
+        // Param 5
+        PropertyInfo param7 = new PropertyInfo();
+        param7.setName("Expired");
+        param7.setValue(Expired);
+        param7.setType(String.class);
+        request.addProperty(param7);
+
+        PropertyInfo param8 = new PropertyInfo();
+        param8.setName("CD");
+        param8.setValue(CD);
+        param8.setType(String.class);
+        request.addProperty(param8);
+
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                global.getUrlWebserviceToSynchronize(), timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
+
 
     public String synchronizeGETPositionInfo(String userCode, String barecode, int isLPN , String type, String positionFrom, String positionTo, String typePosition) {
 
