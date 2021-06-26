@@ -360,11 +360,9 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
                                         } else {
                                             ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
                                         }
-
                                     }
                                     Toast.makeText(Qrcode_Return_WareHouse.this, "You select: " + expDate,
                                             Toast.LENGTH_LONG).show();
-
                                 }
                             });
                             AlertDialog alertDialog = builder.create();

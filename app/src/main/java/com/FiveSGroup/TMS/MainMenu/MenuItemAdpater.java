@@ -1,6 +1,8 @@
 package com.FiveSGroup.TMS.MainMenu;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +43,7 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
     private LinearLayout layout;
     private FrameLayout frameLayout;
 
-    public MenuItemAdpater(Context context, ArrayList<MenuItemObject> arrItem ){
+    public MenuItemAdpater(Context context, ArrayList<MenuItemObject> arrItem) {
         this.context = context;
         this.arrItem = arrItem;
     }
@@ -49,8 +51,8 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
     @NonNull
     @Override
     public MenuItemAdpater.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater=LayoutInflater.from(context);
-        View view=inflater.inflate(R.layout.layout_item_category,null,false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.layout_item_category, null, false);
         return new MenuItemAdpater.ViewHolder(view);
     }
 
@@ -65,7 +67,7 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (object.getNameItem()){
+                switch (object.getNameItem()) {
                     case "LPN":
                         Intent intentLPN = new Intent(context, LPNActivity.class);
                         context.startActivity(intentLPN);
@@ -82,9 +84,9 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intentt = new Intent(context, Qrcode_PutAway.class);
-                            context.startActivity(intentt);
-                            break;
+                        Intent intentt = new Intent(context, Qrcode_PutAway.class);
+                        context.startActivity(intentt);
+                        break;
 //                        }
 
                     case "Let Down":
@@ -96,22 +98,43 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intent1 = new Intent(context, LetDownSuggestionsActivity.class);
-                            context.startActivity(intent1);
-                            break;
+                        //Items
+//                        final String[] items = {"Quét Mới", "Quét Theo Phiếu"};
+//                        AlertDialog.Builder b = new AlertDialog.Builder(context);
+////Thiết lập title
+//                        b.setTitle("Vui Lòng Chọn Hình Thức Letdown");
+////Thiết lập item
+//                        b.setItems(items, new DialogInterface.OnClickListener() {
+//                            //Xử lý sự kiện
+//                            public void onClick(DialogInterface dialog, int which) {
+//
+//                                if (which == 0) {
+                                    Intent intent1 = new Intent(context, LetDownSuggestionsActivity.class);
+                                    context.startActivity(intent1);
+
+//                                } else {
+//
+//                                }
+//
+//                            }
+//                        });
+////Hiển thị dialog
+//                        b.show();
+
+                        break;
 //                        }
 
                     case "Chuyển Vị Trí":
 //                        if(block_Warehouse == -29){
 //                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
-//                            break;
+//                            break;lo
 //                        }else if(block_Warehouse == -1){
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intent3 = new Intent(context, Qrcode_StockTransfer.class);
-                            context.startActivity(intent3);
-                            break;
+                        Intent intent3 = new Intent(context, Qrcode_StockTransfer.class);
+                        context.startActivity(intent3);
+                        break;
 //                        }
 
                     case "Master Pick":
@@ -122,9 +145,9 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intent_master = new Intent(context, Home_Master_Pick.class);
-                            context.startActivity(intent_master);
-                            break;
+                        Intent intent_master = new Intent(context, Home_Master_Pick.class);
+                        context.startActivity(intent_master);
+                        break;
 //                        }
 
                     case "PickList":
@@ -135,9 +158,9 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intent4 = new Intent(context, NewWareHouseActivity.class);
-                            context.startActivity(intent4);
-                            break;
+                        Intent intent4 = new Intent(context, NewWareHouseActivity.class);
+                        context.startActivity(intent4);
+                        break;
 //                        }
 
                     case "Xuất Kho":
@@ -148,9 +171,9 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intent2 = new Intent(context, Home_Stockout.class);
-                            context.startActivity(intent2);
-                            break;
+                        Intent intent2 = new Intent(context, Home_Stockout.class);
+                        context.startActivity(intent2);
+                        break;
 //                        }
 
                     case "Kiểm Tồn":
@@ -161,9 +184,9 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intent_ivt = new Intent(context, InventoryHome.class);
-                            context.startActivity(intent_ivt);
-                            break;
+                        Intent intent_ivt = new Intent(context, InventoryHome.class);
+                        context.startActivity(intent_ivt);
+                        break;
 //                        }
 
                     case "Chỉnh Kho":
@@ -174,9 +197,9 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intent_ajm = new Intent(context, Warehouse_Adjustment.class);
-                            context.startActivity(intent_ajm);
-                            break;
+                        Intent intent_ajm = new Intent(context, Warehouse_Adjustment.class);
+                        context.startActivity(intent_ajm);
+                        break;
 //                        }
 
                     case "Gỡ Sản Phẩm":
@@ -187,9 +210,9 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intent_remove = new Intent(context, Qrcode_Remove_LPN.class);
-                            context.startActivity(intent_remove);
-                            break;
+                        Intent intent_remove = new Intent(context, Qrcode_Remove_LPN.class);
+                        context.startActivity(intent_remove);
+                        break;
 //                        }
 
                     case "Trả Hàng":
@@ -200,9 +223,9 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                            Intent intent_return = new Intent(context, Home_Return_WareHouse.class);
-                            context.startActivity(intent_return);
-                            break;
+                        Intent intent_return = new Intent(context, Home_Return_WareHouse.class);
+                        context.startActivity(intent_return);
+                        break;
 //                        }
 
 //                    case "Thêm Mã Barcode":
@@ -217,6 +240,7 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
     }
 
 
+
     @Override
     public int getItemCount() {
         return arrItem.size();
@@ -226,6 +250,7 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 
         private ImageView imageItem;
         private TextView tvNameItem;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageItem = itemView.findViewById(R.id.imageItem);
