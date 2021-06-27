@@ -18,6 +18,15 @@ public class Product_Qrcode {
     private String STOCKIN_DATE;
     private String WAREHOUSE_POSITION_CD;
     private String MANUFACTURING_DATE ;
+    private String BATCH_NUMBER ;
+
+    public String getBATCH_NUMBER() {
+        return BATCH_NUMBER;
+    }
+
+    public void setBATCH_NUMBER(String BATCH_NUMBER) {
+        this.BATCH_NUMBER = BATCH_NUMBER;
+    }
 
     public String getMANUFACTURING_DATE() {
         return MANUFACTURING_DATE;

@@ -66,6 +66,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     private EditText edtBarcode;;
     String checkToFinish = "";
     String exp_date;
+    String batch_number_t;
     String stockin_date;
     String ea_unit;
     String total_shelf_life = "";
@@ -276,104 +277,115 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 //editor.commit();
                 finish();
             } else {
-                int statusGetCustt = new CmnFns().getExpDateFromServer(global.getAdminCode(),barcodeData, global.getStockReceiptCd());
-                if (statusGetCustt != 1) {
-                    ReturnPosition(barcodeData);
-                } else {
-                    if (expiredDate != null) {
 
-                        ReturnPosition(barcodeData);
+                int statusGetBatch = new CmnFns().getBatch(global.getAdminCode(),barcodeData , global.getStockReceiptCd());
+                if(statusGetBatch == 1){
+                    // lấy tất cả hạn `sử dụng trong database ra
+                    final ArrayList<Batch_number_Tam> batch_number_tams = DatabaseHelper.getInstance().getallBatch();
 
+
+                    if (batch_number_tams.size() > 1) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode.this);
+                        builder.setTitle("Chọn Batch Number");
+
+                        final ArrayList<String> batch_number = new ArrayList<>();
+                        for (int i = 0; i < batch_number_tams.size(); i++) {
+                            batch_number.add(batch_number_tams.get(i).getBATCH_NUMBER());
+                        }
+
+                        // chuyển đổi exp_date thành mảng chuỗi String
+                        String[] mStringArray = new String[batch_number.size()];
+                        mStringArray = batch_number.toArray(mStringArray);
+
+                        final String[] mString = mStringArray;
+                        builder.setItems(mString, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String bat = mString[which];
+
+                                dialog.dismiss(); // Close Dialog
+
+                                if (bat != "") {
+                                    batch_number_t = bat; //TEST
+
+                                    Intent intentt = new Intent(getApplication(), ListQrcode.class);
+                                    intentt.putExtra("stock_in", "333");
+                                    intentt.putExtra("batch", batch_number_t);
+                                    startActivity(intentt);
+
+                                    finish();
+                                    // For example: Call method of MainActivity.
+                                    Toast.makeText(Qrcode.this, "You select: " + batch_number_t,
+                                            Toast.LENGTH_LONG).show();
+                                }
+                                // Do some thing....
+
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    } else if (batch_number_tams.size() == 1) {
+                        String batchTam = "";
+                        try {
+                            batchTam = batch_number_tams.get(0).getBATCH_NUMBER();
+                        } catch (Exception e) {
+
+                        }
+                        Intent intentt = new Intent(getApplication(), ListQrcode.class);
+                        intentt.putExtra("stock_in", "333");
+                        intentt.putExtra("batch", batchTam);
+                        startActivity(intentt);
+
+                        finish();
                     } else {
-                        // lấy tất cả hạn `sử dụng trong database ra
-                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValueStockin();
-                        for (int i = 0; i < expired_date.size(); i++) {
-                            total_shelf_life = expired_date.get(0).getTOTAL_SHELF_LIFE();
-                            shelf_life_type = expired_date.get(0).getSHELF_LIFE_TYPE();
-                            min_rem_shelf_life = expired_date.get(0).getMIN_REM_SHELF_LIFE();
-                                                        }
-
-
-//                                                        final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode.this);
-//                                                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
-//
-//                                                        final ArrayList<String> exp_date = new ArrayList<>();
-//                                                        for (int i = 0; i < expired_date.size(); i++) {
-//                                                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
-//                                                        }
-//
-//                                                        // chuyển đổi exp_date thành mảng chuỗi String
-//                                                        String[] mStringArray = new String[exp_date.size()];
-//                                                        mStringArray = exp_date.toArray(mStringArray);
-//
-//                                                        final String[] mString = mStringArray;
-//                                                        builder.setItems(mString, new DialogInterface.OnClickListener() {
-//                                                            @Override
-//                                                            public void onClick(DialogInterface dialog, int which) {
-//                                                                String expDate = mString[which];
-//
-//                                                                dialog.dismiss(); // Close Dialog
-//
-//                                                                if (expDate != "") {
-//                                                                    expDateTemp2 = expDate; //TEST
-//                                                                    String chuoi[] = expDateTemp2.split(" - ");
-//                                                                    if (!checkBoxGetDVT.isChecked()) {
-//                                                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
-//                                                                        //ReturnProduct(barcodeData,expDateTemp2,"");
-//                                                                    } else {
-//                                                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
-//                                                                    }
-//
-//                                                                }
-//                                                                // Do some thing....
-//                                                                // For example: Call method of MainActivity.
-//                                                                Toast.makeText(Qrcode.this, "You select: " + expDate,
-//                                                                        Toast.LENGTH_LONG).show();
-//                                                            }
-//                                                        });
-//                                                        AlertDialog alertDialog = builder.create();
-//                                                        alertDialog.show();
-//                                                    } else if (expired_date.size() == 1) {
-//                                                        String expDatetemp = "";
-//                                                        try {
-//                                                            expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
-//                                                        } catch (Exception e) {
-//
-//                                                        }
-//                                                        String chuoi[] = expDatetemp.split(" - ");
-//
-//                                                        if (!checkBoxGetDVT.isChecked()) {
-//                                                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
-////                                                        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
-////                                                        final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
-////                                                        ReturnProduct(barcodeData, expDatetemp, ea_unit_tams.get(0).getEA_UNIT_TAM());
-//                                                        } else {
-//                                                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
-//                                                        }
-
-                        Intent intent = new Intent(Qrcode.this, SelectPropertiesProductActivity.class);
-                        intent.putExtra("typeScan", "scan_from_stock_in");
+                        Toast.makeText(Qrcode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Qrcode.this, ListQrcode.class);
                         intent.putExtra("btn1", barcodeData);
-                        intent.putExtra("stockin", "444");
-                        intent.putExtra("stock_in", "333");
-                        intent.putExtra("id_unique_SI", id_unique_SI);
-                        intent.putExtra("total_shelf_life", total_shelf_life);
-                        intent.putExtra("shelf_life_type", shelf_life_type);
-                        intent.putExtra("min_rem_shelf_life", min_rem_shelf_life);
-                        intent.putExtra("returnposition", position);
-                        intent.putExtra("returnCD", product_cd);
-                        intent.putExtra("returnStock", stock);
-                        DatabaseHelper.getInstance().deleteallExp_date();
-                        DatabaseHelper.getInstance().deleteallEa_Unit();
                         startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    int statusGetCustt = new CmnFns().getExpDateFromServer(global.getAdminCode(),barcodeData, global.getStockReceiptCd());
+                    if (statusGetCustt != 1) {
+                        ReturnPosition(barcodeData);
+                    } else {
+                        if (expiredDate != null) {
+
+                            ReturnPosition(barcodeData);
+
+                        } else {
+                            // lấy tất cả hạn `sử dụng trong database ra
+                            final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValueStockin();
+                            for (int i = 0; i < expired_date.size(); i++) {
+                                total_shelf_life = expired_date.get(0).getTOTAL_SHELF_LIFE();
+                                shelf_life_type = expired_date.get(0).getSHELF_LIFE_TYPE();
+                                min_rem_shelf_life = expired_date.get(0).getMIN_REM_SHELF_LIFE();
+                            }
+                            Intent intent = new Intent(Qrcode.this, SelectPropertiesProductActivity.class);
+                            intent.putExtra("typeScan", "scan_from_stock_in");
+                            intent.putExtra("btn1", barcodeData);
+                            intent.putExtra("stockin", "444");
+                            intent.putExtra("stock_in", "333");
+                            intent.putExtra("id_unique_SI", id_unique_SI);
+                            intent.putExtra("total_shelf_life", total_shelf_life);
+                            intent.putExtra("shelf_life_type", shelf_life_type);
+                            intent.putExtra("min_rem_shelf_life", min_rem_shelf_life);
+                            intent.putExtra("returnposition", position);
+                            intent.putExtra("returnCD", product_cd);
+                            intent.putExtra("returnStock", stock);
+                            DatabaseHelper.getInstance().deleteallExp_date();
+                            DatabaseHelper.getInstance().deleteallEa_Unit();
+                            startActivity(intent);
+                        }
                     }
                 }
+
             }
 
         }
     }
 
-//    private void GetData(final String barcodeData){
+//    private void GetData1(final String barcodeData){
 //
 //        if (checkBoxGetLPN.isChecked()) {
 //            if (expiredDate != null) {

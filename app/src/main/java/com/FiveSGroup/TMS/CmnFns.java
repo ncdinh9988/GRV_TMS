@@ -57,6 +57,7 @@ import com.FiveSGroup.TMS.Security.P5sSecurity;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
+import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
 import com.FiveSGroup.TMS.Warehouse.Product_Qrcode;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.Product_Warehouse_Adjustment;
@@ -1271,6 +1272,138 @@ public class CmnFns {
 
     }
 
+    public int getBatch(String usercode ,String barcodeData ,String stock) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.synchronizeGETBatch(usercode , barcodeData , stock);
+        //
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("0")) {
+            return 0;
+        }
+
+        if (result.equals("1")) {
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                String batch_number = jsonobj.getString("BATCH_NUMBER");
+                String product_cd = jsonobj.getString("PRODUCT_CD");
+                String product_code = jsonobj.getString("PRODUCT_CODE");
+                String product_name = jsonobj.getString("PRODUCT_NAME");
+                String stockin_date = jsonobj.getString("STOCKIN_DATE");
+                String expired_date = jsonobj.getString("EXPIRED_DATE");
+                String unit = jsonobj.getString("UNIT");
+                String manufacturing_date = jsonobj.getString("MANUFACTURING_DATE");
+                String position_code = jsonobj.getString("POSITION_CODE");
+                String position_description = jsonobj.getString("POSITION_DESCRIPTION");
+                String warehouse_position_cd = jsonobj.getString("WAREHOUSE_POSITION_CD");
+
+                Batch_number_Tam batch_number_tam = new Batch_number_Tam();
+                batch_number_tam.setBATCH_NUMBER(batch_number);
+                batch_number_tam.setPRODUCT_CD(product_cd);
+                batch_number_tam.setPRODUCT_CODE(product_code);
+                batch_number_tam.setPRODUCT_NAME(product_name);
+                batch_number_tam.setSTOCKIN_DATE(stockin_date);
+                batch_number_tam.setEXPIRED_DATE(expired_date);
+                batch_number_tam.setUNIT(unit);
+                batch_number_tam.setMANUFACTURING_DATE(manufacturing_date);
+                batch_number_tam.setPOSITION_CODE(position_code);
+                batch_number_tam.setPOSITION_DESCRIPTION(position_description); ;
+                batch_number_tam.setWAREHOUSE_POSITION_CD(warehouse_position_cd);
+
+                //exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
+                DatabaseHelper.getInstance().CreateBatch_Number(batch_number_tam);
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
+
+    public int getBatchAndProduct(String usercode,String barcodeData, String stockReceipt , String batch) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.synchronizeGETBatchAndProduct(usercode,barcodeData, stockReceipt, batch);
+        // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("-8")) {
+            return -8;
+        } else if (result.equals("-20")) {
+            return -20;
+        }
+
+        if (result.equals("1")) {
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                String pro_exp = jsonobj.getString("_EXPIRED_DATE");
+                String pro_stockin = jsonobj.getString("_STOCKIN_DATE");
+
+                String total_shelf_life = jsonobj.getString("_TOTAL_SHELF_LIFE");
+                String shelf_life_type = jsonobj.getString("_SHELF_LIFE_TYPE");
+                String min_rem_shelf_life = jsonobj.getString("_MIN_REM_SHELF_LIFE");
+
+
+                Exp_Date_Tam exp_date_tam = new Exp_Date_Tam();
+                if (pro_stockin.equals("")) {
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + "---");
+                } else {
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
+                }
+                exp_date_tam.setTOTAL_SHELF_LIFE(total_shelf_life);
+                exp_date_tam.setSHELF_LIFE_TYPE(shelf_life_type);
+                exp_date_tam.setMIN_REM_SHELF_LIFE(min_rem_shelf_life);
+
+
+                //exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
+                DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
+
 
     public int getExpDateFromServer(String usercode,String barcodeData, String stockReceipt) {
 
@@ -1415,6 +1548,8 @@ public class CmnFns {
 
         return "-1";
     }
+
+
 
     public int synchronizeGETProductInfo(String usercode,String qrcode, String stock, String expDate, String stockinDate,
                                          String unit, String positonReceive ) {

@@ -42,6 +42,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
     ProductAdapter productListViewAdapter;
     RecyclerView listViewProduct;
     String value1 = "";
+    String batch = "";
     String positonReceive = "";
     String productCd = "";
     String stock = "";
@@ -63,6 +64,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
     Product_Qrcode product_qrcode;
 
     ArrayList<Product_Qrcode> qrcode1;
+    ArrayList<Batch_number_Tam> batch_number ;
 //    ArrayList<Product_PutAway> putaway;
     CheckEventbus eventbus;
 
@@ -96,92 +98,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
 
     private void prepareData() {
-//        if (put_away != null) {
-//            tvTitle.setText("Danh Sách SP Put Away");
-//            if (positonReceive == null) {
-//                if (lpn != null && value1 != null) {
-//                    //TODO
-//                    alert_show_SP(1);
-//                } else if (lpn == null && value1 != null) {
-//                    //TODO
-//                    alert_show_SP(0);
-//                }
-//
-//            } else {
-//                if (lpn != null && value1 != null) {
-//                    //TODO
-//                    alert_show_position(1);
-//                } else if (lpn == null && value1 != null) {
-//                    //TODO
-//                    alert_show_position(0);
-//                }
-//
-//            }
-//
-//            putaway = DatabaseHelper.getInstance().getAllProduct_PutAway();
-//            //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
-//            putAwayListAdapter = new PutAwayAdapter(this, putaway);
-//            LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-//            listViewProduct.setLayoutManager(layoutManager);
-//            listViewProduct.setAdapter(putAwayListAdapter);
-//            putAwayListAdapter.notifyDataSetChanged();
-//
-//            ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-//
-//                @Override
-//                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-//                    Toast.makeText(ListQrcode.this, "on Move", Toast.LENGTH_SHORT).show();
-//                    return false;
-//                }
-//
-//                @Override
-//                public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//                    LayoutInflater factory = LayoutInflater.from(ListQrcode.this);
-//                    View layout_cus = factory.inflate(R.layout.layout_delete, null);
-//                    final AlertDialog dialog = new AlertDialog.Builder(ListQrcode.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
-//                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                    ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
-//                    InsetDrawable inset = new InsetDrawable(back, 64);
-//                    dialog.getWindow().setBackgroundDrawable(inset);
-//                    dialog.setView(layout_cus);
-//
-//                    Button btnNo = layout_cus.findViewById(R.id.btnNo);
-//                    Button btnYes = layout_cus.findViewById(R.id.btnYes);
-//                    TextView textView = layout_cus.findViewById(R.id.tvTextBack);
-//
-//
-//                    btnNo.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
-//                            dialog.dismiss();
-//                            finish();
-//                            Intent i = new Intent(ListQrcode.this,ListQrcode.class);
-//                            startActivity(i);
-//
-//                        }
-//                    });
-//                    btnYes.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            //Remove swiped item from list and notify the RecyclerView
-//                            dialog.dismiss();
-//
-//                            int position = viewHolder.getAdapterPosition();
-//                            Product_PutAway product = putaway.get(position);
-//                            putaway.remove(position);
-//                            DatabaseHelper.getInstance().deleteProduct_PutAway_Specific(product.getAUTOINCREMENT());
-//                            putAwayListAdapter.notifyItemRemoved(position);
-//                        }
-//                    });
-//                    dialog.show();
-//
-//
-//                }
-//            };
-//            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-//            itemTouchHelper.attachToRecyclerView(listViewProduct);
-//        } else {
+
             tvTitle.setText("Danh Sách SP Nhập Kho");
             //Dành cho nhập kho chỉ gửi lên qrcode
             if (clickShowListCode != null) {
@@ -192,18 +109,12 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                 listViewProduct.setAdapter(productListViewAdapter);
                 return;
             }
-//            if (positonReceive != null) {
-//                alert_show_position_warehouse(0);
-//            } else {
-//                alert_show_SP_Stock_in();
-//            }
+
         if(stock_in!=null){
             if (positonReceive == null) {
                 alert_show_SP_Stock_in();
             }
         }
-
-
 
             qrcode1 = DatabaseHelper.getInstance().getAllProduct_Qrcode(global.getStockReceiptCd());
             if (qrcode1 != null) {
@@ -276,6 +187,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
     private void getDataFromIntent() {
         Intent intent = getIntent();
         value1 = intent.getStringExtra("btn1");
+        batch = intent.getStringExtra("batch");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
@@ -533,66 +445,6 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         }
 
     }
-//    private void synchronizeseverputawway(){
-//        Dialog dialog = new Dialog(ListQrcode.this);
-//        try {
-//            if (putaway.size() > 0) {
-//                if (isNotScanFromOrTo()) {
-//                    dialog.showDialog(ListQrcode.this, "Chưa có VT Từ hoặc VT Đến");
-//
-//                } else if (isQuanityZero()) {
-//                    dialog.showDialog(ListQrcode.this, "Số lượng SP không được bằng 0");
-//
-//                } else {
-//                    if (put_away != null) {
-//                        try {
-//
-//                            result = new CmnFns().synchronizeData(saleCode, "WPA", "");
-//
-//                            if (result >= 1) {
-//                                ShowSuccessMessage("Lưu thành công");
-//
-//                            } else {
-//                                if (result == -2) {
-//                                    dialog.showDialog(ListQrcode.this, "Số lượng không đủ trong tồn kho");
-//                                } else if (result == -3) {
-//                                    dialog.showDialog(ListQrcode.this, "Vị trí từ không hợp lệ");
-//                                } else if (result == -4) {
-//                                    dialog.showDialog(ListQrcode.this, "Trạng thái của phiếu không hợp lệ");
-//                                } else if (result == -5) {
-//                                    dialog.showDialog(ListQrcode.this, "Vị trí từ trùng vị trí đên");
-//                                } else if (result == -6) {
-//                                    dialog.showDialog(ListQrcode.this, "Vị trí đến không hợp lệ");
-//                                } else if (result == -7) {
-//                                    dialog.showDialog(ListQrcode.this, "Cập nhật trạng thái thất bại");
-//                                } else if (result == -8) {
-//                                    dialog.showDialog(ListQrcode.this, "Sản phẩm không có thông tin trên phiếu ");
-//                                } else if (result == -13) {
-//                                    dialog.showDialog(ListQrcode.this, "Dữ liệu không hợp lệ");
-//
-//                                }else if (result == -24) {
-//                                    dialog.showDialog(ListQrcode.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
-//
-//                                } else {
-//                                    dialog.showDialog(ListQrcode.this, "Lưu thất bại");
-//                                }
-//
-//                            }
-//                        }catch (Exception e){
-//                            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-//                            return ;
-//                        }
-//
-//                    }
-//                }
-//            } else {
-//                dialog.showDialog(ListQrcode.this, "Không có sản phẩm");
-//
-//            }
-//        } catch (Exception e) {
-//
-//        }
-//    }
 
     private void ShowSuccessMessage(String message) {
         LayoutInflater factory = LayoutInflater.from(ListQrcode.this);
@@ -673,42 +525,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-//    private void actionSyn(){
-//        try {
-//            LayoutInflater factory = LayoutInflater.from(ListQrcode.this);
-//            View layout_cus = factory.inflate(R.layout.layout_request, null);
-//            final AlertDialog dialog = new AlertDialog.Builder(ListQrcode.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
-//            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
-//            InsetDrawable inset = new InsetDrawable(back, 64);
-//            dialog.getWindow().setBackgroundDrawable(inset);
-//            dialog.setView(layout_cus);
-//
-//            Button btnNo = layout_cus.findViewById(R.id.btnNo);
-//            Button btnYes = layout_cus.findViewById(R.id.btnYes);
-//            TextView textView = layout_cus.findViewById(R.id.tvTextBack);
-//
-//
-//            btnNo.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    dialog.dismiss();
-//
-//                }
-//            });
-//            btnYes.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    dialog.dismiss();
-//                    synchronizeseverputawway();
-//                }
-//            });
-//            dialog.show();
-//        } catch (Exception e) {
-//            Log.e("Exception", e.getMessage());
-//        }
-//
-//    }
+
 
 
     @Override
@@ -717,89 +534,6 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         super.onResume();
     }
 
-//    public void alert_show_position(int isLPN) {
-//        String positionTo = "";
-//        String positionFrom = "";
-//        ArrayList<Product_PutAway> putAways = new ArrayList<>();
-//        putAways = DatabaseHelper.getInstance().getAllProduct_PutAway_Sync();
-//        for (int i = 0; i < putAways.size(); i++) {
-//            Product_PutAway putAway = putAways.get(i);
-//            if (productCd.equals(putAway.getPRODUCT_CD_PUTAWAY()) &&
-//                    expDate1.equals(putAway.getEXPIRED_DATE_PUTAWAY()) &&
-//                    stockinDate.equals(putAway.getSTOCKIN_DATE_PUTAWAY()) &&
-//                    ea_unit_position.equals(putAway.getEA_UNIT_PUTAWAY())) {
-//                if (!putAway.getLPN_FROM().equals("") || !putAway.getLPN_TO().equals("")) {
-//                    positionTo = putAway.getLPN_TO();
-//                    positionFrom = putAway.getLPN_FROM();
-//                }
-//                if (!putAway.getPOSITION_FROM_CODE().equals("") || !putAway.getPOSITION_TO_CODE().equals("")) {
-//                    positionTo = putAway.getPOSITION_TO_CODE();
-//                    positionFrom = putAway.getPOSITION_FROM_CODE();
-//                }
-//
-//                // if này là để trả lại giá trị from và to nếu người dùng muốn quét lại VTT và VTĐ
-//                if (positonReceive.equals("1")) {
-//                    if (!positionTo.equals("") && !positionFrom.equals("")) {
-//                        positionFrom = "";
-//                    }
-//                } else {
-//                    if (!positionTo.equals("") && !positionFrom.equals("")) {
-//                        positionTo = "";
-//                    }
-//                }
-//            }
-//        }
-//        try {
-//            String postitionDes = new CmnFns().synchronizeGETPositionInfoo("",CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
-//
-//            Dialog dialog = new Dialog(ListQrcode.this);
-//
-//            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-//                dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
-//
-//            } else if (postitionDes.equals("-9")) {
-//                dialog.showDialog(ListQrcode.this, "Vị trí không hợp lệ");
-//
-//            } else if (postitionDes.equals("-3")) {
-//                dialog.showDialog(ListQrcode.this, "Vị trí từ không hợp lệ");
-//
-//            } else if (postitionDes.equals("-6")) {
-//                dialog.showDialog(ListQrcode.this, "Vị trí đến không hợp lệ");
-//
-//            } else if (postitionDes.equals("-5")) {
-//                dialog.showDialog(ListQrcode.this, "Vị trí từ trùng vị trí đến");
-//
-//            } else if (postitionDes.equals("-14")) {
-//                dialog.showDialog(ListQrcode.this, "Vị trí đến trùng vị trí từ");
-//
-//            } else if (postitionDes.equals("-15")) {
-//                dialog.showDialog(ListQrcode.this, "Vị trí từ không có trong hệ thống");
-//
-//            } else if (postitionDes.equals("-10")) {
-//                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong hệ thống");
-//
-//            } else if (postitionDes.equals("-17")) {
-//                dialog.showDialog(ListQrcode.this, "LPN từ trùng LPN đến");
-//
-//            } else if (postitionDes.equals("-18")) {
-//                dialog.showDialog(ListQrcode.this, "LPN đến trùng LPN từ");
-//
-//            } else if (postitionDes.equals("-19")) {
-//                dialog.showDialog(ListQrcode.this, "Vị trí đến không có trong hệ thống");
-//
-//            } else if (postitionDes.equals("-12")) {
-//                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong tồn kho");
-//
-//            } else {
-//                return;
-//            }
-//
-//        }catch (Exception e){
-//            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-//            finish();
-//        }
-//
-//    }
 
     public void alert_show_position_warehouse(int isLPN) {
         String positionTo = "";
@@ -885,78 +619,63 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
     }
 
-//    public void alert_show_SP(int isLPN) {
-//        try {
-//            int postitionDes = new CmnFns().synchronizeGETProductByZonePutaway(ListQrcode.this, value1,
-//                    CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN );
-//
-//            Dialog dialog = new Dialog(ListQrcode.this);
-//
-//
-//            if (postitionDes == 1) {
-//                return;
-//            } else if (postitionDes == -1) {
-//                dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
-//
-//            } else if (postitionDes == -8) {
-//                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trên phiếu");
-//
-//
-//            } else if (postitionDes == -10) {
-//                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong hệ thống");
-//
-//            } else if (postitionDes == -11) {
-//
-//                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong kho");
-//
-//
-//            } else if (postitionDes == -12) {
-//
-//                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong kho");
-//
-//            } else if (postitionDes == -16) {
-//
-//                dialog.showDialog(ListQrcode.this, "Sản phẩm đã quét không nằm trong LPN nào");
-//
-//            } else if (postitionDes == -20) {
-//
-//                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong hệ thống");
-//
-//            } else if (postitionDes == -21) {
-//
-//                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong zone");
-//
-//            } else if (postitionDes == -22) {
-//
-//                dialog.showDialog(ListQrcode.this, "Mã LPN không có trong zone");
-//
-//            }
-//        }catch (Exception e){
-//            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-//            finish();
-//        }
-//
-//
-//    }
+
 
     public void alert_show_SP_Stock_in() {
         try {
             SharedPreferences sharedPreferences = getSharedPreferences("stockReceipt", Context.MODE_PRIVATE);
             String stockReceipt = sharedPreferences.getString("stock", "");
+            int statusGetCust ;
+            if(!batch.equals("")){
+                batch_number = DatabaseHelper.getInstance().getoneBatch(batch);
+                String pro_cd = batch_number.get(0).getPRODUCT_CD();
+                String pro_code = batch_number.get(0).getPRODUCT_CODE();
+                String pro_name = batch_number.get(0).getPRODUCT_NAME();
+                String unit = batch_number.get(0).getUNIT();
+                String stk_date = batch_number.get(0).getSTOCKIN_DATE();
+                String exp_date = batch_number.get(0).getEXPIRED_DATE();
+                String position_code = batch_number.get(0).getPOSITION_CODE();
+                String position_description = batch_number.get(0).getPOSITION_DESCRIPTION();
+                String warehouse_position_cd = batch_number.get(0).getWAREHOUSE_POSITION_CD();
 
-            int statusGetCust = new CmnFns().synchronizeGETProductInfo(saleCode ,value1, stockReceipt, expDate, stockinDate,
-                    ea_unit, positonReceive );
+                Product_Qrcode qrcode1 = new Product_Qrcode();
+                qrcode1.setPRODUCT_CD(pro_cd);
+                qrcode1.setPRODUCT_CODE(pro_code);
+                qrcode1.setPRODUCT_NAME(pro_name);
+                qrcode1.setEA_UNIT(unit);
+                qrcode1.setSTOCKIN_DATE(stk_date);
+                qrcode1.setEXPIRED_DATE(exp_date);
+                qrcode1.setSTOCK_RECEIPT_CD(global.getStockReceiptCd());
+                qrcode1.setBATCH_NUMBER(batch);
 
-            Dialog dialog = new Dialog(ListQrcode.this);
-            if (statusGetCust == 1) {
-                return;
-            } else if (statusGetCust == -1) {
-                dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
-            } else if (statusGetCust == -8) {
-                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trên phiếu");
-            } else if (statusGetCust == -20) {
-                dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong hệ thống");
+
+                qrcode1.setWAREHOUSE_POSITION_CD(warehouse_position_cd);
+                qrcode1.setPOSITION_CODE(position_code);
+                qrcode1.setPOSITION_DESCRIPTION(position_description);
+                qrcode1.setSL_SET("");
+                qrcode1.setPRODUCT_FROM("");
+                qrcode1.setPRODUCT_TO("");
+
+
+                DatabaseHelper.getInstance().CreateProduct_Qrcode(qrcode1);
+                DatabaseHelper.getInstance().deleteallBatch_Number();
+
+            }else{
+                 statusGetCust = new CmnFns().synchronizeGETProductInfo(saleCode ,value1, stockReceipt, expDate, stockinDate,
+                        ea_unit, positonReceive );
+                Dialog dialog = new Dialog(ListQrcode.this);
+                if (statusGetCust == 1) {
+                    return;
+                } else if (statusGetCust == -1) {
+                    dialog.showDialog(ListQrcode.this, "Vui Lòng Thử Lại");
+                } else if (statusGetCust == -8) {
+                    dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trên phiếu");
+                } else if (statusGetCust == -20) {
+                    dialog.showDialog(ListQrcode.this, "Mã sản phẩm không có trong hệ thống");
+                }
             }
+
+
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
             finish();

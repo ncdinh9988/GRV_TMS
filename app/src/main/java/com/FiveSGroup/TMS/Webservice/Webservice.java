@@ -416,6 +416,108 @@ public class Webservice {
     }
 
 
+    public String synchronizeGETBatch(String usercode , String qrcode , String stock) {
+
+
+        String webServiceFunc = "Get_Batch_For_PO";
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("BarCode");
+        param1.setValue(qrcode);
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+        //         Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("UserCode");
+        param2.setValue(usercode);
+        param2.setType(String.class);
+        request.addProperty(param2);
+        //         Param 3
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("Stock_Receipt_CD");
+        param3.setValue(stock);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                global.getUrlWebserviceToSynchronize(), timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: Create Batch Number Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: Create Batch Number Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
+
+    public String synchronizeGETBatchAndProduct(String usercode,String qrcode, String stock, String batch) {
+
+
+        String webServiceFunc = "synchronizeGETProductInfo";
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("BarCode");
+        param1.setValue(qrcode);
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+//         Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("Stock_Receipt_CD");
+        param2.setValue(stock);
+        param2.setType(String.class);
+        request.addProperty(param2);
+        //         Param 3
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("Usercode");
+        param3.setValue(usercode);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+        //         Param 4
+        PropertyInfo param4 = new PropertyInfo();
+        param4.setName("Batch");
+        param4.setValue(batch);
+        param4.setType(String.class);
+        request.addProperty(param4);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                global.getUrlWebserviceToSynchronize(), timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
+
 
 
     public String synchronizeGETProductInfoo(String usercode,String qrcode, String stock) {

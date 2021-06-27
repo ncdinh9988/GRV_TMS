@@ -20,6 +20,7 @@ import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
+import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
 import com.FiveSGroup.TMS.Warehouse.Product_Qrcode;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.Product_Warehouse_Adjustment;
@@ -115,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 72; // version của DB khi thay
+    public static final int DATABASE_VERSION = 82; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -163,6 +164,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_RETURN_WAREHOUSE);
         db.execSQL(CREATE_TABLE_O_MASTER_PICK);
         db.execSQL(CREATE_TABLE_O_DATE_LPN);
+        db.execSQL(CREATE_TABLE_O_BATCH);
     }
 
     @Override
@@ -227,6 +229,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_EXP + " ADD COLUMN  "
                     + MIN_REM_SHELF_LIFE + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 74
+        try {
+            db.execSQL(CREATE_TABLE_O_BATCH);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 78
+
+        try {
+            db.execSQL("ALTER TABLE " + O_QRCODE + " ADD COLUMN  "
+                    + BATCH_NUMBER_CODE + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -4155,6 +4175,126 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //END TABLE O_EA_UNIT
 
+    //Table O_Batch để chứa dữ liệu số batch
+    public static final String O_BATCH = "O_BATCH";
+    public static final String BATCH_NUMBER = "BATCH_NUMBER";
+    public static final String PRODUCT_CODE_BATCH = "PRODUCT_CODE_BATCH";
+    public static final String PRODUCT_NAME_BATCH = "PRODUCT_NAME_BATCH";
+    public static final String PRODUCT_CD_BATCH = "PRODUCT_CD_BATCH";
+    public static final String EXPIRED_DATE_BATCH = "EXPIRED_DATE_BATCH";
+    public static final String UNIT_BATCH = "UNIT_BATCH";
+    public static final String MANUFACTURING_DATE_BATCH = "MANUFACTURING_DATE_BATCH";
+    public static final String STOCKIN_DATE_BATCH = "STOCKIN_DATE_BATCH";
+    public static final String POSITION_CODE_BATCH = "POSITION_CODE_BATCH";
+    public static final String POSITION_DESCRIPTION_BATCH = "POSITION_DESCRIPTION_BATCH";
+    public static final String WAREHOUSE_POSITION_CD_BATCH = "WAREHOUSE_POSITION_CD_BATCH";
+
+    public static final String CREATE_TABLE_O_BATCH = "CREATE TABLE "
+            + O_BATCH + "("
+            + PRODUCT_CODE_BATCH + " TEXT,"
+            + PRODUCT_NAME_BATCH + " TEXT,"
+            + PRODUCT_CD_BATCH + " TEXT,"
+            + EXPIRED_DATE_BATCH + " TEXT,"
+            + UNIT_BATCH + " TEXT,"
+            + MANUFACTURING_DATE_BATCH + " TEXT,"
+            + STOCKIN_DATE_BATCH + " TEXT,"
+            + POSITION_CODE_BATCH + " TEXT,"
+            + POSITION_DESCRIPTION_BATCH + " TEXT,"
+            + WAREHOUSE_POSITION_CD_BATCH + " TEXT,"
+            + BATCH_NUMBER + " TEXT" + ")";
+
+    public long CreateBatch_Number(Batch_number_Tam batch) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        //values.put(QRCODE, qrcode.getQRCODE());
+        values.put(BATCH_NUMBER, batch.getBATCH_NUMBER());
+        values.put(PRODUCT_CODE_BATCH, batch.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_BATCH, batch.getPRODUCT_NAME());
+        values.put(PRODUCT_CD_BATCH, batch.getPRODUCT_CD());
+        values.put(EXPIRED_DATE_BATCH, batch.getEXPIRED_DATE());
+        values.put(UNIT_BATCH, batch.getUNIT());
+        values.put(MANUFACTURING_DATE_BATCH, batch.getMANUFACTURING_DATE());
+        values.put(STOCKIN_DATE_BATCH, batch.getSTOCKIN_DATE());
+        values.put(POSITION_DESCRIPTION_BATCH, batch.getPOSITION_DESCRIPTION());
+        values.put(WAREHOUSE_POSITION_CD_BATCH, batch.getWAREHOUSE_POSITION_CD());
+        values.put(POSITION_CODE_BATCH, batch.getPOSITION_CODE());
+        // insert row
+        long id = db.insert(O_BATCH, null, values);
+        return id;
+    }
+
+    public ArrayList<Batch_number_Tam>
+    getoneBatch(String batch_number) {
+        ArrayList<Batch_number_Tam> batch = new ArrayList<Batch_number_Tam>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_BATCH + " " + " WHERE "
+                + BATCH_NUMBER + " like " + " '%" + batch_number + "%'";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Batch_number_Tam batch_number_tam = new Batch_number_Tam();
+                batch_number_tam.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER))));
+                batch_number_tam.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_BATCH))));
+                batch_number_tam.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_BATCH))));
+                batch_number_tam.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_BATCH))));
+                batch_number_tam.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_BATCH))));
+                batch_number_tam.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_BATCH))));
+                batch_number_tam.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_BATCH))));
+                batch_number_tam.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_BATCH))));
+                batch_number_tam.setPOSITION_CODE((c.getString(c
+                        .getColumnIndex(POSITION_CODE_BATCH))));
+                batch_number_tam.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_BATCH))));
+                batch_number_tam.setPOSITION_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_DESCRIPTION_BATCH))));
+
+                batch.add(batch_number_tam);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return batch;
+    }
+
+    public ArrayList<Batch_number_Tam>
+    getallBatch() {
+        ArrayList<Batch_number_Tam> batch = new ArrayList<Batch_number_Tam>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT * FROM " + O_BATCH;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Batch_number_Tam batch_number_tam = new Batch_number_Tam();
+                batch_number_tam.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER))));
+
+                batch.add(batch_number_tam);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return batch;
+    }
+
+    public void deleteallBatch_Number() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_BATCH);
+    }
+
 
     //Table O_EXP để chứa dữ liệu quét exp lần đầu
     public static final String O_EXP = "O_EXP";
@@ -4269,6 +4409,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String POSITION_CODE = "POSITION_CODE";
     public static final String POSITION_DESCRIPTION = "POSITION_DESCRIPTION";
     public static final String STOCKIN_DATE = "STOCKIN_DATE";
+    public static final String BATCH_NUMBER_CODE = "BATCH_NUMBER_CODE";
 
 
     public static final String CREATE_TABLE_O_QRCODE = "CREATE TABLE "
@@ -4288,6 +4429,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + POSITION_CODE + " TEXT,"
             + POSITION_DESCRIPTION + " TEXT,"
             + STOCKIN_DATE + " TEXT"
+            + BATCH_NUMBER_CODE + " TEXT"
             + ")";
 
 
@@ -4310,6 +4452,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_CODE, qrcode.getPOSITION_CODE());
         values.put(POSITION_DESCRIPTION, qrcode.getPOSITION_DESCRIPTION());
         values.put(STOCKIN_DATE, qrcode.getSTOCKIN_DATE());
+        values.put(BATCH_NUMBER_CODE, qrcode.getBATCH_NUMBER());
         // insert row
         long id = db.insert(O_QRCODE, null, values);
         return id;
@@ -4578,6 +4721,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_PO))));
                 qrcodeq.setMANUFACTURING_DATE((c.getString(c
                         .getColumnIndex(MANUFACTURING_DATE_WST))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CODE))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
@@ -4722,11 +4867,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("delete from " + O_QRCODE + " WHERE " + STOCK_RECEIPT_CD + " = " + stock);
     }
 
-    public void deleteAllProduct_Qrcode() {
-        // TODO Auto-generated method stub
-        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-        db.execSQL("delete from " + O_QRCODE);
-    }
 
 
     //End Table O_QRCODE
