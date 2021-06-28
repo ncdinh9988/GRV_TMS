@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 82; // version của DB khi thay
+    public static final int DATABASE_VERSION = 88; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -4428,7 +4428,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + POSITION_TO + " TEXT,"
             + POSITION_CODE + " TEXT,"
             + POSITION_DESCRIPTION + " TEXT,"
-            + STOCKIN_DATE + " TEXT"
+            + STOCKIN_DATE + " TEXT,"
             + BATCH_NUMBER_CODE + " TEXT"
             + ")";
 

@@ -307,12 +307,10 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
 
                                 if (bat != "") {
                                     batch_number_t = bat; //TEST
-
                                     Intent intentt = new Intent(getApplication(), ListQrcode.class);
                                     intentt.putExtra("stock_in", "333");
                                     intentt.putExtra("batch", batch_number_t);
                                     startActivity(intentt);
-
                                     finish();
                                     // For example: Call method of MainActivity.
                                     Toast.makeText(Qrcode.this, "You select: " + batch_number_t,

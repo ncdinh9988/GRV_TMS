@@ -626,7 +626,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
             SharedPreferences sharedPreferences = getSharedPreferences("stockReceipt", Context.MODE_PRIVATE);
             String stockReceipt = sharedPreferences.getString("stock", "");
             int statusGetCust ;
-            if(!batch.equals("")){
+            if((batch!= null) && (!batch.equals(""))){
                 batch_number = DatabaseHelper.getInstance().getoneBatch(batch);
                 String pro_cd = batch_number.get(0).getPRODUCT_CD();
                 String pro_code = batch_number.get(0).getPRODUCT_CODE();
