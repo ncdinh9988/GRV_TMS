@@ -227,6 +227,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                                     barcodeData = barcodes.valueAt(0).displayValue;
                                     Toast.makeText(Qrcode.this, barcodeData + "", Toast.LENGTH_LONG).show();
                                     if (barcodeData != null) {
+                                        barcodeData = barcodeData.replace("\n","");
                                         edtBarcode.setText(barcodeData);
                                         GetData(barcodeData);
                                     }

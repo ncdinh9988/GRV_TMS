@@ -245,6 +245,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
                                     Log.e("barcode2", "" + barcodeData);
 
                                     if (barcodeData != null) {
+                                       barcodeData = barcodeData.replace("\n","");
                                         edtBarcode.setText(barcodeData);
                                         GetData(barcodeData);
                                     }
@@ -305,7 +306,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WMP", 0, global.getMasterPickCd());
+            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData , texxt, "WMP", 0, global.getMasterPickCd());
             if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData);
             } else {
@@ -452,7 +453,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2 , final String stockinDateShow) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
         String Ea_Unit_temp = "";

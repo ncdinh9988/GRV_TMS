@@ -242,6 +242,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
                                     Log.e("barcode2", "" + barcodeData);
 
                                     if (barcodeData != null) {
+                                        barcodeData = barcodeData.replace("\n","");
                                         edtBarcode.setText(barcodeData);
                                         GetData(barcodeData);
                                     }

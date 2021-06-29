@@ -256,6 +256,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
 
 
                                     if (barcodeData != null) {
+                                        barcodeData = barcodeData.replace("\n","");
                                         edtBarcode.setText(barcodeData);
                                         GetData(barcodeData);
                                     }

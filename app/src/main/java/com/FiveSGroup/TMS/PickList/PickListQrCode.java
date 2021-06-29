@@ -245,6 +245,7 @@ public class PickListQrCode extends AppCompatActivity {
                                         Log.e("barcode2", "" + barcodeData);
 
                                         if (barcodeData != null) {
+                                            barcodeData = barcodeData.replace("\n","");
                                             edtBarcode.setText(barcodeData);
                                             GetData(barcodeData);
                                         }
@@ -428,7 +429,7 @@ public class PickListQrCode extends AppCompatActivity {
     }
 
     private void ReturnProduct(String barcode, String expDatetemp ,String stockinDateShow) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), ListPickList.class);

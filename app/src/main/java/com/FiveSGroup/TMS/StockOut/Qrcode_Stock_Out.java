@@ -245,6 +245,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
                                     Log.e("barcode2", "" + barcodeData);
 
                                     if (barcodeData != null) {
+                                        barcodeData = barcodeData.replace("\n","");
                                         edtBarcode.setText(barcodeData);
                                         GetData(barcodeData);
                                     }

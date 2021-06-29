@@ -252,6 +252,7 @@ public class InventoryScanCode extends AppCompatActivity {
                                     Log.e("barcode2", "" + barcodeData);
 
                                     if (barcodeData != null) {
+                                        barcodeData = barcodeData.replace("\n","");
                                         edtBarcode.setText(barcodeData);
                                         GetData(barcodeData);
                                     }
