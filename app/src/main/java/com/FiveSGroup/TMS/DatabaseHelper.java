@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 88; // version của DB khi thay
+    public static final int DATABASE_VERSION = 90; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -4474,6 +4474,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_FROM, qrcode.getPRODUCT_FROM());
         values.put(POSITION_TO, qrcode.getPRODUCT_TO());
         values.put(STOCKIN_DATE, qrcode.getSTOCKIN_DATE());
+        values.put(BATCH_NUMBER_CODE, qrcode.getBATCH_NUMBER());
         // updating row
         return db.update(O_QRCODE, values, "PRODUCT_CD" + " = ?" + " AND STOCK_RECEIPT_CD = ? AND EXPIRED_DATE = ? AND STOCKIN_DATE = ?  AND EA_UNIT = ?",
                 new String[]{String.valueOf(PRODUCT_CD), String.valueOf(stock), String.valueOf(exp_date),String.valueOf(stockindate) ,String.valueOf(ea_unit)});
@@ -4630,6 +4631,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(WAREHOUSE_POSITION_CD,qrcode.getWAREHOUSE_POSITION_CD());
         values.put(EXPIRED_DATE, qrcode.getEXPIRED_DATE());
         values.put(EA_UNIT, qrcode.getEA_UNIT());
+        values.put(BATCH_NUMBER_CODE, qrcode.getBATCH_NUMBER());
         values.put(SET_UNIT, sl);
         values.put(POSITION_FROM, qrcode.getPRODUCT_FROM());
         values.put(POSITION_TO, qrcode.getPRODUCT_TO());
@@ -4664,6 +4666,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_PO))));
                 qrcodeq.setMANUFACTURING_DATE((c.getString(c
                         .getColumnIndex(MANUFACTURING_DATE_WST))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CODE))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
@@ -4747,6 +4751,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(POSITION_CODE))));
                 qrcodeq.setPOSITION_DESCRIPTION((c.getString(c
                         .getColumnIndex(POSITION_DESCRIPTION))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CODE))));
                 qrcodeq.setSTOCKIN_DATE((c.getString(c
                         .getColumnIndex(STOCKIN_DATE))));
 
@@ -4763,7 +4769,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_Qrcode_Sync(String stock) {
         ArrayList<Product_Qrcode> qrcode = new ArrayList<Product_Qrcode>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT MANUFACTURING_DATE_WST , WAREHOUSE_POSITION_CD, STOCK_RECEIPT_CD, PRODUCT_CD, PRODUCT_CODE, PRODUCT_NAME, SET_UNIT, POSITION_FROM, POSITION_TO" +
+        String selectQuery = "SELECT MANUFACTURING_DATE_WST , BATCH_NUMBER_CODE ,  WAREHOUSE_POSITION_CD, STOCK_RECEIPT_CD, PRODUCT_CD, PRODUCT_CODE, PRODUCT_NAME, SET_UNIT, POSITION_FROM, POSITION_TO" +
                 ", POSITION_CODE, POSITION_DESCRIPTION, EA_UNIT , REPLACE(EXPIRED_DATE,'------','') as EXPIRED_DATE, REPLACE(STOCKIN_DATE,'------','') as STOCKIN_DATE FROM " + O_QRCODE + " " + " WHERE " + STOCK_RECEIPT_CD + " = " + stock;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -4799,8 +4805,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(POSITION_CODE))));
                 qrcodeq.setPOSITION_DESCRIPTION((c.getString(c
                         .getColumnIndex(POSITION_DESCRIPTION))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CODE))));
                 qrcodeq.setSTOCKIN_DATE((c.getString(c
                         .getColumnIndex(STOCKIN_DATE))));
+
 
 
                 qrcode.add(qrcodeq);

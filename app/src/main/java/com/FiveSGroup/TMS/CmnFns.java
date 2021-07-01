@@ -1600,6 +1600,7 @@ public class CmnFns {
                     qrcode1.setPOSITION_DESCRIPTION(pro_position_des);
                     qrcode1.setSL_SET(String.valueOf(pro_set));
                     qrcode1.setMANUFACTURING_DATE(stockinDate);
+                    qrcode1.setBATCH_NUMBER("");
 
 
                     qrcode1.setEA_UNIT(unit);
@@ -2605,7 +2606,9 @@ public class CmnFns {
     }
 
 
-    public String synchronizeGETPositionInfoo(String unique_id , String userCode, String barcode, String positionReceive, String productCd, String expDate, String ea_unit, String stockin, String positionFrom, String positionTo, String type, int isLPN) {
+    public String synchronizeGETPositionInfoo(String unique_id , String userCode, String barcode, String positionReceive,
+                                              String productCd, String expDate, String ea_unit, String stockin,
+                                              String positionFrom, String positionTo, String type, int isLPN) {
 
         String postitionDes = " ";
         Webservice webService = new Webservice();
@@ -2687,7 +2690,6 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_warehouse_Adjustment(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
-
                         } else if (type.equals("WPA")) {
                             //putaway
                             if (isLPN == 1) {
@@ -2701,14 +2703,20 @@ public class CmnFns {
                             ArrayList<Product_Master_Pick> listSP = new ArrayList<>();
                             listSP = DatabaseHelper.getInstance().getoneListSP_Master_Pick(unique_id);
                             String ProductCode = listSP.get(0).getPRODUCT_CODE();
-                            String LPNCode = listSP.get(0).getLPN_CODE();
-                            String PositionCode = listSP.get(0).getPOSITION_FROM_CODE();
-                            String check_position = webService.Check_Suggest_Position_Master_Pick(userCode,ProductCode, ea_unit,LPNCode,PositionCode,stockin,expDate ,global.getMasterPickCd());
-                            if (check_position.equals("-1")) {
-                                return "-1";
-                            } else if (result.equals("0")) {
-                                return "0";
+                            String PositionCode = "" ;
+                            String LPNCode = "" ;
+                            if(isLPN == 1){
+                                LPNCode = barcode;
+                            }else{
+                                 PositionCode = barcode;
                             }
+
+//                            String check_position = webService.Check_Suggest_Position_Master_Pick(userCode,ProductCode, ea_unit,LPNCode,PositionCode,stockin,expDate ,global.getMasterPickCd());
+//                            if (check_position.equals("-1")) {
+//                                return "-1";
+//                            } else if (result.equals("0")) {
+//                                return "0";
+//                            }
                             //
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);

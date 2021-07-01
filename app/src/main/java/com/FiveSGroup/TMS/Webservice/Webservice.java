@@ -628,7 +628,7 @@ public class Webservice {
     public String Check_Suggest_Position_Master_Pick(String UserCode, String ProductCode, String Unit ,
                                                      String LPNCode, String PositionCode, String Stockin, String Expired , String CD) {
 
-        String webServiceFunc = "synchronizeGETPositionInfo";
+        String webServiceFunc = "Check_Suggest_Position_Master_Pick";
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
         // Param 1
         PropertyInfo param1 = new PropertyInfo();
