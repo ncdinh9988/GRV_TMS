@@ -48,6 +48,7 @@ import com.FiveSGroup.TMS.BuildConfig;
 import com.FiveSGroup.TMS.CPhoto;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.HomeActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.global;
 
@@ -168,10 +169,13 @@ public class FCustomerAddNewEdit extends Activity implements View.OnClickListene
         try {
             switch (v.getId()) {
                 case R.id.btnHome:
-                    Intent i = new Intent();
-                    if (customer == null) {
-                        customer = new CCustomer();
-                    }
+                    Intent t = new Intent(FCustomerAddNewEdit.this, HomeActivity.class);
+                    startActivity(t);
+//
+//                    Intent i = new Intent();
+//                    if (customer == null) {
+//                        customer = new CCustomer();
+//                    }
                     finish();
                     break;
                 case R.id.btnUpdate:

@@ -25,12 +25,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.FiveSGroup.TMS.AddCustomerFragment.FCustomerAddNewEdit;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.HomeActivity;
 import com.FiveSGroup.TMS.R;
-import com.FiveSGroup.TMS.global;
 
 public class Home_Ware extends Fragment {
     WebView webViewPickList;

@@ -90,44 +90,44 @@ public class HomeActivity extends AppCompatActivity {
         //}
     }
 
-    private void addEvents(String url) {
-        //String url = "https://voucherpg.com/Phase2/LOGINv2.aspx";
-
-        if (CmnFns.isNetworkAvailable()) {
-            webViewPickList.getSettings().setJavaScriptEnabled(true);
-            webViewPickList.getSettings().setUseWideViewPort(true);
-            webViewPickList.getSettings().setLoadWithOverviewMode(true);
-            webViewPickList.canGoBack();
-            webViewPickList.getSettings().setSupportZoom(true);
-            webViewPickList.canGoForward();
-            webViewPickList.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-            webViewPickList.setInitialScale(1);
-            webViewPickList.loadUrl(url);
-
-            webViewPickList.setWebViewClient(new MyBrowser());
-
-            webViewPickList.setWebChromeClient(new WebChromeClient() {
-                @Override
-                public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-                    //Required functionality here
-                    return super.onJsAlert(view, url, message, result);
-                }
-
-                @Override
-                public void onProgressChanged(WebView view, int newProgress) {
-                    super.onProgressChanged(view, newProgress);
-                    progressBar.setProgress(newProgress);
-                    if (newProgress == 100) {
-                        try {
-                            progressBar.setVisibility(View.GONE);
-                        } catch (Exception e) {
-                        }
-
-                    }
-                }
-            });
-        }
-    }
+//    private void addEvents(String url) {
+//        //String url = "https://voucherpg.com/Phase2/LOGINv2.aspx";
+//
+//        if (CmnFns.isNetworkAvailable()) {
+//            webViewPickList.getSettings().setJavaScriptEnabled(true);
+//            webViewPickList.getSettings().setUseWideViewPort(true);
+//            webViewPickList.getSettings().setLoadWithOverviewMode(true);
+//            webViewPickList.canGoBack();
+//            webViewPickList.getSettings().setSupportZoom(true);
+//            webViewPickList.canGoForward();
+//            webViewPickList.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+//            webViewPickList.setInitialScale(1);
+//            webViewPickList.loadUrl(url);
+//
+//            webViewPickList.setWebViewClient(new MyBrowser());
+//
+//            webViewPickList.setWebChromeClient(new WebChromeClient() {
+//                @Override
+//                public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+//                    //Required functionality here
+//                    return super.onJsAlert(view, url, message, result);
+//                }
+//
+//                @Override
+//                public void onProgressChanged(WebView view, int newProgress) {
+//                    super.onProgressChanged(view, newProgress);
+//                    progressBar.setProgress(newProgress);
+//                    if (newProgress == 100) {
+//                        try {
+//                            progressBar.setVisibility(View.GONE);
+//                        } catch (Exception e) {
+//                        }
+//
+//                    }
+//                }
+//            });
+//        }
+//    }
 
 
     private class MyBrowser extends WebViewClient {
@@ -185,7 +185,7 @@ public class HomeActivity extends AppCompatActivity {
                     fragment = new FragAddCustomer();
                     break;
                 case R.id.navigation_map:
-                    try {
+//                    try {
                         eventBus = EventBus.getDefault().getStickyEvent(SaveLinkEventbus.class);
                         // nếu có nút home ở giao diện thì mới lấy tất
                         if (eventBus==null || !eventBus.getUrl().contains("&Cust_Code")) {
@@ -199,13 +199,15 @@ public class HomeActivity extends AppCompatActivity {
                             }
                             Intent intent = new Intent(HomeActivity.this, MainMapActivity.class);
                             startActivity(intent);
+//                            Toast.makeText(HomeActivity.this,"mainmap",Toast.LENGTH_LONG).show();
                         }else if (eventBus.getUrl().contains("&Cust_Code")){
                             Intent intent = new Intent(HomeActivity.this, MapActivity.class);
                             startActivity(intent);
+//                            Toast.makeText(HomeActivity.this,"twomap",Toast.LENGTH_LONG).show();
                         }
-                    } catch (Exception e){
-                        Log.e("eeeee", e.getMessage());
-                    }
+//                    } catch (Exception e){
+//                        Log.e("eeeee", e.getMessage());
+//                    }
                     break;
 
             }

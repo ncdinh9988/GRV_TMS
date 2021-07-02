@@ -30,15 +30,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.FiveSGroup.TMS.AddCustomerFragment.FCustomerAddNewEdit;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.ValueEventbus;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
-import com.FiveSGroup.TMS.Webservice.Webservice;
 import com.FiveSGroup.TMS.global;
 
 import org.greenrobot.eventbus.EventBus;
