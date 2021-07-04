@@ -2276,7 +2276,6 @@ public class CmnFns {
 
         Webservice webService = new Webservice();
 
-
         String result = webService.GetProductByZone(qrcode, admin, "WPA", isLNP, "");
 
         if (result.equals("-1")) {
@@ -2551,7 +2550,6 @@ public class CmnFns {
                         pickList.setLPN_FROM(lpnCode);
                         pickList.setPOSITION_FROM_DESCRIPTION(description);
                         pickList.setQTY_SET_AVAILABLE(quanity);
-
                     }
 
                     if (isLPN == 0) {

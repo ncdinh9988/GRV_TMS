@@ -968,8 +968,16 @@ public class Webservice {
 
     public String GetParam_LPN() {
 
-        String webServiceFunc = "showLPNCode";
+        String webServiceFunc = "showLPNCode_By_User";
+//        String webServiceFunc = "showLPNCode";
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+
+//        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("UserCode");
+        param1.setValue(CmnFns.readDataAdmin());
+        param1.setType(String.class);
+        request.addProperty(param1);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);

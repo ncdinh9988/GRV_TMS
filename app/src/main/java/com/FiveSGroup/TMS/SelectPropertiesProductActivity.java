@@ -308,7 +308,10 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             Toast.makeText(this, "Vui lòng chọn đơn vị ", Toast.LENGTH_SHORT).show();
         }
         else if((expiredDate.equals(""))&&(stockinDate.equals(""))){
-            Toast.makeText(this, "Vui lòng chọn HSD hoặc NSX ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Vui lòng chọn HSD hoặc (NSX và shelflife)", Toast.LENGTH_SHORT).show();
+        }
+        else if((expiredDate.equals(""))&&(!stockinDate.equals(""))&&(shelfLife.equals(""))) {
+            Toast.makeText(this, "Vui lòng chọn HSD hoặc (NSX và shelflife)", Toast.LENGTH_SHORT).show();
         }
         else {
             try {
