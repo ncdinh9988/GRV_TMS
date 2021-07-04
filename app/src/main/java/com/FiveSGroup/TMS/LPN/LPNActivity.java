@@ -109,8 +109,6 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
         btnCreateLPN.setOnClickListener(this);
         buttonPutToPallet.setOnClickListener(this);
 
-
-
         idbarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,8 +124,6 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
                 Button btnNo = layout_cus.findViewById(R.id.btnNo);
                 Button btnYes = layout_cus.findViewById(R.id.btnYes);
                 final EditText editText = layout_cus.findViewById(R.id.tvTextBack);
-
-
 
                 btnNo.setOnClickListener(new View.OnClickListener() {
                     @Override

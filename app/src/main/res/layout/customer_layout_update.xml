@@ -140,7 +140,6 @@
                             android:ems="10"
                             android:imeOptions="actionNext"
                             android:inputType="text"
-                            android:maxLength="6"
                             android:padding="5dp"
                             android:textColor="@color/black"></EditText>
                     </LinearLayout>

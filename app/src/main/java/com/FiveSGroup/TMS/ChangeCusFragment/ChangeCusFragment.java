@@ -104,6 +104,7 @@ public class ChangeCusFragment extends Fragment {
         btnHome = view.findViewById(R.id.btnHome);
 
         edtCustomerCode = view.findViewById(R.id.editCustomerCode);
+        edtCustomerCode.setFocusable(false);
         edtCustomerName = view.findViewById(R.id.editCustomerName);
         edtCustomerAddress = view.findViewById(R.id.editCustomerAddress);
         edtCustomerPhone = view.findViewById(R.id.editCustomerPhoneNumber);

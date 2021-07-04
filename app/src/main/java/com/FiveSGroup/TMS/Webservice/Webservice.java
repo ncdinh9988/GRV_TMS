@@ -994,8 +994,15 @@ public class Webservice {
 
     public String Create_LPN() {
 
-        String webServiceFunc = "createLPNCode";
+        String webServiceFunc = "createLPNCode_By_User";
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("UserCode");
+        param1.setValue(CmnFns.readDataAdmin());
+        param1.setType(String.class);
+        request.addProperty(param1);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);
@@ -1019,7 +1026,6 @@ public class Webservice {
     }
 
     public String GetProductLetDownSuggestion(String userCode) {
-
 
         String webServiceFunc = "Get_Product_LetDown";
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
