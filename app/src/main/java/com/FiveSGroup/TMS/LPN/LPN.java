@@ -4,6 +4,24 @@ public class LPN {
     private String LPN_NUMBER;
     private String LPN_CODE;
     private String LPN_DATE;
+    private String USER_CREATE;
+    private String STORAGE;
+
+    public String getUSER_CREATE() {
+        return USER_CREATE;
+    }
+
+    public void setUSER_CREATE(String USER_CREATE) {
+        this.USER_CREATE = USER_CREATE;
+    }
+
+    public String getSTORAGE() {
+        return STORAGE;
+    }
+
+    public void setSTORAGE(String STORAGE) {
+        this.STORAGE = STORAGE;
+    }
 
     public String getLPN_NUMBER() {
         return LPN_NUMBER;

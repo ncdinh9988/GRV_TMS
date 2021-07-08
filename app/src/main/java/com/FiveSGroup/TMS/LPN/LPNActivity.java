@@ -45,7 +45,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 
     private Button buttonBack, btnCreateLPN, buttonPutToPallet;
     private ProgressDialog progressSyncProgram;
-    private TextView createDate , idbarcode;
+    private TextView createDate , idbarcode , idwarehouse;
     String  press ="";
     private RecyclerView rvListLPN;
     private SwipeRefreshLayout swipeRefesh;
@@ -97,6 +97,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
     private void init() {
         buttonPutToPallet = findViewById(R.id.buttonPutToPallet);
         createDate = findViewById(R.id.priceproduct);
+        idwarehouse = findViewById(R.id.idwarehouse);
         idbarcode = findViewById(R.id.idproduct);
 //        spinner = findViewById(R.id.spinner);
         buttonBack = findViewById(R.id.buttonBack);

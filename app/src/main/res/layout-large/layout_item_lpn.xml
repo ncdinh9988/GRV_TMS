@@ -15,7 +15,6 @@
         <TextView
             android:id="@+id/tvSTT"
             android:layout_width="0dp"
-            android:paddingLeft="10dp"
             android:layout_weight="1.5"
             android:layout_height="match_parent"
             android:text="1"
@@ -23,53 +22,51 @@
             android:textColor="@color/black" />
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="0.5"
-            android:paddingLeft="20dp"
-
+            android:layout_weight="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tvCode"
                 android:paddingTop="10dp"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="1111111111"
-                android:gravity="left|center"
+                android:gravity="center"
                 android:textStyle="bold"
                 android:textColor="@color/black" />
 
-            <TextView
-                android:id="@+id/tvuser_create"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:paddingLeft="0dp"
-                android:text="Nguyễn Thái Học"
-                android:gravity="left|center"
-                android:textColor="@color/black" />
+                <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/tvuser_create"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Nguyễn Thái Học"
+                    android:gravity="center"
+                    android:textColor="@color/black" />
+
 
         </LinearLayout>
-
         <TextView
-
             android:id="@+id/tvDate"
             android:layout_width="0dp"
-            android:layout_weight="5"
-            android:paddingLeft="10dp"
+            android:layout_weight="4"
             android:layout_height="match_parent"
             android:text="Ngày Tạo"
-            android:gravity="left|center"
+            android:gravity="center"
             android:textColor="@color/black"
             />
         <TextView
-
             android:id="@+id/tvstorage"
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:layout_height="match_parent"
             android:text="Có Hàng"
             android:gravity="center"
             android:textColor="@color/black"
             />
+
+
 
 
     </LinearLayout>

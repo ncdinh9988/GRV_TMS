@@ -1,18 +1,15 @@
-package com.FiveSGroup.TMS.LoadPallet;
+package com.FiveSGroup.TMS.CancelGood;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Camera;
-import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -23,7 +20,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -34,16 +30,18 @@ import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
+import com.FiveSGroup.TMS.global;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-public class LoadPalletQRCode extends AppCompatActivity {
+public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClickListener {
+
+
     private SurfaceView surfaceView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
@@ -53,7 +51,6 @@ public class LoadPalletQRCode extends AppCompatActivity {
     private String barcodeData;
     private CheckBox checkBoxGetDVT, checkBoxGetLPN;
     boolean check = false;
-    android.hardware.Camera camera;
     Intent intent;
     String position = "";
     String product_cd = "";
@@ -61,18 +58,18 @@ public class LoadPalletQRCode extends AppCompatActivity {
     String expiredDate = " ";
     String ea_unit_position = " ";
     String stockinDate = "";
-    String unique_id = "";
+    String checkToFinish = "", id_unique_SO = "";
+
 
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     View viewScan;
     Button buttonBack, btnSend;
-    private EditText edtBarcode;;
-    android.hardware.Camera.Parameters params;
+    private EditText edtBarcode;
+    ;
 
     private boolean isUp;
-    String checkToFinish = "";
 
     @Override
     protected void onStart() {
@@ -96,35 +93,22 @@ public class LoadPalletQRCode extends AppCompatActivity {
 
         }
         check = true;
-
-        setCheckBox();
         getDataFromIntent();
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (position != null || checkToFinish != null) {
-                    Intent intent = new Intent(LoadPalletQRCode.this, LoadPalletActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    finish();
-                }
-            }
-        });
+
+        buttonBack.setOnClickListener(this);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    CmnFns.hideSoftKeyboard(LoadPalletQRCode.this);
-                }catch (Exception e){
+                try {
+                    CmnFns.hideSoftKeyboard(Qrcode_CancelGood.this);
+                } catch (Exception e) {
 
                 }
                 String barcode = edtBarcode.getText().toString();
                 GetData(barcode);
             }
         });
-
-
+        setCheckBox();
     }
 
     private void init() {
@@ -136,9 +120,8 @@ public class LoadPalletQRCode extends AppCompatActivity {
         checkBoxGetDVT = findViewById(R.id.checkBoxGetDVT);
         checkBoxGetLPN = findViewById(R.id.checkBoxGetLPN);
         textViewTitle = findViewById(R.id.tvTitle);
-        textViewTitle.setText("QUÉT MÃ - CHUYỂN VỊ TRÍ");
+        textViewTitle.setText("QUÉT MÃ - XUẤT HỦY");
         buttonBack = findViewById(R.id.buttonQRBack);
-//        checkBoxGetLPN.setVisibility(View.INVISIBLE);
     }
 
     private void setCheckBox() {
@@ -167,11 +150,12 @@ public class LoadPalletQRCode extends AppCompatActivity {
         ea_unit_position = intent.getStringExtra("ea_unit_position");
         // position được truyền qua để định danh nó được bấm from hay to
         position = intent.getStringExtra("position");
-        unique_id = intent.getStringExtra("unique_id");
         // được tuyền qua từ adapter
         product_cd = intent.getStringExtra("product_cd");
         // được truyền qua từ adapter
         stock = intent.getStringExtra("stock");
+        id_unique_SO = intent.getStringExtra("id_unique_SO");
+
 
         // expiredDate truyền từ adapter để xử lí from - to
         expiredDate = intent.getStringExtra("c");
@@ -181,24 +165,15 @@ public class LoadPalletQRCode extends AppCompatActivity {
             checkBoxGetDVT.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setChecked(false);
-
             if (position.equals("1")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
-                checkBoxGetLPN.setVisibility(View.VISIBLE);
-                checkBoxGetLPN.setEnabled(true);
             } else if (position.equals("2")) {
-                checkBoxGetLPN.setVisibility(View.VISIBLE);
-                checkBoxGetLPN.setChecked(true);
-                checkBoxGetLPN.setEnabled(false);
                 textViewTitle.setText("QUÉT VỊ TRÍ ĐẾN");
             }
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
-            checkBoxGetLPN.setChecked(false);
-            checkBoxGetLPN.setEnabled(false);
-
-            textViewTitle.setText("QUÉT MÃ - CHẤT HÀNG LÊN PALLET");
+            textViewTitle.setText("QUÉT MÃ - XUẤT HỦY");
         }
 
     }
@@ -212,17 +187,19 @@ public class LoadPalletQRCode extends AppCompatActivity {
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setRequestedPreviewSize(1920, 1080)
+                .setRequestedFps(30.0f)
                 .setAutoFocusEnabled(true) //you should add this feature
                 .build();
+
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    if (ActivityCompat.checkSelfPermission(LoadPalletQRCode.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(Qrcode_CancelGood.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
                     } else {
-                        ActivityCompat.requestPermissions(LoadPalletQRCode.this, new
+                        ActivityCompat.requestPermissions(Qrcode_CancelGood.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
 
@@ -240,19 +217,6 @@ public class LoadPalletQRCode extends AppCompatActivity {
             public void surfaceDestroyed(SurfaceHolder holder) {
                 cameraSource.stop();
             }
-
-
-        });
-
-        surfaceView.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                cameraFocus(event, cameraSource, android.hardware.Camera.Parameters.FOCUS_MODE_AUTO, surfaceView);
-
-                return false;
-            }
         });
 
 
@@ -265,6 +229,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 Log.d("TAG", "receiveDetections: " + barcodes);
+
                 if (barcodes.size() != 0) {
                     if (check == true) {
                         check = false;
@@ -273,21 +238,21 @@ public class LoadPalletQRCode extends AppCompatActivity {
 
                             @Override
                             public void run() {
+
                                 try {
                                     barcodeData = barcodes.valueAt(0).displayValue;
-                                    Toast.makeText(LoadPalletQRCode.this, barcodeData + "", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Qrcode_CancelGood.this, barcodeData + "", Toast.LENGTH_LONG).show();
                                     Log.e("barcode2", "" + barcodeData);
 
-
                                     if (barcodeData != null) {
-                                        barcodeData = barcodeData.replace("\n","");
+                                        barcodeData = barcodeData.replace("\n", "");
                                         edtBarcode.setText(barcodeData);
                                         GetData(barcodeData);
                                     }
                                 } catch (Exception e) {
-                                    Toast.makeText(LoadPalletQRCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Qrcode_CancelGood.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                                     Log.d("#777: ", e.getMessage());
-                                    Intent intent = new Intent(LoadPalletQRCode.this, LoadPalletActivity.class);
+                                    Intent intent = new Intent(Qrcode_CancelGood.this, ListQrcode_CancelGood.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -295,86 +260,28 @@ public class LoadPalletQRCode extends AppCompatActivity {
                             }
                         });
                     }
+
+
                 }
+
             }
         });
     }
 
-
-    private boolean cameraFocus(MotionEvent event, @NonNull CameraSource cameraSource, @NonNull String focusMode, SurfaceView cameraView) {
-        Field[] declaredFields = CameraSource.class.getDeclaredFields();
-
-        int pointerId = event.getPointerId(0);
-        int pointerIndex = event.findPointerIndex(pointerId);
-        // Get the pointer's current position
-        float x = event.getX(pointerIndex);
-        float y = event.getY(pointerIndex);
-
-        float touchMajor = event.getTouchMajor();
-        float touchMinor = event.getTouchMinor();
-
-        Rect touchRect = new Rect((int) (x - touchMajor / 2), (int) (y - touchMinor / 2), (int) (x + touchMajor / 2), (int) (y + touchMinor / 2));
-
-        Rect focusArea = new Rect();
-
-        focusArea.set(touchRect.left * 2000 / cameraView.getWidth() - 1000,
-                touchRect.top * 2000 / cameraView.getHeight() - 1000,
-                touchRect.right * 2000 / cameraView.getWidth() - 1000,
-                touchRect.bottom * 2000 / cameraView.getHeight() - 1000);
-
-        // Submit focus area to camera
-
-        ArrayList<android.hardware.Camera.Area> focusAreas = new ArrayList<android.hardware.Camera.Area>();
-        focusAreas.add(new android.hardware.Camera.Area(focusArea, 1000));
-
-        for (Field field : declaredFields) {
-            if (field.getType() == Camera.class) {
-                field.setAccessible(true);
-                try {
-                    camera = (android.hardware.Camera) field.get(cameraSource);
-                    if (camera != null) {
-                        params = camera.getParameters();
-                        params.setFocusMode(focusMode);
-                        params.setFocusAreas(focusAreas);
-                        camera.setParameters(params);
-
-                        // Start the autofocus operation
-
-                        camera.autoFocus(new android.hardware.Camera.AutoFocusCallback() {
-                            @Override
-                            public void onAutoFocus(boolean success, android.hardware.Camera camera) {
-                                // currently set to auto-focus on single touch
-                            }
-                        });
-                        return true;
-                    }
-
-                    return false;
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-
-                break;
-            }
-        }
-        return false;
-    }
-
-    private void GetData(final String barcodeData){
+    private void GetData(final String barcodeData) {
         String texxt = CmnFns.readDataAdmin();
-        //TODO: Kiểm tra lại có dùng được chung hàm getPutAwayFromServer() không?
-
+//*****************************
         if (checkBoxGetLPN.isChecked()) {
             if (expiredDate != null) {
-                Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
+                Intent intentt = new Intent(getApplication(), ListQrcode_CancelGood.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("returnposition", position);
-                intentt.putExtra("unique_id", unique_id);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
-                intentt.putExtra("load_pallet", "333");
+                intentt.putExtra("id_unique_SO", id_unique_SO);
+                intentt.putExtra("cancel", "333");
 
                 // truyền qua cho ListQRCode để xử lí from - to
                 intentt.putExtra("expdate", expiredDate);
@@ -390,23 +297,24 @@ public class LoadPalletQRCode extends AppCompatActivity {
 
 
             } else {
-                Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
+                Intent intentt = new Intent(getApplication(), ListQrcode_CancelGood.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
-                intentt.putExtra("load_pallet", "333");
+                intentt.putExtra("cancel", "333");
+                intentt.putExtra("id_unique_SO", id_unique_SO);
                 startActivity(intentt);
                 finish();
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WPP", 0, "");
-            // expiredDate nhận giá trị từ adapter để xử lí position
+            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WCG", 0, global.getCancelCD());
             if (statusGetCustt != 1) {
-                ReturnPosition(barcodeData);
+                ReturnPosition(barcodeData, stockinDate);
             } else {
+                // expiredDate nhận giá trị từ adapter để xử lí position
                 if (expiredDate != null) {
 
-                    ReturnPosition(barcodeData);
+                    ReturnPosition(barcodeData, stockinDate);
 
                 } else {
                     try {
@@ -414,12 +322,14 @@ public class LoadPalletQRCode extends AppCompatActivity {
                         final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
 
                         if (expired_date.size() > 1) {
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(LoadPalletQRCode.this);
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_CancelGood.this);
                             builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
 
                             final ArrayList<String> exp_date = new ArrayList<>();
                             for (int i = 0; i < expired_date.size(); i++) {
                                 exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
+                                //    exp_date.add(expired_date.get(i).getSTOCKIN_DATE_TAM());
+
                             }
 
                             // chuyển đổi exp_date thành mảng chuỗi String
@@ -437,15 +347,15 @@ public class LoadPalletQRCode extends AppCompatActivity {
                                     if (expDate != "") {
                                         // expDateTemp2 lấy giá trị HSD được người dùng chọn
                                         expDateTemp2 = expDate;
-                                        String chuoi[] = expDateTemp2.split(" - ");
-                                        if (chuoi[0].equals("Khác")){
-                                            Intent intent = new Intent(LoadPalletQRCode.this, SelectPropertiesProductActivity.class);
-                                            intent.putExtra("typeScan", "scan_from_load_pallet");
+                                        String[] chuoi = expDateTemp2.split(" - ");
+                                        if (chuoi[0].equals("Khác")) {
+                                            Intent intent = new Intent(Qrcode_CancelGood.this, SelectPropertiesProductActivity.class);
+                                            intent.putExtra("typeScan", "scan_from_cancel");
                                             intent.putExtra("btn1", barcodeData);
                                             intent.putExtra("returnposition", position);
-                                            intent.putExtra("unique_id", unique_id);
                                             intent.putExtra("returnCD", product_cd);
                                             intent.putExtra("returnStock", stock);
+                                            intent.putExtra("id_unique_SO", id_unique_SO);
                                             DatabaseHelper.getInstance().deleteallExp_date();
                                             DatabaseHelper.getInstance().deleteallEa_Unit();
                                             startActivity(intent);
@@ -454,19 +364,13 @@ public class LoadPalletQRCode extends AppCompatActivity {
                                         }
                                         if (!checkBoxGetDVT.isChecked()) {
                                             ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
-                                            // ReturnProduct(barcodeData, expDateTemp2, "");
 
                                         } else {
-                                            //int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
                                             ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
-
-
                                         }
 
                                     }
-                                    // Do some thing....
-                                    // For example: Call method of MainActivity.
-                                    Toast.makeText(LoadPalletQRCode.this, "You select: " + expDate,
+                                    Toast.makeText(Qrcode_CancelGood.this, "You select: " + expDate,
                                             Toast.LENGTH_LONG).show();
 
                                 }
@@ -480,46 +384,50 @@ public class LoadPalletQRCode extends AppCompatActivity {
                             } catch (Exception e) {
 
                             }
-                            String chuoi[] = expDatetemp.split(" - ");
+                            String[] chuoi = expDatetemp.split(" - ");
 
                             if (!checkBoxGetDVT.isChecked()) {
                                 ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
                             } else {
-                                //int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
                                 ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
                             }
                         } else {
-                            Toast.makeText(LoadPalletQRCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(LoadPalletQRCode.this, LoadPalletActivity.class);
-                            intent.putExtra("load_pallet", "333");
+                            Toast.makeText(Qrcode_CancelGood.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(Qrcode_CancelGood.this, ListQrcode_CancelGood.class);
+                            intent.putExtra("cancel", "333");
+                            intent.putExtra("btn1", barcodeData);
+                            intent.putExtra("id_unique_SO", id_unique_SO);
                             startActivity(intent);
                             finish();
-
                         }
                     } catch (Exception e) {
-                        Toast.makeText(LoadPalletQRCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Qrcode_CancelGood.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                         Log.d("#778:", e.getMessage());
                     }
 
                 }
             }
+
         }
     }
 
-    private void ReturnPosition(String barcode) {
-        Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
+    private void ReturnPosition(String barcode, String stockinDateShow) {
+        Intent intentt = new Intent(getApplication(), ListQrcode_CancelGood.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
-        intentt.putExtra("unique_id", unique_id);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
-        intentt.putExtra("load_pallet", "333");
-        intentt.putExtra("stockin_date", stockinDate);
+        intentt.putExtra("cancel", "333");
+        intentt.putExtra("stockin_date", stockinDateShow);
+        intentt.putExtra("id_unique_SO", id_unique_SO);
+
 
         // truyền qua cho ListQRCode để xử lí from - to
         intentt.putExtra("expdate", expiredDate);
 
+        Log.e("barcodeData1", "" + barcodeData);
+        Log.e("nhận từ 2 nút", "" + position);
         startActivity(intentt);
         DatabaseHelper.getInstance().deleteallExp_date();
         DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -533,15 +441,15 @@ public class LoadPalletQRCode extends AppCompatActivity {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
-        Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
+        Intent intentt = new Intent(getApplication(), ListQrcode_CancelGood.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
-        intentt.putExtra("unique_id", unique_id);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("exp_date", expDatetemp);
-        intentt.putExtra("load_pallet", "333");
+        intentt.putExtra("cancel", "333");
         if (stockinDate == null) {
             intentt.putExtra("stockin_date", stockinDateShow);
 
@@ -550,13 +458,10 @@ public class LoadPalletQRCode extends AppCompatActivity {
         }
         if (ea_unit_tams.size() > 0) {
             intentt.putExtra("ea_unit", ea_unit_tams.get(0).getEA_UNIT_TAM());
-
         } else {
             intentt.putExtra("ea_unit", " ");
         }
 
-        Log.e("barcodeData1", "" + barcodeData);
-        Log.e("nhận từ 2 nút", "" + position);
         startActivity(intentt);
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
@@ -587,32 +492,29 @@ public class LoadPalletQRCode extends AppCompatActivity {
         final String[] mString = mStringArray;
 
 
-        AlertDialog.Builder builderDVT = new AlertDialog.Builder(LoadPalletQRCode.this);
+        AlertDialog.Builder builderDVT = new AlertDialog.Builder(Qrcode_CancelGood.this);
         builderDVT.setTitle("CHỌN ĐƠN VỊ TÍNH");
         builderDVT.setCancelable(false);
         builderDVT.setItems(mString, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(LoadPalletQRCode.this, mString[which], Toast.LENGTH_LONG).show();
-                Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
+                Toast.makeText(Qrcode_CancelGood.this, mString[which], Toast.LENGTH_LONG).show();
+                Intent intentt = new Intent(getApplication(), ListQrcode_CancelGood.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
-                intentt.putExtra("unique_id", unique_id);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
-                intentt.putExtra("load_pallet", "333");
+                intentt.putExtra("cancel", "333");
+                intentt.putExtra("id_unique_SO", id_unique_SO);
                 intentt.putExtra("returnStock", stock);
-                intentt.putExtra("stock_in", stockinDate);
-                // truyền qua cho ListQRcode để add vào text HSD
-                intentt.putExtra("exp_date", expDateTemp2);
-                intentt.putExtra("ea_unit", mString[which]);
                 if (stockinDate == null) {
                     intentt.putExtra("stockin_date", stockinDateShow);
 
                 } else {
                     intentt.putExtra("stockin_date", stockinDate);
-                }
-
+                }                // truyền qua cho ListQRcode để add vào text HSD
+                intentt.putExtra("exp_date", expDateTemp2);
+                intentt.putExtra("ea_unit", mString[which]);
 
 
                 startActivity(intentt);
@@ -625,6 +527,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }
+
 
     @Override
     protected void onPause() {
@@ -649,4 +552,20 @@ public class LoadPalletQRCode extends AppCompatActivity {
         DatabaseHelper.getInstance().deleteallExp_date();
         DatabaseHelper.getInstance().deleteallEa_Unit();
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonQRBack:
+                if (position != null || checkToFinish != null) {
+                    Intent intent = new Intent(Qrcode_CancelGood.this, ListQrcode_CancelGood.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    finish();
+                }
+                break;
+        }
+    }
 }
+

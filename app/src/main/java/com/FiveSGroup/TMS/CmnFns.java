@@ -40,6 +40,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
 import com.FiveSGroup.TMS.AddCustomerFragment.CCustomer;
+import com.FiveSGroup.TMS.CancelGood.Product_CancelGood;
 import com.FiveSGroup.TMS.ChangeCusFragment.UpdateCustomer;
 import com.FiveSGroup.TMS.Inventory.InventoryProduct;
 import com.FiveSGroup.TMS.LPN.LPN;
@@ -390,6 +391,33 @@ public class CmnFns {
         dialog.show();
 
     }
+
+//    public String synchronizeGet_Status_Cancel(String cancel_CD) {
+//        try {
+//
+//            int status = this.allowSynchronizeBy3G();
+//            if (status == 102 || status == -1) {
+//                return "-1";
+//            }
+//
+//
+//            Webservice Webservice = new Webservice();
+//
+//            String result = Webservice.Get_Status_Cancel_Good(cancel_CD);
+//            if (result.equals("1")) {
+//
+//                return "1";
+//            } else {
+//                // đồng bộ không thành công
+//                return "-1";
+//            }
+//        } catch (Exception e) {
+//            // TODO: handle exception
+//
+//            return "-1";
+//        }
+//
+//    }
 
     public String synchronizeGet_Status_Stock_Out(String order_Cd) {
         try {
@@ -2113,6 +2141,158 @@ public class CmnFns {
 
         return 1;
     }
+    public int synchronizeGETProductByZonecancel_Good(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String cancelCD, int isLPN) {
+
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.GetProductByZone(qrcode, admin, "WCG", isLPN, cancelCD);
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("1")) {
+            return 1;
+        } else if (result.equals("-8")) {
+            return -8;
+        } else if (result.equals("-10")) {
+            return -10;
+        } else if (result.equals("-11")) {
+            return -11;
+        } else if (result.equals("-12")) {
+            return -12;
+        } else if (result.equals("-16")) {
+            return -16;
+        } else if (result.equals("-20")) {
+            return -20;
+        } else if (result.equals("-21")) {
+            return -21;
+        } else if (result.equals("-22")) {
+            return -22;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
+                    JSONObject jsonobj = jsonarray.getJSONObject(i);
+                    String pro_code = jsonobj.getString("_PRODUCT_CODE");
+                    String pro_cd = jsonobj.getString("_PRODUCT_CD");
+                    String pro_name = jsonobj.getString("_PRODUCT_NAME");
+                    String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+                    String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
+                    String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
+                    String ea_unit = jsonobj.getString("_UNIT");
+                    // VT đến
+                    String position_code = jsonobj.getString("_POSITION_CODE");
+                    String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                    // Mô tả VT đến
+                    String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                    // VT đến
+                    String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+                    String lpnCode = jsonobj.getString("_LPN_CODE");
+                    int pro_set = 1;
+
+                    Product_CancelGood cancelGood = new Product_CancelGood();
+                    cancelGood.setPRODUCT_CD(pro_cd);
+                    cancelGood.setPRODUCT_CODE(pro_code);
+                    cancelGood.setPRODUCT_NAME(pro_name);
+                    cancelGood.setQTY(String.valueOf(pro_set));
+                    cancelGood.setQTY_EA_AVAILABLE(quanity_ea);
+
+                    cancelGood.setPOSITION_TO_CD(warePosition);
+                    cancelGood.setCANCEL_CD(cancelCD);
+                    cancelGood.setWAREHOUSE_POSITION_CD(warePosition);
+                    String positionTo = "---";
+                    String positionFrom = "---";
+                    String lpn_From = "";
+                    String lpn_To = "";
+
+                    cancelGood.setLPN_TO(lpn_To);
+                    cancelGood.setLPN_CODE(lpnCode);
+
+                    cancelGood.setPOSITION_TO_CODE(position_code);
+                    cancelGood.setPOSITION_TO_DESCRIPTION(description);
+
+                    if (isLPN == 0) {
+                        if (stockDate != null) {
+                            cancelGood.setSTOCKIN_DATE(stockDate);
+                        }
+                        cancelGood.setEXPIRED_DATE(expDate);
+                        cancelGood.setUNIT(unit);
+                        cancelGood.setQTY(String.valueOf(pro_set));
+                        cancelGood.setPOSITION_FROM_CD(warePosition);
+                        // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
+                        cancelGood.setPOSITION_FROM_CODE(positionFrom);
+                        cancelGood.setLPN_FROM(lpn_From);
+                        cancelGood.setPOSITION_FROM_DESCRIPTION("");
+                    } else if (isLPN == 1) {
+                        cancelGood.setSTOCKIN_DATE(strokinDate);
+                        cancelGood.setEXPIRED_DATE(exxpiredDate);
+                        cancelGood.setUNIT(ea_unit);
+                        cancelGood.setQTY(quanity);
+                        cancelGood.setPOSITION_FROM_CD(lpn_From);
+
+                        cancelGood.setPOSITION_FROM_CODE(lpn_From);
+                        cancelGood.setLPN_FROM(lpnCode);
+                        cancelGood.setPOSITION_FROM_DESCRIPTION(lpn_From);
+                    }
+
+                    if (isLPN == 0) {
+                        ArrayList<Product_CancelGood> Product_CancelGoods = DatabaseHelper.getInstance().
+                                getoneProduct_CancelGood(cancelGood.getPRODUCT_CD(), expDate, cancelGood.getUNIT(), cancelGood.getSTOCKIN_DATE(), cancelCD);
+                        if (Product_CancelGoods.size() > 0) {
+                            Product_CancelGood product = Product_CancelGoods.get(0);
+                            if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
+
+                                Product_CancelGood updateProductQR = Product_CancelGoods.get(0);
+                                int product_set = Integer.parseInt(Product_CancelGoods.get(0).getQTY());
+                                int sl = product_set + 1;
+                                Product_CancelGoods.get(i).setQTY(String.valueOf(product_set));
+                                DatabaseHelper.getInstance().updateProduct_CancelGood(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                        String.valueOf(sl), updateProductQR.getUNIT(), cancelGood.getSTOCKIN_DATE(), cancelCD);
+                            } else {
+                                DatabaseHelper.getInstance().CreateCANCEL_GOOD(cancelGood);
+                            }
+                        } else {
+                            DatabaseHelper.getInstance().CreateCANCEL_GOOD(cancelGood);
+                        }
+                    } else if (isLPN == 1) {
+                        boolean isExistLPN = false;
+                        ArrayList<Product_CancelGood> Product_CancelGood = DatabaseHelper.getInstance().getAllProduct_CancelGood(cancelCD);
+                        if (Product_CancelGood.size() > 0) {
+                            for (int j = 0; j < Product_CancelGood.size(); j++) {
+                                if (Product_CancelGood.get(j).getLPN_CODE().equals(lpnCode)) {
+                                    isExistLPN = true;
+                                }
+                            }
+                        }
+                        if (isExistLPN == false) {
+                            DatabaseHelper.getInstance().CreateCANCEL_GOOD(cancelGood);
+                        } else {
+                            Dialog dialog = new Dialog(context);
+                            dialog.showDialog(context, "LPN này đã có trong danh sách");
+                        }
+
+                    }
+                }
+
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
 
     public int synchronizeGETProductByZoneStockout(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String stockoutCD, int isLPN) {
 
@@ -2748,11 +2928,11 @@ public class CmnFns {
 
                         } else if (type.equals("WPP")) {
                             //load pallet
-//                            if (isLPN == 1) {
-//                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
-//                            } else {
+                            if (isLPN == 1) {
+                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                            } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_LoadPallet(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
-//                            }
+                            }
 
                         } else if (type.equals("WST")) {
                             //Kiểm kho
@@ -2768,6 +2948,15 @@ public class CmnFns {
                                 DatabaseHelper.getInstance().updatePositionFrom_Remove_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_Remove(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                            }
+
+                        }
+                        else if (type.equals("WCG")) {
+                            //Trả Hàng
+                            if (isLPN == 1) {
+                                DatabaseHelper.getInstance().updatePositionFrom_cancelGood_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                            } else {
+                                DatabaseHelper.getInstance().updatePositionFrom_cancelGood(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         }
@@ -2833,6 +3022,13 @@ public class CmnFns {
                             }
                         } else if (type.equals("WSI")) {
                             DatabaseHelper.getInstance().updatePositionTo_Stockin(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                        }
+                        else if (type.equals("WCG")) {
+                            if (isLPN == 1) {
+                                DatabaseHelper.getInstance().updatePositionTo_cancelGood_LPN(unique_id,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                            } else {
+                                DatabaseHelper.getInstance().updatePositionTo_cancelGood(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                            }
                         }
 
                         // DatabaseHelper.getInstance().updatePositionTo(positionCode, wareHouse, productCd, expDate, postitionDes);
@@ -3014,6 +3210,12 @@ public class CmnFns {
                     return 1;
                 jsonData = gson.toJson(product);
 
+            }
+            else if (type.equals("WCG")) {
+                List<Product_CancelGood> product = DatabaseHelper.getInstance().getAllProduct_CancelGood_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return 1;
+                jsonData = gson.toJson(product);
             }
 
             try {
@@ -3288,6 +3490,16 @@ public class CmnFns {
                     }
                 }
                 if (jsonobj.getString("ParamKey").toString().equals("URL_StockOut")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+                }
+                if (jsonobj.getString("ParamKey").toString().equals("URL_Cancel_Goods")) {
                     CParam param = new CParam();
                     param.setKey(jsonobj.getString("ParamKey"));
                     param.setValue(jsonobj.getString("ParamValue"));
@@ -4026,10 +4238,17 @@ public class CmnFns {
 
                 String lpn_code = jsonobj.getString("LPN_CODE");
                 String lpn_date = jsonobj.getString("LPN_DATE");
+                String user_create = jsonobj.getString("USER_CREATE");
+                String storage = jsonobj.getString("STORAGE");
+
+
+
 
                 LPN lpn = new LPN();
                 lpn.setLPN_CODE(lpn_code);
                 lpn.setLPN_DATE(lpn_date);
+                lpn.setUSER_CREATE(user_create);
+                lpn.setSTORAGE(storage);
                 lpn.setLPN_NUMBER(String.valueOf(i + 1));
 
                 DatabaseHelper.getInstance().CreateLPN(lpn);

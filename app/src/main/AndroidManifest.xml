@@ -148,6 +148,15 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
+            android:name=".CancelGood.Home_CancelGood"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CancelGood.ListQrcode_CancelGood"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CancelGood.Qrcode_CancelGood"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".LoadPallet.LoadPalletActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -23,12 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
-import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
-import com.FiveSGroup.TMS.LoadPallet.Product_LoadPallet;
+
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
-import com.FiveSGroup.TMS.StockOut.ListQrcode_Stockout;
+
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
 import com.FiveSGroup.TMS.global;

@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.AddBarcode.ListProductBarcodeActivity;
+import com.FiveSGroup.TMS.CancelGood.Home_CancelGood;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.Inventory.InventoryHome;
 import com.FiveSGroup.TMS.LPN.LPNActivity;
@@ -225,6 +226,18 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                        }else if(block_Warehouse == 1){
                         Intent intent_return = new Intent(context, Home_Return_WareHouse.class);
                         context.startActivity(intent_return);
+                        break;
+//                        }
+                    case "Xuất Hủy":
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                        Intent intent_cancel = new Intent(context, Home_CancelGood.class);
+                        context.startActivity(intent_cancel);
                         break;
 //                        }
 

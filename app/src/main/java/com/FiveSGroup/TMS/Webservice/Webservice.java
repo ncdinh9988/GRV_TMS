@@ -35,6 +35,40 @@ public class Webservice {
     private static String authPasswd = "";
     private String Url = "";
 
+//    public  String Get_Status_Cancel_Good(String cancel_Cd){
+//        String webServiceFunc = "Get_Status_Stock_Out";
+//
+//        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+//        String imei = CmnFns.getImei(global.getAppContext());
+//
+//        // Param 1
+//        PropertyInfo param1 = new PropertyInfo();
+//        param1.setName("CANCEL_CD");
+//        param1.setValue(cancel_Cd);
+//        param1.setType(String.class);
+//        request.addProperty(param1);
+//
+//        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+//                SoapEnvelope.VER11);
+//        envelope.dotNet = true;
+//        envelope.headerOut = this.getHeader();
+//        envelope.setOutputSoapObject(request);
+//        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+//                global.getUrlWebserviceToSynchronize(), timeOut);
+//
+//        try {
+//            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+//            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+//            global.lstLogUp.add("Check Cancel Good : " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+//            return response.toString();
+//
+//        } catch (Exception e) {
+//            global.lstLogUp.add("Check Cancel Good : " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+//            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+//            return "-1";
+//        }
+//    }
+
     public  String Get_Status_Stock_Out(String order_cd){
         String webServiceFunc = "Get_Status_Stock_Out";
 

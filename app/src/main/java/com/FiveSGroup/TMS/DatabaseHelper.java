@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.FiveSGroup.TMS.AddCustomerFragment.CCustomer;
+import com.FiveSGroup.TMS.CancelGood.Product_CancelGood;
 import com.FiveSGroup.TMS.ChangeCusFragment.UpdateCustomer;
 import com.FiveSGroup.TMS.Inventory.InventoryProduct;
 import com.FiveSGroup.TMS.LPN.LPN;
@@ -116,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 90; // version của DB khi thay
+    public static final int DATABASE_VERSION = 94; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -165,6 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_MASTER_PICK);
         db.execSQL(CREATE_TABLE_O_DATE_LPN);
         db.execSQL(CREATE_TABLE_O_BATCH);
+        db.execSQL(CREATE_TABLE_O_CANCEL_GOOD);
     }
 
     @Override
@@ -252,7 +254,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // TODO: handle exception
         }
 
+        //version DB 92
+        try {
+            db.execSQL(CREATE_TABLE_O_CANCEL_GOOD);
 
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 94
+        try {
+            db.execSQL("ALTER TABLE " + O_LPN + " ADD COLUMN  "
+                    + USER_CREATE + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_LPN + " ADD COLUMN  "
+                    + STORAGE + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 
     }
 
@@ -794,12 +819,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE = "LPN_CODE";
     public static final String LPN_DATE = "LPN_DATE";
     public static final String LPN_NUMBER = "LPN_NUMBER";
+    public static final String USER_CREATE  = "USER_CREATE";
+    public static final String STORAGE  = "STORAGE";
 
 
     public static final String CREATE_TABLE_O_LNP = "CREATE TABLE "
             + O_LPN + "("
             + LPN_NUMBER + " TEXT,"
             + LPN_CODE + " TEXT,"
+            + USER_CREATE + " TEXT,"
+            + STORAGE + " TEXT,"
             + LPN_DATE + " TEXT" + ")";
 
 
@@ -811,6 +840,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_CODE, lpn.getLPN_CODE());
         values.put(LPN_DATE, lpn.getLPN_DATE());
         values.put(LPN_NUMBER, lpn.getLPN_NUMBER());
+        values.put(STORAGE, lpn.getSTORAGE());
+        values.put(USER_CREATE, lpn.getUSER_CREATE());
         // insert row
         long id = db.insert(O_LPN, null, values);
         return id;
@@ -822,6 +853,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_CODE, lpn.getLPN_CODE());
         values.put(LPN_DATE, lpn.getLPN_DATE());
         values.put(LPN_NUMBER, lpn.getLPN_NUMBER());
+        values.put(STORAGE, lpn.getSTORAGE());
+        values.put(USER_CREATE, lpn.getUSER_CREATE());
         // insert row
         long id = db.insert(O_LPN, null, values);
         return id;
@@ -843,6 +876,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(LPN_CODE))));
                 lpn1.setLPN_DATE((c.getString(c
                         .getColumnIndex(LPN_DATE))));
+                lpn1.setUSER_CREATE((c.getString(c
+                        .getColumnIndex(USER_CREATE))));
+                lpn1.setSTORAGE((c.getString(c
+                        .getColumnIndex(STORAGE))));
                 lpn.add(lpn1);
             } while (c.moveToNext());
         }
@@ -866,6 +903,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(LPN_CODE))));
                 lpn1.setLPN_DATE((c.getString(c
                         .getColumnIndex(LPN_DATE))));
+                lpn1.setUSER_CREATE((c.getString(c
+                        .getColumnIndex(USER_CREATE))));
+                lpn1.setSTORAGE((c.getString(c
+                        .getColumnIndex(STORAGE))));
+
                 lpn.add(lpn1);
             } while (c.moveToNext());
         }
@@ -889,6 +931,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(LPN_CODE))));
                 lpn1.setLPN_DATE((c.getString(c
                         .getColumnIndex(LPN_DATE))));
+                lpn1.setUSER_CREATE((c.getString(c
+                        .getColumnIndex(USER_CREATE))));
+                lpn1.setSTORAGE((c.getString(c
+                        .getColumnIndex(STORAGE))));
                 lpn.add(lpn1);
             } while (c.moveToNext());
         }
@@ -912,6 +958,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(LPN_CODE))));
                 lpn1.setLPN_DATE((c.getString(c
                         .getColumnIndex(LPN_DATE))));
+                lpn1.setUSER_CREATE((c.getString(c
+                        .getColumnIndex(USER_CREATE))));
+                lpn1.setSTORAGE((c.getString(c
+                        .getColumnIndex(STORAGE))));
                 lpn.add(lpn1);
             } while (c.moveToNext());
         }
@@ -3016,6 +3066,357 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //END TABLE STOCK_TRANSER
 
+    //DATABASE PUT CANCEL_GOOD
+    public static final String O_CANCEL_GOOD = "O_CANCEL_GOOD";
+    public static final String WAREHOUSE_POSITION_CD_CANCEL_GOOD = "WAREHOUSE_POSITION_CD_CANCEL_GOOD";
+    public static final String AUTOINCREMENT_CANCEL_GOOD = "AUTOINCREMENT_CANCEL_GOOD";
+    public static final String PRODUCT_CODE_CANCEL_GOOD = "PRODUCT_CODE";
+    public static final String PRODUCT_NAME_CANCEL_GOOD = "PRODUCT_NAME";
+    public static final String PRODUCT_CD_CANCEL_GOOD = "PRODUCT_CD";
+    public static final String QTY_EA_AVAILABLE_CANCEL_GOOD = "QTY_EA_AVAILABLE";
+    public static final String QTY_SET_AVAILABLE_CANCEL_GOOD = "QTY_SET_AVAILABLE";
+    public static final String EXPIRED_DATE_CANCEL_GOOD = "EXPIRY_DATE";
+    public static final String STOCKIN_DATE_CANCEL_GOOD = "STOCKIN_DATE";
+    public static final String EA_UNIT_CANCEL_GOOD = "EA_UNIT";
+    public static final String POSITION_FROM_CANCEL_GOOD = "POSITION_FROM_CD";
+    public static final String POSITION_FROM_CODE_CANCEL_GOOD = "POSITION_FROM_CODE";
+    public static final String POSITION_FROM_DESCRIPTION_CANCEL_GOOD = "POSITION_FROM_DESCRIPTION";
+    public static final String POSITION_TO_CANCEL_GOOD = "POSITION_TO_CD";
+    public static final String POSITION_TO_CODE_CANCEL_GOOD = "POSITION_TO_CODE";
+    public static final String POSITION_TO_DESCRIPTION_CANCEL_GOOD = "POSITION_TO_DESCRIPTION";
+    public static final String UNIQUE_CODE_CANCEL_GOOD = "UNIQUE_CODE";
+    public static final String CANCELGOOD_CD = "CANCELGOOD_CD";
+    public static final String LPN_CD_CANCEL_GOOD = "LPN_CD_CANCEL_GOOD";
+    public static final String LPN_CODE_CANCEL_GOOD = "LPN_CODE_CANCEL_GOOD";
+    public static final String LPN_FROM_CANCEL_GOOD = "LPN_FROM_CANCEL_GOOD";
+    public static final String LPN_TO_CANCEL_GOOD = "LPN_TO_CANCEL_GOOD";
+
+    public static final String CREATE_TABLE_O_CANCEL_GOOD = "CREATE TABLE "
+            + O_CANCEL_GOOD + "("
+            + AUTOINCREMENT_CANCEL_GOOD + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + PRODUCT_CD_CANCEL_GOOD + " TEXT,"
+            + WAREHOUSE_POSITION_CD_CANCEL_GOOD + " TEXT,"
+            + PRODUCT_NAME_CANCEL_GOOD + " TEXT,"
+            + PRODUCT_CODE_CANCEL_GOOD + " TEXT,"
+            + QTY_EA_AVAILABLE_CANCEL_GOOD + " TEXT,"
+            + QTY_SET_AVAILABLE_CANCEL_GOOD + " TEXT,"
+            + EXPIRED_DATE_CANCEL_GOOD + " TEXT,"
+            + STOCKIN_DATE_CANCEL_GOOD + " TEXT,"
+            + EA_UNIT_CANCEL_GOOD + " TEXT,"
+            + POSITION_FROM_CANCEL_GOOD + " TEXT,"
+            + POSITION_FROM_CODE_CANCEL_GOOD + " TEXT,"
+            + POSITION_FROM_DESCRIPTION_CANCEL_GOOD + " TEXT,"
+            + POSITION_TO_CANCEL_GOOD + " TEXT,"
+            + POSITION_TO_CODE_CANCEL_GOOD + " TEXT,"
+            + POSITION_TO_DESCRIPTION_CANCEL_GOOD + " TEXT,"
+            + CANCELGOOD_CD + " TEXT,"
+            + UNIQUE_CODE_CANCEL_GOOD + " TEXT ,"
+            + LPN_CD_CANCEL_GOOD + " TEXT ,"
+            + LPN_CODE_CANCEL_GOOD + " TEXT ,"
+            + LPN_FROM_CANCEL_GOOD + " TEXT ,"
+            + LPN_TO_CANCEL_GOOD + " TEXT "
+            + ")";
+
+
+    public long CreateCANCEL_GOOD(Product_CancelGood cancelGood) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+//        values.put(AUTOINCREMENT_CANCEL_GOOD, cancelGood.getAUTOINCREMENT());
+        values.put(UNIQUE_CODE_CANCEL_GOOD, cancelGood.getUNIT());
+        values.put(PRODUCT_CODE_CANCEL_GOOD, cancelGood.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_CANCEL_GOOD, cancelGood.getPRODUCT_NAME());
+        values.put(WAREHOUSE_POSITION_CD_CANCEL_GOOD, cancelGood.getWAREHOUSE_POSITION_CD());
+        values.put(PRODUCT_CD_CANCEL_GOOD, cancelGood.getPRODUCT_CD());
+        values.put(QTY_SET_AVAILABLE_CANCEL_GOOD, cancelGood.getQTY());
+        values.put(STOCKIN_DATE_CANCEL_GOOD, cancelGood.getSTOCKIN_DATE());
+        values.put(QTY_EA_AVAILABLE_CANCEL_GOOD, cancelGood.getQTY_EA_AVAILABLE());
+        values.put(EXPIRED_DATE_CANCEL_GOOD, cancelGood.getEXPIRED_DATE());
+        values.put(EA_UNIT_CANCEL_GOOD, cancelGood.getUNIT());
+        values.put(POSITION_FROM_CANCEL_GOOD, cancelGood.getPOSITION_FROM_CD());
+        values.put(POSITION_TO_CANCEL_GOOD, cancelGood.getPOSITION_TO_CD());
+        values.put(POSITION_FROM_CODE_CANCEL_GOOD, cancelGood.getPOSITION_FROM_CODE());
+        values.put(POSITION_TO_CODE_CANCEL_GOOD, cancelGood.getPOSITION_TO_CODE());
+        values.put(POSITION_FROM_DESCRIPTION_CANCEL_GOOD, cancelGood.getPOSITION_FROM_DESCRIPTION());
+        values.put(POSITION_TO_DESCRIPTION_CANCEL_GOOD, cancelGood.getPOSITION_TO_DESCRIPTION());
+        values.put(CANCELGOOD_CD, cancelGood.getCANCEL_CD());
+        values.put(LPN_CODE_CANCEL_GOOD, cancelGood.getLPN_CODE());
+        values.put(LPN_FROM_CANCEL_GOOD, cancelGood.getLPN_FROM());
+        values.put(LPN_TO_CANCEL_GOOD, cancelGood.getLPN_TO());
+        // insert row
+        long id = db.insert(O_CANCEL_GOOD, null, values);
+        return id;
+    }
+
+    public int updatePositionFrom_cancelGood_LPN(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_CANCEL_GOOD, wareHouse);
+        values.put(POSITION_FROM_DESCRIPTION_CANCEL_GOOD, descreption);
+
+        values.put(POSITION_FROM_CODE_CANCEL_GOOD, from);
+        values.put(LPN_FROM_CANCEL_GOOD, from);
+
+
+        // updating row
+        return db.update(O_CANCEL_GOOD, values, AUTOINCREMENT_CANCEL_GOOD + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionFrom_cancelGood(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_CANCEL_GOOD, wareHouse);
+        values.put(POSITION_FROM_CODE_CANCEL_GOOD, from);
+        values.put(LPN_FROM_CANCEL_GOOD, "");
+        values.put(POSITION_FROM_DESCRIPTION_CANCEL_GOOD, descreption);
+
+
+        // updating row
+        return db.update(O_CANCEL_GOOD, values, AUTOINCREMENT_CANCEL_GOOD + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionTo_cancelGood_LPN(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_CANCEL_GOOD, wareHouse);
+        values.put(POSITION_TO_DESCRIPTION_CANCEL_GOOD, descreption);
+        values.put(LPN_TO_CANCEL_GOOD, to);
+
+        values.put(POSITION_TO_CODE_CANCEL_GOOD, to);
+        // updating row
+        return db.update(O_CANCEL_GOOD, values,
+                AUTOINCREMENT_CANCEL_GOOD + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public int updatePositionTo_cancelGood(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_CANCEL_GOOD, wareHouse);
+        values.put(POSITION_TO_CODE_CANCEL_GOOD, to);
+        values.put(LPN_TO_CANCEL_GOOD, "");
+
+        values.put(POSITION_TO_DESCRIPTION_CANCEL_GOOD, descreption);
+        // updating row
+        return db.update(O_CANCEL_GOOD, values,
+                AUTOINCREMENT_CANCEL_GOOD + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public ArrayList<Product_CancelGood>
+    getoneProduct_CancelGood(String CD, String expDate, String ea_unit, String stockinDate, String cancel) {
+        ArrayList<Product_CancelGood> cancelGoods = new ArrayList<Product_CancelGood>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_CANCEL_GOOD + " " + " WHERE "
+                + PRODUCT_CD_CANCEL_GOOD + " = " + CD + " AND "
+                + CANCELGOOD_CD + " = " + cancel + " AND "
+                + EA_UNIT_CANCEL_GOOD + " like " + " '%" + ea_unit + "%'" + " AND "
+                + EXPIRED_DATE_CANCEL_GOOD + " like " + " '%" + expDate + "%'" + " AND "
+                + STOCKIN_DATE_CANCEL_GOOD + " like " + " '%" + stockinDate + "%'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product_CancelGood cancelGood = new Product_CancelGood();
+                cancelGood.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_CANCEL_GOOD))));
+                cancelGood.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_CANCEL_GOOD))));
+                cancelGood.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_CANCEL_GOOD))));
+                cancelGood.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_CANCEL_GOOD))));
+                cancelGood.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_CANCEL_GOOD))));
+                cancelGood.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_CANCEL_GOOD))));
+                cancelGood.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_CANCEL_GOOD))));
+                cancelGood.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_CANCEL_GOOD))));
+                cancelGood.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_CANCEL_GOOD))));
+                cancelGood.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_CANCEL_GOOD))));
+                cancelGoods.add(cancelGood);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return cancelGoods;
+    }
+
+
+    public ArrayList<Product_CancelGood>
+    getAllProduct_CancelGood_Sync(String cancel) {
+        ArrayList<Product_CancelGood> cancelGoods = new ArrayList<Product_CancelGood>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
+                "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
+                "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_CANCEL_GOOD +
+                " where " + CANCELGOOD_CD + " = " + cancel;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_CancelGood cancelGood = new Product_CancelGood();
+//                cancelGood.setAUTOINCREMENT((c.getString(c
+//                        .getColumnIndex(AUTOINCREMENT_CANCEL_GOOD))));
+                cancelGood.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_CANCEL_GOOD))));
+                cancelGood.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_CANCEL_GOOD))));
+                cancelGood.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_CANCEL_GOOD))));
+                cancelGood.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_CANCEL_GOOD))));
+                cancelGood.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_CANCEL_GOOD))));
+                cancelGood.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_CANCEL_GOOD))));
+                cancelGood.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_CANCEL_GOOD))));
+                cancelGood.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_CANCEL_GOOD))));
+                cancelGood.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_CANCEL_GOOD))));
+                cancelGood.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_CANCEL_GOOD))));
+                cancelGood.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CANCEL_GOOD))));
+                cancelGood.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_CANCEL_GOOD))));
+                cancelGood.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_CANCEL_GOOD))));
+                cancelGood.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_CANCEL_GOOD))));
+                cancelGood.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_CANCEL_GOOD))));
+                cancelGood.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_CANCEL_GOOD))));
+                cancelGood.setCANCEL_CD((c.getString(c
+                        .getColumnIndex(CANCELGOOD_CD))));
+                cancelGood.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_CANCEL_GOOD))));
+                cancelGood.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_CANCEL_GOOD))));
+                cancelGood.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_CANCEL_GOOD))));
+                cancelGoods.add(cancelGood);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return cancelGoods;
+    }
+
+    public ArrayList<Product_CancelGood>
+    getAllProduct_CancelGood(String cancel) {
+        ArrayList<Product_CancelGood> cancelGoods = new ArrayList<Product_CancelGood>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_CANCEL_GOOD + " where " + CANCELGOOD_CD + " = " + cancel;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_CancelGood cancelGood = new Product_CancelGood();
+                cancelGood.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_CANCEL_GOOD))));
+                cancelGood.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_CANCEL_GOOD))));
+                cancelGood.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_CANCEL_GOOD))));
+                cancelGood.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_CANCEL_GOOD))));
+                cancelGood.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_CANCEL_GOOD))));
+                cancelGood.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_CANCEL_GOOD))));
+                cancelGood.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_CANCEL_GOOD))));
+                cancelGood.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_CANCEL_GOOD))));
+                cancelGood.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_CANCEL_GOOD))));
+                cancelGood.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_CANCEL_GOOD))));
+                cancelGood.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_CANCEL_GOOD))));
+                cancelGood.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CANCEL_GOOD))));
+                cancelGood.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_CANCEL_GOOD))));
+                cancelGood.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_CANCEL_GOOD))));
+                cancelGood.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_CANCEL_GOOD))));
+                cancelGood.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_CANCEL_GOOD))));
+                cancelGood.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_CANCEL_GOOD))));
+                cancelGood.setCANCEL_CD((c.getString(c
+                        .getColumnIndex(CANCELGOOD_CD))));
+                cancelGood.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_CANCEL_GOOD))));
+                cancelGood.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_CANCEL_GOOD))));
+                cancelGood.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_CANCEL_GOOD))));
+                cancelGoods.add(cancelGood);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return cancelGoods;
+    }
+
+
+    public int updateProduct_CancelGood(Product_CancelGood cancelGood, String incre_so, String PRODUCT_CD, String sl, String ea_unit, String stock, String cancel) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CD_CANCEL_GOOD, PRODUCT_CD);
+        values.put(PRODUCT_CODE_CANCEL_GOOD, cancelGood.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_CANCEL_GOOD, cancelGood.getPRODUCT_NAME());
+        values.put(EXPIRED_DATE_CANCEL_GOOD, cancelGood.getEXPIRED_DATE());
+        values.put(EA_UNIT_CANCEL_GOOD, cancelGood.getUNIT());
+        values.put(QTY_SET_AVAILABLE_CANCEL_GOOD, sl);
+        values.put(CANCELGOOD_CD, cancel);
+
+        // updating row
+        return db.update(O_CANCEL_GOOD, values,  AUTOINCREMENT_CANCEL_GOOD + " = ?",
+                new String[]{String.valueOf(incre_so)});
+
+    }
+
+
+    public void deleteProduct_CancelGood() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_CANCEL_GOOD);
+    }
+
+    //END TABLE O_CANCEL_GOOD
+
 
 
     //DATABASE PUT STOCK_OUT
@@ -3714,6 +4115,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.delete(O_STOCK_OUT, AUTOINCREMENT_STOCK_OUT + " = ?" ,
+                new String[]{String.valueOf(productCode)});
+
+    }
+
+    public void deleteProduct_Cancel_Specific(String productCode) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.delete(O_CANCEL_GOOD, AUTOINCREMENT_CANCEL_GOOD + " = ?" ,
                 new String[]{String.valueOf(productCode)});
 
     }
@@ -5536,7 +5945,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updatePositionFrom_LoadPallet_LPN(String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_LoadPallet_LPN(String unique_id ,String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -5550,9 +5959,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_FROM_LOAD_PALLET, from);
 
         // updating row
-        return db.update(O_LOAD_PALLET, values, "PRODUCT_CD" + " = ?" + " AND EXPIRY_DATE = ? AND EA_UNIT = ? " + " AND "
-                        + STOCKIN_DATE_LOAD_PALLET + " = ? ",
-                new String[]{String.valueOf(PRODUCT_CD), String.valueOf(exPiredDate), String.valueOf(ea_unit), String.valueOf(stockinDate)});
+        return db.update(O_LOAD_PALLET, values,
+                AUTOINCREMENT_LOAD_PALLET + " = ? ",
+                new String[]{String.valueOf(unique_id)});
     }
 
     public int updatePositionFrom_LoadPallet(String unique_id,String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {

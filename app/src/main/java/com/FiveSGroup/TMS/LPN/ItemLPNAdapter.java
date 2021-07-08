@@ -56,6 +56,8 @@ public class ItemLPNAdapter extends RecyclerView.Adapter<ItemLPNAdapter.ViewHold
         holder.tvCode.setText(lpn.getLPN_CODE());
         holder.tvDate.setText(lpn.getLPN_DATE());
         holder.tvSTT.setText(lpn.getLPN_NUMBER());
+        holder.tvuser_create.setText(lpn.getUSER_CREATE());
+        holder.tvstorage.setText(lpn.getSTORAGE());
 //        holder.layout_item.setBackgroundColor(context.getResources().getColor(R.color.white));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +87,7 @@ public class ItemLPNAdapter extends RecyclerView.Adapter<ItemLPNAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvCode, tvDate, tvSTT;
+        TextView tvCode, tvDate, tvSTT , tvuser_create , tvstorage;
         LinearLayout layout_item;
 
 
@@ -93,6 +95,8 @@ public class ItemLPNAdapter extends RecyclerView.Adapter<ItemLPNAdapter.ViewHold
             super(itemView);
             tvCode = itemView.findViewById(R.id.tvCode);
             tvDate = itemView.findViewById(R.id.tvDate);
+            tvuser_create = itemView.findViewById(R.id.tvuser_create);
+            tvstorage = itemView.findViewById(R.id.tvstorage);
             tvSTT = itemView.findViewById(R.id.tvSTT);
             layout_item = itemView.findViewById(R.id.layout_item);
 

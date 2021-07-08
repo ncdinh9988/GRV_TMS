@@ -174,6 +174,15 @@ public class global extends Application {
     public static void setHide_Warehouse_Adjustment(String hide_Warehouse_Adjustment) {
         Hide_Warehouse_Adjustment = hide_Warehouse_Adjustment;
     }
+    private static String CancelCD = "";
+
+    public static String getCancelCD() {
+        return CancelCD;
+    }
+
+    public static void setCancelCD(String cancelCD) {
+        CancelCD = cancelCD;
+    }
 
     private static String ReturnCD = "";
 
