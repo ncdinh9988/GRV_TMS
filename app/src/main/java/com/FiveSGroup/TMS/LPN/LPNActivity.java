@@ -61,7 +61,6 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_l_p_n);
-
         init();
 
 //        Handler handler = new Handler();
@@ -71,15 +70,11 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 //        handler.postDelayed(taskCanceler, 1000 * 40);
         syncProgram.execute();
 
-
-
-
         RefeshData();
     }
 
     public class TaskSyncProgramCanceler implements Runnable {
         private SyncProgram task;
-
         public TaskSyncProgramCanceler(SyncProgram task) {
             this.task = task;
         }

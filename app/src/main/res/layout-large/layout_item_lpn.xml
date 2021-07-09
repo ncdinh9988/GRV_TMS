@@ -22,9 +22,9 @@
             android:textColor="@color/black" />
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_weight="3.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
             <TextView
                 android:id="@+id/tvCode"
                 android:paddingTop="10dp"
@@ -39,6 +39,7 @@
                 <TextView
                     android:layout_weight="1"
                     android:id="@+id/tvuser_create"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Nguyễn Thái Học"
@@ -50,7 +51,7 @@
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:layout_height="match_parent"
             android:text="Ngày Tạo"
             android:gravity="center"
@@ -59,7 +60,7 @@
         <TextView
             android:id="@+id/tvstorage"
             android:layout_width="0dp"
-            android:layout_weight="2.5"
+            android:layout_weight="2"
             android:layout_height="match_parent"
             android:text="Có Hàng"
             android:gravity="center"
