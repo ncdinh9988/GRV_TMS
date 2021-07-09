@@ -173,6 +173,7 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
+            checkBoxGetLPN.setChecked(false);
             textViewTitle.setText("QUÉT MÃ - XUẤT HỦY");
         }
 
