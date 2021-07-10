@@ -3632,7 +3632,7 @@ public class CmnFns {
                             product_loadPallet.setSTOCKIN_DATE(stockDate);
                         }
                         product_loadPallet.setEXPIRED_DATE(expDate);
-                        product_loadPallet.setUNIT(ea_unit);
+                        product_loadPallet.setUNIT(unit);
                         product_loadPallet.setQTY(String.valueOf(pro_set));
 
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ---

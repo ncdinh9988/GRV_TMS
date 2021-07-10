@@ -113,22 +113,21 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     private void prepareData(){
         if (pick_list != null) {
             if (positonReceive == null) {
-                if(lpn != null && value1 != null){
+                if (lpn != null && value1 != null) {
                     alert_show_SP(1);
-                }
-                else if(lpn == null && value1 != null){
+                } else if (lpn == null && value1 != null) {
                     alert_show_SP(0);
 
                 }
 
             } else {
-                if(lpn != null && value1 != null){
-                   alert_show_position(1);
-                }
-                else if(lpn == null && value1 != null){
+                if (lpn != null && value1 != null) {
+                    alert_show_position(1);
+                } else if (lpn == null && value1 != null) {
                     alert_show_position(0);
                 }
             }
+        }
 
             pickList = DatabaseHelper.getInstance().getAllProduct_PickList_Show(global.getPickListCD());
             //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
@@ -193,7 +192,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             };
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
             itemTouchHelper.attachToRecyclerView(listViewProduct);
-        }
+
     }
     @Override
     protected void onResume() {
