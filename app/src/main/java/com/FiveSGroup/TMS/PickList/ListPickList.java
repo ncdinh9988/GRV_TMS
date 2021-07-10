@@ -30,6 +30,7 @@ import com.FiveSGroup.TMS.MasterPick.Product_Master_Pick;
 import com.FiveSGroup.TMS.PutAway.List_PutAway;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
+import com.FiveSGroup.TMS.StockOut.ListQrcode_Stockout;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.Warehouse.Product_Qrcode;
 import com.FiveSGroup.TMS.global;
@@ -533,6 +534,9 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             }else if (postitionDes == -22) {
 
                 dialog.showDialog(ListPickList.this, "Mã LPN không có trong zone");
+
+            }else if (postitionDes == -31) {
+                dialog.showDialog(ListPickList.this, "LPN Này Đã Được sử Dụng ");
 
             }
         }catch (Exception e){

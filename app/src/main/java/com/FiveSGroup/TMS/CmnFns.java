@@ -2021,6 +2021,8 @@ public class CmnFns {
             return -21;
         } else if (result.equals("-22")) {
             return -22;
+        }else if (result.equals("-31")) {
+            return -31;
         }
 
         try {
@@ -2323,6 +2325,8 @@ public class CmnFns {
             return -21;
         } else if (result.equals("-22")) {
             return -22;
+        } else if (result.equals("-31")) {
+            return -31;
         }
 
         try {
@@ -2656,6 +2660,8 @@ public class CmnFns {
             return -21;
         } else if (result.equals("-22")) {
             return -22;
+        }else if (result.equals("-31")) {
+            return -31;
         }
 
         try {

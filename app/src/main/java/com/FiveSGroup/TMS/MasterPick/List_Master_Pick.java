@@ -566,6 +566,9 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
                 dialog.showDialog(List_Master_Pick.this, "Mã LPN không có trong zone ");
 
+            } else if (postitionDes == -31) {
+                dialog.showDialog(List_Master_Pick.this, "LPN Này Đã Được sử Dụng");
+
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();

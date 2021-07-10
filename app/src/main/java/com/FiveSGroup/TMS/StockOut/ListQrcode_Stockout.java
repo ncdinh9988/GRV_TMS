@@ -535,6 +535,9 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
 
                 dialog.showDialog(ListQrcode_Stockout.this, "Mã LPN không có trong zone");
 
+            }else if (postitionDes == -31) {
+                dialog.showDialog(ListQrcode_Stockout.this, "LPN Này Đã Được sử Dụng ");
+
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
