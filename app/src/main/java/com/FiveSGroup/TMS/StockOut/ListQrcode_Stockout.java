@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
+import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ReturnWareHouse.List_Return_WareHouse;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
@@ -323,6 +324,9 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
 
                         }else if (result == -26) {
                             dialog.showDialog(ListQrcode_Stockout.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
+                        }else if (result == -31) {
+                            dialog.showDialog(ListQrcode_Stockout.this, "LPN Này Đã Được sử Dụng Cho SO Khác");
 
                         }else {
                             dialog.showDialog(ListQrcode_Stockout.this, "Lưu thất bại");

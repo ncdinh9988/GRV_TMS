@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 
+import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 
@@ -350,6 +351,9 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
                         }else if (result == -26) {
                             dialog.showDialog(List_Master_Pick.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
+                        }else if (result == -31) {
+                            dialog.showDialog(List_Master_Pick.this, "LPN Này Đã Được sử Dụng Cho SO Khác");
 
                         }else if (result == -36) {
                             dialog.showDialog(List_Master_Pick.this, "Trùng Dữ Liệu Vui Lòng Kiểm Tra Lại");

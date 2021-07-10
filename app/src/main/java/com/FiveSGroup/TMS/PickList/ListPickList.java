@@ -320,6 +320,9 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                             }else if (result == -26) {
                                 dialog.showDialog(ListPickList.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
+                            }else if (result == -31) {
+                                dialog.showDialog(ListPickList.this, "LPN Này Đã Được sử Dụng Cho SO Khác");
+
                             }else {
                                 dialog.showDialog(ListPickList.this, "Lưu thất bại");
                             }
