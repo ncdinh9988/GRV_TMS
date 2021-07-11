@@ -87,7 +87,7 @@ public class TransferUnitQrcode  extends AppCompatActivity implements View.OnCli
 
         if (!(position == null)) {
             checkBoxGetDVT.setVisibility(View.INVISIBLE);
-            checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetLPN.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setChecked(false);
             if (position.equals("1")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
@@ -96,7 +96,9 @@ public class TransferUnitQrcode  extends AppCompatActivity implements View.OnCli
             }
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
-            checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetLPN.setVisibility(View.INVISIBLE);
+            checkBoxGetLPN.setChecked(false);
+            checkBoxGetDVT.setChecked(true);
             textViewTitle.setText("QUÉT MÃ - CHUYỂN ĐVT");
         }
 
