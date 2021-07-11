@@ -2935,7 +2935,7 @@ public class CmnFns {
                         } else if (type.equals("WPP")) {
                             //load pallet
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(unique_id ,wareHouse, lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_LoadPallet(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3015,7 +3015,7 @@ public class CmnFns {
                             }
                         } else if (type.equals("WPP")) {
 //                            if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet_LPN(unique_id ,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet_LPN(unique_id ,wareHouse ,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
 //                            }
 //                            else {
 //                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);

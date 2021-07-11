@@ -5945,12 +5945,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updatePositionFrom_LoadPallet_LPN(String unique_id ,String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionFrom_LoadPallet_LPN(String unique_id ,String warehouse , String from, String wareHouse_lpn, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
 
-        values.put(POSITION_FROM_LOAD_PALLET, wareHouse);
+        values.put(POSITION_FROM_LOAD_PALLET, warehouse);
         values.put(POSITION_FROM_DESCRIPTION_LOAD_PALLET, descreption);
         // khi quét vị trí là LPN thì phải cập nhật POSITION_FROM_CODE luôn ,
         // khi đó khi đồng bộ hàm isNotScanFromOrTo ms chạy đúng
@@ -5980,7 +5980,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(unique_id)});
     }
 
-    public int updatePositionTo_LoadPallet_LPN(String unique_id , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+    public int updatePositionTo_LoadPallet_LPN(String unique_id ,String wareHouse, String to, String wareHouse_lpn, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
