@@ -21,6 +21,7 @@ import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
+import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
 import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
 import com.FiveSGroup.TMS.Warehouse.Product_Qrcode;
@@ -117,7 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 94; // version của DB khi thay
+    public static final int DATABASE_VERSION = 99; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -167,6 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_DATE_LPN);
         db.execSQL(CREATE_TABLE_O_BATCH);
         db.execSQL(CREATE_TABLE_O_CANCEL_GOOD);
+        db.execSQL(CREATE_TABLE_O_TRANSFER_UNIT);
     }
 
     @Override
@@ -274,6 +276,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_LPN + " ADD COLUMN  "
                     + STORAGE + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 98
+        try {
+            db.execSQL(CREATE_TABLE_O_TRANSFER_UNIT);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_TRANSFER_UNIT + " ADD COLUMN  "
+                    + BARCODE + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -6482,5 +6500,353 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return -1;
     }
+
+    //DATABASE O_TRANSFER_UNIT
+    public static final String O_TRANSFER_UNIT = "O_TRANSFER_UNIT";
+    public static final String AUTOINCREMENT_TRANSFER_UNIT = "AUTOINCREMENT_TRANSFER_UNIT";
+    public static final String SUGGESTION_POSITION_TRANSFER_UNIT_TO = "SUGGESTION_POSITION_TO";
+    public static final String PRODUCT_CODE_TRANSFER_UNIT = "PRODUCT_CODE";
+    public static final String PRODUCT_NAME_TRANSFER_UNIT = "PRODUCT_NAME";
+    public static final String PRODUCT_CD_TRANSFER_UNIT = "PRODUCT_CD";
+    public static final String QTY_EA_AVAILABLE_TRANSFER_UNIT = "QTY_EA_AVAILABLE";
+    public static final String QTY_SET_AVAILABLE_TRANSFER_UNIT = "QTY_SET_AVAILABLE";
+    public static final String EXPIRED_DATE_TRANSFER_UNIT = "EXPIRY_DATE";
+    public static final String STOCKIN_DATE_TRANSFER_UNIT = "STOCKIN_DATE";
+    public static final String EA_UNIT_TRANSFER_UNIT = "EA_UNIT";
+    public static final String POSITION_FROM_TRANSFER_UNIT = "POSITION_FROM_CD";
+    public static final String POSITION_FROM_CODE_TRANSFER_UNIT = "POSITION_FROM_CODE";
+    public static final String POSITION_FROM_DESCRIPTION_TRANSFER_UNIT = "POSITION_FROM_DESCRIPTION";
+    public static final String POSITION_TO_TRANSFER_UNIT = "POSITION_TO_CD";
+    public static final String POSITION_TO_CODE_TRANSFER_UNIT = "POSITION_TO_CODE";
+    public static final String POSITION_TO_DESCRIPTION_TRANSFER_UNIT = "POSITION_TO_DESCRIPTION";
+    public static final String UNIQUE_CODE_TRANSFER_UNIT = "UNIQUE_CODE";
+    public static final String LPN_CD_TRANSFER_UNIT = "LPN_CD_TRANSFER_UNIT";
+    public static final String LPN_CODE_TRANSFER_UNIT = "LPN_CODE_TRANSFER_UNIT";
+    public static final String LPN_FROM_TRANSFER_UNIT = "LPN_FROM_TRANSFER_UNIT";
+    public static final String LPN_TO_TRANSFER_UNIT = "LPN_TO_TRANSFER_UNIT";
+    public static final String SUGGESTION_POSITION_TRANSFER_UNIT = "SUGGESTION_POSITION";
+    public static final String UNIT_CHANGE_TO = "UNIT_CHANGE_TO";
+    public static final String BARCODE = "BARCODE";
+
+    public static final String CREATE_TABLE_O_TRANSFER_UNIT = "CREATE TABLE "
+            + O_TRANSFER_UNIT + "("
+            + AUTOINCREMENT_TRANSFER_UNIT + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + PRODUCT_CD_TRANSFER_UNIT + " TEXT,"
+            + PRODUCT_NAME_TRANSFER_UNIT + " TEXT,"
+            + PRODUCT_CODE_TRANSFER_UNIT + " TEXT,"
+            + QTY_EA_AVAILABLE_TRANSFER_UNIT + " TEXT,"
+            + QTY_SET_AVAILABLE_TRANSFER_UNIT + " TEXT,"
+            + EXPIRED_DATE_TRANSFER_UNIT + " TEXT,"
+            + STOCKIN_DATE_TRANSFER_UNIT + " TEXT,"
+            + EA_UNIT_TRANSFER_UNIT + " TEXT,"
+            + POSITION_FROM_TRANSFER_UNIT + " TEXT,"
+            + POSITION_FROM_CODE_TRANSFER_UNIT + " TEXT,"
+            + POSITION_FROM_DESCRIPTION_TRANSFER_UNIT + " TEXT,"
+            + POSITION_TO_TRANSFER_UNIT + " TEXT,"
+            + POSITION_TO_CODE_TRANSFER_UNIT + " TEXT,"
+            + POSITION_TO_DESCRIPTION_TRANSFER_UNIT + " TEXT,"
+            + UNIQUE_CODE_TRANSFER_UNIT + " TEXT ,"
+            + LPN_CD_TRANSFER_UNIT + " TEXT ,"
+            + LPN_CODE_TRANSFER_UNIT + " TEXT ,"
+            + LPN_FROM_TRANSFER_UNIT + " TEXT ,"
+            + LPN_TO_TRANSFER_UNIT + " TEXT ,"
+            + UNIT_CHANGE_TO + " TEXT ,"
+            + BARCODE + " TEXT ,"
+            + SUGGESTION_POSITION_TRANSFER_UNIT + " TEXT ,"
+            + SUGGESTION_POSITION_TRANSFER_UNIT_TO + " TEXT"
+            + ")";
+
+
+    public long CreateTransferUnit(TransferUnitProduct qrcode) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+//        values.put(AUTOINCREMENT_TRANSFER_UNIT, qrcode.getAUTOINCREMENT());
+        values.put(UNIQUE_CODE_TRANSFER_UNIT, qrcode.getUNIT());
+        values.put(PRODUCT_CODE_TRANSFER_UNIT, qrcode.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_TRANSFER_UNIT, qrcode.getPRODUCT_NAME());
+        values.put(PRODUCT_CD_TRANSFER_UNIT, qrcode.getPRODUCT_CD());
+        values.put(QTY_SET_AVAILABLE_TRANSFER_UNIT, qrcode.getQTY());
+        values.put(STOCKIN_DATE_TRANSFER_UNIT, qrcode.getSTOCKIN_DATE());
+        values.put(QTY_EA_AVAILABLE_TRANSFER_UNIT, qrcode.getQTY_EA_AVAILABLE());
+        values.put(EXPIRED_DATE_TRANSFER_UNIT, qrcode.getEXPIRED_DATE());
+        values.put(EA_UNIT_TRANSFER_UNIT, qrcode.getUNIT());
+        values.put(POSITION_FROM_TRANSFER_UNIT, qrcode.getPOSITION_FROM_CD());
+        values.put(POSITION_TO_TRANSFER_UNIT, qrcode.getPOSITION_TO_CD());
+        values.put(POSITION_FROM_CODE_TRANSFER_UNIT, qrcode.getPOSITION_FROM_CODE());
+        values.put(POSITION_TO_CODE_TRANSFER_UNIT, qrcode.getPOSITION_TO_CODE());
+        values.put(POSITION_FROM_DESCRIPTION_TRANSFER_UNIT, qrcode.getPOSITION_FROM_DESCRIPTION());
+        values.put(POSITION_TO_DESCRIPTION_TRANSFER_UNIT, qrcode.getPOSITION_TO_DESCRIPTION());
+        values.put(LPN_CODE_TRANSFER_UNIT, qrcode.getLPN_CODE());
+        values.put(LPN_FROM_TRANSFER_UNIT, qrcode.getLPN_FROM());
+        values.put(LPN_TO_TRANSFER_UNIT, qrcode.getLPN_TO());
+        values.put(UNIT_CHANGE_TO, qrcode.getUNIT_CHANGE_TO());
+        values.put(BARCODE, qrcode.getBARCODE());
+        values.put(SUGGESTION_POSITION_TRANSFER_UNIT, qrcode.getSUGGESTION_POSITION());
+        values.put(SUGGESTION_POSITION_TRANSFER_UNIT_TO, qrcode.getSUGGESTION_POSITION_TO());
+
+        // insert row
+        long id = db.insert(O_TRANSFER_UNIT, null, values);
+        return id;
+    }
+
+    public ArrayList<TransferUnitProduct>
+    getoneTransferUnitProduct(String CD, String expDate, String ea_unit, String stockinDate) {
+        ArrayList<TransferUnitProduct> qrcode = new ArrayList<TransferUnitProduct>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_TRANSFER_UNIT + " " + " WHERE "
+                + PRODUCT_CD_TRANSFER_UNIT + " = " + CD + " AND "
+                + EA_UNIT_TRANSFER_UNIT + " like " + " '%" + ea_unit + "%'" + " AND "
+                + EXPIRED_DATE_TRANSFER_UNIT + " like " + " '%" + expDate + "%'" + " AND "
+                + STOCKIN_DATE_TRANSFER_UNIT + " like " + " '%" + stockinDate + "%'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                TransferUnitProduct qrcodeq = new TransferUnitProduct();
+                qrcodeq.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_TRANSFER_UNIT))));
+                qrcodeq.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_TRANSFER_UNIT))));
+                qrcodeq.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TRANSFER_UNIT))));
+                qrcodeq.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_TRANSFER_UNIT))));
+                qrcodeq.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TRANSFER_UNIT))));
+                qrcodeq.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_TRANSFER_UNIT))));
+                qrcodeq.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_TRANSFER_UNIT))));
+                qrcodeq.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_TRANSFER_UNIT))));
+                qrcodeq.setUNIT_CHANGE_TO((c.getString(c
+                        .getColumnIndex(UNIT_CHANGE_TO))));
+                qrcodeq.setBARCODE((c.getString(c
+                        .getColumnIndex(BARCODE))));
+                qrcodeq.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_TRANSFER_UNIT))));
+
+
+                qrcode.add(qrcodeq);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+
+
+    public ArrayList<TransferUnitProduct>
+    getAllTransferUnitProduct() {
+        ArrayList<TransferUnitProduct> putaway = new ArrayList<TransferUnitProduct>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *  FROM " + O_TRANSFER_UNIT;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                TransferUnitProduct qrcode = new TransferUnitProduct();
+                qrcode.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_TRANSFER_UNIT))));
+                qrcode.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_TRANSFER_UNIT))));
+                qrcode.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TRANSFER_UNIT))));
+                qrcode.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_TRANSFER_UNIT))));
+                qrcode.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_TRANSFER_UNIT))));
+                qrcode.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_TRANSFER_UNIT))));
+                qrcode.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_TRANSFER_UNIT))));
+                qrcode.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_TRANSFER_UNIT))));
+                qrcode.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TRANSFER_UNIT))));
+                qrcode.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_TRANSFER_UNIT))));
+                qrcode.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_TRANSFER_UNIT))));
+                qrcode.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_TRANSFER_UNIT))));
+                qrcode.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_TRANSFER_UNIT))));
+                qrcode.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_TRANSFER_UNIT))));
+                qrcode.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_TRANSFER_UNIT))));
+                qrcode.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_TRANSFER_UNIT))));
+                qrcode.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_TRANSFER_UNIT))));
+                qrcode.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_TRANSFER_UNIT))));
+                qrcode.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_TRANSFER_UNIT))));
+                qrcode.setBARCODE((c.getString(c
+                        .getColumnIndex(BARCODE))));
+                qrcode.setUNIT_CHANGE_TO((c.getString(c
+                        .getColumnIndex(UNIT_CHANGE_TO))));
+                qrcode.setSUGGESTION_POSITION((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_TRANSFER_UNIT))));
+                qrcode.setSUGGESTION_POSITION_TO((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_TRANSFER_UNIT_TO))));
+                putaway.add(qrcode);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return putaway;
+    }
+
+
+    public ArrayList<TransferUnitProduct>
+    getAllProduct_TRANSFER_UNIT_Sync() {
+        ArrayList<TransferUnitProduct> letdowns = new ArrayList<TransferUnitProduct>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_TRANSFER_UNIT;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                TransferUnitProduct qrcode = new TransferUnitProduct();
+//                qrcode.setAUTOINCREMENT((c.getString(c
+//                        .getColumnIndex(AUTOINCREMENT_TRANSFER_UNIT))));
+                qrcode.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_TRANSFER_UNIT))));
+                qrcode.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TRANSFER_UNIT))));
+                qrcode.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_TRANSFER_UNIT))));
+                qrcode.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_TRANSFER_UNIT))));
+                qrcode.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_TRANSFER_UNIT))));
+                qrcode.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_TRANSFER_UNIT))));
+                qrcode.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_TRANSFER_UNIT))));
+                qrcode.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TRANSFER_UNIT))));
+                qrcode.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_TRANSFER_UNIT))));
+                qrcode.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_TRANSFER_UNIT))));
+                qrcode.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_TRANSFER_UNIT))));
+                qrcode.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_TRANSFER_UNIT))));
+                qrcode.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_TRANSFER_UNIT))));
+                qrcode.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_TRANSFER_UNIT))));
+                qrcode.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_TRANSFER_UNIT))));
+                qrcode.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_TRANSFER_UNIT))));
+                qrcode.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_TRANSFER_UNIT))));
+                qrcode.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_TRANSFER_UNIT))));
+                qrcode.setUNIT_CHANGE_TO((c.getString(c
+                        .getColumnIndex(UNIT_CHANGE_TO))));
+                qrcode.setBARCODE((c.getString(c
+                        .getColumnIndex(BARCODE))));
+                qrcode.setSUGGESTION_POSITION((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_TRANSFER_UNIT))));
+                qrcode.setSUGGESTION_POSITION_TO((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_TRANSFER_UNIT_TO))));
+                letdowns.add(qrcode);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return letdowns;
+    }
+
+    public int updateProduct_TRANSFER_UNIT(TransferUnitProduct letdown, String incre_ld, String PRODUCT_CD, String sl, String ea_unit, String stock) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CD_TRANSFER_UNIT, PRODUCT_CD);
+        values.put(PRODUCT_CODE_TRANSFER_UNIT, letdown.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_TRANSFER_UNIT, letdown.getPRODUCT_NAME());
+        values.put(EXPIRED_DATE_TRANSFER_UNIT, letdown.getEXPIRED_DATE());
+        values.put(EA_UNIT_TRANSFER_UNIT, letdown.getUNIT());
+        values.put(QTY_SET_AVAILABLE_TRANSFER_UNIT, sl);
+
+        // updating row
+        return db.update(O_TRANSFER_UNIT, values,  AUTOINCREMENT_TRANSFER_UNIT + " = ?",
+                new String[]{String.valueOf(incre_ld)});
+
+    }
+
+
+    public void deleteProduct_TRANSFER_UNIT_Specific(String productCode) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.delete(O_TRANSFER_UNIT, AUTOINCREMENT_TRANSFER_UNIT + " = ?"
+                , new String[]{String.valueOf(productCode)});
+
+    }
+
+    public void deleteProduct_TRANSFER_UNIT() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_TRANSFER_UNIT);
+    }
+
+    public int updatePositionFromLetTransferUnit_LPN(String id_unique_LD , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_TRANSFER_UNIT, wareHouse);
+        values.put(POSITION_FROM_DESCRIPTION_TRANSFER_UNIT, descreption);
+        values.put(POSITION_FROM_CODE_TRANSFER_UNIT, from);
+        values.put(LPN_FROM_TRANSFER_UNIT, from);
+
+        // updating row
+        return db.update(O_TRANSFER_UNIT, values,
+                AUTOINCREMENT_TRANSFER_UNIT + " = ?",
+                new String[]{String.valueOf(id_unique_LD)});
+
+    }
+
+    public int updatePositionFromTransferUnit(String id_unique_LD , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_TRANSFER_UNIT, wareHouse);
+        values.put(POSITION_FROM_CODE_TRANSFER_UNIT, from);
+        values.put(LPN_FROM_TRANSFER_UNIT, "");
+        values.put(POSITION_FROM_DESCRIPTION_TRANSFER_UNIT, descreption);
+
+        // updating row
+        return db.update(O_TRANSFER_UNIT, values,  AUTOINCREMENT_TRANSFER_UNIT + " = ?",
+                new String[]{String.valueOf(id_unique_LD)});
+
+    }
+    public int updatePositionToTransferUnit(String id_unique_TU, String unit) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(UNIT_CHANGE_TO, unit);
+
+
+        // updating row
+        return db.update(O_TRANSFER_UNIT, values,  AUTOINCREMENT_TRANSFER_UNIT + " = ?",
+                new String[]{String.valueOf(id_unique_TU)});
+
+    }
+
+
+    //END TABLE O_TRANSFER_UNIT
 
 }

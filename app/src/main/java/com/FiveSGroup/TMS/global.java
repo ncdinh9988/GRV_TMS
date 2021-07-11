@@ -284,7 +284,15 @@ public class global extends Application {
     // biến toàn bộ về Context
     private static Context appContext;
     private static Context appContext1;
+    public static  String barcode="";
 
+    public static String getBarcode() {
+        return barcode;
+    }
+
+    public static void setBarcode(String barcode) {
+        global.barcode = barcode;
+    }
 
     public static  String Customercd="";
     public static String getCustomercd() {

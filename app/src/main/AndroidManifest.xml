@@ -90,8 +90,18 @@
             android:name=".Warehouse.Wv_ShowResultQrode"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".TransferUnit.Change_Unit"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Warehouse.HomeQRActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".TransferUnit.TransferUnitQrcode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TransferUnit.TransferUnitActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".LetDown.LetDownActivity"
             android:screenOrientation="portrait" />
