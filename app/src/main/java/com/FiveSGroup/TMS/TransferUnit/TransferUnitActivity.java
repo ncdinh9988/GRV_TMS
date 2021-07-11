@@ -337,6 +337,9 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
                         }else if (result == -26) {
                             dialog.showDialog(TransferUnitActivity.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
+                        }else if (result == -32) {
+                            dialog.showDialog(TransferUnitActivity.this, "Số Lượng Quy Đổi Không Đủ");
+
                         }else {
                             dialog.showDialog(TransferUnitActivity.this, "Lưu thất bại");
                         }
