@@ -49,6 +49,19 @@
             android:text="Quét Mã Hàng"
             />
         <Button
+            android:id="@+id/btnchuyendvt"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:background="@drawable/bg_button"
+            android:textColor="@color/white"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:layout_margin="5dp"
+            android:text="Chuyển ĐVT"
+            />
+        <Button
             android:id="@+id/btnlpn"
             android:layout_width="0dp"
             android:layout_weight="1"

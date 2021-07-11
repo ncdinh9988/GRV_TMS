@@ -27,6 +27,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.LPN.LPNActivity;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.ValueEventbus;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.global;
@@ -35,7 +36,7 @@ import org.greenrobot.eventbus.EventBus;
 
 public class Home_Master_Pick extends AppCompatActivity {
     private WebView mWebview;
-    private Button btn1, btnLpn, btn3, btnback, btnShow;
+    private Button btn1, btnLpn, btn3, btnback, btnShow , btnchuyendvt;
     LinearLayout layout;
     String value1 = "", value2 = "";
     SharedPreferences sharedPref;
@@ -62,11 +63,21 @@ public class Home_Master_Pick extends AppCompatActivity {
 
         mWebview = (WebView) findViewById(R.id.webview);
         btn1 = (Button) findViewById(R.id.btn1);
+        btnchuyendvt = (Button) findViewById(R.id.btnchuyendvt) ;
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
         btnLpn = findViewById(R.id.btnlpn);
         layout = findViewById(R.id.layout);
         urlStockReceipt = DatabaseHelper.getInstance().getParamByKey("URL_PickListHH").getValue();
+
+        btnchuyendvt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_Master_Pick.this, TransferUnitQrcode.class);
+                startActivity(intent);
+            }
+        });
+
         btnLpn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +177,7 @@ public class Home_Master_Pick extends AppCompatActivity {
                         btn1.setVisibility(View.VISIBLE);
                         btnShow.setVisibility(View.VISIBLE);
                         btnLpn.setVisibility(View.VISIBLE);
+                        btnchuyendvt.setVisibility(View.VISIBLE);
                         btnback.setVisibility(View.GONE);
                         SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -176,6 +188,7 @@ public class Home_Master_Pick extends AppCompatActivity {
                         btnShow.setVisibility(View.GONE);
                         btn1.setVisibility(View.GONE);
                         btnLpn.setVisibility(View.GONE);
+                        btnchuyendvt.setVisibility(View.GONE);
                         btnback.setVisibility(View.VISIBLE);
                         SharedPreferences settings = getSharedPreferences("name", Context.MODE_PRIVATE);
                         settings.edit().clear().apply();

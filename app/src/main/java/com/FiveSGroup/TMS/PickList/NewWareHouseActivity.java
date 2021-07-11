@@ -35,6 +35,7 @@ import com.FiveSGroup.TMS.PutAway.Qrcode_PutAway;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.StockOut.Home_Stockout;
 import com.FiveSGroup.TMS.StockTransfer.Qrcode_StockTransfer;
+import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.Warehouse.HomeQRActivity;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.Warehouse_Adjustment;
 import com.FiveSGroup.TMS.global;
@@ -50,7 +51,7 @@ public class NewWareHouseActivity extends AppCompatActivity implements View.OnCl
     WebView webViewPickList;
     Button btnBack;
     private ProgressBar progressBar;
-    private Button btnScan, btnback, btnShow , btnlpn;
+    private Button btnScan, btnback, btnShow , btnlpn , btnchuyendvt;
     String urlPickListt = "";
     SwipeRefreshLayout refreshLayout;
     @Override
@@ -113,10 +114,12 @@ public class NewWareHouseActivity extends AppCompatActivity implements View.OnCl
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
         btnlpn = findViewById(R.id.btnlpn);
+        btnchuyendvt = findViewById(R.id.btnchuyendvt);
         refreshLayout = findViewById(R.id.swipeRefesh);
         btnScan.setOnClickListener(this);
         btnShow.setOnClickListener(this);
         btnlpn.setOnClickListener(this);
+        btnchuyendvt.setOnClickListener(this);
 
         floating_Warehouse_Adj.setOnClickListener(this);
         floating_Inventory.setOnClickListener(this);
@@ -220,6 +223,7 @@ public class NewWareHouseActivity extends AppCompatActivity implements View.OnCl
                 btnScan.setVisibility(View.VISIBLE);
                 btnShow.setVisibility(View.VISIBLE);
                 btnlpn.setVisibility(View.VISIBLE);
+                btnchuyendvt.setVisibility(View.VISIBLE);
                 btnback.setVisibility(View.GONE);
                 actionMenu.setVisibility(View.GONE);
                 SharedPreferences sharedPreferences = getSharedPreferences("whpicklist", Context.MODE_PRIVATE);
@@ -231,6 +235,7 @@ public class NewWareHouseActivity extends AppCompatActivity implements View.OnCl
                 btnShow.setVisibility(View.GONE);
                 btnScan.setVisibility(View.GONE);
                 btnlpn.setVisibility(View.GONE);
+                btnchuyendvt.setVisibility(View.GONE);
                 btnback.setVisibility(View.VISIBLE);
                 actionMenu.setVisibility(View.GONE);
                 SharedPreferences settings = getSharedPreferences("name", Context.MODE_PRIVATE);
@@ -303,6 +308,10 @@ public class NewWareHouseActivity extends AppCompatActivity implements View.OnCl
             case R.id.btnlpn:
                 Intent intent6 = new Intent(NewWareHouseActivity.this, LPNActivity.class);
                 startActivity(intent6);
+                break;
+            case R.id.btnchuyendvt:
+                Intent intent7 = new Intent(NewWareHouseActivity.this, TransferUnitQrcode.class);
+                startActivity(intent7);
                 break;
             case R.id.btnback:
                 finish();
