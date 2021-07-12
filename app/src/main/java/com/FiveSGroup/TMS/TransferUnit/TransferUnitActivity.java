@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.LetDown.LetDownActivity;
 import com.FiveSGroup.TMS.LetDown.LetDownQrCodeActivity;
 import com.FiveSGroup.TMS.LetDown.LetDownSuggestionsActivity;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
@@ -306,7 +307,10 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
             String saleCode = CmnFns.readDataAdmin();
 
             if (transferUnitarr.size() > 0) {
+                if (checkunit()) {
+                    dialog.showDialog(TransferUnitActivity.this, "Đơn Vị Quy Đổi không Được Trùng Với Đơn Vị Sản Phẩm Đã Chọn");
 
+                }else{
                     result = new CmnFns().synchronizeConvert_UOM();
 
 //                            result = new CmnFns().synchronizeData(saleCode, "WLD", "");
@@ -345,7 +349,10 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
                         }
 
 
+                    }
                 }
+
+
             } else {
                 dialog.showDialog(TransferUnitActivity.this, "Không có sản phẩm");
 
@@ -389,6 +396,26 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
             }
         });
         dialog.show();
+    }
+
+    private boolean checkunit(){
+        boolean check = false;
+        List<TransferUnitProduct> product = DatabaseHelper.getInstance().getAllTransferUnitProduct();
+        for (int i = 0; i < product.size(); i++) {
+            TransferUnitProduct TransferUnitProduct = product.get(i);
+            String valueQty = TransferUnitProduct.getQTY();
+            String changeUnit = TransferUnitProduct.getUNIT_CHANGE_TO();
+            if(valueQty.equals(changeUnit)){
+                check = true;
+            }
+        }
+
+
+        if (check == true) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean isQuanityZero() {
