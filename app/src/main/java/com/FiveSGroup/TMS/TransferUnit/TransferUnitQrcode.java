@@ -304,7 +304,7 @@ public class TransferUnitQrcode  extends AppCompatActivity implements View.OnCli
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WLD", 0, "");
+            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WOI", 0, "");
             // expiredDate nhận giá trị từ adapter để xử lí position
             if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData);

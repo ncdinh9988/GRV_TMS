@@ -399,8 +399,6 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
 
                 }
             }
-
-
         }
     }
     private void ReturnPosition(String barcode) {

@@ -438,7 +438,7 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
     }
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow) {
-
+// khi kh không check vào đơn vị tính mặc định isdefault mặc định là 1 còn khi check vào là 2
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
