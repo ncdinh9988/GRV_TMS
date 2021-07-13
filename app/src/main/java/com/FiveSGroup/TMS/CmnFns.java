@@ -1197,7 +1197,7 @@ public class CmnFns {
 
                 Exp_Date_Tam exp_date_tam = new Exp_Date_Tam();
                 if (pro_stockin.equals("")) {
-                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + "");
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + "---");
                 } else {
                     exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
                 }
@@ -4448,7 +4448,9 @@ public class CmnFns {
 
 
                     if (isLPN == 0) {
-                        if (stockDate != null) {
+                        if (stockDate.equals("---")) {
+                            transferUnit.setSTOCKIN_DATE("");
+                        }else{
                             transferUnit.setSTOCKIN_DATE(stockDate);
                         }
                         transferUnit.setUNIT(unit);
