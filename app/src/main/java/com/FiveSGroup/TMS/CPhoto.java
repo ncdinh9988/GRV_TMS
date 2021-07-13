@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 @Keep
 public class CPhoto implements Serializable,Comparable {
+//note
 
 	private long   photoCD = -1;
 	private String photoPath = "";
