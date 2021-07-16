@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,11 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.edt.setText(product.getQTY());
         holder.tvUnit.setText(product.getUNIT());
+        holder.layout__put.setVisibility(View.VISIBLE);
+        holder.layout_putaway.setVisibility(View.VISIBLE);
+        holder.layout__goiy.setVisibility(View.INVISIBLE);
+        holder.tvMasterPickPositionSuggest.setText(product.getSUGGESTION_POSITION());
+        holder.tvMasterPickPositionSuggest.setTextColor(Color.rgb(255, 51, 0));
 
 
         if(!product.getLPN_FROM().equals("")){
@@ -311,12 +317,18 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageButton btnvtden, btnvtdi;
-        TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
+        TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct , tvMasterPickPositionSuggest;
         TextView tvExpired, tvStockin;
         EditText edt;
+        LinearLayout layout__put;
+        View layout_putaway , layout__goiy;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvMasterPickPositionSuggest = itemView.findViewById(R.id.tvPositionSuggestput);
+            layout__put = itemView.findViewById(R.id.layout__put);
+            layout_putaway = itemView.findViewById(R.id.layout_putaway);
+            layout__goiy = itemView.findViewById(R.id.layout__goiy);
             btnvtden = itemView.findViewById(R.id.btnvtden);
             btnvtdi = itemView.findViewById(R.id.btnvtdi);
             tvFrom = itemView.findViewById(R.id.tvFrom);

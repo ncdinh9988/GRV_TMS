@@ -118,7 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 99; // version của DB khi thay
+    public static final int DATABASE_VERSION = 100; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -288,10 +288,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             // TODO: handle exception
         }
-
+        //version DB 99
         try {
             db.execSQL("ALTER TABLE " + O_TRANSFER_UNIT + " ADD COLUMN  "
                     + BARCODE + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 100
+        try {
+            db.execSQL("ALTER TABLE " + O_MASTER_PICK + " ADD COLUMN  "
+                    + SUGGESTION_POSITION_MASTER_PICK + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -1372,6 +1380,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_MASTER_PICK = "LPN_CODE_MASTER_PICK";
     public static final String LPN_FROM_MASTER_PICK = "LPN_FROM_MASTER_PICK";
     public static final String LPN_TO_MASTER_PICK = "LPN_TO_MASTER_PICK";
+    public static final String SUGGESTION_POSITION_MASTER_PICK = "SUGGESTION_POSITION_MASTER_PICK";
+//    public static final String SUGGESTION_POSITION_TO_MASTER_PICK = "SUGGESTION_POSITION_TO_MASTER_PICK";
 
     public static final String CREATE_TABLE_O_MASTER_PICK = "CREATE TABLE "
             + O_MASTER_PICK + "("
@@ -1395,6 +1405,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + LPN_CD_MASTER_PICK + " TEXT ,"
             + LPN_CODE_MASTER_PICK + " TEXT ,"
             + LPN_FROM_MASTER_PICK + " TEXT ,"
+            + SUGGESTION_POSITION_MASTER_PICK + " TEXT ,"
             + LPN_TO_MASTER_PICK + " TEXT "
             + ")";
 
@@ -1407,6 +1418,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(UNIQUE_CODE_MASTER_PICK, masterPick.getUNIT());
         values.put(PRODUCT_CODE_MASTER_PICK, masterPick.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_MASTER_PICK, masterPick.getPRODUCT_NAME());
+        values.put(SUGGESTION_POSITION_MASTER_PICK, masterPick.getSUGGESTION_POSITION());
         values.put(PRODUCT_CD_MASTER_PICK, masterPick.getPRODUCT_CD());
         values.put(QTY_SET_AVAILABLE_MASTER_PICK, masterPick.getQTY());
         values.put(STOCKIN_DATE_MASTER_PICK, masterPick.getSTOCKIN_DATE());
@@ -1519,6 +1531,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_CODE_MASTER_PICK))));
                 masterPick.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_MASTER_PICK))));
+                masterPick.setSUGGESTION_POSITION((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_MASTER_PICK))));
                 masterPick.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_MASTER_PICK))));
                 masterPick.setQTY((c.getString(c
@@ -1579,6 +1593,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_MASTER_PICK))));
                 masterPick.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_MASTER_PICK))));
+                masterPick.setSUGGESTION_POSITION((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_MASTER_PICK))));
                 masterPick.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_MASTER_PICK))));
                 masterPick.setPRODUCT_NAME((c.getString(c
@@ -1651,6 +1667,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(UNIQUE_CODE_MASTER_PICK))));
                 masterPick.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_MASTER_PICK))));
+                masterPick.setSUGGESTION_POSITION((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_MASTER_PICK))));
                 masterPick.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_MASTER_PICK))));
                 masterPick.setPRODUCT_CD((c.getString(c
@@ -1710,6 +1728,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(UNIQUE_CODE_MASTER_PICK))));
                 masterPick.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_MASTER_PICK))));
+                masterPick.setSUGGESTION_POSITION((c.getString(c
+                        .getColumnIndex(SUGGESTION_POSITION_MASTER_PICK))));
                 masterPick.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_MASTER_PICK))));
                 masterPick.setPRODUCT_CD((c.getString(c

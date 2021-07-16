@@ -2047,6 +2047,7 @@ public class CmnFns {
                     String description = jsonobj.getString("_POSITION_DESCRIPTION");
                     String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
                     String lpnCode = jsonobj.getString("_LPN_CODE");
+                    String suggestionPosition = jsonobj.getString("_Suggest_Position");
 
                     int pro_set = 1;
 
@@ -2067,6 +2068,7 @@ public class CmnFns {
 
                     masterPick.setLPN_TO(lpn_To);
                     masterPick.setLPN_CODE(lpnCode);
+                    masterPick.setSUGGESTION_POSITION(suggestionPosition);
 
                     masterPick.setPOSITION_TO_CODE(positionTo);
                     masterPick.setPOSITION_TO_DESCRIPTION("");
