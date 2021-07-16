@@ -64,6 +64,8 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         holder.layout__put.setVisibility(View.VISIBLE);
         holder.layout_putaway.setVisibility(View.VISIBLE);
         holder.layout__goiy.setVisibility(View.INVISIBLE);
+        holder.tvvtgy.setText("Vị Trí Lấy Hàng: ");
+
         holder.tvMasterPickPositionSuggest.setText(product.getSUGGESTION_POSITION());
         holder.tvMasterPickPositionSuggest.setTextColor(Color.rgb(255, 51, 0));
 
@@ -318,7 +320,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
 
         ImageButton btnvtden, btnvtdi;
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct , tvMasterPickPositionSuggest;
-        TextView tvExpired, tvStockin;
+        TextView tvExpired, tvStockin, tvvtgy;
         EditText edt;
         LinearLayout layout__put;
         View layout_putaway , layout__goiy;
@@ -329,6 +331,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
             layout__put = itemView.findViewById(R.id.layout__put);
             layout_putaway = itemView.findViewById(R.id.layout_putaway);
             layout__goiy = itemView.findViewById(R.id.layout__goiy);
+            tvvtgy = itemView.findViewById(R.id.tvvtgy);
             btnvtden = itemView.findViewById(R.id.btnvtden);
             btnvtdi = itemView.findViewById(R.id.btnvtdi);
             tvFrom = itemView.findViewById(R.id.tvFrom);
