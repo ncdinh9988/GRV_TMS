@@ -675,12 +675,17 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
                 dialog.showDialog(TransferUnitActivity.this, "Mã LPN không có trong zone");
 
             }
+            else if (postitionDes == -100) {
+
+                dialog.showDialog(TransferUnitActivity.this, "Không Có Sản Phẩm Với ĐVT Này");
+
+            }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
             finish();
         }
 
-
-
     }
+
+
 }

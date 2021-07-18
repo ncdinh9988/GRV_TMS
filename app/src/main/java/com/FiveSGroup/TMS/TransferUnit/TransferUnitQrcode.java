@@ -99,6 +99,7 @@ public class TransferUnitQrcode  extends AppCompatActivity implements View.OnCli
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setChecked(false);
             checkBoxGetDVT.setChecked(true);
+checkBoxGetDVT.setClickable(false);
             textViewTitle.setText("QUÉT MÃ - CHUYỂN ĐVT");
         }
 
@@ -499,7 +500,7 @@ public class TransferUnitQrcode  extends AppCompatActivity implements View.OnCli
         builderDVT.setItems(mString, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(TransferUnitQrcode.this, mString[which], Toast.LENGTH_LONG).show();
+//                Toast.makeText(TransferUnitQrcode.this, mString[which], Toast.LENGTH_LONG).show();
                 Intent intentt = new Intent(getApplication(), TransferUnitActivity.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
