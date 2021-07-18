@@ -8,6 +8,7 @@ import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -133,6 +134,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         listViewProduct.setLayoutManager(layoutManager);
         listViewProduct.setAdapter(MasterPickAdapter);
+
         MasterPickAdapter.notifyDataSetChanged();
         master_picklist = "";
 
@@ -154,7 +156,6 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                 InsetDrawable inset = new InsetDrawable(back, 64);
                 dialog.getWindow().setBackgroundDrawable(inset);
                 dialog.setView(layout_cus);
-
                 Button btnNo = layout_cus.findViewById(R.id.btnNo);
                 Button btnYes = layout_cus.findViewById(R.id.btnYes);
                 TextView textView = layout_cus.findViewById(R.id.tvTextBack);
@@ -195,6 +196,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         itemTouchHelper.attachToRecyclerView(listViewProduct);
 
     }
+
 
     @Override
     protected void onResume() {
@@ -354,6 +356,9 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
                         }else if (result == -31) {
                             dialog.showDialog(List_Master_Pick.this, "LPN Này Đã Được sử Dụng Cho SO Khác");
+
+                        }else if (result == -34) {
+                            dialog.showDialog(List_Master_Pick.this, "Sản Phẩm Với ĐVT Không Đúng Trên SO");
 
                         }else if (result == -36) {
                             dialog.showDialog(List_Master_Pick.this, "Trùng Dữ Liệu Vui Lòng Kiểm Tra Lại");
@@ -569,12 +574,16 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
             } else if (postitionDes == -31) {
                 dialog.showDialog(List_Master_Pick.this, "LPN Này Đã Được sử Dụng");
 
+            }else if (postitionDes == -33) {
+                dialog.showDialog(List_Master_Pick.this, "LPN Có Sản Phẩm Với ĐVT Không Đúng Trên SO");
+
             }
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
             finish();
         }
 
-
     }
+
+
 }

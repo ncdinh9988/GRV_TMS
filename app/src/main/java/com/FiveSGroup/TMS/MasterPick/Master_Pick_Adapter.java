@@ -245,28 +245,48 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         });
         final String oldValue = holder.edt.getText().toString();
 
-
-        holder.edt.addTextChangedListener(new TextWatcher() {
+        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+                        // the user is done typing.
+                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // the user is done typing.
+                        DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+                        hideSoftKeyboard(view);
 
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
-                    DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
-                } else {
-                    DatabaseHelper.getInstance().updateProduct_Master_Pick(product,product.getAUTOINCREMENT() , product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+                    }
                 }
             }
         });
 
 
+//        holder.edt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+//                    DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+//                } else {
+//                    DatabaseHelper.getInstance().updateProduct_Master_Pick(product,product.getAUTOINCREMENT() , product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+////                    DatabaseHelper.getInstance().updateProduct_Master_Pick(product,product.getAUTOINCREMENT() , product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+//                }
+//            }
+//        });
+//
+//
         holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -289,7 +309,10 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                             // the user is done typing.
                             DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
                             //DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
-                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(context, List_Master_Pick.class);
+                            context.startActivity(intent);
+                            ((Activity) context).finish();
                             hideSoftKeyboard(view);
 
                         }
@@ -303,6 +326,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         });
 
     }
+
 
     private boolean hideSoftKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);

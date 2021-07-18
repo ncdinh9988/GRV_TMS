@@ -2025,6 +2025,8 @@ public class CmnFns {
             return -22;
         }else if (result.equals("-31")) {
             return -31;
+        }else if (result.equals("-33")) {
+            return -33;
         }
 
         try {
@@ -2666,6 +2668,8 @@ public class CmnFns {
             return -22;
         }else if (result.equals("-31")) {
             return -31;
+        }else if (result.equals("-33")) {
+            return -33;
         }
 
         try {

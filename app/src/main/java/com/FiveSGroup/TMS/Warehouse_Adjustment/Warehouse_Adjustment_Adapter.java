@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.TransferUnit.TransferUnitActivity;
 
 import java.util.ArrayList;
 
@@ -112,22 +113,41 @@ public class Warehouse_Adjustment_Adapter extends RecyclerView.Adapter<Warehouse
         final String oldValue = holder.edt.getText().toString();
 
 
-        holder.edt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        holder.edt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.toString().equals("")) {
+//                    DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
+//                } else {
+//                    DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
+//                }
+//            }
+//        });
 
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
-
+        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().equals("")) {
-                    DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
-                } else {
-                    DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+                        // the user is done typing.
+                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // the user is done typing.
+                        DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
+                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+                        hideSoftKeyboard(view);
+
+                    }
                 }
             }
         });
@@ -160,7 +180,9 @@ public class Warehouse_Adjustment_Adapter extends RecyclerView.Adapter<Warehouse
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                             // the user is done typing.
                             DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getORDER_CD());
-
+                            Intent intent = new Intent(context, ListQrcode_Warehouse_Adjustment.class);
+                            context.startActivity(intent);
+                            ((Activity) context).finish();
                             hideSoftKeyboard(view);
 
 //                        }

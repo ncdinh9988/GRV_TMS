@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.RemoveFromLPN.List_Remove_LPN;
 
 import java.util.ArrayList;
 
@@ -113,22 +114,41 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
 //        });
         final String oldValue = holder.edt.getText().toString();
 
-        holder.edt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        holder.edt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+//                    DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
+//                } else {
+//                    DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
+//                }
+//            }
+//        });
 
-            }
 
+        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+                        // the user is done typing.
+                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // the user is done typing.
+                        DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
+                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+                        hideSoftKeyboard(view);
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
-                    DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
-                } else {
-                    DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
+                    }
                 }
             }
         });
@@ -158,7 +178,9 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                             // the user is done typing.
                             DatabaseHelper.getInstance().updateProduct_Return_WareHouse(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getRETURN_CD());
-
+                            Intent intent = new Intent(context, List_Return_WareHouse.class);
+                            context.startActivity(intent);
+                            ((Activity) context).finish();
                             hideSoftKeyboard(view);
 
                         }

@@ -324,6 +324,9 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                             }else if (result == -31) {
                                 dialog.showDialog(ListPickList.this, "LPN Này Đã Được sử Dụng Cho SO Khác");
 
+                            }else if (result == -34) {
+                                dialog.showDialog(ListPickList.this, "Sản Phẩm Với ĐVT Không Đúng Trên SO");
+
                             }else {
                                 dialog.showDialog(ListPickList.this, "Lưu thất bại");
                             }
@@ -537,6 +540,9 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
 
             }else if (postitionDes == -31) {
                 dialog.showDialog(ListPickList.this, "LPN Này Đã Được sử Dụng ");
+
+            }else if (postitionDes == -33) {
+                dialog.showDialog(ListPickList.this, "LPN Có Sản Phẩm Với ĐVT Không Đúng Trên SO");
 
             }
         }catch (Exception e){
