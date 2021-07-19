@@ -477,7 +477,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
         builderDVT.setItems(mString, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(Qrcode_Master_Pick.this, mString[which], Toast.LENGTH_LONG).show();
+//                Toast.makeText(Qrcode_Master_Pick.this, mString[which], Toast.LENGTH_LONG).show();
                 Intent intentt = new Intent(getApplication(), List_Master_Pick.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
