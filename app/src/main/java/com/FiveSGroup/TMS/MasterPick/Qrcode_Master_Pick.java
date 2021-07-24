@@ -177,6 +177,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetDVT.setChecked(true);
             textViewTitle.setText("QUÉT MÃ - MASTER PICK");
         }
     }

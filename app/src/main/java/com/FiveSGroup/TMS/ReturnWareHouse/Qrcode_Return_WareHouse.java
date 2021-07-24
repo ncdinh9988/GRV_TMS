@@ -168,6 +168,7 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
+            checkBoxGetDVT.setChecked(true);
             checkBoxGetLPN.setChecked(false);
             textViewTitle.setText("QUÉT MÃ - TRẢ HÀNG");
         }

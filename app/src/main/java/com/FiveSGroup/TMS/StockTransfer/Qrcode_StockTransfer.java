@@ -189,6 +189,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetDVT.setChecked(true);
             textViewTitle.setText("QUÉT MÃ - CHUYỂN VỊ TRÍ");
         }
     }

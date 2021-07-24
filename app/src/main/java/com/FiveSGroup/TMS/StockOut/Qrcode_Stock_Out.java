@@ -173,6 +173,7 @@ public class Qrcode_Stock_Out extends AppCompatActivity implements View.OnClickL
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetDVT.setChecked(true);
             textViewTitle.setText("QUÉT MÃ - XUẤT KHO");
         }
 

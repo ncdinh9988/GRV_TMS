@@ -38,7 +38,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class TransferUnitQrcode  extends AppCompatActivity implements View.OnClickListener {
+public class TransferUnitQrcode extends AppCompatActivity implements View.OnClickListener {
 
     private SurfaceView surfaceView;
     private BarcodeDetector barcodeDetector;
@@ -58,13 +58,14 @@ public class TransferUnitQrcode  extends AppCompatActivity implements View.OnCli
     String ea_unit_position = " ";
     String stockinDate = "";
     String checkToFinish = "";
-    String id_unique_LD = "" ;
+    String id_unique_LD = "";
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     View viewScan;
     Button buttonBack, btnSend;
-    private EditText edtBarcode;;
+    private EditText edtBarcode;
+    ;
 
     private boolean isUp;
 
@@ -99,7 +100,7 @@ public class TransferUnitQrcode  extends AppCompatActivity implements View.OnCli
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setChecked(false);
             checkBoxGetDVT.setChecked(true);
-checkBoxGetDVT.setClickable(false);
+            checkBoxGetDVT.setClickable(false);
             textViewTitle.setText("QUÉT MÃ - CHUYỂN ĐVT");
         }
 
@@ -107,9 +108,9 @@ checkBoxGetDVT.setClickable(false);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
+                try {
                     CmnFns.hideSoftKeyboard(TransferUnitQrcode.this);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
                 String barcode = edtBarcode.getText().toString();
@@ -119,7 +120,6 @@ checkBoxGetDVT.setClickable(false);
 
         setCheckBox();
     }
-
 
 
     private void init() {
@@ -140,6 +140,7 @@ checkBoxGetDVT.setClickable(false);
 
         }
     }
+
     private void setCheckBox() {
         checkBoxGetDVT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -245,7 +246,7 @@ checkBoxGetDVT.setClickable(false);
                                     Log.e("barcode2", "" + barcodeData);
 
                                     if (barcodeData != null) {
-                                        barcodeData = barcodeData.replace("\n","");
+                                        barcodeData = barcodeData.replace("\n", "");
                                         edtBarcode.setText(barcodeData);
                                         GetData(barcodeData);
                                     }
@@ -348,7 +349,7 @@ checkBoxGetDVT.setClickable(false);
                                         // expDateTemp2 lấy giá trị HSD được người dùng chọn
                                         expDateTemp2 = expDate;
                                         String chuoi[] = expDateTemp2.split(" - ");
-                                        if (chuoi[0].equals("Khác")){
+                                        if (chuoi[0].equals("Khác")) {
                                             Intent intent = new Intent(TransferUnitQrcode.this, SelectPropertiesProductActivity.class);
                                             intent.putExtra("typeScan", "scan_from_letdown");
                                             intent.putExtra("btn1", barcodeData);

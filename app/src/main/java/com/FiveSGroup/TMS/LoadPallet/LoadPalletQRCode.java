@@ -197,7 +197,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setChecked(false);
             checkBoxGetLPN.setEnabled(false);
-
+            checkBoxGetDVT.setChecked(true);
             textViewTitle.setText("QUÉT MÃ - CHẤT HÀNG LÊN PALLET");
         }
 

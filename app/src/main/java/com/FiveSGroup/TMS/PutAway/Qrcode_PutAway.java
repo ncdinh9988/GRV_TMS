@@ -179,6 +179,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetDVT.setChecked(true);
             textViewTitle.setText("QUÉT MÃ - PUTAWAY");
         }
     }

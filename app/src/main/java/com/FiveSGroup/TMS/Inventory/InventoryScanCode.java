@@ -183,6 +183,7 @@ public class InventoryScanCode extends AppCompatActivity {
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.GONE);
+            checkBoxGetDVT.setChecked(true);
             checkBoxGetLPN.setChecked(false);
             textViewTitle.setText("QUÉT MÃ - KIỂM TỒN");
         }

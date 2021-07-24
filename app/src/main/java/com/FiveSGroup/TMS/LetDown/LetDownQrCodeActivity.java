@@ -97,6 +97,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetDVT.setChecked(true);
             textViewTitle.setText("QUÉT MÃ - LET DOWN");
         }
 

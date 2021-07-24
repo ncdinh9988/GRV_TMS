@@ -183,6 +183,7 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setChecked(false);
+            checkBoxGetDVT.setChecked(true);
             textViewTitle.setText("QUÉT MÃ - GỠ SP RA KHỎI LPN");
         }
     }

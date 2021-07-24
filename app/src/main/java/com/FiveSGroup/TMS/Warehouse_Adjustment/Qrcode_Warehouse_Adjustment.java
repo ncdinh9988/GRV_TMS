@@ -169,6 +169,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.GONE);
+            checkBoxGetDVT.setChecked(true);
             checkBoxGetLPN.setChecked(false);
             textViewTitle.setText("QUÉT MÃ - CHỈNH KHO");
         }

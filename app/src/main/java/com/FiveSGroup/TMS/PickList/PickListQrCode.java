@@ -177,6 +177,7 @@ public class PickListQrCode extends AppCompatActivity {
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetDVT.setChecked(true);
             textViewTitle.setText("QUÉT MÃ - PICKLIST");
         }
     }
