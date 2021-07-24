@@ -1875,9 +1875,9 @@ public class CmnFns {
             JSONArray jsonarray = new JSONArray(result);
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
@@ -1899,7 +1899,7 @@ public class CmnFns {
 
                     int pro_set = 1;
                     Product_Return_WareHouse return_wareHouse = new Product_Return_WareHouse();
-                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     return_wareHouse.setPRODUCT_CD(pro_cd);
                     return_wareHouse.setPRODUCT_CODE(pro_code);
                     return_wareHouse.setPRODUCT_NAME(pro_name);
@@ -1957,11 +1957,11 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().Createreturn_warehouse_OUT(return_wareHouse);
                             }
-                            return 10;
+//                            return 10;
 
                         } else {
                             DatabaseHelper.getInstance().Createreturn_warehouse_OUT(return_wareHouse);
-                            return 10;
+//                            return 10;
                         }
                     } else if (isLPN == 1) {
                         boolean isExistLPN = false;
@@ -1975,7 +1975,7 @@ public class CmnFns {
                         }
                         if (isExistLPN == false) {
                             DatabaseHelper.getInstance().Createreturn_warehouse_OUT(return_wareHouse);
-                            return 10;
+//                            return 10;
                         } else {
                             Dialog dialog = new Dialog(context);
                             dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -2036,9 +2036,9 @@ public class CmnFns {
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
 
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
@@ -2057,7 +2057,7 @@ public class CmnFns {
 
                     int pro_set = 1;
                     Product_Master_Pick masterPick = new Product_Master_Pick();
-                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                         masterPick.setPRODUCT_CD(pro_cd);
                         masterPick.setPRODUCT_CODE(pro_code);
                         masterPick.setPRODUCT_NAME(pro_name);
@@ -2115,11 +2115,11 @@ public class CmnFns {
                                 } else {
                                     DatabaseHelper.getInstance().CreateMaster_Pick(masterPick);
                                 }
-                                return 10;
+//                                return 10;
 
                             } else {
                                 DatabaseHelper.getInstance().CreateMaster_Pick(masterPick);
-                                return 10;
+//                                return 10;
                             }
 
                         } else if (isLPN == 1) {
@@ -2134,7 +2134,7 @@ public class CmnFns {
                             }
                             if (isExistLPN == false) {
                                 DatabaseHelper.getInstance().CreateMaster_Pick(masterPick);
-                                return 10;
+//                                return 10;
                             } else {
                                 Dialog dialog = new Dialog(context);
                                 dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -2189,10 +2189,10 @@ public class CmnFns {
         try {
             JSONArray jsonarray = new JSONArray(result);
             for (int i = 0; i < jsonarray.length(); i++) {
-                // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+//                 lấy một đối tượng json để
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
@@ -2213,7 +2213,7 @@ public class CmnFns {
 
                     Product_CancelGood cancelGood = new Product_CancelGood();
 
-                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     cancelGood.setPRODUCT_CD(pro_cd);
                     cancelGood.setPRODUCT_CODE(pro_code);
                     cancelGood.setPRODUCT_NAME(pro_name);
@@ -2274,10 +2274,10 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().CreateCANCEL_GOOD(cancelGood);
                             }
-                            return 10 ;
+//                            return 10 ;
                         } else {
                             DatabaseHelper.getInstance().CreateCANCEL_GOOD(cancelGood);
-                            return 10 ;
+//                            return 10 ;
                         }
                     } else if (isLPN == 1) {
                         boolean isExistLPN = false;
@@ -2291,7 +2291,7 @@ public class CmnFns {
                         }
                         if (isExistLPN == false) {
                             DatabaseHelper.getInstance().CreateCANCEL_GOOD(cancelGood);
-                            return 10 ;
+//                            return 10 ;
                         } else {
                             Dialog dialog = new Dialog(context);
                             dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -2350,9 +2350,9 @@ public class CmnFns {
             JSONArray jsonarray = new JSONArray(result);
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
@@ -2371,7 +2371,7 @@ public class CmnFns {
                     String lpnCode = jsonobj.getString("_LPN_CODE");
                     int pro_set = 1;
                     Product_StockOut stockOut = new Product_StockOut();
-                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     stockOut.setPRODUCT_CD(pro_cd);
                     stockOut.setPRODUCT_CODE(pro_code);
                     stockOut.setPRODUCT_NAME(pro_name);
@@ -2432,10 +2432,10 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().CreateSTOCK_OUT(stockOut);
                             }
-                            return 10;
+//                            return 10;
                         } else {
                             DatabaseHelper.getInstance().CreateSTOCK_OUT(stockOut);
-                            return 10;
+//                            return 10;
                         }
                     } else if (isLPN == 1) {
                         boolean isExistLPN = false;
@@ -2449,7 +2449,7 @@ public class CmnFns {
                         }
                         if (isExistLPN == false) {
                             DatabaseHelper.getInstance().CreateSTOCK_OUT(stockOut);
-                            return 10;
+//                            return 10;
                         } else {
                             Dialog dialog = new Dialog(context);
                             dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -2512,10 +2512,10 @@ public class CmnFns {
                 // lấy một đối tượng json để
 
 
-//                if (i == 1 && isLNP == 0) {
-//                    return 1;
-//
-//                } else {
+                if (i == 1 && isLNP == 0) {
+                    return 1;
+
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
 
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
@@ -2537,7 +2537,7 @@ public class CmnFns {
                     //  String pro_set= jsonobj.getString("_SET_UNIT");
                     int pro_set = 1;
                     Product_PutAway putAway = new Product_PutAway();
-                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     putAway.setPRODUCT_CD_PUTAWAY(pro_cd);
                     putAway.setPRODUCT_CODE_PUTAWAY(pro_code);
                     putAway.setPRODUCT_NAME_PUTAWAY(pro_name);
@@ -2596,11 +2596,11 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().CreatePutAway(putAway);
                             }
-                            return 10;
+//                            return 10;
 
                         } else {
                             DatabaseHelper.getInstance().CreatePutAway(putAway);
-                            return 10 ;
+//                            return 10 ;
 
                         }
                     } else if (isLNP == 1) {
@@ -2615,7 +2615,7 @@ public class CmnFns {
                         }
                         if (isExistLPN == false) {
                             DatabaseHelper.getInstance().CreatePutAway(putAway);
-                            return 10;
+//                            return 10;
                         } else {
                             Dialog dialog = new Dialog(context);
                             dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -2680,9 +2680,9 @@ public class CmnFns {
             // DatabaseHelper.getInstance().deleteAllRorateTimes();
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
@@ -2700,7 +2700,7 @@ public class CmnFns {
 
                     int pro_set = 1;
                     PickList pickList = new PickList();
-                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     pickList.setPRODUCT_CD(pro_cd);
                     pickList.setPRODUCT_CODE(pro_code);
                     pickList.setPRODUCT_NAME(pro_name);
@@ -2764,11 +2764,11 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().CreatePickList(pickList);
                             }
-                            return 10 ;
+//                            return 10 ;
 
                         } else {
                             DatabaseHelper.getInstance().CreatePickList(pickList);
-                            return 10 ;
+//                            return 10 ;
                         }
                     } else if (isLPN == 1) {
                         boolean isExistLPN = false;
@@ -2782,7 +2782,7 @@ public class CmnFns {
                         }
                         if (isExistLPN == false) {
                             DatabaseHelper.getInstance().CreatePickList(pickList);
-                            return 10 ;
+//                            return 10 ;
                         } else {
                             Dialog dialog = new Dialog(context);
                             dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -3733,9 +3733,9 @@ public class CmnFns {
             // DatabaseHelper.getInstance().deleteAllRorateTimes();
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
 //                String pro_CD = jsonobj.getString("_PRODUCT_CODE");
 //                if (pro_CD.equals(qrcode)) {
@@ -3754,7 +3754,7 @@ public class CmnFns {
 
                     int pro_set = 1;
                     Product_LoadPallet product_loadPallet = new Product_LoadPallet();
-                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     product_loadPallet.setPRODUCT_CD(pro_cd);
                     product_loadPallet.setPRODUCT_CODE(pro_code);
                     product_loadPallet.setPRODUCT_NAME(pro_name);
@@ -3818,11 +3818,11 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().CreateLOAD_PALLET(product_loadPallet);
                             }
-                            return 10 ;
+//                            return 10 ;
 
                         } else {
                             DatabaseHelper.getInstance().CreateLOAD_PALLET(product_loadPallet);
-                            return 10 ;
+//                            return 10 ;
                         }
 
                     } else if (isLPN == 1) {
@@ -3837,7 +3837,7 @@ public class CmnFns {
                         }
                         if (isExistLPN == false) {
                             DatabaseHelper.getInstance().CreateLOAD_PALLET(product_loadPallet);
-                            return 10 ;
+//                            return 10 ;
                         } else {
                             Dialog dialog = new Dialog(context);
                             dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -3888,9 +3888,9 @@ public class CmnFns {
             // DatabaseHelper.getInstance().deleteAllRorateTimes();
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
 //                String pro_CD = jsonobj.getString("_PRODUCT_CODE");
 //                if (pro_CD.equals(qrcode)) {
@@ -3909,7 +3909,7 @@ public class CmnFns {
 
                     int pro_set = 1;
                     Product_StockTransfer productStockTransfer = new Product_StockTransfer();
-                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     productStockTransfer.setPRODUCT_CD(pro_cd);
                     productStockTransfer.setPRODUCT_CODE(pro_code);
                     productStockTransfer.setPRODUCT_NAME(pro_name);
@@ -3971,11 +3971,11 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().CreateSTOCK_TRANSFER(productStockTransfer);
                             }
-                            return 10;
+//                            return 10;
 
                         } else {
                             DatabaseHelper.getInstance().CreateSTOCK_TRANSFER(productStockTransfer);
-                            return 10;
+//                            return 10;
                         }
 
                     } else if (isLPN == 1) {
@@ -3990,7 +3990,7 @@ public class CmnFns {
                         }
                         if (isExistLPN == false) {
                             DatabaseHelper.getInstance().CreateSTOCK_TRANSFER(productStockTransfer);
-                            return 10;
+//                            return 10;
                         } else {
                             Dialog dialog = new Dialog(context);
                             dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -4040,9 +4040,9 @@ public class CmnFns {
             // DatabaseHelper.getInstance().deleteAllRorateTimes();
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
 //                String pro_CD = jsonobj.getString("_PRODUCT_CODE");
 //                if (pro_CD.equals(qrcode)) {
@@ -4061,7 +4061,7 @@ public class CmnFns {
 
                     int pro_set = 1;
                     Product_Remove_LPN productRemoveLpn = new Product_Remove_LPN();
-                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     productRemoveLpn.setPRODUCT_CD(pro_cd);
                     productRemoveLpn.setPRODUCT_CODE(pro_code);
                     productRemoveLpn.setPRODUCT_NAME(pro_name);
@@ -4124,11 +4124,11 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().Create_Remove_LPN(productRemoveLpn);
                             }
-                            return 10 ;
+//                            return 10 ;
 
                         } else {
                             DatabaseHelper.getInstance().Create_Remove_LPN(productRemoveLpn);
-                            return 10;
+//                            return 10;
                         }
 
                     } else if (isLPN == 1) {
@@ -4143,7 +4143,7 @@ public class CmnFns {
                         }
                         if (isExistLPN == false) {
                             DatabaseHelper.getInstance().Create_Remove_LPN(productRemoveLpn);
-                            return 10;
+//                            return 10;
                         } else {
                             Dialog dialog = new Dialog(context);
                             dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -4217,9 +4217,9 @@ public class CmnFns {
             // DatabaseHelper.getInstance().deleteAllRorateTimes();
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
 
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
@@ -4250,7 +4250,7 @@ public class CmnFns {
 
                     int pro_set = 1;
                     ProductLetDown letDown = new ProductLetDown();
-                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     letDown.setPRODUCT_CD(pro_cd);
                     letDown.setPRODUCT_CODE(pro_code);
                     letDown.setPRODUCT_NAME(pro_name);
@@ -4313,11 +4313,11 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().CreateLetDown(letDown);
                             }
-                            return 10 ;
+//                            return 10 ;
 
                         } else {
                             DatabaseHelper.getInstance().CreateLetDown(letDown);
-                            return 10 ;
+//                            return 10 ;
 
                         }
                     } else if (isLPN == 1) {
@@ -4332,7 +4332,7 @@ public class CmnFns {
                         }
                         if (isExistLPN == false) {
                             DatabaseHelper.getInstance().CreateLetDown(letDown);
-                            return 10 ;
+//                            return 10 ;
                         } else {
                             Dialog dialog = new Dialog(context);
                             dialog.showDialog(context, "LPN này đã có trong danh sách");
@@ -4390,9 +4390,9 @@ public class CmnFns {
             // DatabaseHelper.getInstance().deleteAllRorateTimes();
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
 
                 JSONObject jsonobj = jsonarray.getJSONObject(i);
 
@@ -4424,7 +4424,7 @@ public class CmnFns {
                 int pro_set = 1;
 
                 TransferUnitProduct transferUnit = new TransferUnitProduct();
-                if ((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))) {
+//                if ((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))) {
                     transferUnit.setPRODUCT_CD(pro_cd);
                     transferUnit.setPRODUCT_CODE(pro_code);
                     transferUnit.setPRODUCT_NAME(pro_name);
@@ -4493,11 +4493,11 @@ public class CmnFns {
                                 DatabaseHelper.getInstance().CreateTransferUnit(transferUnit);
 
                             }
-                            return 10;
+//                            return 10;
 
                         } else {
                             DatabaseHelper.getInstance().CreateTransferUnit(transferUnit);
-                            return 10;
+//                            return 10;
 
                         }
                     }
@@ -4762,9 +4762,9 @@ public class CmnFns {
             // DatabaseHelper.getInstance().deleteAllRorateTimes();
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
-//                if (i == 1 && isLPN == 0) {
-//                    return 1;
-//                } else {
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
@@ -4783,7 +4783,7 @@ public class CmnFns {
                     int pro_set = 1;
 
                     InventoryProduct inventoryProduct = new InventoryProduct();
-                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     inventoryProduct.setPRODUCT_CD(pro_cd);
                     inventoryProduct.setPRODUCT_CODE(pro_code);
                     inventoryProduct.setPRODUCT_NAME(pro_name);
@@ -4864,15 +4864,15 @@ public class CmnFns {
 
 
                             }
-                            return 10 ;
+//                            return 10 ;
 
                         } else {
                             DatabaseHelper.getInstance().CreateInventory(inventoryProduct);
-                            return 10 ;
+//                            return 10 ;
                         }
                     } else if (isLPN == 1) {
                         DatabaseHelper.getInstance().CreateInventory(inventoryProduct);
-                        return 10 ;
+//                        return 10 ;
                     }
                 }
 
