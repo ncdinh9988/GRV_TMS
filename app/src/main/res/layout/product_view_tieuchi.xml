@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/layout_"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:weightSum="10">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Cấn Dập "
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5">
+                <EditText
+                    android:paddingLeft="2dp"
+                    android:background="@drawable/bg_edittext"
+                    android:textColor="@color/black"
+                    android:id="@+id/edtSelectProductExpiredDate"
+                    android:layout_width="180dp"
+                    android:gravity="center"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:hint="Nhấn vào để chọn ngày" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/layout_putaway"
+        android:visibility="gone"
+        android:background="@color/grey05"
+        android:layout_below="@+id/layout__put"
+        android:layout_marginBottom="2dp"/>
+</RelativeLayout>

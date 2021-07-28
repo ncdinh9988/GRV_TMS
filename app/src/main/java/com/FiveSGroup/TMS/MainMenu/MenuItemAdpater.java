@@ -30,6 +30,7 @@ import com.FiveSGroup.TMS.RemoveFromLPN.Qrcode_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Home_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Home_Stockout;
 import com.FiveSGroup.TMS.StockTransfer.Qrcode_StockTransfer;
+import com.FiveSGroup.TMS.TransferQR.List_TransferQR;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.Warehouse.HomeQRActivity;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.Warehouse_Adjustment;
@@ -252,6 +253,17 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                        }else if(block_Warehouse == 1){
                         Intent intent_transfer = new Intent(context, TransferUnitQrcode.class);
                         context.startActivity(intent_transfer);
+                        break;
+                    case "Chuyển Mã":
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                        Intent intent_qr = new Intent(context, List_TransferQR.class);
+                        context.startActivity(intent_qr);
                         break;
 //                        }
 

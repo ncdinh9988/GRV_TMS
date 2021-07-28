@@ -60,11 +60,11 @@ public class MainWareHouseActivity extends AppCompatActivity {
     private void prepareData(){
         arrItem = new ArrayList<>();
         String name[] = {"LPN", "Nhập Kho", "Put Away", "Let Down", "Chuyển Vị Trí", "Master Pick" ,"PickList",
-                "Xuất Kho", "Kiểm Tồn", "Chỉnh Kho" , "Gỡ Sản Phẩm","Trả Hàng" ,"Xuất Hủy","Chuyển ĐVT"};
+                "Xuất Kho", "Kiểm Tồn", "Chỉnh Kho" , "Gỡ Sản Phẩm","Trả Hàng" ,"Xuất Hủy","Chuyển ĐVT","Chuyển Mã"};
         int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho, R.drawable.ic_putaway, R.drawable.ic_letdown,
                 R.drawable.ic_chuyen_vi_tri,  R.drawable.ic_master_pick , R.drawable.ic_picklist, R.drawable.ic_xuat_kho,
                 R.drawable.ic_kiem_ton, R.drawable.ic_chinh_kho , R.drawable.ic_go_san_pham, R.drawable.ic_tra_hang ,
-                R.drawable.ic_xuat_kho, R.drawable.ic_go_san_pham};
+                R.drawable.ic_xuat_kho, R.drawable.ic_go_san_pham,R.drawable.ic_chuyen_vi_tri};
         String Lock_Wh_Adjustment = DatabaseHelper.getInstance().getParamByKey("LOCK_WH_Adjustment").getValue();
         for(int i = 0; i < name.length; i ++){
             MenuItemObject object = new MenuItemObject();

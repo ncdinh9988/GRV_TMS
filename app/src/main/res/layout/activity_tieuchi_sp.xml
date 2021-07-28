@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="Tiêu Chí Sản Phẩm"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:background="@color/blue2"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <LinearLayout
+
+        android:weightSum="10"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:id="@+id/idproductt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="Kẹo coffe hương vị đặc biệt" />
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:weightSum="10"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:textColor="@color/black"
+            android:layout_weight="5"
+            android:textStyle="bold"
+            android:id="@+id/priceproduct"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="Lỗi" />
+        <TextView
+            android:textColor="@color/black"
+            android:layout_weight="5"
+            android:id="@+id/idUnit"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="Số Lượng" />
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/LoadWebService"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:nestedScrollingEnabled="false"
+        android:layout_weight="9.35">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <!--    <ListView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content" />-->
+
+    <LinearLayout
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:paddingBottom="5dp"
+        android:layout_height="65dp">
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_button"
+            android:text="Thoát"
+            android:id="@+id/buttonBack"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_button"
+            android:text="Trở Về DS"
+            android:visibility="gone"
+            android:id="@+id/buttonBackList"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/bg_button"
+            android:textAllCaps="false"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Xong"
+            android:textSize="16sp"
+            android:id="@+id/buttonOK"/>
+
+    </LinearLayout>
+
+</LinearLayout>

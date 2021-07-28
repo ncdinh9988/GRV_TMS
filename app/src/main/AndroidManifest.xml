@@ -80,6 +80,10 @@
             android:name=".Warehouse_Adjustment.ListQrcode_Warehouse_Adjustment"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".TransferQR.List_TransferQR"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".PickList.PickListQrCode"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
