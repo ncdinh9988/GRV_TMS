@@ -100,6 +100,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import static com.FiveSGroup.TMS.global.barcode;
+import static com.FiveSGroup.TMS.global.getAppContext;
 import static com.FiveSGroup.TMS.global.getSaleCode;
 
 public class CmnFns {
@@ -1028,6 +1029,12 @@ public class CmnFns {
             } else {
                 // Gán các URL(kết nối tới server nào), Username, Pass từ FSID do getInfo lấy được
                 String[] arr = result.split(global.SPLIT_KEY);
+                SharedPreferences sharedPref = getAppContext().getSharedPreferences("setURL", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("urlConnect",arr[0]);
+//            editor.putString("currentTimeIn", a);
+                editor.commit();
+
                 global.setUrlWebserviceToSynchronize(arr[0]);
                 global.setUserNameAuthWebsevice(arr[1]);
                 global.setPasswordNameAuthWebsevice(arr[2]);

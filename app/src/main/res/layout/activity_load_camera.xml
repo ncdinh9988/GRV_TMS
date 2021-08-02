@@ -50,6 +50,7 @@
                     android:buttonTint="#000"
                     android:text="Chọn Đơn Vị Tính"
                     android:textColor="#000"
+                    android:checked="true"
                     android:textSize="@dimen/txt50dp" />
 
                 <CheckBox
@@ -60,7 +61,7 @@
                     android:buttonTint="#000"
                     android:text="Quét Theo LPN"
                     android:textColor="#000"
-                    android:checked="true"
+
                     android:textSize="@dimen/txt50dp" />
             </LinearLayout>
 

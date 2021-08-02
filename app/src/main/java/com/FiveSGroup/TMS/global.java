@@ -2,6 +2,7 @@ package com.FiveSGroup.TMS;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -229,6 +230,8 @@ public class global extends Application {
     }
 
     public static String getUrlWebserviceToSynchronize() {
+        SharedPreferences sharedPref = getAppContext().getSharedPreferences("setURL", Context.MODE_PRIVATE);
+        String UrlWebserviceToSynchronize = sharedPref.getString("urlConnect", "");
         return UrlWebserviceToSynchronize;
     }
 

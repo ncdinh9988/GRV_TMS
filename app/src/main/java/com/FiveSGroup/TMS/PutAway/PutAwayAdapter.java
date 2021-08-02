@@ -120,25 +120,27 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
         final String oldValue = holder.edt.getText().toString();
 
 
-//        holder.edt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
-//                    DatabaseHelper.getInstance().updateProduct_PutAway(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD_PUTAWAY(), "0", product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
-//                } else {
-//                    DatabaseHelper.getInstance().updateProduct_PutAway(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD_PUTAWAY(), s.toString(), product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
-//                }
-//            }
-//        });
+        holder.edt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+                    DatabaseHelper.getInstance().updateProduct_PutAway(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD_PUTAWAY(), "0", product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
+                    Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
+                } else {
+                    DatabaseHelper.getInstance().updateProduct_PutAway(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD_PUTAWAY(), s.toString(), product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
+                    Toast.makeText(context, "Đã cập nhật số lượng 2", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -158,50 +160,49 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
             }
         });
 
-
-        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        actionId == EditorInfo.IME_ACTION_DONE ||
-                        event != null &&
-                                event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    if (event == null || !event.isShiftPressed()) {
-
-
-                        if (holder.edt.getText().toString().equals("") ) {
-                            // the user is done typing.
-
-                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-//                            DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE_PUTAWAY());
-
-                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-                            // the user is done typing.
-
-                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
-//                            DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE_PUTAWAY());
-                        } else {
-
-                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
-
-
-                            // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_PutAway(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
-                            Intent intent = new Intent(context, List_PutAway.class);
-                            context.startActivity(intent);
-                            ((Activity) context).finish();
-                            hideSoftKeyboard(view);
-
-                        }
-                        return true; // consume.
-
-
-                    }
-                }
-                return false;
-            }
-        });
+//        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+//                        actionId == EditorInfo.IME_ACTION_DONE ||
+//                        event != null &&
+//                                event.getAction() == KeyEvent.ACTION_DOWN &&
+//                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+//                    if (event == null || !event.isShiftPressed()) {
+//
+//
+//                        if (holder.edt.getText().toString().equals("") ) {
+//                            // the user is done typing.
+//
+//                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
+////                            DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE_PUTAWAY());
+//
+//                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+//                            // the user is done typing.
+//
+//                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
+////                            DatabaseHelper.getInstance().updateProduct_PutAway(product, product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE_PUTAWAY());
+//                        } else {
+//
+//                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+//
+//
+//                            // the user is done typing.
+//                            DatabaseHelper.getInstance().updateProduct_PutAway(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD_PUTAWAY(), holder.edt.getText().toString(), product.getEA_UNIT_PUTAWAY(), product.getSTOCKIN_DATE_PUTAWAY());
+//                            Intent intent = new Intent(context, List_PutAway.class);
+//                            context.startActivity(intent);
+//                            ((Activity) context).finish();
+//                            hideSoftKeyboard(view);
+//
+//                        }
+//                        return true; // consume.
+//
+//
+//                    }
+//                }
+//                return false;
+//            }
+//        });
     }
     private boolean hideSoftKeyboard(View view){
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);

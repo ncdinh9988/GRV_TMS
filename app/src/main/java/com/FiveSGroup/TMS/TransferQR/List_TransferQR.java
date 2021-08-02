@@ -28,10 +28,9 @@ import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.StockOut.Home_Stockout;
-import com.FiveSGroup.TMS.StockOut.List_TransferQR;
-import com.FiveSGroup.TMS.StockOut.Product_TransferQR;
+
 import com.FiveSGroup.TMS.StockOut.Qrcode_Stock_Out;
-import com.FiveSGroup.TMS.StockOut.TransferQRAdapter;
+
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitActivity;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitAdapter;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
@@ -127,8 +126,8 @@ public class List_TransferQR extends AppCompatActivity implements View.OnClickLi
 
 
 
-        Stockout = DatabaseHelper.getInstance().getAllProduct_TransferQR(global.getStockoutCD());
-        QRListAdapter = new TransferQRAdapter(this, Stockout);
+//        Stockout = DatabaseHelper.getInstance().getAllProduct_TransferQR(global.getStockoutCD());
+//        QRListAdapter = new TransferQRAdapter(this, Stockout);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         listViewProduct.setLayoutManager(layoutManager);
         listViewProduct.setAdapter(QRListAdapter);
@@ -178,7 +177,7 @@ public class List_TransferQR extends AppCompatActivity implements View.OnClickLi
                         int position = viewHolder.getAdapterPosition();
                         Product_TransferQR product = Stockout.get(position);
                         Stockout.remove(position);
-                        DatabaseHelper.getInstance().deleteProduct_TransferQR_Specific(product.getAUTOINCREMENT());
+//                        DatabaseHelper.getInstance().deleteProduct_TransferQR_Specific(product.getAUTOINCREMENT());
                         QRListAdapter.notifyItemRemoved(position);
                     }
                 });
@@ -341,7 +340,7 @@ public class List_TransferQR extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                DatabaseHelper.getInstance().deleteProduct_TransferQR();
+//                DatabaseHelper.getInstance().deleteProduct_TransferQR();
                 Stockout.clear();
                 QRListAdapter.notifyDataSetChanged();
                 Intent intentToHomeQRActivity = new Intent(List_TransferQR.this, Home_Stockout.class);
