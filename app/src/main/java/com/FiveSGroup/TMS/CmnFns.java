@@ -50,6 +50,7 @@ import com.FiveSGroup.TMS.LetDown.ProductLetDown;
 import com.FiveSGroup.TMS.LoadPallet.Product_LoadPallet;
 import com.FiveSGroup.TMS.MasterPick.Product_Master_Pick;
 import com.FiveSGroup.TMS.PickList.PickList;
+import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.PutAway.Product_PutAway;
 import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
@@ -2162,6 +2163,165 @@ public class CmnFns {
 
         return 1;
     }
+
+    public int synchronizeGETProductByZonePo_Return(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String poreturnCD, int isLPN) {
+
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.GetProductByZone(qrcode, admin, "WPR", isLPN, poreturnCD);
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("1")) {
+            return 1;
+        } else if (result.equals("-8")) {
+            return -8;
+        } else if (result.equals("-10")) {
+            return -10;
+        } else if (result.equals("-11")) {
+            return -11;
+        } else if (result.equals("-12")) {
+            return -12;
+        } else if (result.equals("-16")) {
+            return -16;
+        } else if (result.equals("-20")) {
+            return -20;
+        } else if (result.equals("-21")) {
+            return -21;
+        } else if (result.equals("-22")) {
+            return -22;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+            for (int i = 0; i < jsonarray.length(); i++) {
+//                 lấy một đối tượng json để
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
+                    JSONObject jsonobj = jsonarray.getJSONObject(i);
+                    String pro_code = jsonobj.getString("_PRODUCT_CODE");
+                    String pro_cd = jsonobj.getString("_PRODUCT_CD");
+                    String pro_name = jsonobj.getString("_PRODUCT_NAME");
+                    String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+                    String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
+                    String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
+                    String ea_unit = jsonobj.getString("_UNIT");
+                    // VT đến
+                    String position_code = jsonobj.getString("_POSITION_CODE");
+                    String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                    // Mô tả VT đến
+                    String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                    // VT đến
+                    String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+                    String lpnCode = jsonobj.getString("_LPN_CODE");
+                    int pro_set = 1;
+
+                    Product_PoReturn poReturn = new Product_PoReturn();
+
+//                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+                    poReturn.setPRODUCT_CD(pro_cd);
+                    poReturn.setPRODUCT_CODE(pro_code);
+                    poReturn.setPRODUCT_NAME(pro_name);
+                    poReturn.setQTY(String.valueOf(pro_set));
+                    poReturn.setQTY_EA_AVAILABLE(quanity_ea);
+
+                    poReturn.setPOSITION_TO_CD(warePosition);
+                    poReturn.setPO_RETURN_CD(poreturnCD);
+                    poReturn.setWAREHOUSE_POSITION_CD(warePosition);
+                    String positionTo = "---";
+                    String positionFrom = "---";
+                    String lpn_From = "";
+                    String lpn_To = "";
+
+                    poReturn.setLPN_TO(lpn_To);
+                    poReturn.setLPN_CODE(lpnCode);
+
+                    poReturn.setPOSITION_TO_CODE(position_code);
+                    poReturn.setPOSITION_TO_DESCRIPTION(description);
+
+                    if (isLPN == 0) {
+                        if (stockDate != null) {
+                            poReturn.setSTOCKIN_DATE(stockDate);
+                        }
+                        poReturn.setEXPIRED_DATE(expDate);
+                        poReturn.setUNIT(unit);
+                        poReturn.setQTY(String.valueOf(pro_set));
+                        poReturn.setPOSITION_FROM_CD(warePosition);
+                        // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
+                        poReturn.setPOSITION_FROM_CODE(positionFrom);
+                        poReturn.setLPN_FROM(lpn_From);
+                        poReturn.setPOSITION_FROM_DESCRIPTION("");
+                    } else if (isLPN == 1) {
+                        poReturn.setSTOCKIN_DATE(strokinDate);
+                        poReturn.setEXPIRED_DATE(exxpiredDate);
+                        poReturn.setUNIT(ea_unit);
+                        poReturn.setQTY(quanity);
+                        poReturn.setPOSITION_FROM_CD(lpn_From);
+
+                        poReturn.setPOSITION_FROM_CODE(lpn_From);
+                        poReturn.setLPN_FROM(lpnCode);
+                        poReturn.setPOSITION_FROM_DESCRIPTION(lpn_From);
+                    }
+
+                    if (isLPN == 0) {
+                        ArrayList<Product_PoReturn> Product_PoReturns = DatabaseHelper.getInstance().
+                                getoneProduct_PoReturn(poReturn.getPRODUCT_CD(), expDate, poReturn.getUNIT(), poReturn.getSTOCKIN_DATE(), poreturnCD);
+                        if (Product_PoReturns.size() > 0) {
+                            Product_PoReturn product = Product_PoReturns.get(0);
+                            if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
+
+                                Product_PoReturn updateProductQR = Product_PoReturns.get(0);
+                                int product_set = Integer.parseInt(Product_PoReturns.get(0).getQTY());
+                                int sl = product_set + 1;
+                                Product_PoReturns.get(i).setQTY(String.valueOf(product_set));
+                                DatabaseHelper.getInstance().updateProduct_PoReturn(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                        String.valueOf(sl), updateProductQR.getUNIT(), poReturn.getSTOCKIN_DATE(), poreturnCD);
+                            } else {
+                                DatabaseHelper.getInstance().CreatePo_Return(poReturn);
+                            }
+//                            return 10 ;
+                        } else {
+                            DatabaseHelper.getInstance().CreatePo_Return(poReturn);
+//                            return 10 ;
+                        }
+                    } else if (isLPN == 1) {
+                        boolean isExistLPN = false;
+                        ArrayList<Product_PoReturn> Product_PoReturn = DatabaseHelper.getInstance().getAllProduct_PoReturn(poreturnCD);
+                        if (Product_PoReturn.size() > 0) {
+                            for (int j = 0; j < Product_PoReturn.size(); j++) {
+                                if (Product_PoReturn.get(j).getLPN_CODE().equals(lpnCode)) {
+                                    isExistLPN = true;
+                                }
+                            }
+                        }
+                        if (isExistLPN == false) {
+                            DatabaseHelper.getInstance().CreatePo_Return(poReturn);
+//                            return 10 ;
+                        } else {
+                            Dialog dialog = new Dialog(context);
+                            dialog.showDialog(context, "LPN này đã có trong danh sách");
+                        }
+
+                    }
+                }
+
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
+
     public int synchronizeGETProductByZonecancel_Good(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String cancelCD, int isLPN) {
 
 
@@ -2986,6 +3146,15 @@ public class CmnFns {
                             }
 
                         }
+                        else if (type.equals("WPR")) {
+                            //Trả Hàng
+                            if (isLPN == 1) {
+                                DatabaseHelper.getInstance().updatePositionFrom_poReturn_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                            } else {
+                                DatabaseHelper.getInstance().updatePositionFrom_poReturn(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                            }
+
+                        }
                         // DatabaseHelper.getInstance().updatePositionFrom(positionCode, wareHouse, productCd, expDate, postitionDes);
                     } else if (positionReceive.equals("2") && productCd != null) {
                         if (type.equals("WLD")) {
@@ -3054,6 +3223,13 @@ public class CmnFns {
                                 DatabaseHelper.getInstance().updatePositionTo_cancelGood_LPN(unique_id,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_cancelGood(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                            }
+                        }
+                        else if (type.equals("WPR")) {
+                            if (isLPN == 1) {
+                                DatabaseHelper.getInstance().updatePositionTo_poReturn_LPN(unique_id,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                            } else {
+                                DatabaseHelper.getInstance().updatePositionTo_poReturn(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         }
 
@@ -3368,8 +3544,16 @@ public class CmnFns {
                 jsonData = gson.toJson(product);
 
             }
+            //cancel good (xuat huy)
             else if (type.equals("WCG")) {
                 List<Product_CancelGood> product = DatabaseHelper.getInstance().getAllProduct_CancelGood_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return 1;
+                jsonData = gson.toJson(product);
+            }
+            // po return
+            else if (type.equals("WPR")) {
+                List<Product_PoReturn> product = DatabaseHelper.getInstance().getAllProduct_PoReturn_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);

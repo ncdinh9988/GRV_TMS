@@ -24,6 +24,7 @@ import com.FiveSGroup.TMS.LPN.LPNActivity;
 import com.FiveSGroup.TMS.LetDown.LetDownSuggestionsActivity;
 import com.FiveSGroup.TMS.MasterPick.Home_Master_Pick;
 import com.FiveSGroup.TMS.PickList.NewWareHouseActivity;
+import com.FiveSGroup.TMS.PoReturn.Home_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Qrcode_PutAway;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.RemoveFromLPN.Qrcode_Remove_LPN;
@@ -264,6 +265,17 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                        }else if(block_Warehouse == 1){
                         Intent intent_qr = new Intent(context, List_TransferQR.class);
                         context.startActivity(intent_qr);
+                        break;
+                    case "PO Return":
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                        Intent intent_po = new Intent(context, Home_PoReturn.class);
+                        context.startActivity(intent_po);
                         break;
 //                        }
 

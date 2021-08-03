@@ -70,6 +70,16 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".PoReturn.Home_PoReturn"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".PoReturn.Qrcode_PoReturn"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".PoReturn.ListQrcode_PoReturn"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".Warehouse_Adjustment.Qrcode_Warehouse_Adjustment"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />

@@ -1,4 +1,4 @@
-package com.FiveSGroup.TMS.CancelGood;
+package com.FiveSGroup.TMS.PoReturn;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -32,7 +32,7 @@ import com.FiveSGroup.TMS.global;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnClickListener {
+public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnClickListener {
     Button buttonBack, btnok;
     ImageButton btnscan_barcode;
     //ProductListViewAdapter productListViewAdapter;
@@ -44,19 +44,19 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
     String stock = "";
     String expDate = "";
     String expDate1 = "";
-    String cancel = "";
+    String po_return = "";
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
     String lpn = "", id_unique_SO = "";
 
     int statusGetCust;
-    Product_CancelGood product_qrcode;
+    Product_PoReturn product_qrcode;
 
-    ArrayList<Product_CancelGood> cancel_Good;
+    ArrayList<Product_PoReturn> cancel_Good;
     CheckEventbus eventbus;
 
-    CancelGood_Adapter CancelGoodListAdapter;
+    PoReturn_Adapter PoReturnListAdapter;
     TextView tvTitle;
 
     @Override
@@ -89,7 +89,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
-        cancel = intent.getStringExtra("cancel");
+        po_return = intent.getStringExtra("po_return");
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
@@ -103,10 +103,10 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && cancel != null) {
+            if (lpn != null && po_return != null) {
                 //TODO
                 alert_show_SP(1);
-            } else if (lpn == null && cancel != null) {
+            } else if (lpn == null && po_return != null) {
                 //TODO
                 alert_show_SP(0);
             }
@@ -122,26 +122,26 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
 
         }
 
-        cancel_Good = DatabaseHelper.getInstance().getAllProduct_CancelGood(global.getCancelCD());
-        CancelGoodListAdapter = new CancelGood_Adapter(this, cancel_Good);
+        cancel_Good = DatabaseHelper.getInstance().getAllProduct_PoReturn(global.getPoReturnCD());
+        PoReturnListAdapter = new PoReturn_Adapter(this, cancel_Good);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         listViewProduct.setLayoutManager(layoutManager);
-        listViewProduct.setAdapter(CancelGoodListAdapter);
-        CancelGoodListAdapter.notifyDataSetChanged();
-        cancel = "";
+        listViewProduct.setAdapter(PoReturnListAdapter);
+        PoReturnListAdapter.notifyDataSetChanged();
+        po_return = "";
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                Toast.makeText(ListQrcode_CancelGood.this, "on Move", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListQrcode_PoReturn.this, "on Move", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                LayoutInflater factory = LayoutInflater.from(ListQrcode_CancelGood.this);
+                LayoutInflater factory = LayoutInflater.from(ListQrcode_PoReturn.this);
                 View layout_cus = factory.inflate(R.layout.layout_delete, null);
-                final AlertDialog dialog = new AlertDialog.Builder(ListQrcode_CancelGood.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                final AlertDialog dialog = new AlertDialog.Builder(ListQrcode_PoReturn.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
                 InsetDrawable inset = new InsetDrawable(back, 64);
@@ -159,7 +159,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
                         //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
                         finish();
-                        Intent i = new Intent(ListQrcode_CancelGood.this, ListQrcode_CancelGood.class);
+                        Intent i = new Intent(ListQrcode_PoReturn.this, ListQrcode_PoReturn.class);
                         startActivity(i);
 
                     }
@@ -171,10 +171,10 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
                         dialog.dismiss();
 
                         int position = viewHolder.getAdapterPosition();
-                        Product_CancelGood product = cancel_Good.get(position);
+                        Product_PoReturn product = cancel_Good.get(position);
                         cancel_Good.remove(position);
                         DatabaseHelper.getInstance().deleteProduct_Cancel_Specific(product.getAUTOINCREMENT());
-                        CancelGoodListAdapter.notifyItemRemoved(position);
+                        PoReturnListAdapter.notifyItemRemoved(position);
                     }
                 });
                 dialog.show();
@@ -194,10 +194,10 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
 
     private boolean isNotScanFromOrTo() {
         boolean check = false;
-        List<Product_CancelGood> product = DatabaseHelper.getInstance().getAllProduct_CancelGood(global.getCancelCD());
+        List<Product_PoReturn> product = DatabaseHelper.getInstance().getAllProduct_PoReturn(global.getPoReturnCD());
 
         for (int i = 0; i < product.size(); i++) {
-            Product_CancelGood cancelGood = product.get(i);
+            Product_PoReturn cancelGood = product.get(i);
             String value0 = "---";
             String valueFromCode = cancelGood.getPOSITION_FROM_CODE();
             String valueToCode = cancelGood.getPOSITION_TO_CODE();
@@ -237,20 +237,20 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
 
     private void startScan() {
 
-            DatabaseHelper.getInstance().deleteallEa_Unit();
-            DatabaseHelper.getInstance().deleteallExp_date();
-            Intent intent = new Intent(ListQrcode_CancelGood.this, Qrcode_CancelGood.class);
-            intent.putExtra("check_to_finish_at_list", "check");
-            startActivity(intent);
-            finish();
+        DatabaseHelper.getInstance().deleteallEa_Unit();
+        DatabaseHelper.getInstance().deleteallExp_date();
+        Intent intent = new Intent(ListQrcode_PoReturn.this, Qrcode_PoReturn.class);
+        intent.putExtra("check_to_finish_at_list", "check");
+        startActivity(intent);
+        finish();
 
     }
 
     private boolean isQuanityZero() {
         boolean check = false;
-        List<Product_CancelGood> product = DatabaseHelper.getInstance().getAllProduct_CancelGood(global.getCancelCD());
+        List<Product_PoReturn> product = DatabaseHelper.getInstance().getAllProduct_PoReturn(global.getPoReturnCD());
         for (int i = 0; i < product.size(); i++) {
-            Product_CancelGood putAway = product.get(i);
+            Product_PoReturn putAway = product.get(i);
             String valueQty = putAway.getQTY();
             if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
@@ -267,59 +267,59 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
 
     private void synchronizeToService() {
         String saleCode = CmnFns.readDataAdmin();
-        Dialog dialog = new Dialog(ListQrcode_CancelGood.this);
+        Dialog dialog = new Dialog(ListQrcode_PoReturn.this);
 
 
         if (cancel_Good.size() > 0) {
             if (isNotScanFromOrTo()) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Chưa có VT Từ");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Chưa có VT Từ");
 
             } else if (isQuanityZero()) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Số lượng SP không được bằng 0");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Số lượng SP không được bằng 0");
 
             } else {
                 try {
-                    int result = new CmnFns().synchronizeData(saleCode, "WCG", global.getCancelCD());
-                     if (result >= 1) {
+                    int result = new CmnFns().synchronizeData(saleCode, "WPR", global.getPoReturnCD());
+                    if (result >= 1) {
                         ShowSuccessMessage("Lưu thành công");
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
 
                     } else {
 
                         if (result == -1) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Lưu thất bại");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Lưu thất bại");
                         } else if (result == -2) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Số lượng không đủ trong tồn kho");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Số lượng không đủ trong tồn kho");
 
                         } else if (result == -3) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí từ không hợp lệ");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí từ không hợp lệ");
 
                         } else if (result == -4) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Trạng thái của phiếu không hợp lệ");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Trạng thái của phiếu không hợp lệ");
 
                         } else if (result == -5) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí từ trùng vị trí đên");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí từ trùng vị trí đên");
 
                         } else if (result == -6) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí đến không hợp lệ");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí đến không hợp lệ");
 
                         } else if (result == -7) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Cập nhật trạng thái thất bại");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Cập nhật trạng thái thất bại");
 
                         } else if (result == -8) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Sản phẩm không có thông tin trên phiếu ");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Sản phẩm không có thông tin trên phiếu ");
 
                         } else if (result == -13) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Dữ liệu không hợp lệ");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Dữ liệu không hợp lệ");
 
                         } else if (result == -24) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                         } else if (result == -26) {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
                         } else {
-                            dialog.showDialog(ListQrcode_CancelGood.this, "Lưu thất bại");
+                            dialog.showDialog(ListQrcode_PoReturn.this, "Lưu thất bại");
                         }
 
                     }
@@ -330,7 +330,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
 
             }
         } else {
-            dialog.showDialog(ListQrcode_CancelGood.this, "Không có sản phẩm");
+            dialog.showDialog(ListQrcode_PoReturn.this, "Không có sản phẩm");
 
         }
 
@@ -338,9 +338,9 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
     }
 
     private void ShowSuccessMessage(String message) {
-        LayoutInflater factory = LayoutInflater.from(ListQrcode_CancelGood.this);
+        LayoutInflater factory = LayoutInflater.from(ListQrcode_PoReturn.this);
         View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
-        final AlertDialog dialog = new AlertDialog.Builder(ListQrcode_CancelGood.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        final AlertDialog dialog = new AlertDialog.Builder(ListQrcode_PoReturn.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
         InsetDrawable inset = new InsetDrawable(back, 64);
@@ -358,10 +358,10 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                DatabaseHelper.getInstance().deleteProduct_CancelGood();
+                DatabaseHelper.getInstance().deleteProduct_PoReturn();
                 cancel_Good.clear();
-                CancelGoodListAdapter.notifyDataSetChanged();
-                Intent intentToHomeQRActivity = new Intent(ListQrcode_CancelGood.this, Home_CancelGood.class);
+                PoReturnListAdapter.notifyDataSetChanged();
+                Intent intentToHomeQRActivity = new Intent(ListQrcode_PoReturn.this, Home_PoReturn.class);
                 startActivity(intentToHomeQRActivity);
                 finish();
             }
@@ -371,7 +371,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
 
     private void actionBack() {
         try {
-            ListQrcode_CancelGood.this.finish();
+            ListQrcode_PoReturn.this.finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }
@@ -396,10 +396,10 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
     public void alert_show_position(int isLPN) {
         String positionTo = "";
         String positionFrom = "";
-        ArrayList<Product_CancelGood> cancelGoods = new ArrayList<>();
-        cancelGoods = DatabaseHelper.getInstance().getAllProduct_CancelGood_Sync(global.getCancelCD());
+        ArrayList<Product_PoReturn> cancelGoods = new ArrayList<>();
+        cancelGoods = DatabaseHelper.getInstance().getAllProduct_PoReturn_Sync(global.getPoReturnCD());
         for (int i = 0; i < cancelGoods.size(); i++) {
-            Product_CancelGood cancelGood = cancelGoods.get(i);
+            Product_PoReturn cancelGood = cancelGoods.get(i);
             if (productCd.equals(cancelGood.getPRODUCT_CD()) &&
                     expDate1.equals(cancelGood.getEXPIRED_DATE()) &&
                     stockinDate.equals(cancelGood.getSTOCKIN_DATE()) &&
@@ -426,48 +426,48 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SO, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WCG", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SO, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPR", isLPN);
 
-            Dialog dialog = new Dialog(ListQrcode_CancelGood.this);
+            Dialog dialog = new Dialog(ListQrcode_PoReturn.this);
 
             if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Vui Lòng Thử Lại");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Vui Lòng Thử Lại");
 
             } else if (postitionDes.equals("-3")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí từ không hợp lệ");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí từ không hợp lệ");
 
             } else if (postitionDes.equals("-6")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí đến không hợp lệ");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí đến không hợp lệ");
 
             } else if (postitionDes.equals("-5")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí từ trùng vị trí đến");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí từ trùng vị trí đến");
 
             } else if (postitionDes.equals("-14")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí đến trùng vị trí từ");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí đến trùng vị trí từ");
 
             } else if (postitionDes.equals("-15")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí từ không có trong hệ thống");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí từ không có trong hệ thống");
 
             } else if (postitionDes.equals("-10")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã LPN không có trong hệ thống");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã LPN không có trong hệ thống");
 
             } else if (postitionDes.equals("-17")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "LPN từ trùng LPN đến");
+                dialog.showDialog(ListQrcode_PoReturn.this, "LPN từ trùng LPN đến");
 
             } else if (postitionDes.equals("-18")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "LPN đến trùng LPN từ");
+                dialog.showDialog(ListQrcode_PoReturn.this, "LPN đến trùng LPN từ");
 
             } else if (postitionDes.equals("-19")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí đến không có trong hệ thống");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí đến không có trong hệ thống");
 
             } else if (postitionDes.equals("-12")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã LPN không có trong tồn kho");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã LPN không có trong tồn kho");
 
             } else if (postitionDes.equals("-27")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Vị trí từ chưa có sản phẩm");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Vị trí từ chưa có sản phẩm");
 
             } else if (postitionDes.equals("-28")) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "LPN đến có vị trí không hợp lệ");
+                dialog.showDialog(ListQrcode_PoReturn.this, "LPN đến có vị trí không hợp lệ");
 
             } else {
                 return;
@@ -482,47 +482,46 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZonecancel_Good(ListQrcode_CancelGood.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getCancelCD(), isLPN);
+            int postitionDes = new CmnFns().synchronizeGETProductByZonePo_Return(ListQrcode_PoReturn.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getPoReturnCD(), isLPN);
 
-            Dialog dialog = new Dialog(ListQrcode_CancelGood.this);
-
+            Dialog dialog = new Dialog(ListQrcode_PoReturn.this);
 
             if (postitionDes == 1) {
                 return;
             } else if (postitionDes == -1) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Vui Lòng Thử Lại");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Vui Lòng Thử Lại");
 
             } else if (postitionDes == -8) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã sản phẩm không có trên phiếu");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã sản phẩm không có trên phiếu");
 
 
             } else if (postitionDes == -10) {
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã LPN không có trong hệ thống");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã LPN không có trong hệ thống");
 
             } else if (postitionDes == -11) {
 
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã sản phẩm không có trong kho");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã sản phẩm không có trong kho");
 
 
             } else if (postitionDes == -12) {
 
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã LPN không có trong kho");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã LPN không có trong kho");
 
             } else if (postitionDes == -16) {
 
-                dialog.showDialog(ListQrcode_CancelGood.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
             } else if (postitionDes == -20) {
 
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã sản phẩm không có trong hệ thống");
 
             } else if (postitionDes == -21) {
 
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã sản phẩm không có trong zone");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã sản phẩm không có trong zone");
 
             } else if (postitionDes == -22) {
 
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã LPN không có trong zone");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã LPN không có trong zone");
 
             }
         } catch (Exception e) {

@@ -1,5 +1,7 @@
 package com.FiveSGroup.TMS.Webservice;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.FiveSGroup.TMS.CmnFns;
@@ -22,6 +24,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import static com.FiveSGroup.TMS.global.getAppContext;
+
 public class Webservice {
 
     private static String salecode = "";
@@ -34,6 +38,9 @@ public class Webservice {
     private static String authName = "";
     private static String authPasswd = "";
     private String Url = "";
+
+    SharedPreferences sharedPref = getAppContext().getSharedPreferences("setURL", Context.MODE_PRIVATE);
+    String UrlWebserviceToSynchronize = sharedPref.getString("urlConnect", "");
 
 //    public  String Get_Status_Cancel_Good(String cancel_Cd){
 //        String webServiceFunc = "Get_Status_Stock_Out";
@@ -54,7 +61,7 @@ public class Webservice {
 //        envelope.headerOut = this.getHeader();
 //        envelope.setOutputSoapObject(request);
 //        HttpTransportSE androidHttpTransport = new HttpTransportSE(
-//                global.getUrlWebserviceToSynchronize(), timeOut);
+//                UrlWebserviceToSynchronize, timeOut);
 //
 //        try {
 //            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -73,7 +80,7 @@ public class Webservice {
         String webServiceFunc = "Get_Status_Stock_Out";
 
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
-        String imei = CmnFns.getImei(global.getAppContext());
+        String imei = CmnFns.getImei(getAppContext());
 
         // Param 1
         PropertyInfo param1 = new PropertyInfo();
@@ -88,7 +95,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -127,7 +134,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -148,7 +155,7 @@ public class Webservice {
         String webServiceFunc = "synchronizeCustomerAddNew";
 
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
-        String imei = CmnFns.getImei(global.getAppContext());
+        String imei = CmnFns.getImei(getAppContext());
 
         // Param 1
         PropertyInfo param1 = new PropertyInfo();
@@ -185,7 +192,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -208,7 +215,7 @@ public class Webservice {
         }
 
         String webServiceFunc = "synchronizePhotoV2";
-        String imei = CmnFns.getImei(global.getAppContext());
+        String imei = CmnFns.getImei(getAppContext());
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
 
         // Param 1
@@ -252,7 +259,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize());
+                UrlWebserviceToSynchronize);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -274,7 +281,7 @@ public class Webservice {
         }
 
         String webServiceFunc = "synchronizePhotoV2";
-        String imei = CmnFns.getImei(global.getAppContext());
+        String imei = CmnFns.getImei(getAppContext());
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
 
         // Param 1
@@ -318,7 +325,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize());
+                UrlWebserviceToSynchronize);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -390,9 +397,9 @@ public class Webservice {
         envelope.dotNet = true;
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
-        String test1 = global.getUrlWebserviceToSynchronize();
+        String test1 = UrlWebserviceToSynchronize;
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize());
+                UrlWebserviceToSynchronize);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -434,7 +441,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -482,7 +489,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -536,7 +543,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -585,7 +592,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -643,8 +650,8 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
-        Log.d("checkURL", global.getUrlWebserviceToSynchronize());
+                UrlWebserviceToSynchronize, timeOut);
+        Log.d("checkURL", UrlWebserviceToSynchronize);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -726,7 +733,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -805,7 +812,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -844,7 +851,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -881,7 +888,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -926,7 +933,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -966,7 +973,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -989,7 +996,7 @@ public class Webservice {
         String webServiceFunc = "getInfoParam";
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
 
-        String value = CmnFns.getImei(global.getAppContext());
+        String value = CmnFns.getImei(getAppContext());
 
         // Param 1
         PropertyInfo param1 = new PropertyInfo();
@@ -1019,9 +1026,9 @@ public class Webservice {
         envelope.setOutputSoapObject(request);
         //envelope.headerOut = this.getHeader(WebserviceAuth.authName,WebserviceAuth.authPasswd,NAMESPACE_FSID);
 //        HttpTransportSE androidHttpTransport = new HttpTransportSE(
-//                global.getUrlWebserviceToSynchronize());
+//                UrlWebserviceToSynchronize);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -1055,7 +1062,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -1088,7 +1095,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
@@ -1120,7 +1127,7 @@ public class Webservice {
         envelope.headerOut = this.getHeader();
         envelope.setOutputSoapObject(request);
         HttpTransportSE androidHttpTransport = new HttpTransportSE(
-                global.getUrlWebserviceToSynchronize(), timeOut);
+                UrlWebserviceToSynchronize, timeOut);
 
         try {
             androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);

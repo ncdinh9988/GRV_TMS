@@ -1,10 +1,8 @@
-package com.FiveSGroup.TMS.CancelGood;
+package com.FiveSGroup.TMS.PoReturn;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,19 +19,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.R;
-import com.FiveSGroup.TMS.StockOut.Qrcode_Stock_Out;
 
 import java.util.ArrayList;
 
-public class CancelGoodAdapter extends RecyclerView.Adapter<CancelGoodAdapter.ViewHolder> {
+public class PoReturn_Adapter extends RecyclerView.Adapter<PoReturn_Adapter.ViewHolder> {
 
-    final ArrayList<Product_CancelGood> listCancelGood;
+    final ArrayList<Product_PoReturn> listCancelGood;
     Context context;
     View view;
 
-    public CancelGoodAdapter(Context context, ArrayList<Product_CancelGood> listCancelGood) {
+    public PoReturn_Adapter(Context context, ArrayList<Product_PoReturn> listCancelGood) {
         this.context = context;
         this.listCancelGood = listCancelGood;
         // this.arrCustomerFilter = arrCustomerFilter;
@@ -41,16 +37,16 @@ public class CancelGoodAdapter extends RecyclerView.Adapter<CancelGoodAdapter.Vi
 
     @NonNull
     @Override
-    public CancelGoodAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PoReturn_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.product_view, null, false);
-        return new CancelGoodAdapter.ViewHolder(view);
+        return new PoReturn_Adapter.ViewHolder(view);
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CancelGoodAdapter.ViewHolder holder, final int position) {
-        final Product_CancelGood product = listCancelGood.get(position);
+    public void onBindViewHolder(@NonNull final PoReturn_Adapter.ViewHolder holder, final int position) {
+        final Product_PoReturn product = listCancelGood.get(position);
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.edt.setText(product.getQTY());
@@ -83,7 +79,7 @@ public class CancelGoodAdapter extends RecyclerView.Adapter<CancelGoodAdapter.Vi
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, Qrcode_CancelGood.class);
+                Intent intent = new Intent(context, Qrcode_PoReturn.class);
                 intent.putExtra("position", "1");
                 intent.putExtra("product_cd", product.getPRODUCT_CD());
                 intent.putExtra("c", holder.tvExpired.getText());
@@ -99,7 +95,7 @@ public class CancelGoodAdapter extends RecyclerView.Adapter<CancelGoodAdapter.Vi
         holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Qrcode_CancelGood.class);
+                Intent intent = new Intent(context, Qrcode_PoReturn.class);
                 intent.putExtra("position", "2");
                 intent.putExtra("product_cd", product.getPRODUCT_CD());
                 intent.putExtra("c", holder.tvExpired.getText());
@@ -146,7 +142,7 @@ public class CancelGoodAdapter extends RecyclerView.Adapter<CancelGoodAdapter.Vi
 //                        public void onClick(View v) {
 //                            removeItems(position);
 //                            notifyDataSetChanged();
-//                            DatabaseHelper.getInstance().deleteProduct_CancelGood_Specific(product.getPRODUCT_CODE(), product.getEXPIRED_DATE(), product.getSTOCKIN_DATE(), product.getUNIT(), product.getSTOCKOUT_CD());
+//                            DatabaseHelper.getInstance().deleteProduct_PoReturn_Specific(product.getPRODUCT_CODE(), product.getEXPIRED_DATE(), product.getSTOCKIN_DATE(), product.getUNIT(), product.getSTOCKOUT_CD());
 //                            Toast.makeText(context, "Đã xóa sản phẩm " + product.getPRODUCT_NAME(), Toast.LENGTH_SHORT).show();
 //                            dialog.dismiss();
 //                        }
@@ -172,9 +168,9 @@ public class CancelGoodAdapter extends RecyclerView.Adapter<CancelGoodAdapter.Vi
 //            @Override
 //            public void afterTextChanged(Editable s) {
 //                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
-//                    DatabaseHelper.getInstance().updateProduct_CancelGood(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
+//                    DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
 //                } else {
-//                    DatabaseHelper.getInstance().updateProduct_CancelGood(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
+//                    DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
 //                }
 //            }
 //        });
@@ -188,7 +184,7 @@ public class CancelGoodAdapter extends RecyclerView.Adapter<CancelGoodAdapter.Vi
                         Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
                     } else {
                         // the user is done typing.
-                        DatabaseHelper.getInstance().updateProduct_CancelGood(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
+                        DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getPO_RETURN_CD());
                         Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                         hideSoftKeyboard(view);
 
@@ -212,18 +208,18 @@ public class CancelGoodAdapter extends RecyclerView.Adapter<CancelGoodAdapter.Vi
                         if (holder.edt.getText().toString().equals("")) {
                             // the user is done typing.
                             Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-//                            DatabaseHelper.getInstance().updateProduct_CancelGood(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+//                            DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
                         } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
                             // the user is done typing.
 
                             Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
-//                            DatabaseHelper.getInstance().updateProduct_CancelGood(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+//                            DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
                         } else {
 
                             Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                             // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_CancelGood(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
-                            Intent intent = new Intent(context, ListQrcode_CancelGood.class);
+                            DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getPO_RETURN_CD());
+                            Intent intent = new Intent(context, ListQrcode_PoReturn.class);
                             context.startActivity(intent);
                             ((Activity) context).finish();
                             hideSoftKeyboard(view);

@@ -175,7 +175,19 @@ public class global extends Application {
     public static void setHide_Warehouse_Adjustment(String hide_Warehouse_Adjustment) {
         Hide_Warehouse_Adjustment = hide_Warehouse_Adjustment;
     }
+
+    private static String PoReturnCD = "";
+
+    public static String getPoReturnCD() {
+        return PoReturnCD;
+    }
+
+    public static void setPoReturnCD(String poReturnCD) {
+        PoReturnCD = poReturnCD;
+    }
+
     private static String CancelCD = "";
+
 
     public static String getCancelCD() {
         return CancelCD;
@@ -230,8 +242,7 @@ public class global extends Application {
     }
 
     public static String getUrlWebserviceToSynchronize() {
-        SharedPreferences sharedPref = getAppContext().getSharedPreferences("setURL", Context.MODE_PRIVATE);
-        String UrlWebserviceToSynchronize = sharedPref.getString("urlConnect", "");
+
         return UrlWebserviceToSynchronize;
     }
 
