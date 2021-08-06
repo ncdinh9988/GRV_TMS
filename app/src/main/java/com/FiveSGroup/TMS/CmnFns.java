@@ -3392,6 +3392,8 @@ public class CmnFns {
                 return 1;
             }else if(result.equals("-25")) {
                 return -25;
+            }else if(result.equals("-35")) {
+                return -35;
             }else {
                 // đồng bộ không thành công
                 return -1;

@@ -430,6 +430,10 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                             dialog.showDialog(ListQrcode.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                         }
+                        else if (result == -35) {
+                            dialog.showDialog(ListQrcode.this, "Có Sản Phẩm Sai ĐTV");
+
+                        }
                         else {
                             dialog.showDialog(ListQrcode.this, "Lưu thất bại");
                         }
