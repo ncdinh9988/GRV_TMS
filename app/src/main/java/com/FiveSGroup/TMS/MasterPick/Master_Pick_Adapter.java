@@ -57,6 +57,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
     @Override
     public void onBindViewHolder(@NonNull final Master_Pick_Adapter.ViewHolder holder, final int position) {
         final Product_Master_Pick product = masterPicks.get(position);
+        holder.setIsRecyclable(false);
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.edt.setText(product.getQTY());
@@ -70,19 +71,19 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         holder.tvMasterPickPositionSuggest.setTextColor(Color.rgb(255, 51, 0));
 
 
-        if(!product.getLPN_FROM().equals("")){
+        if (!product.getLPN_FROM().equals("")) {
             holder.tvFrom.setText(product.getLPN_FROM());
-        }else {
+        } else {
             holder.tvFrom.setText(product.getPOSITION_FROM_CODE() + " - " + product.getPOSITION_FROM_DESCRIPTION());
         }
 
-        if(!product.getLPN_TO().equals("")){
+        if (!product.getLPN_TO().equals("")) {
             holder.tvTo.setText(product.getLPN_TO());
-        }else {
+        } else {
             holder.tvTo.setText(product.getPOSITION_TO_CODE());
         }
 
-        if(!product.getLPN_CODE().equals("")){
+        if (!product.getLPN_CODE().equals("")) {
             holder.edt.setEnabled(false);
         }
 
@@ -93,7 +94,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!product.getLPN_CODE().equals("")){
+                if (!product.getLPN_CODE().equals("")) {
                     Intent intent = new Intent(context, Qrcode_Master_Pick.class);
                     intent.putExtra("position", "1");
                     intent.putExtra("product_cd", product.getPRODUCT_CD());
@@ -104,8 +105,8 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
 
                     context.startActivity(intent);
                     ((Activity) context).finish();
-                }else{
-                    if(!product.getPOSITION_FROM_CODE().equals("---")) {
+                } else {
+                    if (!product.getPOSITION_FROM_CODE().equals("---")) {
                         try {
                             LayoutInflater factory = LayoutInflater.from(context);
                             View layout_cus = factory.inflate(R.layout.layout_back_putaway, null);
@@ -150,7 +151,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                         } catch (Exception e) {
                             Log.e("Exception", e.getMessage());
                         }
-                    }else{
+                    } else {
                         Intent intent = new Intent(context, Qrcode_Master_Pick.class);
                         intent.putExtra("position", "1");
                         intent.putExtra("product_cd", product.getPRODUCT_CD());
@@ -168,7 +169,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!product.getLPN_CODE().equals("")){
+                if (!product.getLPN_CODE().equals("")) {
                     Intent intent = new Intent(context, Qrcode_Master_Pick.class);
                     intent.putExtra("position", "2");
                     intent.putExtra("product_cd", product.getPRODUCT_CD());
@@ -180,8 +181,8 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                     context.startActivity(intent);
 
                     ((Activity) context).finish();
-                }else{
-                    if(!product.getPOSITION_TO_CODE().equals("---")) {
+                } else {
+                    if (!product.getPOSITION_TO_CODE().equals("---")) {
                         try {
                             LayoutInflater factory = LayoutInflater.from(context);
                             View layout_cus = factory.inflate(R.layout.layout_back_putaway, null);
@@ -226,7 +227,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                         } catch (Exception e) {
                             Log.e("Exception", e.getMessage());
                         }
-                    }else {
+                    } else {
                         Intent intent = new Intent(context, Qrcode_Master_Pick.class);
                         intent.putExtra("position", "2");
                         intent.putExtra("product_cd", product.getPRODUCT_CD());
@@ -276,64 +277,56 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
 
             @Override
             public void afterTextChanged(Editable s) {
-                holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if(!hasFocus){
-                            if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-                                // the user is done typing.
-                            } else {
-                                // the user is done typing.
-                                DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
-                                Toast.makeText(context, "Số lượng " + product.getAUTOINCREMENT(), Toast.LENGTH_SHORT).show();
 
-
-
-                            }
-                        }
-                    }
-                });
+                if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000")) || (holder.edt.getText().toString().equals("0000")) || (holder.edt.getText().toString().equals("00000"))) {
+                    // the user is done typing.
+                } else {
+                    // the user is done typing.
+                    DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+                    Toast.makeText(context, "Số lượng " + product.getAUTOINCREMENT(), Toast.LENGTH_SHORT).show();
+                }
             }
+
         });
 
 
-//        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-//                        actionId == EditorInfo.IME_ACTION_DONE ||
-//                        event != null &&
-//                                event.getAction() == KeyEvent.ACTION_DOWN &&
-//                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-//                    if (event == null || !event.isShiftPressed()) {
-//
-//                        if (holder.edt.getText().toString().equals("")) {
-//                            // the user is done typing.
-//                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-//                          //  DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
-//                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-//                            // the user is done typing.
-//                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
-//                           // DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
-//                        } else {
-//                            // the user is done typing.
-//                            DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
-//                            //DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
-////                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(context, List_Master_Pick.class);
-//                            context.startActivity(intent);
-//                            ((Activity) context).finish();
-//                            hideSoftKeyboard(view);
-//
-//                        }
-//                        return true; // consume.
-//
-//
-//                    }
-//                }
-//                return false;
-//            }
-//        });
+        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        actionId == EditorInfo.IME_ACTION_DONE ||
+                        event != null &&
+                                event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    if (event == null || !event.isShiftPressed()) {
+
+                        if (holder.edt.getText().toString().equals("")) {
+                            // the user is done typing.
+                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
+                            //  DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000")) || (holder.edt.getText().toString().equals("0000")) || (holder.edt.getText().toString().equals("00000"))) {
+                            // the user is done typing.
+                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
+                            // DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+                        } else {
+                            // the user is done typing.
+                            DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
+                            //DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
+//                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(context, List_Master_Pick.class);
+                            context.startActivity(intent);
+                            ((Activity) context).finish();
+                            hideSoftKeyboard(view);
+
+                        }
+                        return true; // consume.
+
+
+                    }
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -353,11 +346,11 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageButton btnvtden, btnvtdi;
-        TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct , tvMasterPickPositionSuggest;
+        TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct, tvMasterPickPositionSuggest;
         TextView tvExpired, tvStockin, tvvtgy;
         EditText edt;
         LinearLayout layout__put;
-        View layout_putaway , layout__goiy;
+        View layout_putaway, layout__goiy;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -382,10 +375,6 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         }
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
 
     private void removeItems(int position) {
         masterPicks.remove(position);

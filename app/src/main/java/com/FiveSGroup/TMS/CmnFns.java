@@ -3034,7 +3034,7 @@ public class CmnFns {
                         //letdown
                         if (type.equals("WLD")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFromLetDown_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFromLetDown_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFromLetDown(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3042,7 +3042,7 @@ public class CmnFns {
                         } else if (type.equals("WRW")) {
                             //Trả Hàng
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_returnWarehouse_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_returnWarehouse_LPN(lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_returnWarehouse(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3050,14 +3050,14 @@ public class CmnFns {
                         } else if (type.equals("WWA")) {
                             //Chỉnh kho
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_warehouse_Adjustment_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_warehouse_Adjustment_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_warehouse_Adjustment(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WPA")) {
                             //putaway
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_LPN(unique_id ,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_LPN(unique_id ,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3083,7 +3083,7 @@ public class CmnFns {
 //                            }
                             //
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_masterPick(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3091,7 +3091,7 @@ public class CmnFns {
                         } else if (type.equals("WSO")) {
                             //Xuất kho
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_StockOut_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_StockOut_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_StockOut(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3099,7 +3099,7 @@ public class CmnFns {
                         } else if (type.equals("WOI")) {
                             //Chuyển vị trí
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_StockTransfer(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3107,7 +3107,7 @@ public class CmnFns {
                         } else if (type.equals("WPL")) {
                             //picklist
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_PickList_LPN(unique_id ,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_PickList_LPN(unique_id ,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_PickList(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3115,7 +3115,7 @@ public class CmnFns {
                         } else if (type.equals("WPP")) {
                             //load pallet
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(unique_id ,wareHouse, lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(unique_id ,wareHouse, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_LoadPallet(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3123,7 +3123,7 @@ public class CmnFns {
                         } else if (type.equals("WST")) {
                             //Kiểm kho
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_Inventory_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_Inventory_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_Inventory(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3131,7 +3131,7 @@ public class CmnFns {
                         } else if (type.equals("WLP")) {
                             //gỡ pallet
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_Remove_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_Remove_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_Remove(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3140,7 +3140,7 @@ public class CmnFns {
                         else if (type.equals("WCG")) {
                             //Trả Hàng
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_cancelGood_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_cancelGood_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_cancelGood(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3149,7 +3149,7 @@ public class CmnFns {
                         else if (type.equals("WPR")) {
                             //Trả Hàng
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_poReturn_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_poReturn_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_poReturn(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3159,59 +3159,59 @@ public class CmnFns {
                     } else if (positionReceive.equals("2") && productCd != null) {
                         if (type.equals("WLD")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionToLetDown_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionToLetDown_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionToLetDown(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WRW")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_returnWarehouse_LPN(lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_returnWarehouse_LPN(lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_returnWarehouse(positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WMP")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_masterPick_LPN(unique_id,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_masterPick_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_masterPick(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WPA")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WSO")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_StockOut_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_StockOut_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_StockOut(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WOI")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer_LPN(unique_id ,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer_LPN(unique_id ,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_StockTransfer(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WPL")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_PickList_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_PickList_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_PickList(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WPP")) {
 //                            if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet_LPN(unique_id ,wareHouse ,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet_LPN(unique_id ,wareHouse ,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
 //                            }
 //                            else {
 //                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
 //                            }
                         } else if (type.equals("WLP")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_Remove_LPN(unique_id , lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_Remove_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_Remove(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
@@ -3220,14 +3220,14 @@ public class CmnFns {
                         }
                         else if (type.equals("WCG")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_cancelGood_LPN(unique_id,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_cancelGood_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_cancelGood(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         }
                         else if (type.equals("WPR")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_poReturn_LPN(unique_id,lpn_code, lpn_cd, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_poReturn_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_poReturn(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
