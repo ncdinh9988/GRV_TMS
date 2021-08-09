@@ -283,7 +283,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                 } else {
                     // the user is done typing.
                     DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
-                    Toast.makeText(context, "Số lượng " + product.getAUTOINCREMENT(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -312,7 +312,7 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
                             // the user is done typing.
                             DatabaseHelper.getInstance().updateProduct_Master_Pick(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getMASTER_PICK_CD());
                             //DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
-//                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(context, List_Master_Pick.class);
                             context.startActivity(intent);
                             ((Activity) context).finish();
