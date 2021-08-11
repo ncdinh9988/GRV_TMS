@@ -1362,6 +1362,7 @@ public class CmnFns {
                 batch_number_tam.setPOSITION_CODE(position_code);
                 batch_number_tam.setPOSITION_DESCRIPTION(position_description); ;
                 batch_number_tam.setWAREHOUSE_POSITION_CD(warehouse_position_cd);
+                batch_number_tam.setAUTOINCREMENT(String.valueOf(i));
 
                 //exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
                 DatabaseHelper.getInstance().CreateBatch_Number(batch_number_tam);

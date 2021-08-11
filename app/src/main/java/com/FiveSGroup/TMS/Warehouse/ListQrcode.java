@@ -51,7 +51,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
     String stock_in = "";
     String ea_unit = "";
     String ea_unit_position = "";
-    String stockinDate = "" , id_unique_SI = "";
+    String stockinDate = "" , id_unique_SI = "" , vitri = "";
 
 
     String clickShowListCode = "";
@@ -188,6 +188,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         Intent intent = getIntent();
         value1 = intent.getStringExtra("btn1");
         batch = intent.getStringExtra("batch");
+        vitri = intent.getStringExtra("vitri");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
@@ -627,11 +628,13 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
     public void alert_show_SP_Stock_in() {
         try {
+            SharedPreferences sharedPreferencess = getSharedPreferences("vitriPO", Context.MODE_PRIVATE);
+            String vitri1 = sharedPreferencess.getString("vitri", "");
             SharedPreferences sharedPreferences = getSharedPreferences("stockReceipt", Context.MODE_PRIVATE);
             String stockReceipt = sharedPreferences.getString("stock", "");
             int statusGetCust ;
             if((batch!= null) && (!batch.equals(""))){
-                batch_number = DatabaseHelper.getInstance().getoneBatch(batch);
+                batch_number = DatabaseHelper.getInstance().getoneBatch(vitri1);
                 String pro_cd = batch_number.get(0).getPRODUCT_CD();
                 String pro_code = batch_number.get(0).getPRODUCT_CODE();
                 String pro_name = batch_number.get(0).getPRODUCT_NAME();

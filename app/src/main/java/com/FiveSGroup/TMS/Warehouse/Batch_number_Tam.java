@@ -12,6 +12,15 @@ public class Batch_number_Tam {
     private String POSITION_CODE ;
     private String POSITION_DESCRIPTION ;
     private String WAREHOUSE_POSITION_CD;
+    private String AUTOINCREMENT;
+
+    public String getAUTOINCREMENT() {
+        return AUTOINCREMENT;
+    }
+
+    public void setAUTOINCREMENT(String AUTOINCREMENT) {
+        this.AUTOINCREMENT = AUTOINCREMENT;
+    }
 
     public String getPOSITION_CODE() {
         return POSITION_CODE;

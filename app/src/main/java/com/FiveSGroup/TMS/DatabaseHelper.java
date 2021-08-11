@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 102; // version của DB khi thay
+    public static final int DATABASE_VERSION = 104; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -309,6 +309,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //version DB 102
         try {
             db.execSQL(CREATE_TABLE_O_PO_RETURN);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 104
+        try {
+            db.execSQL("ALTER TABLE " + O_BATCH + " ADD COLUMN  "
+                    + AUTOINCREMENT_BATCH + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -4984,6 +4992,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Table O_Batch để chứa dữ liệu số batch
     public static final String O_BATCH = "O_BATCH";
+    public static final String AUTOINCREMENT_BATCH = "AUTOINCREMENT_BATCH";
     public static final String BATCH_NUMBER = "BATCH_NUMBER";
     public static final String PRODUCT_CODE_BATCH = "PRODUCT_CODE_BATCH";
     public static final String PRODUCT_NAME_BATCH = "PRODUCT_NAME_BATCH";
@@ -4998,6 +5007,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_O_BATCH = "CREATE TABLE "
             + O_BATCH + "("
+            + AUTOINCREMENT_BATCH + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
             + PRODUCT_CODE_BATCH + " TEXT,"
             + PRODUCT_NAME_BATCH + " TEXT,"
             + PRODUCT_CD_BATCH + " TEXT,"
@@ -5015,6 +5025,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         //values.put(QRCODE, qrcode.getQRCODE());
+        values.put(AUTOINCREMENT_BATCH, batch.getAUTOINCREMENT());
         values.put(BATCH_NUMBER, batch.getBATCH_NUMBER());
         values.put(PRODUCT_CODE_BATCH, batch.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_BATCH, batch.getPRODUCT_NAME());
@@ -5032,11 +5043,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Batch_number_Tam>
-    getoneBatch(String batch_number) {
+    getoneBatch(String auto) {
         ArrayList<Batch_number_Tam> batch = new ArrayList<Batch_number_Tam>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+//        String selectQuery = "SELECT  * FROM " + O_BATCH + " " + " WHERE "
+//                + BATCH_NUMBER + " like " + " '%" + batch_number + "%'";
         String selectQuery = "SELECT  * FROM " + O_BATCH + " " + " WHERE "
-                + BATCH_NUMBER + " like " + " '%" + batch_number + "%'";
+                + AUTOINCREMENT_BATCH + " = " + auto ;
 
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -5087,6 +5100,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Batch_number_Tam batch_number_tam = new Batch_number_Tam();
                 batch_number_tam.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER))));
+                batch_number_tam.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_BATCH))));
 
                 batch.add(batch_number_tam);
             } while (c.moveToNext());

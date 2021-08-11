@@ -1,9 +1,11 @@
 package com.FiveSGroup.TMS.Warehouse;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -287,11 +289,12 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
 
                     if (batch_number_tams.size() > 1) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode.this);
-                        builder.setTitle("Chọn Batch Number");
+                        builder.setTitle("Chọn Batch Number - Đơn Vị Tính");
 
                         final ArrayList<String> batch_number = new ArrayList<>();
                         for (int i = 0; i < batch_number_tams.size(); i++) {
-                            batch_number.add(batch_number_tams.get(i).getBATCH_NUMBER());
+                            batch_number.add(batch_number_tams.get(i).getBATCH_NUMBER() + " - " + batch_number_tams.get(i).getUNIT());
+
                         }
 
                         // chuyển đổi exp_date thành mảng chuỗi String
@@ -303,14 +306,21 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String bat = mString[which];
+                                String vitri = String.valueOf(which);
 
                                 dialog.dismiss(); // Close Dialog
 
                                 if (bat != "") {
                                     batch_number_t = bat; //TEST
+                                    SharedPreferences prefs = getBaseContext().getSharedPreferences("vitriPO", Activity.MODE_PRIVATE);
+                                    SharedPreferences.Editor edit = prefs.edit();
+                                    edit.putString("vitri",vitri );
+                                    edit.commit();
                                     Intent intentt = new Intent(getApplication(), ListQrcode.class);
                                     intentt.putExtra("stock_in", "333");
                                     intentt.putExtra("batch", batch_number_t);
+                                    intentt.putExtra("vitri", vitri);
+
                                     startActivity(intentt);
                                     finish();
                                     // For example: Call method of MainActivity.
@@ -330,6 +340,10 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                         } catch (Exception e) {
 
                         }
+                        SharedPreferences prefs = getBaseContext().getSharedPreferences("vitriPO", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor edit = prefs.edit();
+                        edit.putString("vitri","0");
+                        edit.commit();
                         Intent intentt = new Intent(getApplication(), ListQrcode.class);
                         intentt.putExtra("stock_in", "333");
                         intentt.putExtra("batch", batchTam);
