@@ -337,6 +337,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String expDate = mString[which];
+                                String vitri = String.valueOf(which);
 
                                 dialog.dismiss(); // Close Dialog
 
@@ -358,10 +359,10 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
                                         return;
                                     }
                                     if (!checkBoxGetDVT.isChecked()) {
-                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1], vitri);
                                         //ReturnProduct(barcodeData,expDateTemp2,"");
                                     } else {
-                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1] , vitri);
                                     }
 
                                 }
@@ -383,9 +384,9 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
                         String chuoi[] = expDatetemp.split(" - ");
 
                         if (!checkBoxGetDVT.isChecked()) {
-                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                            ReturnProduct(barcodeData, chuoi[0], chuoi[1] , "0");
                         } else {
-                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1] , "0");
                         }
 
                     } else {
@@ -422,7 +423,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
 
     }
 
-    private void ReturnProduct(String barcode, String expDatetemp ,String stockinDateShow) {
+    private void ReturnProduct(String barcode, String expDatetemp ,String stockinDateShow, String vitri) {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
@@ -432,6 +433,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
         intentt.putExtra("unique_id", unique_id);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("vitri", vitri);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("master_picklist", "333");
         intentt.putExtra("ea_unit", ea_unit_tams.get(0).getEA_UNIT_TAM());
@@ -450,7 +452,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
     }
 
 
-    private void ShowDialogUnit(final String barcode, final String expDateTemp2 , final String stockinDateShow) {
+    private void ShowDialogUnit(final String barcode, final String expDateTemp2 , final String stockinDateShow , final String vitri) {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();

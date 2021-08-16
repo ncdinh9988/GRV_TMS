@@ -48,6 +48,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
+    String batch_number = "";
     String lpn = "", id_unique_SO = "";
 
     int statusGetCust;
@@ -86,6 +87,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
+        batch_number = intent.getStringExtra("batch_number");
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
@@ -173,7 +175,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
                         int position = viewHolder.getAdapterPosition();
                         Product_PoReturn product = cancel_Good.get(position);
                         cancel_Good.remove(position);
-                        DatabaseHelper.getInstance().deleteProduct_Cancel_Specific(product.getAUTOINCREMENT());
+                        DatabaseHelper.getInstance().deleteProduct_PO_Return_Specific(product.getAUTOINCREMENT());
                         PoReturnListAdapter.notifyItemRemoved(position);
                     }
                 });
@@ -207,9 +209,9 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
             if ((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))) {
                 check = true;
             }
-//            if ((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))) {
-//                check = true;
-//            }
+            if ((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))) {
+                check = true;
+            }
         }
         if (check == true) {
             return true;
@@ -232,7 +234,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
         btnok = findViewById(R.id.buttonOK);
         listViewProduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Danh Sách SP Xuất Hủy");
+        tvTitle.setText("Danh Sách SP PO Return");
     }
 
     private void startScan() {
@@ -272,7 +274,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
 
         if (cancel_Good.size() > 0) {
             if (isNotScanFromOrTo()) {
-                dialog.showDialog(ListQrcode_PoReturn.this, "Chưa có VT Từ");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Chưa Có VT Từ Hoặc VT Đến");
 
             } else if (isQuanityZero()) {
                 dialog.showDialog(ListQrcode_PoReturn.this, "Số lượng SP không được bằng 0");
@@ -482,7 +484,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZonePo_Return(ListQrcode_PoReturn.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getPoReturnCD(), isLPN);
+            int postitionDes = new CmnFns().synchronizeGETProductByZonePo_Return(ListQrcode_PoReturn.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getPoReturnCD(), isLPN ,batch_number);
 
             Dialog dialog = new Dialog(ListQrcode_PoReturn.this);
 

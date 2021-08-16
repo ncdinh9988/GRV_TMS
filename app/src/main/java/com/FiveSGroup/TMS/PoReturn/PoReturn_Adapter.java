@@ -25,13 +25,13 @@ import java.util.ArrayList;
 
 public class PoReturn_Adapter extends RecyclerView.Adapter<PoReturn_Adapter.ViewHolder> {
 
-    final ArrayList<Product_PoReturn> listCancelGood;
+    final ArrayList<Product_PoReturn> listPoReturn;
     Context context;
     View view;
 
-    public PoReturn_Adapter(Context context, ArrayList<Product_PoReturn> listCancelGood) {
+    public PoReturn_Adapter(Context context, ArrayList<Product_PoReturn> listPoReturn) {
         this.context = context;
-        this.listCancelGood = listCancelGood;
+        this.listPoReturn = listPoReturn;
         // this.arrCustomerFilter = arrCustomerFilter;
     }
 
@@ -46,7 +46,7 @@ public class PoReturn_Adapter extends RecyclerView.Adapter<PoReturn_Adapter.View
 
     @Override
     public void onBindViewHolder(@NonNull final PoReturn_Adapter.ViewHolder holder, final int position) {
-        final Product_PoReturn product = listCancelGood.get(position);
+        final Product_PoReturn product = listPoReturn.get(position);
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.edt.setText(product.getQTY());
@@ -68,8 +68,8 @@ public class PoReturn_Adapter extends RecyclerView.Adapter<PoReturn_Adapter.View
         if(!product.getLPN_CODE().equals("")){
             holder.edt.setEnabled(false);
         }
-        holder.btnvtdi.setEnabled(false);
-        holder.layoutTo.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
+
+//        holder.layoutTo.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
 
         holder.tvExpired.setText(product.getEXPIRED_DATE());
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
@@ -244,7 +244,7 @@ public class PoReturn_Adapter extends RecyclerView.Adapter<PoReturn_Adapter.View
 
     @Override
     public int getItemCount() {
-        return listCancelGood.size();
+        return listPoReturn.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -275,7 +275,7 @@ public class PoReturn_Adapter extends RecyclerView.Adapter<PoReturn_Adapter.View
     }
 
     private void removeItems(int position) {
-        listCancelGood.remove(position);
+        listPoReturn.remove(position);
         notifyItemRemoved(position);
     }
 }

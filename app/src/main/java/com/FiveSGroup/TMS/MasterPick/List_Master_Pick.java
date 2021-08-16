@@ -55,6 +55,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
     String stockinDate = "";
     String lpn = "";
     String unique_id = "" ;
+    String vitri = "" ;
 
 
     int statusGetCust;
@@ -94,6 +95,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        vitri = intent.getStringExtra("vitri");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
         master_picklist = intent.getStringExtra("master_picklist");
@@ -529,7 +531,14 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneMasterPick(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN);
+            int postitionDes ;
+            if(isLPN==1){
+                postitionDes = new CmnFns().synchronizeGETProductByZoneMasterPick_LPN(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, vitri);
+
+            }else{
+                 postitionDes = new CmnFns().synchronizeGETProductByZoneMasterPick(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, vitri);
+
+            }
 
             Dialog dialog = new Dialog(List_Master_Pick.this);
 

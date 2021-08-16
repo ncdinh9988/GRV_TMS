@@ -6,6 +6,15 @@ public class Exp_Date_Tam {
     private String TOTAL_SHELF_LIFE;
     private String SHELF_LIFE_TYPE;
     private String MIN_REM_SHELF_LIFE;
+    private String BATCH_NUMBER_TAM;
+
+    public String getBATCH_NUMBER_TAM() {
+        return BATCH_NUMBER_TAM;
+    }
+
+    public void setBATCH_NUMBER_TAM(String BATCH_NUMBER_TAM) {
+        this.BATCH_NUMBER_TAM = BATCH_NUMBER_TAM;
+    }
 
     public String getTOTAL_SHELF_LIFE() {
         return TOTAL_SHELF_LIFE;

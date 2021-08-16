@@ -69,7 +69,7 @@ public class Home_PoReturn extends AppCompatActivity {
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
         layout = findViewById(R.id.layout);
-        urlPoReturn = DatabaseHelper.getInstance().getParamByKey("URL_Cancel_Goods").getValue();
+        urlPoReturn = DatabaseHelper.getInstance().getParamByKey("URL_PO_RETURN").getValue();
 
         String urlStockOut = urlPoReturn + "?USER_CODE=" + CmnFns.readDataAdmin();
         addEvents(urlStockOut);
@@ -186,7 +186,7 @@ public class Home_PoReturn extends AppCompatActivity {
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
 
-                    if (url.contains("StockCancelListItemForApp.aspx?STOCK_CANCEL_CD")) {
+                    if (url.contains("POReturnListItemForApp.aspx?STOCK_PO_RETURN_CD")) {
 
                         String chuoi[] = url.split("=");
                         String code = chuoi[1];

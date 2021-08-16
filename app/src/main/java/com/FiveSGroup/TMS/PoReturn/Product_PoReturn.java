@@ -19,18 +19,36 @@ public class Product_PoReturn {
     private String UNIT;
     private String POSITION_FROM_DESCRIPTION;
     private String POSITION_TO_DESCRIPTION;
-    private String PO_RETURN_CD;
+    private String STOCK_PO_RETURN_CD;
     private String LPN_CD;
     private String LPN_CODE;
     private String LPN_FROM;
     private String LPN_TO;
+    private String BATCH_NUMBER;
+    private String MANUFACTURING_DATE;
+
+    public String getMANUFACTURING_DATE() {
+        return MANUFACTURING_DATE;
+    }
+
+    public void setMANUFACTURING_DATE(String MANUFACTURING_DATE) {
+        this.MANUFACTURING_DATE = MANUFACTURING_DATE;
+    }
+
+    public String getBATCH_NUMBER() {
+        return BATCH_NUMBER;
+    }
+
+    public void setBATCH_NUMBER(String BATCH_NUMBER) {
+        this.BATCH_NUMBER = BATCH_NUMBER;
+    }
 
     public String getPO_RETURN_CD() {
-        return PO_RETURN_CD;
+        return STOCK_PO_RETURN_CD;
     }
 
     public void setPO_RETURN_CD(String PO_RETURN_CD) {
-        this.PO_RETURN_CD = PO_RETURN_CD;
+        this.STOCK_PO_RETURN_CD = PO_RETURN_CD;
     }
 
     public String getQRCODE() {

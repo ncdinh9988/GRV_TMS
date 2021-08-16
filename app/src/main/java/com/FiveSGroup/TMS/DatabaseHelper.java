@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 104; // version của DB khi thay
+    public static final int DATABASE_VERSION = 110; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -317,6 +317,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_BATCH + " ADD COLUMN  "
                     + AUTOINCREMENT_BATCH + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 108
+        try {
+            db.execSQL("ALTER TABLE " + O_EXP + " ADD COLUMN  "
+                    + BATCH_NUMBER_TAM + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_PO_RETURN + " ADD COLUMN  "
+                    + BATCH_NUMBER_PO_RETURN + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 110
+        try {
+            db.execSQL("ALTER TABLE " + O_PO_RETURN + " ADD COLUMN  "
+                    + MANUFACTURING_DATE_PO_RETURN + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -3496,12 +3521,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_PO_RETURN = "LPN_CODE_PO_RETURN";
     public static final String LPN_FROM_PO_RETURN = "LPN_FROM_PO_RETURN";
     public static final String LPN_TO_PO_RETURN = "LPN_TO_PO_RETURN";
+    public static final String BATCH_NUMBER_PO_RETURN = "BATCH_NUMBER_PO_RETURN";
+    public static final String MANUFACTURING_DATE_PO_RETURN = "MANUFACTURING_DATE_PO_RETURN";
 
     public static final String CREATE_TABLE_O_PO_RETURN = "CREATE TABLE "
             + O_PO_RETURN + "("
             + AUTOINCREMENT_PO_RETURN + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
             + PRODUCT_CD_PO_RETURN + " TEXT,"
             + WAREHOUSE_POSITION_CD_PO_RETURN + " TEXT,"
+            + BATCH_NUMBER_PO_RETURN + " TEXT,"
+            + MANUFACTURING_DATE_PO_RETURN + " TEXT,"
             + PRODUCT_NAME_PO_RETURN + " TEXT,"
             + PRODUCT_CODE_PO_RETURN + " TEXT,"
             + QTY_EA_AVAILABLE_PO_RETURN + " TEXT,"
@@ -3529,7 +3558,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 //        values.put(AUTOINCREMENT_PO_RETURN, poReturn.getAUTOINCREMENT());
+
         values.put(UNIQUE_CODE_PO_RETURN, poReturn.getUNIT());
+        values.put(BATCH_NUMBER_PO_RETURN, poReturn.getBATCH_NUMBER());
+        values.put(MANUFACTURING_DATE_PO_RETURN, poReturn.getMANUFACTURING_DATE());
         values.put(PRODUCT_CODE_PO_RETURN, poReturn.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_PO_RETURN, poReturn.getPRODUCT_NAME());
         values.put(WAREHOUSE_POSITION_CD_PO_RETURN, poReturn.getWAREHOUSE_POSITION_CD());
@@ -3644,6 +3676,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_PoReturn poReturn = new Product_PoReturn();
                 poReturn.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_PO_RETURN))));
+                poReturn.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PO_RETURN))));
+                poReturn.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_PO_RETURN))));
                 poReturn.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD_PO_RETURN))));
                 poReturn.setPRODUCT_CD((c.getString(c
@@ -3689,6 +3725,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                        .getColumnIndex(AUTOINCREMENT_PO_RETURN))));
                 poReturn.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_PO_RETURN))));
+                poReturn.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PO_RETURN))));
+                poReturn.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_PO_RETURN))));
                 poReturn.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD_PO_RETURN))));
                 poReturn.setPRODUCT_CODE((c.getString(c
@@ -3748,6 +3788,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_PoReturn poReturn = new Product_PoReturn();
                 poReturn.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_PO_RETURN))));
+                poReturn.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PO_RETURN))));
+                poReturn.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_PO_RETURN))));
                 poReturn.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD_PO_RETURN))));
                 poReturn.setUNIQUE_CODE((c.getString(c
@@ -4483,6 +4527,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 });
 
     }
+    public void deleteProduct_PO_Return_Specific(String productCode) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.delete(O_PO_RETURN, AUTOINCREMENT_PO_RETURN + " = ?"
+                , new String[]{String.valueOf(productCode)
+                });
+
+    }
 
     public void deleteProduct_PO_Specific(String productCode) {
         // TODO Auto-generated method stub
@@ -5125,10 +5177,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TOTAL_SHELF_LIFE = "TOTAL_SHELF_LIFE";
     public static final String SHELF_LIFE_TYPE = "SHELF_LIFE_TYPE";
     public static final String MIN_REM_SHELF_LIFE = "MIN_REM_SHELF_LIFE";
+    public static final String BATCH_NUMBER_TAM = "BATCH_NUMBER_TAM";
 
     public static final String CREATE_TABLE_O_EXP = "CREATE TABLE "
             + O_EXP + "("
             + TOTAL_SHELF_LIFE + " TEXT,"
+            + BATCH_NUMBER_TAM + " TEXT,"
             + SHELF_LIFE_TYPE + " TEXT,"
             + MIN_REM_SHELF_LIFE + " TEXT,"
             + EXPIRED_DATE_TAM + " TEXT" + ")";
@@ -5140,11 +5194,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //values.put(QRCODE, qrcode.getQRCODE());
         values.put(TOTAL_SHELF_LIFE, exp.getTOTAL_SHELF_LIFE());
         values.put(SHELF_LIFE_TYPE, exp.getSHELF_LIFE_TYPE());
+        values.put(BATCH_NUMBER_TAM, exp.getBATCH_NUMBER_TAM());
         values.put(MIN_REM_SHELF_LIFE, exp.getMIN_REM_SHELF_LIFE());
         values.put(EXPIRED_DATE_TAM, exp.getEXPIRED_DATE_TAM());
         // insert row
         long id = db.insert(O_EXP, null, values);
         return id;
+    }
+
+    public ArrayList<Exp_Date_Tam>
+    getallValuePoReturn() {
+        ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT * FROM " + O_EXP;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Exp_Date_Tam expd = new Exp_Date_Tam();
+                expd.setEXPIRED_DATE_TAM((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TAM))));
+                expd.setBATCH_NUMBER_TAM((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TAM))));
+
+                exp.add(expd);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return exp;
     }
 
     public ArrayList<Exp_Date_Tam>
@@ -5163,6 +5241,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(TOTAL_SHELF_LIFE))));
                 expd.setSHELF_LIFE_TYPE((c.getString(c
                         .getColumnIndex(SHELF_LIFE_TYPE))));
+                expd.setBATCH_NUMBER_TAM((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TAM))));
                 expd.setMIN_REM_SHELF_LIFE((c.getString(c
                         .getColumnIndex(MIN_REM_SHELF_LIFE))));
 
@@ -5212,6 +5292,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //End table EXP
+
+
 
     //Table O_QRCODE dành cho Nhập Kho trong THỦ KHO
 

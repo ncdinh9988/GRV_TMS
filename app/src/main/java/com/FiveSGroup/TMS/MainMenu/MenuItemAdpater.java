@@ -266,17 +266,17 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                        Intent intent_qr = new Intent(context, List_TransferQR.class);
 //                        context.startActivity(intent_qr);
 //                        break;
-//                    case "PO Return":
-////                        if(block_Warehouse == -29){
-////                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
-////                            break;
-////                        }else if(block_Warehouse == -1){
-////                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
-////                            break;
-////                        }else if(block_Warehouse == 1){
-//                        Intent intent_po = new Intent(context, Home_PoReturn.class);
-//                        context.startActivity(intent_po);
-//                        break;
+                    case "PO Return":
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                        Intent intent_po = new Intent(context, Home_PoReturn.class);
+                        context.startActivity(intent_po);
+                        break;
 //                        }
 
 //                    case "Thêm Mã Barcode":
