@@ -22,6 +22,7 @@ import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
+import com.FiveSGroup.TMS.TransferQR.Product_TransferPosting;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
 import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
@@ -119,7 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 110; // version của DB khi thay
+    public static final int DATABASE_VERSION = 112; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -171,6 +172,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_CANCEL_GOOD);
         db.execSQL(CREATE_TABLE_O_TRANSFER_UNIT);
         db.execSQL(CREATE_TABLE_O_PO_RETURN);
+        db.execSQL(CREATE_TABLE_O_TRANSFER_POSTING);
     }
 
     @Override
@@ -342,6 +344,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_PO_RETURN + " ADD COLUMN  "
                     + MANUFACTURING_DATE_PO_RETURN + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 112
+        try {
+            db.execSQL(CREATE_TABLE_O_TRANSFER_POSTING);
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -1496,7 +1505,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // updating row
         return db.update(O_MASTER_PICK, values,
-                        AUTOINCREMENT_MASTER_PICK + " = ? ",
+                AUTOINCREMENT_MASTER_PICK + " = ? ",
                 new String[]{String.valueOf(unique_id)});
 
     }
@@ -1514,7 +1523,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // updating row
         return db.update(O_MASTER_PICK, values,
-                         AUTOINCREMENT_MASTER_PICK + " = ? ",
+                AUTOINCREMENT_MASTER_PICK + " = ? ",
                 new String[]{String.valueOf(unique_id)});
 
     }
@@ -1531,7 +1540,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_CODE_MASTER_PICK, to);
         // updating row
         return db.update(O_MASTER_PICK, values,
-                        AUTOINCREMENT_MASTER_PICK + " = ? ",
+                AUTOINCREMENT_MASTER_PICK + " = ? ",
                 new String[]{String.valueOf(unique_id)});
 
 
@@ -1550,7 +1559,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_DESCRIPTION_MASTER_PICK, descreption);
         // updating row
         return db.update(O_MASTER_PICK, values,
-                        AUTOINCREMENT_MASTER_PICK + " = ? ",
+                AUTOINCREMENT_MASTER_PICK + " = ? ",
                 new String[]{String.valueOf(unique_id)});
 
 
@@ -2214,7 +2223,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_CODE_PICKLIST, to);
         // updating row
         return db.update(O_PICK_LIST, values,
-                        AUTOINCREMENT_PICKLIST + " = ?",
+                AUTOINCREMENT_PICKLIST + " = ?",
                 new String[]{String.valueOf(id_unique_PL)});
 
 
@@ -2233,7 +2242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_DESCRIPTION_PICKLIST, descreption);
         // updating row
         return db.update(O_PICK_LIST, values,
-                        AUTOINCREMENT_PICKLIST + " = ?",
+                AUTOINCREMENT_PICKLIST + " = ?",
                 new String[]{String.valueOf(id_unique_PL)});
 
     }
@@ -2859,7 +2868,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_CODE_REMOVE_LPN, to);
         // updating row
         return db.update(O_REMOVE_LPN, values,
-                        AUTOINCREMENT_REMOVE_LPN + " = ?",
+                AUTOINCREMENT_REMOVE_LPN + " = ?",
                 new String[]{String.valueOf(id_unique_RML)});
     }
     public int updatePositionTo_Remove(String id_unique_RML , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
@@ -2873,7 +2882,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_DESCRIPTION_REMOVE_LPN, descreption);
         // updating row
         return db.update(O_REMOVE_LPN, values,
-                        AUTOINCREMENT_REMOVE_LPN + " = ?",
+                AUTOINCREMENT_REMOVE_LPN + " = ?",
                 new String[]{String.valueOf(id_unique_RML)});
     }
 
@@ -3998,7 +4007,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_CODE_STOCK_OUT, to);
         // updating row
         return db.update(O_STOCK_OUT, values,
-                        AUTOINCREMENT_STOCK_OUT + " = ? ",
+                AUTOINCREMENT_STOCK_OUT + " = ? ",
                 new String[]{String.valueOf(id_unique_SO)});
 
 
@@ -4017,7 +4026,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_DESCRIPTION_STOCK_OUT, descreption);
         // updating row
         return db.update(O_STOCK_OUT, values,
-                        AUTOINCREMENT_STOCK_OUT + " = ? ",
+                AUTOINCREMENT_STOCK_OUT + " = ? ",
                 new String[]{String.valueOf(id_unique_SO)});
 
 
@@ -4535,13 +4544,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 });
 
     }
+    public void deleteProduct_Transfer_Posting_Specific(String productCode) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.delete(O_TRANSFER_POSTING, AUTOINCREMENT_TRANSFER_POSTING + " = ?"
+                , new String[]{String.valueOf(productCode)
+                });
+
+    }
 
     public void deleteProduct_PO_Specific(String productCode) {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.delete(O_QRCODE, AUTOINCREMENT_PO + " = ?"
                 , new String[]{String.valueOf(productCode)
-        });
+                });
 
     }
 
@@ -4613,7 +4630,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // updating row
         return db.update(O_LET_DOWN, values,
-                       AUTOINCREMENT_LETDOWN + " = ?",
+                AUTOINCREMENT_LETDOWN + " = ?",
                 new String[]{String.valueOf(id_unique_LD)});
 
     }
@@ -5203,7 +5220,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Exp_Date_Tam>
-    getallValuePoReturn() {
+    getallValue() {
         ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT * FROM " + O_EXP;
@@ -5253,7 +5270,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return exp;
     }
-//Date date1 ;
+    //Date date1 ;
     public ArrayList<Exp_Date_Tam>
     getallExp_date() {
         ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
@@ -5397,7 +5414,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // updating row
         return db.update(O_PUT_AWAY, values,
-                         AUTOINCREMENT_PUT_AWAY + " = ?",
+                AUTOINCREMENT_PUT_AWAY + " = ?",
                 new String[]{String.valueOf(id_unique_PAW)});
 
     }
@@ -5431,7 +5448,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // updating row
         return db.update(O_STOCK_TRANSFER, values,
-                         AUTOINCREMENT_STOCK_TRANSFER + " = ? ",
+                AUTOINCREMENT_STOCK_TRANSFER + " = ? ",
                 new String[]{String.valueOf(unique_id)});
     }
 
@@ -5448,7 +5465,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // updating row
         return db.update(O_STOCK_TRANSFER, values,
-                        AUTOINCREMENT_STOCK_TRANSFER + " = ? ",
+                AUTOINCREMENT_STOCK_TRANSFER + " = ? ",
                 new String[]{String.valueOf(unique_id)});
     }
 
@@ -5464,7 +5481,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_CODE_LOAD_PALLET, to);
         // updating row
         return db.update(O_PUT_AWAY, values,
-                        AUTOINCREMENT_PUT_AWAY + " = ? ",
+                AUTOINCREMENT_PUT_AWAY + " = ? ",
                 new String[]{String.valueOf(id_unique_PAW)});
 
 
@@ -5482,7 +5499,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_DESCRIPTION, descreption);
         // updating row
         return db.update(O_PUT_AWAY, values,
-                        AUTOINCREMENT_PUT_AWAY + " = ? ",
+                AUTOINCREMENT_PUT_AWAY + " = ? ",
                 new String[]{String.valueOf(id_unique_PAW)});
 
     }
@@ -5498,7 +5515,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_CODE_STOCK_TRANSFER, to);
         // updating row
         return db.update(O_STOCK_TRANSFER, values,
-                        AUTOINCREMENT_STOCK_TRANSFER + " = ?",
+                AUTOINCREMENT_STOCK_TRANSFER + " = ?",
                 new String[]{String.valueOf(unique_id)});
 
 
@@ -5516,7 +5533,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_DESCRIPTION_STOCK_TRANSFER, descreption);
         // updating row
         return db.update(O_STOCK_TRANSFER, values,
-                        AUTOINCREMENT_STOCK_TRANSFER + " = ?",
+                AUTOINCREMENT_STOCK_TRANSFER + " = ?",
                 new String[]{String.valueOf(unique_id)});
 
 
@@ -6485,7 +6502,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_CODE_LOAD_PALLET, to);
         // updating row
         return db.update(O_LOAD_PALLET, values,
-                        AUTOINCREMENT_LOAD_PALLET + " = ?",
+                AUTOINCREMENT_LOAD_PALLET + " = ?",
                 new String[]{String.valueOf(unique_id)});
     }
 
@@ -6500,7 +6517,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_DESCRIPTION_LOAD_PALLET, descreption);
         // updating row
         return db.update(O_LOAD_PALLET, values,
-                        STOCKIN_DATE_LOAD_PALLET + " = ?",
+                STOCKIN_DATE_LOAD_PALLET + " = ?",
                 new String[]{String.valueOf(unique_id)});
     }
 
@@ -6970,7 +6987,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // updating row
         try {
             return db.update(O_QRCODE, values,
-                            AUTOINCREMENT_PO + " = ?",
+                    AUTOINCREMENT_PO + " = ?",
                     new String[]{String.valueOf(id_unique_SI)});
         }catch (Exception e){
             Log.d("update vi tri nhap kho", e.getMessage());
@@ -7325,5 +7342,377 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //END TABLE O_TRANSFER_UNIT
+    //DATABASE PUT PO_Return
+    public static final String O_TRANSFER_POSTING = "O_TRANSFER_POSTING";
+    public static final String WAREHOUSE_POSITION_CD_TRANSFER_POSTING = "WAREHOUSE_POSITION_CD_TRANSFER_POSTING";
+    public static final String AUTOINCREMENT_TRANSFER_POSTING = "AUTOINCREMENT_TRANSFER_POSTING";
+    public static final String PRODUCT_CODE_TRANSFER_POSTING = "PRODUCT_CODE";
+    public static final String PRODUCT_NAME_TRANSFER_POSTING = "PRODUCT_NAME";
+    public static final String PRODUCT_CD_TRANSFER_POSTING = "PRODUCT_CD";
+    public static final String QTY_EA_AVAILABLE_TRANSFER_POSTING = "QTY_EA_AVAILABLE";
+    public static final String QTY_SET_AVAILABLE_TRANSFER_POSTING = "QTY_SET_AVAILABLE";
+    public static final String EXPIRED_DATE_TRANSFER_POSTING = "EXPIRY_DATE";
+    public static final String STOCKIN_DATE_TRANSFER_POSTING = "STOCKIN_DATE";
+    public static final String EA_UNIT_TRANSFER_POSTING = "EA_UNIT";
+    public static final String POSITION_FROM_TRANSFER_POSTING = "POSITION_FROM_CD";
+    public static final String POSITION_FROM_CODE_TRANSFER_POSTING = "POSITION_FROM_CODE";
+    public static final String POSITION_FROM_DESCRIPTION_TRANSFER_POSTING = "POSITION_FROM_DESCRIPTION";
+    public static final String POSITION_TO_TRANSFER_POSTING = "POSITION_TO_CD";
+    public static final String POSITION_TO_CODE_TRANSFER_POSTING = "POSITION_TO_CODE";
+    public static final String POSITION_TO_DESCRIPTION_TRANSFER_POSTING = "POSITION_TO_DESCRIPTION";
+    public static final String UNIQUE_CODE_TRANSFER_POSTING = "UNIQUE_CODE";
+    public static final String TRANSFER_POSTING_CD = "TRANSFER_POSTING_CD";
+    public static final String LPN_CD_TRANSFER_POSTING = "LPN_CD_TRANSFER_POSTING";
+    public static final String LPN_CODE_TRANSFER_POSTING = "LPN_CODE_TRANSFER_POSTING";
+    public static final String LPN_FROM_TRANSFER_POSTING = "LPN_FROM_TRANSFER_POSTING";
+    public static final String LPN_TO_TRANSFER_POSTING = "LPN_TO_TRANSFER_POSTING";
+    public static final String BATCH_NUMBER_TRANSFER_POSTING = "BATCH_NUMBER_TRANSFER_POSTING";
+    public static final String MANUFACTURING_DATE_TRANSFER_POSTING = "MANUFACTURING_DATE_TRANSFER_POSTING";
+
+    public static final String CREATE_TABLE_O_TRANSFER_POSTING = "CREATE TABLE "
+            + O_TRANSFER_POSTING + "("
+            + AUTOINCREMENT_TRANSFER_POSTING + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + PRODUCT_CD_TRANSFER_POSTING + " TEXT,"
+            + WAREHOUSE_POSITION_CD_TRANSFER_POSTING + " TEXT,"
+            + BATCH_NUMBER_TRANSFER_POSTING + " TEXT,"
+            + MANUFACTURING_DATE_TRANSFER_POSTING + " TEXT,"
+            + PRODUCT_NAME_TRANSFER_POSTING + " TEXT,"
+            + PRODUCT_CODE_TRANSFER_POSTING + " TEXT,"
+            + QTY_EA_AVAILABLE_TRANSFER_POSTING + " TEXT,"
+            + QTY_SET_AVAILABLE_TRANSFER_POSTING + " TEXT,"
+            + EXPIRED_DATE_TRANSFER_POSTING + " TEXT,"
+            + STOCKIN_DATE_TRANSFER_POSTING + " TEXT,"
+            + EA_UNIT_TRANSFER_POSTING + " TEXT,"
+            + POSITION_FROM_TRANSFER_POSTING + " TEXT,"
+            + POSITION_FROM_CODE_TRANSFER_POSTING + " TEXT,"
+            + POSITION_FROM_DESCRIPTION_TRANSFER_POSTING + " TEXT,"
+            + POSITION_TO_TRANSFER_POSTING + " TEXT,"
+            + POSITION_TO_CODE_TRANSFER_POSTING + " TEXT,"
+            + POSITION_TO_DESCRIPTION_TRANSFER_POSTING + " TEXT,"
+            + TRANSFER_POSTING_CD + " TEXT,"
+            + UNIQUE_CODE_TRANSFER_POSTING + " TEXT ,"
+            + LPN_CD_TRANSFER_POSTING + " TEXT ,"
+            + LPN_CODE_TRANSFER_POSTING + " TEXT ,"
+            + LPN_FROM_TRANSFER_POSTING + " TEXT ,"
+            + LPN_TO_TRANSFER_POSTING + " TEXT "
+            + ")";
+
+
+    public long CreateTransfer_Posting(Product_TransferPosting transferPosting) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+//        values.put(AUTOINCREMENT_TRANSFER_POSTING, transferPosting.getAUTOINCREMENT());
+
+        values.put(UNIQUE_CODE_TRANSFER_POSTING, transferPosting.getUNIT());
+        values.put(BATCH_NUMBER_TRANSFER_POSTING, transferPosting.getBATCH_NUMBER());
+        values.put(MANUFACTURING_DATE_TRANSFER_POSTING, transferPosting.getMANUFACTURING_DATE());
+        values.put(PRODUCT_CODE_TRANSFER_POSTING, transferPosting.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_TRANSFER_POSTING, transferPosting.getPRODUCT_NAME());
+        values.put(WAREHOUSE_POSITION_CD_TRANSFER_POSTING, transferPosting.getWAREHOUSE_POSITION_CD());
+        values.put(PRODUCT_CD_TRANSFER_POSTING, transferPosting.getPRODUCT_CD());
+        values.put(QTY_SET_AVAILABLE_TRANSFER_POSTING, transferPosting.getQTY());
+        values.put(STOCKIN_DATE_TRANSFER_POSTING, transferPosting.getSTOCKIN_DATE());
+        values.put(QTY_EA_AVAILABLE_TRANSFER_POSTING, transferPosting.getQTY_EA_AVAILABLE());
+        values.put(EXPIRED_DATE_TRANSFER_POSTING, transferPosting.getEXPIRED_DATE());
+        values.put(EA_UNIT_TRANSFER_POSTING, transferPosting.getUNIT());
+        values.put(POSITION_FROM_TRANSFER_POSTING, transferPosting.getPOSITION_FROM_CD());
+        values.put(POSITION_TO_TRANSFER_POSTING, transferPosting.getPOSITION_TO_CD());
+        values.put(POSITION_FROM_CODE_TRANSFER_POSTING, transferPosting.getPOSITION_FROM_CODE());
+        values.put(POSITION_TO_CODE_TRANSFER_POSTING, transferPosting.getPOSITION_TO_CODE());
+        values.put(POSITION_FROM_DESCRIPTION_TRANSFER_POSTING, transferPosting.getPOSITION_FROM_DESCRIPTION());
+        values.put(POSITION_TO_DESCRIPTION_TRANSFER_POSTING, transferPosting.getPOSITION_TO_DESCRIPTION());
+        values.put(TRANSFER_POSTING_CD, transferPosting.getSTOCK_TRANSFER_POSTING_CD());
+        values.put(LPN_CODE_TRANSFER_POSTING, transferPosting.getLPN_CODE());
+        values.put(LPN_FROM_TRANSFER_POSTING, transferPosting.getLPN_FROM());
+        values.put(LPN_TO_TRANSFER_POSTING, transferPosting.getLPN_TO());
+        // insert row
+        long id = db.insert(O_TRANSFER_POSTING, null, values);
+        return id;
+    }
+
+    public int updatePositionFrom_transferPosting_LPN(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_TRANSFER_POSTING, wareHouse);
+        values.put(POSITION_FROM_DESCRIPTION_TRANSFER_POSTING, descreption);
+
+        values.put(POSITION_FROM_CODE_TRANSFER_POSTING, from);
+        values.put(LPN_FROM_TRANSFER_POSTING, from);
+
+
+        // updating row
+        return db.update(O_TRANSFER_POSTING, values, AUTOINCREMENT_TRANSFER_POSTING + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionFrom_transferPosting(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_TRANSFER_POSTING, wareHouse);
+        values.put(POSITION_FROM_CODE_TRANSFER_POSTING, from);
+        values.put(LPN_FROM_TRANSFER_POSTING, "");
+        values.put(POSITION_FROM_DESCRIPTION_TRANSFER_POSTING, descreption);
+
+
+        // updating row
+        return db.update(O_TRANSFER_POSTING, values, AUTOINCREMENT_TRANSFER_POSTING + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionTo_transferPosting_LPN(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_TRANSFER_POSTING, wareHouse);
+        values.put(POSITION_TO_DESCRIPTION_TRANSFER_POSTING, descreption);
+        values.put(LPN_TO_TRANSFER_POSTING, to);
+
+        values.put(POSITION_TO_CODE_TRANSFER_POSTING, to);
+        // updating row
+        return db.update(O_TRANSFER_POSTING, values,
+                AUTOINCREMENT_TRANSFER_POSTING + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public int updatePositionTo_transferPosting(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_TRANSFER_POSTING, wareHouse);
+        values.put(POSITION_TO_CODE_TRANSFER_POSTING, to);
+        values.put(LPN_TO_TRANSFER_POSTING, "");
+
+        values.put(POSITION_TO_DESCRIPTION_TRANSFER_POSTING, descreption);
+        // updating row
+        return db.update(O_TRANSFER_POSTING, values,
+                AUTOINCREMENT_TRANSFER_POSTING + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public ArrayList<Product_TransferPosting>
+    getoneProduct_TransferPosting(String CD, String expDate, String ea_unit, String stockinDate, String po_return) {
+        ArrayList<Product_TransferPosting> transferPostings = new ArrayList<Product_TransferPosting>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_TRANSFER_POSTING + " " + " WHERE "
+                + PRODUCT_CD_TRANSFER_POSTING + " = " + CD + " AND "
+                + TRANSFER_POSTING_CD + " = " + po_return + " AND "
+                + EA_UNIT_TRANSFER_POSTING + " like " + " '%" + ea_unit + "%'" + " AND "
+                + EXPIRED_DATE_TRANSFER_POSTING + " like " + " '%" + expDate + "%'" + " AND "
+                + STOCKIN_DATE_TRANSFER_POSTING + " like " + " '%" + stockinDate + "%'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product_TransferPosting transferPosting = new Product_TransferPosting();
+                transferPosting.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_TRANSFER_POSTING))));
+                transferPosting.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TRANSFER_POSTING))));
+                transferPosting.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_TRANSFER_POSTING))));
+                transferPosting.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_TRANSFER_POSTING))));
+                transferPosting.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_TRANSFER_POSTING))));
+                transferPosting.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TRANSFER_POSTING))));
+                transferPosting.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_TRANSFER_POSTING))));
+                transferPosting.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TRANSFER_POSTING))));
+                transferPosting.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_TRANSFER_POSTING))));
+                transferPosting.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_TRANSFER_POSTING))));
+                transferPostings.add(transferPosting);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return transferPostings;
+    }
+
+
+    public ArrayList<Product_TransferPosting>
+    getAllProduct_TransferPosting_Sync(String po_return) {
+        ArrayList<Product_TransferPosting> transferPostings = new ArrayList<Product_TransferPosting>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
+                "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
+                "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_TRANSFER_POSTING +
+                " where " + TRANSFER_POSTING_CD + " = " + po_return;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_TransferPosting transferPosting = new Product_TransferPosting();
+//                transferPosting.setAUTOINCREMENT((c.getString(c
+//                        .getColumnIndex(AUTOINCREMENT_TRANSFER_POSTING))));
+                transferPosting.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_TRANSFER_POSTING))));
+                transferPosting.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TRANSFER_POSTING))));
+                transferPosting.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_TRANSFER_POSTING))));
+                transferPosting.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_TRANSFER_POSTING))));
+                transferPosting.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TRANSFER_POSTING))));
+                transferPosting.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_TRANSFER_POSTING))));
+                transferPosting.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_TRANSFER_POSTING))));
+                transferPosting.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_TRANSFER_POSTING))));
+                transferPosting.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_TRANSFER_POSTING))));
+                transferPosting.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_TRANSFER_POSTING))));
+                transferPosting.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TRANSFER_POSTING))));
+                transferPosting.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_TRANSFER_POSTING))));
+                transferPosting.setSTOCK_TRANSFER_POSTING_CD((c.getString(c
+                        .getColumnIndex(TRANSFER_POSTING_CD))));
+                transferPosting.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_TRANSFER_POSTING))));
+                transferPosting.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_TRANSFER_POSTING))));
+                transferPosting.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_TRANSFER_POSTING))));
+                transferPostings.add(transferPosting);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return transferPostings;
+    }
+
+    public ArrayList<Product_TransferPosting>
+    getAllProduct_TransferPosting(String po_return) {
+        ArrayList<Product_TransferPosting> transferPostings = new ArrayList<Product_TransferPosting>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_TRANSFER_POSTING + " where " + TRANSFER_POSTING_CD + " = " + po_return;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_TransferPosting transferPosting = new Product_TransferPosting();
+                transferPosting.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_TRANSFER_POSTING))));
+                transferPosting.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TRANSFER_POSTING))));
+                transferPosting.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_TRANSFER_POSTING))));
+                transferPosting.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_TRANSFER_POSTING))));
+                transferPosting.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_TRANSFER_POSTING))));
+                transferPosting.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TRANSFER_POSTING))));
+                transferPosting.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_TRANSFER_POSTING))));
+                transferPosting.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_TRANSFER_POSTING))));
+                transferPosting.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_TRANSFER_POSTING))));
+                transferPosting.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_TRANSFER_POSTING))));
+                transferPosting.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_TRANSFER_POSTING))));
+                transferPosting.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TRANSFER_POSTING))));
+                transferPosting.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_TRANSFER_POSTING))));
+                transferPosting.setSTOCK_TRANSFER_POSTING_CD((c.getString(c
+                        .getColumnIndex(TRANSFER_POSTING_CD))));
+                transferPosting.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_TRANSFER_POSTING))));
+                transferPosting.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_TRANSFER_POSTING))));
+                transferPosting.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_TRANSFER_POSTING))));
+                transferPostings.add(transferPosting);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return transferPostings;
+    }
+
+
+    public int updateProduct_TransferPosting(Product_TransferPosting transferPosting, String incre_so, String PRODUCT_CD, String sl, String ea_unit, String stock, String po_return) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CD_TRANSFER_POSTING, PRODUCT_CD);
+        values.put(PRODUCT_CODE_TRANSFER_POSTING, transferPosting.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_TRANSFER_POSTING, transferPosting.getPRODUCT_NAME());
+        values.put(EXPIRED_DATE_TRANSFER_POSTING, transferPosting.getEXPIRED_DATE());
+        values.put(EA_UNIT_TRANSFER_POSTING, transferPosting.getUNIT());
+        values.put(QTY_SET_AVAILABLE_TRANSFER_POSTING, sl);
+        values.put(TRANSFER_POSTING_CD, po_return);
+
+        // updating row
+        return db.update(O_TRANSFER_POSTING, values,  AUTOINCREMENT_TRANSFER_POSTING + " = ?",
+                new String[]{String.valueOf(incre_so)});
+
+    }
+
+
+    public void deleteProduct_TransferPosting() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_TRANSFER_POSTING);
+    }
+
+    //END TABLE O_TRANSFER_POSTING
+
+
+
 
 }

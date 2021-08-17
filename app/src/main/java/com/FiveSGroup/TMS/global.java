@@ -27,7 +27,7 @@ public class global extends Application {
 
 //    private static String UrlDeliveryCusomerList = "http://111.222.3.199:54572/TMS/DeliveryConfirm.aspx?orderCD=2";
 
-//    private static String UrlDeliveryCusomerList = "http://idv.grv.fieldvision.com.vn:54574/TMS/DeliveryCustomerList.aspx?deliverer=";
+    //    private static String UrlDeliveryCusomerList = "http://idv.grv.fieldvision.com.vn:54574/TMS/DeliveryCustomerList.aspx?deliverer=";
     private static String UrlDeliveryCusomerList = "";
 
     private static String CreateWarehousePickListForApp = "";
@@ -133,7 +133,7 @@ public class global extends Application {
 
 //    private static String UrlWebserviceToSynchronize = "http://grv.fieldvision.com.vn:54573/Webservice/Synchronize.asmx";
 
-//  private static String UrlWebserviceToSynchronize = "http://111.222.3.199:54572/Webservice/Synchronize.asmx";
+    //  private static String UrlWebserviceToSynchronize = "http://111.222.3.199:54572/Webservice/Synchronize.asmx";
     private  static String STOCK_RECEIPT_CD = "";
 
     public static String getStockReceiptCd() {
@@ -174,6 +174,15 @@ public class global extends Application {
 
     public static void setHide_Warehouse_Adjustment(String hide_Warehouse_Adjustment) {
         Hide_Warehouse_Adjustment = hide_Warehouse_Adjustment;
+    }
+    private static String TransferPostingCD = "";
+
+    public static String getTransferPostingCD() {
+        return TransferPostingCD;
+    }
+
+    public static void setTransferPostingCD(String transferPostingCD) {
+        TransferPostingCD = transferPostingCD;
     }
 
     private static String PoReturnCD = "";

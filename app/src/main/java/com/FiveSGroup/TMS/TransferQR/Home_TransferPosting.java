@@ -34,16 +34,13 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
-import com.FiveSGroup.TMS.StockOut.Home_Stockout;
-import com.FiveSGroup.TMS.StockOut.ListQrcode_Stockout;
-import com.FiveSGroup.TMS.StockOut.Qrcode_Stock_Out;
 import com.FiveSGroup.TMS.ValueEventbus;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.global;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class Home_QRPosting extends AppCompatActivity {
+public class Home_TransferPosting extends AppCompatActivity {
     private WebView mWebview;
     private Button btn1, btn2, btn3, btnback, btnShow;
     LinearLayout layout;
@@ -87,13 +84,13 @@ public class Home_QRPosting extends AppCompatActivity {
             public void onClick(View v) {
                 String check_stockout = new CmnFns().synchronizeGet_Status_Stock_Out(global.getStockoutCD());
                 if(check_stockout.equals("1")){
-                    Intent intent = new Intent(Home_QRPosting.this, Qrcode_TransferQR.class);
+                    Intent intent = new Intent(Home_TransferPosting.this, Qrcode_TransferPosting.class);
                     intent.putExtra("qrcode1", "qrcode1");
                     // Log.e("barcodeData",""+ barcodeData);
                     startActivity(intent);
                 }else{
-                    Dialog dialog = new Dialog(Home_QRPosting.this);
-                    dialog.showDialog(Home_QRPosting.this, "Vui Lòng Tiếp Nhận Xuất Hàng Trước Khi Quét Mã");
+                    Dialog dialog = new Dialog(Home_TransferPosting.this);
+                    dialog.showDialog(Home_TransferPosting.this, "Vui Lòng Tiếp Nhận Xuất Hàng Trước Khi Quét Mã");
                 }
 
             }
@@ -101,7 +98,7 @@ public class Home_QRPosting extends AppCompatActivity {
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home_QRPosting.this, List_TransferQR.class));
+                startActivity(new Intent(Home_TransferPosting.this, List_TransferPosting.class));
                 EventBus.getDefault().postSticky(new CheckEventbus());
 
             }
@@ -159,7 +156,7 @@ public class Home_QRPosting extends AppCompatActivity {
     }
     private void addEvents(String url) {
         if (CmnFns.isNetworkAvailable()) {
-            mWebview.addJavascriptInterface(new Home_QRPosting.JavaScriptInterface(Home_QRPosting.this), "Android");
+            mWebview.addJavascriptInterface(new Home_TransferPosting.JavaScriptInterface(Home_TransferPosting.this), "Android");
             mWebview.getSettings().setJavaScriptEnabled(true); // enable javascript
             mWebview.getSettings().setUseWideViewPort(true);
             mWebview.getSettings().setLoadWithOverviewMode(true);

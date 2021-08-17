@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.R;
-import com.FiveSGroup.TMS.TransferQR.TransferQRAdapter;
 
 import java.util.ArrayList;
 

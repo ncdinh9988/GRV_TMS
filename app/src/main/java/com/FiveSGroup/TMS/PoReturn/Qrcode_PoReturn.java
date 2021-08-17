@@ -321,7 +321,8 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                 } else {
                     try {
                         // lấy tất cả hạn sử dụng trong database ra
-                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValuePoReturn();
+                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue();
+
 
                         if (expired_date.size() > 1) {
                             final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_PoReturn.this);

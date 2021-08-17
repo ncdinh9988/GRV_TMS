@@ -1,8 +1,6 @@
 package com.FiveSGroup.TMS.MainMenu;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +9,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.FiveSGroup.TMS.AddBarcode.ListProductBarcodeActivity;
 import com.FiveSGroup.TMS.CancelGood.Home_CancelGood;
-import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.Inventory.InventoryHome;
 import com.FiveSGroup.TMS.LPN.LPNActivity;
 import com.FiveSGroup.TMS.LetDown.LetDownSuggestionsActivity;
@@ -31,7 +26,6 @@ import com.FiveSGroup.TMS.RemoveFromLPN.Qrcode_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Home_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Home_Stockout;
 import com.FiveSGroup.TMS.StockTransfer.Qrcode_StockTransfer;
-import com.FiveSGroup.TMS.TransferQR.List_TransferQR;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.Warehouse.HomeQRActivity;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.Warehouse_Adjustment;
@@ -113,8 +107,8 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            public void onClick(DialogInterface dialog, int which) {
 //
 //                                if (which == 0) {
-                                    Intent intent1 = new Intent(context, LetDownSuggestionsActivity.class);
-                                    context.startActivity(intent1);
+                        Intent intent1 = new Intent(context, LetDownSuggestionsActivity.class);
+                        context.startActivity(intent1);
 
 //                                } else {
 //

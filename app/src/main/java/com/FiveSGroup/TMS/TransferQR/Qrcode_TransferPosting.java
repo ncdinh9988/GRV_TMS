@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -18,15 +17,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
@@ -43,7 +39,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClickListener {
+public class Qrcode_TransferPosting extends AppCompatActivity implements View.OnClickListener {
 
 
     private SurfaceView surfaceView;
@@ -104,7 +100,7 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 try {
-                    CmnFns.hideSoftKeyboard(Qrcode_TransferQR.this);
+                    CmnFns.hideSoftKeyboard(Qrcode_TransferPosting.this);
                 } catch (Exception e) {
 
                 }
@@ -124,7 +120,7 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
         checkBoxGetDVT = findViewById(R.id.checkBoxGetDVT);
         checkBoxGetLPN = findViewById(R.id.checkBoxGetLPN);
         textViewTitle = findViewById(R.id.tvTitle);
-        textViewTitle.setText("QUÉT MÃ - XUẤT KHO");
+        textViewTitle.setText("QUÉT MÃ - PO RETURN");
         buttonBack = findViewById(R.id.buttonQRBack);
     }
 
@@ -167,7 +163,7 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
         stockinDate = intent.getStringExtra("stockin_date");
         if (!(position == null)) {
             checkBoxGetDVT.setVisibility(View.INVISIBLE);
-            checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetLPN.setVisibility(View.INVISIBLE);
             checkBoxGetLPN.setChecked(false);
             if (position.equals("1")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
@@ -178,7 +174,8 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
             checkBoxGetDVT.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setVisibility(View.VISIBLE);
             checkBoxGetDVT.setChecked(true);
-            textViewTitle.setText("QUÉT MÃ - XUẤT KHO");
+            checkBoxGetLPN.setChecked(false);
+            textViewTitle.setText("QUÉT MÃ - PO RETURN");
         }
 
     }
@@ -201,10 +198,10 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    if (ActivityCompat.checkSelfPermission(Qrcode_TransferQR.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(Qrcode_TransferPosting.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
                     } else {
-                        ActivityCompat.requestPermissions(Qrcode_TransferQR.this, new
+                        ActivityCompat.requestPermissions(Qrcode_TransferPosting.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
 
@@ -246,18 +243,18 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
 
                                 try {
                                     barcodeData = barcodes.valueAt(0).displayValue;
-                                    Toast.makeText(Qrcode_TransferQR.this, barcodeData + "", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Qrcode_TransferPosting.this, barcodeData + "", Toast.LENGTH_LONG).show();
                                     Log.e("barcode2", "" + barcodeData);
 
                                     if (barcodeData != null) {
-                                        barcodeData = barcodeData.replace("\n","");
+                                        barcodeData = barcodeData.replace("\n", "");
                                         edtBarcode.setText(barcodeData);
                                         GetData(barcodeData);
                                     }
                                 } catch (Exception e) {
-                                    Toast.makeText(Qrcode_TransferQR.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Qrcode_TransferPosting.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                                     Log.d("#777: ", e.getMessage());
-                                    Intent intent = new Intent(Qrcode_TransferQR.this, List_TransferQR.class);
+                                    Intent intent = new Intent(Qrcode_TransferPosting.this, List_TransferPosting.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -278,7 +275,7 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
 //*****************************
         if (checkBoxGetLPN.isChecked()) {
             if (expiredDate != null) {
-                Intent intentt = new Intent(getApplication(), List_TransferQR.class);
+                Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("returnposition", position);
@@ -286,7 +283,7 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("id_unique_SO", id_unique_SO);
-                intentt.putExtra("transfer_qr", "333");
+                intentt.putExtra("transfer_posting", "333");
 
                 // truyền qua cho ListQRCode để xử lí from - to
                 intentt.putExtra("expdate", expiredDate);
@@ -302,17 +299,17 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
 
 
             } else {
-                Intent intentt = new Intent(getApplication(), List_TransferQR.class);
+                Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
-                intentt.putExtra("transfer_qr", "333");
+                intentt.putExtra("transfer_posting", "333");
                 intentt.putExtra("id_unique_SO", id_unique_SO);
                 startActivity(intentt);
                 finish();
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WSO", 0, global.getStockoutCD());
+            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WPR", 0, global.getPoReturnCD());
             if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData, stockinDate);
             } else {
@@ -324,15 +321,15 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
                 } else {
                     try {
                         // lấy tất cả hạn sử dụng trong database ra
-                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
+                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue();
 
                         if (expired_date.size() > 1) {
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_TransferQR.this);
-                            builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_TransferPosting.this);
+                            builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho - Batch Number");
 
                             final ArrayList<String> exp_date = new ArrayList<>();
                             for (int i = 0; i < expired_date.size(); i++) {
-                                exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
+                                exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM() + " - " + expired_date.get(i).getBATCH_NUMBER_TAM());
                                 //    exp_date.add(expired_date.get(i).getSTOCKIN_DATE_TAM());
 
                             }
@@ -354,8 +351,8 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
                                         expDateTemp2 = expDate;
                                         String[] chuoi = expDateTemp2.split(" - ");
                                         if (chuoi[0].equals("Khác")) {
-                                            Intent intent = new Intent(Qrcode_TransferQR.this, SelectPropertiesProductActivity.class);
-                                            intent.putExtra("typeScan", "scan_from_transfer_qr");
+                                            Intent intent = new Intent(Qrcode_TransferPosting.this, SelectPropertiesProductActivity.class);
+                                            intent.putExtra("typeScan", "scan_from_cancel");
                                             intent.putExtra("btn1", barcodeData);
                                             intent.putExtra("returnposition", position);
                                             intent.putExtra("returnCD", product_cd);
@@ -368,14 +365,14 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
                                             return;
                                         }
                                         if (!checkBoxGetDVT.isChecked()) {
-                                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                                            ReturnProduct(barcodeData, chuoi[0], chuoi[1] , chuoi[2]);
 
                                         } else {
-                                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
                                         }
 
                                     }
-                                    Toast.makeText(Qrcode_TransferQR.this, "You select: " + expDate,
+                                    Toast.makeText(Qrcode_TransferPosting.this, "You select: " + expDate,
                                             Toast.LENGTH_LONG).show();
 
                                 }
@@ -383,30 +380,31 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
                             AlertDialog alertDialog = builder.create();
                             alertDialog.show();
                         } else if (expired_date.size() == 1) {
-                            String expDatetemp = "";
+                            String expDatetemp = "" , batch_number = "";
                             try {
                                 expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                                batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             } catch (Exception e) {
 
                             }
                             String[] chuoi = expDatetemp.split(" - ");
 
                             if (!checkBoxGetDVT.isChecked()) {
-                                ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                                ReturnProduct(barcodeData, chuoi[0], chuoi[1] , batch_number);
                             } else {
-                                ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                                ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], batch_number);
                             }
                         } else {
-                            Toast.makeText(Qrcode_TransferQR.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(Qrcode_TransferQR.this, List_TransferQR.class);
-                            intent.putExtra("transfer_qr", "333");
+                            Toast.makeText(Qrcode_TransferPosting.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(Qrcode_TransferPosting.this, List_TransferPosting.class);
+                            intent.putExtra("transfer_posting", "333");
                             intent.putExtra("btn1", barcodeData);
                             intent.putExtra("id_unique_SO", id_unique_SO);
                             startActivity(intent);
                             finish();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(Qrcode_TransferQR.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Qrcode_TransferPosting.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                         Log.d("#778:", e.getMessage());
                     }
 
@@ -417,13 +415,13 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
     }
 
     private void ReturnPosition(String barcode, String stockinDateShow) {
-        Intent intentt = new Intent(getApplication(), List_TransferQR.class);
+        Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
-        intentt.putExtra("transfer_qr", "333");
+        intentt.putExtra("transfer_posting", "333");
         intentt.putExtra("stockin_date", stockinDateShow);
         intentt.putExtra("id_unique_SO", id_unique_SO);
 
@@ -441,20 +439,21 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
 
     }
 
-    private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow) {
-
+    private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow , String batch_number) {
+// khi kh không check vào đơn vị tính mặc định isdefault mặc định là 1 còn khi check vào là 2
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
-        Intent intentt = new Intent(getApplication(), List_TransferQR.class);
+        Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
+        intentt.putExtra("batch_number", batch_number);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("exp_date", expDatetemp);
-        intentt.putExtra("transfer_qr", "333");
+        intentt.putExtra("transfer_posting", "333");
         if (stockinDate == null) {
             intentt.putExtra("stockin_date", stockinDateShow);
 
@@ -475,7 +474,7 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
     }
 
 
-    private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow) {
+    private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow ,final String batch_number ) {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
@@ -497,19 +496,20 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
         final String[] mString = mStringArray;
 
 
-        AlertDialog.Builder builderDVT = new AlertDialog.Builder(Qrcode_TransferQR.this);
+        AlertDialog.Builder builderDVT = new AlertDialog.Builder(Qrcode_TransferPosting.this);
         builderDVT.setTitle("CHỌN ĐƠN VỊ TÍNH");
         builderDVT.setCancelable(false);
         builderDVT.setItems(mString, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(Qrcode_TransferQR.this, mString[which], Toast.LENGTH_LONG).show();
-                Intent intentt = new Intent(getApplication(), List_TransferQR.class);
+                Toast.makeText(Qrcode_TransferPosting.this, mString[which], Toast.LENGTH_LONG).show();
+                Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
+                intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
-                intentt.putExtra("transfer_qr", "333");
+                intentt.putExtra("transfer_posting", "333");
                 intentt.putExtra("id_unique_SO", id_unique_SO);
                 intentt.putExtra("returnStock", stock);
                 if (stockinDate == null) {
@@ -563,7 +563,7 @@ public class Qrcode_TransferQR extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.buttonQRBack:
                 if (position != null || checkToFinish != null) {
-                    Intent intent = new Intent(Qrcode_TransferQR.this, List_TransferQR.class);
+                    Intent intent = new Intent(Qrcode_TransferPosting.this, List_TransferPosting.class);
                     startActivity(intent);
                     finish();
                 } else {

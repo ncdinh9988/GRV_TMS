@@ -90,7 +90,7 @@
             android:name=".Warehouse_Adjustment.ListQrcode_Warehouse_Adjustment"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TransferQR.List_TransferQR"
+            android:name=".TransferQR.List_TransferPosting"
             android:screenOrientation="portrait" />
 
         <activity
