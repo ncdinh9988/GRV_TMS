@@ -405,6 +405,8 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                     result = new CmnFns().synchronizeStockReceiptChecked(ListQrcode.this,saleCode);
 
                     if (result >= 1) {
+                        DatabaseHelper.getInstance().deleteallBatch_Number();
+                        DatabaseHelper.getInstance().deleteProduct_Qrcode(global.getStockReceiptCd());
                         ShowSuccessMessage("Lưu thành công");
                     } else {
                         if (result == -2) {

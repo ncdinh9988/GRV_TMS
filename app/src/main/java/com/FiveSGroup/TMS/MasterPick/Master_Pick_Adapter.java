@@ -381,4 +381,3 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         notifyItemRemoved(position);
     }
 }
-

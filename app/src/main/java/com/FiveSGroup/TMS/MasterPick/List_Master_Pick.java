@@ -531,14 +531,15 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes ;
-            if(isLPN==1){
-                postitionDes = new CmnFns().synchronizeGETProductByZoneMasterPick_LPN(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, vitri);
+            int postitionDes  = new CmnFns().synchronizeGETProductByZoneMasterPick(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, vitri);
+//            int postitionDes ;
+//            if(isLPN==1){
+//                postitionDes = new CmnFns().synchronizeGETProductByZoneMasterPick_LPN(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, vitri);
+//
+//            }else{
+//                 postitionDes = new CmnFns().synchronizeGETProductByZoneMasterPick(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, vitri);
 
-            }else{
-                 postitionDes = new CmnFns().synchronizeGETProductByZoneMasterPick(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, vitri);
-
-            }
+//            }
 
             Dialog dialog = new Dialog(List_Master_Pick.this);
 
