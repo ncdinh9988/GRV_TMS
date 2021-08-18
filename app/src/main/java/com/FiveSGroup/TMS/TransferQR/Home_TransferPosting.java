@@ -46,7 +46,7 @@ public class Home_TransferPosting extends AppCompatActivity {
     LinearLayout layout;
     String value1 = "", value2 = "";
     SharedPreferences sharedPref;
-    String urlStockReceipt = "";
+    String urlTransferPosting = "";
     ValueEventbus eventbus;
     static String value = "";
     String value3 = "";
@@ -72,11 +72,11 @@ public class Home_TransferPosting extends AppCompatActivity {
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
         layout = findViewById(R.id.layout);
-        urlStockReceipt = DatabaseHelper.getInstance().getParamByKey("URL_StockOut").getValue();;
+        urlTransferPosting = DatabaseHelper.getInstance().getParamByKey("URL_TransferPosting").getValue();;
 
 
 
-        String urlStockOut =  urlStockReceipt + "?USER_CODE=" + CmnFns.readDataAdmin();
+        String urlStockOut =  urlTransferPosting + "?USER_CODE=" + CmnFns.readDataAdmin();
         addEvents(urlStockOut);
 
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +147,7 @@ public class Home_TransferPosting extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                addEvents(urlStockReceipt + "?USER_CODE=" + CmnFns.readDataAdmin());
+                addEvents(urlTransferPosting + "?USER_CODE=" + CmnFns.readDataAdmin());
                 refreshLayout.setRefreshing(false);
 
             }

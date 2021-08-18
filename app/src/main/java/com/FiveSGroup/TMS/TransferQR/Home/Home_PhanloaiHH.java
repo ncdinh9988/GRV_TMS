@@ -1,8 +1,11 @@
 package com.FiveSGroup.TMS.TransferQR.Home;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.MainMenu.MenuItemObject;
 import com.FiveSGroup.TMS.MainMenu.SpaceItem;
+import com.FiveSGroup.TMS.PickList.NewWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 
 import java.util.ArrayList;
@@ -24,13 +28,25 @@ public class Home_PhanloaiHH extends AppCompatActivity {
     ArrayList<MenuItemObject> arrItem;
     Arr_Adapter_Transfer_Posting adpater;
     TextView tvSale, tvVersion;
+    Button btnback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_ware_house);
+        setContentView(R.layout.activity_home_phanloaihh);
         rvCategory = findViewById(R.id.rvCategory);
         tvSale = findViewById(R.id.tvSale);
         tvVersion = findViewById(R.id.tvVersion);
+        btnback = findViewById(R.id.btnback);
+
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_PhanloaiHH.this, NewWareHouseActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
         String version;
         try {
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
