@@ -26,6 +26,7 @@ import com.FiveSGroup.TMS.RemoveFromLPN.Qrcode_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Home_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Home_Stockout;
 import com.FiveSGroup.TMS.StockTransfer.Qrcode_StockTransfer;
+import com.FiveSGroup.TMS.TransferQR.Home.Home_PhanloaiHH;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.Warehouse.HomeQRActivity;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.Warehouse_Adjustment;
@@ -270,6 +271,18 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                        }else if(block_Warehouse == 1){
                         Intent intent_po = new Intent(context, Home_PoReturn.class);
                         context.startActivity(intent_po);
+                        break;
+//                        }
+                    case "Phân Loại HH":
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                        Intent intent_hh = new Intent(context, Home_PhanloaiHH.class);
+                        context.startActivity(intent_hh);
                         break;
 //                        }
 

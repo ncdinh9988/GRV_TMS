@@ -54,6 +54,18 @@
             android:name=".PutAway.List_PutAway"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".TransferQR.Home.Home_PhanloaiHH"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TransferQR.Home_TransferPosting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TransferQR.List_TransferPosting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TransferQR.Qrcode_TransferPosting"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".MasterPick.List_Master_Pick"
             android:screenOrientation="portrait" />
         <activity

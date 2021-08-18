@@ -1,4 +1,4 @@
-package com.FiveSGroup.TMS.MainMenu;
+package com.FiveSGroup.TMS.TransferQR.Home;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,16 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.MainMenu.MenuItemObject;
+import com.FiveSGroup.TMS.MainMenu.SpaceItem;
 import com.FiveSGroup.TMS.R;
-import com.FiveSGroup.TMS.global;
 
 import java.util.ArrayList;
 
-public class MainWareHouseActivity extends AppCompatActivity {
+public class Home_PhanloaiHH extends AppCompatActivity {
 
     RecyclerView rvCategory;
     ArrayList<MenuItemObject> arrItem;
-    MenuItemAdpater adpater;
+    Arr_Adapter_Transfer_Posting adpater;
     TextView tvSale, tvVersion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class MainWareHouseActivity extends AppCompatActivity {
             tvSale.setText(CmnFns.readDataShipper());
         }
 
-        adpater = new MenuItemAdpater(this, arrItem);
+        adpater = new Arr_Adapter_Transfer_Posting(this, arrItem);
         LinearLayoutManager layoutManager = new GridLayoutManager(this, 3);
         int spanCount = 3; // 3 columns
         int spacing = 50; // 50px
@@ -59,13 +60,8 @@ public class MainWareHouseActivity extends AppCompatActivity {
 
     private void prepareData(){
         arrItem = new ArrayList<>();
-        String name[] = {"LPN", "Nhập Kho", "Put Away", "Let Down", "Chuyển Vị Trí", "Master Pick" ,"PickList",
-                "Xuất Kho", "Kiểm Tồn", "Chỉnh Kho" , "Gỡ Sản Phẩm","Trả Hàng" ,"Xuất Hủy","Chuyển ĐVT" ,"PO Return"
-                ,"Phân Loại HH"};
-        int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho, R.drawable.ic_putaway, R.drawable.ic_letdown,
-                R.drawable.ic_chuyen_vi_tri,  R.drawable.ic_master_pick , R.drawable.ic_picklist, R.drawable.ic_xuat_kho,
-                R.drawable.ic_kiem_ton, R.drawable.ic_chinh_kho , R.drawable.ic_go_san_pham, R.drawable.ic_tra_hang ,
-                R.drawable.ic_xuat_kho, R.drawable.ic_go_san_pham , R.drawable.ic_chuyen_vi_tri ,R.drawable.ic_nhap_kho };
+        String name[] = {"Lấy Hàng", "Phân Loại"};
+        int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho};
         String Lock_Wh_Adjustment = DatabaseHelper.getInstance().getParamByKey("LOCK_WH_Adjustment").getValue();
         for(int i = 0; i < name.length; i ++){
             MenuItemObject object = new MenuItemObject();
