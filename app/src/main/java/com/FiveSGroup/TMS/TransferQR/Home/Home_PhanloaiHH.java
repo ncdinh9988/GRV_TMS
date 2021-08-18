@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.MainMenu.MenuItemObject;
 import com.FiveSGroup.TMS.MainMenu.SpaceItem;
 import com.FiveSGroup.TMS.PickList.NewWareHouseActivity;
@@ -38,14 +39,7 @@ public class Home_PhanloaiHH extends AppCompatActivity {
         tvVersion = findViewById(R.id.tvVersion);
         btnback = findViewById(R.id.btnback);
 
-        btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Home_PhanloaiHH.this, NewWareHouseActivity.class);
-                startActivity(intent);
 
-            }
-        });
 
         String version;
         try {
@@ -93,6 +87,14 @@ public class Home_PhanloaiHH extends AppCompatActivity {
                 arrItem.add(object);
             }
         }
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_PhanloaiHH.this, MainWareHouseActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override
