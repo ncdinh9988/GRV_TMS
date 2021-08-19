@@ -609,8 +609,13 @@ public class Webservice {
 
 
     public String GetProductByZone(String qrcode, String salescode, String type , int IsLPN , String CD) {
+        String webServiceFunc = "";
+        if(type.equals("WTP")){
+            webServiceFunc = "GetProductByZone_RQBT";
+        }else{
+            webServiceFunc = "GetProductByZone";
+        }
 
-        String webServiceFunc = "GetProductByZone";
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
         // Param 1
         PropertyInfo param1 = new PropertyInfo();
@@ -753,8 +758,13 @@ public class Webservice {
     public String synchronizeGETPositionInfo(String userCode, String barecode, int isLPN , String type, String positionFrom, String positionTo, String typePosition) {
 
         String isLPNFormat = String.valueOf(isLPN);
+        String webServiceFunc = "";
+        if(type.equals("WTP")){
+            webServiceFunc = "synchronizeGETPositionInfo_RQBT";
+        }else{
+            webServiceFunc = "synchronizeGETPositionInfo";
+        }
 
-        String webServiceFunc = "synchronizeGETPositionInfo";
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
         // Param 1
         PropertyInfo param1 = new PropertyInfo();

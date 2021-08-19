@@ -1,4 +1,4 @@
-package com.FiveSGroup.TMS.TransferQR;
+package com.FiveSGroup.TMS.TransferQR.ChuyenMa;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -24,10 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.PoReturn.Home_PoReturn;
-import com.FiveSGroup.TMS.PoReturn.Qrcode_PoReturn;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
-
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
 import com.FiveSGroup.TMS.global;
@@ -35,7 +33,7 @@ import com.FiveSGroup.TMS.global;
 import java.util.ArrayList;
 import java.util.List;
 
-public class List_TransferPosting extends AppCompatActivity implements View.OnClickListener {
+public class List_ChuyenMa extends AppCompatActivity implements View.OnClickListener {
     Button buttonBack, btnok;
     ImageButton btnscan_barcode;
     //ProductListViewAdapter productListViewAdapter;
@@ -47,7 +45,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
     String stock = "";
     String expDate = "";
     String expDate1 = "";
-    String transfer_posting = "";
+    String chuyen_ma = "";
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
@@ -55,12 +53,12 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
     String lpn = "", id_unique_SO = "";
 
     int statusGetCust;
-    Product_TransferPosting product_qrcode;
+    Product_ChuyenMa product_qrcode;
 
-    ArrayList<Product_TransferPosting> transfer_Posting;
+    ArrayList<Product_ChuyenMa> chuyen_Ma;
     CheckEventbus eventbus;
 
-    TransferPosting_Adapter TransferPostingListAdapter;
+    ChuyenMa_Adapter ChuyenMa_ListAdapter;
     TextView tvTitle;
 
     @Override
@@ -94,7 +92,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
-        transfer_posting = intent.getStringExtra("transfer_posting");
+        chuyen_ma = intent.getStringExtra("chuyen_ma");
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
@@ -108,10 +106,10 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && transfer_posting != null) {
+            if (lpn != null && chuyen_ma != null) {
                 //TODO
                 alert_show_SP(1);
-            } else if (lpn == null && transfer_posting != null) {
+            } else if (lpn == null && chuyen_ma != null) {
                 //TODO
                 alert_show_SP(0);
             }
@@ -127,26 +125,26 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
         }
 
-        transfer_Posting = DatabaseHelper.getInstance().getAllProduct_TransferPosting(global.getTransferPostingCD());
-        TransferPostingListAdapter = new TransferPosting_Adapter(this, transfer_Posting);
+        chuyen_ma = DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());
+        ChuyenMa_ListAdapter = new ChuyenMa_Adapter(this, chuyen_Ma);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         listVieWTPoduct.setLayoutManager(layoutManager);
-        listVieWTPoduct.setAdapter(TransferPostingListAdapter);
-        TransferPostingListAdapter.notifyDataSetChanged();
-        transfer_posting = "";
+        listVieWTPoduct.setAdapter(ChuyenMa_ListAdapter);
+        ChuyenMa_ListAdapter.notifyDataSetChanged();
+        chuyen_ma = "";
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                Toast.makeText(List_TransferPosting.this, "on Move", Toast.LENGTH_SHORT).show();
+                Toast.makeText(List_ChuyenMa.this, "on Move", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                LayoutInflater factory = LayoutInflater.from(List_TransferPosting.this);
+                LayoutInflater factory = LayoutInflater.from(List_ChuyenMa.this);
                 View layout_cus = factory.inflate(R.layout.layout_delete, null);
-                final AlertDialog dialog = new AlertDialog.Builder(List_TransferPosting.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                final AlertDialog dialog = new AlertDialog.Builder(List_ChuyenMa.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
                 InsetDrawable inset = new InsetDrawable(back, 64);
@@ -164,7 +162,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
                         //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
                         finish();
-                        Intent i = new Intent(List_TransferPosting.this, List_TransferPosting.class);
+                        Intent i = new Intent(List_ChuyenMa.this, List_ChuyenMa.class);
                         startActivity(i);
 
                     }
@@ -176,10 +174,10 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
                         dialog.dismiss();
 
                         int position = viewHolder.getAdapterPosition();
-                        Product_TransferPosting product = transfer_Posting.get(position);
-                        transfer_Posting.remove(position);
-                        DatabaseHelper.getInstance().deleteProduct_Transfer_Posting_Specific(product.getAUTOINCREMENT());
-                        TransferPostingListAdapter.notifyItemRemoved(position);
+                        Product_ChuyenMa product = chuyen_Ma.get(position);
+                        chuyen_Ma.remove(position);
+                        DatabaseHelper.getInstance().deleteProduct_chuyen_ma_Specific(product.getAUTOINCREMENT());
+                        ChuyenMa_ListAdapter.notifyItemRemoved(position);
                     }
                 });
                 dialog.show();
@@ -199,10 +197,10 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
     private boolean isNotScanFromOrTo() {
         boolean check = false;
-        List<Product_TransferPosting> product = DatabaseHelper.getInstance().getAllProduct_TransferPosting(global.getTransferPostingCD());
+        List<Product_ChuyenMa> product = DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());
 
         for (int i = 0; i < product.size(); i++) {
-            Product_TransferPosting cancelGood = product.get(i);
+            Product_ChuyenMa cancelGood = product.get(i);
             String value0 = "---";
             String valueFromCode = cancelGood.getPOSITION_FROM_CODE();
             String valueToCode = cancelGood.getPOSITION_TO_CODE();
@@ -237,14 +235,14 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
         btnok = findViewById(R.id.buttonOK);
         listVieWTPoduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Danh Sách SP PO Return");
+        tvTitle.setText("Danh Sách SP Phân Hàng");
     }
 
     private void startScan() {
 
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
-        Intent intent = new Intent(List_TransferPosting.this, Qrcode_PoReturn.class);
+        Intent intent = new Intent(List_ChuyenMa.this, Qrcode_ChuyenMa.class);
         intent.putExtra("check_to_finish_at_list", "check");
         startActivity(intent);
         finish();
@@ -253,9 +251,9 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
     private boolean isQuanityZero() {
         boolean check = false;
-        List<Product_TransferPosting> product = DatabaseHelper.getInstance().getAllProduct_TransferPosting(global.getTransferPostingCD());
+        List<Product_ChuyenMa> product = DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());
         for (int i = 0; i < product.size(); i++) {
-            Product_TransferPosting putAway = product.get(i);
+            Product_ChuyenMa putAway = product.get(i);
             String valueQty = putAway.getQTY();
             if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
@@ -272,19 +270,19 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
     private void synchronizeToService() {
         String saleCode = CmnFns.readDataAdmin();
-        Dialog dialog = new Dialog(List_TransferPosting.this);
+        Dialog dialog = new Dialog(List_ChuyenMa.this);
 
 
-        if (transfer_Posting.size() > 0) {
+        if (chuyen_Ma.size() > 0) {
             if (isNotScanFromOrTo()) {
-                dialog.showDialog(List_TransferPosting.this, "Chưa Có VT Từ Hoặc VT Đến");
+                dialog.showDialog(List_ChuyenMa.this, "Chưa Có VT Từ Hoặc VT Đến");
 
             } else if (isQuanityZero()) {
-                dialog.showDialog(List_TransferPosting.this, "Số lượng SP không được bằng 0");
+                dialog.showDialog(List_ChuyenMa.this, "Số lượng SP không được bằng 0");
 
             } else {
                 try {
-                    int result = new CmnFns().synchronizeData(saleCode, "WTP", global.getTransferPostingCD());
+                    int result = new CmnFns().synchronizeData(saleCode, "WTP", global.getChuyenMaCD());
                     if (result >= 1) {
                         ShowSuccessMessage("Lưu thành công");
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
@@ -292,39 +290,39 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
                     } else {
 
                         if (result == -1) {
-                            dialog.showDialog(List_TransferPosting.this, "Lưu thất bại");
+                            dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
                         } else if (result == -2) {
-                            dialog.showDialog(List_TransferPosting.this, "Số lượng không đủ trong tồn kho");
+                            dialog.showDialog(List_ChuyenMa.this, "Số lượng không đủ trong tồn kho");
 
                         } else if (result == -3) {
-                            dialog.showDialog(List_TransferPosting.this, "Vị trí từ không hợp lệ");
+                            dialog.showDialog(List_ChuyenMa.this, "Vị trí từ không hợp lệ");
 
                         } else if (result == -4) {
-                            dialog.showDialog(List_TransferPosting.this, "Trạng thái của phiếu không hợp lệ");
+                            dialog.showDialog(List_ChuyenMa.this, "Trạng thái của phiếu không hợp lệ");
 
                         } else if (result == -5) {
-                            dialog.showDialog(List_TransferPosting.this, "Vị trí từ trùng vị trí đên");
+                            dialog.showDialog(List_ChuyenMa.this, "Vị trí từ trùng vị trí đên");
 
                         } else if (result == -6) {
-                            dialog.showDialog(List_TransferPosting.this, "Vị trí đến không hợp lệ");
+                            dialog.showDialog(List_ChuyenMa.this, "Vị trí đến không hợp lệ");
 
                         } else if (result == -7) {
-                            dialog.showDialog(List_TransferPosting.this, "Cập nhật trạng thái thất bại");
+                            dialog.showDialog(List_ChuyenMa.this, "Cập nhật trạng thái thất bại");
 
                         } else if (result == -8) {
-                            dialog.showDialog(List_TransferPosting.this, "Sản phẩm không có thông tin trên phiếu ");
+                            dialog.showDialog(List_ChuyenMa.this, "Sản phẩm không có thông tin trên phiếu ");
 
                         } else if (result == -13) {
-                            dialog.showDialog(List_TransferPosting.this, "Dữ liệu không hợp lệ");
+                            dialog.showDialog(List_ChuyenMa.this, "Dữ liệu không hợp lệ");
 
                         } else if (result == -24) {
-                            dialog.showDialog(List_TransferPosting.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+                            dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                         } else if (result == -26) {
-                            dialog.showDialog(List_TransferPosting.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+                            dialog.showDialog(List_ChuyenMa.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
                         } else {
-                            dialog.showDialog(List_TransferPosting.this, "Lưu thất bại");
+                            dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
                         }
 
                     }
@@ -335,7 +333,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
             }
         } else {
-            dialog.showDialog(List_TransferPosting.this, "Không có sản phẩm");
+            dialog.showDialog(List_ChuyenMa.this, "Không có sản phẩm");
 
         }
 
@@ -343,9 +341,9 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
     }
 
     private void ShowSuccessMessage(String message) {
-        LayoutInflater factory = LayoutInflater.from(List_TransferPosting.this);
+        LayoutInflater factory = LayoutInflater.from(List_ChuyenMa.this);
         View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
-        final AlertDialog dialog = new AlertDialog.Builder(List_TransferPosting.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        final AlertDialog dialog = new AlertDialog.Builder(List_ChuyenMa.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
         InsetDrawable inset = new InsetDrawable(back, 64);
@@ -363,10 +361,10 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                DatabaseHelper.getInstance().deleteProduct_TransferPosting();
-                transfer_Posting.clear();
-                TransferPostingListAdapter.notifyDataSetChanged();
-                Intent intentToHomeQRActivity = new Intent(List_TransferPosting.this, Home_PoReturn.class);
+                DatabaseHelper.getInstance().deleteProduct_ChuyenMa();
+                chuyen_Ma.clear();
+                ChuyenMa_ListAdapter.notifyDataSetChanged();
+                Intent intentToHomeQRActivity = new Intent(List_ChuyenMa.this, Home_PoReturn.class);
                 startActivity(intentToHomeQRActivity);
                 finish();
             }
@@ -376,7 +374,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
     private void actionBack() {
         try {
-            List_TransferPosting.this.finish();
+            List_ChuyenMa.this.finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }
@@ -401,10 +399,10 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
     public void alert_show_position(int isLPN) {
         String positionTo = "";
         String positionFrom = "";
-        ArrayList<Product_TransferPosting> cancelGoods = new ArrayList<>();
-        cancelGoods = DatabaseHelper.getInstance().getAllProduct_TransferPosting_Sync(global.getTransferPostingCD());
+        ArrayList<Product_ChuyenMa> cancelGoods = new ArrayList<>();
+        cancelGoods = DatabaseHelper.getInstance().getAllProduct_ChuyenMa_Sync(global.getChuyenMaCD());
         for (int i = 0; i < cancelGoods.size(); i++) {
-            Product_TransferPosting cancelGood = cancelGoods.get(i);
+            Product_ChuyenMa cancelGood = cancelGoods.get(i);
             if (productCd.equals(cancelGood.getPRODUCT_CD()) &&
                     expDate1.equals(cancelGood.getEXPIRED_DATE()) &&
                     stockinDate.equals(cancelGood.getSTOCKIN_DATE()) &&
@@ -433,46 +431,46 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
         try {
             String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SO, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WTP", isLPN);
 
-            Dialog dialog = new Dialog(List_TransferPosting.this);
+            Dialog dialog = new Dialog(List_ChuyenMa.this);
 
             if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-                dialog.showDialog(List_TransferPosting.this, "Vui Lòng Thử Lại");
+                dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Thử Lại");
 
             } else if (postitionDes.equals("-3")) {
-                dialog.showDialog(List_TransferPosting.this, "Vị trí từ không hợp lệ");
+                dialog.showDialog(List_ChuyenMa.this, "Vị trí từ không hợp lệ");
 
             } else if (postitionDes.equals("-6")) {
-                dialog.showDialog(List_TransferPosting.this, "Vị trí đến không hợp lệ");
+                dialog.showDialog(List_ChuyenMa.this, "Vị trí đến không hợp lệ");
 
             } else if (postitionDes.equals("-5")) {
-                dialog.showDialog(List_TransferPosting.this, "Vị trí từ trùng vị trí đến");
+                dialog.showDialog(List_ChuyenMa.this, "Vị trí từ trùng vị trí đến");
 
             } else if (postitionDes.equals("-14")) {
-                dialog.showDialog(List_TransferPosting.this, "Vị trí đến trùng vị trí từ");
+                dialog.showDialog(List_ChuyenMa.this, "Vị trí đến trùng vị trí từ");
 
             } else if (postitionDes.equals("-15")) {
-                dialog.showDialog(List_TransferPosting.this, "Vị trí từ không có trong hệ thống");
+                dialog.showDialog(List_ChuyenMa.this, "Vị trí từ không có trong hệ thống");
 
             } else if (postitionDes.equals("-10")) {
-                dialog.showDialog(List_TransferPosting.this, "Mã LPN không có trong hệ thống");
+                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong hệ thống");
 
             } else if (postitionDes.equals("-17")) {
-                dialog.showDialog(List_TransferPosting.this, "LPN từ trùng LPN đến");
+                dialog.showDialog(List_ChuyenMa.this, "LPN từ trùng LPN đến");
 
             } else if (postitionDes.equals("-18")) {
-                dialog.showDialog(List_TransferPosting.this, "LPN đến trùng LPN từ");
+                dialog.showDialog(List_ChuyenMa.this, "LPN đến trùng LPN từ");
 
             } else if (postitionDes.equals("-19")) {
-                dialog.showDialog(List_TransferPosting.this, "Vị trí đến không có trong hệ thống");
+                dialog.showDialog(List_ChuyenMa.this, "Vị trí đến không có trong hệ thống");
 
             } else if (postitionDes.equals("-12")) {
-                dialog.showDialog(List_TransferPosting.this, "Mã LPN không có trong tồn kho");
+                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong tồn kho");
 
             } else if (postitionDes.equals("-27")) {
-                dialog.showDialog(List_TransferPosting.this, "Vị trí từ chưa có sản phẩm");
+                dialog.showDialog(List_ChuyenMa.this, "Vị trí từ chưa có sản phẩm");
 
             } else if (postitionDes.equals("-28")) {
-                dialog.showDialog(List_TransferPosting.this, "LPN đến có vị trí không hợp lệ");
+                dialog.showDialog(List_ChuyenMa.this, "LPN đến có vị trí không hợp lệ");
 
             } else {
                 return;
@@ -487,46 +485,46 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneTransfer_Posting(List_TransferPosting.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getTransferPostingCD(), isLPN ,batch_number);
+            int postitionDes = new CmnFns().synchronizeGETProductByZonechuyen_ma(List_ChuyenMa.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getChuyenMaCD(), isLPN ,batch_number);
 
-            Dialog dialog = new Dialog(List_TransferPosting.this);
+            Dialog dialog = new Dialog(List_ChuyenMa.this);
 
             if (postitionDes == 1) {
                 return;
             } else if (postitionDes == -1) {
-                dialog.showDialog(List_TransferPosting.this, "Vui Lòng Thử Lại");
+                dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Thử Lại");
 
             } else if (postitionDes == -8) {
-                dialog.showDialog(List_TransferPosting.this, "Mã sản phẩm không có trên phiếu");
+                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trên phiếu");
 
 
             } else if (postitionDes == -10) {
-                dialog.showDialog(List_TransferPosting.this, "Mã LPN không có trong hệ thống");
+                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong hệ thống");
 
             } else if (postitionDes == -11) {
 
-                dialog.showDialog(List_TransferPosting.this, "Mã sản phẩm không có trong kho");
+                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong kho");
 
 
             } else if (postitionDes == -12) {
 
-                dialog.showDialog(List_TransferPosting.this, "Mã LPN không có trong kho");
+                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong kho");
 
             } else if (postitionDes == -16) {
 
-                dialog.showDialog(List_TransferPosting.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(List_ChuyenMa.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
             } else if (postitionDes == -20) {
 
-                dialog.showDialog(List_TransferPosting.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong hệ thống");
 
             } else if (postitionDes == -21) {
 
-                dialog.showDialog(List_TransferPosting.this, "Mã sản phẩm không có trong zone");
+                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong zone");
 
             } else if (postitionDes == -22) {
 
-                dialog.showDialog(List_TransferPosting.this, "Mã LPN không có trong zone");
+                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong zone");
 
             }
         } catch (Exception e) {

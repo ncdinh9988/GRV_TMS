@@ -1,4 +1,4 @@
-package com.FiveSGroup.TMS.TransferQR;
+package com.FiveSGroup.TMS.TransferQR.ChuyenMa;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -39,7 +39,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Qrcode_TransferPosting extends AppCompatActivity implements View.OnClickListener {
+public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickListener {
 
 
     private SurfaceView surfaceView;
@@ -100,7 +100,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
             @Override
             public void onClick(View v) {
                 try {
-                    CmnFns.hideSoftKeyboard(Qrcode_TransferPosting.this);
+                    CmnFns.hideSoftKeyboard(Qrcode_ChuyenMa.this);
                 } catch (Exception e) {
 
                 }
@@ -175,7 +175,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
             checkBoxGetLPN.setVisibility(View.VISIBLE);
             checkBoxGetDVT.setChecked(true);
             checkBoxGetLPN.setChecked(false);
-            textViewTitle.setText("QUÉT MÃ - PO RETURN");
+            textViewTitle.setText("QUÉT MÃ - PHÂN HÀNG");
         }
 
     }
@@ -198,10 +198,10 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    if (ActivityCompat.checkSelfPermission(Qrcode_TransferPosting.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(Qrcode_ChuyenMa.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
                     } else {
-                        ActivityCompat.requestPermissions(Qrcode_TransferPosting.this, new
+                        ActivityCompat.requestPermissions(Qrcode_ChuyenMa.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
 
@@ -243,7 +243,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
 
                                 try {
                                     barcodeData = barcodes.valueAt(0).displayValue;
-                                    Toast.makeText(Qrcode_TransferPosting.this, barcodeData + "", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Qrcode_ChuyenMa.this, barcodeData + "", Toast.LENGTH_LONG).show();
                                     Log.e("barcode2", "" + barcodeData);
 
                                     if (barcodeData != null) {
@@ -252,9 +252,9 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
                                         GetData(barcodeData);
                                     }
                                 } catch (Exception e) {
-                                    Toast.makeText(Qrcode_TransferPosting.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Qrcode_ChuyenMa.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                                     Log.d("#777: ", e.getMessage());
-                                    Intent intent = new Intent(Qrcode_TransferPosting.this, List_TransferPosting.class);
+                                    Intent intent = new Intent(Qrcode_ChuyenMa.this, List_ChuyenMa.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -275,7 +275,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
 //*****************************
         if (checkBoxGetLPN.isChecked()) {
             if (expiredDate != null) {
-                Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
+                Intent intentt = new Intent(getApplication(), List_ChuyenMa.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("returnposition", position);
@@ -299,7 +299,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
 
 
             } else {
-                Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
+                Intent intentt = new Intent(getApplication(), List_ChuyenMa.class);
                 intentt.putExtra("lpn", "444");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("transfer_posting", "333");
@@ -309,8 +309,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WPR", 0, global.getPoReturnCD());
-            if (statusGetCustt != 1) {
+            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WTP", 0, global.getChuyenMaCD());            if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData, stockinDate);
             } else {
                 // expiredDate nhận giá trị từ adapter để xử lí position
@@ -324,7 +323,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
                         final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue();
 
                         if (expired_date.size() > 1) {
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_TransferPosting.this);
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_ChuyenMa.this);
                             builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho - Batch Number");
 
                             final ArrayList<String> exp_date = new ArrayList<>();
@@ -351,7 +350,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
                                         expDateTemp2 = expDate;
                                         String[] chuoi = expDateTemp2.split(" - ");
                                         if (chuoi[0].equals("Khác")) {
-                                            Intent intent = new Intent(Qrcode_TransferPosting.this, SelectPropertiesProductActivity.class);
+                                            Intent intent = new Intent(Qrcode_ChuyenMa.this, SelectPropertiesProductActivity.class);
                                             intent.putExtra("typeScan", "scan_from_cancel");
                                             intent.putExtra("btn1", barcodeData);
                                             intent.putExtra("returnposition", position);
@@ -372,7 +371,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
                                         }
 
                                     }
-                                    Toast.makeText(Qrcode_TransferPosting.this, "You select: " + expDate,
+                                    Toast.makeText(Qrcode_ChuyenMa.this, "You select: " + expDate,
                                             Toast.LENGTH_LONG).show();
 
                                 }
@@ -395,8 +394,8 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
                                 ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], batch_number);
                             }
                         } else {
-                            Toast.makeText(Qrcode_TransferPosting.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(Qrcode_TransferPosting.this, List_TransferPosting.class);
+                            Toast.makeText(Qrcode_ChuyenMa.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(Qrcode_ChuyenMa.this, List_ChuyenMa.class);
                             intent.putExtra("transfer_posting", "333");
                             intent.putExtra("btn1", barcodeData);
                             intent.putExtra("id_unique_SO", id_unique_SO);
@@ -404,7 +403,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
                             finish();
                         }
                     } catch (Exception e) {
-                        Toast.makeText(Qrcode_TransferPosting.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Qrcode_ChuyenMa.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                         Log.d("#778:", e.getMessage());
                     }
 
@@ -415,7 +414,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
     }
 
     private void ReturnPosition(String barcode, String stockinDateShow) {
-        Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
+        Intent intentt = new Intent(getApplication(), List_ChuyenMa.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
@@ -444,7 +443,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
-        Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
+        Intent intentt = new Intent(getApplication(), List_ChuyenMa.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
         intentt.putExtra("batch_number", batch_number);
@@ -496,14 +495,14 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
         final String[] mString = mStringArray;
 
 
-        AlertDialog.Builder builderDVT = new AlertDialog.Builder(Qrcode_TransferPosting.this);
+        AlertDialog.Builder builderDVT = new AlertDialog.Builder(Qrcode_ChuyenMa.this);
         builderDVT.setTitle("CHỌN ĐƠN VỊ TÍNH");
         builderDVT.setCancelable(false);
         builderDVT.setItems(mString, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(Qrcode_TransferPosting.this, mString[which], Toast.LENGTH_LONG).show();
-                Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
+                Toast.makeText(Qrcode_ChuyenMa.this, mString[which], Toast.LENGTH_LONG).show();
+                Intent intentt = new Intent(getApplication(), List_ChuyenMa.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("batch_number", batch_number);
@@ -563,7 +562,7 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
         switch (v.getId()) {
             case R.id.buttonQRBack:
                 if (position != null || checkToFinish != null) {
-                    Intent intent = new Intent(Qrcode_TransferPosting.this, List_TransferPosting.class);
+                    Intent intent = new Intent(Qrcode_ChuyenMa.this, List_ChuyenMa.class);
                     startActivity(intent);
                     finish();
                 } else {

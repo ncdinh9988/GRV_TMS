@@ -1,4 +1,4 @@
-package com.FiveSGroup.TMS.TransferQR;
+package com.FiveSGroup.TMS.TransferQR.TransferPosting;
 
 public class Product_TransferPosting {
 

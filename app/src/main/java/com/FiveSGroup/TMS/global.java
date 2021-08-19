@@ -176,6 +176,15 @@ public class global extends Application {
         Hide_Warehouse_Adjustment = hide_Warehouse_Adjustment;
     }
     private static String TransferPostingCD = "";
+    private static String ChuyenMaCD = "";
+
+    public static String getChuyenMaCD() {
+        return ChuyenMaCD;
+    }
+
+    public static void setChuyenMaCD(String chuyenMaCD) {
+        ChuyenMaCD = chuyenMaCD;
+    }
 
     public static String getTransferPostingCD() {
         return TransferPostingCD;

@@ -34,7 +34,6 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -59,7 +58,7 @@ import com.FiveSGroup.TMS.Security.P5sSecurity;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
-import com.FiveSGroup.TMS.TransferQR.Product_TransferPosting;
+import com.FiveSGroup.TMS.TransferQR.TransferPosting.Product_TransferPosting;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
 import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
@@ -70,7 +69,6 @@ import com.FiveSGroup.TMS.Webservice.Webservice;
 import com.FiveSGroup.TMS.Webservice.WebserviceAuth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,7 +88,6 @@ import java.lang.reflect.Method;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -101,7 +98,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import static com.FiveSGroup.TMS.global.barcode;
 import static com.FiveSGroup.TMS.global.getAppContext;
 import static com.FiveSGroup.TMS.global.getSaleCode;
 

@@ -13,10 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.FiveSGroup.TMS.LPN.LPNActivity;
 import com.FiveSGroup.TMS.MainMenu.MenuItemObject;
 import com.FiveSGroup.TMS.R;
-import com.FiveSGroup.TMS.TransferQR.Home_TransferPosting;
+import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Home_ChuyenMa;
+import com.FiveSGroup.TMS.TransferQR.TransferPosting.Home_TransferPosting;
 import com.FiveSGroup.TMS.Warehouse.HomeQRActivity;
 
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class Arr_Adapter_Transfer_Posting extends RecyclerView.Adapter<Arr_Adapt
                         context.startActivity(intentLPN);
                         break;
                     case "Chuyển Mã":
-                        Intent intent = new Intent(context, HomeQRActivity.class);
+                        Intent intent = new Intent(context, Home_ChuyenMa.class);
                         context.startActivity(intent);
                         break;
 

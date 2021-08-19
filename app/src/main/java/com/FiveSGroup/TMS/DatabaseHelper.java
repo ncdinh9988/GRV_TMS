@@ -22,7 +22,7 @@ import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
-import com.FiveSGroup.TMS.TransferQR.Product_TransferPosting;
+import com.FiveSGroup.TMS.TransferQR.TransferPosting.Product_TransferPosting;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
 import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;

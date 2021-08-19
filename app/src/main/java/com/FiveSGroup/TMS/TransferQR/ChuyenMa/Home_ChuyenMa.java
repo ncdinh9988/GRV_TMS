@@ -1,4 +1,4 @@
-package com.FiveSGroup.TMS.TransferQR;
+package com.FiveSGroup.TMS.TransferQR.ChuyenMa;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,14 +33,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
-import com.FiveSGroup.TMS.ShowDialog.Dialog;
+
+import com.FiveSGroup.TMS.TransferQR.TransferPosting.List_TransferPosting;
+
 import com.FiveSGroup.TMS.ValueEventbus;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.global;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class Home_TransferPosting extends AppCompatActivity {
+public class Home_ChuyenMa extends AppCompatActivity {
     private WebView mWebview;
     private Button btn1, btn2, btn3, btnback, btnShow;
     LinearLayout layout;
@@ -82,23 +84,23 @@ public class Home_TransferPosting extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String check_stockout = new CmnFns().synchronizeGet_Status_Stock_Out(global.getStockoutCD());
-                if(check_stockout.equals("1")){
-                    Intent intent = new Intent(Home_TransferPosting.this, Qrcode_TransferPosting.class);
-                    intent.putExtra("qrcode1", "qrcode1");
-                    // Log.e("barcodeData",""+ barcodeData);
-                    startActivity(intent);
-                }else{
-                    Dialog dialog = new Dialog(Home_TransferPosting.this);
-                    dialog.showDialog(Home_TransferPosting.this, "Vui Lòng Tiếp Nhận Xuất Hàng Trước Khi Quét Mã");
-                }
+//                String check_stockout = new CmnFns().synchronizeGet_Status_Stock_Out(global.getStockoutCD());
+//                if(check_stockout.equals("1")){
+                Intent intent = new Intent(Home_ChuyenMa.this, Qrcode_ChuyenMa.class);
+                intent.putExtra("qrcode1", "qrcode1");
+                // Log.e("barcodeData",""+ barcodeData);
+                startActivity(intent);
+//                }else{
+//                    Dialog dialog = new Dialog(Home_ChuyenMa.this);
+//                    dialog.showDialog(Home_ChuyenMa.this, "Vui Lòng Tiếp Nhận Xuất Hàng Trước Khi Quét Mã");
+//                }
 
             }
         });
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home_TransferPosting.this, List_TransferPosting.class));
+                startActivity(new Intent(Home_ChuyenMa.this, List_TransferPosting.class));
                 EventBus.getDefault().postSticky(new CheckEventbus());
 
             }
@@ -156,7 +158,7 @@ public class Home_TransferPosting extends AppCompatActivity {
     }
     private void addEvents(String url) {
         if (CmnFns.isNetworkAvailable()) {
-            mWebview.addJavascriptInterface(new Home_TransferPosting.JavaScriptInterface(Home_TransferPosting.this), "Android");
+            mWebview.addJavascriptInterface(new Home_ChuyenMa.JavaScriptInterface(Home_ChuyenMa.this), "Android");
             mWebview.getSettings().setJavaScriptEnabled(true); // enable javascript
             mWebview.getSettings().setUseWideViewPort(true);
             mWebview.getSettings().setLoadWithOverviewMode(true);
@@ -196,13 +198,13 @@ public class Home_TransferPosting extends AppCompatActivity {
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
 
-                    if (url.contains("StockOutListItemForApp.aspx?ORDER_CD")) {
+                    if (url.contains("TransferPostingListItemForApp.aspx?TRANSFER_POSTING_CD")) {
 
                         String chuoi[] = url.split("=");
                         String code = chuoi[1];
                         String chuoi2[] = code.split("&");
                         String code2 = chuoi2[0];
-                        global.setStockoutCD(code2);
+                        global.setChuyenMaCD(code2);
                         // Toast.makeText(HomeQRActivity.this, code+"", Toast.LENGTH_SHORT).show();
 
                         btn1.setVisibility(View.VISIBLE);
@@ -310,3 +312,4 @@ public class Home_TransferPosting extends AppCompatActivity {
     }
 
 }
+
