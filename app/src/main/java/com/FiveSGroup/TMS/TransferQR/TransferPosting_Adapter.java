@@ -3,6 +3,8 @@ package com.FiveSGroup.TMS.TransferQR;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.PoReturn.ListQrcode_PoReturn;
-import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PoReturn.Qrcode_PoReturn;
 import com.FiveSGroup.TMS.R;
 
@@ -28,11 +29,11 @@ import java.util.ArrayList;
 
 public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPosting_Adapter.ViewHolder> {
 
-    final ArrayList<Product_PoReturn> listTransferPosting;
+    final ArrayList<Product_TransferPosting> listTransferPosting;
     Context context;
     View view;
 
-    public TransferPosting_Adapter(Context context, ArrayList<Product_PoReturn> listTransferPosting) {
+    public TransferPosting_Adapter(Context context, ArrayList<Product_TransferPosting> listTransferPosting) {
         this.context = context;
         this.listTransferPosting = listTransferPosting;
         // this.arrCustomerFilter = arrCustomerFilter;
@@ -49,10 +50,11 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
 
     @Override
     public void onBindViewHolder(@NonNull final TransferPosting_Adapter.ViewHolder holder, final int position) {
-        final Product_PoReturn product = listTransferPosting.get(position);
+        final Product_TransferPosting product = listTransferPosting.get(position);
+        holder.setIsRecyclable(false);
+        holder.edt.setText(listTransferPosting.get(position).getQTY());
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
-        holder.edt.setText(product.getQTY());
         holder.tvUnit.setText(product.getUNIT());
 
 
@@ -145,7 +147,7 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
 //                        public void onClick(View v) {
 //                            removeItems(position);
 //                            notifyDataSetChanged();
-//                            DatabaseHelper.getInstance().deleteProduct_PoReturn_Specific(product.getPRODUCT_CODE(), product.getEXPIRED_DATE(), product.getSTOCKIN_DATE(), product.getUNIT(), product.getSTOCKOUT_CD());
+//                            DatabaseHelper.getInstance().deleteProduct_TransferPosting_Specific(product.getPRODUCT_CODE(), product.getEXPIRED_DATE(), product.getSTOCKIN_DATE(), product.getUNIT(), product.getSTOCKOUT_CD());
 //                            Toast.makeText(context, "Đã xóa sản phẩm " + product.getPRODUCT_NAME(), Toast.LENGTH_SHORT).show();
 //                            dialog.dismiss();
 //                        }
@@ -158,84 +160,84 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
 //            }
 //        });
 
-//        holder.edt.addTextChangedListener(new TextWatcher() {
+        holder.edt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+//                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
+                } else {
+                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TRANSFER_POSTING_CD());
+                }
+            }
+        });
+
+//        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(!hasFocus){
+//                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+//                        // the user is done typing.
+//                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        // the user is done typing.
+//                        DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TRANSFER_POSTING_CD());
+//                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+//                        hideSoftKeyboard(view);
 //
-//            }
 //
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
-//                    DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
-//                } else {
-//                    DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
+//                    }
 //                }
 //            }
 //        });
-
-        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-                        // the user is done typing.
-                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // the user is done typing.
-                        DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getPO_RETURN_CD());
-                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
-                        hideSoftKeyboard(view);
-
-
-                    }
-                }
-            }
-        });
-
-
-        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        actionId == EditorInfo.IME_ACTION_DONE ||
-                        event != null &&
-                                event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    if (event == null || !event.isShiftPressed()) {
-
-                        if (holder.edt.getText().toString().equals("")) {
-                            // the user is done typing.
-                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-//                            DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
-                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-                            // the user is done typing.
-
-                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
-//                            DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
-                        } else {
-
-                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
-                            // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_PoReturn(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getPO_RETURN_CD());
-                            Intent intent = new Intent(context, ListQrcode_PoReturn.class);
-                            context.startActivity(intent);
-                            ((Activity) context).finish();
-                            hideSoftKeyboard(view);
-
-                        }
-                        return true; // consume.
-
-
-                    }
-                }
-                return false;
-            }
-        });
+//
+//
+//        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+//                        actionId == EditorInfo.IME_ACTION_DONE ||
+//                        event != null &&
+//                                event.getAction() == KeyEvent.ACTION_DOWN &&
+//                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+//                    if (event == null || !event.isShiftPressed()) {
+//
+//                        if (holder.edt.getText().toString().equals("")) {
+//                            // the user is done typing.
+//                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
+////                            DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+//                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+//                            // the user is done typing.
+//
+//                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
+////                            DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+//                        } else {
+//
+//                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+//                            // the user is done typing.
+//                            DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TRANSFER_POSTING_CD());
+//                            Intent intent = new Intent(context, ListQrcode_PoReturn.class);
+//                            context.startActivity(intent);
+//                            ((Activity) context).finish();
+//                            hideSoftKeyboard(view);
+//
+//                        }
+//                        return true; // consume.
+//
+//
+//                    }
+//                }
+//                return false;
+//            }
+//        });
     }
 
     private boolean hideSoftKeyboard(View view) {
@@ -273,6 +275,24 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
 
             tvExpired = itemView.findViewById(R.id.tvExpired);
             edt = itemView.findViewById(R.id.priceproduct);
+            edt.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    listTransferPosting.get(getAdapterPosition()).setQTY(edt.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+
+            });
+
 
         }
     }

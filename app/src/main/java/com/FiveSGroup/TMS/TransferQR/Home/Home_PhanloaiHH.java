@@ -42,13 +42,13 @@ public class Home_PhanloaiHH extends AppCompatActivity {
 
 
         String version;
-        try {
-            PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
-            version = pInfo.versionName;
-            tvVersion.setText("Version: " + version);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
+//            version = pInfo.versionName;
+//            tvVersion.setText("Version: " + version);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
         prepareData();
         if(CmnFns.isCheckAdmin()){

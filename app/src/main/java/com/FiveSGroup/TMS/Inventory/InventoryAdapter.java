@@ -65,9 +65,10 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
     @Override
     public void onBindViewHolder(@NonNull final InventoryAdapter.ViewHolder holder, final int position) {
         final InventoryProduct product = inventoryList.get(position);
+        holder.setIsRecyclable(false);
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
-        holder.edt.setText(product.getQTY());
+        holder.edt.setText(inventoryList.get(position).getQTY());
         holder.tvUnit.setText(product.getUNIT());
         String lpnCode = product.getLPN_FROM();
 //        holder.tvTo.setText(product.getPOSITION_TO_CODE());
@@ -200,45 +201,45 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         final String oldValue = holder.edt.getText().toString();
 
 
-//        holder.edt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if (s.toString().equals("")) {
-//                    // trong KT khi để sl rỗng thì phải cập nhật "" để phân biệt giữa 0 và ""
-//                    DatabaseHelper.getInstance().updateProduct_Inventory(product,product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "", product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
-//                } else {
-//                    DatabaseHelper.getInstance().updateProduct_Inventory(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
-//                }
-//            }
-//        });
-
-        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        holder.edt.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-                        // the user is done typing.
-                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // the user is done typing.
-                        DatabaseHelper.getInstance().updateProduct_Inventory(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
-                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
-                        hideSoftKeyboard(view);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
 
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+                    // trong KT khi để sl rỗng thì phải cập nhật "" để phân biệt giữa 0 và ""
+//                    DatabaseHelper.getInstance().updateProduct_Inventory(product,product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "", product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
+                } else {
+                    DatabaseHelper.getInstance().updateProduct_Inventory(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
                 }
             }
         });
+
+//        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(!hasFocus){
+//                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+//                        // the user is done typing.
+//                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        // the user is done typing.
+//                        DatabaseHelper.getInstance().updateProduct_Inventory(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_TAKE_CD());
+//                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+//                        hideSoftKeyboard(view);
+//
+//
+//                    }
+//                }
+//            }
+//        });
 
 
         holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -329,6 +330,23 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
 
             tvExpired = itemView.findViewById(R.id.tvExpired);
             edt = itemView.findViewById(R.id.priceproduct);
+            edt.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    inventoryList.get(getAdapterPosition()).setQTY(edt.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+
+            });
 
         }
     }

@@ -24,8 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.PoReturn.Home_PoReturn;
-import com.FiveSGroup.TMS.PoReturn.PoReturn_Adapter;
-import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PoReturn.Qrcode_PoReturn;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
@@ -57,12 +55,12 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
     String lpn = "", id_unique_SO = "";
 
     int statusGetCust;
-    Product_PoReturn product_qrcode;
+    Product_TransferPosting product_qrcode;
 
-    ArrayList<Product_PoReturn> cancel_Good;
+    ArrayList<Product_TransferPosting> transfer_Posting;
     CheckEventbus eventbus;
 
-    PoReturn_Adapter PoReturnListAdapter;
+    TransferPosting_Adapter TransferPostingListAdapter;
     TextView tvTitle;
 
     @Override
@@ -129,12 +127,12 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
         }
 
-        cancel_Good = DatabaseHelper.getInstance().getAllProduct_PoReturn(global.getTransferPostingCD());
-        PoReturnListAdapter = new PoReturn_Adapter(this, cancel_Good);
+        transfer_Posting = DatabaseHelper.getInstance().getAllProduct_TransferPosting(global.getTransferPostingCD());
+        TransferPostingListAdapter = new TransferPosting_Adapter(this, transfer_Posting);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         listVieWTPoduct.setLayoutManager(layoutManager);
-        listVieWTPoduct.setAdapter(PoReturnListAdapter);
-        PoReturnListAdapter.notifyDataSetChanged();
+        listVieWTPoduct.setAdapter(TransferPostingListAdapter);
+        TransferPostingListAdapter.notifyDataSetChanged();
         transfer_posting = "";
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
@@ -178,10 +176,10 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
                         dialog.dismiss();
 
                         int position = viewHolder.getAdapterPosition();
-                        Product_PoReturn product = cancel_Good.get(position);
-                        cancel_Good.remove(position);
+                        Product_TransferPosting product = transfer_Posting.get(position);
+                        transfer_Posting.remove(position);
                         DatabaseHelper.getInstance().deleteProduct_Transfer_Posting_Specific(product.getAUTOINCREMENT());
-                        PoReturnListAdapter.notifyItemRemoved(position);
+                        TransferPostingListAdapter.notifyItemRemoved(position);
                     }
                 });
                 dialog.show();
@@ -201,10 +199,10 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
     private boolean isNotScanFromOrTo() {
         boolean check = false;
-        List<Product_PoReturn> product = DatabaseHelper.getInstance().getAllProduct_PoReturn(global.getTransferPostingCD());
+        List<Product_TransferPosting> product = DatabaseHelper.getInstance().getAllProduct_TransferPosting(global.getTransferPostingCD());
 
         for (int i = 0; i < product.size(); i++) {
-            Product_PoReturn cancelGood = product.get(i);
+            Product_TransferPosting cancelGood = product.get(i);
             String value0 = "---";
             String valueFromCode = cancelGood.getPOSITION_FROM_CODE();
             String valueToCode = cancelGood.getPOSITION_TO_CODE();
@@ -255,9 +253,9 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
     private boolean isQuanityZero() {
         boolean check = false;
-        List<Product_PoReturn> product = DatabaseHelper.getInstance().getAllProduct_PoReturn(global.getTransferPostingCD());
+        List<Product_TransferPosting> product = DatabaseHelper.getInstance().getAllProduct_TransferPosting(global.getTransferPostingCD());
         for (int i = 0; i < product.size(); i++) {
-            Product_PoReturn putAway = product.get(i);
+            Product_TransferPosting putAway = product.get(i);
             String valueQty = putAway.getQTY();
             if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
                 check = true;
@@ -277,7 +275,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
         Dialog dialog = new Dialog(List_TransferPosting.this);
 
 
-        if (cancel_Good.size() > 0) {
+        if (transfer_Posting.size() > 0) {
             if (isNotScanFromOrTo()) {
                 dialog.showDialog(List_TransferPosting.this, "Chưa Có VT Từ Hoặc VT Đến");
 
@@ -365,9 +363,9 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                DatabaseHelper.getInstance().deleteProduct_PoReturn();
-                cancel_Good.clear();
-                PoReturnListAdapter.notifyDataSetChanged();
+                DatabaseHelper.getInstance().deleteProduct_TransferPosting();
+                transfer_Posting.clear();
+                TransferPostingListAdapter.notifyDataSetChanged();
                 Intent intentToHomeQRActivity = new Intent(List_TransferPosting.this, Home_PoReturn.class);
                 startActivity(intentToHomeQRActivity);
                 finish();
@@ -403,10 +401,10 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
     public void alert_show_position(int isLPN) {
         String positionTo = "";
         String positionFrom = "";
-        ArrayList<Product_PoReturn> cancelGoods = new ArrayList<>();
-        cancelGoods = DatabaseHelper.getInstance().getAllProduct_PoReturn_Sync(global.getTransferPostingCD());
+        ArrayList<Product_TransferPosting> cancelGoods = new ArrayList<>();
+        cancelGoods = DatabaseHelper.getInstance().getAllProduct_TransferPosting_Sync(global.getTransferPostingCD());
         for (int i = 0; i < cancelGoods.size(); i++) {
-            Product_PoReturn cancelGood = cancelGoods.get(i);
+            Product_TransferPosting cancelGood = cancelGoods.get(i);
             if (productCd.equals(cancelGood.getPRODUCT_CD()) &&
                     expDate1.equals(cancelGood.getEXPIRED_DATE()) &&
                     stockinDate.equals(cancelGood.getSTOCKIN_DATE()) &&

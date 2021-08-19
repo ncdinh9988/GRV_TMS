@@ -51,9 +51,11 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final LetDownAdapter.ViewHolder holder, final int position) {
         final ProductLetDown product = listLetDown.get(position);
+        holder.setIsRecyclable(false);
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
-        holder.edt.setText(product.getQTY_SET_AVAILABLE());
+//        holder.edt.setText(product.getQTY_SET_AVAILABLE());
+        holder.edt.setText(listLetDown.get(position).getQTY_SET_AVAILABLE());
         holder.tvUnit.setText(product.getUNIT());
 
         if(!product.getLPN_FROM().equals("")){
@@ -164,88 +166,88 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
 //            }
 //        });
 
-//        holder.edt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+        holder.edt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
 //                    DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE());
-//                } else {
-//                    DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE());
+                } else {
+                    DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE());
+                }
+            }
+        });
+
+//        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(!hasFocus){
+//                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+//                        // the user is done typing.
+//                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        // the user is done typing.
+//                        DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE());
+//                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+//                        hideSoftKeyboard(view);
+//
+//
+//                    }
 //                }
 //            }
 //        });
-
-        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-                        // the user is done typing.
-                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // the user is done typing.
-                        DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE());
-                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
-                        hideSoftKeyboard(view);
-
-
-                    }
-                }
-            }
-        });
-
-
-        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        actionId == EditorInfo.IME_ACTION_DONE ||
-                        event != null &&
-                                event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    if (event == null || !event.isShiftPressed()) {
-
-
-                        if (holder.edt.getText().toString().equals("")) {
-                            // the user is done typing.
-
-                            Toast.makeText(context, "Số lượng không được bằng  rỗng", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE());
-                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-                            // the user is done typing.
-
-                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
-                            DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE());
-                        } else {
-
-                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
-
-
-                            // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE());
-                            Intent intent = new Intent(context, LetDownActivity.class);
-                            context.startActivity(intent);
-                            ((Activity) context).finish();
-                            hideSoftKeyboard(view);
-
-                        }
-                        return true; // consume.
-
-
-                    }
-                }
-                return false;
-            }
-        });
+//
+//
+//        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+//                        actionId == EditorInfo.IME_ACTION_DONE ||
+//                        event != null &&
+//                                event.getAction() == KeyEvent.ACTION_DOWN &&
+//                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+//                    if (event == null || !event.isShiftPressed()) {
+//
+//
+//                        if (holder.edt.getText().toString().equals("")) {
+//                            // the user is done typing.
+//
+//                            Toast.makeText(context, "Số lượng không được bằng  rỗng", Toast.LENGTH_SHORT).show();
+//                            DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE());
+//                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+//                            // the user is done typing.
+//
+//                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
+//                            DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE());
+//                        } else {
+//
+//                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+//
+//
+//                            // the user is done typing.
+//                            DatabaseHelper.getInstance().updateProduct_LetDown(product,product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE());
+//                            Intent intent = new Intent(context, LetDownActivity.class);
+//                            context.startActivity(intent);
+//                            ((Activity) context).finish();
+//                            hideSoftKeyboard(view);
+//
+//                        }
+//                        return true; // consume.
+//
+//
+//                    }
+//                }
+//                return false;
+//            }
+//        });
     }
 
     private boolean hideSoftKeyboard(View view) {
@@ -285,6 +287,24 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
 
             tvExpired = itemView.findViewById(R.id.tvExpired);
             edt = itemView.findViewById(R.id.priceproduct);
+            edt.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    listLetDown.get(getAdapterPosition()).setQTY_SET_AVAILABLE(edt.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+
+            });
+
 
         }
     }

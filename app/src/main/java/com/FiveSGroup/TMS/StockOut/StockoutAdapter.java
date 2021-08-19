@@ -50,9 +50,11 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull final StockoutAdapter.ViewHolder holder, final int position) {
         final Product_StockOut product = listStockOut.get(position);
+        holder.setIsRecyclable(false);
+        holder.edt.setText(listStockOut.get(position).getQTY());
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
-        holder.edt.setText(product.getQTY());
+//        holder.edt.setText(product.getQTY());
         holder.tvUnit.setText(product.getUNIT());
 
 
@@ -158,83 +160,83 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
 //            }
 //        });
 
-//        holder.edt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+        holder.edt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
 //                    DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
-//                } else {
-//                    DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+                } else {
+                    DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+                }
+            }
+        });
+
+//        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(!hasFocus){
+//                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+//                        // the user is done typing.
+//                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        // the user is done typing.
+//                        DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+//                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+//                        hideSoftKeyboard(view);
+//
+//                    }
 //                }
 //            }
 //        });
-
-        holder.edt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if ((holder.edt.getText().toString().equals("")) || (holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-                        // the user is done typing.
-                        Toast.makeText(context, "Số lượng không được bằng không hoặc rỗng", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // the user is done typing.
-                        DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
-                        Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
-                        hideSoftKeyboard(view);
-
-                    }
-                }
-            }
-        });
-
-
-        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        actionId == EditorInfo.IME_ACTION_DONE ||
-                        event != null &&
-                                event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    if (event == null || !event.isShiftPressed()) {
-
-                        if (holder.edt.getText().toString().equals("")) {
-                            // the user is done typing.
-                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
-//                            DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
-                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
-                            // the user is done typing.
-
-                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
-//                            DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
-                        } else {
-
-                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
-                            // the user is done typing.
-                            DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
-                            Intent intent = new Intent(context, ListQrcode_Stockout.class);
-                            context.startActivity(intent);
-                            ((Activity) context).finish();
-                            hideSoftKeyboard(view);
-
-                        }
-                        return true; // consume.
-
-
-                    }
-                }
-                return false;
-            }
-        });
+//
+//
+//        holder.edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+//                        actionId == EditorInfo.IME_ACTION_DONE ||
+//                        event != null &&
+//                                event.getAction() == KeyEvent.ACTION_DOWN &&
+//                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+//                    if (event == null || !event.isShiftPressed()) {
+//
+//                        if (holder.edt.getText().toString().equals("")) {
+//                            // the user is done typing.
+//                            Toast.makeText(context, "Số lượng không được bằng rỗng", Toast.LENGTH_SHORT).show();
+////                            DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+//                        } else if ((holder.edt.getText().toString().equals("0")) || (holder.edt.getText().toString().equals("00")) || (holder.edt.getText().toString().equals("000"))|| (holder.edt.getText().toString().equals("0000"))|| (holder.edt.getText().toString().equals("00000"))) {
+//                            // the user is done typing.
+//
+//                            Toast.makeText(context, "Số lượng không được bằng không", Toast.LENGTH_SHORT).show();
+////                            DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getPRODUCT_CD(), holder.edt.getText().toString(), "0", product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+//                        } else {
+//
+//                            Toast.makeText(context, "Đã cập nhật số lượng", Toast.LENGTH_SHORT).show();
+//                            // the user is done typing.
+//                            DatabaseHelper.getInstance().updateProduct_Stockout(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), holder.edt.getText().toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCKOUT_CD());
+//                            Intent intent = new Intent(context, ListQrcode_Stockout.class);
+//                            context.startActivity(intent);
+//                            ((Activity) context).finish();
+//                            hideSoftKeyboard(view);
+//
+//                        }
+//                        return true; // consume.
+//
+//
+//                    }
+//                }
+//                return false;
+//            }
+//        });
     }
 
     private boolean hideSoftKeyboard(View view) {
