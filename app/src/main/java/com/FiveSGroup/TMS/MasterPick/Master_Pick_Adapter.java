@@ -62,10 +62,10 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvUnit.setText(product.getUNIT());
-        holder.layout__put.setVisibility(View.VISIBLE);
-        holder.layout_putaway.setVisibility(View.VISIBLE);
-        holder.layout__goiy.setVisibility(View.INVISIBLE);
-        holder.tvvtgy.setText("Vị Trí Lấy Hàng: ");
+//        holder.layout__put.setVisibility(View.VISIBLE);
+//        holder.layout_putaway.setVisibility(View.VISIBLE);
+//        holder.layout__goiy.setVisibility(View.INVISIBLE);
+//        holder.tvvtgy.setText("Vị Trí Lấy Hàng: ");
         holder.edt.setText(masterPicks.get(position).getQTY());
         holder.tvMasterPickPositionSuggest.setText(product.getSUGGESTION_POSITION());
         holder.tvMasterPickPositionSuggest.setTextColor(Color.rgb(255, 51, 0));
@@ -355,10 +355,10 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvMasterPickPositionSuggest = itemView.findViewById(R.id.tvPositionSuggestput);
-            layout__put = itemView.findViewById(R.id.layout__put);
-            layout_putaway = itemView.findViewById(R.id.layout_putaway);
-            layout__goiy = itemView.findViewById(R.id.layout__goiy);
-            tvvtgy = itemView.findViewById(R.id.tvvtgy);
+//            layout__put = itemView.findViewById(R.id.layout__put);
+//            layout_putaway = itemView.findViewById(R.id.layout_putaway);
+//            layout__goiy = itemView.findViewById(R.id.layout__goiy);
+//            tvvtgy = itemView.findViewById(R.id.tvvtgy);
             btnvtden = itemView.findViewById(R.id.btnvtden);
             btnvtdi = itemView.findViewById(R.id.btnvtdi);
             tvFrom = itemView.findViewById(R.id.tvFrom);

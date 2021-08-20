@@ -309,7 +309,10 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WTP", 0, global.getChuyenMaCD());            if (statusGetCustt != 1) {
+            int statusGetCustt = 1;
+//            int statusGetCustt = new CmnFns().getChuyenMa(barcodeData, texxt, "WTP", 0, global.getChuyenMaCD());
+//            int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
+            if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData, stockinDate);
             } else {
                 // expiredDate nhận giá trị từ adapter để xử lí position

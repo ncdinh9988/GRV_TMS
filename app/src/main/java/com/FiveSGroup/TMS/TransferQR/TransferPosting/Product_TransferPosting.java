@@ -20,7 +20,7 @@ public class Product_TransferPosting {
     private String UNIT;
     private String POSITION_FROM_DESCRIPTION;
     private String POSITION_TO_DESCRIPTION;
-    private String STOCK_TRANSFER_POSTING_CD;
+    private String TRANSFER_POSTING_CD;
     private String LPN_CD;
     private String LPN_CODE;
     private String LPN_FROM;
@@ -173,11 +173,11 @@ public class Product_TransferPosting {
     }
 
     public String getSTOCK_TRANSFER_POSTING_CD() {
-        return STOCK_TRANSFER_POSTING_CD;
+        return TRANSFER_POSTING_CD;
     }
 
     public void setSTOCK_TRANSFER_POSTING_CD(String STOCK_TRANSFER_POSTING_CD) {
-        this.STOCK_TRANSFER_POSTING_CD = STOCK_TRANSFER_POSTING_CD;
+        this.TRANSFER_POSTING_CD = STOCK_TRANSFER_POSTING_CD;
     }
 
     public String getLPN_CD() {

@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.PoReturn.Qrcode_PoReturn;
 import com.FiveSGroup.TMS.R;
 
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, Qrcode_PoReturn.class);
+                Intent intent = new Intent(context, Qrcode_TransferPosting.class);
                 intent.putExtra("position", "1");
                 intent.putExtra("product_cd", product.getPRODUCT_CD());
                 intent.putExtra("c", holder.tvExpired.getText());
@@ -96,7 +95,7 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
         holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Qrcode_PoReturn.class);
+                Intent intent = new Intent(context, Qrcode_TransferPosting.class);
                 intent.putExtra("position", "2");
                 intent.putExtra("product_cd", product.getPRODUCT_CD());
                 intent.putExtra("c", holder.tvExpired.getText());

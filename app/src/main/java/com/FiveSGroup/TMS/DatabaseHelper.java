@@ -22,6 +22,7 @@ import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
+import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Product_ChuyenMa;
 import com.FiveSGroup.TMS.TransferQR.TransferPosting.Product_TransferPosting;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
 import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
@@ -7711,6 +7712,377 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //END TABLE O_TRANSFER_POSTING
+
+
+//    //DATABASE PUT Chuyen Ma
+//    public static final String O_CHUYEN_MA = "O_CHUYEN_MA";
+//    public static final String WAREHOUSE_POSITION_CD_CHUYEN_MA = "WAREHOUSE_POSITION_CD_CHUYEN_MA";
+//    public static final String AUTOINCREMENT_CHUYEN_MA = "AUTOINCREMENT_CHUYEN_MA";
+//    public static final String PRODUCT_CODE_CHUYEN_MA = "PRODUCT_CODE";
+//    public static final String PRODUCT_NAME_CHUYEN_MA = "PRODUCT_NAME";
+//    public static final String PRODUCT_CD_CHUYEN_MA = "PRODUCT_CD";
+//    public static final String QTY_EA_AVAILABLE_CHUYEN_MA = "QTY_EA_AVAILABLE";
+//    public static final String QTY_SET_AVAILABLE_CHUYEN_MA = "QTY_SET_AVAILABLE";
+//    public static final String EXPIRED_DATE_CHUYEN_MA = "EXPIRY_DATE";
+//    public static final String STOCKIN_DATE_CHUYEN_MA = "STOCKIN_DATE";
+//    public static final String EA_UNIT_CHUYEN_MA = "EA_UNIT";
+//    public static final String POSITION_FROM_CHUYEN_MA = "POSITION_FROM_CD";
+//    public static final String POSITION_FROM_CODE_CHUYEN_MA = "POSITION_FROM_CODE";
+//    public static final String POSITION_FROM_DESCRIPTION_CHUYEN_MA = "POSITION_FROM_DESCRIPTION";
+//    public static final String POSITION_TO_CHUYEN_MA = "POSITION_TO_CD";
+//    public static final String POSITION_TO_CODE_CHUYEN_MA = "POSITION_TO_CODE";
+//    public static final String POSITION_TO_DESCRIPTION_CHUYEN_MA = "POSITION_TO_DESCRIPTION";
+//    public static final String UNIQUE_CODE_CHUYEN_MA = "UNIQUE_CODE";
+//    public static final String TRANSFER_POSTING_CD = "TRANSFER_POSTING_CD";
+//    public static final String LPN_CD_CHUYEN_MA = "LPN_CD_CHUYEN_MA";
+//    public static final String LPN_CODE_CHUYEN_MA = "LPN_CODE_CHUYEN_MA";
+//    public static final String LPN_FROM_CHUYEN_MA = "LPN_FROM_CHUYEN_MA";
+//    public static final String LPN_TO_CHUYEN_MA = "LPN_TO_CHUYEN_MA";
+//    public static final String BATCH_NUMBER_CHUYEN_MA = "BATCH_NUMBER_CHUYEN_MA";
+//    public static final String MANUFACTURING_DATE_CHUYEN_MA = "MANUFACTURING_DATE_CHUYEN_MA";
+//
+//    public static final String CREATE_TABLE_O_CHUYEN_MA = "CREATE TABLE "
+//            + O_CHUYEN_MA + "("
+//            + AUTOINCREMENT_CHUYEN_MA + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+//            + PRODUCT_CD_CHUYEN_MA + " TEXT,"
+//            + WAREHOUSE_POSITION_CD_CHUYEN_MA + " TEXT,"
+//            + BATCH_NUMBER_CHUYEN_MA + " TEXT,"
+//            + MANUFACTURING_DATE_CHUYEN_MA + " TEXT,"
+//            + PRODUCT_NAME_CHUYEN_MA + " TEXT,"
+//            + PRODUCT_CODE_CHUYEN_MA + " TEXT,"
+//            + QTY_EA_AVAILABLE_CHUYEN_MA + " TEXT,"
+//            + QTY_SET_AVAILABLE_CHUYEN_MA + " TEXT,"
+//            + EXPIRED_DATE_CHUYEN_MA + " TEXT,"
+//            + STOCKIN_DATE_CHUYEN_MA + " TEXT,"
+//            + EA_UNIT_CHUYEN_MA + " TEXT,"
+//            + POSITION_FROM_CHUYEN_MA + " TEXT,"
+//            + POSITION_FROM_CODE_CHUYEN_MA + " TEXT,"
+//            + POSITION_FROM_DESCRIPTION_CHUYEN_MA + " TEXT,"
+//            + POSITION_TO_CHUYEN_MA + " TEXT,"
+//            + POSITION_TO_CODE_CHUYEN_MA + " TEXT,"
+//            + POSITION_TO_DESCRIPTION_CHUYEN_MA + " TEXT,"
+//            + TRANSFER_POSTING_CD + " TEXT,"
+//            + UNIQUE_CODE_CHUYEN_MA + " TEXT ,"
+//            + LPN_CD_CHUYEN_MA + " TEXT ,"
+//            + LPN_CODE_CHUYEN_MA + " TEXT ,"
+//            + LPN_FROM_CHUYEN_MA + " TEXT ,"
+//            + LPN_TO_CHUYEN_MA + " TEXT "
+//            + ")";
+//
+//
+//    public long CreateChuyen_Ma(Product_ChuyenMa chuyenMa) {
+//        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+//
+//        ContentValues values = new ContentValues();
+////        values.put(AUTOINCREMENT_CHUYEN_MA, chuyenMa.getAUTOINCREMENT());
+//
+//        values.put(UNIQUE_CODE_CHUYEN_MA, chuyenMa.getUNIT());
+//        values.put(BATCH_NUMBER_CHUYEN_MA, chuyenMa.getBATCH_NUMBER());
+//        values.put(MANUFACTURING_DATE_CHUYEN_MA, chuyenMa.getMANUFACTURING_DATE());
+//        values.put(PRODUCT_CODE_CHUYEN_MA, chuyenMa.getPRODUCT_CODE());
+//        values.put(PRODUCT_NAME_CHUYEN_MA, chuyenMa.getPRODUCT_NAME());
+//        values.put(WAREHOUSE_POSITION_CD_CHUYEN_MA, chuyenMa.getWAREHOUSE_POSITION_CD());
+//        values.put(PRODUCT_CD_CHUYEN_MA, chuyenMa.getPRODUCT_CD());
+//        values.put(QTY_SET_AVAILABLE_CHUYEN_MA, chuyenMa.getQTY());
+//        values.put(STOCKIN_DATE_CHUYEN_MA, chuyenMa.getSTOCKIN_DATE());
+//        values.put(QTY_EA_AVAILABLE_CHUYEN_MA, chuyenMa.getQTY_EA_AVAILABLE());
+//        values.put(EXPIRED_DATE_CHUYEN_MA, chuyenMa.getEXPIRED_DATE());
+//        values.put(EA_UNIT_CHUYEN_MA, chuyenMa.getUNIT());
+//        values.put(POSITION_FROM_CHUYEN_MA, chuyenMa.getPOSITION_FROM_CD());
+//        values.put(POSITION_TO_CHUYEN_MA, chuyenMa.getPOSITION_TO_CD());
+//        values.put(POSITION_FROM_CODE_CHUYEN_MA, chuyenMa.getPOSITION_FROM_CODE());
+//        values.put(POSITION_TO_CODE_CHUYEN_MA, chuyenMa.getPOSITION_TO_CODE());
+//        values.put(POSITION_FROM_DESCRIPTION_CHUYEN_MA, chuyenMa.getPOSITION_FROM_DESCRIPTION());
+//        values.put(POSITION_TO_DESCRIPTION_CHUYEN_MA, chuyenMa.getPOSITION_TO_DESCRIPTION());
+//        values.put(TRANSFER_POSTING_CD, chuyenMa.getSTOCK_CHUYEN_MA_CD());
+//        values.put(LPN_CODE_CHUYEN_MA, chuyenMa.getLPN_CODE());
+//        values.put(LPN_FROM_CHUYEN_MA, chuyenMa.getLPN_FROM());
+//        values.put(LPN_TO_CHUYEN_MA, chuyenMa.getLPN_TO());
+//        // insert row
+//        long id = db.insert(O_CHUYEN_MA, null, values);
+//        return id;
+//    }
+//
+//    public int updatePositionFrom_chuyenMa_LPN(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+//        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+//
+//        ContentValues values = new ContentValues();
+//
+//        values.put(POSITION_FROM_CHUYEN_MA, wareHouse);
+//        values.put(POSITION_FROM_DESCRIPTION_CHUYEN_MA, descreption);
+//
+//        values.put(POSITION_FROM_CODE_CHUYEN_MA, from);
+//        values.put(LPN_FROM_CHUYEN_MA, from);
+//
+//
+//        // updating row
+//        return db.update(O_CHUYEN_MA, values, AUTOINCREMENT_CHUYEN_MA + " = ? ",
+//                new String[]{String.valueOf(id_unique_SO)});
+//
+//    }
+//
+//    public int updatePositionFrom_chuyenMa(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+//        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+//
+//        ContentValues values = new ContentValues();
+//
+//        values.put(POSITION_FROM_CHUYEN_MA, wareHouse);
+//        values.put(POSITION_FROM_CODE_CHUYEN_MA, from);
+//        values.put(LPN_FROM_CHUYEN_MA, "");
+//        values.put(POSITION_FROM_DESCRIPTION_CHUYEN_MA, descreption);
+//
+//
+//        // updating row
+//        return db.update(O_CHUYEN_MA, values, AUTOINCREMENT_CHUYEN_MA + " = ? ",
+//                new String[]{String.valueOf(id_unique_SO)});
+//
+//    }
+//
+//    public int updatePositionTo_chuyenMa_LPN(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+//
+//        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+//
+//        ContentValues values = new ContentValues();
+//        values.put(POSITION_TO_CHUYEN_MA, wareHouse);
+//        values.put(POSITION_TO_DESCRIPTION_CHUYEN_MA, descreption);
+//        values.put(LPN_TO_CHUYEN_MA, to);
+//
+//        values.put(POSITION_TO_CODE_CHUYEN_MA, to);
+//        // updating row
+//        return db.update(O_CHUYEN_MA, values,
+//                AUTOINCREMENT_CHUYEN_MA + " = ? ",
+//                new String[]{String.valueOf(id_unique_SO)});
+//
+//
+//    }
+//
+//
+//    public int updatePositionTo_chuyenMa(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+//
+//        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+//
+//        ContentValues values = new ContentValues();
+//        values.put(POSITION_TO_CHUYEN_MA, wareHouse);
+//        values.put(POSITION_TO_CODE_CHUYEN_MA, to);
+//        values.put(LPN_TO_CHUYEN_MA, "");
+//
+//        values.put(POSITION_TO_DESCRIPTION_CHUYEN_MA, descreption);
+//        // updating row
+//        return db.update(O_CHUYEN_MA, values,
+//                AUTOINCREMENT_CHUYEN_MA + " = ? ",
+//                new String[]{String.valueOf(id_unique_SO)});
+//
+//
+//    }
+//
+//
+//    public ArrayList<Product_ChuyenMa>
+//    getoneProduct_chuyenMa(String CD, String expDate, String ea_unit, String stockinDate, String po_return) {
+//        ArrayList<Product_ChuyenMa> chuyenMas = new ArrayList<Product_ChuyenMa>();
+//        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+//        String selectQuery = "SELECT  * FROM " + O_CHUYEN_MA + " " + " WHERE "
+//                + PRODUCT_CD_CHUYEN_MA + " = " + CD + " AND "
+//                + TRANSFER_POSTING_CD + " = " + po_return + " AND "
+//                + EA_UNIT_CHUYEN_MA + " like " + " '%" + ea_unit + "%'" + " AND "
+//                + EXPIRED_DATE_CHUYEN_MA + " like " + " '%" + expDate + "%'" + " AND "
+//                + STOCKIN_DATE_CHUYEN_MA + " like " + " '%" + stockinDate + "%'";
+//        Cursor c = db.rawQuery(selectQuery, null);
+//        // looping through all rows and adding to list
+//        if (c != null && c.moveToFirst()) {
+//            do {
+//                Product_ChuyenMa chuyenMa = new Product_ChuyenMa();
+//                chuyenMa.setAUTOINCREMENT((c.getString(c
+//                        .getColumnIndex(AUTOINCREMENT_CHUYEN_MA))));
+//                chuyenMa.setBATCH_NUMBER((c.getString(c
+//                        .getColumnIndex(BATCH_NUMBER_CHUYEN_MA))));
+//                chuyenMa.setMANUFACTURING_DATE((c.getString(c
+//                        .getColumnIndex(MANUFACTURING_DATE_CHUYEN_MA))));
+//                chuyenMa.setWAREHOUSE_POSITION_CD((c.getString(c
+//                        .getColumnIndex(WAREHOUSE_POSITION_CD_CHUYEN_MA))));
+//                chuyenMa.setPRODUCT_CD((c.getString(c
+//                        .getColumnIndex(PRODUCT_CD_CHUYEN_MA))));
+//                chuyenMa.setPRODUCT_CODE((c.getString(c
+//                        .getColumnIndex(PRODUCT_CODE_CHUYEN_MA))));
+//                chuyenMa.setPRODUCT_NAME((c.getString(c
+//                        .getColumnIndex(PRODUCT_NAME_CHUYEN_MA))));
+//                chuyenMa.setEXPIRED_DATE((c.getString(c
+//                        .getColumnIndex(EXPIRED_DATE_CHUYEN_MA))));
+//                chuyenMa.setQTY((c.getString(c
+//                        .getColumnIndex(QTY_SET_AVAILABLE_CHUYEN_MA))));
+//                chuyenMa.setUNIT((c.getString(c
+//                        .getColumnIndex(EA_UNIT_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_FROM_CODE((c.getString(c
+//                        .getColumnIndex(POSITION_FROM_CODE_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_TO_CODE((c.getString(c
+//                        .getColumnIndex(POSITION_TO_CODE_CHUYEN_MA))));
+//                chuyenMas.add(chuyenMa);
+//            } while (c.moveToNext());
+//        }
+//
+//        c.close();
+//        return chuyenMas;
+//    }
+//
+//
+//    public ArrayList<Product_ChuyenMa>
+//    getAllProduct_chuyenMa_Sync(String po_return) {
+//        ArrayList<Product_ChuyenMa> chuyenMas = new ArrayList<Product_ChuyenMa>();
+//        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+//        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
+//                "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
+//                "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_CHUYEN_MA +
+//                " where " + TRANSFER_POSTING_CD + " = " + po_return;
+//        Cursor c = db.rawQuery(selectQuery, null);
+//        // looping through all rows and adding to list
+//        if (c != null && c.moveToFirst()) {
+//            do {
+//
+//                Product_ChuyenMa chuyenMa = new Product_ChuyenMa();
+////                chuyenMa.setAUTOINCREMENT((c.getString(c
+////                        .getColumnIndex(AUTOINCREMENT_CHUYEN_MA))));
+//                chuyenMa.setUNIQUE_CODE((c.getString(c
+//                        .getColumnIndex(UNIQUE_CODE_CHUYEN_MA))));
+//                chuyenMa.setBATCH_NUMBER((c.getString(c
+//                        .getColumnIndex(BATCH_NUMBER_CHUYEN_MA))));
+//                chuyenMa.setMANUFACTURING_DATE((c.getString(c
+//                        .getColumnIndex(MANUFACTURING_DATE_CHUYEN_MA))));
+//                chuyenMa.setWAREHOUSE_POSITION_CD((c.getString(c
+//                        .getColumnIndex(WAREHOUSE_POSITION_CD_CHUYEN_MA))));
+//                chuyenMa.setPRODUCT_CODE((c.getString(c
+//                        .getColumnIndex(PRODUCT_CODE_CHUYEN_MA))));
+//                chuyenMa.setPRODUCT_NAME((c.getString(c
+//                        .getColumnIndex(PRODUCT_NAME_CHUYEN_MA))));
+//                chuyenMa.setPRODUCT_CD((c.getString(c
+//                        .getColumnIndex(PRODUCT_CD_CHUYEN_MA))));
+//                chuyenMa.setQTY((c.getString(c
+//                        .getColumnIndex(QTY_SET_AVAILABLE_CHUYEN_MA))));
+//                chuyenMa.setSTOCKIN_DATE((c.getString(c
+//                        .getColumnIndex(STOCKIN_DATE_CHUYEN_MA))));
+//                chuyenMa.setQTY_EA_AVAILABLE((c.getString(c
+//                        .getColumnIndex(QTY_EA_AVAILABLE_CHUYEN_MA))));
+//                chuyenMa.setEXPIRED_DATE((c.getString(c
+//                        .getColumnIndex(EXPIRED_DATE_CHUYEN_MA))));
+//                chuyenMa.setUNIT((c.getString(c
+//                        .getColumnIndex(EA_UNIT_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_FROM_CD((c.getString(c
+//                        .getColumnIndex(POSITION_FROM_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_TO_CD((c.getString(c
+//                        .getColumnIndex(POSITION_TO_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_FROM_CODE((c.getString(c
+//                        .getColumnIndex(POSITION_FROM_CODE_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_TO_CODE((c.getString(c
+//                        .getColumnIndex(POSITION_TO_CODE_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_FROM_DESCRIPTION((c.getString(c
+//                        .getColumnIndex(POSITION_FROM_DESCRIPTION_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_TO_DESCRIPTION((c.getString(c
+//                        .getColumnIndex(POSITION_TO_DESCRIPTION_CHUYEN_MA))));
+//                chuyenMa.setSTOCK_CHUYEN_MA_CD((c.getString(c
+//                        .getColumnIndex(TRANSFER_POSTING_CD))));
+//                chuyenMa.setLPN_FROM((c.getString(c
+//                        .getColumnIndex(LPN_FROM_CHUYEN_MA))));
+//                chuyenMa.setLPN_TO((c.getString(c
+//                        .getColumnIndex(LPN_TO_CHUYEN_MA))));
+//                chuyenMa.setLPN_CODE((c.getString(c
+//                        .getColumnIndex(LPN_CODE_CHUYEN_MA))));
+//                chuyenMas.add(chuyenMa);
+//            } while (c.moveToNext());
+//        }
+//
+//        c.close();
+//        return chuyenMas;
+//    }
+//
+//    public ArrayList<Product_ChuyenMa>
+//    getAllProduct_chuyenMa(String po_return) {
+//        ArrayList<Product_ChuyenMa> chuyenMas = new ArrayList<Product_ChuyenMa>();
+//        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+//        String selectQuery = "SELECT  * FROM " + O_CHUYEN_MA + " where " + TRANSFER_POSTING_CD + " = " + po_return;
+//        Cursor c = db.rawQuery(selectQuery, null);
+//        // looping through all rows and adding to list
+//        if (c != null && c.moveToFirst()) {
+//            do {
+//
+//                Product_ChuyenMa chuyenMa = new Product_ChuyenMa();
+//                chuyenMa.setAUTOINCREMENT((c.getString(c
+//                        .getColumnIndex(AUTOINCREMENT_CHUYEN_MA))));
+//                chuyenMa.setBATCH_NUMBER((c.getString(c
+//                        .getColumnIndex(BATCH_NUMBER_CHUYEN_MA))));
+//                chuyenMa.setMANUFACTURING_DATE((c.getString(c
+//                        .getColumnIndex(MANUFACTURING_DATE_CHUYEN_MA))));
+//                chuyenMa.setWAREHOUSE_POSITION_CD((c.getString(c
+//                        .getColumnIndex(WAREHOUSE_POSITION_CD_CHUYEN_MA))));
+//                chuyenMa.setUNIQUE_CODE((c.getString(c
+//                        .getColumnIndex(UNIQUE_CODE_CHUYEN_MA))));
+//                chuyenMa.setPRODUCT_CODE((c.getString(c
+//                        .getColumnIndex(PRODUCT_CODE_CHUYEN_MA))));
+//                chuyenMa.setPRODUCT_NAME((c.getString(c
+//                        .getColumnIndex(PRODUCT_NAME_CHUYEN_MA))));
+//                chuyenMa.setPRODUCT_CD((c.getString(c
+//                        .getColumnIndex(PRODUCT_CD_CHUYEN_MA))));
+//                chuyenMa.setQTY_SET_AVAILABLE((c.getString(c
+//                        .getColumnIndex(QTY_SET_AVAILABLE_CHUYEN_MA))));
+//                chuyenMa.setSTOCKIN_DATE((c.getString(c
+//                        .getColumnIndex(STOCKIN_DATE_CHUYEN_MA))));
+//                chuyenMa.setQTY_EA_AVAILABLE((c.getString(c
+//                        .getColumnIndex(QTY_EA_AVAILABLE_CHUYEN_MA))));
+//                chuyenMa.setEXPIRED_DATE((c.getString(c
+//                        .getColumnIndex(EXPIRED_DATE_CHUYEN_MA))));
+//                chuyenMa.setUNIT((c.getString(c
+//                        .getColumnIndex(EA_UNIT_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_FROM_CD((c.getString(c
+//                        .getColumnIndex(POSITION_FROM_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_TO_CD((c.getString(c
+//                        .getColumnIndex(POSITION_TO_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_FROM_CODE((c.getString(c
+//                        .getColumnIndex(POSITION_FROM_CODE_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_TO_CODE((c.getString(c
+//                        .getColumnIndex(POSITION_TO_CODE_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_FROM_DESCRIPTION((c.getString(c
+//                        .getColumnIndex(POSITION_FROM_DESCRIPTION_CHUYEN_MA))));
+//                chuyenMa.setPOSITION_TO_DESCRIPTION((c.getString(c
+//                        .getColumnIndex(POSITION_TO_DESCRIPTION_CHUYEN_MA))));
+//                chuyenMa.setSTOCK_TRANSFER_POSTING_CD((c.getString(c
+//                        .getColumnIndex(TRANSFER_POSTING_CD))));
+//                chuyenMa.setLPN_FROM((c.getString(c
+//                        .getColumnIndex(LPN_FROM_CHUYEN_MA))));
+//                chuyenMa.setLPN_TO((c.getString(c
+//                        .getColumnIndex(LPN_TO_CHUYEN_MA))));
+//                chuyenMa.setLPN_CODE((c.getString(c
+//                        .getColumnIndex(LPN_CODE_CHUYEN_MA))));
+//                chuyenMas.add(chuyenMa);
+//            } while (c.moveToNext());
+//        }
+//
+//        c.close();
+//        return chuyenMas;
+//    }
+//
+//
+//    public int updateProduct_chuyenMa(Product_ChuyenMa chuyenMa, String incre_so, String PRODUCT_CD, String sl, String ea_unit, String stock, String po_return) {
+//        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+//        ContentValues values = new ContentValues();
+//        values.put(PRODUCT_CD_CHUYEN_MA, PRODUCT_CD);
+//        values.put(PRODUCT_CODE_CHUYEN_MA, chuyenMa.getPRODUCT_CODE());
+//        values.put(PRODUCT_NAME_CHUYEN_MA, chuyenMa.getPRODUCT_NAME());
+//        values.put(EXPIRED_DATE_CHUYEN_MA, chuyenMa.getEXPIRED_DATE());
+//        values.put(EA_UNIT_CHUYEN_MA, chuyenMa.getUNIT());
+//        values.put(QTY_SET_AVAILABLE_CHUYEN_MA, sl);
+//        values.put(TRANSFER_POSTING_CD, po_return);
+//
+//        // updating row
+//        return db.update(O_CHUYEN_MA, values,  AUTOINCREMENT_CHUYEN_MA + " = ?",
+//                new String[]{String.valueOf(incre_so)});
+//
+//    }
+//
+//
+//    public void deleteProduct_chuyenMa() {
+//        // TODO Auto-generated method stub
+//        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+//        db.execSQL("delete from " + O_CHUYEN_MA);
+//    }
+//
+//    //END TABLE O_CHUYEN_MA
 
 
 

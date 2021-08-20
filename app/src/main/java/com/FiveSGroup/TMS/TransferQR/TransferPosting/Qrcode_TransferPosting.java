@@ -309,7 +309,8 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WTP", 0, global.getTransferPostingCD());            if (statusGetCustt != 1) {
+            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WTP", 0, global.getTransferPostingCD());
+            if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData, stockinDate);
             } else {
                 // expiredDate nhận giá trị từ adapter để xử lí position

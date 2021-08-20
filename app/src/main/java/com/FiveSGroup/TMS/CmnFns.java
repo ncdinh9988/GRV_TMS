@@ -1154,6 +1154,129 @@ public class CmnFns {
         return "-1";
     }
 
+//    public int getChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
+//
+//        int status = this.allowSynchronizeBy3G();
+//        if (status != 1)
+//            return -1;
+//
+//        Webservice webService = new Webservice();
+//
+//        String result = webService.GetSPChuyenMa(barcodeData, sale_codes, type, IsLPN, cd);
+//
+//        // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
+//        if (result.equals("-1")) {
+//            return -1;
+//        } else if (result.equals("1")) {
+//            return 1;
+//        } else if (result.equals("-8")) {
+//            return -8;
+//        } else if (result.equals("-11")) {
+//            return -11;
+//        } else if (result.equals("-12")) {
+//            return -12;
+//        } else if (result.equals("-16")) {
+//            return -16;
+//        } else if (result.equals("-20")) {
+//            return -20;
+//        } else if (result.equals("-21")) {
+//            return -21;
+//        } else if (result.equals("-22")) {
+//            return -22;
+//        }
+//        if (result.equals("1")) {
+//            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+//            return 1;
+//        }
+//
+//        try {
+//            JSONArray jsonarray = new JSONArray(result);
+//
+//            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+//            for (int i = 0; i < jsonarray.length(); i++) {
+//                // lấy một đối tượng json để
+//
+//                JSONObject jsonobj = jsonarray.getJSONObject(i);
+//                String pro_code = jsonobj.getString("_PRODUCT_CODE");
+//                String pro_cd = jsonobj.getString("_PRODUCT_CD");
+//                String pro_name = jsonobj.getString("_PRODUCT_NAME");
+//                String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+//                String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
+//                String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
+//                String ea_unit = jsonobj.getString("_UNIT");
+//                // VT đến
+//                String position_code = jsonobj.getString("_POSITION_CODE");
+//                String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+//                // Mô tả VT đến
+//                String description = jsonobj.getString("_POSITION_DESCRIPTION");
+//                // VT đến
+//                String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+//                String lpnCode = jsonobj.getString("_LPN_CODE");
+//                String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
+//                int pro_set = 1;
+//
+//                Product_TransferPosting transferPosting = new Product_TransferPosting();
+//
+////                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+//                transferPosting.setPRODUCT_CD(pro_cd);
+//                transferPosting.setPRODUCT_CODE(pro_code);
+//                transferPosting.setPRODUCT_NAME(pro_name);
+//                transferPosting.setQTY(String.valueOf(pro_set));
+//                transferPosting.setQTY_EA_AVAILABLE(quanity_ea);
+//                transferPosting.setBATCH_NUMBER(batch_number);
+//                transferPosting.setMANUFACTURING_DATE(manufacturing);
+//
+//                transferPosting.setPOSITION_TO_CD(warePosition);
+//                transferPosting.setSTOCK_TRANSFER_POSTING_CD(transferPostingCD);
+//                transferPosting.setWAREHOUSE_POSITION_CD(warePosition);
+//                String positionTo = "---";
+//                String positionFrom = "---";
+//                String lpn_From = "";
+//                String lpn_To = "";
+//
+//                transferPosting.setLPN_TO(lpn_To);
+//                transferPosting.setLPN_CODE(lpnCode);
+//
+//                transferPosting.setPOSITION_TO_CODE(positionTo);
+//                transferPosting.setPOSITION_TO_DESCRIPTION(positionTo);
+//
+//                if (IsLPN == 0) {
+//                    if (stockDate != null) {
+//                        transferPosting.setSTOCKIN_DATE(stockDate);
+//                    }
+//                    transferPosting.setEXPIRED_DATE(expDate);
+//                    transferPosting.setUNIT(unit);
+//                    transferPosting.setQTY(String.valueOf(pro_set));
+//                    transferPosting.setPOSITION_FROM_CD(warePosition);
+//                    // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
+//                    transferPosting.setPOSITION_FROM_CODE(positionFrom);
+//                    transferPosting.setLPN_FROM(lpn_From);
+//                    transferPosting.setPOSITION_FROM_DESCRIPTION("");
+//                } else if (IsLPN == 1) {
+//                    transferPosting.setSTOCKIN_DATE(strokinDate);
+//                    transferPosting.setEXPIRED_DATE(exxpiredDate);
+//                    transferPosting.setUNIT(ea_unit);
+//                    transferPosting.setQTY(quanity);
+//                    transferPosting.setPOSITION_FROM_CD(lpn_From);
+//
+//                    transferPosting.setPOSITION_FROM_CODE(lpn_From);
+//                    transferPosting.setLPN_FROM(lpnCode);
+//                    transferPosting.setPOSITION_FROM_DESCRIPTION(lpn_From);
+//                }
+//                DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);
+//
+//            }
+//
+//        } catch (JSONException e) {
+//            // TODO Auto-generated catch block
+////            CmnFns.writeLogError("Exception "
+////                    + e.getMessage());
+//            return -1;
+//        }
+//
+//        return 1;
+//    }
+
     public int getPutAwayFromServer(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
 
         int status = this.allowSynchronizeBy3G();
@@ -3984,6 +4107,14 @@ public class CmnFns {
                     return 1;
                 jsonData = gson.toJson(product);
             }
+            // transfer posting
+            else if (type.equals("WTP")) {
+                List<Product_TransferPosting> product = DatabaseHelper.getInstance().getAllProduct_TransferPosting_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return 1;
+                jsonData = gson.toJson(product);
+            }
+
 
             try {
 

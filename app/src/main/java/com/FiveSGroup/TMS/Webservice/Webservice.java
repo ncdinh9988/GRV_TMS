@@ -607,6 +607,67 @@ public class Webservice {
         }
     }
 
+    public String GetSPChuyenMa(String qrcode, String salescode, String type , int IsLPN , String CD) {
+        String webServiceFunc = "";
+
+            webServiceFunc = "GetProductByZone_RQBT_Final";
+
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("BarCode");
+        param1.setValue(qrcode);
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+//         Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("UserCode");
+        param2.setValue(salescode);
+        param2.setType(String.class);
+        request.addProperty(param2);
+
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("Type");
+        param3.setValue(type);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+        PropertyInfo param4 = new PropertyInfo();
+        param4.setName("IsLPN");
+        param4.setValue(IsLPN);
+        param4.setType(String.class);
+        request.addProperty(param4);
+
+        PropertyInfo param5 = new PropertyInfo();
+        param5.setName("CD");
+        param5.setValue(CD);
+        param5.setType(String.class);
+        request.addProperty(param5);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+        Log.d("checkURL", UrlWebserviceToSynchronize);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
 
     public String GetProductByZone(String qrcode, String salescode, String type , int IsLPN , String CD) {
         String webServiceFunc = "";

@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.PoReturn.Home_PoReturn;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 
@@ -365,7 +364,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
                 DatabaseHelper.getInstance().deleteProduct_TransferPosting();
                 transfer_Posting.clear();
                 TransferPostingListAdapter.notifyDataSetChanged();
-                Intent intentToHomeQRActivity = new Intent(List_TransferPosting.this, Home_PoReturn.class);
+                Intent intentToHomeQRActivity = new Intent(List_TransferPosting.this, Home_TransferPosting.class);
                 startActivity(intentToHomeQRActivity);
                 finish();
             }

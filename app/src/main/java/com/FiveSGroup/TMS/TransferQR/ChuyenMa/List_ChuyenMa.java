@@ -79,7 +79,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
         buttonBack.setOnClickListener(this);
         btnok.setOnClickListener(this);
 
-        prepareData();
+//        prepareData();
     }
 
 
@@ -104,121 +104,78 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
         DatabaseHelper.getInstance().deleteallExp_date();
     }
 
-    private void prepareData() {
-        if (positonReceive == null) {
-            if (lpn != null && chuyen_ma != null) {
-                //TODO
-                alert_show_SP(1);
-            } else if (lpn == null && chuyen_ma != null) {
-                //TODO
-                alert_show_SP(0);
-            }
-
-        } else {
-            if (lpn != null) {
-                //TODO
-                alert_show_position(1);
-            } else {
-                //TODO
-                alert_show_position(0);
-            }
-
-        }
-
-        chuyen_ma = DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());
-        ChuyenMa_ListAdapter = new ChuyenMa_Adapter(this, chuyen_Ma);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        listVieWTPoduct.setLayoutManager(layoutManager);
-        listVieWTPoduct.setAdapter(ChuyenMa_ListAdapter);
-        ChuyenMa_ListAdapter.notifyDataSetChanged();
-        chuyen_ma = "";
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                Toast.makeText(List_ChuyenMa.this, "on Move", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                LayoutInflater factory = LayoutInflater.from(List_ChuyenMa.this);
-                View layout_cus = factory.inflate(R.layout.layout_delete, null);
-                final AlertDialog dialog = new AlertDialog.Builder(List_ChuyenMa.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
-                InsetDrawable inset = new InsetDrawable(back, 64);
-                dialog.getWindow().setBackgroundDrawable(inset);
-                dialog.setView(layout_cus);
-
-                Button btnNo = layout_cus.findViewById(R.id.btnNo);
-                Button btnYes = layout_cus.findViewById(R.id.btnYes);
-                TextView textView = layout_cus.findViewById(R.id.tvTextBack);
-
-
-                btnNo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
-                        dialog.dismiss();
-                        finish();
-                        Intent i = new Intent(List_ChuyenMa.this, List_ChuyenMa.class);
-                        startActivity(i);
-
-                    }
-                });
-                btnYes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Remove swiped item from list and notify the RecyclerView
-                        dialog.dismiss();
-
-                        int position = viewHolder.getAdapterPosition();
-                        Product_ChuyenMa product = chuyen_Ma.get(position);
-                        chuyen_Ma.remove(position);
-                        DatabaseHelper.getInstance().deleteProduct_chuyen_ma_Specific(product.getAUTOINCREMENT());
-                        ChuyenMa_ListAdapter.notifyItemRemoved(position);
-                    }
-                });
-                dialog.show();
-
-
-            }
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(listVieWTPoduct);
-    }
+//    private void prepareData() {
+//
+//
+//        alert_show_SP(0);
+//
+//        chuyen_ma = DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());
+//        ChuyenMa_ListAdapter = new ChuyenMa_Adapter(this, chuyen_Ma);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+//        listVieWTPoduct.setLayoutManager(layoutManager);
+//        listVieWTPoduct.setAdapter(ChuyenMa_ListAdapter);
+//        ChuyenMa_ListAdapter.notifyDataSetChanged();
+//        chuyen_ma = "";
+//        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+//
+//            @Override
+//            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+//                Toast.makeText(List_ChuyenMa.this, "on Move", Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+//                LayoutInflater factory = LayoutInflater.from(List_ChuyenMa.this);
+//                View layout_cus = factory.inflate(R.layout.layout_delete, null);
+//                final AlertDialog dialog = new AlertDialog.Builder(List_ChuyenMa.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+//                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+//                InsetDrawable inset = new InsetDrawable(back, 64);
+//                dialog.getWindow().setBackgroundDrawable(inset);
+//                dialog.setView(layout_cus);
+//
+//                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+//                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+//                TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+//
+//
+//                btnNo.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
+//                        dialog.dismiss();
+//                        finish();
+//                        Intent i = new Intent(List_ChuyenMa.this, List_ChuyenMa.class);
+//                        startActivity(i);
+//
+//                    }
+//                });
+//                btnYes.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //Remove swiped item from list and notify the RecyclerView
+//                        dialog.dismiss();
+//
+//                        int position = viewHolder.getAdapterPosition();
+//                        Product_ChuyenMa product = chuyen_Ma.get(position);
+//                        chuyen_Ma.remove(position);
+////                        DatabaseHelper.getInstance().deleteProduct_chuyen_ma_Specific(product.getAUTOINCREMENT());
+//                        ChuyenMa_ListAdapter.notifyItemRemoved(position);
+//                    }
+//                });
+//                dialog.show();
+//
+//
+//            }
+//        };
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+//        itemTouchHelper.attachToRecyclerView(listVieWTPoduct);
+//    }
 
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-
-    private boolean isNotScanFromOrTo() {
-        boolean check = false;
-        List<Product_ChuyenMa> product = DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());
-
-        for (int i = 0; i < product.size(); i++) {
-            Product_ChuyenMa cancelGood = product.get(i);
-            String value0 = "---";
-            String valueFromCode = cancelGood.getPOSITION_FROM_CODE();
-            String valueToCode = cancelGood.getPOSITION_TO_CODE();
-            String lpn_from = cancelGood.getLPN_FROM();
-            String lpn_to = cancelGood.getLPN_TO();
-
-            if ((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))) {
-                check = true;
-            }
-            if ((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))) {
-                check = true;
-            }
-        }
-        if (check == true) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
 
@@ -249,96 +206,62 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private boolean isQuanityZero() {
-        boolean check = false;
-        List<Product_ChuyenMa> product = DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());
-        for (int i = 0; i < product.size(); i++) {
-            Product_ChuyenMa putAway = product.get(i);
-            String valueQty = putAway.getQTY();
-            if ((valueQty.equals("0") || (valueQty.equals("")) || (valueQty.equals("00")) || (valueQty.equals("000")) || (valueQty.equals("0000")) || (valueQty.equals("00000")))) {
-                check = true;
-            }
-        }
-
-
-        if (check == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     private void synchronizeToService() {
         String saleCode = CmnFns.readDataAdmin();
         Dialog dialog = new Dialog(List_ChuyenMa.this);
 
-
-        if (chuyen_Ma.size() > 0) {
-            if (isNotScanFromOrTo()) {
-                dialog.showDialog(List_ChuyenMa.this, "Chưa Có VT Từ Hoặc VT Đến");
-
-            } else if (isQuanityZero()) {
-                dialog.showDialog(List_ChuyenMa.this, "Số lượng SP không được bằng 0");
-
-            } else {
-                try {
-                    int result = new CmnFns().synchronizeData(saleCode, "WTP", global.getChuyenMaCD());
-                    if (result >= 1) {
-                        ShowSuccessMessage("Lưu thành công");
+        try {
+            int result = new CmnFns().synchronizeData(saleCode, "WTP", global.getChuyenMaCD());
+            if (result >= 1) {
+                ShowSuccessMessage("Lưu thành công");
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
 
-                    } else {
+            } else {
 
-                        if (result == -1) {
-                            dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
-                        } else if (result == -2) {
-                            dialog.showDialog(List_ChuyenMa.this, "Số lượng không đủ trong tồn kho");
+                if (result == -1) {
+                    dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
+                } else if (result == -2) {
+                    dialog.showDialog(List_ChuyenMa.this, "Số lượng không đủ trong tồn kho");
 
-                        } else if (result == -3) {
-                            dialog.showDialog(List_ChuyenMa.this, "Vị trí từ không hợp lệ");
+                } else if (result == -3) {
+                    dialog.showDialog(List_ChuyenMa.this, "Vị trí từ không hợp lệ");
 
-                        } else if (result == -4) {
-                            dialog.showDialog(List_ChuyenMa.this, "Trạng thái của phiếu không hợp lệ");
+                } else if (result == -4) {
+                    dialog.showDialog(List_ChuyenMa.this, "Trạng thái của phiếu không hợp lệ");
 
-                        } else if (result == -5) {
-                            dialog.showDialog(List_ChuyenMa.this, "Vị trí từ trùng vị trí đên");
+                } else if (result == -5) {
+                    dialog.showDialog(List_ChuyenMa.this, "Vị trí từ trùng vị trí đên");
 
-                        } else if (result == -6) {
-                            dialog.showDialog(List_ChuyenMa.this, "Vị trí đến không hợp lệ");
+                } else if (result == -6) {
+                    dialog.showDialog(List_ChuyenMa.this, "Vị trí đến không hợp lệ");
 
-                        } else if (result == -7) {
-                            dialog.showDialog(List_ChuyenMa.this, "Cập nhật trạng thái thất bại");
+                } else if (result == -7) {
+                    dialog.showDialog(List_ChuyenMa.this, "Cập nhật trạng thái thất bại");
 
-                        } else if (result == -8) {
-                            dialog.showDialog(List_ChuyenMa.this, "Sản phẩm không có thông tin trên phiếu ");
+                } else if (result == -8) {
+                    dialog.showDialog(List_ChuyenMa.this, "Sản phẩm không có thông tin trên phiếu ");
 
-                        } else if (result == -13) {
-                            dialog.showDialog(List_ChuyenMa.this, "Dữ liệu không hợp lệ");
+                } else if (result == -13) {
+                    dialog.showDialog(List_ChuyenMa.this, "Dữ liệu không hợp lệ");
 
-                        } else if (result == -24) {
-                            dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+                } else if (result == -24) {
+                    dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
-                        } else if (result == -26) {
-                            dialog.showDialog(List_ChuyenMa.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+                } else if (result == -26) {
+                    dialog.showDialog(List_ChuyenMa.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
-                        } else {
-                            dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
-                        }
-
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
-                    finish();
+                } else {
+                    dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
                 }
 
             }
-        } else {
-            dialog.showDialog(List_ChuyenMa.this, "Không có sản phẩm");
-
+        } catch (Exception e) {
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
-
-    }
+}
 
     private void ShowSuccessMessage(String message) {
         LayoutInflater factory = LayoutInflater.from(List_ChuyenMa.this);
@@ -361,7 +284,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                DatabaseHelper.getInstance().deleteProduct_ChuyenMa();
+//                DatabaseHelper.getInstance().deleteProduct_ChuyenMa();
                 chuyen_Ma.clear();
                 ChuyenMa_ListAdapter.notifyDataSetChanged();
                 Intent intentToHomeQRActivity = new Intent(List_ChuyenMa.this, Home_PoReturn.class);
@@ -396,142 +319,57 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
     }
 
 
-    public void alert_show_position(int isLPN) {
-        String positionTo = "";
-        String positionFrom = "";
-        ArrayList<Product_ChuyenMa> cancelGoods = new ArrayList<>();
-        cancelGoods = DatabaseHelper.getInstance().getAllProduct_ChuyenMa_Sync(global.getChuyenMaCD());
-        for (int i = 0; i < cancelGoods.size(); i++) {
-            Product_ChuyenMa cancelGood = cancelGoods.get(i);
-            if (productCd.equals(cancelGood.getPRODUCT_CD()) &&
-                    expDate1.equals(cancelGood.getEXPIRED_DATE()) &&
-                    stockinDate.equals(cancelGood.getSTOCKIN_DATE()) &&
-                    ea_unit_position.equals(cancelGood.getUNIT())) {
-
-                if (!cancelGood.getLPN_FROM().equals("") || !cancelGood.getLPN_TO().equals("")) {
-                    positionTo = cancelGood.getLPN_TO();
-                    positionFrom = cancelGood.getLPN_FROM();
-                }
-                if (!cancelGood.getPOSITION_FROM_CODE().equals("") || !cancelGood.getPOSITION_TO_CODE().equals("")) {
-                    positionTo = cancelGood.getPOSITION_TO_CODE();
-                    positionFrom = cancelGood.getPOSITION_FROM_CODE();
-                }
-                // if này là để trả lại giá trị from và to nếu người dùng muốn quét lại VTT và VTĐ
-                if (positonReceive.equals("1")) {
-                    if (!positionTo.equals("") && !positionFrom.equals("")) {
-                        positionFrom = "";
-                    }
-                } else {
-                    if (!positionTo.equals("") && !positionFrom.equals("")) {
-                        positionTo = "";
-                    }
-                }
-            }
-        }
-        try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SO, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WTP", isLPN);
-
-            Dialog dialog = new Dialog(List_ChuyenMa.this);
-
-            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-                dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Thử Lại");
-
-            } else if (postitionDes.equals("-3")) {
-                dialog.showDialog(List_ChuyenMa.this, "Vị trí từ không hợp lệ");
-
-            } else if (postitionDes.equals("-6")) {
-                dialog.showDialog(List_ChuyenMa.this, "Vị trí đến không hợp lệ");
-
-            } else if (postitionDes.equals("-5")) {
-                dialog.showDialog(List_ChuyenMa.this, "Vị trí từ trùng vị trí đến");
-
-            } else if (postitionDes.equals("-14")) {
-                dialog.showDialog(List_ChuyenMa.this, "Vị trí đến trùng vị trí từ");
-
-            } else if (postitionDes.equals("-15")) {
-                dialog.showDialog(List_ChuyenMa.this, "Vị trí từ không có trong hệ thống");
-
-            } else if (postitionDes.equals("-10")) {
-                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong hệ thống");
-
-            } else if (postitionDes.equals("-17")) {
-                dialog.showDialog(List_ChuyenMa.this, "LPN từ trùng LPN đến");
-
-            } else if (postitionDes.equals("-18")) {
-                dialog.showDialog(List_ChuyenMa.this, "LPN đến trùng LPN từ");
-
-            } else if (postitionDes.equals("-19")) {
-                dialog.showDialog(List_ChuyenMa.this, "Vị trí đến không có trong hệ thống");
-
-            } else if (postitionDes.equals("-12")) {
-                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong tồn kho");
-
-            } else if (postitionDes.equals("-27")) {
-                dialog.showDialog(List_ChuyenMa.this, "Vị trí từ chưa có sản phẩm");
-
-            } else if (postitionDes.equals("-28")) {
-                dialog.showDialog(List_ChuyenMa.this, "LPN đến có vị trí không hợp lệ");
-
-            } else {
-                return;
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
-            finish();
-        }
 
 
-    }
-
-    public void alert_show_SP(int isLPN) {
-        try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZonechuyen_ma(List_ChuyenMa.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getChuyenMaCD(), isLPN ,batch_number);
-
-            Dialog dialog = new Dialog(List_ChuyenMa.this);
-
-            if (postitionDes == 1) {
-                return;
-            } else if (postitionDes == -1) {
-                dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Thử Lại");
-
-            } else if (postitionDes == -8) {
-                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trên phiếu");
-
-
-            } else if (postitionDes == -10) {
-                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong hệ thống");
-
-            } else if (postitionDes == -11) {
-
-                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong kho");
-
-
-            } else if (postitionDes == -12) {
-
-                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong kho");
-
-            } else if (postitionDes == -16) {
-
-                dialog.showDialog(List_ChuyenMa.this, "Sản phẩm đã quét không nằm trong LPN nào");
-
-            } else if (postitionDes == -20) {
-
-                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong hệ thống");
-
-            } else if (postitionDes == -21) {
-
-                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong zone");
-
-            } else if (postitionDes == -22) {
-
-                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong zone");
-
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-
-
-    }
+//    public void alert_show_SP(int isLPN) {
+//        try {
+//            int postitionDes = new CmnFns().synchronizeGETProductByZonechuyen_ma(List_ChuyenMa.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getChuyenMaCD(), isLPN ,batch_number);
+//
+//            Dialog dialog = new Dialog(List_ChuyenMa.this);
+//
+//            if (postitionDes == 1) {
+//                return;
+//            } else if (postitionDes == -1) {
+//                dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Thử Lại");
+//
+//            } else if (postitionDes == -8) {
+//                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trên phiếu");
+//
+//
+//            } else if (postitionDes == -10) {
+//                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong hệ thống");
+//
+//            } else if (postitionDes == -11) {
+//
+//                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong kho");
+//
+//
+//            } else if (postitionDes == -12) {
+//
+//                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong kho");
+//
+//            } else if (postitionDes == -16) {
+//
+//                dialog.showDialog(List_ChuyenMa.this, "Sản phẩm đã quét không nằm trong LPN nào");
+//
+//            } else if (postitionDes == -20) {
+//
+//                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong hệ thống");
+//
+//            } else if (postitionDes == -21) {
+//
+//                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong zone");
+//
+//            } else if (postitionDes == -22) {
+//
+//                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong zone");
+//
+//            }
+//        } catch (Exception e) {
+//            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
+//            finish();
+//        }
+//
+//
+//    }
 }

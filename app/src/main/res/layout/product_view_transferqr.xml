@@ -22,28 +22,42 @@
             android:layout_weight="4"
             android:background="@drawable/bg_edt_sl"
             android:orientation="vertical">
-            <EditText
-                android:id="@+id/priceproduct"
+
+            <TextView
+                android:id="@+id/tvnameproduct"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="top|left"
-                android:padding="5dp"
-                android:layout_weight="1"
-                android:text="Kẹo Kopico 150g vị cà phê "
-                android:background="@null"
-                android:textColor="@color/black"
-                android:textSize="18sp"/>
-            <EditText
-                android:id="@+id/priceproductt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top|left"
-                android:padding="5dp"
                 android:layout_weight="2"
-                android:text=" 20210725"
+                android:background="@null"
+                android:gravity="top|left"
+                android:padding="5dp"
+                android:text="Kẹo Kopico 150g vị cà phê "
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvhsd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|left"
+                android:padding="5dp"
+                android:layout_weight="3"
+                android:text="Hsd: "
                 android:background="@null"
                 android:textColor="@color/black"
-                android:textSize="18sp"/>
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvbatch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:background="@null"
+                android:gravity="top|left"
+                android:padding="5dp"
+                android:text="Batch: "
+                android:textColor="@color/black"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -75,7 +89,7 @@
 
             <TextView
 
-                android:id="@+id/nameproduct"
+                android:id="@+id/idproduct2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -85,7 +99,7 @@
                 android:textStyle="bold" />
             <TextView
 
-                android:id="@+id/nameproductt"
+                android:id="@+id/idproduct3"
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
                 android:layout_width="match_parent"
@@ -104,36 +118,38 @@
             android:layout_marginRight="2dp"
             android:layout_weight="2"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/idsl"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="75 CAR"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/idsl1"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="25 "
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <TextView
 
                 android:id="@+id/idsl2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="25 "
                 android:textColor="@color/black"
                 android:textStyle="bold" />
+
             <TextView
 
                 android:id="@+id/idsl3"
@@ -185,13 +201,14 @@
                 android:text="15.5 "
                 android:textColor="@color/black"
                 android:textStyle="bold" />
+
             <TextView
 
                 android:id="@+id/idkg3"
-                android:layout_weight="1"
-                android:layout_gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
                 android:text="14 "
                 android:textColor="@color/black"
                 android:textStyle="bold" />
