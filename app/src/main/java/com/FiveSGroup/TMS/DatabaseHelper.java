@@ -18,6 +18,7 @@ import com.FiveSGroup.TMS.PickList.PickList;
 import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.PutAway.Product_PutAway;
+import com.FiveSGroup.TMS.QA.Pickup.Product_Pickup;
 import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
@@ -123,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 122; // version của DB khi thay
+    public static final int DATABASE_VERSION = 126; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -179,6 +180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_MATERIAL);
         db.execSQL(CREATE_TABLE_O_SP);
         db.execSQL(CREATE_TABLE_O_CHUYENMA);
+        db.execSQL(CREATE_TABLE_O_PICKUP);
     }
 
     @Override
@@ -404,6 +406,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_CHUYENMA + " ADD COLUMN  "
                     + UNIT_2_CHUYENMA + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 124
+        try {
+            db.execSQL(CREATE_TABLE_O_PICKUP);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+//version DB 126
+        try {
+            db.execSQL("ALTER TABLE " + O_PICKUP + " ADD COLUMN  "
+                    + NOTE_PICKUP + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -8569,6 +8586,398 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //    }
 //
 //    //END TABLE O_CHUYEN_MA
+
+
+        //DATABASE PUT cd
+    public static final String O_PICKUP = "O_PICKUP";
+    public static final String WAREHOUSE_POSITION_CD_PICKUP = "WAREHOUSE_POSITION_CD_PICKUP";
+    public static final String AUTOINCREMENT_PICKUP = "AUTOINCREMENT_PICKUP";
+    public static final String PRODUCT_CODE_PICKUP = "PRODUCT_CODE";
+    public static final String PRODUCT_NAME_PICKUP = "PRODUCT_NAME";
+    public static final String PRODUCT_CD_PICKUP = "PRODUCT_CD";
+    public static final String QTY_EA_AVAILABLE_PICKUP = "QTY_EA_AVAILABLE";
+    public static final String QTY_SET_AVAILABLE_PICKUP = "QTY_SET_AVAILABLE";
+    public static final String EXPIRED_DATE_PICKUP = "EXPIRY_DATE";
+    public static final String STOCKIN_DATE_PICKUP = "STOCKIN_DATE";
+    public static final String EA_UNIT_PICKUP = "EA_UNIT";
+    public static final String POSITION_FROM_PICKUP = "POSITION_FROM_CD";
+    public static final String POSITION_FROM_CODE_PICKUP = "POSITION_FROM_CODE";
+    public static final String POSITION_FROM_DESCRIPTION_PICKUP = "POSITION_FROM_DESCRIPTION";
+    public static final String POSITION_TO_PICKUP = "POSITION_TO_CD";
+    public static final String POSITION_TO_CODE_PICKUP = "POSITION_TO_CODE";
+    public static final String POSITION_TO_DESCRIPTION_PICKUP = "POSITION_TO_DESCRIPTION";
+    public static final String UNIQUE_CODE_PICKUP = "UNIQUE_CODE";
+    public static final String STOCK_QA_CD = "STOCK_QA_CD";
+    public static final String LPN_CD_PICKUP = "LPN_CD_PICKUP";
+    public static final String LPN_CODE_PICKUP = "LPN_CODE_PICKUP";
+    public static final String LPN_FROM_PICKUP = "LPN_FROM_PICKUP";
+    public static final String LPN_TO_PICKUP = "LPN_TO_PICKUP";
+    public static final String BATCH_NUMBER_PICKUP = "BATCH_NUMBER_PICKUP";
+    public static final String MANUFACTURING_DATE_PICKUP = "MANUFACTURING_DATE_PICKUP";
+    public static final String NOTE_PICKUP = "NOTE_PICKUP";
+
+    public static final String CREATE_TABLE_O_PICKUP = "CREATE TABLE "
+            + O_PICKUP + "("
+            + AUTOINCREMENT_PICKUP + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + PRODUCT_CD_PICKUP + " TEXT,"
+            + WAREHOUSE_POSITION_CD_PICKUP + " TEXT,"
+            + BATCH_NUMBER_PICKUP + " TEXT,"
+            + MANUFACTURING_DATE_PICKUP + " TEXT,"
+            + PRODUCT_NAME_PICKUP + " TEXT,"
+            + PRODUCT_CODE_PICKUP + " TEXT,"
+            + QTY_EA_AVAILABLE_PICKUP + " TEXT,"
+            + QTY_SET_AVAILABLE_PICKUP + " TEXT,"
+            + EXPIRED_DATE_PICKUP + " TEXT,"
+            + STOCKIN_DATE_PICKUP + " TEXT,"
+            + EA_UNIT_PICKUP + " TEXT,"
+            + POSITION_FROM_PICKUP + " TEXT,"
+            + POSITION_FROM_CODE_PICKUP + " TEXT,"
+            + POSITION_FROM_DESCRIPTION_PICKUP + " TEXT,"
+            + POSITION_TO_PICKUP + " TEXT,"
+            + POSITION_TO_CODE_PICKUP + " TEXT,"
+            + POSITION_TO_DESCRIPTION_PICKUP + " TEXT,"
+            + STOCK_QA_CD + " TEXT,"
+            + UNIQUE_CODE_PICKUP + " TEXT ,"
+            + LPN_CD_PICKUP + " TEXT ,"
+            + LPN_CODE_PICKUP + " TEXT ,"
+            + LPN_FROM_PICKUP + " TEXT ,"
+            + LPN_TO_PICKUP + " TEXT "
+            + NOTE_PICKUP + " TEXT "
+            + ")";
+
+
+    public long CreatePickup(Product_Pickup pickup) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+//        values.put(AUTOINCREMENT_PICKUP, pickup.getAUTOINCREMENT());
+
+        values.put(UNIQUE_CODE_PICKUP, pickup.getUNIT());
+        values.put(BATCH_NUMBER_PICKUP, pickup.getBATCH_NUMBER());
+        values.put(MANUFACTURING_DATE_PICKUP, pickup.getMANUFACTURING_DATE());
+        values.put(PRODUCT_CODE_PICKUP, pickup.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_PICKUP, pickup.getPRODUCT_NAME());
+        values.put(WAREHOUSE_POSITION_CD_PICKUP, pickup.getWAREHOUSE_POSITION_CD());
+        values.put(PRODUCT_CD_PICKUP, pickup.getPRODUCT_CD());
+        values.put(QTY_SET_AVAILABLE_PICKUP, pickup.getQTY());
+        values.put(STOCKIN_DATE_PICKUP, pickup.getSTOCKIN_DATE());
+        values.put(QTY_EA_AVAILABLE_PICKUP, pickup.getQTY_EA_AVAILABLE());
+        values.put(EXPIRED_DATE_PICKUP, pickup.getEXPIRED_DATE());
+        values.put(EA_UNIT_PICKUP, pickup.getUNIT());
+        values.put(POSITION_FROM_PICKUP, pickup.getPOSITION_FROM_CD());
+        values.put(POSITION_TO_PICKUP, pickup.getPOSITION_TO_CD());
+        values.put(POSITION_FROM_CODE_PICKUP, pickup.getPOSITION_FROM_CODE());
+        values.put(POSITION_TO_CODE_PICKUP, pickup.getPOSITION_TO_CODE());
+        values.put(POSITION_FROM_DESCRIPTION_PICKUP, pickup.getPOSITION_FROM_DESCRIPTION());
+        values.put(POSITION_TO_DESCRIPTION_PICKUP, pickup.getPOSITION_TO_DESCRIPTION());
+        values.put(STOCK_QA_CD, pickup.getSTOCK_QA_CD());
+        values.put(LPN_CODE_PICKUP, pickup.getLPN_CODE());
+        values.put(LPN_FROM_PICKUP, pickup.getLPN_FROM());
+        values.put(LPN_TO_PICKUP, pickup.getLPN_TO());
+        values.put(NOTE_PICKUP, pickup.getNOTE());
+        // insert row
+        long id = db.insert(O_PICKUP, null, values);
+        return id;
+    }
+
+    public int updatePositionFrom_pickup_LPN(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_PICKUP, wareHouse);
+        values.put(POSITION_FROM_DESCRIPTION_PICKUP, descreption);
+
+        values.put(POSITION_FROM_CODE_PICKUP, from);
+        values.put(LPN_FROM_PICKUP, from);
+
+
+        // updating row
+        return db.update(O_PICKUP, values, AUTOINCREMENT_PICKUP + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionFrom_pickup(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_PICKUP, wareHouse);
+        values.put(POSITION_FROM_CODE_PICKUP, from);
+        values.put(LPN_FROM_PICKUP, "");
+        values.put(POSITION_FROM_DESCRIPTION_PICKUP, descreption);
+
+
+        // updating row
+        return db.update(O_PICKUP, values, AUTOINCREMENT_PICKUP + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionTo_pickup_LPN(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_PICKUP, wareHouse);
+        values.put(POSITION_TO_DESCRIPTION_PICKUP, descreption);
+        values.put(LPN_TO_PICKUP, to);
+
+        values.put(POSITION_TO_CODE_PICKUP, to);
+        // updating row
+        return db.update(O_PICKUP, values,
+                AUTOINCREMENT_PICKUP + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public int updatePositionTo_pickup(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_PICKUP, wareHouse);
+        values.put(POSITION_TO_CODE_PICKUP, to);
+        values.put(LPN_TO_PICKUP, "");
+
+        values.put(POSITION_TO_DESCRIPTION_PICKUP, descreption);
+        // updating row
+        return db.update(O_PICKUP, values,
+                AUTOINCREMENT_PICKUP + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public ArrayList<Product_Pickup>
+    getoneProduct_Pickup(String CD, String expDate, String ea_unit, String stockinDate, String cd) {
+        ArrayList<Product_Pickup> pickups = new ArrayList<Product_Pickup>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_PICKUP + " " + " WHERE "
+                + PRODUCT_CD_PICKUP + " = " + CD + " AND "
+                + STOCK_QA_CD + " = " + cd + " AND "
+                + EA_UNIT_PICKUP + " like " + " '%" + ea_unit + "%'" + " AND "
+                + EXPIRED_DATE_PICKUP + " like " + " '%" + expDate + "%'" + " AND "
+                + STOCKIN_DATE_PICKUP + " like " + " '%" + stockinDate + "%'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product_Pickup pickup = new Product_Pickup();
+                pickup.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_PICKUP))));
+                pickup.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PICKUP))));
+                pickup.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_PICKUP))));
+                pickup.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_PICKUP))));
+                pickup.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_PICKUP))));
+                pickup.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_PICKUP))));
+                pickup.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_PICKUP))));
+                pickup.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_PICKUP))));
+                pickup.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_PICKUP))));
+                pickup.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_PICKUP))));
+                pickup.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_PICKUP))));
+                pickup.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_PICKUP))));
+                pickup.setNOTE((c.getString(c
+                        .getColumnIndex(NOTE_PICKUP))));
+                pickups.add(pickup);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return pickups;
+    }
+
+
+    public ArrayList<Product_Pickup>
+    getAllProduct_Pickup_Sync(String cd) {
+        ArrayList<Product_Pickup> pickups = new ArrayList<Product_Pickup>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
+                "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
+                "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_PICKUP +
+                " where " + STOCK_QA_CD + " = " + cd;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Pickup pickup = new Product_Pickup();
+//                pickup.setAUTOINCREMENT((c.getString(c
+//                        .getColumnIndex(AUTOINCREMENT_PICKUP))));
+                pickup.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_PICKUP))));
+                pickup.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PICKUP))));
+                pickup.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_PICKUP))));
+                pickup.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_PICKUP))));
+                pickup.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_PICKUP))));
+                pickup.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_PICKUP))));
+                pickup.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_PICKUP))));
+                pickup.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_PICKUP))));
+                pickup.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_PICKUP))));
+                pickup.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_PICKUP))));
+                pickup.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_PICKUP))));
+                pickup.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_PICKUP))));
+                pickup.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_PICKUP))));
+                pickup.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_PICKUP))));
+                pickup.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_PICKUP))));
+                pickup.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_PICKUP))));
+                pickup.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_PICKUP))));
+                pickup.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_PICKUP))));
+                pickup.setSTOCK_QA_CD((c.getString(c
+                        .getColumnIndex(STOCK_QA_CD))));
+                pickup.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_PICKUP))));
+                pickup.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_PICKUP))));
+                pickup.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_PICKUP))));
+                pickup.setNOTE((c.getString(c
+                        .getColumnIndex(NOTE_PICKUP))));
+                pickups.add(pickup);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return pickups;
+    }
+
+    public ArrayList<Product_Pickup>
+    getAllProduct_Pickup(String cd) {
+        ArrayList<Product_Pickup> pickups = new ArrayList<Product_Pickup>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_PICKUP + " where " + STOCK_QA_CD + " = " + cd;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Pickup pickup = new Product_Pickup();
+                pickup.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_PICKUP))));
+                pickup.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PICKUP))));
+                pickup.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_PICKUP))));
+                pickup.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_PICKUP))));
+                pickup.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_PICKUP))));
+                pickup.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_PICKUP))));
+                pickup.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_PICKUP))));
+                pickup.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_PICKUP))));
+                pickup.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_PICKUP))));
+                pickup.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_PICKUP))));
+                pickup.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_PICKUP))));
+                pickup.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_PICKUP))));
+                pickup.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_PICKUP))));
+                pickup.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_PICKUP))));
+                pickup.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_PICKUP))));
+                pickup.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_PICKUP))));
+                pickup.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_PICKUP))));
+                pickup.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_PICKUP))));
+                pickup.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_PICKUP))));
+                pickup.setSTOCK_QA_CD((c.getString(c
+                        .getColumnIndex(STOCK_QA_CD))));
+                pickup.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_PICKUP))));
+                pickup.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_PICKUP))));
+                pickup.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_PICKUP))));
+                pickup.setNOTE((c.getString(c
+                        .getColumnIndex(NOTE_PICKUP))));
+                pickups.add(pickup);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return pickups;
+    }
+
+
+    public int updateProduct_Pickup(Product_Pickup pickup, String incre_so, String PRODUCT_CD, String sl, String ea_unit, String stock, String cd) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CD_PICKUP, PRODUCT_CD);
+        values.put(PRODUCT_CODE_PICKUP, pickup.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_PICKUP, pickup.getPRODUCT_NAME());
+        values.put(EXPIRED_DATE_PICKUP, pickup.getEXPIRED_DATE());
+        values.put(EA_UNIT_PICKUP, pickup.getUNIT());
+        values.put(QTY_SET_AVAILABLE_PICKUP, sl);
+        values.put(STOCK_QA_CD, cd);
+
+        // updating row
+        return db.update(O_PICKUP, values,  AUTOINCREMENT_PICKUP + " = ?",
+                new String[]{String.valueOf(incre_so)});
+
+    }
+
+    public int updateNote_Pickup(String incre_so  , String note) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+
+        values.put(NOTE_PICKUP, note);
+
+        // updating row
+        return db.update(O_PICKUP, values,  AUTOINCREMENT_PICKUP + " = ?",
+                new String[]{String.valueOf(incre_so)});
+
+    }
+
+
+    public void deleteProduct_Pickup( String cd) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_PICKUP);
+    }
+
+    //END TABLE O_PICKUP
 
 
 

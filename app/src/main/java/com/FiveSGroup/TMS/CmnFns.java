@@ -52,6 +52,7 @@ import com.FiveSGroup.TMS.PickList.PickList;
 import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.PutAway.Product_PutAway;
+import com.FiveSGroup.TMS.QA.Pickup.Product_Pickup;
 import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.Security.P5sSecurity;
@@ -1376,7 +1377,7 @@ public class CmnFns {
                 String pro_exp = jsonobj.getString("_EXPIRY_DATE");
                 String pro_stockin = jsonobj.getString("_STOCKIN_DATE");
                 String batch = "";
-                if((type.equals("WPR"))|| (type.equals("WTP"))){
+                if((type.equals("WPR"))|| (type.equals("WTP"))|| (type.equals("WQA"))){
                     batch = jsonobj.getString("_BATCH_NUMBER");
                 }
 
@@ -1386,7 +1387,7 @@ public class CmnFns {
                 } else {
                     exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
                 }
-                if((type.equals("WPR"))|| (type.equals("WTP"))){
+                if((type.equals("WPR"))|| (type.equals("WTP"))|| (type.equals("WQA"))){
                     exp_date_tam.setBATCH_NUMBER_TAM(batch);
                 }
 
@@ -2906,6 +2907,167 @@ public class CmnFns {
         return 1;
     }
 
+    public int synchronizeGETProductByZonePickup(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String pickupCD, int isLPN , String batch_number) {
+
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.GetProductByZone(qrcode, admin, "WQA", isLPN, pickupCD);
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("1")) {
+            return 1;
+        } else if (result.equals("-8")) {
+            return -8;
+        } else if (result.equals("-10")) {
+            return -10;
+        } else if (result.equals("-11")) {
+            return -11;
+        } else if (result.equals("-12")) {
+            return -12;
+        } else if (result.equals("-16")) {
+            return -16;
+        } else if (result.equals("-20")) {
+            return -20;
+        } else if (result.equals("-21")) {
+            return -21;
+        } else if (result.equals("-22")) {
+            return -22;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+            for (int i = 0; i < jsonarray.length(); i++) {
+//                 lấy một đối tượng json để
+                if (i == 1 && isLPN == 0) {
+                    return 1;
+                } else {
+                    JSONObject jsonobj = jsonarray.getJSONObject(i);
+                    String pro_code = jsonobj.getString("_PRODUCT_CODE");
+                    String pro_cd = jsonobj.getString("_PRODUCT_CD");
+                    String pro_name = jsonobj.getString("_PRODUCT_NAME");
+                    String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+                    String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
+                    String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
+                    String ea_unit = jsonobj.getString("_UNIT");
+                    // VT đến
+                    String position_code = jsonobj.getString("_POSITION_CODE");
+                    String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                    // Mô tả VT đến
+                    String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                    // VT đến
+                    String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+                    String lpnCode = jsonobj.getString("_LPN_CODE");
+                    String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
+                    int pro_set = 1;
+
+                    Product_Pickup pickUp = new Product_Pickup();
+
+//                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+                    pickUp.setPRODUCT_CD(pro_cd);
+                    pickUp.setPRODUCT_CODE(pro_code);
+                    pickUp.setPRODUCT_NAME(pro_name);
+                    pickUp.setQTY(String.valueOf(pro_set));
+                    pickUp.setQTY_EA_AVAILABLE(quanity_ea);
+                    pickUp.setBATCH_NUMBER(batch_number);
+                    pickUp.setMANUFACTURING_DATE(manufacturing);
+
+                    pickUp.setPOSITION_TO_CD(warePosition);
+                    pickUp.setSTOCK_QA_CD(pickupCD);
+                    pickUp.setWAREHOUSE_POSITION_CD(warePosition);
+                    String positionTo = "---";
+                    String positionFrom = "---";
+                    String lpn_From = "";
+                    String lpn_To = "";
+
+                    pickUp.setLPN_TO(lpn_To);
+                    pickUp.setLPN_CODE(lpnCode);
+
+                    pickUp.setPOSITION_TO_CODE(positionTo);
+                    pickUp.setPOSITION_TO_DESCRIPTION(positionTo);
+
+                    if (isLPN == 0) {
+                        if (stockDate != null) {
+                            pickUp.setSTOCKIN_DATE(stockDate);
+                        }
+                        pickUp.setEXPIRED_DATE(expDate);
+                        pickUp.setUNIT(unit);
+                        pickUp.setQTY(String.valueOf(pro_set));
+                        pickUp.setPOSITION_FROM_CD(warePosition);
+                        // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
+                        pickUp.setPOSITION_FROM_CODE(positionFrom);
+                        pickUp.setLPN_FROM(lpn_From);
+                        pickUp.setPOSITION_FROM_DESCRIPTION("");
+                    } else if (isLPN == 1) {
+                        pickUp.setSTOCKIN_DATE(strokinDate);
+                        pickUp.setEXPIRED_DATE(exxpiredDate);
+                        pickUp.setUNIT(ea_unit);
+                        pickUp.setQTY(quanity);
+                        pickUp.setPOSITION_FROM_CD(lpn_From);
+
+                        pickUp.setPOSITION_FROM_CODE(lpn_From);
+                        pickUp.setLPN_FROM(lpnCode);
+                        pickUp.setPOSITION_FROM_DESCRIPTION(lpn_From);
+                    }
+
+                    if (isLPN == 0) {
+                        ArrayList<Product_Pickup> Product_Pickups = DatabaseHelper.getInstance().
+                                getoneProduct_Pickup(pickUp.getPRODUCT_CD(), expDate, pickUp.getUNIT(), pickUp.getSTOCKIN_DATE(), pickupCD);
+                        if (Product_Pickups.size() > 0) {
+                            Product_Pickup product = Product_Pickups.get(0);
+                            if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
+
+                                Product_Pickup updateProductQR = Product_Pickups.get(0);
+                                int product_set = Integer.parseInt(Product_Pickups.get(0).getQTY());
+                                int sl = product_set + 1;
+                                Product_Pickups.get(i).setQTY(String.valueOf(product_set));
+                                DatabaseHelper.getInstance().updateProduct_Pickup(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                        String.valueOf(sl), updateProductQR.getUNIT(), pickUp.getSTOCKIN_DATE(), pickupCD);
+                            } else {
+                                DatabaseHelper.getInstance().CreatePickup(pickUp);
+                            }
+//                            return 10 ;
+                        } else {
+                            DatabaseHelper.getInstance().CreatePickup(pickUp);
+//                            return 10 ;
+                        }
+                    } else if (isLPN == 1) {
+                        boolean isExistLPN = false;
+                        ArrayList<Product_Pickup> Product_Pickup = DatabaseHelper.getInstance().getAllProduct_Pickup(pickupCD);
+                        if (Product_Pickup.size() > 0) {
+                            for (int j = 0; j < Product_Pickup.size(); j++) {
+                                if (Product_Pickup.get(j).getLPN_CODE().equals(lpnCode)) {
+                                    isExistLPN = true;
+                                }
+                            }
+                        }
+                        if (isExistLPN == false) {
+                            DatabaseHelper.getInstance().CreatePickup(pickUp);
+//                            return 10 ;
+                        } else {
+                            Dialog dialog = new Dialog(context);
+                            dialog.showDialog(context, "LPN này đã có trong danh sách");
+                        }
+
+                    }
+                }
+
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
+
     public int synchronizeGETProductByZonecancel_Good(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String cancelCD, int isLPN) {
 
 
@@ -3740,11 +3902,20 @@ public class CmnFns {
 
                         }
                         else if (type.equals("WTP")) {
-                            //Trả Hàng
+                            // Phân hàng chuyển mã
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionFrom_transferPosting_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFrom_transferPosting(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                            }
+
+                        }
+                        else if (type.equals("WQA")) {
+                            //Lấy hàng QA
+                            if (isLPN == 1) {
+                                DatabaseHelper.getInstance().updatePositionFrom_pickup_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                            } else {
+                                DatabaseHelper.getInstance().updatePositionFrom_pickup(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         }
@@ -3830,6 +4001,13 @@ public class CmnFns {
                                 DatabaseHelper.getInstance().updatePositionTo_transferPosting_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
                                 DatabaseHelper.getInstance().updatePositionTo_transferPosting(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                            }
+                        }
+                        else if (type.equals("WQA")) {
+                            if (isLPN == 1) {
+                                DatabaseHelper.getInstance().updatePositionTo_pickup_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                            } else {
+                                DatabaseHelper.getInstance().updatePositionTo_pickup(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         }
 
@@ -4168,6 +4346,14 @@ public class CmnFns {
                 jsonData = gson.toJson(product);
             }
 
+            // QA
+            else if (type.equals("WQA")) {
+                List<Product_Pickup> product = DatabaseHelper.getInstance().getAllProduct_Pickup_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return 1;
+                jsonData = gson.toJson(product);
+            }
+
 
             try {
 
@@ -4425,6 +4611,19 @@ public class CmnFns {
 //                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
                 }
                 if (jsonobj.getString("ParamKey").toString().equals("URL_TransferPosting")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+
+//                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
+
+                if (jsonobj.getString("ParamKey").toString().equals("URL_StockQA")) {
                     CParam param = new CParam();
                     param.setKey(jsonobj.getString("ParamKey"));
                     param.setValue(jsonobj.getString("ParamValue"));

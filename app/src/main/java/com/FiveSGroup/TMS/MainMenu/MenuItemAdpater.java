@@ -21,6 +21,7 @@ import com.FiveSGroup.TMS.MasterPick.Home_Master_Pick;
 import com.FiveSGroup.TMS.PickList.NewWareHouseActivity;
 import com.FiveSGroup.TMS.PoReturn.Home_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Qrcode_PutAway;
+import com.FiveSGroup.TMS.QA.Home.Home_Show_QA;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.RemoveFromLPN.Qrcode_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Home_Return_WareHouse;
@@ -274,7 +275,20 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
                         Intent intent_hh = new Intent(context, Home_PhanloaiHH.class);
                         context.startActivity(intent_hh);
                         break;
-                        }
+//                        }
+
+                    case "QA":
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                        Intent intent_qa = new Intent(context, Home_Show_QA.class);
+                        context.startActivity(intent_qa);
+                        break;
+//                        }
 
 //                    case "Thêm Mã Barcode":
 //                        Toast.makeText(context, "Tính năng đang phát triển trong thời gian tới", Toast.LENGTH_LONG).show();
@@ -282,7 +296,7 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 ////                        context.startActivity(intent_add_barcode);
 //                        break;
 
-//                }
+                }
             }
         });
     }

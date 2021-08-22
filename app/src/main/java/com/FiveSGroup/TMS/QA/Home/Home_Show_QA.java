@@ -1,8 +1,9 @@
-package com.FiveSGroup.TMS.MainMenu;
+package com.FiveSGroup.TMS.QA.Home;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,32 +13,41 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
+import com.FiveSGroup.TMS.MainMenu.MenuItemObject;
+import com.FiveSGroup.TMS.MainMenu.SpaceItem;
 import com.FiveSGroup.TMS.R;
-import com.FiveSGroup.TMS.global;
+import com.FiveSGroup.TMS.TransferQR.Home.Arr_Adapter_Transfer_Posting;
+import com.FiveSGroup.TMS.TransferQR.Home.Home_PhanloaiHH;
 
 import java.util.ArrayList;
 
-public class MainWareHouseActivity extends AppCompatActivity {
+public class Home_Show_QA extends AppCompatActivity {
 
     RecyclerView rvCategory;
     ArrayList<MenuItemObject> arrItem;
-    MenuItemAdpater adpater;
+    Arr_Adapter_QA adpater;
     TextView tvSale, tvVersion;
+    Button btnback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_ware_house);
+        setContentView(R.layout.activity_home_phanloaihh);
         rvCategory = findViewById(R.id.rvCategory);
         tvSale = findViewById(R.id.tvSale);
         tvVersion = findViewById(R.id.tvVersion);
+        btnback = findViewById(R.id.btnback);
+
+
+
         String version;
-        try {
-            PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
-            version = pInfo.versionName;
-            tvVersion.setText("Version: " + version);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
+//            version = pInfo.versionName;
+//            tvVersion.setText("Version: " + version);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
         prepareData();
         if(CmnFns.isCheckAdmin()){
@@ -46,7 +56,7 @@ public class MainWareHouseActivity extends AppCompatActivity {
             tvSale.setText(CmnFns.readDataShipper());
         }
 
-        adpater = new MenuItemAdpater(this, arrItem);
+        adpater = new Arr_Adapter_QA(this, arrItem);
         LinearLayoutManager layoutManager = new GridLayoutManager(this, 3);
         int spanCount = 3; // 3 columns
         int spacing = 50; // 50px
@@ -59,16 +69,8 @@ public class MainWareHouseActivity extends AppCompatActivity {
 
     private void prepareData(){
         arrItem = new ArrayList<>();
-        String name[] = {"LPN", "Nhập Kho", "Put Away", "Let Down", "Chuyển Vị Trí", "Master Pick" ,"PickList",
-                "Xuất Kho", "Kiểm Tồn", "Chỉnh Kho" , "Gỡ Sản Phẩm","Trả Hàng" ,"Xuất Hủy","Chuyển ĐVT"
-               , "PO Return","Phân Loại HH" , "QA"
-        };
-        int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho, R.drawable.ic_putaway, R.drawable.ic_letdown,
-                R.drawable.ic_chuyen_vi_tri,  R.drawable.ic_master_pick , R.drawable.ic_picklist, R.drawable.ic_xuat_kho,
-                R.drawable.ic_kiem_ton, R.drawable.ic_chinh_kho , R.drawable.ic_go_san_pham, R.drawable.ic_tra_hang ,
-                R.drawable.ic_xuat_kho, R.drawable.ic_go_san_pham
-                , R.drawable.ic_chuyen_vi_tri ,R.drawable.ic_nhap_kho, R.drawable.ic_xuat_kho
-        };
+        String name[] = {"Lấy Hàng", "QA"};
+        int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho};
         String Lock_Wh_Adjustment = DatabaseHelper.getInstance().getParamByKey("LOCK_WH_Adjustment").getValue();
         for(int i = 0; i < name.length; i ++){
             MenuItemObject object = new MenuItemObject();
@@ -84,6 +86,14 @@ public class MainWareHouseActivity extends AppCompatActivity {
                 arrItem.add(object);
             }
         }
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Home_Show_QA.this, MainWareHouseActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override

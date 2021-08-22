@@ -54,6 +54,21 @@
             android:name=".PutAway.List_PutAway"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".QA.HomeQA.Home_QA"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QA.Home.Home_Show_QA"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QA.Pickup.List_Pickup"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QA.Pickup.Qrcode_Pickup"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QA.Pickup.Home_Pickup"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".TransferQR.ChuyenMa.Home_ChuyenMa"
             android:screenOrientation="portrait" />
         <activity
@@ -109,9 +124,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Warehouse_Adjustment.ListQrcode_Warehouse_Adjustment"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".TransferQR.TransferPosting.List_TransferPosting"
             android:screenOrientation="portrait" />
 
         <activity

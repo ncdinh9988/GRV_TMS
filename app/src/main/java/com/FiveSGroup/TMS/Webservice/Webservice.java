@@ -717,7 +717,7 @@ public class Webservice {
 
     public String GetProductByZone(String qrcode, String salescode, String type , int IsLPN , String CD) {
         String webServiceFunc = "";
-        if(type.equals("WTP")){
+        if(type.equals("WTP") || type.equals("WQA")){
             webServiceFunc = "GetProductByZone_RQBT";
         }else{
             webServiceFunc = "GetProductByZone";
@@ -1023,7 +1023,7 @@ public class Webservice {
 
     public String synchronizeData(String json, String usercode, String type) {
         String webServiceFunc ;
-        if(type.equals("WTP")){
+        if((type.equals("WTP")) || (type.equals("WQA"))){
             webServiceFunc = "synchronizeData_RQBT";
         }else{
             webServiceFunc = "synchronizeData";

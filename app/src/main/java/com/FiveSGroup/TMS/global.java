@@ -177,6 +177,24 @@ public class global extends Application {
     }
     private static String TransferPostingCD = "";
     private static String ChuyenMaCD = "";
+    private static String PickupCD = "";
+    private static String QACD = "";
+
+    public static String getPickupCD() {
+        return PickupCD;
+    }
+
+    public static void setPickupCD(String pickupCD) {
+        PickupCD = pickupCD;
+    }
+
+    public static String getQACD() {
+        return QACD;
+    }
+
+    public static void setQACD(String QACD) {
+        global.QACD = QACD;
+    }
 
     public static String getChuyenMaCD() {
         return ChuyenMaCD;
