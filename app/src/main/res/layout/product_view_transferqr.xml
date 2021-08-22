@@ -17,8 +17,7 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
+
             android:layout_weight="4"
             android:background="@drawable/bg_edt_sl"
             android:orientation="vertical">
@@ -31,40 +30,70 @@
                 android:background="@null"
                 android:gravity="top|left"
                 android:padding="5dp"
+                android:textStyle="bold"
                 android:text="Kẹo Kopico 150g vị cà phê "
                 android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvhsd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top|left"
-                android:padding="5dp"
-                android:layout_weight="3"
-                android:text="Hsd: "
-                android:background="@null"
-                android:textColor="@color/black"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:id="@+id/tvbatch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:background="@null"
-                android:gravity="top|left"
-                android:padding="5dp"
-                android:text="Batch: "
-                android:textColor="@color/black"
                 android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvhsd1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="Hsd: "
+                    android:gravity="center"
+                    android:background="@null"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/tvhsd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvbatch1"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="Batch: "
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/tvbatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="2dp"
             android:layout_weight="2"
             android:orientation="vertical">
             <TextView
@@ -83,8 +112,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:text="1 : COFFE"
-                android:textStyle="bold"
+                android:textSize="12sp"
+                android:text=""
                 android:textColor="@color/black" />
 
             <TextView
@@ -94,9 +123,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:text="2 : GGEEE"
+                android:textSize="12sp"
+
+                android:text=""
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                />
             <TextView
 
                 android:id="@+id/idproduct3"
@@ -104,9 +135,11 @@
                 android:layout_gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3 : GGEEE"
+                android:text=""
+                android:textSize="12sp"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:background="@drawable/bg_edt_sl"
+                />
 
 
         </LinearLayout>
@@ -114,50 +147,64 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="2dp"
+            android:gravity="center"
             android:layout_weight="2"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/idsl"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="75 CAR"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvqty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvunit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
 
-            <TextView
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <EditText
                 android:id="@+id/idsl1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="25 "
+                android:background="@drawable/bg_edt_sl"
+                android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <TextView
+            <EditText
 
                 android:id="@+id/idsl2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:inputType="numberDecimal"
                 android:layout_weight="1"
-                android:text="25 "
+                android:background="@drawable/bg_edt_sl"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <TextView
+            <EditText
 
                 android:id="@+id/idsl3"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="25 "
+                android:inputType="numberDecimal"
+                android:background="@drawable/bg_edt_sl"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -167,49 +214,64 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="2dp"
             android:layout_weight="2"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/idkg"
-                android:layout_weight="1"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:text="47 KG "
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:layout_height="48dp"
+                android:orientation="horizontal">
 
-            <TextView
+                <TextView
+                    android:id="@+id/tvqty2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvunit2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <EditText
                 android:id="@+id/idkg1"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:text="17.5 "
+                android:background="@drawable/bg_edt_sl"
+                android:inputType="numberDecimal"
                 android:textStyle="bold"
                 android:textColor="@color/black" />
 
-            <TextView
+            <EditText
 
                 android:id="@+id/idkg2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:inputType="numberDecimal"
                 android:layout_weight="1"
-                android:text="15.5 "
+                android:background="@drawable/bg_edt_sl"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <TextView
+            <EditText
 
                 android:id="@+id/idkg3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:text="14 "
+                android:inputType="numberDecimal"
+                android:background="@drawable/bg_edt_sl"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 

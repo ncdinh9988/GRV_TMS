@@ -3,28 +3,100 @@ package com.FiveSGroup.TMS.TransferQR.ChuyenMa;
 public class Product_ChuyenMa {
     private String QRCODE;
     private String AUTOINCREMENT;
-    private String PRODUCT_CODE;
-    private String PRODUCT_NAME;
+    private String PRODUCT_CODE_FROM;
+    private String PRODUCT_CODE_TO;
+    private String PRODUCT_NAME_FROM;
+    private String PRODUCT_NAME_TO;
     private String PRODUCT_CD;
     private String QTY_EA_AVAILABLE;
-    private String POSITION_FROM_CD;
-    private String POSITION_TO_CD;
+    private String QTY_SET_AVAILABLE_ORIGINAL;
+    private String QTY_SET_AVAILABLE_ORIGINAL_2;
     private String QTY_SET_AVAILABLE;
-    private String QTY_SET_AVAILABLE_2;
     private String EXPIRED_DATE;
     private String STOCKIN_DATE;
     private String WAREHOUSE_POSITION_CD;
-    private String UNIQUE_CODE;
-    private String POSITION_FROM_CODE;
-    private String POSITION_TO_CODE;
+    private String POSITION_CODE;
     private String UNIT;
     private String UNIT_2;
-    private String POSITION_FROM_DESCRIPTION;
-    private String POSITION_TO_DESCRIPTION;
+    private String POSITION_DESCRIPTION;
     private String TRANSFER_POSTING_CD;
     private String BATCH_NUMBER;
     private String MANUFACTURING_DATE;
     private String ITEM_BASIC;
+    private String LPN_FROM;
+    private String LPN_TO;
+
+    public String getLPN_FROM() {
+        return LPN_FROM;
+    }
+
+    public void setLPN_FROM(String LPN_FROM) {
+        this.LPN_FROM = LPN_FROM;
+    }
+
+    public String getLPN_TO() {
+        return LPN_TO;
+    }
+
+    public void setLPN_TO(String LPN_TO) {
+        this.LPN_TO = LPN_TO;
+    }
+
+    public String getUNIT_2() {
+        return UNIT_2;
+    }
+
+    public void setUNIT_2(String UNIT_2) {
+        this.UNIT_2 = UNIT_2;
+    }
+
+    public String getQTY_SET_AVAILABLE_ORIGINAL() {
+        return QTY_SET_AVAILABLE_ORIGINAL;
+    }
+
+    public void setQTY_SET_AVAILABLE_ORIGINAL(String QTY_SET_AVAILABLE_ORIGINAL) {
+        this.QTY_SET_AVAILABLE_ORIGINAL = QTY_SET_AVAILABLE_ORIGINAL;
+    }
+
+    public String getQTY_SET_AVAILABLE_ORIGINAL_2() {
+        return QTY_SET_AVAILABLE_ORIGINAL_2;
+    }
+
+    public void setQTY_SET_AVAILABLE_ORIGINAL_2(String QTY_SET_AVAILABLE_ORIGINAL_2) {
+        this.QTY_SET_AVAILABLE_ORIGINAL_2 = QTY_SET_AVAILABLE_ORIGINAL_2;
+    }
+
+    public String getPOSITION_CODE() {
+        return POSITION_CODE;
+    }
+
+    public void setPOSITION_CODE(String POSITION_CODE) {
+        this.POSITION_CODE = POSITION_CODE;
+    }
+
+    public String getPOSITION_DESCRIPTION() {
+        return POSITION_DESCRIPTION;
+    }
+
+    public void setPOSITION_DESCRIPTION(String POSITION_DESCRIPTION) {
+        this.POSITION_DESCRIPTION = POSITION_DESCRIPTION;
+    }
+
+    public String getPRODUCT_CODE_FROM() {
+        return PRODUCT_CODE_FROM;
+    }
+
+    public void setPRODUCT_CODE_FROM(String PRODUCT_CODE_FROM) {
+        this.PRODUCT_CODE_FROM = PRODUCT_CODE_FROM;
+    }
+
+    public String getPRODUCT_CODE_TO() {
+        return PRODUCT_CODE_TO;
+    }
+
+    public void setPRODUCT_CODE_TO(String PRODUCT_CODE_TO) {
+        this.PRODUCT_CODE_TO = PRODUCT_CODE_TO;
+    }
 
     public String getTRANSFER_POSTING_CD() {
         return TRANSFER_POSTING_CD;
@@ -42,21 +114,6 @@ public class Product_ChuyenMa {
         this.QTY_SET_AVAILABLE = QTY_SET_AVAILABLE;
     }
 
-    public String getQTY_SET_AVAILABLE_2() {
-        return QTY_SET_AVAILABLE_2;
-    }
-
-    public void setQTY_SET_AVAILABLE_2(String QTY_SET_AVAILABLE_2) {
-        this.QTY_SET_AVAILABLE_2 = QTY_SET_AVAILABLE_2;
-    }
-
-    public String getUNIT_2() {
-        return UNIT_2;
-    }
-
-    public void setUNIT_2(String UNIT_2) {
-        this.UNIT_2 = UNIT_2;
-    }
 
     public String getITEM_BASIC() {
         return ITEM_BASIC;
@@ -82,20 +139,20 @@ public class Product_ChuyenMa {
         this.AUTOINCREMENT = AUTOINCREMENT;
     }
 
-    public String getPRODUCT_CODE() {
-        return PRODUCT_CODE;
+    public String getPRODUCT_NAME_FROM() {
+        return PRODUCT_NAME_FROM;
     }
 
-    public void setPRODUCT_CODE(String PRODUCT_CODE) {
-        this.PRODUCT_CODE = PRODUCT_CODE;
+    public void setPRODUCT_NAME_FROM(String PRODUCT_NAME_FROM) {
+        this.PRODUCT_NAME_FROM = PRODUCT_NAME_FROM;
     }
 
-    public String getPRODUCT_NAME() {
-        return PRODUCT_NAME;
+    public String getPRODUCT_NAME_TO() {
+        return PRODUCT_NAME_TO;
     }
 
-    public void setPRODUCT_NAME(String PRODUCT_NAME) {
-        this.PRODUCT_NAME = PRODUCT_NAME;
+    public void setPRODUCT_NAME_TO(String PRODUCT_NAME_TO) {
+        this.PRODUCT_NAME_TO = PRODUCT_NAME_TO;
     }
 
     public String getPRODUCT_CD() {
@@ -112,22 +169,6 @@ public class Product_ChuyenMa {
 
     public void setQTY_EA_AVAILABLE(String QTY_EA_AVAILABLE) {
         this.QTY_EA_AVAILABLE = QTY_EA_AVAILABLE;
-    }
-
-    public String getPOSITION_FROM_CD() {
-        return POSITION_FROM_CD;
-    }
-
-    public void setPOSITION_FROM_CD(String POSITION_FROM_CD) {
-        this.POSITION_FROM_CD = POSITION_FROM_CD;
-    }
-
-    public String getPOSITION_TO_CD() {
-        return POSITION_TO_CD;
-    }
-
-    public void setPOSITION_TO_CD(String POSITION_TO_CD) {
-        this.POSITION_TO_CD = POSITION_TO_CD;
     }
 
 
@@ -155,29 +196,6 @@ public class Product_ChuyenMa {
         this.WAREHOUSE_POSITION_CD = WAREHOUSE_POSITION_CD;
     }
 
-    public String getUNIQUE_CODE() {
-        return UNIQUE_CODE;
-    }
-
-    public void setUNIQUE_CODE(String UNIQUE_CODE) {
-        this.UNIQUE_CODE = UNIQUE_CODE;
-    }
-
-    public String getPOSITION_FROM_CODE() {
-        return POSITION_FROM_CODE;
-    }
-
-    public void setPOSITION_FROM_CODE(String POSITION_FROM_CODE) {
-        this.POSITION_FROM_CODE = POSITION_FROM_CODE;
-    }
-
-    public String getPOSITION_TO_CODE() {
-        return POSITION_TO_CODE;
-    }
-
-    public void setPOSITION_TO_CODE(String POSITION_TO_CODE) {
-        this.POSITION_TO_CODE = POSITION_TO_CODE;
-    }
 
     public String getUNIT() {
         return UNIT;
@@ -186,23 +204,6 @@ public class Product_ChuyenMa {
     public void setUNIT(String UNIT) {
         this.UNIT = UNIT;
     }
-
-    public String getPOSITION_FROM_DESCRIPTION() {
-        return POSITION_FROM_DESCRIPTION;
-    }
-
-    public void setPOSITION_FROM_DESCRIPTION(String POSITION_FROM_DESCRIPTION) {
-        this.POSITION_FROM_DESCRIPTION = POSITION_FROM_DESCRIPTION;
-    }
-
-    public String getPOSITION_TO_DESCRIPTION() {
-        return POSITION_TO_DESCRIPTION;
-    }
-
-    public void setPOSITION_TO_DESCRIPTION(String POSITION_TO_DESCRIPTION) {
-        this.POSITION_TO_DESCRIPTION = POSITION_TO_DESCRIPTION;
-    }
-
 
     public String getBATCH_NUMBER() {
         return BATCH_NUMBER;

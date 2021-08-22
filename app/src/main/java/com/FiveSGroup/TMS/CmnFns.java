@@ -58,6 +58,9 @@ import com.FiveSGroup.TMS.Security.P5sSecurity;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
+import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Product_ChuyenMa;
+import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Product_Material;
+import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Product_SP;
 import com.FiveSGroup.TMS.TransferQR.TransferPosting.Product_TransferPosting;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
 import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
@@ -1154,128 +1157,178 @@ public class CmnFns {
         return "-1";
     }
 
-//    public int getChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
-//
-//        int status = this.allowSynchronizeBy3G();
-//        if (status != 1)
-//            return -1;
-//
-//        Webservice webService = new Webservice();
-//
-//        String result = webService.GetSPChuyenMa(barcodeData, sale_codes, type, IsLPN, cd);
-//
-//        // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
-//        if (result.equals("-1")) {
-//            return -1;
-//        } else if (result.equals("1")) {
-//            return 1;
-//        } else if (result.equals("-8")) {
-//            return -8;
-//        } else if (result.equals("-11")) {
-//            return -11;
-//        } else if (result.equals("-12")) {
-//            return -12;
-//        } else if (result.equals("-16")) {
-//            return -16;
-//        } else if (result.equals("-20")) {
-//            return -20;
-//        } else if (result.equals("-21")) {
-//            return -21;
-//        } else if (result.equals("-22")) {
-//            return -22;
-//        }
-//        if (result.equals("1")) {
-//            // DatabaseHelper.getInstance().deleteAllRorateTimes();
-//            return 1;
-//        }
-//
-//        try {
-//            JSONArray jsonarray = new JSONArray(result);
-//
-//            // DatabaseHelper.getInstance().deleteAllRorateTimes();
-//            for (int i = 0; i < jsonarray.length(); i++) {
-//                // lấy một đối tượng json để
-//
-//                JSONObject jsonobj = jsonarray.getJSONObject(i);
-//                String pro_code = jsonobj.getString("_PRODUCT_CODE");
-//                String pro_cd = jsonobj.getString("_PRODUCT_CD");
-//                String pro_name = jsonobj.getString("_PRODUCT_NAME");
-//                String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
-//                String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
-//                String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
-//                String ea_unit = jsonobj.getString("_UNIT");
-//                // VT đến
-//                String position_code = jsonobj.getString("_POSITION_CODE");
-//                String strokinDate = jsonobj.getString("_STOCKIN_DATE");
-//                // Mô tả VT đến
-//                String description = jsonobj.getString("_POSITION_DESCRIPTION");
-//                // VT đến
-//                String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
-//                String lpnCode = jsonobj.getString("_LPN_CODE");
-//                String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
-//                int pro_set = 1;
-//
-//                Product_TransferPosting transferPosting = new Product_TransferPosting();
-//
-////                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
-//                transferPosting.setPRODUCT_CD(pro_cd);
-//                transferPosting.setPRODUCT_CODE(pro_code);
-//                transferPosting.setPRODUCT_NAME(pro_name);
-//                transferPosting.setQTY(String.valueOf(pro_set));
-//                transferPosting.setQTY_EA_AVAILABLE(quanity_ea);
-//                transferPosting.setBATCH_NUMBER(batch_number);
-//                transferPosting.setMANUFACTURING_DATE(manufacturing);
-//
-//                transferPosting.setPOSITION_TO_CD(warePosition);
-//                transferPosting.setSTOCK_TRANSFER_POSTING_CD(transferPostingCD);
-//                transferPosting.setWAREHOUSE_POSITION_CD(warePosition);
-//                String positionTo = "---";
-//                String positionFrom = "---";
-//                String lpn_From = "";
-//                String lpn_To = "";
-//
-//                transferPosting.setLPN_TO(lpn_To);
-//                transferPosting.setLPN_CODE(lpnCode);
-//
-//                transferPosting.setPOSITION_TO_CODE(positionTo);
-//                transferPosting.setPOSITION_TO_DESCRIPTION(positionTo);
-//
-//                if (IsLPN == 0) {
-//                    if (stockDate != null) {
-//                        transferPosting.setSTOCKIN_DATE(stockDate);
-//                    }
-//                    transferPosting.setEXPIRED_DATE(expDate);
-//                    transferPosting.setUNIT(unit);
-//                    transferPosting.setQTY(String.valueOf(pro_set));
-//                    transferPosting.setPOSITION_FROM_CD(warePosition);
-//                    // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
-//                    transferPosting.setPOSITION_FROM_CODE(positionFrom);
-//                    transferPosting.setLPN_FROM(lpn_From);
-//                    transferPosting.setPOSITION_FROM_DESCRIPTION("");
-//                } else if (IsLPN == 1) {
-//                    transferPosting.setSTOCKIN_DATE(strokinDate);
-//                    transferPosting.setEXPIRED_DATE(exxpiredDate);
-//                    transferPosting.setUNIT(ea_unit);
-//                    transferPosting.setQTY(quanity);
-//                    transferPosting.setPOSITION_FROM_CD(lpn_From);
-//
-//                    transferPosting.setPOSITION_FROM_CODE(lpn_From);
-//                    transferPosting.setLPN_FROM(lpnCode);
-//                    transferPosting.setPOSITION_FROM_DESCRIPTION(lpn_From);
-//                }
-//                DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);
-//
-//            }
-//
-//        } catch (JSONException e) {
-//            // TODO Auto-generated catch block
-////            CmnFns.writeLogError("Exception "
-////                    + e.getMessage());
-//            return -1;
-//        }
-//
-//        return 1;
-//    }
+    public int getChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+
+        String result = webService.GetSPChuyenMa(barcodeData, sale_codes, type, IsLPN, cd);
+
+        // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("1")) {
+            return 1;
+        } else if (result.equals("-8")) {
+            return -8;
+        } else if (result.equals("-11")) {
+            return -11;
+        } else if (result.equals("-12")) {
+            return -12;
+        } else if (result.equals("-16")) {
+            return -16;
+        } else if (result.equals("-20")) {
+            return -20;
+        } else if (result.equals("-21")) {
+            return -21;
+        } else if (result.equals("-22")) {
+            return -22;
+        }
+        if (result.equals("1")) {
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                String pro_code = jsonobj.getString("_PRODUCT_CODE");
+                String pro_cd = jsonobj.getString("_PRODUCT_CD");
+                String pro_name = jsonobj.getString("_PRODUCT_NAME");
+                String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+                String quanity_2 = jsonobj.getString("_QTY_SET_AVAILABLE_2");
+                String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
+                String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
+                String ea_unit = jsonobj.getString("_UNIT");
+                String ea_unit_2 = jsonobj.getString("_UNIT_2");
+                // VT đến
+                String position_code = jsonobj.getString("_POSITION_CODE");
+                String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                // Mô tả VT đến
+                String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                // VT đến
+                String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+                String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
+                String batch_number = jsonobj.getString("_BATCH_NUMBER");
+                String item_basic = jsonobj.getString("_ITEM_BASIC");
+
+                Product_SP sp = new Product_SP();
+
+//                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+                sp.setPRODUCT_CD(pro_cd);
+                sp.setPRODUCT_CODE(pro_code);
+                sp.setPRODUCT_NAME(pro_name);
+                sp.setQTY_SET_AVAILABLE(quanity);
+                sp.setQTY_SET_AVAILABLE_2(quanity_2);
+                sp.setQTY_EA_AVAILABLE(quanity_ea);
+                sp.setEXPIRED_DATE(exxpiredDate);
+                sp.setUNIT(ea_unit);
+                sp.setUNIT_2(ea_unit_2);
+                sp.setPOSITION_CODE(position_code);
+                sp.setSTOCKIN_DATE(strokinDate);
+                sp.setPOSITION_DESCRIPTION(description);
+                sp.setWAREHOUSE_POSITION_CD(warePosition);
+                sp.setMANUFACTURING_DATE(manufacturing);
+                sp.setBATCH_NUMBER(batch_number);
+                sp.setITEM_BASIC(item_basic);
+
+                DatabaseHelper.getInstance().CreateSP(sp);
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
+
+    public int getChuyenMaMateril(String barcodeData,  String type) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+
+        String result = webService.getChuyenMaMateril(barcodeData, type);
+
+        // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("1")) {
+            return 1;
+        } else if (result.equals("-8")) {
+            return -8;
+        } else if (result.equals("-11")) {
+            return -11;
+        } else if (result.equals("-12")) {
+            return -12;
+        } else if (result.equals("-16")) {
+            return -16;
+        } else if (result.equals("-20")) {
+            return -20;
+        } else if (result.equals("-21")) {
+            return -21;
+        } else if (result.equals("-22")) {
+            return -22;
+        }
+        if (result.equals("1")) {
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+
+                String pro_cd = jsonobj.getString("PRODUCT_CD");
+                String pro_code = jsonobj.getString("PRODUCT_CODE");
+                String pro_name = jsonobj.getString("PRODUCT_NAME");
+                String barcode = jsonobj.getString("BARCODE");
+                String item_basic = jsonobj.getString("ITEM_BASIC");
+
+
+                Product_Material material = new Product_Material();
+
+//                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
+                material.setPRODUCT_CD(pro_cd);
+                material.setPRODUCT_CODE(pro_code);
+                material.setPRODUCT_NAME(pro_name);
+                material.setBARCODE(barcode);
+                material.setITEM_BABIC(item_basic);
+
+
+                DatabaseHelper.getInstance().CreateMaterial(material);
+
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
 
     public int getPutAwayFromServer(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
 
@@ -4141,6 +4194,52 @@ public class CmnFns {
             // phải đồng bộ nữa
 
             String result = Webservice.synchronizeData(jsonData, usercode, type);
+            int resultCovertToInt = Integer.parseInt(result);
+            if (resultCovertToInt >= 1) {
+                // đã đồng bộ thành công update để lần sau không đồng bộ lại
+                //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
+                return resultCovertToInt;
+            } else {
+                // đồng bộ không thành công
+                return Integer.parseInt(result);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            return -1;
+        }
+
+    }
+
+    public int synchronizeData_RQBT_Final(String usercode, String type, String CD) {
+
+        try {
+
+            int status = this.allowSynchronizeBy3G();
+            if (status == 102 || status == -1) {
+                return -1;
+            }
+
+            String jsonData = "";
+            Webservice Webservice = new Webservice();
+            //String json = convertToJson(customers);
+            Gson gson = new GsonBuilder().create();
+
+
+            // chuyen ma
+            if (type.equals("WTP")) {
+                List<Product_ChuyenMa> product = DatabaseHelper.getInstance().getAll_ChuyenMa(CD);
+                if (product == null || product.size() == 0)
+                    return 1;
+                jsonData = gson.toJson(product);
+            }
+
+            // lấy các khách hàng chưa đồng bộ, đã
+            // đồng bộ về rồi
+            // thì sẽ ko cần
+            // phải đồng bộ nữa
+
+            String result = Webservice.synchronizeData_RQBT_Final(jsonData, usercode, type);
             int resultCovertToInt = Integer.parseInt(result);
             if (resultCovertToInt >= 1) {
                 // đã đồng bộ thành công update để lần sau không đồng bộ lại

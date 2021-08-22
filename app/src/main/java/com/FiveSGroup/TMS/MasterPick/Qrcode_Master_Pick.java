@@ -424,7 +424,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
     }
 
     private void ReturnProduct(String barcode, String expDatetemp ,String stockinDateShow, String vitri) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), List_Master_Pick.class);

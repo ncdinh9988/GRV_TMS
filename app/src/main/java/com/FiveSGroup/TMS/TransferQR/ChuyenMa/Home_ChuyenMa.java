@@ -34,8 +34,6 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
 
-import com.FiveSGroup.TMS.TransferQR.TransferPosting.List_TransferPosting;
-
 import com.FiveSGroup.TMS.ValueEventbus;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.global;
@@ -100,7 +98,7 @@ public class Home_ChuyenMa extends AppCompatActivity {
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home_ChuyenMa.this, List_TransferPosting.class));
+                startActivity(new Intent(Home_ChuyenMa.this, List_ChuyenMa.class));
                 EventBus.getDefault().postSticky(new CheckEventbus());
 
             }

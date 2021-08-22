@@ -361,7 +361,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                DatabaseHelper.getInstance().deleteProduct_TransferPosting();
+                DatabaseHelper.getInstance().deleteProduct_TransferPosting(global.getTransferPostingCD());
                 transfer_Posting.clear();
                 TransferPostingListAdapter.notifyDataSetChanged();
                 Intent intentToHomeQRActivity = new Intent(List_TransferPosting.this, Home_TransferPosting.class);

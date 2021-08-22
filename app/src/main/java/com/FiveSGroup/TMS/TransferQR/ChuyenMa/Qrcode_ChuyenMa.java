@@ -175,7 +175,7 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
             checkBoxGetLPN.setVisibility(View.VISIBLE);
             checkBoxGetDVT.setChecked(true);
             checkBoxGetLPN.setChecked(false);
-            textViewTitle.setText("QUÉT MÃ - PHÂN HÀNG");
+            textViewTitle.setText("QUÉT MÃ - CHUYỂN MÃ");
         }
 
     }
@@ -309,9 +309,10 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
             }
 
         } else {
-            int statusGetCustt = 1;
-//            int statusGetCustt = new CmnFns().getChuyenMa(barcodeData, texxt, "WTP", 0, global.getChuyenMaCD());
-//            int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
+
+            int statusGetCustt = new CmnFns().getChuyenMa(barcodeData, texxt, "WTP", 0, global.getChuyenMaCD());
+            int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
+//            DatabaseHelper.getInstance().getAllProduct_ChuyenMa();
             if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData, stockinDate);
             } else {

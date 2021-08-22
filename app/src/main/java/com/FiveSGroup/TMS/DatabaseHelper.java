@@ -23,6 +23,8 @@ import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
 import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Product_ChuyenMa;
+import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Product_Material;
+import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Product_SP;
 import com.FiveSGroup.TMS.TransferQR.TransferPosting.Product_TransferPosting;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
 import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
@@ -121,7 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 112; // version của DB khi thay
+    public static final int DATABASE_VERSION = 122; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -174,6 +176,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_TRANSFER_UNIT);
         db.execSQL(CREATE_TABLE_O_PO_RETURN);
         db.execSQL(CREATE_TABLE_O_TRANSFER_POSTING);
+        db.execSQL(CREATE_TABLE_O_MATERIAL);
+        db.execSQL(CREATE_TABLE_O_SP);
+        db.execSQL(CREATE_TABLE_O_CHUYENMA);
     }
 
     @Override
@@ -352,6 +357,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //version DB 112
         try {
             db.execSQL(CREATE_TABLE_O_TRANSFER_POSTING);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 114
+        try {
+            db.execSQL(CREATE_TABLE_O_MATERIAL);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 116
+        try {
+            db.execSQL(CREATE_TABLE_O_SP);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 118
+        try {
+            db.execSQL(CREATE_TABLE_O_CHUYENMA);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 120
+        try {
+            db.execSQL("ALTER TABLE " + O_CHUYENMA + " ADD COLUMN  "
+                    + PRODUCT_NAME_FROM_CHUYENMA + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_CHUYENMA + " ADD COLUMN  "
+                    + PRODUCT_NAME_TO_CHUYENMA + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_CHUYENMA + " ADD COLUMN  "
+                    + UNIT_2_CHUYENMA + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -5187,6 +5239,456 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("delete from " + O_BATCH);
     }
 
+    //Table O_ChuyenMa để chứa dữ liệu quét material chuyen ma
+
+
+
+    public static final String O_CHUYENMA = "O_CHUYENMA";
+    public static final String QRCODE_CHUYENMA = "QRCODE_CHUYENMA";
+    public static final String PRODUCT_CODE_FROM_CHUYENMA = "PRODUCT_CODE_FROM_CHUYENMA";
+    public static final String PRODUCT_CODE_TO_CHUYENMA = "PRODUCT_CODE_TO_CHUYENMA";
+    public static final String PRODUCT_NAME_FROM_CHUYENMA = "PRODUCT_NAME_FROM_CHUYENMA";
+    public static final String PRODUCT_NAME_TO_CHUYENMA = "PRODUCT_NAME_TO_CHUYENMA";
+    public static final String PRODUCT_CD_CHUYENMA = "PRODUCT_CD_CHUYENMA";
+    public static final String QTY_EA_AVAILABLE_CHUYENMA = "QTY_EA_AVAILABLE_CHUYENMA";
+    public static final String QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA = "QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA";
+    public static final String QTY_SET_AVAILABLE_ORIGINAL_2_CHUYENMA = "QTY_SET_AVAILABLE_ORIGINAL_2_CHUYENMA";
+    public static final String QTY_SET_AVAILABLE_CHUYENMA = "QTY_SET_AVAILABLE_CHUYENMA";
+    public static final String EXPIRED_DATE_CHUYENMA = "EXPIRED_DATE_CHUYENMA";
+    public static final String STOCKIN_DATE_CHUYENMA = "STOCKIN_DATE_CHUYENMA";
+    public static final String WAREHOUSE_POSITION_CD_CHUYENMA = "WAREHOUSE_POSITION_CD_CHUYENMA";
+    public static final String POSITION_CODE_CHUYENMA = "POSITION_CODE_CHUYENMA";
+    public static final String UNIT_CHUYENMA = "UNIT_CHUYENMA";
+    public static final String UNIT_2_CHUYENMA = "UNIT_2_CHUYENMA";
+    public static final String POSITION_DESCRIPTION_CHUYENMA = "POSITION_DESCRIPTION_CHUYENMA";
+    public static final String TRANSFER_POSTING_CD_CHUYENMA = "TRANSFER_POSTING_CD_CHUYENMA";
+    public static final String BATCH_NUMBER_CHUYENMA = "BATCH_NUMBER_CHUYENMA";
+    public static final String MANUFACTURING_DATE_CHUYENMA = "MANUFACTURING_DATE_CHUYENMA";
+    public static final String ITEM_BASIC_CHUYENMA = "ITEM_BASIC_CHUYENMA";
+    public static final String LPN_FROM_CHUYENMA = "LPN_FROM_CHUYENMA";
+    public static final String LPN_TO_CHUYENMA = "LPN_TO_CHUYENMA";
+
+    public static final String CREATE_TABLE_O_CHUYENMA = "CREATE TABLE "
+            + O_CHUYENMA + "("
+            + QRCODE_CHUYENMA + " TEXT,"
+            + PRODUCT_CODE_FROM_CHUYENMA + " TEXT,"
+            + PRODUCT_CODE_TO_CHUYENMA + " TEXT,"
+            + PRODUCT_NAME_FROM_CHUYENMA + " TEXT,"
+            + PRODUCT_NAME_TO_CHUYENMA + " TEXT,"
+            + PRODUCT_CD_CHUYENMA + " TEXT,"
+            + QTY_EA_AVAILABLE_CHUYENMA + " TEXT,"
+            + QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA + " TEXT,"
+            + QTY_SET_AVAILABLE_ORIGINAL_2_CHUYENMA + " TEXT,"
+            + QTY_SET_AVAILABLE_CHUYENMA + " TEXT,"
+            + EXPIRED_DATE_CHUYENMA + " TEXT,"
+            + STOCKIN_DATE_CHUYENMA + " TEXT,"
+            + WAREHOUSE_POSITION_CD_CHUYENMA + " TEXT,"
+            + POSITION_CODE_CHUYENMA + " TEXT,"
+            + UNIT_CHUYENMA + " TEXT,"
+            + UNIT_2_CHUYENMA + " TEXT,"
+            + LPN_FROM_CHUYENMA + " TEXT,"
+            + LPN_TO_CHUYENMA + " TEXT,"
+            + POSITION_DESCRIPTION_CHUYENMA + " TEXT,"
+            + TRANSFER_POSTING_CD_CHUYENMA + " TEXT,"
+            + BATCH_NUMBER_CHUYENMA + " TEXT,"
+            + MANUFACTURING_DATE_CHUYENMA + " TEXT,"
+            + ITEM_BASIC_CHUYENMA + " TEXT" + ")";
+
+    public long CreateChuyenma(Product_ChuyenMa chuyenma , String cd ) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(QRCODE_CHUYENMA, chuyenma.getQRCODE());
+        values.put(PRODUCT_CODE_FROM_CHUYENMA, chuyenma.getPRODUCT_CODE_FROM());
+        values.put(PRODUCT_CODE_TO_CHUYENMA, chuyenma.getPRODUCT_CODE_TO());
+        values.put(PRODUCT_NAME_FROM_CHUYENMA, chuyenma.getPRODUCT_NAME_FROM());
+        values.put(PRODUCT_NAME_TO_CHUYENMA, chuyenma.getPRODUCT_NAME_TO());
+        values.put(PRODUCT_CD_CHUYENMA, chuyenma.getPRODUCT_CD());
+        values.put(QTY_EA_AVAILABLE_CHUYENMA, chuyenma.getQTY_EA_AVAILABLE());
+        values.put(QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA, chuyenma.getQTY_SET_AVAILABLE_ORIGINAL());
+        values.put(QTY_SET_AVAILABLE_ORIGINAL_2_CHUYENMA, chuyenma.getQTY_SET_AVAILABLE_ORIGINAL_2());
+        values.put(QTY_SET_AVAILABLE_CHUYENMA, chuyenma.getQTY_SET_AVAILABLE());
+        values.put(EXPIRED_DATE_CHUYENMA, chuyenma.getEXPIRED_DATE());
+        values.put(STOCKIN_DATE_CHUYENMA, chuyenma.getSTOCKIN_DATE());
+        values.put(WAREHOUSE_POSITION_CD_CHUYENMA, chuyenma.getWAREHOUSE_POSITION_CD());
+        values.put(POSITION_CODE_CHUYENMA, chuyenma.getPOSITION_CODE());
+        values.put(UNIT_CHUYENMA, chuyenma.getUNIT());
+        values.put(UNIT_2_CHUYENMA, chuyenma.getUNIT_2());
+        values.put(LPN_FROM_CHUYENMA, " ");
+        values.put(LPN_TO_CHUYENMA, " ");
+        values.put(POSITION_DESCRIPTION_CHUYENMA, chuyenma.getPOSITION_DESCRIPTION());
+        values.put(TRANSFER_POSTING_CD_CHUYENMA, cd);
+        values.put(BATCH_NUMBER_CHUYENMA, chuyenma.getBATCH_NUMBER());
+        values.put(MANUFACTURING_DATE_CHUYENMA, chuyenma.getMANUFACTURING_DATE());
+        values.put(ITEM_BASIC_CHUYENMA, chuyenma.getITEM_BASIC());
+        // insert row
+        long id = db.insert(O_CHUYENMA, null, values);
+        return id;
+    }
+
+
+    public ArrayList<Product_ChuyenMa>
+    getAllProduct_ChuyenMa(String cd) {
+        ArrayList<Product_ChuyenMa> qrcode = new ArrayList<Product_ChuyenMa>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "Select * From O_MATERIAL A INNER JOIN O_SP B ON A.ITEM_BASIC_MATERIAL = B.ITEM_BASIC_SP ";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_ChuyenMa qrcodeq = new Product_ChuyenMa();
+
+                qrcodeq.setQRCODE((c.getString(c
+                        .getColumnIndex(QRCODE_SP))));
+                qrcodeq.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_SP))));
+                qrcodeq.setPRODUCT_CODE_FROM((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_SP))));
+                qrcodeq.setPRODUCT_CODE_TO((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_MATERIAL))));
+                qrcodeq.setPRODUCT_NAME_FROM((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_SP))));
+                qrcodeq.setPRODUCT_NAME_TO((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_MATERIAL))));
+                qrcodeq.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_SP))));
+                qrcodeq.setQTY_SET_AVAILABLE_ORIGINAL((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_SP))));
+                qrcodeq.setQTY_SET_AVAILABLE_ORIGINAL_2((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_SP_2))));
+                qrcodeq.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_SP))));
+                qrcodeq.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_SP))));
+                qrcodeq.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_SP))));
+                qrcodeq.setPOSITION_CODE((c.getString(c
+                        .getColumnIndex(POSITION_CODE_SP))));
+                qrcodeq.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_SP))));
+                qrcodeq.setUNIT_2((c.getString(c
+                        .getColumnIndex(UNIT_SP_2))));
+                qrcodeq.setPOSITION_DESCRIPTION(c.getString(c
+                        .getColumnIndex(POSITION_DESCRIPTION_SP)));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_SP))));
+                qrcodeq.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_SP))));
+                qrcodeq.setITEM_BASIC((c.getString(c
+                        .getColumnIndex(ITEM_BASIC_SP))));
+
+
+                qrcode.add(qrcodeq);
+                CreateChuyenma(qrcodeq , cd);
+
+
+            } while (c.moveToNext());
+            DatabaseHelper.getInstance().deleteallMaterial();
+            DatabaseHelper.getInstance().deleteallSP();
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+    public ArrayList<Product_ChuyenMa>
+    getAll_ChuyenMa(String cd) {
+        ArrayList<Product_ChuyenMa> qrcode = new ArrayList<Product_ChuyenMa>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "Select * From O_CHUYENMA Where " + TRANSFER_POSTING_CD_CHUYENMA + " = " + cd ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_ChuyenMa qrcodeq = new Product_ChuyenMa();
+                qrcodeq.setQRCODE((c.getString(c
+                        .getColumnIndex(QRCODE_CHUYENMA))));
+                qrcodeq.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_CHUYENMA))));
+                qrcodeq.setPRODUCT_CODE_FROM((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_FROM_CHUYENMA))));
+                qrcodeq.setPRODUCT_CODE_TO((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TO_CHUYENMA))));
+                qrcodeq.setPRODUCT_NAME_FROM((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_FROM_CHUYENMA))));
+                qrcodeq.setPRODUCT_NAME_TO((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_TO_CHUYENMA))));
+                qrcodeq.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_CHUYENMA))));
+                qrcodeq.setQTY_SET_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_CHUYENMA))));
+                qrcodeq.setQTY_SET_AVAILABLE_ORIGINAL((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA))));
+                qrcodeq.setQTY_SET_AVAILABLE_ORIGINAL_2((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_ORIGINAL_2_CHUYENMA))));
+                qrcodeq.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_CHUYENMA))));
+                qrcodeq.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_CHUYENMA))));
+                qrcodeq.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_CHUYENMA))));
+                qrcodeq.setPOSITION_CODE((c.getString(c
+                        .getColumnIndex(POSITION_CODE_CHUYENMA))));
+                qrcodeq.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_CHUYENMA))));
+                qrcodeq.setUNIT_2((c.getString(c
+                        .getColumnIndex(UNIT_2_CHUYENMA))));
+                qrcodeq.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_CHUYENMA))));
+                qrcodeq.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_CHUYENMA))));
+                qrcodeq.setPOSITION_DESCRIPTION(c.getString(c
+                        .getColumnIndex(POSITION_DESCRIPTION_CHUYENMA)));
+                qrcodeq.setTRANSFER_POSTING_CD((c.getString(c
+                        .getColumnIndex(TRANSFER_POSTING_CD_CHUYENMA))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CHUYENMA))));
+                qrcodeq.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_CHUYENMA))));
+                qrcodeq.setITEM_BASIC((c.getString(c
+                        .getColumnIndex(ITEM_BASIC_CHUYENMA))));
+                qrcode.add(qrcodeq);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+    public ArrayList<Product_ChuyenMa>
+    getDataMaterialbyItemBasic(String product_code_from , String  unit , String cd ) {
+        ArrayList<Product_ChuyenMa> listMaterialChuyenma = new ArrayList<Product_ChuyenMa>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "Select * From " + O_CHUYENMA  + " Where "
+                + PRODUCT_CODE_FROM_CHUYENMA + " = "  +  product_code_from
+                + " AND " + TRANSFER_POSTING_CD_CHUYENMA + " = " + cd
+                ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_ChuyenMa item = new Product_ChuyenMa();
+
+                item.setPRODUCT_CODE_FROM((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_FROM_CHUYENMA))));
+                item.setPRODUCT_CODE_TO((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TO_CHUYENMA))));
+                item.setTRANSFER_POSTING_CD((c.getString(c
+                        .getColumnIndex(TRANSFER_POSTING_CD_CHUYENMA))));
+                item.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CHUYENMA))));
+                item.setQTY_SET_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_CHUYENMA))));
+                item.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_CHUYENMA))));
+                item.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_CHUYENMA))));
+                item.setUNIT_2((c.getString(c
+                        .getColumnIndex(UNIT_2_CHUYENMA))));
+                item.setPRODUCT_NAME_TO((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_TO_CHUYENMA))));
+
+                listMaterialChuyenma.add(item);
+//                CreateChuyenma(qrcodeq);
+
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return listMaterialChuyenma;
+    }
+
+        public int updateProduct_ChuyenMa(String product_code_from, String product_code_to , String qty ) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(QTY_SET_AVAILABLE_CHUYENMA, qty);
+        return db.update(O_CHUYENMA, values,  PRODUCT_CODE_FROM_CHUYENMA + " = ? AND " + PRODUCT_CODE_TO_CHUYENMA + " = ? ",
+                new String[]{String.valueOf(product_code_from),String.valueOf(product_code_to)});
+
+    }
+
+    public ArrayList<Product_ChuyenMa>
+    getshow_ChuyenMa(String chuyenma_cd) {
+        ArrayList<Product_ChuyenMa> listchuyenma = new ArrayList<Product_ChuyenMa>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "Select * From O_CHUYENMA Where " + TRANSFER_POSTING_CD_CHUYENMA + " = " + chuyenma_cd +
+                " GROUP BY PRODUCT_CODE_FROM_CHUYENMA , PRODUCT_NAME_FROM_CHUYENMA , EXPIRED_DATE_CHUYENMA , BATCH_NUMBER_CHUYENMA ";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_ChuyenMa itemchuyenma = new Product_ChuyenMa();
+
+                itemchuyenma.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_CHUYENMA))));
+                itemchuyenma.setPRODUCT_CODE_FROM((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_FROM_CHUYENMA))));
+                itemchuyenma.setPRODUCT_NAME_FROM((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_FROM_CHUYENMA))));
+                itemchuyenma.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_CHUYENMA))));
+                itemchuyenma.setITEM_BASIC((c.getString(c
+                        .getColumnIndex(ITEM_BASIC_CHUYENMA))));
+                itemchuyenma.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_CHUYENMA))));
+                itemchuyenma.setTRANSFER_POSTING_CD((c.getString(c
+                        .getColumnIndex(TRANSFER_POSTING_CD_CHUYENMA))));
+                itemchuyenma.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CHUYENMA))));
+                itemchuyenma.setQTY_SET_AVAILABLE_ORIGINAL((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA))));
+                itemchuyenma.setQTY_SET_AVAILABLE_ORIGINAL_2((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_ORIGINAL_2_CHUYENMA))));
+                itemchuyenma.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_CHUYENMA))));
+                itemchuyenma.setUNIT_2((c.getString(c
+                        .getColumnIndex(UNIT_2_CHUYENMA))));
+
+
+                listchuyenma.add(itemchuyenma);
+//                CreateChuyenma(qrcodeq);
+
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return listchuyenma;
+    }
+
+
+    public void deleteProduct_Chuyen_Ma_Specific
+            (String product_cd, String batch_number , String item_basic , String expired_date , String warehouse_position_cd) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_CHUYENMA + " Where " + PRODUCT_CD_CHUYENMA + " = " + product_cd + " AND "
+                + ITEM_BASIC_CHUYENMA + " = " + item_basic + " AND "
+                + WAREHOUSE_POSITION_CD_CHUYENMA + " = " + warehouse_position_cd );
+    }
+    public void deleteallChuyenMa(String cd) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_CHUYENMA + " Where " + TRANSFER_POSTING_CD_CHUYENMA + " = " + cd);
+    }
+
+    //end table chuyenma
+
+    //Table O_Material để chứa dữ liệu quét material chuyen ma
+    public static final String O_SP = "O_SP";
+    public static final String QRCODE_SP = "QRCODE_SP";
+    public static final String PRODUCT_CODE_SP = "PRODUCT_CODE_SP";
+    public static final String PRODUCT_NAME_SP = "PRODUCT_NAME_SP";
+    public static final String PRODUCT_CD_SP = "PRODUCT_CD_SP";
+    public static final String QTY_EA_AVAILABLE_SP = "QTY_EA_AVAILABLE_SP";
+    public static final String QTY_SET_AVAILABLE_SP = "QTY_SET_AVAILABLE_SP";
+    public static final String QTY_SET_AVAILABLE_SP_2 = "QTY_SET_AVAILABLE_SP_2";
+    public static final String EXPIRED_DATE_SP = "EXPIRED_DATE_SP";
+    public static final String STOCKIN_DATE_SP = "STOCKIN_DATE_SP";
+    public static final String WAREHOUSE_POSITION_CD_SP = "WAREHOUSE_POSITION_CD_SP";
+    public static final String POSITION_CODE_SP = "POSITION_CODE_SP";
+    public static final String UNIT_SP = "UNIT_SP";
+    public static final String UNIT_SP_2 = "UNIT_SP_2";
+    public static final String POSITION_DESCRIPTION_SP = "POSITION_DESCRIPTION_SP";
+    public static final String TRANSFER_POSTING_CD_SP = "TRANSFER_POSTING_CD_SP";
+    public static final String BATCH_NUMBER_SP = "BATCH_NUMBER_SP";
+    public static final String MANUFACTURING_DATE_SP = "MANUFACTURING_DATE_SP";
+    public static final String ITEM_BASIC_SP = "ITEM_BASIC_SP";
+
+    public static final String CREATE_TABLE_O_SP = "CREATE TABLE "
+            + O_SP + "("
+            + QRCODE_SP + " TEXT,"
+            + PRODUCT_CODE_SP + " TEXT,"
+            + PRODUCT_NAME_SP + " TEXT,"
+            + PRODUCT_CD_SP + " TEXT,"
+            + QTY_EA_AVAILABLE_SP + " TEXT,"
+            + QTY_SET_AVAILABLE_SP + " TEXT,"
+            + QTY_SET_AVAILABLE_SP_2 + " TEXT,"
+            + EXPIRED_DATE_SP + " TEXT,"
+            + STOCKIN_DATE_SP + " TEXT,"
+            + WAREHOUSE_POSITION_CD_SP + " TEXT,"
+            + POSITION_CODE_SP + " TEXT,"
+            + UNIT_SP + " TEXT,"
+            + UNIT_SP_2 + " TEXT,"
+            + POSITION_DESCRIPTION_SP + " TEXT,"
+            + TRANSFER_POSTING_CD_SP + " TEXT,"
+            + BATCH_NUMBER_SP + " TEXT,"
+            + MANUFACTURING_DATE_SP + " TEXT,"
+            + ITEM_BASIC_SP + " TEXT" + ")";
+
+    public long CreateSP(Product_SP sp) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(QRCODE_SP, sp.getQRCODE());
+        values.put(PRODUCT_CODE_SP, sp.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_SP, sp.getPRODUCT_NAME());
+        values.put(PRODUCT_CD_SP, sp.getPRODUCT_CD());
+        values.put(QTY_EA_AVAILABLE_SP, sp.getQTY_EA_AVAILABLE());
+        values.put(QTY_SET_AVAILABLE_SP, sp.getQTY_SET_AVAILABLE());
+        values.put(QTY_SET_AVAILABLE_SP_2, sp.getQTY_SET_AVAILABLE_2());
+        values.put(EXPIRED_DATE_SP, sp.getEXPIRED_DATE());
+        values.put(STOCKIN_DATE_SP, sp.getSTOCKIN_DATE());
+        values.put(WAREHOUSE_POSITION_CD_SP, sp.getWAREHOUSE_POSITION_CD());
+        values.put(POSITION_CODE_SP, sp.getPOSITION_CODE());
+        values.put(UNIT_SP, sp.getUNIT());
+        values.put(UNIT_SP_2, sp.getUNIT_2());
+        values.put(POSITION_DESCRIPTION_SP, sp.getPOSITION_DESCRIPTION());
+        values.put(TRANSFER_POSTING_CD_SP, sp.getTRANSFER_POSTING_CD());
+        values.put(BATCH_NUMBER_SP, sp.getBATCH_NUMBER());
+        values.put(MANUFACTURING_DATE_SP, sp.getMANUFACTURING_DATE());
+        values.put(ITEM_BASIC_SP, sp.getITEM_BASIC());
+        // insert row
+        long id = db.insert(O_SP, null, values);
+        return id;
+    }
+    public void deleteallSP() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_SP);
+    }
+
+    //end table SP
+
+    //Table O_Material để chứa dữ liệu quét material chuyen ma
+    public static final String O_MATERIAL = "O_MATERIAL";
+    public static final String PRODUCT_CD_MATERIAL = "PRODUCT_CD_MATERIAL";
+    public static final String PRODUCT_CODE_MATERIAL = "PRODUCT_CODE_MATERIAL";
+    public static final String PRODUCT_NAME_MATERIAL = "PRODUCT_NAME_MATERIAL";
+    public static final String BARCODE_MATERIAL = "BARCODE_MATERIAL";
+    public static final String ITEM_BASIC_MATERIAL = "ITEM_BASIC_MATERIAL";
+
+    public static final String CREATE_TABLE_O_MATERIAL = "CREATE TABLE "
+            + O_MATERIAL + "("
+            + PRODUCT_CD_MATERIAL + " TEXT,"
+            + PRODUCT_CODE_MATERIAL + " TEXT,"
+            + PRODUCT_NAME_MATERIAL + " TEXT,"
+            + BARCODE_MATERIAL + " TEXT,"
+            + ITEM_BASIC_MATERIAL + " TEXT" + ")";
+
+    public long CreateMaterial(Product_Material material) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        //values.put(QRCODE, qrcode.getQRCODE());
+        values.put(PRODUCT_CD_MATERIAL, material.getPRODUCT_CD());
+        values.put(PRODUCT_CODE_MATERIAL, material.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_MATERIAL, material.getPRODUCT_NAME());
+        values.put(BARCODE_MATERIAL, material.getBARCODE());
+        values.put(ITEM_BASIC_MATERIAL, material.getITEM_BABIC());
+        // insert row
+        long id = db.insert(O_MATERIAL, null, values);
+        return id;
+    }
+    public void deleteallMaterial() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_MATERIAL);
+    }
+
+    //end table material
+
 
     //Table O_EXP để chứa dữ liệu quét exp lần đầu
     public static final String O_EXP = "O_EXP";
@@ -7705,7 +8207,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void deleteProduct_TransferPosting() {
+    public void deleteProduct_TransferPosting( String cd) {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.execSQL("delete from " + O_TRANSFER_POSTING);
@@ -7838,23 +8340,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //
 //    }
 //
-//    public int updatePositionTo_chuyenMa_LPN(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
-//
-//        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-//
-//        ContentValues values = new ContentValues();
-//        values.put(POSITION_TO_CHUYEN_MA, wareHouse);
-//        values.put(POSITION_TO_DESCRIPTION_CHUYEN_MA, descreption);
-//        values.put(LPN_TO_CHUYEN_MA, to);
-//
-//        values.put(POSITION_TO_CODE_CHUYEN_MA, to);
-//        // updating row
-//        return db.update(O_CHUYEN_MA, values,
-//                AUTOINCREMENT_CHUYEN_MA + " = ? ",
-//                new String[]{String.valueOf(id_unique_SO)});
-//
-//
-//    }
+
 //
 //
 //    public int updatePositionTo_chuyenMa(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {

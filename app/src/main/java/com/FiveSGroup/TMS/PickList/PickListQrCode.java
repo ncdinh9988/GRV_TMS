@@ -458,7 +458,7 @@ public class PickListQrCode extends AppCompatActivity {
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2 , final String stockinDateShow) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
         String Ea_Unit_temp = "";
