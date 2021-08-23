@@ -45,7 +45,7 @@ public class Home_QA extends AppCompatActivity {
     LinearLayout layout;
     String value1 = "", value2 = "";
     SharedPreferences sharedPref;
-    String urlTransferPosting = "";
+    String urlQA = "";
     ValueEventbus eventbus;
     static String value = "";
     String value3 = "";
@@ -71,11 +71,11 @@ public class Home_QA extends AppCompatActivity {
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
         layout = findViewById(R.id.layout);
-        urlTransferPosting = DatabaseHelper.getInstance().getParamByKey("URL_TransferPosting").getValue();;
+        urlQA = DatabaseHelper.getInstance().getParamByKey("URL_StockQA").getValue();;
 
 
 
-        String urlStockOut =  urlTransferPosting + "?USER_CODE=" + CmnFns.readDataAdmin();
+        String urlStockOut =  urlQA + "?USER_CODE=" + CmnFns.readDataAdmin();
         addEvents(urlStockOut);
 
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +146,7 @@ public class Home_QA extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                addEvents(urlTransferPosting + "?USER_CODE=" + CmnFns.readDataAdmin());
+                addEvents(urlQA + "?USER_CODE=" + CmnFns.readDataAdmin());
                 refreshLayout.setRefreshing(false);
 
             }
@@ -195,13 +195,13 @@ public class Home_QA extends AppCompatActivity {
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
 
-                    if (url.contains("TransferPostingListItemForApp.aspx?TRANSFER_POSTING_CD")) {
+                    if (url.contains("StockQAListItemForApp.aspx?STOCK_QA_CD")) {
 
                         String chuoi[] = url.split("=");
                         String code = chuoi[1];
                         String chuoi2[] = code.split("&");
                         String code2 = chuoi2[0];
-                        global.setChuyenMaCD(code2);
+                        global.setQACD(code2);
                         // Toast.makeText(HomeQRActivity.this, code+"", Toast.LENGTH_SHORT).show();
 
                         btn1.setVisibility(View.VISIBLE);

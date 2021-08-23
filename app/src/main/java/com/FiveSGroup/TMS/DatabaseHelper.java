@@ -18,6 +18,7 @@ import com.FiveSGroup.TMS.PickList.PickList;
 import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.PutAway.Product_PutAway;
+import com.FiveSGroup.TMS.QA.HomeQA.Product_QA;
 import com.FiveSGroup.TMS.QA.Pickup.Product_Pickup;
 import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
@@ -4623,6 +4624,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void deleteProduct_QA_Specific(String productCode) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.delete(O_QA, AUTOINCREMENT_QA+ " = ?"
+                , new String[]{String.valueOf(productCode)
+                });
+
+    }
+
     public void deleteProduct_PO_Specific(String productCode) {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
@@ -7862,7 +7872,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //END TABLE O_TRANSFER_UNIT
-    //DATABASE PUT PO_Return
+    //DATABASE PUT transfer Posting
     public static final String O_TRANSFER_POSTING = "O_TRANSFER_POSTING";
     public static final String WAREHOUSE_POSITION_CD_TRANSFER_POSTING = "WAREHOUSE_POSITION_CD_TRANSFER_POSTING";
     public static final String AUTOINCREMENT_TRANSFER_POSTING = "AUTOINCREMENT_TRANSFER_POSTING";
@@ -8978,6 +8988,376 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //END TABLE O_PICKUP
+
+    //DATABASE PUT PO_Return
+    public static final String O_QA = "O_QA";
+    public static final String WAREHOUSE_POSITION_CD_QA = "WAREHOUSE_POSITION_CD_QA";
+    public static final String AUTOINCREMENT_QA = "AUTOINCREMENT_QA";
+    public static final String PRODUCT_CODE_QA = "PRODUCT_CODE";
+    public static final String PRODUCT_NAME_QA = "PRODUCT_NAME";
+    public static final String PRODUCT_CD_QA = "PRODUCT_CD";
+    public static final String QTY_EA_AVAILABLE_QA = "QTY_EA_AVAILABLE";
+    public static final String QTY_SET_AVAILABLE_QA = "QTY_SET_AVAILABLE";
+    public static final String EXPIRED_DATE_QA = "EXPIRY_DATE";
+    public static final String STOCKIN_DATE_QA = "STOCKIN_DATE";
+    public static final String EA_UNIT_QA = "EA_UNIT";
+    public static final String POSITION_FROM_QA = "POSITION_FROM_CD";
+    public static final String POSITION_FROM_CODE_QA = "POSITION_FROM_CODE";
+    public static final String POSITION_FROM_DESCRIPTION_QA = "POSITION_FROM_DESCRIPTION";
+    public static final String POSITION_TO_QA = "POSITION_TO_CD";
+    public static final String POSITION_TO_CODE_QA = "POSITION_TO_CODE";
+    public static final String POSITION_TO_DESCRIPTION_QA = "POSITION_TO_DESCRIPTION";
+    public static final String UNIQUE_CODE_QA = "UNIQUE_CODE";
+    public static final String STOCK_QA_CD_QA = "STOCK_QA_CD_QA";
+    public static final String LPN_CD_QA = "LPN_CD_QA";
+    public static final String LPN_CODE_QA = "LPN_CODE_QA";
+    public static final String LPN_FROM_QA = "LPN_FROM_QA";
+    public static final String LPN_TO_QA = "LPN_TO_QA";
+    public static final String BATCH_NUMBER_QA = "BATCH_NUMBER_QA";
+    public static final String MANUFACTURING_DATE_QA = "MANUFACTURING_DATE_QA";
+
+    public static final String CREATE_TABLE_O_QA = "CREATE TABLE "
+            + O_QA + "("
+            + AUTOINCREMENT_QA + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + PRODUCT_CD_QA + " TEXT,"
+            + WAREHOUSE_POSITION_CD_QA + " TEXT,"
+            + BATCH_NUMBER_QA + " TEXT,"
+            + MANUFACTURING_DATE_QA + " TEXT,"
+            + PRODUCT_NAME_QA + " TEXT,"
+            + PRODUCT_CODE_QA + " TEXT,"
+            + QTY_EA_AVAILABLE_QA + " TEXT,"
+            + QTY_SET_AVAILABLE_QA + " TEXT,"
+            + EXPIRED_DATE_QA + " TEXT,"
+            + STOCKIN_DATE_QA + " TEXT,"
+            + EA_UNIT_QA + " TEXT,"
+            + POSITION_FROM_QA + " TEXT,"
+            + POSITION_FROM_CODE_QA + " TEXT,"
+            + POSITION_FROM_DESCRIPTION_QA + " TEXT,"
+            + POSITION_TO_QA + " TEXT,"
+            + POSITION_TO_CODE_QA + " TEXT,"
+            + POSITION_TO_DESCRIPTION_QA + " TEXT,"
+            + STOCK_QA_CD_QA + " TEXT,"
+            + UNIQUE_CODE_QA + " TEXT ,"
+            + LPN_CD_QA + " TEXT ,"
+            + LPN_CODE_QA + " TEXT ,"
+            + LPN_FROM_QA + " TEXT ,"
+            + LPN_TO_QA + " TEXT "
+            + ")";
+
+
+    public long CreateQA(Product_QA list_QA) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+//        values.put(AUTOINCREMENT_QA, list_QA.getAUTOINCREMENT());
+
+        values.put(UNIQUE_CODE_QA, list_QA.getUNIT());
+        values.put(BATCH_NUMBER_QA, list_QA.getBATCH_NUMBER());
+        values.put(MANUFACTURING_DATE_QA, list_QA.getMANUFACTURING_DATE());
+        values.put(PRODUCT_CODE_QA, list_QA.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_QA, list_QA.getPRODUCT_NAME());
+        values.put(WAREHOUSE_POSITION_CD_QA, list_QA.getWAREHOUSE_POSITION_CD());
+        values.put(PRODUCT_CD_QA, list_QA.getPRODUCT_CD());
+        values.put(QTY_SET_AVAILABLE_QA, list_QA.getQTY());
+        values.put(STOCKIN_DATE_QA, list_QA.getSTOCKIN_DATE());
+        values.put(QTY_EA_AVAILABLE_QA, list_QA.getQTY_EA_AVAILABLE());
+        values.put(EXPIRED_DATE_QA, list_QA.getEXPIRED_DATE());
+        values.put(EA_UNIT_QA, list_QA.getUNIT());
+        values.put(POSITION_FROM_QA, list_QA.getPOSITION_FROM_CD());
+        values.put(POSITION_TO_QA, list_QA.getPOSITION_TO_CD());
+        values.put(POSITION_FROM_CODE_QA, list_QA.getPOSITION_FROM_CODE());
+        values.put(POSITION_TO_CODE_QA, list_QA.getPOSITION_TO_CODE());
+        values.put(POSITION_FROM_DESCRIPTION_QA, list_QA.getPOSITION_FROM_DESCRIPTION());
+        values.put(POSITION_TO_DESCRIPTION_QA, list_QA.getPOSITION_TO_DESCRIPTION());
+        values.put(STOCK_QA_CD_QA, list_QA.getSTOCK_QA_CD());
+        values.put(LPN_CODE_QA, list_QA.getLPN_CODE());
+        values.put(LPN_FROM_QA, list_QA.getLPN_FROM());
+        values.put(LPN_TO_QA, list_QA.getLPN_TO());
+        // insert row
+        long id = db.insert(O_QA, null, values);
+        return id;
+    }
+
+    public int updatePositionFrom_list_QA_LPN(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_QA, wareHouse);
+        values.put(POSITION_FROM_DESCRIPTION_QA, descreption);
+
+        values.put(POSITION_FROM_CODE_QA, from);
+        values.put(LPN_FROM_QA, from);
+
+
+        // updating row
+        return db.update(O_QA, values, AUTOINCREMENT_QA + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionFrom_list_QA(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_QA, wareHouse);
+        values.put(POSITION_FROM_CODE_QA, from);
+        values.put(LPN_FROM_QA, "");
+        values.put(POSITION_FROM_DESCRIPTION_QA, descreption);
+
+
+        // updating row
+        return db.update(O_QA, values, AUTOINCREMENT_QA + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionTo_list_QA_LPN(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_QA, wareHouse);
+        values.put(POSITION_TO_DESCRIPTION_QA, descreption);
+        values.put(LPN_TO_QA, to);
+
+        values.put(POSITION_TO_CODE_QA, to);
+        // updating row
+        return db.update(O_QA, values,
+                AUTOINCREMENT_QA + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public int updatePositionTo_list_QA(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_QA, wareHouse);
+        values.put(POSITION_TO_CODE_QA, to);
+        values.put(LPN_TO_QA, "");
+
+        values.put(POSITION_TO_DESCRIPTION_QA, descreption);
+        // updating row
+        return db.update(O_QA, values,
+                AUTOINCREMENT_QA + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public ArrayList<Product_QA>
+    getoneProduct_QA(String CD, String expDate, String ea_unit, String stockinDate, String po_return) {
+        ArrayList<Product_QA> list_QAs = new ArrayList<Product_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_QA + " " + " WHERE "
+                + PRODUCT_CD_QA + " = " + CD + " AND "
+                + STOCK_QA_CD_QA + " = " + po_return + " AND "
+                + EA_UNIT_QA + " like " + " '%" + ea_unit + "%'" + " AND "
+                + EXPIRED_DATE_QA + " like " + " '%" + expDate + "%'" + " AND "
+                + STOCKIN_DATE_QA + " like " + " '%" + stockinDate + "%'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product_QA list_QA = new Product_QA();
+                list_QA.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_QA))));
+                list_QA.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_QA))));
+                list_QA.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_QA))));
+                list_QA.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_QA))));
+                list_QA.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_QA))));
+                list_QA.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_QA))));
+                list_QA.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_QA))));
+                list_QA.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_QA))));
+                list_QA.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_QA))));
+                list_QA.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_QA))));
+                list_QA.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_QA))));
+                list_QA.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_QA))));
+                list_QAs.add(list_QA);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return list_QAs;
+    }
+
+
+    public ArrayList<Product_QA>
+    getAllProduct_QA_Sync(String po_return) {
+        ArrayList<Product_QA> list_QAs = new ArrayList<Product_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
+                "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
+                "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_QA +
+                " where " + STOCK_QA_CD_QA + " = " + po_return;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_QA list_QA = new Product_QA();
+//                list_QA.setAUTOINCREMENT((c.getString(c
+//                        .getColumnIndex(AUTOINCREMENT_QA))));
+                list_QA.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_QA))));
+                list_QA.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_QA))));
+                list_QA.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_QA))));
+                list_QA.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_QA))));
+                list_QA.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_QA))));
+                list_QA.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_QA))));
+                list_QA.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_QA))));
+                list_QA.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_QA))));
+                list_QA.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_QA))));
+                list_QA.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_QA))));
+                list_QA.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_QA))));
+                list_QA.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_QA))));
+                list_QA.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_QA))));
+                list_QA.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_QA))));
+                list_QA.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_QA))));
+                list_QA.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_QA))));
+                list_QA.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_QA))));
+                list_QA.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_QA))));
+                list_QA.setSTOCK_QA_CD((c.getString(c
+                        .getColumnIndex(STOCK_QA_CD_QA))));
+                list_QA.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_QA))));
+                list_QA.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_QA))));
+                list_QA.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_QA))));
+                list_QAs.add(list_QA);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return list_QAs;
+    }
+
+    public ArrayList<Product_QA>
+    getAllProduct_QA(String po_return) {
+        ArrayList<Product_QA> list_QAs = new ArrayList<Product_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_QA + " where " + STOCK_QA_CD + " = " + po_return;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_QA list_QA = new Product_QA();
+                list_QA.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_QA))));
+                list_QA.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_QA))));
+                list_QA.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_QA))));
+                list_QA.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_QA))));
+                list_QA.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_QA))));
+                list_QA.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_QA))));
+                list_QA.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_QA))));
+                list_QA.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_QA))));
+                list_QA.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_QA))));
+                list_QA.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_QA))));
+                list_QA.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_QA))));
+                list_QA.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_QA))));
+                list_QA.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_QA))));
+                list_QA.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_QA))));
+                list_QA.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_QA))));
+                list_QA.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_QA))));
+                list_QA.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_QA))));
+                list_QA.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_QA))));
+                list_QA.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_QA))));
+                list_QA.setSTOCK_QA_CD((c.getString(c
+                        .getColumnIndex(STOCK_QA_CD_QA))));
+                list_QA.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_QA))));
+                list_QA.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_QA))));
+                list_QA.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_QA))));
+                list_QAs.add(list_QA);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return list_QAs;
+    }
+
+
+    public int updateProduct_QA(Product_QA list_QA, String incre_so, String PRODUCT_CD, String sl, String ea_unit, String stock, String po_return) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CD_QA, PRODUCT_CD);
+        values.put(PRODUCT_CODE_QA, list_QA.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_QA, list_QA.getPRODUCT_NAME());
+        values.put(EXPIRED_DATE_QA, list_QA.getEXPIRED_DATE());
+        values.put(EA_UNIT_QA, list_QA.getUNIT());
+        values.put(QTY_SET_AVAILABLE_QA, sl);
+        values.put(STOCK_QA_CD_QA, po_return);
+
+        // updating row
+        return db.update(O_QA, values,  AUTOINCREMENT_QA + " = ?",
+                new String[]{String.valueOf(incre_so)});
+
+    }
+
+
+    public void deleteProduct_QA( String cd) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_QA);
+    }
+
+    //END TABLE O_QA
 
 
 
