@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="10dp"
-            android:layout_height="120dp"
+            android:layout_height="160dp"
             android:layout_gravity="bottom"
             android:layout_weight="4"
             android:weightSum="10"
@@ -32,7 +32,7 @@
                 android:padding="5dp"
                 android:text="Kẹo Kopico 150g vị cà phê "
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -45,12 +45,12 @@
                     android:id="@+id/tvhsd1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="6"
+                    android:layout_weight="3"
                     android:background="@null"
                     android:gravity="center"
                     android:text="Hsd: "
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvhsd"
@@ -58,6 +58,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:textSize="12sp"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -72,14 +73,14 @@
 
                 <TextView
                     android:id="@+id/tvbatch1"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:background="@null"
                     android:gravity="center"
                     android:text="Batch: "
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvbatch"
@@ -89,6 +90,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textColor="@color/black"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -98,13 +100,13 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="3.5"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/idproduct"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="bottom"
                 android:text=""
                 android:textStyle="bold"
@@ -114,9 +116,9 @@
                 android:id="@+id/idproduct1"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="bottom"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:text=""
                 android:textColor="@color/black" />
 
@@ -124,10 +126,10 @@
 
                 android:id="@+id/idproduct2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:textSize="12sp"
+                android:textSize="10sp"
 
                 android:text=""
                 android:textColor="@color/black"
@@ -138,9 +140,9 @@
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text=""
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textColor="@color/black"
                 android:background="@drawable/bg_edt_sl"
                 />
@@ -152,7 +154,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -184,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:gravity="bottom|center_horizontal"
                 android:background="@drawable/bg_edt_sl"
                 android:inputType="numberDecimal"
@@ -197,7 +199,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:inputType="numberDecimal"
                 android:gravity="bottom|center_horizontal"
                 android:layout_weight="1"
@@ -212,7 +214,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:gravity="bottom|center_horizontal"
                 android:inputType="numberDecimal"
                 android:background="@drawable/bg_edt_sl"
