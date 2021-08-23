@@ -190,7 +190,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
         btnok = findViewById(R.id.buttonOK);
         listVieWTPoduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Danh Sách SP Chuyển Mã");
+        tvTitle.setText("Danh Sách SP Phân Loại");
     }
 
     private void startScan() {

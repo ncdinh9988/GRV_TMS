@@ -61,7 +61,7 @@ public class Arr_Adapter_QA extends RecyclerView.Adapter<Arr_Adapter_QA.ViewHold
                         Intent intentLPN = new Intent(context, Home_Pickup.class);
                         context.startActivity(intentLPN);
                         break;
-                    case "QA":
+                    case "Kiểm Định":
                         Intent intent = new Intent(context, Home_QA.class);
                         context.startActivity(intent);
                         break;

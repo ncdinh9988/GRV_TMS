@@ -70,7 +70,7 @@ public class Home_PhanloaiHH extends AppCompatActivity {
 
     private void prepareData(){
         arrItem = new ArrayList<>();
-        String name[] = {"Lấy Hàng", "Chuyển Mã"};
+        String name[] = {"Lấy Hàng", "Phân Loại"};
         int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho};
         String Lock_Wh_Adjustment = DatabaseHelper.getInstance().getParamByKey("LOCK_WH_Adjustment").getValue();
         for(int i = 0; i < name.length; i ++){

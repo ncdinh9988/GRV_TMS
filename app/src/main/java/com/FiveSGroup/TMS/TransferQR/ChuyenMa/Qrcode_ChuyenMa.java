@@ -120,7 +120,7 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
         checkBoxGetDVT = findViewById(R.id.checkBoxGetDVT);
         checkBoxGetLPN = findViewById(R.id.checkBoxGetLPN);
         textViewTitle = findViewById(R.id.tvTitle);
-        textViewTitle.setText("QUÉT MÃ - PO RETURN");
+        textViewTitle.setText("QUÉT MÃ - PHÂN LOẠI");
         buttonBack = findViewById(R.id.buttonQRBack);
     }
 
@@ -175,7 +175,7 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
             checkBoxGetLPN.setVisibility(View.VISIBLE);
             checkBoxGetDVT.setChecked(true);
             checkBoxGetLPN.setChecked(false);
-            textViewTitle.setText("QUÉT MÃ - CHUYỂN MÃ");
+            textViewTitle.setText("QUÉT MÃ - PHÂN LOẠI");
         }
 
     }

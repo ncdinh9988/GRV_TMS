@@ -59,7 +59,7 @@ public class Arr_Adapter_Transfer_Posting extends RecyclerView.Adapter<Arr_Adapt
                         Intent intentLPN = new Intent(context, Home_TransferPosting.class);
                         context.startActivity(intentLPN);
                         break;
-                    case "Chuyển Mã":
+                    case "Phân Loại":
                         Intent intent = new Intent(context, Home_ChuyenMa.class);
                         context.startActivity(intent);
                         break;

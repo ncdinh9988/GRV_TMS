@@ -235,7 +235,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
         btnok = findViewById(R.id.buttonOK);
         listVieWTPoduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Danh Sách SP Phân Hàng");
+        tvTitle.setText("Danh Sách SP Lấy Hàng");
     }
 
     private void startScan() {
