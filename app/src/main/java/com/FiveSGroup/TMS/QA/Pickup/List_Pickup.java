@@ -175,7 +175,7 @@ public class List_Pickup extends AppCompatActivity implements View.OnClickListen
                         int position = viewHolder.getAdapterPosition();
                         Product_Pickup product = product_pickup.get(position);
                         product_pickup.remove(position);
-                        DatabaseHelper.getInstance().deleteProduct_Transfer_Posting_Specific(product.getAUTOINCREMENT());
+                        DatabaseHelper.getInstance().deleteProduct_Pickup_Specific(product.getAUTOINCREMENT());
                         PickupListAdapter.notifyItemRemoved(position);
                     }
                 });

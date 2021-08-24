@@ -3148,6 +3148,7 @@ public class CmnFns {
 
                     pickUp.setPOSITION_TO_CODE(positionTo);
                     pickUp.setPOSITION_TO_DESCRIPTION(positionTo);
+                    pickUp.setNOTE(lpn_To);
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -4782,6 +4783,19 @@ public class CmnFns {
 
 //                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
                 }
+                if (jsonobj.getString("ParamKey").toString().equals("URL_TransferPostingClassify")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+
+//                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
+
 
                 if (jsonobj.getString("ParamKey").toString().equals("URL_StockQA")) {
                     CParam param = new CParam();

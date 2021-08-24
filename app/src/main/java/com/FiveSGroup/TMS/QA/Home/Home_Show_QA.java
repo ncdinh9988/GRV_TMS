@@ -27,7 +27,7 @@ public class Home_Show_QA extends AppCompatActivity {
     RecyclerView rvCategory;
     ArrayList<MenuItemObject> arrItem;
     Arr_Adapter_QA adpater;
-    TextView tvSale, tvVersion;
+    TextView tvSale, tvVersion , tvTitle;
     Button btnback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,9 @@ public class Home_Show_QA extends AppCompatActivity {
         tvSale = findViewById(R.id.tvSale);
         tvVersion = findViewById(R.id.tvVersion);
         btnback = findViewById(R.id.btnback);
+        tvTitle = findViewById(R.id.tvTitle);
+
+        tvTitle.setText("KIỂM ĐỊNH HÀNG HÓA");
 
 
 

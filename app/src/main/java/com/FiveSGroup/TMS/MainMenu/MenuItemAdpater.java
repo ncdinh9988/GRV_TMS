@@ -277,7 +277,7 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
                         break;
 //                        }
 
-                    case "QA":
+                    case "Kiểm Định":
 //                        if(block_Warehouse == -29){
 //                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
 //                            break;

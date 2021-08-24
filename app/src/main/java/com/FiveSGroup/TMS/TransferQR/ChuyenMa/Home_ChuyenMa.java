@@ -72,7 +72,7 @@ public class Home_ChuyenMa extends AppCompatActivity {
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
         layout = findViewById(R.id.layout);
-        urlTransferPosting = DatabaseHelper.getInstance().getParamByKey("URL_TransferPosting").getValue();;
+        urlTransferPosting = DatabaseHelper.getInstance().getParamByKey("URL_TransferPostingClassify").getValue();;
 
 
 
@@ -196,7 +196,7 @@ public class Home_ChuyenMa extends AppCompatActivity {
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
 
-                    if (url.contains("TransferPostingListItemForApp.aspx?TRANSFER_POSTING_CD")) {
+                    if (url.contains("TransferPostingClassifyForApp.aspx?TRANSFER_POSTING_CD")) {
 
                         String chuoi[] = url.split("=");
                         String code = chuoi[1];

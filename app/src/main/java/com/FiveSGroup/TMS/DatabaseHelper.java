@@ -4649,6 +4649,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 , new String[]{String.valueOf(productCode)});
 
     }
+    public void deleteProduct_Pickup_Specific(String productCode) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.delete(O_PICKUP, AUTOINCREMENT_PICKUP+ " = ?"
+                , new String[]{String.valueOf(productCode)});
+
+    }
 
     public void deleteProduct_Return_Specific(String productCode) {
         // TODO Auto-generated method stub
@@ -8651,7 +8658,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + LPN_CD_PICKUP + " TEXT ,"
             + LPN_CODE_PICKUP + " TEXT ,"
             + LPN_FROM_PICKUP + " TEXT ,"
-            + LPN_TO_PICKUP + " TEXT "
+            + LPN_TO_PICKUP + " TEXT ,"
             + NOTE_PICKUP + " TEXT "
             + ")";
 

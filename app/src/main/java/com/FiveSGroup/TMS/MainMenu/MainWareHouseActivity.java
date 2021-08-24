@@ -61,7 +61,7 @@ public class MainWareHouseActivity extends AppCompatActivity {
         arrItem = new ArrayList<>();
         String name[] = {"LPN", "Nhập Kho", "Put Away", "Let Down", "Chuyển Vị Trí", "Master Pick" ,"PickList",
                 "Xuất Kho", "Kiểm Tồn", "Chỉnh Kho" , "Gỡ Sản Phẩm","Trả Hàng" ,"Xuất Hủy","Chuyển ĐVT"
-               , "PO Return","Phân Loại HH" , "QA"
+               , "PO Return","Phân Loại HH" , "Kiểm Định"
         };
         int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho, R.drawable.ic_putaway, R.drawable.ic_letdown,
                 R.drawable.ic_chuyen_vi_tri,  R.drawable.ic_master_pick , R.drawable.ic_picklist, R.drawable.ic_xuat_kho,

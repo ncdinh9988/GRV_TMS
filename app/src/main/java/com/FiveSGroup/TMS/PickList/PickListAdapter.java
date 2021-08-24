@@ -42,7 +42,7 @@ public class PickListAdapter extends RecyclerView.Adapter<PickListAdapter.ViewHo
     @Override
     public PickListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        view = inflater.inflate(R.layout.product_view, null, false);
+        view = inflater.inflate(R.layout.product_view_masterpick, null, false);
         return new ViewHolder(view);
 
     }
