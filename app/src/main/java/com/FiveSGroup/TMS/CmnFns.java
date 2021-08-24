@@ -1340,7 +1340,7 @@ public class CmnFns {
 
         Webservice webService = new Webservice();
 
-        String result = webService.GetProductByZone(barcodeData, sale_codes, type, IsLPN, cd);
+        String result = webService.GetSPChuyenMa(barcodeData, sale_codes, type, IsLPN, cd);
 
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
         if (result.equals("-1")) {
@@ -2305,7 +2305,7 @@ public class CmnFns {
         return 1;
     }
 
-//    public int synchronizeGETProductByZoneMasterPick(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String masterPickCD, int isLPN , String vitri) {
+    //    public int synchronizeGETProductByZoneMasterPick(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String masterPickCD, int isLPN , String vitri) {
 //
 //        int status = this.allowSynchronizeBy3G();
 //        if (status != 1)
@@ -2746,6 +2746,16 @@ public class CmnFns {
 
         return 1;
     }
+    public int GetMaterialInspection(Context context, String barcode , String usercode , String batch){
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.GetMaterialInspection(barcode, usercode, batch);
+        return 1 ;
+
+    }
     public int synchronizeGETProductByZoneQA(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String listQACD, int isLPN , String batch_number) {
 
 
@@ -2754,7 +2764,7 @@ public class CmnFns {
             return -1;
 
         Webservice webService = new Webservice();
-        String result = webService.GetProductByZone(qrcode, admin, "WTP", isLPN, listQACD);
+        String result = webService.GetSPChuyenMa(qrcode, admin, "WQA", isLPN, listQACD);
         if (result.equals("-1")) {
             return -1;
         } else if (result.equals("1")) {
@@ -2813,6 +2823,7 @@ public class CmnFns {
                     listQA.setQTY_EA_AVAILABLE(quanity_ea);
                     listQA.setBATCH_NUMBER(batch_number);
                     listQA.setMANUFACTURING_DATE(manufacturing);
+                    listQA.setBARCODE(qrcode);
 
                     listQA.setPOSITION_TO_CD(warePosition);
                     listQA.setSTOCK_QA_CD(listQACD);

@@ -79,36 +79,33 @@ public class QA_Adapter extends RecyclerView.Adapter<QA_Adapter.ViewHolder> {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, Qrcode_QA.class);
-                intent.putExtra("position", "1");
-                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                intent.putExtra("c", holder.tvExpired.getText());
-                intent.putExtra("ea_unit_position", product.getUNIT());
-                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+                Intent intent = new Intent(context, List_Criteria.class);
+                intent.putExtra("product_code", product.getPRODUCT_CODE());
+                intent.putExtra("batch_number",product.getBATCH_NUMBER());
+                intent.putExtra("barcode",product.getBARCODE());
 
                 context.startActivity(intent);
 
                 ((Activity) context).finish();
             }
         });
-        holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, Qrcode_QA.class);
-                intent.putExtra("position", "2");
-                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                intent.putExtra("c", holder.tvExpired.getText());
-                intent.putExtra("ea_unit_position", product.getUNIT());
-                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
-
-
-                context.startActivity(intent);
-
-                ((Activity) context).finish();
-            }
-        });
+//        holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, Qrcode_QA.class);
+//                intent.putExtra("position", "2");
+//                intent.putExtra("product_cd", product.getPRODUCT_CD());
+//                intent.putExtra("c", holder.tvExpired.getText());
+//                intent.putExtra("ea_unit_position", product.getUNIT());
+//                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+//                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+//
+//
+//                context.startActivity(intent);
+//
+//                ((Activity) context).finish();
+//            }
+//        });
         final String oldValue = holder.edt.getText().toString();
 
 //        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {

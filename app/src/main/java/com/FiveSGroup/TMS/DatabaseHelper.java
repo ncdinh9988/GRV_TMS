@@ -125,7 +125,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 126; // version của DB khi thay
+    public static final int DATABASE_VERSION = 130; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -182,6 +182,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_SP);
         db.execSQL(CREATE_TABLE_O_CHUYENMA);
         db.execSQL(CREATE_TABLE_O_PICKUP);
+        db.execSQL(CREATE_TABLE_O_QA);
     }
 
     @Override
@@ -422,6 +423,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_PICKUP + " ADD COLUMN  "
                     + NOTE_PICKUP + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 128
+        try {
+            db.execSQL(CREATE_TABLE_O_QA);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 130
+        try {
+            db.execSQL("ALTER TABLE " + O_QA + " ADD COLUMN  "
+                    + BARCODE_QA + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -5535,7 +5553,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return listMaterialChuyenma;
     }
 
-        public int updateProduct_ChuyenMa(String product_code_from, String product_code_to , String qty ) {
+    public int updateProduct_ChuyenMa(String product_code_from, String product_code_to , String qty ) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(QTY_SET_AVAILABLE_CHUYENMA, qty);
@@ -8605,7 +8623,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //    //END TABLE O_CHUYEN_MA
 
 
-        //DATABASE PUT cd
+    //DATABASE PUT cd
     public static final String O_PICKUP = "O_PICKUP";
     public static final String WAREHOUSE_POSITION_CD_PICKUP = "WAREHOUSE_POSITION_CD_PICKUP";
     public static final String AUTOINCREMENT_PICKUP = "AUTOINCREMENT_PICKUP";
@@ -9022,6 +9040,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_TO_QA = "LPN_TO_QA";
     public static final String BATCH_NUMBER_QA = "BATCH_NUMBER_QA";
     public static final String MANUFACTURING_DATE_QA = "MANUFACTURING_DATE_QA";
+    public static final String BARCODE_QA = "BARCODE_QA";
 
     public static final String CREATE_TABLE_O_QA = "CREATE TABLE "
             + O_QA + "("
@@ -9048,6 +9067,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + LPN_CD_QA + " TEXT ,"
             + LPN_CODE_QA + " TEXT ,"
             + LPN_FROM_QA + " TEXT ,"
+            + BARCODE_QA + " TEXT ,"
             + LPN_TO_QA + " TEXT "
             + ")";
 
@@ -9059,6 +9079,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        values.put(AUTOINCREMENT_QA, list_QA.getAUTOINCREMENT());
 
         values.put(UNIQUE_CODE_QA, list_QA.getUNIT());
+        values.put(BARCODE_QA, list_QA.getBARCODE());
         values.put(BATCH_NUMBER_QA, list_QA.getBATCH_NUMBER());
         values.put(MANUFACTURING_DATE_QA, list_QA.getMANUFACTURING_DATE());
         values.put(PRODUCT_CODE_QA, list_QA.getPRODUCT_CODE());
@@ -9175,6 +9196,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_QA list_QA = new Product_QA();
                 list_QA.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_QA))));
+                list_QA.setBARCODE((c.getString(c
+                        .getColumnIndex(BARCODE_QA))));
                 list_QA.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_QA))));
                 list_QA.setMANUFACTURING_DATE((c.getString(c
@@ -9224,6 +9247,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                        .getColumnIndex(AUTOINCREMENT_QA))));
                 list_QA.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_QA))));
+                list_QA.setBARCODE((c.getString(c
+                        .getColumnIndex(BARCODE_QA))));
                 list_QA.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_QA))));
                 list_QA.setMANUFACTURING_DATE((c.getString(c
@@ -9278,7 +9303,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_QA(String po_return) {
         ArrayList<Product_QA> list_QAs = new ArrayList<Product_QA>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  * FROM " + O_QA + " where " + STOCK_QA_CD + " = " + po_return;
+        String selectQuery = "SELECT  * FROM " + O_QA + " where " + STOCK_QA_CD_QA + " = " + po_return;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -9287,6 +9312,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_QA list_QA = new Product_QA();
                 list_QA.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_QA))));
+                list_QA.setBARCODE((c.getString(c
+                        .getColumnIndex(BARCODE_QA))));
                 list_QA.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_QA))));
                 list_QA.setMANUFACTURING_DATE((c.getString(c

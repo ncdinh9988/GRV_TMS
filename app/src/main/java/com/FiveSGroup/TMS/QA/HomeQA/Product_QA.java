@@ -1,7 +1,7 @@
 package com.FiveSGroup.TMS.QA.HomeQA;
 
 public class Product_QA {
-    private String QRCODE;
+    private String BARCODE;
     private String AUTOINCREMENT;
     private String PRODUCT_CODE;
     private String PRODUCT_NAME;
@@ -27,12 +27,13 @@ public class Product_QA {
     private String BATCH_NUMBER;
     private String MANUFACTURING_DATE;
 
-    public String getQRCODE() {
-        return QRCODE;
+
+    public String getBARCODE() {
+        return BARCODE;
     }
 
-    public void setQRCODE(String QRCODE) {
-        this.QRCODE = QRCODE;
+    public void setBARCODE(String BARCODE) {
+        this.BARCODE = BARCODE;
     }
 
     public String getAUTOINCREMENT() {

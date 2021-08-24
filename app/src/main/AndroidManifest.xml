@@ -60,6 +60,12 @@
             android:name=".QA.Home.Home_Show_QA"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".QA.HomeQA.Qrcode_QA"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QA.HomeQA.List_QA"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".QA.Pickup.List_Pickup"
             android:screenOrientation="portrait" />
         <activity
@@ -67,6 +73,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".QA.Pickup.Home_Pickup"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QA.HomeQA.List_Criteria"
             android:screenOrientation="portrait" />
         <activity
             android:name=".TransferQR.ChuyenMa.Home_ChuyenMa"

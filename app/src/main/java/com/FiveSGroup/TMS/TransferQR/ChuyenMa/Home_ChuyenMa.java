@@ -196,7 +196,7 @@ public class Home_ChuyenMa extends AppCompatActivity {
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
 
-                    if (url.contains("TransferPostingClassifyForApp.aspx?TRANSFER_POSTING_CD")) {
+                    if (url.contains("TransferPostingClassifyItemForApp.aspx?TRANSFER_POSTING_CD")) {
 
                         String chuoi[] = url.split("=");
                         String code = chuoi[1];

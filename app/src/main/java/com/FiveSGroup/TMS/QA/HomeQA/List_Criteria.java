@@ -25,7 +25,6 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
-
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
 import com.FiveSGroup.TMS.global;
@@ -33,7 +32,7 @@ import com.FiveSGroup.TMS.global;
 import java.util.ArrayList;
 import java.util.List;
 
-public class List_QA extends AppCompatActivity implements View.OnClickListener {
+public class List_Criteria extends AppCompatActivity implements View.OnClickListener {
     Button buttonBack, btnok;
     ImageButton btnscan_barcode;
     //ProductListViewAdapter productListViewAdapter;
@@ -41,7 +40,8 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     RecyclerView listVieWTPoduct;
     String value1 = "";
     String positonReceive = "";
-    String productCd = "";
+    String product_code = "";
+    String barcode = "";
     String stock = "";
     String expDate = "";
     String expDate1 = "";
@@ -64,7 +64,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_qrcode);
+        setContentView(R.layout.activity_list_criteria);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -87,8 +87,9 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         Intent intent = getIntent();
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
-        productCd = intent.getStringExtra("returnCD");
+        product_code = intent.getStringExtra("product_code");
         batch_number = intent.getStringExtra("batch_number");
+        barcode = intent.getStringExtra("barcode");
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
@@ -105,25 +106,8 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void prepareData() {
-//        if (positonReceive == null) {
-//            if (lpn != null && transfer_QA != null) {
-//                //TODO
-//                alert_show_SP(1);
-//            } else if (lpn == null && transfer_QA != null) {
-//                //TODO
+
         alert_show_SP(0);
-//            }
-//
-//        } else {
-//            if (lpn != null) {
-//                //TODO
-//                alert_show_position(1);
-//            } else {
-//                //TODO
-//                alert_show_position(0);
-//            }
-//
-//        }
 
         product_QA = DatabaseHelper.getInstance().getAllProduct_QA(global.getQACD());
         QAlistAdapter = new QA_Adapter(this, product_QA);
@@ -136,15 +120,15 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                Toast.makeText(List_QA.this, "on Move", Toast.LENGTH_SHORT).show();
+                Toast.makeText(List_Criteria.this, "on Move", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                LayoutInflater factory = LayoutInflater.from(List_QA.this);
+                LayoutInflater factory = LayoutInflater.from(List_Criteria.this);
                 View layout_cus = factory.inflate(R.layout.layout_delete, null);
-                final AlertDialog dialog = new AlertDialog.Builder(List_QA.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                final AlertDialog dialog = new AlertDialog.Builder(List_Criteria.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
                 InsetDrawable inset = new InsetDrawable(back, 64);
@@ -162,7 +146,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                         //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
                         finish();
-                        Intent i = new Intent(List_QA.this, List_QA.class);
+                        Intent i = new Intent(List_Criteria.this, List_Criteria.class);
                         startActivity(i);
 
                     }
@@ -242,7 +226,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
-        Intent intent = new Intent(List_QA.this, Qrcode_QA.class);
+        Intent intent = new Intent(List_Criteria.this, Qrcode_QA.class);
         intent.putExtra("check_to_finish_at_list", "check");
         startActivity(intent);
         finish();
@@ -270,15 +254,15 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
     private void synchronizeToService() {
         String saleCode = CmnFns.readDataAdmin();
-        Dialog dialog = new Dialog(List_QA.this);
+        Dialog dialog = new Dialog(List_Criteria.this);
 
 
         if (product_QA.size() > 0) {
             if (isNotScanFromOrTo()) {
-                dialog.showDialog(List_QA.this, "Chưa Có VT Từ Hoặc VT Đến");
+                dialog.showDialog(List_Criteria.this, "Chưa Có VT Từ Hoặc VT Đến");
 
             } else if (isQuanityZero()) {
-                dialog.showDialog(List_QA.this, "Số lượng SP không được bằng 0");
+                dialog.showDialog(List_Criteria.this, "Số lượng SP không được bằng 0");
 
             } else {
                 try {
@@ -290,39 +274,39 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                     } else {
 
                         if (result == -1) {
-                            dialog.showDialog(List_QA.this, "Lưu thất bại");
+                            dialog.showDialog(List_Criteria.this, "Lưu thất bại");
                         } else if (result == -2) {
-                            dialog.showDialog(List_QA.this, "Số lượng không đủ trong tồn kho");
+                            dialog.showDialog(List_Criteria.this, "Số lượng không đủ trong tồn kho");
 
                         } else if (result == -3) {
-                            dialog.showDialog(List_QA.this, "Vị trí từ không hợp lệ");
+                            dialog.showDialog(List_Criteria.this, "Vị trí từ không hợp lệ");
 
                         } else if (result == -4) {
-                            dialog.showDialog(List_QA.this, "Trạng thái của phiếu không hợp lệ");
+                            dialog.showDialog(List_Criteria.this, "Trạng thái của phiếu không hợp lệ");
 
                         } else if (result == -5) {
-                            dialog.showDialog(List_QA.this, "Vị trí từ trùng vị trí đên");
+                            dialog.showDialog(List_Criteria.this, "Vị trí từ trùng vị trí đên");
 
                         } else if (result == -6) {
-                            dialog.showDialog(List_QA.this, "Vị trí đến không hợp lệ");
+                            dialog.showDialog(List_Criteria.this, "Vị trí đến không hợp lệ");
 
                         } else if (result == -7) {
-                            dialog.showDialog(List_QA.this, "Cập nhật trạng thái thất bại");
+                            dialog.showDialog(List_Criteria.this, "Cập nhật trạng thái thất bại");
 
                         } else if (result == -8) {
-                            dialog.showDialog(List_QA.this, "Sản phẩm không có thông tin trên phiếu ");
+                            dialog.showDialog(List_Criteria.this, "Sản phẩm không có thông tin trên phiếu ");
 
                         } else if (result == -13) {
-                            dialog.showDialog(List_QA.this, "Dữ liệu không hợp lệ");
+                            dialog.showDialog(List_Criteria.this, "Dữ liệu không hợp lệ");
 
                         } else if (result == -24) {
-                            dialog.showDialog(List_QA.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+                            dialog.showDialog(List_Criteria.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
                         } else if (result == -26) {
-                            dialog.showDialog(List_QA.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+                            dialog.showDialog(List_Criteria.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
                         } else {
-                            dialog.showDialog(List_QA.this, "Lưu thất bại");
+                            dialog.showDialog(List_Criteria.this, "Lưu thất bại");
                         }
 
                     }
@@ -333,7 +317,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
             }
         } else {
-            dialog.showDialog(List_QA.this, "Không có sản phẩm");
+            dialog.showDialog(List_Criteria.this, "Không có sản phẩm");
 
         }
 
@@ -341,9 +325,9 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void ShowSuccessMessage(String message) {
-        LayoutInflater factory = LayoutInflater.from(List_QA.this);
+        LayoutInflater factory = LayoutInflater.from(List_Criteria.this);
         View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
-        final AlertDialog dialog = new AlertDialog.Builder(List_QA.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        final AlertDialog dialog = new AlertDialog.Builder(List_Criteria.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
         InsetDrawable inset = new InsetDrawable(back, 64);
@@ -364,7 +348,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                 DatabaseHelper.getInstance().deleteProduct_QA(global.getQACD());
                 product_QA.clear();
                 QAlistAdapter.notifyDataSetChanged();
-                Intent intentToHomeQRActivity = new Intent(List_QA.this, Home_QA.class);
+                Intent intentToHomeQRActivity = new Intent(List_Criteria.this, Home_QA.class);
                 startActivity(intentToHomeQRActivity);
                 finish();
             }
@@ -374,7 +358,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
     private void actionBack() {
         try {
-            List_QA.this.finish();
+            List_Criteria.this.finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }
@@ -396,136 +380,49 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    public void alert_show_position(int isLPN) {
-        String positionTo = "";
-        String positionFrom = "";
-        ArrayList<Product_QA> cancelGoods = new ArrayList<>();
-        cancelGoods = DatabaseHelper.getInstance().getAllProduct_QA_Sync(global.getQACD());
-        for (int i = 0; i < cancelGoods.size(); i++) {
-            Product_QA cancelGood = cancelGoods.get(i);
-            if (productCd.equals(cancelGood.getPRODUCT_CD()) &&
-                    expDate1.equals(cancelGood.getEXPIRED_DATE()) &&
-                    stockinDate.equals(cancelGood.getSTOCKIN_DATE()) &&
-                    ea_unit_position.equals(cancelGood.getUNIT())) {
-
-                if (!cancelGood.getLPN_FROM().equals("") || !cancelGood.getLPN_TO().equals("")) {
-                    positionTo = cancelGood.getLPN_TO();
-                    positionFrom = cancelGood.getLPN_FROM();
-                }
-                if (!cancelGood.getPOSITION_FROM_CODE().equals("") || !cancelGood.getPOSITION_TO_CODE().equals("")) {
-                    positionTo = cancelGood.getPOSITION_TO_CODE();
-                    positionFrom = cancelGood.getPOSITION_FROM_CODE();
-                }
-                // if này là để trả lại giá trị from và to nếu người dùng muốn quét lại VTT và VTĐ
-                if (positonReceive.equals("1")) {
-                    if (!positionTo.equals("") && !positionFrom.equals("")) {
-                        positionFrom = "";
-                    }
-                } else {
-                    if (!positionTo.equals("") && !positionFrom.equals("")) {
-                        positionTo = "";
-                    }
-                }
-            }
-        }
-        try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SO, CmnFns.readDataAdmin(), value1,
-                    positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WTP", isLPN);
-
-            Dialog dialog = new Dialog(List_QA.this);
-
-            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-                dialog.showDialog(List_QA.this, "Vui Lòng Thử Lại");
-
-            } else if (postitionDes.equals("-3")) {
-                dialog.showDialog(List_QA.this, "Vị trí từ không hợp lệ");
-
-            } else if (postitionDes.equals("-6")) {
-                dialog.showDialog(List_QA.this, "Vị trí đến không hợp lệ");
-
-            } else if (postitionDes.equals("-5")) {
-                dialog.showDialog(List_QA.this, "Vị trí từ trùng vị trí đến");
-
-            } else if (postitionDes.equals("-14")) {
-                dialog.showDialog(List_QA.this, "Vị trí đến trùng vị trí từ");
-
-            } else if (postitionDes.equals("-15")) {
-                dialog.showDialog(List_QA.this, "Vị trí từ không có trong hệ thống");
-
-            } else if (postitionDes.equals("-10")) {
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong hệ thống");
-
-            } else if (postitionDes.equals("-17")) {
-                dialog.showDialog(List_QA.this, "LPN từ trùng LPN đến");
-
-            } else if (postitionDes.equals("-18")) {
-                dialog.showDialog(List_QA.this, "LPN đến trùng LPN từ");
-
-            } else if (postitionDes.equals("-19")) {
-                dialog.showDialog(List_QA.this, "Vị trí đến không có trong hệ thống");
-
-            } else if (postitionDes.equals("-12")) {
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong tồn kho");
-
-            } else if (postitionDes.equals("-27")) {
-                dialog.showDialog(List_QA.this, "Vị trí từ chưa có sản phẩm");
-
-            } else if (postitionDes.equals("-28")) {
-                dialog.showDialog(List_QA.this, "LPN đến có vị trí không hợp lệ");
-
-            } else {
-                return;
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-
-
-    }
-
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneQA(List_QA.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getQACD(), isLPN ,batch_number);
+            int postitionDes = 1;
+            postitionDes = new CmnFns().GetMaterialInspection(List_Criteria.this, barcode, CmnFns.readDataAdmin() ,batch_number);
 
-            Dialog dialog = new Dialog(List_QA.this);
+            Dialog dialog = new Dialog(List_Criteria.this);
 
             if (postitionDes == 1) {
                 return;
             } else if (postitionDes == -1) {
-                dialog.showDialog(List_QA.this, "Vui Lòng Thử Lại");
+                dialog.showDialog(List_Criteria.this, "Vui Lòng Thử Lại");
 
             } else if (postitionDes == -8) {
-                dialog.showDialog(List_QA.this, "Mã sản phẩm không có trên phiếu");
+                dialog.showDialog(List_Criteria.this, "Mã sản phẩm không có trên phiếu");
 
 
             } else if (postitionDes == -10) {
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong hệ thống");
+                dialog.showDialog(List_Criteria.this, "Mã LPN không có trong hệ thống");
 
             } else if (postitionDes == -11) {
 
-                dialog.showDialog(List_QA.this, "Mã sản phẩm không có trong kho");
+                dialog.showDialog(List_Criteria.this, "Mã sản phẩm không có trong kho");
 
 
             } else if (postitionDes == -12) {
 
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong kho");
+                dialog.showDialog(List_Criteria.this, "Mã LPN không có trong kho");
 
             } else if (postitionDes == -16) {
 
-                dialog.showDialog(List_QA.this, "Sản phẩm đã quét không nằm trong LPN nào");
+                dialog.showDialog(List_Criteria.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
             } else if (postitionDes == -20) {
 
-                dialog.showDialog(List_QA.this, "Mã sản phẩm không có trong hệ thống");
+                dialog.showDialog(List_Criteria.this, "Mã sản phẩm không có trong hệ thống");
 
             } else if (postitionDes == -21) {
 
-                dialog.showDialog(List_QA.this, "Mã sản phẩm không có trong zone");
+                dialog.showDialog(List_Criteria.this, "Mã sản phẩm không có trong zone");
 
             } else if (postitionDes == -22) {
 
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong zone");
+                dialog.showDialog(List_Criteria.this, "Mã LPN không có trong zone");
 
             }
         } catch (Exception e) {
