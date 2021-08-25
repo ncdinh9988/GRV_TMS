@@ -47,6 +47,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
     String productCd = "";
     String stock = "";
     String expDate = "";
+    String cont = "";
     String expDate1 = "";
     String stock_in = "";
     String ea_unit = "";
@@ -193,6 +194,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
+        cont = intent.getStringExtra("cont");
         expDate1 = intent.getStringExtra("expdate");
         stock_in = intent.getStringExtra("stock_in");
         ea_unit = intent.getStringExtra("ea_unit");
@@ -671,7 +673,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
             }else{
                  statusGetCust = new CmnFns().synchronizeGETProductInfo(saleCode ,value1, stockReceipt, expDate, stockinDate,
-                        ea_unit, positonReceive );
+                        ea_unit, positonReceive , cont );
                 Dialog dialog = new Dialog(ListQrcode.this);
                 if (statusGetCust == 1) {
                     return;

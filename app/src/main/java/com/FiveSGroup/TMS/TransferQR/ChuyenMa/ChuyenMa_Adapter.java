@@ -62,7 +62,7 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
 
 
         final ArrayList<Product_ChuyenMa> chuyenma = DatabaseHelper.getInstance().getDataMaterialbyItemBasic(code , unit , chuyenma_Cd);
-        for (int i= 0 ; i < chuyenma.size() ; i++){
+        for (int i = 0 ; i < chuyenma.size() ; i++){
             if(i == 0){
                 holder.idproduct1.setText(chuyenma.get(0).getPRODUCT_NAME_TO());
                 holder.idsl1.setText(chuyenma.get(0).getQTY_SET_AVAILABLE());
@@ -82,7 +82,6 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
 //                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
                         } else {
                             DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(0).getPRODUCT_CODE_FROM(), chuyenma.get(0).getPRODUCT_CODE_TO(),s.toString() );
-                            Toast.makeText(context,"đã cập nhật 1" , Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -106,7 +105,6 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
 //                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
                         } else {
                             DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(1).getPRODUCT_CODE_FROM(), chuyenma.get(1).getPRODUCT_CODE_TO(),s.toString());
-                            Toast.makeText(context,"đã cập nhật 2" , Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -130,7 +128,6 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
 //                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
                         } else {
                             DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(2).getPRODUCT_CODE_FROM(), chuyenma.get(2).getPRODUCT_CODE_TO(),s.toString());
-                            Toast.makeText(context,"đã cập nhật 3" , Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -195,14 +192,14 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
 //
 //                @Override
 //                public void onTextChanged(CharSequence s, int start, int before, int count) {
-////                    listChuyenMa.get(getAdapterPosition()).setQTY(idsl1.getText().toString());
+//                    listChuyenMa.get(getAdapterPosition()).setUNIT(idsl1.getText().toString());
 //                }
 //
 //                @Override
 //                public void afterTextChanged(Editable s) {
 //
 //                }
-
+//
 //            });
 
 

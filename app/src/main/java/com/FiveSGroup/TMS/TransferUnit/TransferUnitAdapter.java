@@ -51,7 +51,7 @@ public class TransferUnitAdapter extends RecyclerView.Adapter<TransferUnitAdapte
     @Override
     public TransferUnitAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        view = inflater.inflate(R.layout.product_view, null, false);
+        view = inflater.inflate(R.layout.product_view_masterpick, null, false);
         return new TransferUnitAdapter.ViewHolder(view);
 
     }

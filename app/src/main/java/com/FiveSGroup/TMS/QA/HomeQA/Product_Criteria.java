@@ -5,6 +5,33 @@ public class Product_Criteria {
     private String MIC_CODE;
     private String MIC_DESC;
     private String BATCH_NUMBER;
+    private String NOTE;
+    private String QTY;
+    private String MATERIA_CD;
+
+    public String getMATERIA_CD() {
+        return MATERIA_CD;
+    }
+
+    public void setMATERIA_CD(String MATERIA_CD) {
+        this.MATERIA_CD = MATERIA_CD;
+    }
+
+    public String getQTY() {
+        return QTY;
+    }
+
+    public void setQTY(String QTY) {
+        this.QTY = QTY;
+    }
+
+    public String getNOTE() {
+        return NOTE;
+    }
+
+    public void setNOTE(String NOTE) {
+        this.NOTE = NOTE;
+    }
 
     public String getPRODUCT_CODE() {
         return PRODUCT_CODE;

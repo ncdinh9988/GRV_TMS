@@ -309,9 +309,7 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
             }
 
         } else {
-
-            int statusGetCustt = new CmnFns().getChuyenMa(barcodeData, texxt, "WTP", 0, global.getChuyenMaCD());
-            int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
+            int statusGetCustt = new CmnFns().getQAFromServer(barcodeData, texxt, "WTP", 0, global.getChuyenMaCD());
 //            DatabaseHelper.getInstance().getAllProduct_ChuyenMa();
             if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData, stockinDate);

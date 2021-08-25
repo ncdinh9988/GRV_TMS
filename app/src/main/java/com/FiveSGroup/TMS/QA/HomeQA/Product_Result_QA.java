@@ -1,15 +1,13 @@
 package com.FiveSGroup.TMS.QA.HomeQA;
 
-public class Product_QA {
+public class Product_Result_QA {
     private String BARCODE;
     private String AUTOINCREMENT;
     private String PRODUCT_CODE;
     private String PRODUCT_NAME;
     private String PRODUCT_CD;
     private String QTY_EA_AVAILABLE;
-    private String POSITION_FROM_CD;
-    private String POSITION_TO_CD;
-    private String QTY;
+    private String QTY_SET_AVAILABLE;
     private String EXPIRED_DATE;
     private String STOCKIN_DATE;
     private String WAREHOUSE_POSITION_CD;
@@ -17,33 +15,12 @@ public class Product_QA {
     private String POSITION_FROM_CODE;
     private String POSITION_TO_CODE;
     private String UNIT;
-    private String POSITION_FROM_DESCRIPTION;
-    private String POSITION_TO_DESCRIPTION;
     private String STOCK_QA_CD;
-    private String LPN_CD;
-    private String LPN_CODE;
-    private String LPN_FROM;
-    private String LPN_TO;
     private String BATCH_NUMBER;
     private String MANUFACTURING_DATE;
-    private String COMPLETE;
-    private String CHECKED;
-
-    public String getCOMPLETE() {
-        return COMPLETE;
-    }
-
-    public void setCOMPLETE(String COMPLETE) {
-        this.COMPLETE = COMPLETE;
-    }
-
-    public String getCHECKED() {
-        return CHECKED;
-    }
-
-    public void setCHECKED(String CHECKED) {
-        this.CHECKED = CHECKED;
-    }
+    private String MIC_CODE;
+    private String MIC_DESC;
+    private String NOTE;
 
     public String getBARCODE() {
         return BARCODE;
@@ -93,28 +70,12 @@ public class Product_QA {
         this.QTY_EA_AVAILABLE = QTY_EA_AVAILABLE;
     }
 
-    public String getPOSITION_FROM_CD() {
-        return POSITION_FROM_CD;
+    public String getQTY_SET_AVAILABLE() {
+        return QTY_SET_AVAILABLE;
     }
 
-    public void setPOSITION_FROM_CD(String POSITION_FROM_CD) {
-        this.POSITION_FROM_CD = POSITION_FROM_CD;
-    }
-
-    public String getPOSITION_TO_CD() {
-        return POSITION_TO_CD;
-    }
-
-    public void setPOSITION_TO_CD(String POSITION_TO_CD) {
-        this.POSITION_TO_CD = POSITION_TO_CD;
-    }
-
-    public String getQTY() {
-        return QTY;
-    }
-
-    public void setQTY(String QTY) {
-        this.QTY = QTY;
+    public void setQTY_SET_AVAILABLE(String QTY_SET_AVAILABLE) {
+        this.QTY_SET_AVAILABLE = QTY_SET_AVAILABLE;
     }
 
     public String getEXPIRED_DATE() {
@@ -173,60 +134,12 @@ public class Product_QA {
         this.UNIT = UNIT;
     }
 
-    public String getPOSITION_FROM_DESCRIPTION() {
-        return POSITION_FROM_DESCRIPTION;
-    }
-
-    public void setPOSITION_FROM_DESCRIPTION(String POSITION_FROM_DESCRIPTION) {
-        this.POSITION_FROM_DESCRIPTION = POSITION_FROM_DESCRIPTION;
-    }
-
-    public String getPOSITION_TO_DESCRIPTION() {
-        return POSITION_TO_DESCRIPTION;
-    }
-
-    public void setPOSITION_TO_DESCRIPTION(String POSITION_TO_DESCRIPTION) {
-        this.POSITION_TO_DESCRIPTION = POSITION_TO_DESCRIPTION;
-    }
-
     public String getSTOCK_QA_CD() {
         return STOCK_QA_CD;
     }
 
     public void setSTOCK_QA_CD(String STOCK_QA_CD) {
         this.STOCK_QA_CD = STOCK_QA_CD;
-    }
-
-    public String getLPN_CD() {
-        return LPN_CD;
-    }
-
-    public void setLPN_CD(String LPN_CD) {
-        this.LPN_CD = LPN_CD;
-    }
-
-    public String getLPN_CODE() {
-        return LPN_CODE;
-    }
-
-    public void setLPN_CODE(String LPN_CODE) {
-        this.LPN_CODE = LPN_CODE;
-    }
-
-    public String getLPN_FROM() {
-        return LPN_FROM;
-    }
-
-    public void setLPN_FROM(String LPN_FROM) {
-        this.LPN_FROM = LPN_FROM;
-    }
-
-    public String getLPN_TO() {
-        return LPN_TO;
-    }
-
-    public void setLPN_TO(String LPN_TO) {
-        this.LPN_TO = LPN_TO;
     }
 
     public String getBATCH_NUMBER() {
@@ -243,5 +156,29 @@ public class Product_QA {
 
     public void setMANUFACTURING_DATE(String MANUFACTURING_DATE) {
         this.MANUFACTURING_DATE = MANUFACTURING_DATE;
+    }
+
+    public String getMIC_CODE() {
+        return MIC_CODE;
+    }
+
+    public void setMIC_CODE(String MIC_CODE) {
+        this.MIC_CODE = MIC_CODE;
+    }
+
+    public String getMIC_DESC() {
+        return MIC_DESC;
+    }
+
+    public void setMIC_DESC(String MIC_DESC) {
+        this.MIC_DESC = MIC_DESC;
+    }
+
+    public String getNOTE() {
+        return NOTE;
+    }
+
+    public void setNOTE(String NOTE) {
+        this.NOTE = NOTE;
     }
 }

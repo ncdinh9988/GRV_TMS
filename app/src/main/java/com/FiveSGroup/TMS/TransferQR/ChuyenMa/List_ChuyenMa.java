@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.PoReturn.Home_PoReturn;
+import com.FiveSGroup.TMS.QA.HomeQA.List_QA;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
@@ -105,6 +106,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
     }
 
     private void prepareData() {
+        alert_show_SP(0);
         DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());
         chuyen_Ma = DatabaseHelper.getInstance().getshow_ChuyenMa(global.getChuyenMaCD());
         ChuyenMa_ListAdapter = new ChuyenMa_Adapter(this, chuyen_Ma);
@@ -169,6 +171,63 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(listVieWTPoduct);
+    }
+
+    public void alert_show_SP(int isLPN) {
+
+        try {
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneChuyenMa(value1, CmnFns.readDataAdmin(), "WTP", 0, global.getChuyenMaCD());
+
+
+            Dialog dialog = new Dialog(List_ChuyenMa.this);
+
+            if (postitionDes == 1) {
+                return;
+            } else if (postitionDes == -1) {
+                dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Thử Lại");
+
+            } else if (postitionDes == -8) {
+                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trên phiếu");
+
+
+            } else if (postitionDes == -10) {
+                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong hệ thống");
+
+            } else if (postitionDes == -11) {
+
+                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong kho");
+
+
+            } else if (postitionDes == -12) {
+
+                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong kho");
+
+            } else if (postitionDes == -16) {
+
+                dialog.showDialog(List_ChuyenMa.this, "Sản phẩm đã quét không nằm trong LPN nào");
+
+            } else if (postitionDes == -20) {
+
+                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong hệ thống");
+
+            } else if (postitionDes == -21) {
+
+                dialog.showDialog(List_ChuyenMa.this, "Mã sản phẩm không có trong zone");
+
+            } else if (postitionDes == -22) {
+
+                dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong zone");
+
+            }
+
+
+        } catch(Exception e){
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+
+
     }
 
     @Override

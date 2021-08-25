@@ -64,7 +64,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_qrcode);
+        setContentView(R.layout.activity_list_qa);
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -177,6 +177,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                         Product_QA product = product_QA.get(position);
                         product_QA.remove(position);
                         DatabaseHelper.getInstance().deleteProduct_QA_Specific(product.getAUTOINCREMENT());
+                        DatabaseHelper.getInstance().deleteallCriteria(batch_number, global.getQACD());
                         QAlistAdapter.notifyItemRemoved(position);
                     }
                 });
@@ -274,15 +275,9 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
 
         if (product_QA.size() > 0) {
-            if (isNotScanFromOrTo()) {
-                dialog.showDialog(List_QA.this, "Chưa Có VT Từ Hoặc VT Đến");
 
-            } else if (isQuanityZero()) {
-                dialog.showDialog(List_QA.this, "Số lượng SP không được bằng 0");
-
-            } else {
                 try {
-                    int result = new CmnFns().synchronizeData(saleCode, "WTP", global.getQACD());
+                    int result = new CmnFns().synchronizeData_RQBT_Final(saleCode, "WQA", global.getQACD());
                     if (result >= 1) {
                         ShowSuccessMessage("Lưu thành công");
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
@@ -331,7 +326,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                     finish();
                 }
 
-            }
+
         } else {
             dialog.showDialog(List_QA.this, "Không có sản phẩm");
 
@@ -362,6 +357,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
             public void onClick(View view) {
                 dialog.dismiss();
                 DatabaseHelper.getInstance().deleteProduct_QA(global.getQACD());
+                DatabaseHelper.getInstance().deleteallCriteria(batch_number,global.getQACD());
                 product_QA.clear();
                 QAlistAdapter.notifyDataSetChanged();
                 Intent intentToHomeQRActivity = new Intent(List_QA.this, Home_QA.class);
@@ -396,142 +392,62 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    public void alert_show_position(int isLPN) {
-        String positionTo = "";
-        String positionFrom = "";
-        ArrayList<Product_QA> cancelGoods = new ArrayList<>();
-        cancelGoods = DatabaseHelper.getInstance().getAllProduct_QA_Sync(global.getQACD());
-        for (int i = 0; i < cancelGoods.size(); i++) {
-            Product_QA cancelGood = cancelGoods.get(i);
-            if (productCd.equals(cancelGood.getPRODUCT_CD()) &&
-                    expDate1.equals(cancelGood.getEXPIRED_DATE()) &&
-                    stockinDate.equals(cancelGood.getSTOCKIN_DATE()) &&
-                    ea_unit_position.equals(cancelGood.getUNIT())) {
-
-                if (!cancelGood.getLPN_FROM().equals("") || !cancelGood.getLPN_TO().equals("")) {
-                    positionTo = cancelGood.getLPN_TO();
-                    positionFrom = cancelGood.getLPN_FROM();
-                }
-                if (!cancelGood.getPOSITION_FROM_CODE().equals("") || !cancelGood.getPOSITION_TO_CODE().equals("")) {
-                    positionTo = cancelGood.getPOSITION_TO_CODE();
-                    positionFrom = cancelGood.getPOSITION_FROM_CODE();
-                }
-                // if này là để trả lại giá trị from và to nếu người dùng muốn quét lại VTT và VTĐ
-                if (positonReceive.equals("1")) {
-                    if (!positionTo.equals("") && !positionFrom.equals("")) {
-                        positionFrom = "";
-                    }
-                } else {
-                    if (!positionTo.equals("") && !positionFrom.equals("")) {
-                        positionTo = "";
-                    }
-                }
-            }
-        }
-        try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SO, CmnFns.readDataAdmin(), value1,
-                    positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WTP", isLPN);
-
-            Dialog dialog = new Dialog(List_QA.this);
-
-            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-                dialog.showDialog(List_QA.this, "Vui Lòng Thử Lại");
-
-            } else if (postitionDes.equals("-3")) {
-                dialog.showDialog(List_QA.this, "Vị trí từ không hợp lệ");
-
-            } else if (postitionDes.equals("-6")) {
-                dialog.showDialog(List_QA.this, "Vị trí đến không hợp lệ");
-
-            } else if (postitionDes.equals("-5")) {
-                dialog.showDialog(List_QA.this, "Vị trí từ trùng vị trí đến");
-
-            } else if (postitionDes.equals("-14")) {
-                dialog.showDialog(List_QA.this, "Vị trí đến trùng vị trí từ");
-
-            } else if (postitionDes.equals("-15")) {
-                dialog.showDialog(List_QA.this, "Vị trí từ không có trong hệ thống");
-
-            } else if (postitionDes.equals("-10")) {
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong hệ thống");
-
-            } else if (postitionDes.equals("-17")) {
-                dialog.showDialog(List_QA.this, "LPN từ trùng LPN đến");
-
-            } else if (postitionDes.equals("-18")) {
-                dialog.showDialog(List_QA.this, "LPN đến trùng LPN từ");
-
-            } else if (postitionDes.equals("-19")) {
-                dialog.showDialog(List_QA.this, "Vị trí đến không có trong hệ thống");
-
-            } else if (postitionDes.equals("-12")) {
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong tồn kho");
-
-            } else if (postitionDes.equals("-27")) {
-                dialog.showDialog(List_QA.this, "Vị trí từ chưa có sản phẩm");
-
-            } else if (postitionDes.equals("-28")) {
-                dialog.showDialog(List_QA.this, "LPN đến có vị trí không hợp lệ");
-
-            } else {
-                return;
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-
-
-    }
 
     public void alert_show_SP(int isLPN) {
-        try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneQA(List_QA.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getQACD(), isLPN ,batch_number);
 
-            Dialog dialog = new Dialog(List_QA.this);
+            try {
 
-            if (postitionDes == 1) {
-                return;
-            } else if (postitionDes == -1) {
-                dialog.showDialog(List_QA.this, "Vui Lòng Thử Lại");
+                int postitionDes = new CmnFns().synchronizeGETProductByZoneQA(List_QA.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getQACD(), isLPN, batch_number);
 
-            } else if (postitionDes == -8) {
-                dialog.showDialog(List_QA.this, "Mã sản phẩm không có trên phiếu");
+                Dialog dialog = new Dialog(List_QA.this);
 
-
-            } else if (postitionDes == -10) {
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong hệ thống");
-
-            } else if (postitionDes == -11) {
-
-                dialog.showDialog(List_QA.this, "Mã sản phẩm không có trong kho");
+                if (postitionDes == 1) {
+                    return;
+                }
+//                else if (postitionDes == -1) {
+//                    dialog.showDialog(List_QA.this, "Vui Lòng Thử Lại");
+//
+//                }
+                else if (postitionDes == -8) {
+                    dialog.showDialog(List_QA.this, "Mã sản phẩm không có trên phiếu");
 
 
-            } else if (postitionDes == -12) {
+                } else if (postitionDes == -10) {
+                    dialog.showDialog(List_QA.this, "Mã LPN không có trong hệ thống");
 
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong kho");
+                } else if (postitionDes == -11) {
 
-            } else if (postitionDes == -16) {
+                    dialog.showDialog(List_QA.this, "Mã sản phẩm không có trong kho");
 
-                dialog.showDialog(List_QA.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
-            } else if (postitionDes == -20) {
+                } else if (postitionDes == -12) {
 
-                dialog.showDialog(List_QA.this, "Mã sản phẩm không có trong hệ thống");
+                    dialog.showDialog(List_QA.this, "Mã LPN không có trong kho");
 
-            } else if (postitionDes == -21) {
+                } else if (postitionDes == -16) {
 
-                dialog.showDialog(List_QA.this, "Mã sản phẩm không có trong zone");
+                    dialog.showDialog(List_QA.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
-            } else if (postitionDes == -22) {
+                } else if (postitionDes == -20) {
 
-                dialog.showDialog(List_QA.this, "Mã LPN không có trong zone");
+                    dialog.showDialog(List_QA.this, "Mã sản phẩm không có trong hệ thống");
 
-            }
-        } catch (Exception e) {
+                } else if (postitionDes == -21) {
+
+                    dialog.showDialog(List_QA.this, "Mã sản phẩm không có trong zone");
+
+                } else if (postitionDes == -22) {
+
+                    dialog.showDialog(List_QA.this, "Mã LPN không có trong zone");
+
+                }
+
+
+        } catch(Exception e){
             Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();
         }
+
 
 
     }

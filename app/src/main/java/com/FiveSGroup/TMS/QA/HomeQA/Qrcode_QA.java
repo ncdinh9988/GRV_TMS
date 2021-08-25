@@ -309,7 +309,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WTP", 0, global.getTransferPostingCD());
+            int statusGetCustt = new CmnFns().getQAFromServer(barcodeData, texxt, "WQA", 0, global.getQACD());
             if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData, stockinDate);
             } else {

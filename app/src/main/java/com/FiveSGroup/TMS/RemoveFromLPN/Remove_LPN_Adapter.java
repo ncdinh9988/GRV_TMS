@@ -39,7 +39,7 @@ public class Remove_LPN_Adapter extends RecyclerView.Adapter<Remove_LPN_Adapter.
     @Override
     public Remove_LPN_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        view = inflater.inflate(R.layout.product_view, null, false);
+        view = inflater.inflate(R.layout.product_view_masterpick, null, false);
         return new Remove_LPN_Adapter.ViewHolder(view);
 
     }

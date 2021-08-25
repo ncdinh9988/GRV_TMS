@@ -18,7 +18,9 @@ import com.FiveSGroup.TMS.PickList.PickList;
 import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.PutAway.Product_PutAway;
+import com.FiveSGroup.TMS.QA.HomeQA.Product_Criteria;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_QA;
+import com.FiveSGroup.TMS.QA.HomeQA.Product_Result_QA;
 import com.FiveSGroup.TMS.QA.Pickup.Product_Pickup;
 import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
@@ -125,7 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 130; // version của DB khi thay
+    public static final int DATABASE_VERSION = 134; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -183,6 +185,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_CHUYENMA);
         db.execSQL(CREATE_TABLE_O_PICKUP);
         db.execSQL(CREATE_TABLE_O_QA);
+        db.execSQL(CREATE_TABLE_O_CRITERIA);
+        db.execSQL(CREATE_TABLE_O_RESULT_QA);
     }
 
     @Override
@@ -440,6 +444,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_QA + " ADD COLUMN  "
                     + BARCODE_QA + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 132
+        try {
+            db.execSQL(CREATE_TABLE_O_CRITERIA);
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -5290,6 +5302,194 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.execSQL("delete from " + O_BATCH);
     }
+    //Table O_RESULT_QA để chứa dữ liệu quét material chuyen ma
+
+
+
+    public static final String O_RESULT_QA = "O_RESULT_QA";
+    public static final String QRCODE_RESULT_QA = "QRCODE_RESULT_QA";
+    public static final String PRODUCT_CODE_RESULT_QA = "PRODUCT_CODE_FROM_RESULT_QA";
+    public static final String PRODUCT_NAME_RESULT_QA = "PRODUCT_NAME_FROM_RESULT_QA";
+    public static final String PRODUCT_CD_RESULT_QA = "PRODUCT_CD_RESULT_QA";
+    public static final String QTY_EA_AVAILABLE_RESULT_QA = "QTY_EA_AVAILABLE_RESULT_QA";
+    public static final String QTY_SET_AVAILABLE_RESULT_QA = "QTY_SET_AVAILABLE_RESULT_QA";
+    public static final String EXPIRED_DATE_RESULT_QA = "EXPIRED_DATE_RESULT_QA";
+    public static final String STOCKIN_DATE_RESULT_QA = "STOCKIN_DATE_RESULT_QA";
+    public static final String WAREHOUSE_POSITION_CD_RESULT_QA = "WAREHOUSE_POSITION_CD_RESULT_QA";
+    public static final String POSITION_CODE_RESULT_QA = "POSITION_CODE_RESULT_QA";
+    public static final String UNIT_RESULT_QA = "UNIT_RESULT_QA";
+    public static final String POSITION_DESCRIPTION_RESULT_QA = "POSITION_DESCRIPTION_RESULT_QA";
+    public static final String STOCK_QA_CD_RESULT = "STOCK_QA_CD_RESULT";
+    public static final String BATCH_NUMBER_RESULT_QA = "BATCH_NUMBER_RESULT_QA";
+    public static final String MANUFACTURING_DATE_RESULT_QA = "MANUFACTURING_DATE_RESULT_QA";
+    public static final String MIC_CODE_RESULT_QA = "MIC_CODE_RESULT_QA";
+    public static final String MIC_DESC_RESULT_QA = "MIC_DESC_RESULT_QA";
+    public static final String NOTE_RESULT_QA = "NOTE_RESULT_QA";
+
+
+    public static final String CREATE_TABLE_O_RESULT_QA = "CREATE TABLE "
+            + O_RESULT_QA + "("
+            + QRCODE_RESULT_QA + " TEXT,"
+            + PRODUCT_CD_RESULT_QA + " TEXT,"
+            + PRODUCT_CODE_RESULT_QA + " TEXT,"
+            + PRODUCT_NAME_RESULT_QA + " TEXT,"
+            + QTY_EA_AVAILABLE_RESULT_QA + " TEXT,"
+            + QTY_SET_AVAILABLE_RESULT_QA + " TEXT,"
+            + EXPIRED_DATE_RESULT_QA + " TEXT,"
+            + STOCKIN_DATE_RESULT_QA + " TEXT,"
+            + WAREHOUSE_POSITION_CD_RESULT_QA + " TEXT,"
+            + POSITION_CODE_RESULT_QA + " TEXT,"
+            + UNIT_RESULT_QA + " TEXT,"
+            + MIC_CODE_RESULT_QA + " TEXT,"
+            + MIC_DESC_RESULT_QA + " TEXT,"
+            + NOTE_RESULT_QA + " TEXT,"
+            + POSITION_DESCRIPTION_RESULT_QA + " TEXT,"
+            + STOCK_QA_CD_RESULT + " TEXT,"
+            + BATCH_NUMBER_RESULT_QA + " TEXT,"
+            + MANUFACTURING_DATE_RESULT_QA + " TEXT" + ")";
+
+    public long CreateResultQA(Product_Result_QA chuyenma , String cd ) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CD_RESULT_QA, chuyenma.getPRODUCT_CD());
+        values.put(PRODUCT_CODE_RESULT_QA, chuyenma.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_RESULT_QA, chuyenma.getPRODUCT_NAME());
+        values.put(QTY_EA_AVAILABLE_RESULT_QA, chuyenma.getQTY_EA_AVAILABLE());
+        values.put(QTY_SET_AVAILABLE_RESULT_QA, chuyenma.getQTY_SET_AVAILABLE());
+        values.put(EXPIRED_DATE_RESULT_QA, chuyenma.getEXPIRED_DATE());
+        values.put(STOCKIN_DATE_RESULT_QA, chuyenma.getSTOCKIN_DATE());
+        values.put(WAREHOUSE_POSITION_CD_RESULT_QA, chuyenma.getWAREHOUSE_POSITION_CD());
+        values.put(UNIT_RESULT_QA, chuyenma.getUNIT());
+        values.put(MIC_CODE_RESULT_QA, chuyenma.getMIC_CODE());
+        values.put(MIC_DESC_RESULT_QA, chuyenma.getMIC_DESC());
+        values.put(NOTE_RESULT_QA, chuyenma.getNOTE());
+        values.put(STOCK_QA_CD_RESULT, cd);
+        values.put(BATCH_NUMBER_RESULT_QA, chuyenma.getBATCH_NUMBER());
+        values.put(MANUFACTURING_DATE_RESULT_QA, chuyenma.getMANUFACTURING_DATE());
+        // insert row
+        long id = db.insert(O_RESULT_QA, null, values);
+        return id;
+    }
+
+
+    public ArrayList<Product_Result_QA>
+    getAllProduct_RESULT_QA(String cd) {
+        ArrayList<Product_Result_QA> qrcode = new ArrayList<Product_Result_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "Select * From O_QA A INNER JOIN O_CRITERIA B ON A.BATCH_NUMBER_QA = B.BATCH_NUMBER_CRITERIA WHERE "
+                + STOCK_QA_CD_QA + " = " + cd;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Result_QA qrcodeq = new Product_Result_QA();
+
+
+                qrcodeq.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_QA))));
+                qrcodeq.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_QA))));
+                qrcodeq.setQTY_SET_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_CRITERIA))));
+                qrcodeq.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_QA))));
+                qrcodeq.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_QA))));
+                qrcodeq.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_QA))));
+                qrcodeq.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_QA))));
+                qrcodeq.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_QA))));
+                qrcodeq.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_QA))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_QA))));
+                qrcodeq.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_QA))));
+                qrcodeq.setMIC_CODE((c.getString(c
+                        .getColumnIndex(MIC_CODE))));
+                qrcodeq.setMIC_DESC((c.getString(c
+                        .getColumnIndex(MIC_DESC))));
+                qrcodeq.setNOTE((c.getString(c
+                        .getColumnIndex(NOTE_CRITERIA))));
+                qrcodeq.setQTY_SET_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_CRITERIA))));
+                qrcodeq.setSTOCK_QA_CD((c.getString(c
+                        .getColumnIndex(STOCK_QA_CD_QA))));
+
+
+
+                qrcode.add(qrcodeq);
+                CreateResultQA(qrcodeq , cd);
+
+
+            } while (c.moveToNext());
+
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+    public ArrayList<Product_Result_QA>
+    getAll_RESULT_QA(String cd) {
+        ArrayList<Product_Result_QA> qrcode = new ArrayList<Product_Result_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "Select * From " + O_RESULT_QA + " Where " +
+                QTY_SET_AVAILABLE_RESULT_QA + " != '' AND " + STOCK_QA_CD_RESULT + " = " + cd;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Result_QA qrcodeq = new Product_Result_QA();
+
+
+                qrcodeq.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_RESULT_QA))));
+                qrcodeq.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_RESULT_QA))));
+                qrcodeq.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_RESULT_QA))));
+                qrcodeq.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_RESULT_QA))));
+                qrcodeq.setQTY_SET_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_RESULT_QA))));
+                qrcodeq.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_RESULT_QA))));
+                qrcodeq.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_RESULT_QA))));
+                qrcodeq.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_RESULT_QA))));
+                qrcodeq.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_RESULT_QA))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_RESULT_QA))));
+                qrcodeq.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_RESULT_QA))));
+                qrcodeq.setMIC_CODE((c.getString(c
+                        .getColumnIndex(MIC_CODE_RESULT_QA))));
+                qrcodeq.setMIC_DESC((c.getString(c
+                        .getColumnIndex(MIC_DESC_RESULT_QA))));
+                qrcodeq.setNOTE((c.getString(c
+                        .getColumnIndex(NOTE_RESULT_QA))));
+                qrcodeq.setSTOCK_QA_CD((c.getString(c
+                        .getColumnIndex(STOCK_QA_CD_RESULT))));
+
+                qrcode.add(qrcodeq);
+//                CreateResultQA(qrcodeq , cd);
+
+
+            } while (c.moveToNext());
+
+        }
+
+        c.close();
+        return qrcode;
+    }
 
     //Table O_ChuyenMa để chứa dữ liệu quét material chuyen ma
 
@@ -5861,6 +6061,115 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.execSQL("delete from " + O_EXP);
+    }
+
+    //End table EXP
+
+    //Table O_CRITERIA để chứa dữ liệu quét exp lần đầu
+    public static final String O_CRITERIA = "O_CRITERIA";
+    public static final String PRODUCT_CODE_CRITERIA = "PRODUCT_CODE_CRITERIA";
+    public static final String MIC_CODE = "MIC_CODE";
+    public static final String MIC_DESC = "MIC_DESC";
+    public static final String BATCH_NUMBER_CRITERIA = "BATCH_NUMBER_CRITERIA";
+    public static final String NOTE_CRITERIA = "NOTE_CRITERIA";
+    public static final String QTY_CRITERIA = "QTY_CRITERIA";
+    public static final String MATERIA_CD_CRITERIA = "MATERIA_CD_CRITERIA";
+
+
+    public static final String CREATE_TABLE_O_CRITERIA = "CREATE TABLE "
+            + O_CRITERIA + "("
+            + PRODUCT_CODE_CRITERIA + " TEXT,"
+            + MIC_CODE + " TEXT,"
+            + MIC_DESC + " TEXT,"
+            + QTY_CRITERIA + " TEXT,"
+            + BATCH_NUMBER_CRITERIA + " TEXT,"
+            + MATERIA_CD_CRITERIA + " TEXT,"
+            + NOTE_CRITERIA + " TEXT" + ")";
+
+    public long CreateCriteria(Product_Criteria criteria) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        //values.put(QRCODE, qrcode.getQRCODE());
+        values.put(PRODUCT_CODE_CRITERIA, criteria.getPRODUCT_CODE());
+        values.put(MIC_CODE, criteria.getMIC_CODE());
+        values.put(MIC_DESC, criteria.getMIC_DESC());
+        values.put(QTY_CRITERIA, criteria.getQTY());
+        values.put(BATCH_NUMBER_CRITERIA, criteria.getBATCH_NUMBER());
+        values.put(MATERIA_CD_CRITERIA, criteria.getMATERIA_CD());
+        values.put(NOTE_CRITERIA, criteria.getNOTE());
+        // insert row
+        long id = db.insert(O_CRITERIA, null, values);
+        return id;
+    }
+
+    public ArrayList<Product_Criteria>
+    getallCriteria(String batch) {
+        ArrayList<Product_Criteria> listcriteria = new ArrayList<Product_Criteria>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT * FROM " + O_CRITERIA + " where " + BATCH_NUMBER_CRITERIA + " = '" + batch + "'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product_Criteria item_criteria = new Product_Criteria();
+                item_criteria.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_CRITERIA))));
+                item_criteria.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CRITERIA))));
+                item_criteria.setMIC_CODE((c.getString(c
+                        .getColumnIndex(MIC_CODE))));
+                item_criteria.setMIC_DESC((c.getString(c
+                        .getColumnIndex(MIC_DESC))));
+                item_criteria.setQTY((c.getString(c
+                        .getColumnIndex(QTY_CRITERIA))));
+                item_criteria.setNOTE((c.getString(c
+                        .getColumnIndex(NOTE_CRITERIA))));
+                item_criteria.setMATERIA_CD((c.getString(c
+                        .getColumnIndex(MATERIA_CD_CRITERIA))));
+
+                listcriteria.add(item_criteria);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return listcriteria;
+    }
+
+
+    public int updateunit_Criteria(String mic_code , String batch, String qty , String cd) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(QTY_CRITERIA, qty);
+
+        // updating row
+        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND " + MATERIA_CD_CRITERIA + " = ? ",
+                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd)});
+
+    }
+
+    public int updatenote_Criteria(String mic_code , String batch, String note ,String cd) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(NOTE_CRITERIA, note);
+
+        // updating row
+        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND " + MATERIA_CD_CRITERIA + " = ? ",
+                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd)});
+
+    }
+
+
+    public void deleteallCriteria(String batch , String cd) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_CRITERIA + " where "
+                + BATCH_NUMBER_CRITERIA + " = " + batch + " AND "
+                + MATERIA_CD_CRITERIA + " = " + cd);
     }
 
     //End table EXP
@@ -9041,6 +9350,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String BATCH_NUMBER_QA = "BATCH_NUMBER_QA";
     public static final String MANUFACTURING_DATE_QA = "MANUFACTURING_DATE_QA";
     public static final String BARCODE_QA = "BARCODE_QA";
+    public static final String CHECKED_QA = "CHECKED_QA";
 
     public static final String CREATE_TABLE_O_QA = "CREATE TABLE "
             + O_QA + "("
@@ -9060,6 +9370,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + POSITION_FROM_CODE_QA + " TEXT,"
             + POSITION_FROM_DESCRIPTION_QA + " TEXT,"
             + POSITION_TO_QA + " TEXT,"
+            + CHECKED_QA + " TEXT,"
             + POSITION_TO_CODE_QA + " TEXT,"
             + POSITION_TO_DESCRIPTION_QA + " TEXT,"
             + STOCK_QA_CD_QA + " TEXT,"
@@ -9091,6 +9402,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(QTY_EA_AVAILABLE_QA, list_QA.getQTY_EA_AVAILABLE());
         values.put(EXPIRED_DATE_QA, list_QA.getEXPIRED_DATE());
         values.put(EA_UNIT_QA, list_QA.getUNIT());
+        values.put(CHECKED_QA, list_QA.getCHECKED());
         values.put(POSITION_FROM_QA, list_QA.getPOSITION_FROM_CD());
         values.put(POSITION_TO_QA, list_QA.getPOSITION_TO_CD());
         values.put(POSITION_FROM_CODE_QA, list_QA.getPOSITION_FROM_CODE());
@@ -9106,75 +9418,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public int updatePositionFrom_list_QA_LPN(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+    public int updateChecked_QA(String batch , String cd) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
 
-        values.put(POSITION_FROM_QA, wareHouse);
-        values.put(POSITION_FROM_DESCRIPTION_QA, descreption);
-
-        values.put(POSITION_FROM_CODE_QA, from);
-        values.put(LPN_FROM_QA, from);
-
+        values.put(CHECKED_QA, "YES");
 
         // updating row
-        return db.update(O_QA, values, AUTOINCREMENT_QA + " = ? ",
-                new String[]{String.valueOf(id_unique_SO)});
-
-    }
-
-    public int updatePositionFrom_list_QA(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
-        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-
-        ContentValues values = new ContentValues();
-
-        values.put(POSITION_FROM_QA, wareHouse);
-        values.put(POSITION_FROM_CODE_QA, from);
-        values.put(LPN_FROM_QA, "");
-        values.put(POSITION_FROM_DESCRIPTION_QA, descreption);
-
-
-        // updating row
-        return db.update(O_QA, values, AUTOINCREMENT_QA + " = ? ",
-                new String[]{String.valueOf(id_unique_SO)});
-
-    }
-
-    public int updatePositionTo_list_QA_LPN(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
-
-        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-
-        ContentValues values = new ContentValues();
-        values.put(POSITION_TO_QA, wareHouse);
-        values.put(POSITION_TO_DESCRIPTION_QA, descreption);
-        values.put(LPN_TO_QA, to);
-
-        values.put(POSITION_TO_CODE_QA, to);
-        // updating row
-        return db.update(O_QA, values,
-                AUTOINCREMENT_QA + " = ? ",
-                new String[]{String.valueOf(id_unique_SO)});
-
-
-    }
-
-
-    public int updatePositionTo_list_QA(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
-
-        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-
-        ContentValues values = new ContentValues();
-        values.put(POSITION_TO_QA, wareHouse);
-        values.put(POSITION_TO_CODE_QA, to);
-        values.put(LPN_TO_QA, "");
-
-        values.put(POSITION_TO_DESCRIPTION_QA, descreption);
-        // updating row
-        return db.update(O_QA, values,
-                AUTOINCREMENT_QA + " = ? ",
-                new String[]{String.valueOf(id_unique_SO)});
-
+        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? ",
+                new String[]{String.valueOf(batch),String.valueOf(cd)});
 
     }
 

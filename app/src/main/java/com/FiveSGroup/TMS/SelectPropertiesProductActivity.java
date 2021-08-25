@@ -51,7 +51,7 @@ import java.util.Locale;
 public class SelectPropertiesProductActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private TextView tvProductSelectName;
-    private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate, edtSelectShelfLife, edtSelectShelfLifeDate;
+    private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate, edtSelectShelfLife, edtSelectShelfLifeDate , edtcont;
     private Spinner spinnerProductUnit;
     private DatePickerDialog pickerDialog;
     private ArrayList<String> units;
@@ -67,6 +67,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             selectedUnit = "",
             currentDateandTime = "",
             stockinDate = "",
+            cont = "",
             expiredDate = "",
             shelfLife = "",
             shelfLifeDate = "",
@@ -174,6 +175,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         edtSelectProductExpiredDate = findViewById(R.id.edtSelectProductExpiredDate);
         edtSelectProductStockinDate = findViewById(R.id.edtSelectProductStockinDate);
         edtSelectShelfLife = findViewById(R.id.edtSelectShelfLife);
+        edtcont = findViewById(R.id.edtcont);
         spinnerProductUnit = findViewById(R.id.spinnerProductUnit);
         edtSelectProductExpiredDate.setOnClickListener(this);
         edtSelectProductStockinDate.setOnClickListener(this);
@@ -300,6 +302,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
     private void createProduct(final Class activity, final String type) {
         expiredDate = edtSelectProductExpiredDate.getText().toString().trim();
         stockinDate = edtSelectProductStockinDate.getText().toString().trim();
+        cont = edtcont.getText().toString().trim();
         shelfLife = edtSelectShelfLife.getText().toString().trim();
 //            shelfLifeDate = edtSelectShelfLifeDate.getText().toString().trim();
         final String unit = spinnerProductUnit.getSelectedItem().toString();
@@ -570,6 +573,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         intent.putExtra("returnStock", returnStock);
         intent.putExtra("exp_date", exp_date);
         intent.putExtra("stockin_date", stockinDate);
+        intent.putExtra("cont", cont);
         intent.putExtra("ea_unit", unit);
         intent.putExtra(type, type);
         startActivity(intent);

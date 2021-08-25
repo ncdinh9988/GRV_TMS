@@ -8,7 +8,7 @@
         android:id="@+id/layout_"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:weightSum="10">
@@ -24,8 +24,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="3"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:text="Cấn Dập "
+                android:text="2000912DC "
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -36,7 +35,6 @@
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
                 android:text="Cấn Dập "
                 android:gravity="center"
                 android:textColor="@color/black"
@@ -51,7 +49,8 @@
                 android:paddingLeft="2dp"
                 android:background="@drawable/bg_edittext"
                 android:textColor="@color/black"
-                android:id="@+id/edtunit"
+                android:inputType="numberDecimal"
+                android:id="@+id/edtqty"
                 android:gravity="center"
                 android:padding="5dp"
                 android:hint="Nhấn vào để chọn ngày" />
@@ -59,7 +58,46 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_margin="5dp">
 
+            <TextView
+                android:id="@+id/tvnote"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+
+                android:text="Note : "
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="8"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:background="@drawable/bg_edittext"
+                android:textColor="@color/black"
+                android:id="@+id/edtnote"
+                android:gravity="center"
+                android:padding="5dp"
+                android:hint="Nhấn vào để chọn ngày" />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey05"
+            android:layout_marginBottom="2dp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

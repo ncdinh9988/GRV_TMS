@@ -40,7 +40,7 @@ public class StockTransferAdapter extends RecyclerView.Adapter<StockTransferAdap
     @Override
     public StockTransferAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        view = inflater.inflate(R.layout.product_view, null, false);
+        view = inflater.inflate(R.layout.product_view_masterpick, null, false);
         return new StockTransferAdapter.ViewHolder(view);
 
     }

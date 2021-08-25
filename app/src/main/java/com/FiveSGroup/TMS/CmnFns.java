@@ -52,7 +52,9 @@ import com.FiveSGroup.TMS.PickList.PickList;
 import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.PutAway.Product_PutAway;
+import com.FiveSGroup.TMS.QA.HomeQA.Product_Criteria;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_QA;
+import com.FiveSGroup.TMS.QA.HomeQA.Product_Result_QA;
 import com.FiveSGroup.TMS.QA.Pickup.Product_Pickup;
 import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
@@ -1159,7 +1161,7 @@ public class CmnFns {
         return "-1";
     }
 
-    public int getChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
+    public int synchronizeGETProductByZoneChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -1245,6 +1247,7 @@ public class CmnFns {
                 DatabaseHelper.getInstance().CreateSP(sp);
 
             }
+            int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
@@ -1331,6 +1334,81 @@ public class CmnFns {
 
         return 1;
     }
+    public int getQAFromServer(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = "";
+        result = webService.GetSPChuyenMa(barcodeData, sale_codes, type, IsLPN, cd);
+
+
+
+        // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("1")) {
+            return 1;
+        } else if (result.equals("-8")) {
+            return -8;
+        } else if (result.equals("-11")) {
+            return -11;
+        } else if (result.equals("-12")) {
+            return -12;
+        } else if (result.equals("-16")) {
+            return -16;
+        } else if (result.equals("-20")) {
+            return -20;
+        } else if (result.equals("-21")) {
+            return -21;
+        } else if (result.equals("-22")) {
+            return -22;
+        }
+        if (result.equals("1")) {
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                String pro_exp = jsonobj.getString("_EXPIRY_DATE");
+                String pro_stockin = jsonobj.getString("_STOCKIN_DATE");
+                String batch = "";
+
+                    batch = jsonobj.getString("_BATCH_NUMBER");
+
+
+                Exp_Date_Tam exp_date_tam = new Exp_Date_Tam();
+                if (pro_stockin.equals("")) {
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + "---");
+                } else {
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
+                }
+
+                    exp_date_tam.setBATCH_NUMBER_TAM(batch);
+
+
+                DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
 
     public int getPutAwayFromServer(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
 
@@ -1339,8 +1417,12 @@ public class CmnFns {
             return -1;
 
         Webservice webService = new Webservice();
+        String result = "";
 
-        String result = webService.GetSPChuyenMa(barcodeData, sale_codes, type, IsLPN, cd);
+            result = webService.GetProductByZone(barcodeData, sale_codes, type, IsLPN, cd);
+
+
+
 
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
         if (result.equals("-1")) {
@@ -1773,7 +1855,7 @@ public class CmnFns {
 
 
     public int synchronizeGETProductInfo(String usercode,String qrcode, String stock, String expDate, String stockinDate,
-                                         String unit, String positonReceive ) {
+                                         String unit, String positonReceive , String cont ) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -1821,7 +1903,12 @@ public class CmnFns {
                     qrcode1.setPOSITION_DESCRIPTION(pro_position_des);
                     qrcode1.setSL_SET(String.valueOf(pro_set));
                     qrcode1.setMANUFACTURING_DATE(stockinDate);
-                    qrcode1.setBATCH_NUMBER("");
+                    if(!cont.equals("")){
+                        qrcode1.setBATCH_NUMBER(cont);
+                    }else{
+                        qrcode1.setBATCH_NUMBER("");
+                    }
+
 
 
                     qrcode1.setEA_UNIT(unit);
@@ -2746,13 +2833,48 @@ public class CmnFns {
 
         return 1;
     }
-    public int GetMaterialInspection(Context context, String barcode , String usercode , String batch){
+    public int GetMaterialInspection(Context context, String barcode , String usercode , String batch , String cd){
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
 
         Webservice webService = new Webservice();
         String result = webService.GetMaterialInspection(barcode, usercode, batch);
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("1")) {
+            return 1;
+        }
+        try {
+        ArrayList<Product_Criteria> Product_Criteria = DatabaseHelper.getInstance().getallCriteria(batch);
+        int check ;
+        check = Product_Criteria.size();
+        if(check == 0){
+                JSONArray jsonarray = new JSONArray(result);
+                for (int i = 0; i < jsonarray.length(); i++) {
+//                 lấy một đối tượng json để
+                    JSONObject jsonobj = jsonarray.getJSONObject(i);
+                    String pro_code = jsonobj.getString("PRODUCT_CODE");
+                    String mic_code = jsonobj.getString("MIC_CODE");
+                    String mic_desc = jsonobj.getString("MIC_DESC");
+                    String batch_number = jsonobj.getString("BATCH_NUMBER");
+
+                    Product_Criteria listCriteria = new Product_Criteria();
+                    listCriteria.setPRODUCT_CODE(pro_code);
+                    listCriteria.setMATERIA_CD(cd);
+                    listCriteria.setMIC_CODE(mic_code);
+                    listCriteria.setMIC_DESC(mic_desc);
+                    listCriteria.setBATCH_NUMBER(batch_number);
+                    listCriteria.setNOTE("");
+                    listCriteria.setQTY("");
+
+                    DatabaseHelper.getInstance().CreateCriteria(listCriteria);
+                }
+            }
+        }catch (Exception e){
+
+        }
+
         return 1 ;
 
     }
@@ -2835,11 +2957,11 @@ public class CmnFns {
 
                     listQA.setLPN_TO(lpn_To);
                     listQA.setLPN_CODE(lpnCode);
+                    listQA.setCHECKED("NO");
 
                     listQA.setPOSITION_TO_CODE(positionTo);
                     listQA.setPOSITION_TO_DESCRIPTION(positionTo);
 
-                    if (isLPN == 0) {
                         if (stockDate != null) {
                             listQA.setSTOCKIN_DATE(stockDate);
                         }
@@ -2851,17 +2973,7 @@ public class CmnFns {
                         listQA.setPOSITION_FROM_CODE(positionFrom);
                         listQA.setLPN_FROM(lpn_From);
                         listQA.setPOSITION_FROM_DESCRIPTION("");
-                    } else if (isLPN == 1) {
-                        listQA.setSTOCKIN_DATE(strokinDate);
-                        listQA.setEXPIRED_DATE(exxpiredDate);
-                        listQA.setUNIT(ea_unit);
-                        listQA.setQTY(quanity);
-                        listQA.setPOSITION_FROM_CD(lpn_From);
 
-                        listQA.setPOSITION_FROM_CODE(lpn_From);
-                        listQA.setLPN_FROM(lpnCode);
-                        listQA.setPOSITION_FROM_DESCRIPTION(lpn_From);
-                    }
 
                     if (isLPN == 0) {
                         ArrayList<Product_QA> Product_QAs = DatabaseHelper.getInstance().
@@ -2884,24 +2996,6 @@ public class CmnFns {
                             DatabaseHelper.getInstance().CreateQA(listQA);
 //                            return 10 ;
                         }
-                    } else if (isLPN == 1) {
-                        boolean isExistLPN = false;
-                        ArrayList<Product_QA> Product_QA = DatabaseHelper.getInstance().getAllProduct_QA(listQACD);
-                        if (Product_QA.size() > 0) {
-                            for (int j = 0; j < Product_QA.size(); j++) {
-                                if (Product_QA.get(j).getLPN_CODE().equals(lpnCode)) {
-                                    isExistLPN = true;
-                                }
-                            }
-                        }
-                        if (isExistLPN == false) {
-                            DatabaseHelper.getInstance().CreateQA(listQA);
-//                            return 10 ;
-                        } else {
-                            Dialog dialog = new Dialog(context);
-                            dialog.showDialog(context, "LPN này đã có trong danh sách");
-                        }
-
                     }
                 }
 
@@ -3161,11 +3255,14 @@ public class CmnFns {
                     pickUp.setPOSITION_TO_DESCRIPTION(positionTo);
                     pickUp.setNOTE(lpn_To);
 
+
                     if (isLPN == 0) {
                         if (stockDate != null) {
                             pickUp.setSTOCKIN_DATE(stockDate);
                         }
+
                         pickUp.setEXPIRED_DATE(expDate);
+
                         pickUp.setUNIT(unit);
                         pickUp.setQTY(String.valueOf(pro_set));
                         pickUp.setPOSITION_FROM_CD(warePosition);
@@ -4587,6 +4684,13 @@ public class CmnFns {
             // chuyen ma
             if (type.equals("WTP")) {
                 List<Product_ChuyenMa> product = DatabaseHelper.getInstance().getAll_ChuyenMa(CD);
+                if (product == null || product.size() == 0)
+                    return 1;
+                jsonData = gson.toJson(product);
+            }
+            // chuyen ma
+            if (type.equals("WQA")) {
+                List<Product_Result_QA> product = DatabaseHelper.getInstance().getAll_RESULT_QA(CD);
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
