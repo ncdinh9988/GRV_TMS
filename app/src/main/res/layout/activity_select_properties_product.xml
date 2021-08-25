@@ -269,6 +269,7 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:paddingLeft="2dp"
+                    android:maxLength="10"
                     android:background="@drawable/bg_edittext"
                     android:textColor="@color/black"
                     android:id="@+id/edtcont"

@@ -98,7 +98,7 @@
                 android:layout_height="match_parent"
                 android:gravity="bottom|center_horizontal"
                 android:padding="5dp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:maxLength="5"
                 android:text="1"
                 android:background="@null"

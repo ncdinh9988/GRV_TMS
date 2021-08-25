@@ -5648,7 +5648,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAll_ChuyenMa(String cd) {
         ArrayList<Product_ChuyenMa> qrcode = new ArrayList<Product_ChuyenMa>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "Select * From O_CHUYENMA Where " + TRANSFER_POSTING_CD_CHUYENMA + " = " + cd ;
+        String selectQuery = "Select * From O_CHUYENMA Where " +
+                QTY_SET_AVAILABLE_CHUYENMA + " != '' AND " + TRANSFER_POSTING_CD_CHUYENMA + " = " + cd  ;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
