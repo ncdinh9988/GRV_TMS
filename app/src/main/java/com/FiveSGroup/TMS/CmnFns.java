@@ -6226,7 +6226,21 @@ public class CmnFns {
 //                            return 10 ;
 
                         } else {
+                            ArrayList<InventoryProduct> getpossition_inventory = DatabaseHelper.getInstance().getposition_Inventory();
                             DatabaseHelper.getInstance().CreateInventory(inventoryProduct);
+                            try {
+                                int id_1 = Integer.parseInt(getpossition_inventory.get(0).getAUTOINCREMENT());
+                                if (id_1 >= 1){
+                                    ArrayList<InventoryProduct> getpossition_inventory_2 = DatabaseHelper.getInstance().getautoProduct_Inventory();
+                                    String id_3 = getpossition_inventory_2.get(0).getAUTOINCREMENT();
+
+                                    DatabaseHelper.getInstance().updatePositionFrom_Inventory(id_3 , getpossition_inventory.get(0).getPOSITION_FROM_CODE(),
+                                            getpossition_inventory.get(0).getPOSITION_FROM_CD(), "", "",
+                                            getpossition_inventory.get(0).getPOSITION_FROM_DESCRIPTION(), "", "");
+                                }
+                            }catch (Exception e){
+
+                            }
 //                            return 10 ;
                         }
                     } else if (isLPN == 1) {
