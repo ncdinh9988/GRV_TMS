@@ -26,16 +26,7 @@ public class Product_QA {
     private String LPN_TO;
     private String BATCH_NUMBER;
     private String MANUFACTURING_DATE;
-    private String COMPLETE;
     private String CHECKED;
-
-    public String getCOMPLETE() {
-        return COMPLETE;
-    }
-
-    public void setCOMPLETE(String COMPLETE) {
-        this.COMPLETE = COMPLETE;
-    }
 
     public String getCHECKED() {
         return CHECKED;

@@ -50,6 +50,7 @@ public class QA_Adapter extends RecyclerView.Adapter<QA_Adapter.ViewHolder> {
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvchecked.setText(product.getCHECKED());
+        holder.tvbatchnumber.setText(product.getBATCH_NUMBER());
 
 
         if(!product.getLPN_TO().equals("")){
@@ -99,7 +100,7 @@ public class QA_Adapter extends RecyclerView.Adapter<QA_Adapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageButton btnvtden, btnvtdi;
-        TextView  tvTo, tvIdProduct, tvNameProduct , tvchecked;
+        TextView  tvTo, tvIdProduct, tvNameProduct , tvchecked , tvbatchnumber;
         TextView tvExpired, tvStockin;
         LinearLayout layoutTo;
 
@@ -112,6 +113,7 @@ public class QA_Adapter extends RecyclerView.Adapter<QA_Adapter.ViewHolder> {
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
             layoutTo = itemView.findViewById(R.id.layoutTo);
+            tvbatchnumber = itemView.findViewById(R.id.tvbatchnumber);
 
             tvStockin = itemView.findViewById(R.id.tvStockin);
 

@@ -127,7 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 134; // version của DB khi thay
+    public static final int DATABASE_VERSION = 136; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -452,6 +452,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //version DB 132
         try {
             db.execSQL(CREATE_TABLE_O_CRITERIA);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 134
+        try {
+            db.execSQL("ALTER TABLE " + O_QA + " ADD COLUMN  "
+                    + CHECKED_QA + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -9435,126 +9444,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_QA>
-    getoneProduct_QA(String CD, String expDate, String ea_unit, String stockinDate, String po_return) {
-        ArrayList<Product_QA> list_QAs = new ArrayList<Product_QA>();
-        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  * FROM " + O_QA + " " + " WHERE "
-                + PRODUCT_CD_QA + " = " + CD + " AND "
-                + STOCK_QA_CD_QA + " = " + po_return + " AND "
-                + EA_UNIT_QA + " like " + " '%" + ea_unit + "%'" + " AND "
-                + EXPIRED_DATE_QA + " like " + " '%" + expDate + "%'" + " AND "
-                + STOCKIN_DATE_QA + " like " + " '%" + stockinDate + "%'";
-        Cursor c = db.rawQuery(selectQuery, null);
-        // looping through all rows and adding to list
-        if (c != null && c.moveToFirst()) {
-            do {
-                Product_QA list_QA = new Product_QA();
-                list_QA.setAUTOINCREMENT((c.getString(c
-                        .getColumnIndex(AUTOINCREMENT_QA))));
-                list_QA.setBARCODE((c.getString(c
-                        .getColumnIndex(BARCODE_QA))));
-                list_QA.setBATCH_NUMBER((c.getString(c
-                        .getColumnIndex(BATCH_NUMBER_QA))));
-                list_QA.setMANUFACTURING_DATE((c.getString(c
-                        .getColumnIndex(MANUFACTURING_DATE_QA))));
-                list_QA.setWAREHOUSE_POSITION_CD((c.getString(c
-                        .getColumnIndex(WAREHOUSE_POSITION_CD_QA))));
-                list_QA.setPRODUCT_CD((c.getString(c
-                        .getColumnIndex(PRODUCT_CD_QA))));
-                list_QA.setPRODUCT_CODE((c.getString(c
-                        .getColumnIndex(PRODUCT_CODE_QA))));
-                list_QA.setPRODUCT_NAME((c.getString(c
-                        .getColumnIndex(PRODUCT_NAME_QA))));
-                list_QA.setEXPIRED_DATE((c.getString(c
-                        .getColumnIndex(EXPIRED_DATE_QA))));
-                list_QA.setQTY((c.getString(c
-                        .getColumnIndex(QTY_SET_AVAILABLE_QA))));
-                list_QA.setUNIT((c.getString(c
-                        .getColumnIndex(EA_UNIT_QA))));
-                list_QA.setPOSITION_FROM_CODE((c.getString(c
-                        .getColumnIndex(POSITION_FROM_CODE_QA))));
-                list_QA.setPOSITION_TO_CODE((c.getString(c
-                        .getColumnIndex(POSITION_TO_CODE_QA))));
-                list_QAs.add(list_QA);
-            } while (c.moveToNext());
-        }
-
-        c.close();
-        return list_QAs;
-    }
-
-
-    public ArrayList<Product_QA>
-    getAllProduct_QA_Sync(String po_return) {
-        ArrayList<Product_QA> list_QAs = new ArrayList<Product_QA>();
-        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
-                "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
-                "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_QA +
-                " where " + STOCK_QA_CD_QA + " = " + po_return;
-        Cursor c = db.rawQuery(selectQuery, null);
-        // looping through all rows and adding to list
-        if (c != null && c.moveToFirst()) {
-            do {
-
-                Product_QA list_QA = new Product_QA();
-//                list_QA.setAUTOINCREMENT((c.getString(c
-//                        .getColumnIndex(AUTOINCREMENT_QA))));
-                list_QA.setUNIQUE_CODE((c.getString(c
-                        .getColumnIndex(UNIQUE_CODE_QA))));
-                list_QA.setBARCODE((c.getString(c
-                        .getColumnIndex(BARCODE_QA))));
-                list_QA.setBATCH_NUMBER((c.getString(c
-                        .getColumnIndex(BATCH_NUMBER_QA))));
-                list_QA.setMANUFACTURING_DATE((c.getString(c
-                        .getColumnIndex(MANUFACTURING_DATE_QA))));
-                list_QA.setWAREHOUSE_POSITION_CD((c.getString(c
-                        .getColumnIndex(WAREHOUSE_POSITION_CD_QA))));
-                list_QA.setPRODUCT_CODE((c.getString(c
-                        .getColumnIndex(PRODUCT_CODE_QA))));
-                list_QA.setPRODUCT_NAME((c.getString(c
-                        .getColumnIndex(PRODUCT_NAME_QA))));
-                list_QA.setPRODUCT_CD((c.getString(c
-                        .getColumnIndex(PRODUCT_CD_QA))));
-                list_QA.setQTY((c.getString(c
-                        .getColumnIndex(QTY_SET_AVAILABLE_QA))));
-                list_QA.setSTOCKIN_DATE((c.getString(c
-                        .getColumnIndex(STOCKIN_DATE_QA))));
-                list_QA.setQTY_EA_AVAILABLE((c.getString(c
-                        .getColumnIndex(QTY_EA_AVAILABLE_QA))));
-                list_QA.setEXPIRED_DATE((c.getString(c
-                        .getColumnIndex(EXPIRED_DATE_QA))));
-                list_QA.setUNIT((c.getString(c
-                        .getColumnIndex(EA_UNIT_QA))));
-                list_QA.setPOSITION_FROM_CD((c.getString(c
-                        .getColumnIndex(POSITION_FROM_QA))));
-                list_QA.setPOSITION_TO_CD((c.getString(c
-                        .getColumnIndex(POSITION_TO_QA))));
-                list_QA.setPOSITION_FROM_CODE((c.getString(c
-                        .getColumnIndex(POSITION_FROM_CODE_QA))));
-                list_QA.setPOSITION_TO_CODE((c.getString(c
-                        .getColumnIndex(POSITION_TO_CODE_QA))));
-                list_QA.setPOSITION_FROM_DESCRIPTION((c.getString(c
-                        .getColumnIndex(POSITION_FROM_DESCRIPTION_QA))));
-                list_QA.setPOSITION_TO_DESCRIPTION((c.getString(c
-                        .getColumnIndex(POSITION_TO_DESCRIPTION_QA))));
-                list_QA.setSTOCK_QA_CD((c.getString(c
-                        .getColumnIndex(STOCK_QA_CD_QA))));
-                list_QA.setLPN_FROM((c.getString(c
-                        .getColumnIndex(LPN_FROM_QA))));
-                list_QA.setLPN_TO((c.getString(c
-                        .getColumnIndex(LPN_TO_QA))));
-                list_QA.setLPN_CODE((c.getString(c
-                        .getColumnIndex(LPN_CODE_QA))));
-                list_QAs.add(list_QA);
-            } while (c.moveToNext());
-        }
-
-        c.close();
-        return list_QAs;
-    }
-
-    public ArrayList<Product_QA>
     getAllProduct_QA(String po_return) {
         ArrayList<Product_QA> list_QAs = new ArrayList<Product_QA>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
@@ -9613,6 +9502,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(LPN_TO_QA))));
                 list_QA.setLPN_CODE((c.getString(c
                         .getColumnIndex(LPN_CODE_QA))));
+                list_QA.setCHECKED((c.getString(c
+                        .getColumnIndex(CHECKED_QA))));
                 list_QAs.add(list_QA);
             } while (c.moveToNext());
         }
@@ -9621,23 +9512,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list_QAs;
     }
 
-
-    public int updateProduct_QA(Product_QA list_QA, String incre_so, String PRODUCT_CD, String sl, String ea_unit, String stock, String po_return) {
-        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-        ContentValues values = new ContentValues();
-        values.put(PRODUCT_CD_QA, PRODUCT_CD);
-        values.put(PRODUCT_CODE_QA, list_QA.getPRODUCT_CODE());
-        values.put(PRODUCT_NAME_QA, list_QA.getPRODUCT_NAME());
-        values.put(EXPIRED_DATE_QA, list_QA.getEXPIRED_DATE());
-        values.put(EA_UNIT_QA, list_QA.getUNIT());
-        values.put(QTY_SET_AVAILABLE_QA, sl);
-        values.put(STOCK_QA_CD_QA, po_return);
-
-        // updating row
-        return db.update(O_QA, values,  AUTOINCREMENT_QA + " = ?",
-                new String[]{String.valueOf(incre_so)});
-
-    }
 
 
     public void deleteProduct_QA( String cd) {

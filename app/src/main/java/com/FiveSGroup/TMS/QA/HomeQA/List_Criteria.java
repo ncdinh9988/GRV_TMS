@@ -138,7 +138,7 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
         btnok = findViewById(R.id.buttonOK);
         listVieWTPoduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Danh Sách SP Phân Hàng");
+        tvTitle.setText("Danh Sách SP Tiêu Chí Kiểm Định");
     }
 
     private void startScan() {

@@ -2954,10 +2954,11 @@ public class CmnFns {
                     String positionFrom = "---";
                     String lpn_From = "";
                     String lpn_To = "";
+                    String setvalues = "No";
 
                     listQA.setLPN_TO(lpn_To);
                     listQA.setLPN_CODE(lpnCode);
-                    listQA.setCHECKED("NO");
+                    listQA.setCHECKED(setvalues);
 
                     listQA.setPOSITION_TO_CODE(positionTo);
                     listQA.setPOSITION_TO_DESCRIPTION(positionTo);
@@ -2974,29 +2975,31 @@ public class CmnFns {
                         listQA.setLPN_FROM(lpn_From);
                         listQA.setPOSITION_FROM_DESCRIPTION("");
 
+                    DatabaseHelper.getInstance().CreateQA(listQA);
 
-                    if (isLPN == 0) {
-                        ArrayList<Product_QA> Product_QAs = DatabaseHelper.getInstance().
-                                getoneProduct_QA(listQA.getPRODUCT_CD(), expDate, listQA.getUNIT(), listQA.getSTOCKIN_DATE(), listQACD);
-                        if (Product_QAs.size() > 0) {
-                            Product_QA product = Product_QAs.get(0);
-                            if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
 
-                                Product_QA updateProductQA = Product_QAs.get(0);
-                                int product_set = Integer.parseInt(Product_QAs.get(0).getQTY());
-                                int sl = product_set + 1;
-                                Product_QAs.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_QA(updateProductQA, updateProductQA.getAUTOINCREMENT(),updateProductQA.getPRODUCT_CD(),
-                                        String.valueOf(sl), updateProductQA.getUNIT(), listQA.getSTOCKIN_DATE(), listQACD);
-                            } else {
-                                DatabaseHelper.getInstance().CreateQA(listQA);
-                            }
-//                            return 10 ;
-                        } else {
-                            DatabaseHelper.getInstance().CreateQA(listQA);
-//                            return 10 ;
-                        }
-                    }
+//                   if (isLPN == 0) {
+//                                    ArrayList<Product_QA> Product_QAs = DatabaseHelper.getInstance().
+//                                            getoneProduct_QA(listQA.getPRODUCT_CD(), expDate, listQA.getUNIT(), listQA.getSTOCKIN_DATE(), listQACD);
+//                                    if (Product_QAs.size() > 0) {
+//                                        Product_QA product = Product_QAs.get(0);
+//                                        if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
+//
+//                                            Product_QA updateProductQA = Product_QAs.get(0);
+//                                            int product_set = Integer.parseInt(Product_QAs.get(0).getQTY());
+//                                            int sl = product_set + 1;
+//                                            Product_QAs.get(i).setQTY(String.valueOf(product_set));
+//                                            DatabaseHelper.getInstance().updateProduct_QA(updateProductQA, updateProductQA.getAUTOINCREMENT(),updateProductQA.getPRODUCT_CD(),
+//                                                    String.valueOf(sl), updateProductQA.getUNIT(), listQA.getSTOCKIN_DATE(), listQACD);
+//                            } else {
+//                                DatabaseHelper.getInstance().CreateQA(listQA);
+//                            }
+////                            return 10 ;
+//                        } else {
+//                            DatabaseHelper.getInstance().CreateQA(listQA);
+////                            return 10 ;
+//                        }
+//                    }
                 }
 
 
@@ -6091,7 +6094,6 @@ public class CmnFns {
 
         Webservice webService = new Webservice();
 
-
         String result = webService.GetProductByZone(qrcode, admin, type, isLPN, inventoryCD);
 
         if (result.equals("-1")) {
@@ -6175,8 +6177,8 @@ public class CmnFns {
                         inventoryProduct.setQTY(String.valueOf(pro_set));
 
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ---
-                        inventoryProduct.setPOSITION_FROM_CODE(positionFrom);
                         inventoryProduct.setLPN_FROM(lpn_From);
+                        inventoryProduct.setPOSITION_FROM_CODE(positionFrom);
                         inventoryProduct.setPOSITION_FROM_DESCRIPTION("---");
                     } else if (isLPN == 1) {
                         inventoryProduct.setSTOCKIN_DATE(strokinDate);

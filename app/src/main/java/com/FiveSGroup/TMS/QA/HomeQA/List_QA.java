@@ -177,7 +177,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                         Product_QA product = product_QA.get(position);
                         product_QA.remove(position);
                         DatabaseHelper.getInstance().deleteProduct_QA_Specific(product.getAUTOINCREMENT());
-                        DatabaseHelper.getInstance().deleteallCriteria(batch_number, global.getQACD());
+
                         QAlistAdapter.notifyItemRemoved(position);
                     }
                 });
@@ -236,7 +236,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         btnok = findViewById(R.id.buttonOK);
         listVieWTPoduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Danh Sách SP Phân Hàng");
+        tvTitle.setText("Danh Sách SP Kiểm Định");
     }
 
     private void startScan() {
