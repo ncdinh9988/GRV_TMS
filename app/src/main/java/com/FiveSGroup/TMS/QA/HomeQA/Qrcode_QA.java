@@ -424,6 +424,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
         intentt.putExtra("qa_info", "333");
         intentt.putExtra("stockin_date", stockinDateShow);
         intentt.putExtra("id_unique_SO", id_unique_SO);
+        intentt.putExtra("allow", "1");
 
 
         // truyền qua cho ListQRCode để xử lí from - to
@@ -450,6 +451,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
         intentt.putExtra("batch_number", batch_number);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
+        intentt.putExtra("allow", "1");
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("exp_date", expDatetemp);
@@ -510,6 +512,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("qa_info", "333");
+                intentt.putExtra("allow", "1");
                 intentt.putExtra("id_unique_SO", id_unique_SO);
                 intentt.putExtra("returnStock", stock);
                 if (stockinDate == null) {

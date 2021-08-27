@@ -71,7 +71,7 @@ public class Home_QA extends AppCompatActivity {
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
         layout = findViewById(R.id.layout);
-        urlQA = DatabaseHelper.getInstance().getParamByKey("URL_StockQA").getValue();;
+        urlQA = DatabaseHelper.getInstance().getParamByKey("URL_StockQAPerform").getValue();;
 
 
 
@@ -195,7 +195,7 @@ public class Home_QA extends AppCompatActivity {
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
 
-                    if (url.contains("StockQAListItemForApp.aspx?STOCK_QA_CD")) {
+                    if (url.contains("StockQAPerformItemForApp.aspx?STOCK_QA_CD")) {
 
                         String chuoi[] = url.split("=");
                         String code = chuoi[1];

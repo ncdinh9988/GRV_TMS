@@ -49,6 +49,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
+    String allow = "";
     String batch_number = "";
     String lpn = "", id_unique_SO = "";
 
@@ -88,6 +89,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
+        allow = intent.getStringExtra("allow");
         batch_number = intent.getStringExtra("batch_number");
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
@@ -394,7 +396,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
 
     public void alert_show_SP(int isLPN) {
-
+        if(allow != null ){
             try {
 
                 int postitionDes = new CmnFns().synchronizeGETProductByZoneQA(List_QA.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getQACD(), isLPN, batch_number);
@@ -404,10 +406,10 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                 if (postitionDes == 1) {
                     return;
                 }
-//                else if (postitionDes == -1) {
-//                    dialog.showDialog(List_QA.this, "Vui Lòng Thử Lại");
-//
-//                }
+                else if (postitionDes == -1) {
+                    dialog.showDialog(List_QA.this, "Vui Lòng Thử Lại");
+
+                }
                 else if (postitionDes == -8) {
                     dialog.showDialog(List_QA.this, "Mã sản phẩm không có trên phiếu");
 
@@ -442,13 +444,11 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
                 }
 
-
-        } catch(Exception e){
-            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
-            finish();
+            } catch(Exception e){
+                Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
-
-
 
     }
 }
