@@ -425,6 +425,7 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
         intentt.putExtra("transfer_posting", "333");
         intentt.putExtra("stockin_date", stockinDateShow);
         intentt.putExtra("id_unique_SO", id_unique_SO);
+        intentt.putExtra("check_chuyenma", "1");
 
 
         // truyền qua cho ListQRCode để xử lí from - to
@@ -455,6 +456,7 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
         intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("transfer_posting", "333");
+        intentt.putExtra("check_chuyenma", "1");
         if (stockinDate == null) {
             intentt.putExtra("stockin_date", stockinDateShow);
 
@@ -513,6 +515,7 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
                 intentt.putExtra("transfer_posting", "333");
                 intentt.putExtra("id_unique_SO", id_unique_SO);
                 intentt.putExtra("returnStock", stock);
+                intentt.putExtra("check_chuyenma", "1");
                 if (stockinDate == null) {
                     intentt.putExtra("stockin_date", stockinDateShow);
 

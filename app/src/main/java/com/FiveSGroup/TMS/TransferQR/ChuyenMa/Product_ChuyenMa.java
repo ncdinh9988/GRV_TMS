@@ -25,6 +25,15 @@ public class Product_ChuyenMa {
     private String ITEM_BASIC;
     private String LPN_FROM;
     private String LPN_TO;
+    private String SUM_QTY;
+
+    public String getSUM_QTY() {
+        return SUM_QTY;
+    }
+
+    public void setSUM_QTY(String SUM_QTY) {
+        this.SUM_QTY = SUM_QTY;
+    }
 
     public String getLPN_FROM() {
         return LPN_FROM;

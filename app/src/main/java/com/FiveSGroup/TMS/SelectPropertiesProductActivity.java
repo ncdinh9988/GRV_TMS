@@ -306,15 +306,18 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         shelfLife = edtSelectShelfLife.getText().toString().trim();
 //            shelfLifeDate = edtSelectShelfLifeDate.getText().toString().trim();
         final String unit = spinnerProductUnit.getSelectedItem().toString();
-
-        if (spinnerProductUnit.getSelectedItem().toString().isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn đơn vị ", Toast.LENGTH_SHORT).show();
-        }
-        else if((expiredDate.equals(""))&&(stockinDate.equals(""))){
-            Toast.makeText(this, "Vui lòng chọn HSD hoặc (NSX và shelflife)", Toast.LENGTH_SHORT).show();
-        }
-        else if((expiredDate.equals(""))&&(!stockinDate.equals(""))&&(shelfLife.equals(""))) {
-            Toast.makeText(this, "Vui lòng chọn HSD hoặc (NSX và shelflife)", Toast.LENGTH_SHORT).show();
+//dành cho kho khô
+//        if (spinnerProductUnit.getSelectedItem().toString().isEmpty()) {
+//            Toast.makeText(this, "Vui lòng chọn đơn vị ", Toast.LENGTH_SHORT).show();
+//        }
+//        else if((expiredDate.equals(""))&&(stockinDate.equals(""))){
+//            Toast.makeText(this, "Vui lòng chọn HSD hoặc (NSX và shelflife)", Toast.LENGTH_SHORT).show();
+//        }
+//        else if((expiredDate.equals(""))&&(!stockinDate.equals(""))&&(shelfLife.equals(""))) {
+//            Toast.makeText(this, "Vui lòng chọn HSD hoặc (NSX và shelflife)", Toast.LENGTH_SHORT).show();
+//        }
+        if(edtcont.getText().toString().isEmpty()){
+            Toast.makeText(this, "Vui Lòng Nhập Batch/Cont ", Toast.LENGTH_SHORT).show();
         }
         else {
             try {

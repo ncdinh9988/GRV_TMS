@@ -99,7 +99,7 @@
                 android:gravity="bottom|center_horizontal"
                 android:padding="5dp"
                 android:inputType="numberDecimal"
-                android:maxLength="5"
+                android:maxLength="8"
                 android:text="1"
                 android:background="@null"
                 android:textColor="@color/black"

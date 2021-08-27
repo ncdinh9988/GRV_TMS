@@ -127,7 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 136; // version của DB khi thay
+    public static final int DATABASE_VERSION = 140; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -461,6 +461,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_QA + " ADD COLUMN  "
                     + CHECKED_QA + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 140
+        try {
+            db.execSQL("ALTER TABLE " + O_CHUYENMA + " ADD COLUMN  "
+                    + SUM_QTY_CHUYENMA + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -5528,6 +5536,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String ITEM_BASIC_CHUYENMA = "ITEM_BASIC_CHUYENMA";
     public static final String LPN_FROM_CHUYENMA = "LPN_FROM_CHUYENMA";
     public static final String LPN_TO_CHUYENMA = "LPN_TO_CHUYENMA";
+    public static final String SUM_QTY_CHUYENMA = "SUM_QTY_CHUYENMA";
+
 
     public static final String CREATE_TABLE_O_CHUYENMA = "CREATE TABLE "
             + O_CHUYENMA + "("
@@ -5548,6 +5558,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + UNIT_CHUYENMA + " TEXT,"
             + UNIT_2_CHUYENMA + " TEXT,"
             + LPN_FROM_CHUYENMA + " TEXT,"
+            + SUM_QTY_CHUYENMA + " TEXT,"
             + LPN_TO_CHUYENMA + " TEXT,"
             + POSITION_DESCRIPTION_CHUYENMA + " TEXT,"
             + TRANSFER_POSTING_CD_CHUYENMA + " TEXT,"
@@ -5575,6 +5586,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_CODE_CHUYENMA, chuyenma.getPOSITION_CODE());
         values.put(UNIT_CHUYENMA, chuyenma.getUNIT());
         values.put(UNIT_2_CHUYENMA, chuyenma.getUNIT_2());
+        values.put(SUM_QTY_CHUYENMA, chuyenma.getSUM_QTY());
         values.put(LPN_FROM_CHUYENMA, " ");
         values.put(LPN_TO_CHUYENMA, " ");
         values.put(POSITION_DESCRIPTION_CHUYENMA, chuyenma.getPOSITION_DESCRIPTION());
@@ -5711,6 +5723,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(MANUFACTURING_DATE_CHUYENMA))));
                 qrcodeq.setITEM_BASIC((c.getString(c
                         .getColumnIndex(ITEM_BASIC_CHUYENMA))));
+                qrcode.add(qrcodeq);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+    public ArrayList<Product_ChuyenMa>
+    getCheckQTy_ChuyenMa(String cd) {
+        ArrayList<Product_ChuyenMa> qrcode = new ArrayList<Product_ChuyenMa>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "Select SUM(QTY_SET_AVAILABLE_CHUYENMA) as SUM_QTY_CHUYENMA, QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA From O_CHUYENMA Where " +
+                QTY_SET_AVAILABLE_CHUYENMA + " != '' AND " + TRANSFER_POSTING_CD_CHUYENMA + " = " + cd
+                + " GROUP BY PRODUCT_CODE_FROM_CHUYENMA , UNIT_CHUYENMA , BATCH_NUMBER_CHUYENMA , ITEM_BASIC_CHUYENMA " ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_ChuyenMa qrcodeq = new Product_ChuyenMa();
+
+                qrcodeq.setSUM_QTY((c.getString(c
+                        .getColumnIndex(SUM_QTY_CHUYENMA))));
+                qrcodeq.setQTY_SET_AVAILABLE_ORIGINAL((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA))));
+
                 qrcode.add(qrcodeq);
             } while (c.moveToNext());
         }
