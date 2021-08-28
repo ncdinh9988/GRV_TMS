@@ -9,11 +9,20 @@ import java.util.TimeZone;
 
 public class OrderPhoto {
     private String Order_CD;
+    private String STOCK_QA_PRODUCT_CD ;
     private String Photo_Name;
     private String Photo_Path;
     private String Photo_CD;
     private Bitmap image;
     private long   photoCD = -1;
+
+    public String getSTOCK_QA_PRODUCT_CD() {
+        return STOCK_QA_PRODUCT_CD;
+    }
+
+    public void setSTOCK_QA_PRODUCT_CD(String STOCK_QA_PRODUCT_CD) {
+        this.STOCK_QA_PRODUCT_CD = STOCK_QA_PRODUCT_CD;
+    }
 
     public long getPhotoCD() {
         return photoCD;

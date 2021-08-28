@@ -78,6 +78,9 @@
             android:name=".QA.HomeQA.List_Criteria"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".QA.HomeQA.Image_QA.TakePhoto_QA"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".TransferQR.ChuyenMa.Home_ChuyenMa"
             android:screenOrientation="portrait" />
         <activity

@@ -390,6 +390,7 @@
     <string name="LocationFileSystem">fsys</string>
     <string name="PathFolderPicture">ImageTMS</string>
     <string name="PathFolderSalePicture">ImageTMS/imageOrder</string>
+    <string name="PathFolderSalePictureQA">ImageTMS/imageQA</string>
 
     <string name="PathFolderAdvertise">HH5S/Advertise</string>
     <string name="PathFolderelucky">/HH5S/elucky</string>

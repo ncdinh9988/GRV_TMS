@@ -18,6 +18,7 @@ import com.FiveSGroup.TMS.PickList.PickList;
 import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.PutAway.Product_PutAway;
+import com.FiveSGroup.TMS.QA.HomeQA.Image_QA.Product_Photo_QA;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_Criteria;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_QA;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_Result_QA;
@@ -127,7 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 140; // version của DB khi thay
+    public static final int DATABASE_VERSION = 144; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -187,6 +188,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_QA);
         db.execSQL(CREATE_TABLE_O_CRITERIA);
         db.execSQL(CREATE_TABLE_O_RESULT_QA);
+        db.execSQL(CREATE_TABLE_O_PHOTO_QA);
     }
 
     @Override
@@ -469,6 +471,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_CHUYENMA + " ADD COLUMN  "
                     + SUM_QTY_CHUYENMA + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 142
+        try {
+            db.execSQL(CREATE_TABLE_O_PHOTO_QA);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 144
+        try {
+            db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
+                    + SALE_QA_CD_PHOTO + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -6113,6 +6132,91 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //End table EXP
+    //Table Take Photo QA để chứa dữ liệu
+    public static final String O_PHOTO_QA = "O_PHOTO_QA";
+    public static final String PRODUCT_CODE_PHOTO_QA = "PRODUCT_CODE_PHOTO_QA";
+    public static final String STOCK_QA_CD_PHOTO_QA = "STOCK_QA_CD_PHOTO_QA";
+    public static final String UNIT_PHOTO_QA = "UNIT_PHOTO_QA";
+    public static final String EXPIRED_DATE_PHOTO_QA = "EXPIRED_DATE_PHOTO_QA";
+    public static final String BATCH_NUMBER_PHOTO_QA = "BATCH_NUMBER_PHOTO_QA";
+    public static final String STOCKIN_DATE_PHOTO_QA = "STOCKIN_DATE_PHOTO_QA";
+    public static final String PHOTO_DATE = "PHOTO_DATE";
+    public static final String PHOTO_NAME = "PHOTO_NAME";
+
+
+    public static final String CREATE_TABLE_O_PHOTO_QA = "CREATE TABLE "
+            + O_PHOTO_QA + "("
+            + PRODUCT_CODE_PHOTO_QA + " TEXT,"
+            + STOCK_QA_CD_PHOTO_QA + " TEXT,"
+            + UNIT_PHOTO_QA + " TEXT,"
+            + EXPIRED_DATE_PHOTO_QA + " TEXT,"
+            + BATCH_NUMBER_PHOTO_QA + " TEXT,"
+            + STOCKIN_DATE_PHOTO_QA + " TEXT,"
+            + PHOTO_DATE + " TEXT,"
+            + PHOTO_NAME + " TEXT" + ")";
+
+    public long CreatePhotoQA(Product_Photo_QA photo) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        //values.put(QRCODE, qrcode.getQRCODE());
+        values.put(PRODUCT_CODE_PHOTO_QA, photo.getPRODUCT_CODE());
+        values.put(STOCK_QA_CD_PHOTO_QA, photo.getSTOCK_QA_CD());
+        values.put(UNIT_PHOTO_QA, photo.getUNIT());
+        values.put(EXPIRED_DATE_PHOTO_QA, photo.getEXPIRED_DATE());
+        values.put(BATCH_NUMBER_PHOTO_QA, photo.getBATCH_NUMBER());
+        values.put(STOCKIN_DATE_PHOTO_QA, photo.getSTOCKIN_DATE());
+        values.put(PHOTO_DATE, photo.getPHOTO_DATE());
+        values.put(PHOTO_NAME, photo.getPHOTO_NAME());
+        // insert row
+        long id = db.insert(O_PHOTO_QA, null, values);
+        return id;
+    }
+
+    public ArrayList<Product_Photo_QA>
+    getallPhotoQA(String cd) {
+        ArrayList<Product_Photo_QA> listphoto = new ArrayList<Product_Photo_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT * FROM " + O_PHOTO_QA + " where " + STOCK_QA_CD_PHOTO_QA + " = " + cd ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product_Photo_QA item_photo = new Product_Photo_QA();
+                item_photo.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_PHOTO_QA))));
+                item_photo.setSTOCK_QA_CD((c.getString(c
+                        .getColumnIndex(STOCK_QA_CD_PHOTO_QA))));
+                item_photo.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_PHOTO_QA))));
+                item_photo.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_PHOTO_QA))));
+                item_photo.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PHOTO_QA))));
+                item_photo.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_PHOTO_QA))));
+                item_photo.setPHOTO_DATE((c.getString(c
+                        .getColumnIndex(PHOTO_DATE))));
+                item_photo.setPHOTO_NAME((c.getString(c
+                        .getColumnIndex(PHOTO_NAME))));
+
+
+                listphoto.add(item_photo);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return listphoto;
+    }
+
+    public void deleteallPhotoQA(String batch , String cd) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_CRITERIA + " where "
+                + BATCH_NUMBER_PHOTO_QA + " = " + batch + " AND "
+                + STOCK_QA_CD_PHOTO_QA + " = " + cd);
+    }
+    // End Table Take Photo QA
 
     //Table O_CRITERIA để chứa dữ liệu quét exp lần đầu
     public static final String O_CRITERIA = "O_CRITERIA";
@@ -6757,6 +6861,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String SALE_TAKES_PHOTO_PRIMARY_KEY = "SALE_TAKES_PHOTO_CD";
     public static final String SALE_TAKES_PHOTO_FILE_NAME = "PHOTO_NAME";
     public static final String SALE_ORDER_CD = "ORDER_CD";
+    public static final String SALE_QA_CD_PHOTO = "SALE_QA_CD_PHOTO";
+
 
     public static final String SALE_TAKES_PHOTO_FULL_PATH_FILE = "SALE_TAKES_PHOTO_FULL_PATH_FILE";
     public static final String SALE_TAKES_PHOTO_CREATED_DATE = "PHOTO_DATE";
@@ -6840,6 +6946,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String CREATE_TABLE_O_SALE_TAKES_PHOTO = "CREATE TABLE "
             + O_SALE_TAKE_PHOTO + "(" + SALE_TAKES_PHOTO_PRIMARY_KEY + " TEXT,"
             + SALE_ORDER_CD + " TEXT,"
+            + SALE_QA_CD_PHOTO + " TEXT,"
             + SALE_TAKES_PHOTO_FILE_NAME + " TEXT,"
             + SALE_TAKES_PHOTO_FULL_PATH_FILE + " TEXT,"
             + SALE_TAKES_PHOTO_CREATED_DATE + " TEXT" + ")";
@@ -7286,6 +7393,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return files;
     }
 
+    public List<OrderPhoto> getAllPhotoForQA(String cd) {
+
+        List<OrderPhoto> files = new ArrayList<OrderPhoto>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_SALE_TAKE_PHOTO;
+
+        android.database.Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                try {
+                    OrderPhoto file = new OrderPhoto();
+                    file.setSTOCK_QA_PRODUCT_CD((c.getString(c
+                            .getColumnIndex(SALE_QA_CD_PHOTO))));
+                    file.setPhoto_Name((c.getString(c
+                            .getColumnIndex(SALE_TAKES_PHOTO_FILE_NAME))));
+                    file.setPhoto_Path((c.getString(c
+                            .getColumnIndex(SALE_TAKES_PHOTO_FULL_PATH_FILE))));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                            global.getFormatDate());
+                    Date convertedDate = new Date();
+                    try {
+                        convertedDate = dateFormat.parse((c.getString(c
+                                .getColumnIndex(SALE_TAKES_PHOTO_CREATED_DATE))));
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                    file.setPhoto_Date(convertedDate);
+                    files.add(file);
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+
+            } while (c.moveToNext());
+        }
+        c.close();
+        return files;
+    }
+
     public List<OrderPhoto> getAllPhotoForOrders() {
 
         List<OrderPhoto> files = new ArrayList<OrderPhoto>();
@@ -7359,6 +7510,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(SALE_ORDER_CD, orderCD);
+        values.put(SALE_QA_CD_PHOTO, orderCD);
         values.put(SALE_TAKES_PHOTO_FILE_NAME, files.getPhoto_Name());
         values.put(SALE_TAKES_PHOTO_CREATED_DATE,
                 files.getStrDateTakesPhoto());

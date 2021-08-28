@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.QA.HomeQA.Image_QA.TakePhoto_QA;
 import com.FiveSGroup.TMS.R;
 
 import java.util.ArrayList;
@@ -82,6 +83,24 @@ public class QA_Adapter extends RecyclerView.Adapter<QA_Adapter.ViewHolder> {
                 ((Activity) context).finish();
             }
         });
+        holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, TakePhoto_QA.class);
+                intent.putExtra("product_code", product.getPRODUCT_CODE());
+                intent.putExtra("batch_number",product.getBATCH_NUMBER());
+                intent.putExtra("stockcd",product.getSTOCK_QA_CD());
+                intent.putExtra("stockindate",product.getSTOCKIN_DATE());
+                intent.putExtra("exp",product.getEXPIRED_DATE());
+                intent.putExtra("unit",product.getUNIT());
+
+                context.startActivity(intent);
+
+                ((Activity) context).finish();
+            }
+        });
+
 
     }
 

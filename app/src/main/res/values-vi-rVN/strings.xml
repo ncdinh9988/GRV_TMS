@@ -473,6 +473,7 @@
     <string name="msgSaveSuccess">Lưu thành công</string>
     <string name="TextViewCustomerAddnew"> Thêm mới KH </string>
     <string name="PathFolderSalePicture">ImageTMS/imageOrder</string>
+    <string name="PathFolderSalePictureQA">ImageTMS/imageQA</string>
 
     <string name="Home">Trang chủ</string>
     <string name="AddCustomer">Thêm KH</string>

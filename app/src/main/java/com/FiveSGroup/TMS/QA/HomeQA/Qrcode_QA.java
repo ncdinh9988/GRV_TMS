@@ -120,7 +120,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
         checkBoxGetDVT = findViewById(R.id.checkBoxGetDVT);
         checkBoxGetLPN = findViewById(R.id.checkBoxGetLPN);
         textViewTitle = findViewById(R.id.tvTitle);
-        textViewTitle.setText("QUÉT MÃ - QA");
+        textViewTitle.setText("QUÉT MÃ - KIỂM ĐỊNH");
         buttonBack = findViewById(R.id.buttonQRBack);
     }
 

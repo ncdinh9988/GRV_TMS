@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.QA.HomeQA.Image_QA.TakePhoto_QA;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 
@@ -386,6 +387,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.buttonOK:
                 synchronizeToService();
+                new CmnFns().synchronizePhotoQA(List_QA.this , global.getQACD());
                 break;
             case R.id.buttonBack:
                 actionBack();

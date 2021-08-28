@@ -26,6 +26,7 @@
     <string name="LocationFileSystem">fsys</string>
     <string name="PathFolderPicture">ImageTMS</string>
     <string name="PathFolderSalePicture">ImageTMS/imageOrder</string>
+    <string name="PathFolderSalePictureQA">ImageTMS/imageQA</string>
     <string name="PathFolderInputFiles">Inputfiles</string>
     <string name="PathFolderOutputFiles">Outputfiles</string>
     <string name="PathFolderCPInputFiles">HH5S/Inputfiles</string>

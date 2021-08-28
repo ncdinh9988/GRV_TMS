@@ -52,6 +52,7 @@ import com.FiveSGroup.TMS.PickList.PickList;
 import com.FiveSGroup.TMS.PoReturn.Product_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.PutAway.Product_PutAway;
+import com.FiveSGroup.TMS.QA.HomeQA.Image_QA.Product_Photo_QA;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_Criteria;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_QA;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_Result_QA;
@@ -105,6 +106,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import static com.FiveSGroup.TMS.global.getAdminCode;
 import static com.FiveSGroup.TMS.global.getAppContext;
 import static com.FiveSGroup.TMS.global.getSaleCode;
 
@@ -536,6 +538,112 @@ public class CmnFns {
             // TODO: handle exception
 
             return -1;
+        }
+
+    }
+    // hàm đồng bộ hình ảnh dữ liệu QA về Server
+    public int synchronizePhotoQA(Context context ,  String cd) {
+
+        try {
+
+            int status = this.allowSynchronizeBy3G();
+            if (status != 1)
+                return -1;
+
+//            List<OrderPhoto> photos = DatabaseHelper.getInstance()
+//                    .getAllPhotoForOrders(); // lấy dữ liệu các tấm hình để đồng bộ
+//            // về
+
+            List<OrderPhoto> photos = DatabaseHelper.getInstance().getAllPhotoForQA(cd);  // lấy dữ liệu các tấm hình để đồng bộ
+            // về
+            if (photos == null || photos.size() == 0)
+                return 1;
+
+            int countSync = 0;
+
+            Webservice webService = new Webservice();
+
+            int photoSize = photos.size();
+
+            for (int i = 0; i < photoSize; i++) {
+
+                // check valid imagePath
+                // kiểm tra image không tồn tại trên HH thì sẽ không đồng bộ về
+                // Server
+                // đồng thời xóa dữ liệu hình ảnh này trong DB luôn
+                try {
+                    File checkFile = new File(photos.get(i).getPhoto_Path());
+                    if (!checkFile.exists()) {
+                        countSync++;
+                        DatabaseHelper.getInstance().deletePhotoForOrders(
+                                photos.get(i).getPhoto_Name());
+                        try {
+                            checkFile.delete(); // clear file
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
+                        continue;
+                    }
+
+                    Gson gson = new GsonBuilder().create();
+
+                    // hàm tạo cấu trúc JSON để đồng bộ về Server
+                    String jsonData = gson.toJson(photos.get(i));
+                    if (!jsonData.contains("["))
+                        jsonData = "[" + jsonData;
+
+                    if (!jsonData.contains("]"))
+                        jsonData = jsonData + "]";
+                    // 5108 có thể xảy ra lỗi trong quá trình này
+                    byte[] image = CmnFns.decodeImageToString(photos.get(i)
+                            .getPhoto_Path()); // chuyển đổi hình ảnh thành mảng
+                    // byte
+
+                    String result = webService
+                            .synchronizePhotoForOrder(getAdminCode(), "3", jsonData, image); // gửi dữ liệu
+                    // về Server
+                    if (result.equals("-1")) {
+
+                    } else {
+                        // nếu thành công thì xóa dữ liệu trong DB và file trên
+                        // HH
+                        countSync++;
+                        DatabaseHelper.getInstance().deletePhotoForOrders(
+                                photos.get(i).getPhoto_Name());
+                        File file = new File(photos.get(i).getPhoto_Path());
+                        file.delete(); // clear file
+                    }
+                    // 5098 có thể xảy ra lỗi trong quá trình này
+
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+
+                    Log.d("lỗi", e.getMessage());
+                    // Bị lỗi trong quá trình chuyển 2 phần có thể  5108 + 5098
+                    // 2 phần này có thể xảy ra lỗi trong quá trình chạy
+                    // Comment phần này để tránh xảy ra lỗi khi không thể xảy ra lỗi
+//                    DatabaseHelper.getInstance().deletePhoto(
+//                            photos.get(i).getPhotoCD());
+//                    countSync++;
+//                    CmnFns.writeLogError("Photo Upload: "
+//                            + e.getMessage());
+                }
+
+
+            }
+
+            if (countSync == photoSize)
+                return 1;
+
+            return -1;
+        } catch (Exception e) {
+            // TODO: handle exception
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return 1;
+
         }
 
     }
