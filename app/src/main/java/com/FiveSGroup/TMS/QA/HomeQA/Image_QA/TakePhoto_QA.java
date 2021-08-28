@@ -90,7 +90,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
         getDataFromIntent();
         init();
         btnCap.setOnClickListener(this);
-        btnUpload.setOnClickListener(this);
+//        btnUpload.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         getImages();
         prepareData();
@@ -119,7 +119,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
         imgDisplay = findViewById(R.id.imgDisplay);
         rvListImageOrder = findViewById(R.id.rv_list_image_order);
         tvEmptyImage = findViewById(R.id.tvEmptyImage);
-        btnUpload = findViewById(R.id.btnUpload);
+//        btnUpload = findViewById(R.id.btnUpload);
         arrImage = new ArrayList<>();
     }
 
@@ -495,8 +495,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
                 prepareData();
                 //   this.setPic(this.photoFile.getAbsolutePath()); // hiển thị thumb
 
-
-
+                DatabaseHelper.getInstance().update_Image_QA(batch_number ,stockcd);
             }
 
 

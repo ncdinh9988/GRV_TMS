@@ -149,7 +149,6 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
         intent.putExtra("check_to_finish_at_list", "check");
         startActivity(intent);
         finish();
-
     }
 
 
@@ -159,12 +158,6 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
         DatabaseHelper.getInstance().updateChecked_QA(batch_number ,cd);
         DatabaseHelper.getInstance().getAllProduct_RESULT_QA(cd);
         ShowSuccessMessage("Lưu thành công");
-
-//                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-
-
-
-
     }
 
     private void ShowSuccessMessage(String message) {
@@ -181,7 +174,6 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
         Button btnClose = layout_cus.findViewById(R.id.btnHuy);
         TextView textView = layout_cus.findViewById(R.id.tvText);
         btnClose.setText("OK");
-
 
         textView.setText(message);
         btnClose.setOnClickListener(new View.OnClickListener() {

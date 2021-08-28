@@ -51,22 +51,13 @@ public class QA_Adapter extends RecyclerView.Adapter<QA_Adapter.ViewHolder> {
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvchecked.setText(product.getCHECKED());
+        holder.tvTo.setText(product.getCHECKED_IMAGE());
         holder.tvbatchnumber.setText(product.getBATCH_NUMBER());
-
-
-        if(!product.getLPN_TO().equals("")){
-            holder.tvTo.setText(product.getLPN_TO());
-        }else {
-            holder.tvTo.setText(product.getPOSITION_TO_CODE());
-        }
-
-
 
 //        holder.layoutTo.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
 
         holder.tvExpired.setText(product.getEXPIRED_DATE());
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
-
 
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -128,7 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 144; // version của DB khi thay
+    public static final int DATABASE_VERSION = 146; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -488,6 +488,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
                     + SALE_QA_CD_PHOTO + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 146
+        try {
+            db.execSQL("ALTER TABLE " + O_QA + " ADD COLUMN  "
+                    + CHECKED_IMAGE_QA + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -9552,6 +9561,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String MANUFACTURING_DATE_QA = "MANUFACTURING_DATE_QA";
     public static final String BARCODE_QA = "BARCODE_QA";
     public static final String CHECKED_QA = "CHECKED_QA";
+    public static final String CHECKED_IMAGE_QA = "CHECKED_IMAGE_QA";
 
     public static final String CREATE_TABLE_O_QA = "CREATE TABLE "
             + O_QA + "("
@@ -9572,6 +9582,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + POSITION_FROM_DESCRIPTION_QA + " TEXT,"
             + POSITION_TO_QA + " TEXT,"
             + CHECKED_QA + " TEXT,"
+            + CHECKED_IMAGE_QA + " TEXT,"
             + POSITION_TO_CODE_QA + " TEXT,"
             + POSITION_TO_DESCRIPTION_QA + " TEXT,"
             + STOCK_QA_CD_QA + " TEXT,"
@@ -9604,6 +9615,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(EXPIRED_DATE_QA, list_QA.getEXPIRED_DATE());
         values.put(EA_UNIT_QA, list_QA.getUNIT());
         values.put(CHECKED_QA, list_QA.getCHECKED());
+        values.put(CHECKED_IMAGE_QA, list_QA.getCHECKED_IMAGE());
         values.put(POSITION_FROM_QA, list_QA.getPOSITION_FROM_CD());
         values.put(POSITION_TO_QA, list_QA.getPOSITION_TO_CD());
         values.put(POSITION_FROM_CODE_QA, list_QA.getPOSITION_FROM_CODE());
@@ -9621,12 +9633,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public int updateChecked_QA(String batch , String cd) {
+
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-
         ContentValues values = new ContentValues();
-
         values.put(CHECKED_QA, "YES");
+        // updating row
+        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? ",
+                new String[]{String.valueOf(batch),String.valueOf(cd)});
 
+    }
+
+    public int update_Image_QA(String batch , String cd) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(CHECKED_IMAGE_QA, "YES");
         // updating row
         return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? ",
                 new String[]{String.valueOf(batch),String.valueOf(cd)});
@@ -9695,6 +9716,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(LPN_CODE_QA))));
                 list_QA.setCHECKED((c.getString(c
                         .getColumnIndex(CHECKED_QA))));
+                list_QA.setCHECKED_IMAGE((c.getString(c
+                        .getColumnIndex(CHECKED_IMAGE_QA))));
                 list_QAs.add(list_QA);
             } while (c.moveToNext());
         }

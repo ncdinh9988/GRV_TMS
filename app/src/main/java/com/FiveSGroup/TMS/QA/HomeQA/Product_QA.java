@@ -27,6 +27,15 @@ public class Product_QA {
     private String BATCH_NUMBER;
     private String MANUFACTURING_DATE;
     private String CHECKED;
+    private String CHECKED_IMAGE;
+
+    public String getCHECKED_IMAGE() {
+        return CHECKED_IMAGE;
+    }
+
+    public void setCHECKED_IMAGE(String CHECKED_IMAGE) {
+        this.CHECKED_IMAGE = CHECKED_IMAGE;
+    }
 
     public String getCHECKED() {
         return CHECKED;

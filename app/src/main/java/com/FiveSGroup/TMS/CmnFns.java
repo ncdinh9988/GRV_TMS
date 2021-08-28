@@ -3067,6 +3067,7 @@ public class CmnFns {
                     listQA.setLPN_TO(lpn_To);
                     listQA.setLPN_CODE(lpnCode);
                     listQA.setCHECKED(setvalues);
+                    listQA.setCHECKED_IMAGE(setvalues);
 
                     listQA.setPOSITION_TO_CODE(positionTo);
                     listQA.setPOSITION_TO_DESCRIPTION(positionTo);
