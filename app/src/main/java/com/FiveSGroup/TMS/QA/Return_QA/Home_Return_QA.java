@@ -201,7 +201,7 @@ public class Home_Return_QA extends AppCompatActivity {
                         String code = chuoi[1];
                         String chuoi2[] = code.split("&");
                         String code2 = chuoi2[0];
-                        global.setPickupCD(code2);
+                        global.setReturnQACD(code2);
                         // Toast.makeText(HomeQRActivity.this, code+"", Toast.LENGTH_SHORT).show();
 
                         btn1.setVisibility(View.VISIBLE);

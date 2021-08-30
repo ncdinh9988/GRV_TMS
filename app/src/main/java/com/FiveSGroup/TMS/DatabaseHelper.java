@@ -23,6 +23,7 @@ import com.FiveSGroup.TMS.QA.HomeQA.Product_Criteria;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_QA;
 import com.FiveSGroup.TMS.QA.HomeQA.Product_Result_QA;
 import com.FiveSGroup.TMS.QA.Pickup.Product_Pickup;
+import com.FiveSGroup.TMS.QA.Return_QA.Product_Return_QA;
 import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
@@ -4646,6 +4647,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.delete(O_LET_DOWN, AUTOINCREMENT_LETDOWN + " = ?"
+                , new String[]{String.valueOf(productCode)});
+
+    }
+
+    public void deleteProduct_Return_QA_Specific(String productCode) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.delete(O_RETURN_QA, AUTOINCREMENT_RETURN_QA + " = ?"
                 , new String[]{String.valueOf(productCode)});
 
     }
@@ -9735,6 +9744,397 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //END TABLE O_QA
+
+    //DATABASE PUT cd
+    public static final String O_RETURN_QA = "O_RETURN_QA";
+    public static final String WAREHOUSE_POSITION_CD_RETURN_QA = "WAREHOUSE_POSITION_CD_RETURN_QA";
+    public static final String AUTOINCREMENT_RETURN_QA = "AUTOINCREMENT_RETURN_QA";
+    public static final String PRODUCT_CODE_RETURN_QA = "PRODUCT_CODE";
+    public static final String PRODUCT_NAME_RETURN_QA = "PRODUCT_NAME";
+    public static final String PRODUCT_CD_RETURN_QA = "PRODUCT_CD";
+    public static final String QTY_EA_AVAILABLE_RETURN_QA = "QTY_EA_AVAILABLE";
+    public static final String QTY_SET_AVAILABLE_RETURN_QA = "QTY_SET_AVAILABLE";
+    public static final String EXPIRED_DATE_RETURN_QA = "EXPIRY_DATE";
+    public static final String STOCKIN_DATE_RETURN_QA = "STOCKIN_DATE";
+    public static final String EA_UNIT_RETURN_QA = "EA_UNIT";
+    public static final String POSITION_FROM_RETURN_QA = "POSITION_FROM_CD";
+    public static final String POSITION_FROM_CODE_RETURN_QA = "POSITION_FROM_CODE";
+    public static final String POSITION_FROM_DESCRIPTION_RETURN_QA = "POSITION_FROM_DESCRIPTION";
+    public static final String POSITION_TO_RETURN_QA = "POSITION_TO_CD";
+    public static final String POSITION_TO_CODE_RETURN_QA = "POSITION_TO_CODE";
+    public static final String POSITION_TO_DESCRIPTION_RETURN_QA = "POSITION_TO_DESCRIPTION";
+    public static final String UNIQUE_CODE_RETURN_QA = "UNIQUE_CODE";
+    public static final String STOCK_QA_CD = "STOCK_QA_CD";
+    public static final String LPN_CD_RETURN_QA = "LPN_CD_RETURN_QA";
+    public static final String LPN_CODE_RETURN_QA = "LPN_CODE_RETURN_QA";
+    public static final String LPN_FROM_RETURN_QA = "LPN_FROM_RETURN_QA";
+    public static final String LPN_TO_RETURN_QA = "LPN_TO_RETURN_QA";
+    public static final String BATCH_NUMBER_RETURN_QA = "BATCH_NUMBER_RETURN_QA";
+    public static final String MANUFACTURING_DATE_RETURN_QA = "MANUFACTURING_DATE_RETURN_QA";
+    public static final String NOTE_RETURN_QA = "NOTE_RETURN_QA";
+
+    public static final String CREATE_TABLE_O_RETURN_QA = "CREATE TABLE "
+            + O_RETURN_QA + "("
+            + AUTOINCREMENT_RETURN_QA + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + PRODUCT_CD_RETURN_QA + " TEXT,"
+            + WAREHOUSE_POSITION_CD_RETURN_QA + " TEXT,"
+            + BATCH_NUMBER_RETURN_QA + " TEXT,"
+            + MANUFACTURING_DATE_RETURN_QA + " TEXT,"
+            + PRODUCT_NAME_RETURN_QA + " TEXT,"
+            + PRODUCT_CODE_RETURN_QA + " TEXT,"
+            + QTY_EA_AVAILABLE_RETURN_QA + " TEXT,"
+            + QTY_SET_AVAILABLE_RETURN_QA + " TEXT,"
+            + EXPIRED_DATE_RETURN_QA + " TEXT,"
+            + STOCKIN_DATE_RETURN_QA + " TEXT,"
+            + EA_UNIT_RETURN_QA + " TEXT,"
+            + POSITION_FROM_RETURN_QA + " TEXT,"
+            + POSITION_FROM_CODE_RETURN_QA + " TEXT,"
+            + POSITION_FROM_DESCRIPTION_RETURN_QA + " TEXT,"
+            + POSITION_TO_RETURN_QA + " TEXT,"
+            + POSITION_TO_CODE_RETURN_QA + " TEXT,"
+            + POSITION_TO_DESCRIPTION_RETURN_QA + " TEXT,"
+            + STOCK_QA_CD + " TEXT,"
+            + UNIQUE_CODE_RETURN_QA + " TEXT ,"
+            + LPN_CD_RETURN_QA + " TEXT ,"
+            + LPN_CODE_RETURN_QA + " TEXT ,"
+            + LPN_FROM_RETURN_QA + " TEXT ,"
+            + LPN_TO_RETURN_QA + " TEXT ,"
+            + NOTE_RETURN_QA + " TEXT "
+            + ")";
+
+
+    public long CreatereturnQA(Product_Return_QA returnQA) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+//        values.put(AUTOINCREMENT_RETURN_QA, returnQA.getAUTOINCREMENT());
+
+        values.put(UNIQUE_CODE_RETURN_QA, returnQA.getUNIT());
+        values.put(BATCH_NUMBER_RETURN_QA, returnQA.getBATCH_NUMBER());
+        values.put(MANUFACTURING_DATE_RETURN_QA, returnQA.getMANUFACTURING_DATE());
+        values.put(PRODUCT_CODE_RETURN_QA, returnQA.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_RETURN_QA, returnQA.getPRODUCT_NAME());
+        values.put(WAREHOUSE_POSITION_CD_RETURN_QA, returnQA.getWAREHOUSE_POSITION_CD());
+        values.put(PRODUCT_CD_RETURN_QA, returnQA.getPRODUCT_CD());
+        values.put(QTY_SET_AVAILABLE_RETURN_QA, returnQA.getQTY());
+        values.put(STOCKIN_DATE_RETURN_QA, returnQA.getSTOCKIN_DATE());
+        values.put(QTY_EA_AVAILABLE_RETURN_QA, returnQA.getQTY_EA_AVAILABLE());
+        values.put(EXPIRED_DATE_RETURN_QA, returnQA.getEXPIRED_DATE());
+        values.put(EA_UNIT_RETURN_QA, returnQA.getUNIT());
+        values.put(POSITION_FROM_RETURN_QA, returnQA.getPOSITION_FROM_CD());
+        values.put(POSITION_TO_RETURN_QA, returnQA.getPOSITION_TO_CD());
+        values.put(POSITION_FROM_CODE_RETURN_QA, returnQA.getPOSITION_FROM_CODE());
+        values.put(POSITION_TO_CODE_RETURN_QA, returnQA.getPOSITION_TO_CODE());
+        values.put(POSITION_FROM_DESCRIPTION_RETURN_QA, returnQA.getPOSITION_FROM_DESCRIPTION());
+        values.put(POSITION_TO_DESCRIPTION_RETURN_QA, returnQA.getPOSITION_TO_DESCRIPTION());
+        values.put(STOCK_QA_CD, returnQA.getSTOCK_QA_CD());
+        values.put(LPN_CODE_RETURN_QA, returnQA.getLPN_CODE());
+        values.put(LPN_FROM_RETURN_QA, returnQA.getLPN_FROM());
+        values.put(LPN_TO_RETURN_QA, returnQA.getLPN_TO());
+        values.put(NOTE_RETURN_QA, returnQA.getNOTE());
+        // insert row
+        long id = db.insert(O_RETURN_QA, null, values);
+        return id;
+    }
+
+    public int updatePositionFrom_RETURN_QA_LPN(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_RETURN_QA, wareHouse);
+        values.put(POSITION_FROM_DESCRIPTION_RETURN_QA, descreption);
+
+        values.put(POSITION_FROM_CODE_RETURN_QA, from);
+        values.put(LPN_FROM_RETURN_QA, from);
+
+
+        // updating row
+        return db.update(O_RETURN_QA, values, AUTOINCREMENT_RETURN_QA + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionFrom_RETURN_QA(String id_unique_SO , String from, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_FROM_RETURN_QA, wareHouse);
+        values.put(POSITION_FROM_CODE_RETURN_QA, from);
+        values.put(LPN_FROM_RETURN_QA, "");
+        values.put(POSITION_FROM_DESCRIPTION_RETURN_QA, descreption);
+
+
+        // updating row
+        return db.update(O_RETURN_QA, values, AUTOINCREMENT_RETURN_QA + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+    }
+
+    public int updatePositionTO_RETURN_QA_LPN(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_RETURN_QA, wareHouse);
+        values.put(POSITION_TO_DESCRIPTION_RETURN_QA, descreption);
+        values.put(LPN_TO_RETURN_QA, to);
+
+        values.put(POSITION_TO_CODE_RETURN_QA, to);
+        // updating row
+        return db.update(O_RETURN_QA, values,
+                AUTOINCREMENT_RETURN_QA + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public int updatePositionTO_RETURN_QA(String id_unique_SO , String to, String wareHouse, String PRODUCT_CD, String exPiredDate, String descreption, String ea_unit, String stockinDate) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(POSITION_TO_RETURN_QA, wareHouse);
+        values.put(POSITION_TO_CODE_RETURN_QA, to);
+        values.put(LPN_TO_RETURN_QA, "");
+
+        values.put(POSITION_TO_DESCRIPTION_RETURN_QA, descreption);
+        // updating row
+        return db.update(O_RETURN_QA, values,
+                AUTOINCREMENT_RETURN_QA + " = ? ",
+                new String[]{String.valueOf(id_unique_SO)});
+
+
+    }
+
+
+    public ArrayList<Product_Return_QA>
+    getoneProduct_Return_QA(String CD, String expDate, String ea_unit, String stockinDate, String cd) {
+        ArrayList<Product_Return_QA> returnQAs = new ArrayList<Product_Return_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_RETURN_QA + " " + " WHERE "
+                + PRODUCT_CD_RETURN_QA + " = " + CD + " AND "
+                + STOCK_QA_CD + " = " + cd + " AND "
+                + EA_UNIT_RETURN_QA + " like " + " '%" + ea_unit + "%'" + " AND "
+                + EXPIRED_DATE_RETURN_QA + " like " + " '%" + expDate + "%'" + " AND "
+                + STOCKIN_DATE_RETURN_QA + " like " + " '%" + stockinDate + "%'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product_Return_QA returnQA = new Product_Return_QA();
+                returnQA.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_RETURN_QA))));
+                returnQA.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_RETURN_QA))));
+                returnQA.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_RETURN_QA))));
+                returnQA.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_RETURN_QA))));
+                returnQA.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_RETURN_QA))));
+                returnQA.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_RETURN_QA))));
+                returnQA.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_RETURN_QA))));
+                returnQA.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_RETURN_QA))));
+                returnQA.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_RETURN_QA))));
+                returnQA.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_RETURN_QA))));
+                returnQA.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_RETURN_QA))));
+                returnQA.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_RETURN_QA))));
+                returnQA.setNOTE((c.getString(c
+                        .getColumnIndex(NOTE_RETURN_QA))));
+                returnQAs.add(returnQA);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return returnQAs;
+    }
+
+
+    public ArrayList<Product_Return_QA>
+    getAllProduct_Return_QA_Sync(String cd) {
+        ArrayList<Product_Return_QA> returnQAs = new ArrayList<Product_Return_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
+                "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
+                "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_RETURN_QA +
+                " where " + STOCK_QA_CD + " = " + cd;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Return_QA returnQA = new Product_Return_QA();
+//                returnQA.setAUTOINCREMENT((c.getString(c
+//                        .getColumnIndex(AUTOINCREMENT_RETURN_QA))));
+                returnQA.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_RETURN_QA))));
+                returnQA.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_RETURN_QA))));
+                returnQA.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_RETURN_QA))));
+                returnQA.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_RETURN_QA))));
+                returnQA.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_RETURN_QA))));
+                returnQA.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_RETURN_QA))));
+                returnQA.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_RETURN_QA))));
+                returnQA.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_RETURN_QA))));
+                returnQA.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_RETURN_QA))));
+                returnQA.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_RETURN_QA))));
+                returnQA.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_RETURN_QA))));
+                returnQA.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_RETURN_QA))));
+                returnQA.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_RETURN_QA))));
+                returnQA.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_RETURN_QA))));
+                returnQA.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_RETURN_QA))));
+                returnQA.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_RETURN_QA))));
+                returnQA.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_RETURN_QA))));
+                returnQA.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_RETURN_QA))));
+                returnQA.setSTOCK_QA_CD((c.getString(c
+                        .getColumnIndex(STOCK_QA_CD))));
+                returnQA.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_RETURN_QA))));
+                returnQA.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_RETURN_QA))));
+                returnQA.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_RETURN_QA))));
+                returnQA.setNOTE((c.getString(c
+                        .getColumnIndex(NOTE_RETURN_QA))));
+                returnQAs.add(returnQA);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return returnQAs;
+    }
+
+    public ArrayList<Product_Return_QA>
+    getAllProduct_Return_QA(String cd) {
+        ArrayList<Product_Return_QA> returnQAs = new ArrayList<Product_Return_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_RETURN_QA + " where " + STOCK_QA_CD + " = " + cd;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Return_QA returnQA = new Product_Return_QA();
+                returnQA.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_RETURN_QA))));
+                returnQA.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_RETURN_QA))));
+                returnQA.setMANUFACTURING_DATE((c.getString(c
+                        .getColumnIndex(MANUFACTURING_DATE_RETURN_QA))));
+                returnQA.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_RETURN_QA))));
+                returnQA.setUNIQUE_CODE((c.getString(c
+                        .getColumnIndex(UNIQUE_CODE_RETURN_QA))));
+                returnQA.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_RETURN_QA))));
+                returnQA.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_RETURN_QA))));
+                returnQA.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_RETURN_QA))));
+                returnQA.setQTY((c.getString(c
+                        .getColumnIndex(QTY_SET_AVAILABLE_RETURN_QA))));
+                returnQA.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_RETURN_QA))));
+                returnQA.setQTY_EA_AVAILABLE((c.getString(c
+                        .getColumnIndex(QTY_EA_AVAILABLE_RETURN_QA))));
+                returnQA.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_RETURN_QA))));
+                returnQA.setUNIT((c.getString(c
+                        .getColumnIndex(EA_UNIT_RETURN_QA))));
+                returnQA.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_RETURN_QA))));
+                returnQA.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_RETURN_QA))));
+                returnQA.setPOSITION_FROM_CODE((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CODE_RETURN_QA))));
+                returnQA.setPOSITION_TO_CODE((c.getString(c
+                        .getColumnIndex(POSITION_TO_CODE_RETURN_QA))));
+                returnQA.setPOSITION_FROM_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_FROM_DESCRIPTION_RETURN_QA))));
+                returnQA.setPOSITION_TO_DESCRIPTION((c.getString(c
+                        .getColumnIndex(POSITION_TO_DESCRIPTION_RETURN_QA))));
+                returnQA.setSTOCK_QA_CD((c.getString(c
+                        .getColumnIndex(STOCK_QA_CD))));
+                returnQA.setLPN_FROM((c.getString(c
+                        .getColumnIndex(LPN_FROM_RETURN_QA))));
+                returnQA.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_RETURN_QA))));
+                returnQA.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_RETURN_QA))));
+                returnQA.setNOTE((c.getString(c
+                        .getColumnIndex(NOTE_RETURN_QA))));
+                returnQAs.add(returnQA);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return returnQAs;
+    }
+
+
+    public int updateProduct_Return_QA(Product_Return_QA returnQA, String incre_so, String PRODUCT_CD, String sl, String ea_unit, String stock, String cd) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CD_RETURN_QA, PRODUCT_CD);
+        values.put(PRODUCT_CODE_RETURN_QA, returnQA.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_RETURN_QA, returnQA.getPRODUCT_NAME());
+        values.put(EXPIRED_DATE_RETURN_QA, returnQA.getEXPIRED_DATE());
+        values.put(EA_UNIT_RETURN_QA, returnQA.getUNIT());
+        values.put(QTY_SET_AVAILABLE_RETURN_QA, sl);
+        values.put(STOCK_QA_CD, cd);
+
+        // updating row
+        return db.update(O_RETURN_QA, values,  AUTOINCREMENT_RETURN_QA + " = ?",
+                new String[]{String.valueOf(incre_so)});
+
+    }
+
+    public int updateNote_RETURN_QA(String incre_so  , String note) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+
+        values.put(NOTE_RETURN_QA, note);
+
+        // updating row
+        return db.update(O_RETURN_QA, values,  AUTOINCREMENT_RETURN_QA + " = ?",
+                new String[]{String.valueOf(incre_so)});
+
+    }
+
+
+    public void deleteProduct_Return_QA( String cd) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_RETURN_QA);
+    }
+
+    //END TABLE O_RETURN_QA
 
 
 

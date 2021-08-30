@@ -179,6 +179,15 @@ public class global extends Application {
     private static String ChuyenMaCD = "";
     private static String PickupCD = "";
     private static String QACD = "";
+    private static String ReturnQACD = "";
+
+    public static String getReturnQACD() {
+        return ReturnQACD;
+    }
+
+    public static void setReturnQACD(String returnQACD) {
+        ReturnQACD = returnQACD;
+    }
 
     public static String getPickupCD() {
         return PickupCD;
