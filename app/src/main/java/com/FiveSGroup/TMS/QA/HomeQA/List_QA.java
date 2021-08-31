@@ -177,13 +177,16 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void onClick(View v) {
                         //Remove swiped item from list and notify the RecyclerView
+
+
                         dialog.dismiss();
 
                         int position = viewHolder.getAdapterPosition();
                         Product_QA product = product_QA.get(position);
                         product_QA.remove(position);
                         DatabaseHelper.getInstance().deleteProduct_QA_Specific(product.getAUTOINCREMENT());
-                        DatabaseHelper.getInstance().deleteallCriteria(batch_number,global.getQACD());
+                        DatabaseHelper.getInstance().deleterowCriteria(product.getBATCH_NUMBER(),global.getQACD());
+
                         QAlistAdapter.notifyItemRemoved(position);
                     }
                 });
@@ -282,62 +285,61 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
         if (product_QA.size() > 0) {
 
-                try {
-                    int result = new CmnFns().synchronizeData_RQBT_Final(saleCode, "WQA", global.getQACD());
-                    if (result >= 1) {
-                        ShowSuccessMessage("Lưu thành công");
+            try {
+                int result = new CmnFns().synchronizeData_RQBT_Final(saleCode, "WQA", global.getQACD());
+                if (result >= 1) {
+                    ShowSuccessMessage("Lưu thành công");
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
 
+                } else {
+
+                    if (result == -1) {
+                        dialog.showDialog(List_QA.this, "Lưu thất bại");
+                    } else if (result == -2) {
+                        dialog.showDialog(List_QA.this, "Số lượng không đủ trong tồn kho");
+
+                    } else if (result == -3) {
+                        dialog.showDialog(List_QA.this, "Vị trí từ không hợp lệ");
+
+                    } else if (result == -4) {
+                        dialog.showDialog(List_QA.this, "Trạng thái của phiếu không hợp lệ");
+
+                    } else if (result == -5) {
+                        dialog.showDialog(List_QA.this, "Vị trí từ trùng vị trí đên");
+
+                    } else if (result == -6) {
+                        dialog.showDialog(List_QA.this, "Vị trí đến không hợp lệ");
+
+                    } else if (result == -7) {
+                        dialog.showDialog(List_QA.this, "Cập nhật trạng thái thất bại");
+
+                    } else if (result == -8) {
+                        dialog.showDialog(List_QA.this, "Sản phẩm không có thông tin trên phiếu ");
+
+                    } else if (result == -13) {
+                        dialog.showDialog(List_QA.this, "Dữ liệu không hợp lệ");
+
+                    } else if (result == -24) {
+                        dialog.showDialog(List_QA.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
+                    } else if (result == -26) {
+                        dialog.showDialog(List_QA.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
                     } else {
-
-                        if (result == -1) {
-                            dialog.showDialog(List_QA.this, "Lưu thất bại");
-                        } else if (result == -2) {
-                            dialog.showDialog(List_QA.this, "Số lượng không đủ trong tồn kho");
-
-                        } else if (result == -3) {
-                            dialog.showDialog(List_QA.this, "Vị trí từ không hợp lệ");
-
-                        } else if (result == -4) {
-                            dialog.showDialog(List_QA.this, "Trạng thái của phiếu không hợp lệ");
-
-                        } else if (result == -5) {
-                            dialog.showDialog(List_QA.this, "Vị trí từ trùng vị trí đên");
-
-                        } else if (result == -6) {
-                            dialog.showDialog(List_QA.this, "Vị trí đến không hợp lệ");
-
-                        } else if (result == -7) {
-                            dialog.showDialog(List_QA.this, "Cập nhật trạng thái thất bại");
-
-                        } else if (result == -8) {
-                            dialog.showDialog(List_QA.this, "Sản phẩm không có thông tin trên phiếu ");
-
-                        } else if (result == -13) {
-                            dialog.showDialog(List_QA.this, "Dữ liệu không hợp lệ");
-
-                        } else if (result == -24) {
-                            dialog.showDialog(List_QA.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
-
-                        } else if (result == -26) {
-                            dialog.showDialog(List_QA.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
-
-                        } else {
-                            dialog.showDialog(List_QA.this, "Lưu thất bại");
-                        }
-
+                        dialog.showDialog(List_QA.this, "Lưu thất bại");
                     }
-                } catch (Exception e) {
-                    Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
-                    finish();
+
                 }
+            } catch (Exception e) {
+                Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
+                finish();
+            }
 
 
         } else {
             dialog.showDialog(List_QA.this, "Không có sản phẩm");
 
         }
-
 
     }
 
@@ -362,7 +364,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
             public void onClick(View view) {
                 dialog.dismiss();
                 DatabaseHelper.getInstance().deleteProduct_QA(global.getQACD());
-                DatabaseHelper.getInstance().deleteallCriteria(batch_number,global.getQACD());
+                DatabaseHelper.getInstance().deleteallCriteria(global.getQACD());
                 product_QA.clear();
                 QAlistAdapter.notifyDataSetChanged();
                 Intent intentToHomeQRActivity = new Intent(List_QA.this, Home_QA.class);

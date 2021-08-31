@@ -6375,12 +6375,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void deleteallCriteria(String batch , String cd) {
+    public void deleterowCriteria(String batch , String cd) {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.execSQL("delete from " + O_CRITERIA + " where "
                 + BATCH_NUMBER_CRITERIA + " = " + batch + " AND "
                 + MATERIA_CD_CRITERIA + " = " + cd);
+    }
+    public void deleteallCriteria( String cd) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_CRITERIA + " where " + MATERIA_CD_CRITERIA + " = " + cd);
     }
 
     //End table EXP

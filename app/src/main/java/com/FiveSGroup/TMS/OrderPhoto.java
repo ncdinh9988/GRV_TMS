@@ -15,7 +15,7 @@ public class OrderPhoto {
     private Bitmap image;
     private long   photoCD = -1;
 
-    private String STOCK_QA_PRODUCT_CD ;
+    private String STOCK_QA_CD ;
     private String BATCH_NUMBER;
     private String PRODUCT_CODE;
     private String UNIT;
@@ -63,11 +63,11 @@ public class OrderPhoto {
     }
 
     public String getSTOCK_QA_PRODUCT_CD() {
-        return STOCK_QA_PRODUCT_CD;
+        return STOCK_QA_CD;
     }
 
     public void setSTOCK_QA_PRODUCT_CD(String STOCK_QA_PRODUCT_CD) {
-        this.STOCK_QA_PRODUCT_CD = STOCK_QA_PRODUCT_CD;
+        this.STOCK_QA_CD = STOCK_QA_PRODUCT_CD;
     }
 
     public long getPhotoCD() {

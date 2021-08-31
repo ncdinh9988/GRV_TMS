@@ -1492,7 +1492,7 @@ public class CmnFns {
                 String pro_stockin = jsonobj.getString("_STOCKIN_DATE");
                 String batch = "";
 
-                    batch = jsonobj.getString("_BATCH_NUMBER");
+                batch = jsonobj.getString("_BATCH_NUMBER");
 
 
                 Exp_Date_Tam exp_date_tam = new Exp_Date_Tam();
@@ -1502,7 +1502,7 @@ public class CmnFns {
                     exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
                 }
 
-                    exp_date_tam.setBATCH_NUMBER_TAM(batch);
+                exp_date_tam.setBATCH_NUMBER_TAM(batch);
 
 
                 DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);
@@ -1528,7 +1528,7 @@ public class CmnFns {
         Webservice webService = new Webservice();
         String result = "";
 
-            result = webService.GetProductByZone(barcodeData, sale_codes, type, IsLPN, cd);
+        result = webService.GetProductByZone(barcodeData, sale_codes, type, IsLPN, cd);
 
 
 
@@ -2955,10 +2955,10 @@ public class CmnFns {
             return 1;
         }
         try {
-        ArrayList<Product_Criteria> Product_Criteria = DatabaseHelper.getInstance().getallCriteria(batch);
-        int check ;
-        check = Product_Criteria.size();
-        if(check == 0){
+            ArrayList<Product_Criteria> Product_Criteria = DatabaseHelper.getInstance().getallCriteria(batch);
+            int check ;
+            check = Product_Criteria.size();
+            if(check == 0){
                 JSONArray jsonarray = new JSONArray(result);
                 for (int i = 0; i < jsonarray.length(); i++) {
 //                 lấy một đối tượng json để
@@ -3073,17 +3073,17 @@ public class CmnFns {
                     listQA.setPOSITION_TO_CODE(positionTo);
                     listQA.setPOSITION_TO_DESCRIPTION(positionTo);
 
-                        if (stockDate != null) {
-                            listQA.setSTOCKIN_DATE(stockDate);
-                        }
-                        listQA.setEXPIRED_DATE(expDate);
-                        listQA.setUNIT(unit);
-                        listQA.setQTY(String.valueOf(pro_set));
-                        listQA.setPOSITION_FROM_CD(warePosition);
-                        // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
-                        listQA.setPOSITION_FROM_CODE(positionFrom);
-                        listQA.setLPN_FROM(lpn_From);
-                        listQA.setPOSITION_FROM_DESCRIPTION("");
+                    if (stockDate != null) {
+                        listQA.setSTOCKIN_DATE(stockDate);
+                    }
+                    listQA.setEXPIRED_DATE(expDate);
+                    listQA.setUNIT(unit);
+                    listQA.setQTY(String.valueOf(pro_set));
+                    listQA.setPOSITION_FROM_CD(warePosition);
+                    // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
+                    listQA.setPOSITION_FROM_CODE(positionFrom);
+                    listQA.setLPN_FROM(lpn_From);
+                    listQA.setPOSITION_FROM_DESCRIPTION("");
 
                     DatabaseHelper.getInstance().CreateQA(listQA);
 

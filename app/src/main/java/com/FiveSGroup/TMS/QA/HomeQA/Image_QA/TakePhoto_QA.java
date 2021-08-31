@@ -125,36 +125,41 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getImages(){
-        ArrayList<OrderPhoto> cPhotos = (ArrayList<OrderPhoto>) DatabaseHelper.getInstance().getAllPhotoForQA(stockcd , batch_number,product_code);
-        if(cPhotos.size() > 0){
-            for(int i = 0; i < cPhotos.size(); i++){
-                OrderPhoto cPhoto = cPhotos.get(i);
-                File checkFile = new File(cPhoto.getPhoto_Path());
-                if (!checkFile.exists()) {
-                    DatabaseHelper.getInstance().deletePhotoForOrders(
-                            cPhoto.getPhoto_Name());
-                    try {
-                        checkFile.delete(); // clear file
-                    } catch (Exception e) {
-                        // TODO: handle exception
+        try {
+            ArrayList<OrderPhoto> cPhotos = (ArrayList<OrderPhoto>) DatabaseHelper.getInstance().getAllPhotoForQA(stockcd , batch_number,product_code);
+            if(cPhotos.size() > 0){
+                for(int i = 0; i < cPhotos.size(); i++){
+                    OrderPhoto cPhoto = cPhotos.get(i);
+                    File checkFile = new File(cPhoto.getPhoto_Path());
+                    if (!checkFile.exists()) {
+                        DatabaseHelper.getInstance().deletePhotoForOrders(
+                                cPhoto.getPhoto_Name());
+                        try {
+                            checkFile.delete(); // clear file
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+                        continue;
                     }
-                    continue;
+                    String file = cPhoto.getPhoto_Path();
+                    String nameFile = cPhoto.getPhoto_Name();
+                    if(nameFile.contains("QA_"+stockcd+"_"+product_code+"_"+batch_number)) {
+                        File image = new File(file); // lấy hình ảnh từ đường dẫn
+                        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                        Bitmap bitmap1 = BitmapFactory.decodeFile(image.getAbsolutePath(),
+                                bmOptions);
+                        arrImage.add(bitmap1);
+                        // Toast.makeText(FCustomerAddNewEdit.this, cPhoto.getImage()+"", Toast.LENGTH_SHORT).show();
+                        prepareData();
+                    }
                 }
-                String file = cPhoto.getPhoto_Path();
-                String nameFile = cPhoto.getPhoto_Name();
-                if(nameFile.contains("QA_"+stockcd+"_"+product_code+"_"+batch_number)) {
-                    File image = new File(file); // lấy hình ảnh từ đường dẫn
-                    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                    Bitmap bitmap1 = BitmapFactory.decodeFile(image.getAbsolutePath(),
-                            bmOptions);
-                    arrImage.add(bitmap1);
-                    // Toast.makeText(FCustomerAddNewEdit.this, cPhoto.getImage()+"", Toast.LENGTH_SHORT).show();
-                    prepareData();
-                }
+            }else{
+                tvEmptyImage.setVisibility(View.VISIBLE);
             }
-        }else{
-            tvEmptyImage.setVisibility(View.VISIBLE);
+        }catch (Exception e){
+
         }
+
     }
 
     private void prepareData() {
