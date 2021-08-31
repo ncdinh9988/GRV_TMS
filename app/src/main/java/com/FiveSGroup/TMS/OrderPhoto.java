@@ -62,12 +62,13 @@ public class OrderPhoto {
         this.BATCH_NUMBER = BATCH_NUMBER;
     }
 
-    public String getSTOCK_QA_PRODUCT_CD() {
+
+    public String getSTOCK_QA_CD() {
         return STOCK_QA_CD;
     }
 
-    public void setSTOCK_QA_PRODUCT_CD(String STOCK_QA_PRODUCT_CD) {
-        this.STOCK_QA_CD = STOCK_QA_PRODUCT_CD;
+    public void setSTOCK_QA_CD(String STOCK_QA_CD) {
+        this.STOCK_QA_CD = STOCK_QA_CD;
     }
 
     public long getPhotoCD() {

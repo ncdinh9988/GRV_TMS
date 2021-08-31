@@ -7480,7 +7480,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 try {
                     OrderPhoto file = new OrderPhoto();
-                    file.setSTOCK_QA_PRODUCT_CD((c.getString(c
+                    file.setSTOCK_QA_CD((c.getString(c
                             .getColumnIndex(SALE_QA_CD_PHOTO))));
                     file.setPhoto_Name((c.getString(c
                             .getColumnIndex(SALE_TAKES_PHOTO_FILE_NAME))));
@@ -7536,7 +7536,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 try {
                     OrderPhoto file = new OrderPhoto();
-                    file.setSTOCK_QA_PRODUCT_CD((c.getString(c
+                    file.setSTOCK_QA_CD((c.getString(c
                             .getColumnIndex(SALE_QA_CD_PHOTO))));
                     file.setPhoto_Name((c.getString(c
                             .getColumnIndex(SALE_TAKES_PHOTO_FILE_NAME))));
