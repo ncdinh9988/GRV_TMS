@@ -9,12 +9,58 @@ import java.util.TimeZone;
 
 public class OrderPhoto {
     private String Order_CD;
-    private String STOCK_QA_PRODUCT_CD ;
     private String Photo_Name;
     private String Photo_Path;
     private String Photo_CD;
     private Bitmap image;
     private long   photoCD = -1;
+
+    private String STOCK_QA_PRODUCT_CD ;
+    private String BATCH_NUMBER;
+    private String PRODUCT_CODE;
+    private String UNIT;
+    private String EXPIRED_DATE;
+    private String STOCKIN_DATE;;
+
+    public String getPRODUCT_CODE() {
+        return PRODUCT_CODE;
+    }
+
+    public void setPRODUCT_CODE(String PRODUCT_CODE) {
+        this.PRODUCT_CODE = PRODUCT_CODE;
+    }
+
+    public String getUNIT() {
+        return UNIT;
+    }
+
+    public void setUNIT(String UNIT) {
+        this.UNIT = UNIT;
+    }
+
+    public String getEXPIRED_DATE() {
+        return EXPIRED_DATE;
+    }
+
+    public void setEXPIRED_DATE(String EXPIRED_DATE) {
+        this.EXPIRED_DATE = EXPIRED_DATE;
+    }
+
+    public String getSTOCKIN_DATE() {
+        return STOCKIN_DATE;
+    }
+
+    public void setSTOCKIN_DATE(String STOCKIN_DATE) {
+        this.STOCKIN_DATE = STOCKIN_DATE;
+    }
+
+    public String getBATCH_NUMBER() {
+        return BATCH_NUMBER;
+    }
+
+    public void setBATCH_NUMBER(String BATCH_NUMBER) {
+        this.BATCH_NUMBER = BATCH_NUMBER;
+    }
 
     public String getSTOCK_QA_PRODUCT_CD() {
         return STOCK_QA_PRODUCT_CD;

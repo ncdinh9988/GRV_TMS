@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.MainMenu.MenuItemObject;
 import com.FiveSGroup.TMS.QA.HomeQA.Home_QA;
 import com.FiveSGroup.TMS.QA.Pickup.Home_Pickup;
+import com.FiveSGroup.TMS.QA.Return_QA.Home_Return_QA;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Home_ChuyenMa;
 import com.FiveSGroup.TMS.TransferQR.Home.Arr_Adapter_Transfer_Posting;
@@ -64,6 +65,10 @@ public class Arr_Adapter_QA extends RecyclerView.Adapter<Arr_Adapter_QA.ViewHold
                     case "Kiểm Định":
                         Intent intent = new Intent(context, Home_QA.class);
                         context.startActivity(intent);
+                        break;
+                    case "Trả Hàng":
+                        Intent intentt = new Intent(context, Home_Return_QA.class);
+                        context.startActivity(intentt);
                         break;
 
 

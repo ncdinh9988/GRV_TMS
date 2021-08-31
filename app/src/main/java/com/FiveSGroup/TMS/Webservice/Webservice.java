@@ -769,7 +769,7 @@ public class Webservice {
 
     public String GetProductByZone(String qrcode, String salescode, String type , int IsLPN , String CD) {
         String webServiceFunc = "";
-        if(type.equals("WTP") || type.equals("WQA")){
+        if(type.equals("WTP") || type.equals("WQA") || type.equals("WQA_Return")){
             webServiceFunc = "GetProductByZone_RQBT";
         }else{
             webServiceFunc = "GetProductByZone";
@@ -918,7 +918,7 @@ public class Webservice {
 
         String isLPNFormat = String.valueOf(isLPN);
         String webServiceFunc = "";
-        if(type.equals("WTP")){
+        if(type.equals("WTP") || type.equals("WQA_Return")){
             webServiceFunc = "synchronizeGETPositionInfo_RQBT";
         }else{
             webServiceFunc = "synchronizeGETPositionInfo";
@@ -1075,7 +1075,7 @@ public class Webservice {
 
     public String synchronizeData(String json, String usercode, String type) {
         String webServiceFunc ;
-        if((type.equals("WTP")) || (type.equals("WQA"))){
+        if((type.equals("WTP")) || (type.equals("WQA")) || (type.equals("WQA_Return"))){
             webServiceFunc = "synchronizeData_RQBT";
         }else{
             webServiceFunc = "synchronizeData";

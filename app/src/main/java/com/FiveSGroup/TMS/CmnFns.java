@@ -543,7 +543,7 @@ public class CmnFns {
 
     }
     // hàm đồng bộ hình ảnh dữ liệu QA về Server
-    public int synchronizePhotoQA(Context context ,  String cd) {
+    public int synchronizePhoto_QA(Context context ,  String cd ) {
 
         try {
 
@@ -555,7 +555,7 @@ public class CmnFns {
 //                    .getAllPhotoForOrders(); // lấy dữ liệu các tấm hình để đồng bộ
 //            // về
 
-            List<OrderPhoto> photos = DatabaseHelper.getInstance().getAllPhotoForQA(cd);  // lấy dữ liệu các tấm hình để đồng bộ
+            List<OrderPhoto> photos = DatabaseHelper.getInstance().getAllPhoto_QA(cd );  // lấy dữ liệu các tấm hình để đồng bộ
             // về
             if (photos == null || photos.size() == 0)
                 return 1;
@@ -1569,7 +1569,7 @@ public class CmnFns {
                 String pro_exp = jsonobj.getString("_EXPIRY_DATE");
                 String pro_stockin = jsonobj.getString("_STOCKIN_DATE");
                 String batch = "";
-                if((type.equals("WPR"))|| (type.equals("WTP"))|| (type.equals("WQA"))){
+                if((type.equals("WPR"))|| (type.equals("WTP"))|| (type.equals("WQA"))|| (type.equals("WQA_Return"))){
                     batch = jsonobj.getString("_BATCH_NUMBER");
                 }
 
@@ -1579,7 +1579,7 @@ public class CmnFns {
                 } else {
                     exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
                 }
-                if((type.equals("WPR"))|| (type.equals("WTP"))|| (type.equals("WQA"))){
+                if((type.equals("WPR"))|| (type.equals("WTP"))|| (type.equals("WQA"))|| (type.equals("WQA_Return"))){
                     exp_date_tam.setBATCH_NUMBER_TAM(batch);
                 }
 
@@ -3458,7 +3458,7 @@ public class CmnFns {
             return -1;
 
         Webservice webService = new Webservice();
-        String result = webService.GetProductByZone(qrcode, admin, "WRT_QA", isLPN, returnQACD);
+        String result = webService.GetProductByZone(qrcode, admin, "WQA_Return", isLPN, returnQACD);
         if (result.equals("-1")) {
             return -1;
         } else if (result.equals("1")) {
@@ -4466,7 +4466,7 @@ public class CmnFns {
                             }
 
                         }
-                        else if (type.equals("WRT_QA")) {
+                        else if (type.equals("WQA_Return")) {
                             //Trả Hàng QA
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionFrom_RETURN_QA_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
@@ -4566,7 +4566,7 @@ public class CmnFns {
                                 DatabaseHelper.getInstance().updatePositionTo_pickup(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         }
-                        else if (type.equals("WRT_QA")) {
+                        else if (type.equals("WQA_Return")) {
                             if (isLPN == 1) {
                                 DatabaseHelper.getInstance().updatePositionTO_RETURN_QA_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
@@ -4917,7 +4917,7 @@ public class CmnFns {
                 jsonData = gson.toJson(product);
             }
             // return QA
-            else if (type.equals("WRT_QA")) {
+            else if (type.equals("WQA_Return")) {
                 List<Product_Return_QA> product = DatabaseHelper.getInstance().getAllProduct_Return_QA_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
@@ -5188,6 +5188,18 @@ public class CmnFns {
 //                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
                 }
                 if (jsonobj.getString("ParamKey").toString().equals("URL_StockQAPerform")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+
+//                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
+                if (jsonobj.getString("ParamKey").toString().equals("URL_StockQA_Return")) {
                     CParam param = new CParam();
                     param.setKey(jsonobj.getString("ParamKey"));
                     param.setValue(jsonobj.getString("ParamValue"));

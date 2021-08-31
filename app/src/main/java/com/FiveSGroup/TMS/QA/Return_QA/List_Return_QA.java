@@ -235,7 +235,7 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
         btnok = findViewById(R.id.buttonOK);
         listVieWTPoduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Danh Sách SP Lấy Hàng");
+        tvTitle.setText("Danh Sách SP Trả Hàng");
     }
 
     private void startScan() {
@@ -282,7 +282,7 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
 
             } else {
                 try {
-                    int result = new CmnFns().synchronizeData(saleCode, "WRT_QA", global.getReturnQACD());
+                    int result = new CmnFns().synchronizeData(saleCode, "WQA_Return", global.getReturnQACD());
                     if (result >= 1) {
                         ShowSuccessMessage("Lưu thành công");
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
@@ -429,7 +429,7 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SO, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WRT_QA", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_SO, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WQA_Return", isLPN);
 
             Dialog dialog = new Dialog(List_Return_QA.this);
 

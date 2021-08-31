@@ -28,6 +28,14 @@ public class Product_Return_QA {
     private String MANUFACTURING_DATE;
     private String NOTE;
 
+    public String getSTOCK_QA_CD() {
+        return STOCK_QA_CD;
+    }
+
+    public void setSTOCK_QA_CD(String STOCK_QA_CD) {
+        this.STOCK_QA_CD = STOCK_QA_CD;
+    }
+
     public String getQRCODE() {
         return QRCODE;
     }
@@ -172,13 +180,7 @@ public class Product_Return_QA {
         this.POSITION_TO_DESCRIPTION = POSITION_TO_DESCRIPTION;
     }
 
-    public String getSTOCK_QA_CD() {
-        return STOCK_QA_CD;
-    }
 
-    public void setSTOCK_QA_CD(String STOCK_QA_CD) {
-        this.STOCK_QA_CD = STOCK_QA_CD;
-    }
 
     public String getLPN_CD() {
         return LPN_CD;

@@ -309,7 +309,7 @@ public class Qrcode_Return_QA extends AppCompatActivity implements View.OnClickL
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WRT_QA", 0, global.getReturnQACD());
+            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WQA_Return", 0, global.getReturnQACD());
             if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData, stockinDate);
             } else {

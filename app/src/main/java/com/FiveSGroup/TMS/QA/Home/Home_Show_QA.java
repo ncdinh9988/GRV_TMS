@@ -72,8 +72,8 @@ public class Home_Show_QA extends AppCompatActivity {
 
     private void prepareData(){
         arrItem = new ArrayList<>();
-        String name[] = {"Lấy Hàng", "Kiểm Định"};
-        int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho};
+        String name[] = {"Lấy Hàng", "Kiểm Định","Trả Hàng"};
+        int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho,R.drawable.ic_master_pick };
         String Lock_Wh_Adjustment = DatabaseHelper.getInstance().getParamByKey("LOCK_WH_Adjustment").getValue();
         for(int i = 0; i < name.length; i ++){
             MenuItemObject object = new MenuItemObject();

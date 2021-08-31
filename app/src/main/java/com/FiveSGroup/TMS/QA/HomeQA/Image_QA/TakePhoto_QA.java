@@ -46,6 +46,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.HomeActivity;
 import com.FiveSGroup.TMS.OrderPhoto;
+import com.FiveSGroup.TMS.QA.HomeQA.List_Criteria;
 import com.FiveSGroup.TMS.QA.HomeQA.List_QA;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.TakePhotoFragment.ImageOrderAdapter;
@@ -124,7 +125,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getImages(){
-        ArrayList<OrderPhoto> cPhotos = (ArrayList<OrderPhoto>) DatabaseHelper.getInstance().getAllPhotoForQA(stockcd);
+        ArrayList<OrderPhoto> cPhotos = (ArrayList<OrderPhoto>) DatabaseHelper.getInstance().getAllPhotoForQA(stockcd , batch_number,product_code);
         if(cPhotos.size() > 0){
             for(int i = 0; i < cPhotos.size(); i++){
                 OrderPhoto cPhoto = cPhotos.get(i);
@@ -141,7 +142,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
                 }
                 String file = cPhoto.getPhoto_Path();
                 String nameFile = cPhoto.getPhoto_Name();
-                if(nameFile.contains("QA_"+stockcd)) {
+                if(nameFile.contains("QA_"+stockcd+"_"+product_code+"_"+batch_number)) {
                     File image = new File(file); // lấy hình ảnh từ đường dẫn
                     BitmapFactory.Options bmOptions = new BitmapFactory.Options();
                     Bitmap bitmap1 = BitmapFactory.decodeFile(image.getAbsolutePath(),
@@ -187,7 +188,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
         @Override
         protected Void doInBackground(Void... voids) {
             // progressDialog.setProgress(10);
-            new CmnFns().synchronizePhotoQA(TakePhoto_QA.this , stockcd);
+//            new CmnFns().synchronizePhotoQA(TakePhoto_QA.this , stockcd);
             //  progressDialog.setProgress(100);
             return null;
         }
@@ -287,7 +288,9 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
 
     private void backToHomeScreen() {
         try {
-            TakePhoto_QA.this.finish();
+            Intent intentToHomeQRActivity = new Intent(TakePhoto_QA.this, List_QA.class);
+            startActivity(intentToHomeQRActivity);
+            finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }
@@ -299,7 +302,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
             // Create an image file name
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
                     .format(new Date());
-            imageFileName = "QA_"  + stockcd+ "_" + timeStamp + ".png";
+            imageFileName = "QA_"  + stockcd+ "_" + product_code+ "_" + batch_number+ "_" + unit+ "_" + timeStamp + ".png";
 
 //            String path = Environment.getExternalStorageDirectory()
 //                    + File.separator
@@ -482,7 +485,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
                 // file.setGeoCodeAccuracy(getCodeAccuracy);
                 // GetInfoCustomer();
                 GetInfoCustomer();
-                photoCD = DatabaseHelper.getInstance().createdSaleTakesPhoto(stockcd, file);
+                photoCD = DatabaseHelper.getInstance().createdSaleTakesPhoto(stockcd, file ,product_code, batch_number, unit , exp , stockindate);
 
                 file.setPhotoCD(photoCD); // lưu key sau khi insert vào
 

@@ -81,6 +81,15 @@
             android:name=".QA.HomeQA.Image_QA.TakePhoto_QA"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".QA.Return_QA.Home_Return_QA"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QA.Return_QA.List_Return_QA"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QA.Return_QA.Qrcode_Return_QA"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".TransferQR.ChuyenMa.Home_ChuyenMa"
             android:screenOrientation="portrait" />
         <activity

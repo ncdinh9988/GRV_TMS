@@ -454,7 +454,7 @@ public class CaptureFragment extends Fragment {
                 // file.setGeoCodeAccuracy(getCodeAccuracy);
                 // GetInfoCustomer();
                 GetInfoCustomer();
-                photoCD = DatabaseHelper.getInstance().createdSaleTakesPhoto(codeOrder, file);
+                photoCD = DatabaseHelper.getInstance().createdSaleTakesPhoto(codeOrder, file , "" , "","","", "");
 
                 file.setPhotoCD(photoCD); // lưu key sau khi insert vào
 

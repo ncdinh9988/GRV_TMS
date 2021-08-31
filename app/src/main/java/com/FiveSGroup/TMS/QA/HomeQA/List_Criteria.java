@@ -193,7 +193,9 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
 
     private void actionBack() {
         try {
-            List_Criteria.this.finish();
+            Intent intentToHomeQRActivity = new Intent(List_Criteria.this, List_QA.class);
+            startActivity(intentToHomeQRActivity);
+            finish();
         } catch (Exception e) {
             Log.e("Exception", e.getMessage());
         }

@@ -43,6 +43,8 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     String value1 = "";
     String positonReceive = "";
     String productCd = "";
+    String product_code = "";
+
     String stock = "";
     String expDate = "";
     String expDate1 = "";
@@ -89,6 +91,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         Intent intent = getIntent();
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
+        product_code = intent.getStringExtra("product_code");
         productCd = intent.getStringExtra("returnCD");
         allow = intent.getStringExtra("allow");
         batch_number = intent.getStringExtra("batch_number");
@@ -180,7 +183,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                         Product_QA product = product_QA.get(position);
                         product_QA.remove(position);
                         DatabaseHelper.getInstance().deleteProduct_QA_Specific(product.getAUTOINCREMENT());
-
+                        DatabaseHelper.getInstance().deleteallCriteria(batch_number,global.getQACD());
                         QAlistAdapter.notifyItemRemoved(position);
                     }
                 });
@@ -352,8 +355,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         Button btnClose = layout_cus.findViewById(R.id.btnHuy);
         TextView textView = layout_cus.findViewById(R.id.tvText);
         btnClose.setText("OK");
-
-
+        new CmnFns().synchronizePhoto_QA(List_QA.this , global.getQACD() );
         textView.setText(message);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -387,7 +389,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.buttonOK:
                 synchronizeToService();
-                new CmnFns().synchronizePhotoQA(List_QA.this , global.getQACD());
+
                 break;
             case R.id.buttonBack:
                 actionBack();

@@ -129,7 +129,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 146; // version của DB khi thay
+    public static final int DATABASE_VERSION = 150; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -190,6 +190,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_CRITERIA);
         db.execSQL(CREATE_TABLE_O_RESULT_QA);
         db.execSQL(CREATE_TABLE_O_PHOTO_QA);
+        db.execSQL(CREATE_TABLE_O_RETURN_QA);
     }
 
     @Override
@@ -498,6 +499,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_QA + " ADD COLUMN  "
                     + CHECKED_IMAGE_QA + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 148
+        try {
+            db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
+                    + BATCH_NUMBER_PHOTO + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 150
+        try {
+            db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
+                    + PRODUCT_CODE_PHOTO + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        try {
+            db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
+                    + UNIT_PHOTO + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        try {
+            db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
+                    + EXPIRED_DATE_PHOTO + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        try {
+            db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
+                    + STOCKIN_DATE_PHOTO + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -6880,6 +6920,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String SALE_TAKES_PHOTO_FILE_NAME = "PHOTO_NAME";
     public static final String SALE_ORDER_CD = "ORDER_CD";
     public static final String SALE_QA_CD_PHOTO = "SALE_QA_CD_PHOTO";
+    public static final String BATCH_NUMBER_PHOTO = "BATCH_NUMBER_PHOTO";
+    public static final String PRODUCT_CODE_PHOTO = "PRODUCT_CODE_PHOTO";
+    public static final String UNIT_PHOTO = "UNIT_PHOTO";
+    public static final String EXPIRED_DATE_PHOTO = "EXPIRED_DATE_PHOTO";
+    public static final String STOCKIN_DATE_PHOTO = "STOCKIN_DATE_PHOTO";
 
 
     public static final String SALE_TAKES_PHOTO_FULL_PATH_FILE = "SALE_TAKES_PHOTO_FULL_PATH_FILE";
@@ -6965,6 +7010,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + O_SALE_TAKE_PHOTO + "(" + SALE_TAKES_PHOTO_PRIMARY_KEY + " TEXT,"
             + SALE_ORDER_CD + " TEXT,"
             + SALE_QA_CD_PHOTO + " TEXT,"
+            + BATCH_NUMBER_PHOTO + " TEXT,"
+            + PRODUCT_CODE_PHOTO + " TEXT,"
+            + UNIT_PHOTO + " TEXT,"
+            + EXPIRED_DATE_PHOTO + " TEXT,"
+            + STOCKIN_DATE_PHOTO + " TEXT,"
             + SALE_TAKES_PHOTO_FILE_NAME + " TEXT,"
             + SALE_TAKES_PHOTO_FULL_PATH_FILE + " TEXT,"
             + SALE_TAKES_PHOTO_CREATED_DATE + " TEXT" + ")";
@@ -7411,11 +7461,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return files;
     }
 
-    public List<OrderPhoto> getAllPhotoForQA(String cd) {
+    public List<OrderPhoto> getAllPhoto_QA(String cd  ) {
 
         List<OrderPhoto> files = new ArrayList<OrderPhoto>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  * FROM " + O_SALE_TAKE_PHOTO;
+        String selectQuery = "SELECT  * FROM " + O_SALE_TAKE_PHOTO  + " Where " + SALE_QA_CD_PHOTO + " = " + cd ;
 
         android.database.Cursor c = db.rawQuery(selectQuery, null);
 
@@ -7429,6 +7479,72 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             .getColumnIndex(SALE_QA_CD_PHOTO))));
                     file.setPhoto_Name((c.getString(c
                             .getColumnIndex(SALE_TAKES_PHOTO_FILE_NAME))));
+                    file.setBATCH_NUMBER((c.getString(c
+                            .getColumnIndex(BATCH_NUMBER_PHOTO))));
+                    file.setPRODUCT_CODE((c.getString(c
+                            .getColumnIndex(PRODUCT_CODE_PHOTO))));
+                    file.setUNIT((c.getString(c
+                            .getColumnIndex(UNIT_PHOTO))));
+                    file.setEXPIRED_DATE((c.getString(c
+                            .getColumnIndex(EXPIRED_DATE_PHOTO))));
+                    file.setSTOCKIN_DATE((c.getString(c
+                            .getColumnIndex(STOCKIN_DATE_PHOTO))));
+                    file.setPhoto_Path((c.getString(c
+                            .getColumnIndex(SALE_TAKES_PHOTO_FULL_PATH_FILE))));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                            global.getFormatDate());
+                    Date convertedDate = new Date();
+                    try {
+                        convertedDate = dateFormat.parse((c.getString(c
+                                .getColumnIndex(SALE_TAKES_PHOTO_CREATED_DATE))));
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                    file.setPhoto_Date(convertedDate);
+                    files.add(file);
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+
+            } while (c.moveToNext());
+        }
+        c.close();
+        return files;
+    }
+
+    public List<OrderPhoto> getAllPhotoForQA(String cd , String batch , String product_code ) {
+
+        List<OrderPhoto> files = new ArrayList<OrderPhoto>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_SALE_TAKE_PHOTO  + " Where " + SALE_QA_CD_PHOTO + " = " + cd +
+                " AND " + BATCH_NUMBER_PHOTO + " = " + batch +
+                " AND " + PRODUCT_CODE_PHOTO + " = " + product_code ;
+
+        android.database.Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                try {
+                    OrderPhoto file = new OrderPhoto();
+                    file.setSTOCK_QA_PRODUCT_CD((c.getString(c
+                            .getColumnIndex(SALE_QA_CD_PHOTO))));
+                    file.setPhoto_Name((c.getString(c
+                            .getColumnIndex(SALE_TAKES_PHOTO_FILE_NAME))));
+                    file.setBATCH_NUMBER((c.getString(c
+                            .getColumnIndex(BATCH_NUMBER_PHOTO))));
+                    file.setPRODUCT_CODE((c.getString(c
+                            .getColumnIndex(PRODUCT_CODE_PHOTO))));
+                    file.setUNIT((c.getString(c
+                            .getColumnIndex(UNIT_PHOTO))));
+                    file.setEXPIRED_DATE((c.getString(c
+                            .getColumnIndex(EXPIRED_DATE_PHOTO))));
+                    file.setSTOCKIN_DATE((c.getString(c
+                            .getColumnIndex(STOCKIN_DATE_PHOTO))));
                     file.setPhoto_Path((c.getString(c
                             .getColumnIndex(SALE_TAKES_PHOTO_FULL_PATH_FILE))));
                     SimpleDateFormat dateFormat = new SimpleDateFormat(
@@ -7523,12 +7639,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public long createdSaleTakesPhoto(String orderCD, OrderPhoto files) {
+    public long createdSaleTakesPhoto(String orderCD, OrderPhoto files ,String product, String batch , String unit , String exp , String stockin) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
         values.put(SALE_ORDER_CD, orderCD);
         values.put(SALE_QA_CD_PHOTO, orderCD);
+
+        values.put(PRODUCT_CODE_PHOTO, product);
+        values.put(BATCH_NUMBER_PHOTO, batch);
+        values.put(UNIT_PHOTO, unit);
+        values.put(EXPIRED_DATE_PHOTO, exp);
+        values.put(STOCKIN_DATE_PHOTO, stockin);
+
         values.put(SALE_TAKES_PHOTO_FILE_NAME, files.getPhoto_Name());
         values.put(SALE_TAKES_PHOTO_CREATED_DATE,
                 files.getStrDateTakesPhoto());
@@ -9645,7 +9768,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
-        values.put(CHECKED_QA, "YES");
+        values.put(CHECKED_QA, "Yes");
         // updating row
         return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? ",
                 new String[]{String.valueOf(batch),String.valueOf(cd)});
@@ -9656,7 +9779,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
-        values.put(CHECKED_IMAGE_QA, "YES");
+        values.put(CHECKED_IMAGE_QA, "Yes");
         // updating row
         return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? ",
                 new String[]{String.valueOf(batch),String.valueOf(cd)});
@@ -9764,7 +9887,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String POSITION_TO_CODE_RETURN_QA = "POSITION_TO_CODE";
     public static final String POSITION_TO_DESCRIPTION_RETURN_QA = "POSITION_TO_DESCRIPTION";
     public static final String UNIQUE_CODE_RETURN_QA = "UNIQUE_CODE";
-    public static final String STOCK_QA_CD = "STOCK_QA_CD";
+    public static final String STOCK_RETURN_QA_CD = "STOCK_RETURN_QA_CD";
     public static final String LPN_CD_RETURN_QA = "LPN_CD_RETURN_QA";
     public static final String LPN_CODE_RETURN_QA = "LPN_CODE_RETURN_QA";
     public static final String LPN_FROM_RETURN_QA = "LPN_FROM_RETURN_QA";
@@ -9793,7 +9916,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + POSITION_TO_RETURN_QA + " TEXT,"
             + POSITION_TO_CODE_RETURN_QA + " TEXT,"
             + POSITION_TO_DESCRIPTION_RETURN_QA + " TEXT,"
-            + STOCK_QA_CD + " TEXT,"
+            + STOCK_RETURN_QA_CD + " TEXT,"
             + UNIQUE_CODE_RETURN_QA + " TEXT ,"
             + LPN_CD_RETURN_QA + " TEXT ,"
             + LPN_CODE_RETURN_QA + " TEXT ,"
@@ -9827,7 +9950,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_CODE_RETURN_QA, returnQA.getPOSITION_TO_CODE());
         values.put(POSITION_FROM_DESCRIPTION_RETURN_QA, returnQA.getPOSITION_FROM_DESCRIPTION());
         values.put(POSITION_TO_DESCRIPTION_RETURN_QA, returnQA.getPOSITION_TO_DESCRIPTION());
-        values.put(STOCK_QA_CD, returnQA.getSTOCK_QA_CD());
+        values.put(STOCK_RETURN_QA_CD, returnQA.getSTOCK_QA_CD());
         values.put(LPN_CODE_RETURN_QA, returnQA.getLPN_CODE());
         values.put(LPN_FROM_RETURN_QA, returnQA.getLPN_FROM());
         values.put(LPN_TO_RETURN_QA, returnQA.getLPN_TO());
@@ -9916,7 +10039,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_RETURN_QA + " " + " WHERE "
                 + PRODUCT_CD_RETURN_QA + " = " + CD + " AND "
-                + STOCK_QA_CD + " = " + cd + " AND "
+                + STOCK_RETURN_QA_CD + " = " + cd + " AND "
                 + EA_UNIT_RETURN_QA + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_RETURN_QA + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_RETURN_QA + " like " + " '%" + stockinDate + "%'";
@@ -9967,7 +10090,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
                 "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
                 "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_RETURN_QA +
-                " where " + STOCK_QA_CD + " = " + cd;
+                " where " + STOCK_RETURN_QA_CD + " = " + cd;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -10013,7 +10136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 returnQA.setPOSITION_TO_DESCRIPTION((c.getString(c
                         .getColumnIndex(POSITION_TO_DESCRIPTION_RETURN_QA))));
                 returnQA.setSTOCK_QA_CD((c.getString(c
-                        .getColumnIndex(STOCK_QA_CD))));
+                        .getColumnIndex(STOCK_RETURN_QA_CD))));
                 returnQA.setLPN_FROM((c.getString(c
                         .getColumnIndex(LPN_FROM_RETURN_QA))));
                 returnQA.setLPN_TO((c.getString(c
@@ -10034,7 +10157,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_Return_QA(String cd) {
         ArrayList<Product_Return_QA> returnQAs = new ArrayList<Product_Return_QA>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  * FROM " + O_RETURN_QA + " where " + STOCK_QA_CD + " = " + cd;
+        String selectQuery = "SELECT  * FROM " + O_RETURN_QA + " where " + STOCK_RETURN_QA_CD + " = " + cd;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -10080,7 +10203,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 returnQA.setPOSITION_TO_DESCRIPTION((c.getString(c
                         .getColumnIndex(POSITION_TO_DESCRIPTION_RETURN_QA))));
                 returnQA.setSTOCK_QA_CD((c.getString(c
-                        .getColumnIndex(STOCK_QA_CD))));
+                        .getColumnIndex(STOCK_RETURN_QA_CD))));
                 returnQA.setLPN_FROM((c.getString(c
                         .getColumnIndex(LPN_FROM_RETURN_QA))));
                 returnQA.setLPN_TO((c.getString(c
@@ -10107,7 +10230,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(EXPIRED_DATE_RETURN_QA, returnQA.getEXPIRED_DATE());
         values.put(EA_UNIT_RETURN_QA, returnQA.getUNIT());
         values.put(QTY_SET_AVAILABLE_RETURN_QA, sl);
-        values.put(STOCK_QA_CD, cd);
+        values.put(STOCK_RETURN_QA_CD, cd);
 
         // updating row
         return db.update(O_RETURN_QA, values,  AUTOINCREMENT_RETURN_QA + " = ?",
