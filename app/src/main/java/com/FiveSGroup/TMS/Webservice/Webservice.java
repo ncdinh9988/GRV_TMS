@@ -918,7 +918,7 @@ public class Webservice {
 
         String isLPNFormat = String.valueOf(isLPN);
         String webServiceFunc = "";
-        if(type.equals("WTP") || type.equals("WQA_Return")){
+        if(type.equals("WTP") || type.equals("WQA")|| type.equals("WQA_Return")){
             webServiceFunc = "synchronizeGETPositionInfo_RQBT";
         }else{
             webServiceFunc = "synchronizeGETPositionInfo";

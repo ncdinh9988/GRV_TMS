@@ -54,14 +54,18 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
         holder.tvnameproduct.setText(product.getPRODUCT_NAME_FROM());
         holder.tvqty.setText(product.getQTY_SET_AVAILABLE_ORIGINAL());
         holder.tvunit.setText(product.getUNIT());
+//        holder.idsl1.setText(listChuyenMa.get(position).getQTY_SET_AVAILABLE());
+//        holder.idsl2.setText(listChuyenMa.get(position).getQTY_SET_AVAILABLE());
+//        holder.idsl3.setText(listChuyenMa.get(position).getQTY_SET_AVAILABLE());
 
 
         String code = product.getPRODUCT_CODE_FROM();
         String unit = product.getUNIT();
         String chuyenma_Cd = product.getTRANSFER_POSTING_CD();
+        String batch = product.getBATCH_NUMBER();
 
 
-        final ArrayList<Product_ChuyenMa> chuyenma = DatabaseHelper.getInstance().getDataMaterialbyItemBasic(code , unit , chuyenma_Cd);
+        final ArrayList<Product_ChuyenMa> chuyenma = DatabaseHelper.getInstance().getDataMaterialbyItemBasic(code , unit , chuyenma_Cd, batch);
         for (int i = 0 ; i < chuyenma.size() ; i++){
             if(i == 0){
                 holder.idproduct1.setText(chuyenma.get(0).getPRODUCT_NAME_TO());
@@ -81,7 +85,7 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
                         if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
 //                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
                         } else {
-                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(0).getPRODUCT_CODE_FROM(), chuyenma.get(0).getPRODUCT_CODE_TO(),s.toString() );
+                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(0).getPRODUCT_CODE_FROM(), chuyenma.get(0).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER());
                         }
                     }
                 });
@@ -104,7 +108,7 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
                         if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
 //                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
                         } else {
-                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(1).getPRODUCT_CODE_FROM(), chuyenma.get(1).getPRODUCT_CODE_TO(),s.toString());
+                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(1).getPRODUCT_CODE_FROM(), chuyenma.get(1).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER());
                         }
                     }
                 });
@@ -127,7 +131,7 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
                         if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
 //                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
                         } else {
-                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(2).getPRODUCT_CODE_FROM(), chuyenma.get(2).getPRODUCT_CODE_TO(),s.toString());
+                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(2).getPRODUCT_CODE_FROM(), chuyenma.get(2).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER());
                         }
                     }
                 });

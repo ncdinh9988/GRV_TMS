@@ -1270,7 +1270,7 @@ public class CmnFns {
         return "-1";
     }
 
-    public int synchronizeGETProductByZoneChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
+    public int synchronizeGETProductByZoneChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd , String expdate ,String batch , String stockindate , String unit_cm ) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -1312,51 +1312,54 @@ public class CmnFns {
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
 
-                JSONObject jsonobj = jsonarray.getJSONObject(i);
-                String pro_code = jsonobj.getString("_PRODUCT_CODE");
-                String pro_cd = jsonobj.getString("_PRODUCT_CD");
-                String pro_name = jsonobj.getString("_PRODUCT_NAME");
-                String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
-                String quanity_2 = jsonobj.getString("_QTY_SET_AVAILABLE_2");
-                String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
-                String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
-                String ea_unit = jsonobj.getString("_UNIT");
-                String ea_unit_2 = jsonobj.getString("_UNIT_2");
-                // VT đến
-                String position_code = jsonobj.getString("_POSITION_CODE");
-                String strokinDate = jsonobj.getString("_STOCKIN_DATE");
-                // Mô tả VT đến
-                String description = jsonobj.getString("_POSITION_DESCRIPTION");
-                // VT đến
-                String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
-                String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
-                String batch_number = jsonobj.getString("_BATCH_NUMBER");
-                String item_basic = jsonobj.getString("_ITEM_BASIC");
+                    JSONObject jsonobj = jsonarray.getJSONObject(i);
+                    String pro_code = jsonobj.getString("_PRODUCT_CODE");
+                    String pro_cd = jsonobj.getString("_PRODUCT_CD");
+                    String pro_name = jsonobj.getString("_PRODUCT_NAME");
+                    String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+                    String quanity_2 = jsonobj.getString("_QTY_SET_AVAILABLE_2");
+                    String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
+                    String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
+                    String ea_unit = jsonobj.getString("_UNIT");
+                    String ea_unit_2 = jsonobj.getString("_UNIT_2");
+                    // VT đến
+                    String position_code = jsonobj.getString("_POSITION_CODE");
+                    String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                    // Mô tả VT đến
+                    String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                    // VT đến
+                    String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+                    String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
+                    String batch_number = jsonobj.getString("_BATCH_NUMBER");
+                    String item_basic = jsonobj.getString("_ITEM_BASIC");
+               if((!batch_number.equals(batch))){
 
-                Product_SP sp = new Product_SP();
+               }else{
+                   Product_SP sp = new Product_SP();
 
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
-                sp.setPRODUCT_CD(pro_cd);
-                sp.setPRODUCT_CODE(pro_code);
-                sp.setPRODUCT_NAME(pro_name);
-                sp.setQTY_SET_AVAILABLE(quanity);
-                sp.setQTY_SET_AVAILABLE_2(quanity_2);
-                sp.setQTY_EA_AVAILABLE(quanity_ea);
-                sp.setEXPIRED_DATE(exxpiredDate);
-                sp.setUNIT(ea_unit);
-                sp.setUNIT_2(ea_unit_2);
-                sp.setPOSITION_CODE(position_code);
-                sp.setSTOCKIN_DATE(strokinDate);
-                sp.setPOSITION_DESCRIPTION(description);
-                sp.setWAREHOUSE_POSITION_CD(warePosition);
-                sp.setMANUFACTURING_DATE(manufacturing);
-                sp.setBATCH_NUMBER(batch_number);
-                sp.setITEM_BASIC(item_basic);
+                   sp.setPRODUCT_CD(pro_cd);
+                   sp.setPRODUCT_CODE(pro_code);
+                   sp.setPRODUCT_NAME(pro_name);
+                   sp.setQTY_SET_AVAILABLE(quanity);
+                   sp.setQTY_SET_AVAILABLE_2(quanity_2);
+                   sp.setQTY_EA_AVAILABLE(quanity_ea);
+                   sp.setEXPIRED_DATE(expdate);
+                   sp.setUNIT(unit_cm);
+                   sp.setUNIT_2(ea_unit_2);
+                   sp.setPOSITION_CODE(position_code);
+                   sp.setSTOCKIN_DATE(stockindate);
+                   sp.setPOSITION_DESCRIPTION(description);
+                   sp.setWAREHOUSE_POSITION_CD(warePosition);
+                   sp.setMANUFACTURING_DATE(manufacturing);
+                   sp.setBATCH_NUMBER(batch);
+                   sp.setITEM_BASIC(item_basic);
 
-                DatabaseHelper.getInstance().CreateSP(sp);
+                   DatabaseHelper.getInstance().CreateSP(sp);
+                   int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
+               }
 
             }
-            int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
 
         } catch (JSONException e) {
             // TODO Auto-generated catch block
@@ -2942,7 +2945,7 @@ public class CmnFns {
 
         return 1;
     }
-    public int GetMaterialInspection(Context context, String barcode , String usercode , String batch , String cd){
+    public int GetMaterialInspection(Context context, String barcode , String usercode , String batch , String cd , String product_code){
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -2955,7 +2958,7 @@ public class CmnFns {
             return 1;
         }
         try {
-            ArrayList<Product_Criteria> Product_Criteria = DatabaseHelper.getInstance().getallCriteria(batch);
+            ArrayList<Product_Criteria> Product_Criteria = DatabaseHelper.getInstance().getallCriteria(cd,batch, product_code);
             int check ;
             check = Product_Criteria.size();
             if(check == 0){

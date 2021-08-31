@@ -5836,13 +5836,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Product_ChuyenMa>
-    getDataMaterialbyItemBasic(String product_code_from , String  unit , String cd ) {
+    getDataMaterialbyItemBasic(String product_code_from , String  unit , String cd , String batch) {
         ArrayList<Product_ChuyenMa> listMaterialChuyenma = new ArrayList<Product_ChuyenMa>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "Select * From " + O_CHUYENMA  + " Where "
                 + PRODUCT_CODE_FROM_CHUYENMA + " = "  +  product_code_from
                 + " AND " + TRANSFER_POSTING_CD_CHUYENMA + " = " + cd
-                ;
+                + " AND " + BATCH_NUMBER_CHUYENMA + " = '" + batch
+                + "' AND " + UNIT_CHUYENMA + " = '" + unit
+                + "' ORDER BY " + BATCH_NUMBER_CHUYENMA + " DESC";
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -5879,12 +5881,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return listMaterialChuyenma;
     }
 
-    public int updateProduct_ChuyenMa(String product_code_from, String product_code_to , String qty ) {
+    public int updateProduct_ChuyenMa(String product_code_from, String product_code_to , String qty , String batch ) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(QTY_SET_AVAILABLE_CHUYENMA, qty);
-        return db.update(O_CHUYENMA, values,  PRODUCT_CODE_FROM_CHUYENMA + " = ? AND " + PRODUCT_CODE_TO_CHUYENMA + " = ? ",
-                new String[]{String.valueOf(product_code_from),String.valueOf(product_code_to)});
+        return db.update(O_CHUYENMA, values,  PRODUCT_CODE_FROM_CHUYENMA + " = ? AND " + PRODUCT_CODE_TO_CHUYENMA + " = ? AND " + BATCH_NUMBER_CHUYENMA + " = ? " ,
+                new String[]{String.valueOf(product_code_from),String.valueOf(product_code_to),String.valueOf(batch)});
 
     }
 
@@ -5893,7 +5895,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Product_ChuyenMa> listchuyenma = new ArrayList<Product_ChuyenMa>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "Select * From O_CHUYENMA Where " + TRANSFER_POSTING_CD_CHUYENMA + " = " + chuyenma_cd +
-                " GROUP BY PRODUCT_CODE_FROM_CHUYENMA , PRODUCT_NAME_FROM_CHUYENMA , EXPIRED_DATE_CHUYENMA , BATCH_NUMBER_CHUYENMA ";
+                " GROUP BY PRODUCT_CODE_FROM_CHUYENMA , PRODUCT_NAME_FROM_CHUYENMA , EXPIRED_DATE_CHUYENMA , BATCH_NUMBER_CHUYENMA ORDER BY " + BATCH_NUMBER_CHUYENMA + " DESC";
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -6315,10 +6317,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Product_Criteria>
-    getallCriteria(String batch) {
+    getallCriteria(String cd ,String batch , String product_code) {
         ArrayList<Product_Criteria> listcriteria = new ArrayList<Product_Criteria>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT * FROM " + O_CRITERIA + " where " + BATCH_NUMBER_CRITERIA + " = '" + batch + "'";
+        String selectQuery = "SELECT * FROM " + O_CRITERIA + " where " + BATCH_NUMBER_CRITERIA + " = '" + batch + "' AND "
+                + PRODUCT_CODE_CRITERIA + " = " + product_code + " AND "
+                + MATERIA_CD_CRITERIA + " = " + cd ;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -6348,7 +6352,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updateunit_Criteria(String mic_code , String batch, String qty , String cd) {
+    public int updateunit_Criteria(String mic_code , String batch, String qty , String cd , String product_code) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -6356,12 +6360,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(QTY_CRITERIA, qty);
 
         // updating row
-        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND " + MATERIA_CD_CRITERIA + " = ? ",
-                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd)});
+        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND " + MATERIA_CD_CRITERIA + " = ? AND " + PRODUCT_CODE_CRITERIA + " = ? ",
+                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd), String.valueOf(product_code)});
 
     }
 
-    public int updatenote_Criteria(String mic_code , String batch, String note ,String cd) {
+    public int updatenote_Criteria(String mic_code , String batch, String note ,String cd , String product_code) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -6369,8 +6373,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(NOTE_CRITERIA, note);
 
         // updating row
-        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND " + MATERIA_CD_CRITERIA + " = ? ",
-                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd)});
+        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND " + MATERIA_CD_CRITERIA + " = ? AND " + PRODUCT_CODE_CRITERIA + " = ? ",
+                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd), String.valueOf(product_code)});
 
     }
 
@@ -6379,7 +6383,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         db.execSQL("delete from " + O_CRITERIA + " where "
-                + BATCH_NUMBER_CRITERIA + " = " + batch + " AND "
+                + BATCH_NUMBER_CRITERIA + " = '" + batch + "' AND "
                 + MATERIA_CD_CRITERIA + " = " + cd);
     }
     public void deleteallCriteria( String cd) {
@@ -7492,7 +7496,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             .getColumnIndex(UNIT_PHOTO))));
                     file.setEXPIRED_DATE((c.getString(c
                             .getColumnIndex(EXPIRED_DATE_PHOTO))));
-                    file.setSTOCKIN_DATE((c.getString(c
+                    file.setSTOCK_IN_DATE((c.getString(c
                             .getColumnIndex(STOCKIN_DATE_PHOTO))));
                     file.setPhoto_Path((c.getString(c
                             .getColumnIndex(SALE_TAKES_PHOTO_FULL_PATH_FILE))));
@@ -7525,8 +7529,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<OrderPhoto> files = new ArrayList<OrderPhoto>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_SALE_TAKE_PHOTO  + " Where " + SALE_QA_CD_PHOTO + " = " + cd +
-                " AND " + BATCH_NUMBER_PHOTO + " = " + batch +
-                " AND " + PRODUCT_CODE_PHOTO + " = " + product_code ;
+                " AND " + BATCH_NUMBER_PHOTO + " = '" + batch +
+                "' AND " + PRODUCT_CODE_PHOTO + " = " + product_code ;
 
         android.database.Cursor c = db.rawQuery(selectQuery, null);
 
@@ -7548,7 +7552,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             .getColumnIndex(UNIT_PHOTO))));
                     file.setEXPIRED_DATE((c.getString(c
                             .getColumnIndex(EXPIRED_DATE_PHOTO))));
-                    file.setSTOCKIN_DATE((c.getString(c
+                    file.setSTOCK_IN_DATE((c.getString(c
                             .getColumnIndex(STOCKIN_DATE_PHOTO))));
                     file.setPhoto_Path((c.getString(c
                             .getColumnIndex(SALE_TAKES_PHOTO_FULL_PATH_FILE))));
@@ -9769,25 +9773,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updateChecked_QA(String batch , String cd) {
+    public int updateChecked_QA(String batch , String cd , String product_code) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(CHECKED_QA, "Yes");
         // updating row
-        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? ",
-                new String[]{String.valueOf(batch),String.valueOf(cd)});
+        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? AND "  + PRODUCT_CODE_QA + " = ? ",
+                new String[]{String.valueOf(batch),String.valueOf(cd),String.valueOf(product_code)});
 
     }
 
-    public int update_Image_QA(String batch , String cd) {
+    public int update_Image_QA(String batch , String cd , String product_code) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(CHECKED_IMAGE_QA, "Yes");
         // updating row
-        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? ",
-                new String[]{String.valueOf(batch),String.valueOf(cd)});
+        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? AND "  + PRODUCT_CODE_QA + " = ? ",
+                new String[]{String.valueOf(batch),String.valueOf(cd),String.valueOf(product_code)});
 
     }
 

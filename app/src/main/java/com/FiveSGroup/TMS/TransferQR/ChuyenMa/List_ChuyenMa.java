@@ -180,7 +180,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
     public void alert_show_SP(int isLPN) {
         if(check_chuyenma != null ) {
             try {
-                int postitionDes = new CmnFns().synchronizeGETProductByZoneChuyenMa(value1, CmnFns.readDataAdmin(), "WTP", 0, global.getChuyenMaCD());
+                int postitionDes = new CmnFns().synchronizeGETProductByZoneChuyenMa(value1, CmnFns.readDataAdmin(), "WTP", 0, global.getChuyenMaCD(), expDate , batch_number,stockinDate , ea_unit);
                 Dialog dialog = new Dialog(List_ChuyenMa.this);
 
                 if (postitionDes == 1) {

@@ -20,7 +20,7 @@ public class OrderPhoto {
     private String PRODUCT_CODE;
     private String UNIT;
     private String EXPIRED_DATE;
-    private String STOCKIN_DATE;;
+    private String STOCK_IN_DATE;;
 
     public String getPRODUCT_CODE() {
         return PRODUCT_CODE;
@@ -46,12 +46,12 @@ public class OrderPhoto {
         this.EXPIRED_DATE = EXPIRED_DATE;
     }
 
-    public String getSTOCKIN_DATE() {
-        return STOCKIN_DATE;
+    public String getSTOCK_IN_DATE() {
+        return STOCK_IN_DATE;
     }
 
-    public void setSTOCKIN_DATE(String STOCKIN_DATE) {
-        this.STOCKIN_DATE = STOCKIN_DATE;
+    public void setSTOCK_IN_DATE(String STOCK_IN_DATE) {
+        this.STOCK_IN_DATE = STOCK_IN_DATE;
     }
 
     public String getBATCH_NUMBER() {
