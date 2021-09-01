@@ -77,7 +77,7 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
 
         init();
         buttonBack.setOnClickListener(this);
-        btnok.setOnClickListener(this);
+//        btnok.setOnClickListener(this);
 
         prepareData();
     }
@@ -135,7 +135,7 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
     private void init() {
         buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setText("Trở Về");
-        btnok = findViewById(R.id.buttonOK);
+//        btnok = findViewById(R.id.buttonOK);
         listVieWTPoduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
         tvTitle.setText("Danh Sách SP Tiêu Chí Kiểm Định");
@@ -156,7 +156,6 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
         String saleCode = CmnFns.readDataAdmin();
         Dialog dialog = new Dialog(List_Criteria.this);
         DatabaseHelper.getInstance().updateChecked_QA(batch_number ,cd , product_code);
-        DatabaseHelper.getInstance().getAllProduct_RESULT_QA(cd);
         ShowSuccessMessage("Lưu thành công");
     }
 
@@ -207,9 +206,9 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
             case R.id.buttonScan_Barcode:
                 startScan();
                 break;
-            case R.id.buttonOK:
-                synchronizeToService();
-                break;
+//            case R.id.buttonOK:
+//                synchronizeToService();
+//                break;
             case R.id.buttonBack:
                 actionBack();
                 break;

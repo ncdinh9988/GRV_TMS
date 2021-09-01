@@ -177,16 +177,12 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void onClick(View v) {
                         //Remove swiped item from list and notify the RecyclerView
-
-
                         dialog.dismiss();
-
                         int position = viewHolder.getAdapterPosition();
                         Product_QA product = product_QA.get(position);
                         product_QA.remove(position);
                         DatabaseHelper.getInstance().deleteProduct_QA_Specific(product.getAUTOINCREMENT());
                         DatabaseHelper.getInstance().deleterowCriteria(product.getBATCH_NUMBER(),global.getQACD());
-
                         QAlistAdapter.notifyItemRemoved(position);
                     }
                 });
@@ -286,13 +282,17 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         if (product_QA.size() > 0) {
 
             try {
+                DatabaseHelper.getInstance().getAllProduct_RESULT_QA(global.getQACD());
                 int result = new CmnFns().synchronizeData_RQBT_Final(saleCode, "WQA", global.getQACD());
                 if (result >= 1) {
+                    new CmnFns().synchronizePhoto_QA(List_QA.this , global.getQACD() );
+                    DatabaseHelper.getInstance().deleteallResult_QA(global.getQACD());
+                    DatabaseHelper.getInstance().deleteProduct_QA(global.getQACD());
+                    DatabaseHelper.getInstance().deleteallCriteria(global.getQACD());
                     ShowSuccessMessage("Lưu thành công");
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-
                 } else {
-
+                    DatabaseHelper.getInstance().deleteallResult_QA(global.getQACD());
                     if (result == -1) {
                         dialog.showDialog(List_QA.this, "Lưu thất bại");
                     } else if (result == -2) {
@@ -357,14 +357,12 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         Button btnClose = layout_cus.findViewById(R.id.btnHuy);
         TextView textView = layout_cus.findViewById(R.id.tvText);
         btnClose.setText("OK");
-        new CmnFns().synchronizePhoto_QA(List_QA.this , global.getQACD() );
+
         textView.setText(message);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
-                DatabaseHelper.getInstance().deleteProduct_QA(global.getQACD());
-                DatabaseHelper.getInstance().deleteallCriteria(global.getQACD());
                 product_QA.clear();
                 QAlistAdapter.notifyDataSetChanged();
                 Intent intentToHomeQRActivity = new Intent(List_QA.this, Home_QA.class);
@@ -390,6 +388,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
                 startScan();
                 break;
             case R.id.buttonOK:
+
                 synchronizeToService();
 
                 break;

@@ -55,6 +55,7 @@ import com.FiveSGroup.TMS.global;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,6 +65,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
     Button btnCap, btnBack, btnUpload;
     ImageView imgViewOrder, imgClose, imgDisplay;
     RecyclerView rvListImageOrder;
+    Date date1 , date2;
 
     File photoFile = null;
     String imageFileName;
@@ -71,7 +73,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
     FrameLayout frameLayout;
     TextView tvEmptyImage;
     String product_code = "" , unit = "" , batch_number = ""  , exp = "" , stockcd = "" , stockindate = "";
-
+    String exp_date = "" , stockin_date = "";
     private static final int REQUEST_TAKE_PHOTO = 2;
 
     private Bitmap bitmap, bitmapCanvas;
@@ -107,6 +109,21 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
         unit = intent.getStringExtra("unit");
         exp = intent.getStringExtra("exp");
         stockindate = intent.getStringExtra("stockindate");
+
+//        try {
+//            date2 = new SimpleDateFormat(global.getFormatDate()).parse(stockindate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            date1 = new SimpleDateFormat(global.getFormatDate()).parse(exp);
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        exp_date = String.valueOf(date1);
+//        stockin_date = String.valueOf(date2);
+
 
     }
 
@@ -468,16 +485,16 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
                 file.setPhoto_Date(new Date());
                 file.setImage(bitmap);
 
-                Product_Photo_QA listphotoQA = new Product_Photo_QA();
-                listphotoQA.setPRODUCT_CODE(product_code);
-                listphotoQA.setBATCH_NUMBER(batch_number);
-                listphotoQA.setUNIT(unit);
-                listphotoQA.setSTOCKIN_DATE(stockindate);
-                listphotoQA.setEXPIRED_DATE(exp);
-                listphotoQA.setSTOCK_QA_CD(stockcd);
-                listphotoQA.setPHOTO_DATE(file.getStrDateTakesPhoto());
-                listphotoQA.setPHOTO_NAME(imageFileName);
-                DatabaseHelper.getInstance().CreatePhotoQA(listphotoQA);
+//                Product_Photo_QA listphotoQA = new Product_Photo_QA();
+//                listphotoQA.setPRODUCT_CODE(product_code);
+//                listphotoQA.setBATCH_NUMBER(batch_number);
+//                listphotoQA.setUNIT(unit);
+//                listphotoQA.setSTOCKIN_DATE(stockindate);
+//                listphotoQA.setEXPIRED_DATE(exp);
+//                listphotoQA.setSTOCK_QA_CD(stockcd);
+//                listphotoQA.setPHOTO_DATE(file.getStrDateTakesPhoto());
+//                listphotoQA.setPHOTO_NAME(imageFileName);
+//                DatabaseHelper.getInstance().CreatePhotoQA(listphotoQA);
 
 //                CPhoto file = new CPhoto();
 //                file.setPhoto_Name(this.photoFile.getName());

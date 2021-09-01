@@ -48,6 +48,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -5585,6 +5586,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return qrcode;
     }
 
+    public void deleteallResult_QA(String cd) {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_RESULT_QA + " where " + STOCK_QA_CD_RESULT + " = " + cd);
+    }
+
     //Table O_ChuyenMa để chứa dữ liệu quét material chuyen ma
 
 
@@ -7494,12 +7501,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             .getColumnIndex(PRODUCT_CODE_PHOTO))));
                     file.setUNIT((c.getString(c
                             .getColumnIndex(UNIT_PHOTO))));
-                    file.setEXPIRED_DATE((c.getString(c
-                            .getColumnIndex(EXPIRED_DATE_PHOTO))));
-                    file.setSTOCK_IN_DATE((c.getString(c
-                            .getColumnIndex(STOCKIN_DATE_PHOTO))));
                     file.setPhoto_Path((c.getString(c
                             .getColumnIndex(SALE_TAKES_PHOTO_FULL_PATH_FILE))));
+                    file.setSTOCK_IN_DATE((c.getString(c
+                            .getColumnIndex(STOCKIN_DATE_PHOTO))));
+                    file.setEXPIRED_DATE((c.getString(c
+                            .getColumnIndex(EXPIRED_DATE_PHOTO))));
+
                     SimpleDateFormat dateFormat = new SimpleDateFormat(
                             global.getFormatDate());
                     Date convertedDate = new Date();
