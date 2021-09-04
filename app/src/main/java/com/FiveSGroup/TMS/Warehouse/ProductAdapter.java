@@ -57,8 +57,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
 //        holder.edt.setText(product.getSL_SET());
-
+        holder.tvcont.setText(product.getBATCH_NUMBER());
         holder.tvFrom.setText(product.getPRODUCT_FROM());
+
         holder.tvUnit.setText(product.getEA_UNIT());
         if (product.getPOSITION_CODE().equals("") && product.getPOSITION_DESCRIPTION().equals("")){
             holder.tvTo.setText("---");
@@ -71,6 +72,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.btnvtdi.setEnabled(false);
         holder.btnvtden.setEnabled(false);
 
+        holder.layout_cont.setVisibility(View.VISIBLE);
         holder.layoutFrom.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
         holder.layoutTo.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
 
@@ -254,10 +256,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageButton btnvtden, btnvtdi;
-        TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
+        TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct , tvcont;
         TextView tvExpired, tvStockin;
         EditText edt;
-        LinearLayout layoutFrom , layoutTo;
+        LinearLayout layoutFrom , layoutTo, layout_cont;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -267,10 +269,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
+            tvcont = itemView.findViewById(R.id.tvcont);
 
 
             layoutFrom = itemView.findViewById(R.id.layoutFrom);
             layoutTo = itemView.findViewById(R.id.layoutTo);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
             tvUnit = itemView.findViewById(R.id.tvUnit);
 
             tvStockin = itemView.findViewById(R.id.tvStockin);
