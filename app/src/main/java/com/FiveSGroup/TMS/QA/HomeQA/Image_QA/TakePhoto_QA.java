@@ -109,20 +109,31 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
         unit = intent.getStringExtra("unit");
         exp = intent.getStringExtra("exp");
         stockindate = intent.getStringExtra("stockindate");
+        try {
+            String chuoi[] = exp.split("/");
+            String code = chuoi[0];
+            String code1 = chuoi[1];
+            String code2 = chuoi[2];
+            exp_date = code2+"-"+code1+"-"+code;
+            if(exp==null){
+                exp_date = "";
+            }
+        }catch (Exception e){
 
-//        try {
-//            date2 = new SimpleDateFormat(global.getFormatDate()).parse(stockindate);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            date1 = new SimpleDateFormat(global.getFormatDate()).parse(exp);
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        exp_date = String.valueOf(date1);
-//        stockin_date = String.valueOf(date2);
+        }
+        try {
+            String chuoi[] = stockindate.split("/");
+            String code = chuoi[0];
+            String code1 = chuoi[1];
+            String code2 = chuoi[2];
+            stockin_date = code2+"-"+code1+"-"+code;
+            if (stockindate==null){
+                stockin_date="";
+            }
+
+        }catch (Exception e){
+
+        }
 
 
     }
@@ -507,7 +518,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
                 // file.setGeoCodeAccuracy(getCodeAccuracy);
                 // GetInfoCustomer();
                 GetInfoCustomer();
-                photoCD = DatabaseHelper.getInstance().createdSaleTakesPhoto(stockcd, file ,product_code, batch_number, unit , exp , stockindate);
+                photoCD = DatabaseHelper.getInstance().createdSaleTakesPhoto(stockcd, file ,product_code, batch_number, unit , exp_date , stockin_date);
 
                 file.setPhotoCD(photoCD); // lưu key sau khi insert vào
 

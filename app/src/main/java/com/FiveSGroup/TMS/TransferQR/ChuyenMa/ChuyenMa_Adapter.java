@@ -82,11 +82,9 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
-//                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
-                        } else {
+
                             DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(0).getPRODUCT_CODE_FROM(), chuyenma.get(0).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER());
-                        }
+
                     }
                 });
             }
@@ -105,11 +103,9 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
-//                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
-                        } else {
+
                             DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(1).getPRODUCT_CODE_FROM(), chuyenma.get(1).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER());
-                        }
+
                     }
                 });
             }
@@ -128,11 +124,9 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
-//                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
-                        } else {
+
                             DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(2).getPRODUCT_CODE_FROM(), chuyenma.get(2).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER());
-                        }
+
                     }
                 });
             }

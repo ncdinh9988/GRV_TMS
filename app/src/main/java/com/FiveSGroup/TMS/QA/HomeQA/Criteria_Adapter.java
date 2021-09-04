@@ -65,12 +65,10 @@ public class Criteria_Adapter extends RecyclerView.Adapter<Criteria_Adapter.View
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if ((s.toString().equals("")) || (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000")) || (s.toString().equals("00000"))) {
-//                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
-                        } else {
+
                             DatabaseHelper.getInstance().updateChecked_QA(product.getBATCH_NUMBER() ,cd , product_code);
                             DatabaseHelper.getInstance().updateunit_Criteria(product.getMIC_CODE(), product.getBATCH_NUMBER(), s.toString(),cd, product_code);
-                        }
+
                     }
                 });
 
@@ -86,11 +84,9 @@ public class Criteria_Adapter extends RecyclerView.Adapter<Criteria_Adapter.View
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if ((s.toString().equals("")) || (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000")) || (s.toString().equals("00000"))) {
-//                    DatabaseHelper.getInstance().updateProduct_TransferPosting(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
-                        } else {
+
                             DatabaseHelper.getInstance().updatenote_Criteria(product.getMIC_CODE(), product.getBATCH_NUMBER(), s.toString(),cd , product_code);
-                        }
+
                     }
                 });
 
