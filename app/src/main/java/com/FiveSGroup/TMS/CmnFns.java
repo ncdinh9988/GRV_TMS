@@ -1522,6 +1522,82 @@ public class CmnFns {
         return 1;
     }
 
+    public int getDataFromSeverWithBatch(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = "";
+
+        result = webService.GetProductByZone(barcodeData, sale_codes, type, IsLPN, cd);
+
+
+
+
+        // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("1")) {
+            return 1;
+        } else if (result.equals("-8")) {
+            return -8;
+        } else if (result.equals("-11")) {
+            return -11;
+        } else if (result.equals("-12")) {
+            return -12;
+        } else if (result.equals("-16")) {
+            return -16;
+        } else if (result.equals("-20")) {
+            return -20;
+        } else if (result.equals("-21")) {
+            return -21;
+        } else if (result.equals("-22")) {
+            return -22;
+        }
+        if (result.equals("1")) {
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                String pro_exp = jsonobj.getString("_EXPIRY_DATE");
+                String pro_stockin = jsonobj.getString("_STOCKIN_DATE");
+                String batch = jsonobj.getString("_BATCH_NUMBER");
+
+
+                Exp_Date_Tam exp_date_tam = new Exp_Date_Tam();
+                if (pro_stockin.equals("")) {
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + "---");
+                } else {
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
+                }
+
+                    exp_date_tam.setBATCH_NUMBER_TAM(batch);
+
+
+                DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
+
     public int getPutAwayFromServer(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
 
         int status = this.allowSynchronizeBy3G();
