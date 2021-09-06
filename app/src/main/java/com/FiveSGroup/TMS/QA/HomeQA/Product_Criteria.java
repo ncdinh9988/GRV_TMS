@@ -7,7 +7,16 @@ public class Product_Criteria {
     private String BATCH_NUMBER;
     private String NOTE;
     private String QTY;
+    private String UNIT;
     private String MATERIA_CD;
+
+    public String getUNIT() {
+        return UNIT;
+    }
+
+    public void setUNIT(String UNIT) {
+        this.UNIT = UNIT;
+    }
 
     public String getMATERIA_CD() {
         return MATERIA_CD;

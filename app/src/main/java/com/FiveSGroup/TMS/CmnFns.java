@@ -2945,7 +2945,7 @@ public class CmnFns {
 
         return 1;
     }
-    public int GetMaterialInspection(Context context, String barcode , String usercode , String batch , String cd , String product_code){
+    public int GetMaterialInspection(Context context, String barcode , String usercode , String batch , String cd , String product_code, String unit){
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -2976,6 +2976,7 @@ public class CmnFns {
                     listCriteria.setMATERIA_CD(cd);
                     listCriteria.setMIC_CODE(mic_code);
                     listCriteria.setMIC_DESC(mic_desc);
+                    listCriteria.setUNIT(unit);
                     listCriteria.setBATCH_NUMBER(batch_number);
                     listCriteria.setNOTE("");
                     listCriteria.setQTY("");

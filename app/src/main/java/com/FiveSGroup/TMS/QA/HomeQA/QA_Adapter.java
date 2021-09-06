@@ -68,6 +68,7 @@ public class QA_Adapter extends RecyclerView.Adapter<QA_Adapter.ViewHolder> {
                 intent.putExtra("batch_number",product.getBATCH_NUMBER());
                 intent.putExtra("barcode",product.getBARCODE());
                 intent.putExtra("cd",product.getSTOCK_QA_CD());
+                intent.putExtra("unit",product.getUNIT());
 
                 context.startActivity(intent);
 

@@ -43,6 +43,7 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
     String product_code = "";
     String barcode = "";
     String stock = "";
+    String unit = "";
     String expDate = "";
     String expDate1 = "";
     String transfer_QA = "";
@@ -91,6 +92,7 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
         batch_number = intent.getStringExtra("batch_number");
         barcode = intent.getStringExtra("barcode");
         cd = intent.getStringExtra("cd");
+        unit = intent.getStringExtra("unit");
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
@@ -219,7 +221,7 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
     public void alert_show_SP() {
         try {
 
-            int postitionDes = new CmnFns().GetMaterialInspection(List_Criteria.this, barcode, CmnFns.readDataAdmin() ,batch_number , cd , product_code);
+            int postitionDes = new CmnFns().GetMaterialInspection(List_Criteria.this, barcode, CmnFns.readDataAdmin() ,batch_number , cd , product_code , unit);
 
             Dialog dialog = new Dialog(List_Criteria.this);
 

@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 150; // version của DB khi thay
+    public static final int DATABASE_VERSION = 152; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -539,6 +539,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
                     + STOCKIN_DATE_PHOTO + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+//version DB 152
+        try {
+            db.execSQL("ALTER TABLE " + O_CRITERIA + " ADD COLUMN  "
+                    + UNIT_CRITERIA + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -5472,7 +5480,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_RESULT_QA(String cd) {
         ArrayList<Product_Result_QA> qrcode = new ArrayList<Product_Result_QA>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "Select * From O_QA A INNER JOIN O_CRITERIA B ON A.BATCH_NUMBER_QA = B.BATCH_NUMBER_CRITERIA WHERE "
+        String selectQuery = "Select * From O_QA A INNER JOIN O_CRITERIA B ON " +
+                " A.BATCH_NUMBER_QA = B.BATCH_NUMBER_CRITERIA " +
+                " AND " +
+                " A.PRODUCT_CODE = B.PRODUCT_CODE_CRITERIA " +
+                " AND " +
+                " A.EA_UNIT = B.UNIT_CRITERIA " +
+                " WHERE "
                 + STOCK_QA_CD_QA + " = " + cd;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -6293,6 +6307,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String BATCH_NUMBER_CRITERIA = "BATCH_NUMBER_CRITERIA";
     public static final String NOTE_CRITERIA = "NOTE_CRITERIA";
     public static final String QTY_CRITERIA = "QTY_CRITERIA";
+    public static final String UNIT_CRITERIA = "UNIT_CRITERIA";
     public static final String MATERIA_CD_CRITERIA = "MATERIA_CD_CRITERIA";
 
 
@@ -6302,6 +6317,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + MIC_CODE + " TEXT,"
             + MIC_DESC + " TEXT,"
             + QTY_CRITERIA + " TEXT,"
+            + UNIT_CRITERIA + " TEXT,"
             + BATCH_NUMBER_CRITERIA + " TEXT,"
             + MATERIA_CD_CRITERIA + " TEXT,"
             + NOTE_CRITERIA + " TEXT" + ")";
@@ -6315,6 +6331,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(MIC_CODE, criteria.getMIC_CODE());
         values.put(MIC_DESC, criteria.getMIC_DESC());
         values.put(QTY_CRITERIA, criteria.getQTY());
+        values.put(UNIT_CRITERIA, criteria.getUNIT());
         values.put(BATCH_NUMBER_CRITERIA, criteria.getBATCH_NUMBER());
         values.put(MATERIA_CD_CRITERIA, criteria.getMATERIA_CD());
         values.put(NOTE_CRITERIA, criteria.getNOTE());
@@ -6343,6 +6360,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(MIC_CODE))));
                 item_criteria.setMIC_DESC((c.getString(c
                         .getColumnIndex(MIC_DESC))));
+                item_criteria.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_CRITERIA))));
                 item_criteria.setQTY((c.getString(c
                         .getColumnIndex(QTY_CRITERIA))));
                 item_criteria.setNOTE((c.getString(c
