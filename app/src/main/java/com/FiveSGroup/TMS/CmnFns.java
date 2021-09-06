@@ -2701,7 +2701,7 @@ public class CmnFns {
 //
 //        return 1;
 //    }
-    public int synchronizeGETProductByZoneMasterPick(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String masterPickCD, int isLPN , String vitri) {
+    public int synchronizeGETProductByZoneMasterPick(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String masterPickCD, int isLPN , String batch_number) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -4176,7 +4176,7 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZonePickList(Context context, String qrcode, String admin, String expDate, String unit, String type, String PickListCD, String stockDate, int isLPN) {
+    public int synchronizeGETProductByZonePickList(Context context, String qrcode, String admin, String expDate, String unit, String type, String PickListCD, String stockDate, int isLPN,String batch_number) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -4244,6 +4244,7 @@ public class CmnFns {
                     pickList.setPRODUCT_CD(pro_cd);
                     pickList.setPRODUCT_CODE(pro_code);
                     pickList.setPRODUCT_NAME(pro_name);
+                    pickList.setBATCH_NUMBER(batch_number);
 
                     pickList.setQTY_SET_AVAILABLE(String.valueOf(pro_set));
 

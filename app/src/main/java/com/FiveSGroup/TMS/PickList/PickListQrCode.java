@@ -310,7 +310,7 @@ public class PickListQrCode extends AppCompatActivity {
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WPL", 0, global.getPickListCD());
+            int statusGetCustt = new CmnFns().getDataFromSeverWithBatch(barcodeData, texxt, "WPL", 0, global.getPickListCD());
             if (statusGetCustt != 1) {
                 ReturnPosition(barcodeData);
             } else {
@@ -325,11 +325,11 @@ public class PickListQrCode extends AppCompatActivity {
 
                     if (expired_date.size() > 1) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(PickListQrCode.this);
-                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
+                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho - Batch Number");
 
                         final ArrayList<String> exp_date = new ArrayList<>();
                         for (int i = 0; i < expired_date.size(); i++) {
-                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
+                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM()+ " - " + expired_date.get(i).getBATCH_NUMBER_TAM());
                         }
 
                         // chuyển đổi exp_date thành mảng chuỗi String
@@ -362,10 +362,10 @@ public class PickListQrCode extends AppCompatActivity {
                                         return;
                                     }
                                     if (!checkBoxGetDVT.isChecked()) {
-                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
                                         //ReturnProduct(barcodeData,expDateTemp2,"");
                                     } else {
-                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
                                     }
 
                                 }
@@ -378,18 +378,19 @@ public class PickListQrCode extends AppCompatActivity {
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     } else if (expired_date.size() == 1) {
-                        String expDatetemp = "";
+                        String expDatetemp = "", batch_number = "";
                         try {
                             expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                            batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                         } catch (Exception e) {
 
                         }
                         String chuoi[] = expDatetemp.split(" - ");
 
                         if (!checkBoxGetDVT.isChecked()) {
-                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                            ReturnProduct(barcodeData, chuoi[0], chuoi[1],batch_number);
                         } else {
-                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1],batch_number);
                         }
 
                     } else {
@@ -429,7 +430,7 @@ public class PickListQrCode extends AppCompatActivity {
 
     }
 
-    private void ReturnProduct(String barcode, String expDatetemp ,String stockinDateShow) {
+    private void ReturnProduct(String barcode, String expDatetemp ,String stockinDateShow , String batch_number) {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
@@ -437,6 +438,7 @@ public class PickListQrCode extends AppCompatActivity {
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
         intentt.putExtra("returnCD", product_cd);
+        intentt.putExtra("batch_number", batch_number);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("id_unique_PL", id_unique_PL);
@@ -457,7 +459,7 @@ public class PickListQrCode extends AppCompatActivity {
     }
 
 
-    private void ShowDialogUnit(final String barcode, final String expDateTemp2 , final String stockinDateShow) {
+    private void ShowDialogUnit(final String barcode, final String expDateTemp2 , final String stockinDateShow,final String batch_number) {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
@@ -490,6 +492,7 @@ public class PickListQrCode extends AppCompatActivity {
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
+                intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("id_unique_PL", id_unique_PL);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 if (stockinDate == null) {

@@ -47,6 +47,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     String productCd = "";
     String stock = "";
     String expDate = "";
+    String batch_number = "";
     String expDate1 = "";
     String pick_list = "";
     String ea_unit = "";
@@ -100,6 +101,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        batch_number = intent.getStringExtra("batch_number");
         id_unique_PL = intent.getStringExtra("id_unique_PL");
         expDate = intent.getStringExtra("exp_date");
                expDate1 = intent.getStringExtra("expdate");
@@ -496,7 +498,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
 
     public void alert_show_SP(int isLPN){
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZonePickList(ListPickList.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WPL", global.getPickListCD(), stockinDate ,isLPN);
+            int postitionDes = new CmnFns().synchronizeGETProductByZonePickList(ListPickList.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WPL", global.getPickListCD(), stockinDate ,isLPN,batch_number);
 
             Dialog dialog = new Dialog(ListPickList.this);
 

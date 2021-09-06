@@ -10,6 +10,7 @@ public class PickList {
     private String POSITION_FROM_CD;
     private String POSITION_TO_CD;
     private String QTY;
+    private String BATCH_NUMBER;
     private String EXPIRED_DATE ;
     private String STOCKIN_DATE;
     private String WAREHOUSE_POSITION_CD;
@@ -24,6 +25,14 @@ public class PickList {
     private String LPN_CODE;
     private String LPN_FROM;
     private String LPN_TO;
+
+    public String getBATCH_NUMBER() {
+        return BATCH_NUMBER;
+    }
+
+    public void setBATCH_NUMBER(String BATCH_NUMBER) {
+        this.BATCH_NUMBER = BATCH_NUMBER;
+    }
 
     public String getAUTOINCREMENT() {
         return AUTOINCREMENT;

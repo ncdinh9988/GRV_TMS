@@ -10,6 +10,7 @@ public class Product_Master_Pick {
     private String POSITION_FROM_CD;
     private String POSITION_TO_CD;
     private String QTY;
+    private String BATCH_NUMBER;
     private String EXPIRED_DATE ;
     private String STOCKIN_DATE;
     private String WAREHOUSE_POSITION_CD;
@@ -26,6 +27,14 @@ public class Product_Master_Pick {
     private String LPN_TO;
     private String SUGGESTION_POSITION;
     private String SUGGESTION_POSITION_TO;
+
+    public String getBATCH_NUMBER() {
+        return BATCH_NUMBER;
+    }
+
+    public void setBATCH_NUMBER(String BATCH_NUMBER) {
+        this.BATCH_NUMBER = BATCH_NUMBER;
+    }
 
     public String getSUGGESTION_POSITION() {
         return SUGGESTION_POSITION;

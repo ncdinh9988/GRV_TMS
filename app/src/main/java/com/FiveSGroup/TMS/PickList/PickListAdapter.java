@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,9 @@ public class PickListAdapter extends RecyclerView.Adapter<PickListAdapter.ViewHo
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
 //        holder.edt.setText(product.getQTY_SET_AVAILABLE());
         holder.tvUnit.setText(product.getUNIT());
+
+        holder.layout_cont.setVisibility(View.VISIBLE);
+        holder.tvcont.setText(product.getBATCH_NUMBER());
 
         if(!product.getLPN_FROM().equals("")){
             holder.tvFrom.setText(product.getLPN_FROM());
@@ -264,8 +268,9 @@ public class PickListAdapter extends RecyclerView.Adapter<PickListAdapter.ViewHo
 
         ImageButton btnvtden, btnvtdi;
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
-        TextView tvExpired, tvStockin;
+        TextView tvExpired, tvStockin ,tvcont;
         EditText edt;
+        LinearLayout   layout_cont;
 
 
         public void onClick(View view) {
@@ -280,8 +285,10 @@ public class PickListAdapter extends RecyclerView.Adapter<PickListAdapter.ViewHo
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
+            tvcont = itemView.findViewById(R.id.tvcont);
             tvStockin = itemView.findViewById(R.id.tvStockin);
 
             tvExpired = itemView.findViewById(R.id.tvExpired);

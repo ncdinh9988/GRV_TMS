@@ -1615,6 +1615,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String EXPIRED_DATE_MASTER_PICK = "EXPIRY_DATE";
     public static final String STOCKIN_DATE_MASTER_PICK = "STOCKIN_DATE";
     public static final String EA_UNIT_MASTER_PICK = "EA_UNIT";
+    public static final String BATCH_NUMBER_MASTER_PICK = "BATCH_NUMBER";
     public static final String POSITION_FROM_MASTER_PICK = "POSITION_FROM_CD";
     public static final String POSITION_FROM_CODE_MASTER_PICK = "POSITION_FROM_CODE";
     public static final String POSITION_FROM_DESCRIPTION_MASTER_PICK = "POSITION_FROM_DESCRIPTION";
@@ -1640,6 +1641,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + QTY_SET_AVAILABLE_MASTER_PICK + " TEXT,"
             + EXPIRED_DATE_MASTER_PICK + " TEXT,"
             + STOCKIN_DATE_MASTER_PICK + " TEXT,"
+            + BATCH_NUMBER_MASTER_PICK + " TEXT,"
             + EA_UNIT_MASTER_PICK + " TEXT,"
             + POSITION_FROM_MASTER_PICK + " TEXT,"
             + POSITION_FROM_CODE_MASTER_PICK + " TEXT,"
@@ -1671,6 +1673,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(STOCKIN_DATE_MASTER_PICK, masterPick.getSTOCKIN_DATE());
         values.put(QTY_EA_AVAILABLE_MASTER_PICK, masterPick.getQTY_EA_AVAILABLE());
         values.put(EXPIRED_DATE_MASTER_PICK, masterPick.getEXPIRED_DATE());
+        values.put(BATCH_NUMBER_MASTER_PICK, masterPick.getBATCH_NUMBER());
         values.put(EA_UNIT_MASTER_PICK, masterPick.getUNIT());
         values.put(POSITION_FROM_MASTER_PICK, masterPick.getPOSITION_FROM_CD());
         values.put(POSITION_TO_MASTER_PICK, masterPick.getPOSITION_TO_CD());
@@ -1790,6 +1793,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(QTY_EA_AVAILABLE_MASTER_PICK))));
                 masterPick.setEXPIRED_DATE((c.getString(c
                         .getColumnIndex(EXPIRED_DATE_MASTER_PICK))));
+                masterPick.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_MASTER_PICK))));
                 masterPick.setUNIT((c.getString(c
                         .getColumnIndex(EA_UNIT_MASTER_PICK))));
                 masterPick.setPOSITION_FROM_CD((c.getString(c
@@ -1846,6 +1851,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_CODE_MASTER_PICK))));
                 masterPick.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_MASTER_PICK))));
+                masterPick.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_MASTER_PICK))));
                 masterPick.setEXPIRED_DATE((c.getString(c
                         .getColumnIndex(EXPIRED_DATE_MASTER_PICK))));
                 masterPick.setQTY((c.getString(c
@@ -1920,6 +1927,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_NAME_MASTER_PICK))));
                 masterPick.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_MASTER_PICK))));
+                masterPick.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_MASTER_PICK))));
                 masterPick.setQTY((c.getString(c
                         .getColumnIndex(QTY_SET_AVAILABLE_MASTER_PICK))));
                 masterPick.setSTOCKIN_DATE((c.getString(c
@@ -1979,6 +1988,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(SUGGESTION_POSITION_MASTER_PICK))));
                 masterPick.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_MASTER_PICK))));
+                masterPick.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_MASTER_PICK))));
                 masterPick.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_MASTER_PICK))));
                 masterPick.setQTY((c.getString(c
@@ -2057,6 +2068,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String EXPIRED_DATE_PICKLIST = "EXPIRY_DATE";
     public static final String STOCKIN_DATE_PICKLIST = "STOCKIN_DATE";
     public static final String EA_UNIT_PICKLIST = "EA_UNIT";
+    public static final String BATCH_NUMBER_PICKLIST = "BATCH_NUMBER";
     public static final String POSITION_FROM_PICKLIST = "POSITION_FROM_CD";
     public static final String POSITION_FROM_CODE_PICKLIST = "POSITION_FROM_CODE";
     public static final String POSITION_FROM_DESCRIPTION_PICKLIST = "POSITION_FROM_DESCRIPTION";
@@ -2079,6 +2091,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + QTY_SET_AVAILABLE_PICKLIST + " TEXT,"
             + STOCKIN_DATE_PICKLIST + " TEXT,"
             + PRODUCT_CD_PICKLIST + " TEXT,"
+            + BATCH_NUMBER_PICKLIST + " TEXT,"
             + QTY_EA_AVAILABLE_PICKLIST + " TEXT,"
             + POSITION_FROM_PICKLIST + " TEXT,"
             + EXPIRED_DATE_PICKLIST + " TEXT,"
@@ -2108,6 +2121,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(QTY_SET_AVAILABLE_PICKLIST, qrcode.getQTY_SET_AVAILABLE());
         values.put(STOCKIN_DATE_PICKLIST, qrcode.getSTOCKIN_DATE());
         values.put(QTY_EA_AVAILABLE_PICKLIST, qrcode.getQTY_EA_AVAILABLE());
+        values.put(BATCH_NUMBER_PICKLIST, qrcode.getBATCH_NUMBER());
         values.put(EXPIRED_DATE_PICKLIST, qrcode.getEXPIRED_DATE());
         values.put(EA_UNIT_PICKLIST, qrcode.getUNIT());
         values.put(POSITION_FROM_PICKLIST, qrcode.getPOSITION_FROM_CD());
@@ -2149,6 +2163,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_CD_PICKLIST))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_PICKLIST))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PICKLIST))));
                 qrcodeq.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_PICKLIST))));
                 qrcodeq.setEXPIRED_DATE((c.getString(c
@@ -2193,6 +2209,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_NAME_PICKLIST))));
                 product.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_PICKLIST))));
+                product.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PICKLIST))));
                 product.setQTY_SET_AVAILABLE((c.getString(c
                         .getColumnIndex(QTY_SET_AVAILABLE_PICKLIST))));
                 product.setSTOCKIN_DATE((c.getString(c
@@ -2246,6 +2264,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_PICKLIST))));
                 product.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_PICKLIST))));
+                product.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PICKLIST))));
                 product.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_PICKLIST))));
                 product.setPRODUCT_NAME((c.getString(c
@@ -2307,6 +2327,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(UNIQUE_CODE_PICKLIST))));
                 product.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_PICKLIST))));
+                product.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PICKLIST))));
                 product.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_PICKLIST))));
                 product.setPRODUCT_CD((c.getString(c

@@ -69,6 +69,8 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         holder.edt.setText(masterPicks.get(position).getQTY());
         holder.tvMasterPickPositionSuggest.setText(product.getSUGGESTION_POSITION());
         holder.tvMasterPickPositionSuggest.setTextColor(Color.rgb(255, 51, 0));
+        holder.layout_cont.setVisibility(View.VISIBLE);
+        holder.tvcont.setText(product.getBATCH_NUMBER());
 
 
         if (!product.getLPN_FROM().equals("")) {
@@ -347,9 +349,9 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
 
         ImageButton btnvtden, btnvtdi;
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct, tvMasterPickPositionSuggest;
-        TextView tvExpired, tvStockin, tvvtgy;
+        TextView tvExpired, tvStockin, tvvtgy , tvcont;
         EditText edt;
-        LinearLayout layout__put;
+        LinearLayout layout__put , layout_cont;
         View layout_putaway, layout__goiy;
 
         public ViewHolder(@NonNull View itemView) {
@@ -359,12 +361,15 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
 //            layout_putaway = itemView.findViewById(R.id.layout_putaway);
 //            layout__goiy = itemView.findViewById(R.id.layout__goiy);
 //            tvvtgy = itemView.findViewById(R.id.tvvtgy);
+
+            layout_cont = itemView.findViewById(R.id.layout_cont);
             btnvtden = itemView.findViewById(R.id.btnvtden);
             btnvtdi = itemView.findViewById(R.id.btnvtdi);
             tvFrom = itemView.findViewById(R.id.tvFrom);
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
+            tvcont = itemView.findViewById(R.id.tvcont);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);
