@@ -2781,6 +2781,7 @@ public class CmnFns {
 
                     masterPick.setPOSITION_TO_CODE(positionTo);
                     masterPick.setPOSITION_TO_DESCRIPTION("");
+                    masterPick.setBATCH_NUMBER(batch_number);
 
                     if (isLPN == 0) {
                         if (stockDate != null) {
@@ -3034,7 +3035,7 @@ public class CmnFns {
             return 1;
         }
         try {
-            ArrayList<Product_Criteria> Product_Criteria = DatabaseHelper.getInstance().getallCriteria(cd,batch, product_code);
+            ArrayList<Product_Criteria> Product_Criteria = DatabaseHelper.getInstance().getallCriteria(cd,batch, product_code,unit);
             int check ;
             check = Product_Criteria.size();
             if(check == 0){

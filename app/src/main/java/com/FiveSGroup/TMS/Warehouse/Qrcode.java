@@ -312,13 +312,14 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
 
                                 if (bat != "") {
                                     batch_number_t = bat; //TEST
+                                    String[] chuoi = batch_number_t.split(" - ");
                                     SharedPreferences prefs = getBaseContext().getSharedPreferences("vitriPO", Activity.MODE_PRIVATE);
                                     SharedPreferences.Editor edit = prefs.edit();
                                     edit.putString("vitri",vitri );
                                     edit.commit();
                                     Intent intentt = new Intent(getApplication(), ListQrcode.class);
                                     intentt.putExtra("stock_in", "333");
-                                    intentt.putExtra("batch", batch_number_t);
+                                    intentt.putExtra("batch", chuoi[0]);
                                     intentt.putExtra("vitri", vitri);
 
                                     startActivity(intentt);

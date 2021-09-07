@@ -48,7 +48,7 @@ public class QA_Adapter extends RecyclerView.Adapter<QA_Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final QA_Adapter.ViewHolder holder, final int position) {
         final Product_QA product = listTransferPosting.get(position);
         holder.setIsRecyclable(false);
-        holder.tvIdProduct.setText(product.getPRODUCT_CODE());
+        holder.tvIdProduct.setText(product.getPRODUCT_CODE() + " - " + product.getUNIT());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvchecked.setText(product.getCHECKED());
         holder.tvTo.setText(product.getCHECKED_IMAGE());

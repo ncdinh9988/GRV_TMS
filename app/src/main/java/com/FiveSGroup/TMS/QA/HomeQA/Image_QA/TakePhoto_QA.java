@@ -531,7 +531,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
                 prepareData();
                 //   this.setPic(this.photoFile.getAbsolutePath()); // hiển thị thumb
 
-                DatabaseHelper.getInstance().update_Image_QA(batch_number ,stockcd , product_code);
+                DatabaseHelper.getInstance().update_Image_QA(batch_number ,stockcd , product_code,unit);
             }
 
 

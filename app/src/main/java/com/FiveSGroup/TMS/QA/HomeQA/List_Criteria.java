@@ -112,7 +112,7 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
 
         alert_show_SP();
 
-        Product_Criteria = DatabaseHelper.getInstance().getallCriteria(cd ,batch_number , product_code);
+        Product_Criteria = DatabaseHelper.getInstance().getallCriteria(cd ,batch_number , product_code,unit);
         QAlistAdapter = new Criteria_Adapter(this, Product_Criteria);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         listVieWTPoduct.setLayoutManager(layoutManager);
@@ -157,7 +157,7 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
     private void synchronizeToService() {
         String saleCode = CmnFns.readDataAdmin();
         Dialog dialog = new Dialog(List_Criteria.this);
-        DatabaseHelper.getInstance().updateChecked_QA(batch_number ,cd , product_code);
+        DatabaseHelper.getInstance().updateChecked_QA(batch_number ,cd , product_code,unit);
         ShowSuccessMessage("Lưu thành công");
     }
 

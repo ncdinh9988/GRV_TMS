@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 152; // version của DB khi thay
+    public static final int DATABASE_VERSION = 154; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -552,6 +552,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // TODO: handle exception
         }
 
+        //version DB 154
+        try {
+            db.execSQL("ALTER TABLE " + O_MASTER_PICK + " ADD COLUMN  "
+                    + BATCH_NUMBER_MASTER_PICK + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        try {
+            db.execSQL("ALTER TABLE " + O_PICK_LIST + " ADD COLUMN  "
+                    + BATCH_NUMBER_PICKLIST + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     //database from table O_LETDOWN_SUGGEST
@@ -6363,11 +6378,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Product_Criteria>
-    getallCriteria(String cd ,String batch , String product_code) {
+    getallCriteria(String cd ,String batch , String product_code , String unit) {
         ArrayList<Product_Criteria> listcriteria = new ArrayList<Product_Criteria>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT * FROM " + O_CRITERIA + " where " + BATCH_NUMBER_CRITERIA + " = '" + batch + "' AND "
                 + PRODUCT_CODE_CRITERIA + " = " + product_code + " AND "
+                + UNIT_CRITERIA + " = '" + unit + "' AND "
                 + MATERIA_CD_CRITERIA + " = " + cd ;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -6400,7 +6416,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updateunit_Criteria(String mic_code , String batch, String qty , String cd , String product_code) {
+    public int updateunit_Criteria(String mic_code , String batch, String qty , String cd , String product_code, String unit) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -6408,12 +6424,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(QTY_CRITERIA, qty);
 
         // updating row
-        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND " + MATERIA_CD_CRITERIA + " = ? AND " + PRODUCT_CODE_CRITERIA + " = ? ",
-                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd), String.valueOf(product_code)});
+        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND "
+                        + MATERIA_CD_CRITERIA + " = ? AND "
+                        + UNIT_CRITERIA + " = ? AND "
+                        + PRODUCT_CODE_CRITERIA + " = ? ",
+                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd), String.valueOf(unit), String.valueOf(product_code)});
 
     }
 
-    public int updatenote_Criteria(String mic_code , String batch, String note ,String cd , String product_code) {
+    public int updatenote_Criteria(String mic_code , String batch, String note ,String cd , String product_code , String unit) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
 
         ContentValues values = new ContentValues();
@@ -6421,8 +6440,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(NOTE_CRITERIA, note);
 
         // updating row
-        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND " + MATERIA_CD_CRITERIA + " = ? AND " + PRODUCT_CODE_CRITERIA + " = ? ",
-                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd), String.valueOf(product_code)});
+        return db.update(O_CRITERIA, values,  MIC_CODE + " = ? AND " + BATCH_NUMBER_CRITERIA + " = ? AND "
+                        + MATERIA_CD_CRITERIA + " = ? AND "
+                        + UNIT_CRITERIA + " = ? AND "
+                        + PRODUCT_CODE_CRITERIA + " = ? ",
+                new String[]{String.valueOf(mic_code) , String.valueOf(batch), String.valueOf(cd), String.valueOf(unit), String.valueOf(product_code)});
 
     }
 
@@ -9822,25 +9844,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public int updateChecked_QA(String batch , String cd , String product_code) {
+    public int updateChecked_QA(String batch , String cd , String product_code,String unit) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(CHECKED_QA, "Yes");
         // updating row
-        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? AND "  + PRODUCT_CODE_QA + " = ? ",
-                new String[]{String.valueOf(batch),String.valueOf(cd),String.valueOf(product_code)});
+        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND "
+                        + STOCK_QA_CD_QA + " = ? AND "
+                        + PRODUCT_CODE_QA + " = ? AND "
+                        + EA_UNIT_QA + " = ? ",
+                new String[]{String.valueOf(batch),String.valueOf(cd),String.valueOf(product_code),String.valueOf(unit)});
 
     }
 
-    public int update_Image_QA(String batch , String cd , String product_code) {
+    public int update_Image_QA(String batch , String cd , String product_code,String unit) {
 
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(CHECKED_IMAGE_QA, "Yes");
         // updating row
-        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND " + STOCK_QA_CD_QA + " = ? AND "  + PRODUCT_CODE_QA + " = ? ",
-                new String[]{String.valueOf(batch),String.valueOf(cd),String.valueOf(product_code)});
+        return db.update(O_QA, values, BATCH_NUMBER_QA + " = ? AND "
+                        + STOCK_QA_CD_QA + " = ? AND "
+                        + PRODUCT_CODE_QA + " = ? AND "
+                        + EA_UNIT_QA + " = ? ",
+                new String[]{String.valueOf(batch),String.valueOf(cd),String.valueOf(product_code),String.valueOf(unit)});
 
     }
 

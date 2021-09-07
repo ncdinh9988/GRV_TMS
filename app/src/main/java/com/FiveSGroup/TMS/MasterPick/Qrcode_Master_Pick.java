@@ -316,7 +316,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
 
                 } else {
                     // lấy tất cả hạn `sử dụng trong database ra
-                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
+                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue();
 
 
                     if (expired_date.size() > 1) {

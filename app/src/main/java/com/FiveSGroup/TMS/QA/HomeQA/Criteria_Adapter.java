@@ -66,8 +66,8 @@ public class Criteria_Adapter extends RecyclerView.Adapter<Criteria_Adapter.View
                     @Override
                     public void afterTextChanged(Editable s) {
 
-                            DatabaseHelper.getInstance().updateChecked_QA(product.getBATCH_NUMBER() ,cd , product_code);
-                            DatabaseHelper.getInstance().updateunit_Criteria(product.getMIC_CODE(), product.getBATCH_NUMBER(), s.toString(),cd, product_code);
+                            DatabaseHelper.getInstance().updateChecked_QA(product.getBATCH_NUMBER() ,cd , product_code,product.getUNIT());
+                            DatabaseHelper.getInstance().updateunit_Criteria(product.getMIC_CODE(), product.getBATCH_NUMBER(), s.toString(),cd, product_code,product.getUNIT());
 
                     }
                 });
@@ -85,7 +85,7 @@ public class Criteria_Adapter extends RecyclerView.Adapter<Criteria_Adapter.View
                     @Override
                     public void afterTextChanged(Editable s) {
 
-                            DatabaseHelper.getInstance().updatenote_Criteria(product.getMIC_CODE(), product.getBATCH_NUMBER(), s.toString(),cd , product_code);
+                            DatabaseHelper.getInstance().updatenote_Criteria(product.getMIC_CODE(), product.getBATCH_NUMBER(), s.toString(),cd , product_code,product.getUNIT());
 
                     }
                 });
