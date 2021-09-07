@@ -7595,13 +7595,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return files;
     }
 
-    public List<OrderPhoto> getAllPhotoForQA(String cd , String batch , String product_code ) {
+    public List<OrderPhoto> getAllPhotoForQA(String cd , String batch , String product_code ,String unit) {
 
         List<OrderPhoto> files = new ArrayList<OrderPhoto>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  * FROM " + O_SALE_TAKE_PHOTO  + " Where " + SALE_QA_CD_PHOTO + " = " + cd +
-                " AND " + BATCH_NUMBER_PHOTO + " = '" + batch +
-                "' AND " + PRODUCT_CODE_PHOTO + " = " + product_code ;
+        String selectQuery = "SELECT  * FROM " + O_SALE_TAKE_PHOTO  + " Where " + SALE_QA_CD_PHOTO + " = " + cd + " AND "
+                + BATCH_NUMBER_PHOTO + " = '" + batch + "' AND "
+                + UNIT_PHOTO + " = '" + unit + "' AND "
+                + PRODUCT_CODE_PHOTO + " = " + product_code ;
 
         android.database.Cursor c = db.rawQuery(selectQuery, null);
 

@@ -154,7 +154,7 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
 
     private void getImages(){
         try {
-            ArrayList<OrderPhoto> cPhotos = (ArrayList<OrderPhoto>) DatabaseHelper.getInstance().getAllPhotoForQA(stockcd , batch_number,product_code);
+            ArrayList<OrderPhoto> cPhotos = (ArrayList<OrderPhoto>) DatabaseHelper.getInstance().getAllPhotoForQA(stockcd , batch_number,product_code,unit);
             if(cPhotos.size() > 0){
                 for(int i = 0; i < cPhotos.size(); i++){
                     OrderPhoto cPhoto = cPhotos.get(i);
