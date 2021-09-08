@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 154; // version của DB khi thay
+    public static final int DATABASE_VERSION = 156; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -563,6 +563,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_PICK_LIST + " ADD COLUMN  "
                     + BATCH_NUMBER_PICKLIST + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 156
+        try {
+            db.execSQL("ALTER TABLE " + O_STOCK_OUT + " ADD COLUMN  "
+                    + BATCH_NUMBER_STOCK_OUT + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -4131,6 +4140,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String POSITION_TO_DESCRIPTION_STOCK_OUT = "POSITION_TO_DESCRIPTION";
     public static final String UNIQUE_CODE_STOCK_OUT = "UNIQUE_CODE";
     public static final String STOCKOUT_CD = "STOCKOUT_CD";
+    public static final String BATCH_NUMBER_STOCK_OUT = "BATCH_NUMBER";
     public static final String LPN_CD_STOCK_OUT = "LPN_CD_STOCK_OUT";
     public static final String LPN_CODE_STOCK_OUT = "LPN_CODE_STOCK_OUT";
     public static final String LPN_FROM_STOCK_OUT = "LPN_FROM_STOCK_OUT";
@@ -4146,6 +4156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + QTY_EA_AVAILABLE_STOCK_OUT + " TEXT,"
             + QTY_SET_AVAILABLE_STOCK_OUT + " TEXT,"
             + EXPIRED_DATE_STOCK_OUT + " TEXT,"
+            + BATCH_NUMBER_STOCK_OUT + " TEXT,"
             + STOCKIN_DATE_STOCK_OUT + " TEXT,"
             + EA_UNIT_STOCK_OUT + " TEXT,"
             + POSITION_FROM_STOCK_OUT + " TEXT,"
@@ -4171,6 +4182,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(UNIQUE_CODE_STOCK_OUT, stockOut.getUNIT());
         values.put(PRODUCT_CODE_STOCK_OUT, stockOut.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_STOCK_OUT, stockOut.getPRODUCT_NAME());
+        values.put(BATCH_NUMBER_STOCK_OUT, stockOut.getBATCH_NUMBER());
         values.put(WAREHOUSE_POSITION_CD_STOCK_OUT, stockOut.getWAREHOUSE_POSITION_CD());
         values.put(PRODUCT_CD_STOCK_OUT, stockOut.getPRODUCT_CD());
         values.put(QTY_SET_AVAILABLE_STOCK_OUT, stockOut.getQTY());
@@ -4283,6 +4295,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_StockOut stockOut = new Product_StockOut();
                 stockOut.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_STOCK_OUT))));
+                stockOut.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_STOCK_OUT))));
                 stockOut.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD_STOCK_OUT))));
                 stockOut.setPRODUCT_CD((c.getString(c
@@ -4328,6 +4342,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                        .getColumnIndex(AUTOINCREMENT_STOCK_OUT))));
                 stockOut.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_STOCK_OUT))));
+                stockOut.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_STOCK_OUT))));
                 stockOut.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD_STOCK_OUT))));
                 stockOut.setPRODUCT_CODE((c.getString(c
@@ -4389,6 +4405,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_STOCK_OUT))));
                 stock.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD_STOCK_OUT))));
+                stock.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_STOCK_OUT))));
                 stock.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_STOCK_OUT))));
                 stock.setPRODUCT_CODE((c.getString(c

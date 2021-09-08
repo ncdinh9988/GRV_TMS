@@ -3854,7 +3854,7 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZoneStockout(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String stockoutCD, int isLPN) {
+    public int synchronizeGETProductByZoneStockout(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String stockoutCD, int isLPN , String batch_number) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -3921,6 +3921,7 @@ public class CmnFns {
 
                     stockOut.setPOSITION_TO_CD(warePosition);
                     stockOut.setSTOCKOUT_CD(stockoutCD);
+                    stockOut.setBATCH_NUMBER(batch_number);
                     stockOut.setWAREHOUSE_POSITION_CD(warePosition);
                     String positionTo = "---";
                     String positionFrom = "---";
@@ -4887,47 +4888,54 @@ public class CmnFns {
             Webservice Webservice = new Webservice();
             //String json = convertToJson(customers);
             Gson gson = new GsonBuilder().create();
-
+//put away
             if (type.equals("WPA")) {
                 List<Product_PutAway> product = DatabaseHelper.getInstance().getAllProduct_PutAway_Sync();
                 if (product == null || product.size() == 0)
                     return 1;
 
                 jsonData = gson.toJson(product);
-            } else if (type.equals("WRW")) {
+            } // tra hang
+            else if (type.equals("WRW")) {
                 List<Product_Return_WareHouse> product = DatabaseHelper.getInstance().getAllProduct_Return_WareHouse_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
 
                 jsonData = gson.toJson(product);
-            } else if (type.equals("WLP")) {
+            } //chat hang len lpn
+            else if (type.equals("WLP")) {
                 List<Product_Remove_LPN> product = DatabaseHelper.getInstance().getAllProduct_Remove_LPN_Sync();
                 if (product == null || product.size() == 0)
                     return 1;
 
                 jsonData = gson.toJson(product);
-            } else if (type.equals("WLD")) {
+            } //let down
+            else if (type.equals("WLD")) {
                 List<ProductLetDown> product = DatabaseHelper.getInstance().getAllProduct_LetDown_Sync();
                 if (product == null || product.size() == 0)
                     return 1;
 
                 jsonData = gson.toJson(product);
-            } else if (type.equals("WSO")) {
+            } // tra hang
+            else if (type.equals("WSO")) {
                 List<Product_StockOut> product = DatabaseHelper.getInstance().getAllProduct_Stockout_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
-            } else if (type.equals("WOI")) {
+            } // chuyen vi tri
+            else if (type.equals("WOI")) {
                 List<Product_StockTransfer> product = DatabaseHelper.getInstance().getAllProduct_StockTransfer_Sync();
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
-            } else if (type.equals("WPL")) {
+            }// pick list
+            else if (type.equals("WPL")) {
                 List<PickList> product = DatabaseHelper.getInstance().getAllProduct_PickList_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
-            } else if (type.equals("WPP")) {
+            }
+            else if (type.equals("WPP")) {
                 try {
                     int check = DatabaseHelper.getInstance().getDuplicate_LoadPallet();
                     if (check > 1 ){
@@ -4941,17 +4949,19 @@ public class CmnFns {
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
-            } else if (type.equals("WST")) {
+            }
+            else if (type.equals("WST")) {
                 List<InventoryProduct> product = DatabaseHelper.getInstance().getAllProduct_Inventory_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
-            } else if (type.equals("WWA")) {
+            }
+            else if (type.equals("WWA")) {
                 List<Product_Warehouse_Adjustment> product = DatabaseHelper.getInstance().getAllProduct_Warehouse_Adjustment_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
-            }
+            }// masster pick
             else if (type.equals("WMP")) {
                 try {
                     int check = DatabaseHelper.getInstance().getDuplicate_MasterPick(CD);

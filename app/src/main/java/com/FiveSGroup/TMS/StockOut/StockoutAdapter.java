@@ -57,6 +57,9 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
 //        holder.edt.setText(product.getQTY());
         holder.tvUnit.setText(product.getUNIT());
 
+        holder.layout_cont.setVisibility(View.VISIBLE);
+        holder.tvcont.setText(product.getBATCH_NUMBER());
+
 
         if(!product.getLPN_FROM().equals("")){
             holder.tvFrom.setText(product.getLPN_FROM());
@@ -255,9 +258,9 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
 
         ImageButton btnvtden, btnvtdi;
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
-        TextView tvExpired, tvStockin;
+        TextView tvExpired, tvStockin , tvcont;
         EditText edt;
-        LinearLayout layoutTo;
+        LinearLayout layoutTo , layout_cont;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -265,9 +268,11 @@ public class StockoutAdapter extends RecyclerView.Adapter<StockoutAdapter.ViewHo
             btnvtdi = itemView.findViewById(R.id.btnvtdi);
             tvFrom = itemView.findViewById(R.id.tvFrom);
             tvTo = itemView.findViewById(R.id.tvTo);
+            tvcont = itemView.findViewById(R.id.tvcont);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
             layoutTo = itemView.findViewById(R.id.layoutTo);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);
