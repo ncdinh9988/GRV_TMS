@@ -85,7 +85,11 @@ public class PickListAdapter extends RecyclerView.Adapter<PickListAdapter.ViewHo
         }
 
         holder.tvExpired.setText(product.getEXPIRED_DATE());
-        holder.tvStockin.setText(product.getSTOCKIN_DATE());
+        if(!product.getSTOCKIN_DATE().equals("---")){
+            holder.tvStockin.setText(product.getSTOCKIN_DATE());
+        }else{
+            holder.tvStockin.setText("");
+        }
 
 
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {

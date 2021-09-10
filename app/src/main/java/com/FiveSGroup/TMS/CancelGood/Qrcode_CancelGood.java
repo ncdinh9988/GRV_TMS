@@ -163,7 +163,7 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
         stockinDate = intent.getStringExtra("stockin_date");
         if (!(position == null)) {
             checkBoxGetDVT.setVisibility(View.INVISIBLE);
-            checkBoxGetLPN.setVisibility(View.INVISIBLE);
+            checkBoxGetLPN.setVisibility(View.VISIBLE);
             checkBoxGetLPN.setChecked(false);
             if (position.equals("1")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
@@ -172,7 +172,7 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
             }
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
-            checkBoxGetLPN.setVisibility(View.INVISIBLE);
+            checkBoxGetLPN.setVisibility(View.VISIBLE);
             checkBoxGetDVT.setChecked(true);
             checkBoxGetLPN.setChecked(false);
             textViewTitle.setText("QUÉT MÃ - XUẤT HỦY");

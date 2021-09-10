@@ -351,6 +351,12 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                                         // expDateTemp2 lấy giá trị HSD được người dùng chọn
                                         expDateTemp2 = expDate;
                                         String[] chuoi = expDateTemp2.split(" - ");
+                                        String c = "";
+                                        try {
+                                            c = chuoi[2];
+                                        }catch (Exception e){
+
+                                        }
                                         if (chuoi[0].equals("Khác")) {
                                             Intent intent = new Intent(Qrcode_PoReturn.this, SelectPropertiesProductActivity.class);
                                             intent.putExtra("typeScan", "scan_from_cancel");
@@ -366,10 +372,10 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                                             return;
                                         }
                                         if (!checkBoxGetDVT.isChecked()) {
-                                            ReturnProduct(barcodeData, chuoi[0], chuoi[1] , chuoi[2]);
+                                            ReturnProduct(barcodeData, chuoi[0], chuoi[1] , c);
 
                                         } else {
-                                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
+                                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], c);
                                         }
 
                                     }

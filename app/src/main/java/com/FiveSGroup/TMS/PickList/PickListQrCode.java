@@ -347,6 +347,12 @@ public class PickListQrCode extends AppCompatActivity {
                                 if (expDate != "") {
                                     expDateTemp2 = expDate; //TEST
                                     String chuoi[] = expDateTemp2.split(" - ");
+                                    String c = "";
+                                    try {
+                                        c = chuoi[2];
+                                    }catch (Exception e){
+
+                                    }
                                     if (chuoi[0].equals("Khác")){
                                         Intent intent = new Intent(PickListQrCode.this, SelectPropertiesProductActivity.class);
                                         intent.putExtra("typeScan", "scan_from_pick_list");
@@ -362,10 +368,10 @@ public class PickListQrCode extends AppCompatActivity {
                                         return;
                                     }
                                     if (!checkBoxGetDVT.isChecked()) {
-                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
+                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1], c);
                                         //ReturnProduct(barcodeData,expDateTemp2,"");
                                     } else {
-                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
+                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], c);
                                     }
 
                                 }

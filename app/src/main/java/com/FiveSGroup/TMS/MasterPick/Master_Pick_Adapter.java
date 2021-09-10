@@ -90,7 +90,12 @@ public class Master_Pick_Adapter extends RecyclerView.Adapter<Master_Pick_Adapte
         }
 
         holder.tvExpired.setText(product.getEXPIRED_DATE());
-        holder.tvStockin.setText(product.getSTOCKIN_DATE());
+        if(!product.getSTOCKIN_DATE().equals("---")){
+            holder.tvStockin.setText(product.getSTOCKIN_DATE());
+        }else{
+            holder.tvStockin.setText("");
+        }
+
 
 
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {

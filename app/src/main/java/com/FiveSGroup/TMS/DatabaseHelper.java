@@ -1931,7 +1931,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_Master_Pick_Sync(String master_pick_cd) {
         ArrayList<Product_Master_Pick> masterPicks = new ArrayList<Product_Master_Pick>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(POSITION_FROM_CODE,'---','') " +
+        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(STOCKIN_DATE,'---','') as STOCKIN_DATE ," +
+                " REPLACE(POSITION_FROM_CODE,'---','') " +
                 "as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') " +
                 "as POSITION_TO_CODE FROM " + O_MASTER_PICK + " where " + MASTER_PICK_CD + " = " + master_pick_cd;
         Cursor c = db.rawQuery(selectQuery, null);
@@ -2338,7 +2339,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_PickList_Sync(String pickListCD) {
         ArrayList<PickList> picklist = new ArrayList<PickList>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_PICK_LIST + " where " + PICKLIST_CD + " = " + pickListCD;
+        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(STOCKIN_DATE,'---','') as STOCKIN_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_PICK_LIST + " where " + PICKLIST_CD + " = " + pickListCD;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -3319,7 +3320,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_StockTransfer_Sync() {
         ArrayList<Product_StockTransfer> stockTransfers = new ArrayList<Product_StockTransfer>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_STOCK_TRANSFER;
+        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(STOCKIN_DATE,'---','') as STOCKIN_DATE  , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_STOCK_TRANSFER;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -4328,7 +4329,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_Stockout_Sync(String stockout_cd) {
         ArrayList<Product_StockOut> stockOuts = new ArrayList<Product_StockOut>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , " +
+        String selectQuery = "SELECT  *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(STOCKIN_DATE,'---','') as STOCKIN_DATE  , " +
                 "REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, " +
                 "REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_STOCK_OUT +
                 " where " + STOCKOUT_CD + " = " + stockout_cd;
