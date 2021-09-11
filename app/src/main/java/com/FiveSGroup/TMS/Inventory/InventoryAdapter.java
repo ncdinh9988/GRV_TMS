@@ -70,6 +70,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.edt.setText(inventoryList.get(position).getQTY());
         holder.tvUnit.setText(product.getUNIT());
+        holder.tvcont.setText(product.getBATCH_NUMBER());
+        holder.layout_cont.setVisibility(View.VISIBLE);
         String lpnCode = product.getLPN_FROM();
 //        holder.tvTo.setText(product.getPOSITION_TO_CODE());
 //        if(!lpnCode.equals("")){
@@ -309,6 +311,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         TextView tvExpired, tvStockin;
         EditText edt;
         LinearLayout layoutTo;
+        TextView tvcont;
+        LinearLayout layout_cont;
 
 
         public void onClick(View view) {
@@ -324,6 +328,8 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
             layoutTo = itemView.findViewById(R.id.layoutTo);
+            tvcont = itemView.findViewById(R.id.tvcont);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);

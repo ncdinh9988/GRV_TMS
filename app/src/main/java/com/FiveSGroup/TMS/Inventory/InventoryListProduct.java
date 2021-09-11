@@ -49,6 +49,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
     String pro_code = "";
     String pro_name = "";
     String ea_unit = "";
+    String batch_number = "";
     String ea_unit_position = "";
     String stockinDate = "", id_unique_IVT = "";
     String lpn = "";
@@ -105,6 +106,13 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
+        batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
+        if(batch_number==null){
+            batch_number = "";
+        }
 
 
         stockinDate = intent.getStringExtra("stockin_date");
@@ -519,7 +527,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZoneInventory(value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WST",
-                    global.getInventoryCD(), stockinDate, isLPN,pro_code , pro_name);
+                    global.getInventoryCD(), stockinDate, isLPN,pro_code , pro_name ,batch_number);
 
             Dialog dialog = new Dialog(InventoryListProduct.this);
 

@@ -47,6 +47,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
     String positonReceive = "";
     String productCd = "";
     String pro_code = "";
+    String batch_number = "";
     String pro_name = "";
     String stock = "";
     String expDate = "";
@@ -102,6 +103,13 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
+        batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
+        if(batch_number==null){
+            batch_number = "";
+        }
 
         stockinDate = intent.getStringExtra("stockin_date");
         DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -467,7 +475,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
     public void alert_show_SP(int isLPN){
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZoneReturnWareHouse(List_Return_WareHouse.this, value1,
-                    CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate,global.getReturnCD(),isLPN,pro_code , pro_name);
+                    CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate,global.getReturnCD(),isLPN,pro_code , pro_name,batch_number);
 
             Dialog dialog = new Dialog(List_Return_WareHouse.this);
 

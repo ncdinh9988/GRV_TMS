@@ -63,6 +63,8 @@ public class TransferUnitAdapter extends RecyclerView.Adapter<TransferUnitAdapte
         holder.edt.setText(listtransferunit.get(position).getQTY());
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
+        holder.tvcont.setText(product.getBATCH_NUMBER());
+        holder.layout_cont.setVisibility(View.VISIBLE);
 //        holder.edt.setText(product.getQTY());
         holder.tvUnit.setText(product.getUNIT());
 
@@ -220,6 +222,8 @@ public class TransferUnitAdapter extends RecyclerView.Adapter<TransferUnitAdapte
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
         TextView tvExpired, tvStockin;
         EditText edt;
+        TextView tvcont;
+        LinearLayout layout_cont;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -229,6 +233,8 @@ public class TransferUnitAdapter extends RecyclerView.Adapter<TransferUnitAdapte
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
+            tvcont = itemView.findViewById(R.id.tvcont);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
 

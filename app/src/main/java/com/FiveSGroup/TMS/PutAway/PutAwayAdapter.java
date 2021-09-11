@@ -72,6 +72,8 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
         if(!product.getLPN_CODE().equals("")){
             holder.edt.setEnabled(false);
         }
+        holder.tvcont.setText(product.getBATCH_NUMBER());
+        holder.layout_cont.setVisibility(View.VISIBLE);
 
         holder.tvExpired.setText(product.getEXPIRED_DATE_PUTAWAY());
         holder.tvStockin.setText(product.getSTOCKIN_DATE_PUTAWAY());
@@ -225,6 +227,8 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
         EditText edt;
         LinearLayout layout__put;
         View layout_putaway , layout__goiy;
+        TextView tvcont;
+        LinearLayout layout_cont;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -232,6 +236,8 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
             btnvtdi = itemView.findViewById(R.id.btnvtdi);
             tvFrom = itemView.findViewById(R.id.tvFrom);
             tvTo = itemView.findViewById(R.id.tvTo);
+            tvcont = itemView.findViewById(R.id.tvcont);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
             tvPutAwayPositionSuggest = itemView.findViewById(R.id.tvPositionSuggestput);

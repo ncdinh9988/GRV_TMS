@@ -624,10 +624,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_WAREHOUSE_ADJUSTMENT = "LPN_CODE_WAREHOUSE_ADJUSTMENT";
     public static final String LPN_FROM_WAREHOUSE_ADJUSTMENT = "LPN_FROM_WAREHOUSE_ADJUSTMENT";
     public static final String LPN_TO_WAREHOUSE_ADJUSTMENT = "LPN_TO_WAREHOUSE_ADJUSTMENT";
+    public static final String BATCH_NUMBER_WAREHOUSE_ADJUSTMENT = "BATCH_NUMBER_WAREHOUSE_ADJUSTMENT";
 
     public static final String CREATE_TABLE_O_WAREHOUSE_ADJUSTMENT = "CREATE TABLE "
             + O_WAREHOUSE_ADJUSTMENT + "("
             + AUTOINCREMENT_WAREHOUSE_ADJUSTMENT + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + BATCH_NUMBER_WAREHOUSE_ADJUSTMENT + " TEXT,"
             + PRODUCT_CD_WAREHOUSE_ADJUSTMENT + " TEXT,"
             + PRODUCT_NAME_WAREHOUSE_ADJUSTMENT + " TEXT,"
             + PRODUCT_CODE_WAREHOUSE_ADJUSTMENT + " TEXT,"
@@ -657,6 +659,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 //        values.put(AUTOINCREMENT_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getUNIT());
+        values.put(BATCH_NUMBER_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getBATCH_NUMBER());
         values.put(PRODUCT_CODE_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getPRODUCT_NAME());
         values.put(PRODUCT_CD_WAREHOUSE_ADJUSTMENT, warehouse_Adjustment.getPRODUCT_CD());
@@ -768,6 +771,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Warehouse_Adjustment warehouse_Adjustment = new Product_Warehouse_Adjustment();
                 warehouse_Adjustment.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_WAREHOUSE_ADJUSTMENT))));
+                warehouse_Adjustment.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_WAREHOUSE_ADJUSTMENT))));
                 warehouse_Adjustment.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_WAREHOUSE_ADJUSTMENT))));
                 warehouse_Adjustment.setPRODUCT_CODE((c.getString(c
@@ -806,6 +811,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Warehouse_Adjustment warehouse_Adjustment = new Product_Warehouse_Adjustment();
                 warehouse_Adjustment.setAUTOINCREMENT(c.getString(c
                         .getColumnIndex(AUTOINCREMENT_WAREHOUSE_ADJUSTMENT)));
+                warehouse_Adjustment.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_WAREHOUSE_ADJUSTMENT))));
                 warehouse_Adjustment.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_WAREHOUSE_ADJUSTMENT))));
                 warehouse_Adjustment.setPRODUCT_CODE((c.getString(c
@@ -1322,6 +1329,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_RETURN_WAREHOUSE = "LPN_CODE_RETURN_WAREHOUSE";
     public static final String LPN_FROM_RETURN_WAREHOUSE = "LPN_FROM_RETURN_WAREHOUSE";
     public static final String LPN_TO_RETURN_WAREHOUSE = "LPN_TO_RETURN_WAREHOUSE";
+    public static final String BATCH_NUMBER_RETURN_WAREHOUSE = "BATCH_NUMBER_RETURN_WAREHOUSE";
 
     public static final String CREATE_TABLE_O_RETURN_WAREHOUSE = "CREATE TABLE "
             + O_RETURN_WAREHOUSE + "("
@@ -1329,6 +1337,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + PRODUCT_CD_RETURN_WAREHOUSE + " TEXT,"
             + PRODUCT_NAME_RETURN_WAREHOUSE + " TEXT,"
             + PRODUCT_CODE_RETURN_WAREHOUSE + " TEXT,"
+            + BATCH_NUMBER_RETURN_WAREHOUSE + " TEXT,"
             + QTY_EA_AVAILABLE_RETURN_WAREHOUSE + " TEXT,"
             + QTY_SET_AVAILABLE_RETURN_WAREHOUSE + " TEXT,"
             + EXPIRED_DATE_RETURN_WAREHOUSE + " TEXT,"
@@ -1355,6 +1364,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 //        values.put(AUTOINCREMENT_RETURN_WAREHOUSE,returnWarehouse.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_RETURN_WAREHOUSE, returnWarehouse.getUNIT());
+        values.put(BATCH_NUMBER_RETURN_WAREHOUSE, returnWarehouse.getBATCH_NUMBER());
         values.put(PRODUCT_CODE_RETURN_WAREHOUSE, returnWarehouse.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_RETURN_WAREHOUSE, returnWarehouse.getPRODUCT_NAME());
         values.put(PRODUCT_CD_RETURN_WAREHOUSE, returnWarehouse.getPRODUCT_CD());
@@ -1469,6 +1479,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Return_WareHouse returnWarehouse = new Product_Return_WareHouse();
                 returnWarehouse.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_RETURN_WAREHOUSE))));
+                returnWarehouse.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_RETURN_WAREHOUSE))));
                 returnWarehouse.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_RETURN_WAREHOUSE))));
                 returnWarehouse.setPRODUCT_CODE((c.getString(c
@@ -1509,6 +1521,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 return_warehouse.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_RETURN_WAREHOUSE))));
+                return_warehouse.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_RETURN_WAREHOUSE))));
                 return_warehouse.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_RETURN_WAREHOUSE))));
                 return_warehouse.setPRODUCT_NAME((c.getString(c
@@ -1566,6 +1580,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Return_WareHouse return_warehouse = new Product_Return_WareHouse();
                 return_warehouse.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_RETURN_WAREHOUSE))));
+                return_warehouse.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_RETURN_WAREHOUSE))));
                 return_warehouse.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_RETURN_WAREHOUSE))));
                 return_warehouse.setPRODUCT_CODE((c.getString(c
@@ -2599,6 +2615,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_LOAD_PALLET = "LPN_CODE_LOAD_PALLET";
     public static final String LPN_FROM_LOAD_PALLET = "LPN_FROM_LOAD_PALLET";
     public static final String LPN_TO_LOAD_PALLET = "LPN_TO_LOAD_PALLET";
+    public static final String BATCH_NUMBER_LOAD_PALLET = "BATCH_NUMBER_LOAD_PALLET";
 
     public static final String CREATE_TABLE_O_LOAD_PALLET = "CREATE TABLE "
             + O_LOAD_PALLET + "("
@@ -2606,6 +2623,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + PRODUCT_CD_LOAD_PALLET + " TEXT,"
             + PRODUCT_NAME_LOAD_PALLET + " TEXT,"
             + PRODUCT_CODE_LOAD_PALLET + " TEXT,"
+            + BATCH_NUMBER_LOAD_PALLET + " TEXT,"
             + QTY_EA_AVAILABLE_LOAD_PALLET + " TEXT,"
             + QTY_SET_AVAILABLE_LOAD_PALLET + " TEXT,"
             + EXPIRED_DATE_LOAD_PALLET + " TEXT,"
@@ -2633,6 +2651,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(PRODUCT_CODE_LOAD_PALLET, product_loadPallet.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_LOAD_PALLET, product_loadPallet.getPRODUCT_NAME());
         values.put(PRODUCT_CD_LOAD_PALLET, product_loadPallet.getPRODUCT_CD());
+        values.put(BATCH_NUMBER_LOAD_PALLET, product_loadPallet.getBATCH_NUMBER());
         values.put(QTY_SET_AVAILABLE_LOAD_PALLET, product_loadPallet.getQTY());
         values.put(STOCKIN_DATE_LOAD_PALLET, product_loadPallet.getSTOCKIN_DATE());
         values.put(QTY_EA_AVAILABLE_LOAD_PALLET, product_loadPallet.getQTY_EA_AVAILABLE());
@@ -2668,6 +2687,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_LoadPallet product_loadPallet = new Product_LoadPallet();
                 product_loadPallet.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_LOAD_PALLET))));
+                product_loadPallet.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_LOAD_PALLET))));
                 product_loadPallet.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_LOAD_PALLET))));
                 product_loadPallet.setPRODUCT_CODE((c.getString(c
@@ -2705,6 +2726,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_LoadPallet product_loadPallet = new Product_LoadPallet();
                 product_loadPallet.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_LOAD_PALLET))));
+                product_loadPallet.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_LOAD_PALLET))));
                 product_loadPallet.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_LOAD_PALLET))));
                 product_loadPallet.setPRODUCT_CODE((c.getString(c
@@ -2764,6 +2787,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                        .getColumnIndex(AUTOINCREMENT_LOAD_PALLET))));
                 product_loadPallet.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_LOAD_PALLET))));
+                product_loadPallet.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_LOAD_PALLET))));
                 product_loadPallet.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_LOAD_PALLET))));
                 product_loadPallet.setPRODUCT_NAME((c.getString(c
@@ -3451,6 +3476,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_CANCEL_GOOD = "LPN_CODE_CANCEL_GOOD";
     public static final String LPN_FROM_CANCEL_GOOD = "LPN_FROM_CANCEL_GOOD";
     public static final String LPN_TO_CANCEL_GOOD = "LPN_TO_CANCEL_GOOD";
+    public static final String BATCH_NUMBER_CANCEL_GOOD = "BATCH_NUMBER_CANCEL_GOOD";
 
     public static final String CREATE_TABLE_O_CANCEL_GOOD = "CREATE TABLE "
             + O_CANCEL_GOOD + "("
@@ -3461,6 +3487,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + PRODUCT_CODE_CANCEL_GOOD + " TEXT,"
             + QTY_EA_AVAILABLE_CANCEL_GOOD + " TEXT,"
             + QTY_SET_AVAILABLE_CANCEL_GOOD + " TEXT,"
+            + BATCH_NUMBER_CANCEL_GOOD + " TEXT,"
             + EXPIRED_DATE_CANCEL_GOOD + " TEXT,"
             + STOCKIN_DATE_CANCEL_GOOD + " TEXT,"
             + EA_UNIT_CANCEL_GOOD + " TEXT,"
@@ -3485,6 +3512,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 //        values.put(AUTOINCREMENT_CANCEL_GOOD, cancelGood.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_CANCEL_GOOD, cancelGood.getUNIT());
+        values.put(BATCH_NUMBER_CANCEL_GOOD, cancelGood.getBATCH_NUMBER());
         values.put(PRODUCT_CODE_CANCEL_GOOD, cancelGood.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_CANCEL_GOOD, cancelGood.getPRODUCT_NAME());
         values.put(WAREHOUSE_POSITION_CD_CANCEL_GOOD, cancelGood.getWAREHOUSE_POSITION_CD());
@@ -3599,6 +3627,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_CancelGood cancelGood = new Product_CancelGood();
                 cancelGood.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_CANCEL_GOOD))));
+                cancelGood.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CANCEL_GOOD))));
                 cancelGood.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD_CANCEL_GOOD))));
                 cancelGood.setPRODUCT_CD((c.getString(c
@@ -3646,6 +3676,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(UNIQUE_CODE_CANCEL_GOOD))));
                 cancelGood.setWAREHOUSE_POSITION_CD((c.getString(c
                         .getColumnIndex(WAREHOUSE_POSITION_CD_CANCEL_GOOD))));
+                cancelGood.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CANCEL_GOOD))));
                 cancelGood.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_CANCEL_GOOD))));
                 cancelGood.setPRODUCT_NAME((c.getString(c
@@ -3707,6 +3739,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(WAREHOUSE_POSITION_CD_CANCEL_GOOD))));
                 cancelGood.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_CANCEL_GOOD))));
+                cancelGood.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_CANCEL_GOOD))));
                 cancelGood.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_CANCEL_GOOD))));
                 cancelGood.setPRODUCT_NAME((c.getString(c
@@ -4534,6 +4568,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_FROM_LETDOWN = "LPN_FROM_LETDOWN";
     public static final String LPN_TO_LETDOWN = "LPN_TO_LETDOWN";
     public static final String SUGGESTION_POSITION_LETDOWN = "SUGGESTION_POSITION";
+    public static final String BATCH_NUMBER_LETDOWN = "BATCH_NUMBER_LETDOWN";
 
     public static final String CREATE_TABLE_O_LET_DOWN = "CREATE TABLE "
             + O_LET_DOWN + "("
@@ -4543,6 +4578,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + PRODUCT_CODE_LETDOWN + " TEXT,"
             + QTY_EA_AVAILABLE_LETDOWN + " TEXT,"
             + QTY_SET_AVAILABLE_LETDOWN + " TEXT,"
+            + BATCH_NUMBER_LETDOWN + " TEXT,"
             + EXPIRED_DATE_LETDOWN + " TEXT,"
             + STOCKIN_DATE_LETDOWN + " TEXT,"
             + EA_UNIT_LETDOWN + " TEXT,"
@@ -4569,6 +4605,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        values.put(AUTOINCREMENT_LETDOWN, qrcode.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_LETDOWN, qrcode.getUNIT());
         values.put(PRODUCT_CODE_LETDOWN, qrcode.getPRODUCT_CODE());
+        values.put(BATCH_NUMBER_LETDOWN, qrcode.getBATCH_NUMBER());
         values.put(PRODUCT_NAME_LETDOWN, qrcode.getPRODUCT_NAME());
         values.put(PRODUCT_CD_LETDOWN, qrcode.getPRODUCT_CD());
         values.put(QTY_SET_AVAILABLE_LETDOWN, qrcode.getQTY_SET_AVAILABLE());
@@ -4610,6 +4647,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ProductLetDown qrcodeq = new ProductLetDown();
                 qrcodeq.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_LETDOWN))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_LETDOWN))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_LETDOWN))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
@@ -4651,6 +4690,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ProductLetDown qrcode = new ProductLetDown();
                 qrcode.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_LETDOWN))));
+                qrcode.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_LETDOWN))));
                 qrcode.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_LETDOWN))));
                 qrcode.setPRODUCT_CODE((c.getString(c
@@ -4715,6 +4756,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                        .getColumnIndex(AUTOINCREMENT_LETDOWN))));
                 qrcode.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_LETDOWN))));
+                qrcode.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_LETDOWN))));
                 qrcode.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_LETDOWN))));
                 qrcode.setPRODUCT_NAME((c.getString(c
@@ -5015,11 +5058,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_FROM_PUTAWAY = "LPN_FROM_PUTAWAY";
     public static final String LPN_TO_PUTAWAY = "LPN_TO_PUTAWAY";
     public static final String SUGGESTION_POSITION_PUTAWAY = "SUGGESTION_POSITION";
+    public static final String BATCH_NUMBER_PUTAWAY = "BATCH_NUMBER_PUTAWAY";
 
 
     public static final String CREATE_TABLE_O_PUT_AWAY = "CREATE TABLE "
             + O_PUT_AWAY + "("
             + AUTOINCREMENT_PUT_AWAY + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + BATCH_NUMBER_PUTAWAY + " TEXT,"
             + UNIQUE_CODE_PUTAWAY + " TEXT,"
             + PRODUCT_CODE_PUTAWAY + " TEXT,"
             + PRODUCT_NAME_PUTAWAY + " TEXT,"
@@ -5049,6 +5094,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 //        values.put(AUTOINCREMENT_PUT_AWAY,qrcode.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_PUTAWAY, qrcode.getUNIQUE_CODE_PUTAWAY());
+        values.put(BATCH_NUMBER_PUTAWAY, qrcode.getBATCH_NUMBER());
         values.put(PRODUCT_CODE_PUTAWAY, qrcode.getPRODUCT_CODE_PUTAWAY());
         values.put(PRODUCT_NAME_PUTAWAY, qrcode.getPRODUCT_NAME_PUTAWAY());
         values.put(PRODUCT_CD_PUTAWAY, qrcode.getPRODUCT_CD_PUTAWAY());
@@ -5123,6 +5169,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_PutAway qrcodeq = new Product_PutAway();
                 qrcodeq.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_PUT_AWAY))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PUTAWAY))));
                 qrcodeq.setPRODUCT_CD_PUTAWAY((c.getString(c
                         .getColumnIndex(PRODUCT_CD_PUTAWAY))));
                 qrcodeq.setPRODUCT_CODE_PUTAWAY((c.getString(c
@@ -5184,6 +5232,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_PutAway qrcode_putaway = new Product_PutAway();
                 qrcode_putaway.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_PUT_AWAY))));
+                qrcode_putaway.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PUTAWAY))));
                 qrcode_putaway.setUNIQUE_CODE_PUTAWAY((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_PUTAWAY))));
                 qrcode_putaway.setPRODUCT_CODE_PUTAWAY((c.getString(c
@@ -5246,6 +5296,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                        .getColumnIndex(AUTOINCREMENT_PUT_AWAY))));
                 qrcode_putaway.setUNIQUE_CODE_PUTAWAY((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_PUTAWAY))));
+                qrcode_putaway.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_PUTAWAY))));
                 qrcode_putaway.setPRODUCT_CODE_PUTAWAY((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_PUTAWAY))));
                 qrcode_putaway.setPRODUCT_NAME_PUTAWAY((c.getString(c
@@ -7932,6 +7984,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_INVENTORY = "LPN_CODE_INVENTORY";
     public static final String LPN_FROM_INVENTORY = "LPN_FROM_INVENTORY";
     public static final String LPN_TO_INVENTORY = "LPN_TO_INVENTORY";
+    public static final String BATCH_NUMBER_INVENTORY = "BATCH_NUMBER_INVENTORY";
 
     public static final String CREATE_TABLE_O_INVENTORY = "CREATE TABLE "
             + O_INVENTORY + "("
@@ -7942,6 +7995,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + QTY_SET_AVAILABLE_INVENTORY + " TEXT,"
             + STOCKIN_DATE_INVENTORY + " TEXT,"
             + PRODUCT_CD_INVENTORY + " TEXT,"
+            + BATCH_NUMBER_INVENTORY + " TEXT,"
             + QTY_EA_AVAILABLE_INVENTORY + " TEXT,"
             + POSITION_FROM_INVENTORY + " TEXT,"
             + EXPIRED_DATE_INVENTORY + " TEXT,"
@@ -7966,6 +8020,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(UNIQUE_CODE_INVENTORY, qrcode.getUNIQUE_CODE());
         values.put(PRODUCT_CODE_INVENTORY, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_INVENTORY, qrcode.getPRODUCT_NAME());
+        values.put(BATCH_NUMBER_INVENTORY, qrcode.getBATCH_NUMBER());
         values.put(PRODUCT_CD_INVENTORY, qrcode.getPRODUCT_CD());
         values.put(QTY_SET_AVAILABLE_INVENTORY, qrcode.getQTY());
         values.put(STOCKIN_DATE_INVENTORY, qrcode.getSTOCKIN_DATE());
@@ -8060,6 +8115,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 InventoryProduct qrcodeq = new InventoryProduct();
                 qrcodeq.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_INVENTORY))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_INVENTORY))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_INVENTORY))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
@@ -8099,6 +8156,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_INVENTORY))));
                 product.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_INVENTORY))));
+                product.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_INVENTORY))));
                 product.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_INVENTORY))));
                 product.setPRODUCT_NAME((c.getString(c
@@ -8156,6 +8215,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 InventoryProduct product = new InventoryProduct();
                 product.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_INVENTORY))));
+                product.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_INVENTORY))));
                 product.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_INVENTORY))));
                 product.setPRODUCT_CODE((c.getString(c
@@ -8216,6 +8277,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 product.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_INVENTORY))));
+                product.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_INVENTORY))));
                 product.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_INVENTORY))));
                 product.setPRODUCT_NAME((c.getString(c
@@ -8408,10 +8471,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String SUGGESTION_POSITION_TRANSFER_UNIT = "SUGGESTION_POSITION";
     public static final String UNIT_CHANGE_TO = "UNIT_CHANGE_TO";
     public static final String BARCODE = "BARCODE";
+    public static final String BATCH_NUMBER_TRANSFER_UNIT = "BATCH_NUMBER_TRANSFER_UNIT";
 
     public static final String CREATE_TABLE_O_TRANSFER_UNIT = "CREATE TABLE "
             + O_TRANSFER_UNIT + "("
             + AUTOINCREMENT_TRANSFER_UNIT + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + BATCH_NUMBER_TRANSFER_UNIT + " TEXT,"
             + PRODUCT_CD_TRANSFER_UNIT + " TEXT,"
             + PRODUCT_NAME_TRANSFER_UNIT + " TEXT,"
             + PRODUCT_CODE_TRANSFER_UNIT + " TEXT,"
@@ -8444,6 +8509,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 //        values.put(AUTOINCREMENT_TRANSFER_UNIT, qrcode.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_TRANSFER_UNIT, qrcode.getUNIT());
+        values.put(BATCH_NUMBER_TRANSFER_UNIT, qrcode.getBATCH_NUMBER());
         values.put(PRODUCT_CODE_TRANSFER_UNIT, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_TRANSFER_UNIT, qrcode.getPRODUCT_NAME());
         values.put(PRODUCT_CD_TRANSFER_UNIT, qrcode.getPRODUCT_CD());
@@ -8488,6 +8554,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TransferUnitProduct qrcodeq = new TransferUnitProduct();
                 qrcodeq.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_TRANSFER_UNIT))));
+                qrcodeq.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TRANSFER_UNIT))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_TRANSFER_UNIT))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
@@ -8533,6 +8601,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TransferUnitProduct qrcode = new TransferUnitProduct();
                 qrcode.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_TRANSFER_UNIT))));
+                qrcode.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TRANSFER_UNIT))));
                 qrcode.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_TRANSFER_UNIT))));
                 qrcode.setPRODUCT_CODE((c.getString(c
@@ -8599,6 +8669,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TransferUnitProduct qrcode = new TransferUnitProduct();
 //                qrcode.setAUTOINCREMENT((c.getString(c
 //                        .getColumnIndex(AUTOINCREMENT_TRANSFER_UNIT))));
+                qrcode.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TRANSFER_UNIT))));
                 qrcode.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_TRANSFER_UNIT))));
                 qrcode.setPRODUCT_CODE((c.getString(c

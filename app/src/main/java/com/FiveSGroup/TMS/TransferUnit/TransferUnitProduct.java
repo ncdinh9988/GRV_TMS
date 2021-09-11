@@ -27,6 +27,15 @@ public class TransferUnitProduct {
     private String SUGGESTION_POSITION_TO;
     private String UNIT_CHANGE_TO;
     private String BARCODE;
+    private String BATCH_NUMBER;
+
+    public String getBATCH_NUMBER() {
+        return BATCH_NUMBER;
+    }
+
+    public void setBATCH_NUMBER(String BATCH_NUMBER) {
+        this.BATCH_NUMBER = BATCH_NUMBER;
+    }
 
     public String getBARCODE() {
         return BARCODE;

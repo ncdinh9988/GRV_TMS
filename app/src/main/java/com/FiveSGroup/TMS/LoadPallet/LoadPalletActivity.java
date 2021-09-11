@@ -47,6 +47,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
+    String batch_number = "";
     String lpn = "";
     String unique_id = "" ;
 
@@ -90,6 +91,13 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
+        batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
+        if(batch_number==null){
+            batch_number = "";
+        }
 
         stockinDate = intent.getStringExtra("stockin_date");
         DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -596,7 +604,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZoneLoadPallet(LoadPalletActivity.this, value1,
-                    CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+                    CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN, pro_code,pro_name,batch_number);
 
 
             Dialog dialog = new Dialog(LoadPalletActivity.this);

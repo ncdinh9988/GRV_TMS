@@ -41,6 +41,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
     String value1 = "";
     String positonReceive = "";
     String productCd = "";
+    String batch_number = "";
     String stock = "";
     String expDate = "";
     String expDate1 = "";
@@ -205,6 +206,13 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
         // ea_unit : đơn vị trả về từ PutaWayQrCodeActivity
         ea_unit = intent.getStringExtra("ea_unit");
         lpn = intent.getStringExtra("lpn");
+        batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
+        if(batch_number==null){
+            batch_number = "";
+        }
 
         stockinDate = intent.getStringExtra("stockin_date");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
@@ -560,7 +568,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZonePutaway(List_PutAway.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name ,batch_number);
 
             Dialog dialog = new Dialog(List_PutAway.this);
 

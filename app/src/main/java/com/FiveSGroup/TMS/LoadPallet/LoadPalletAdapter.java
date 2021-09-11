@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,8 @@ public class LoadPalletAdapter extends RecyclerView.Adapter<LoadPalletAdapter.Vi
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvUnit.setText(product.getUNIT());
+        holder.tvcont.setText(product.getBATCH_NUMBER());
+        holder.layout_cont.setVisibility(View.VISIBLE);
 
 
         if(!product.getLPN_FROM().equals("")){
@@ -390,6 +393,8 @@ public class LoadPalletAdapter extends RecyclerView.Adapter<LoadPalletAdapter.Vi
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
         TextView tvExpired, tvStockin;
         EditText edt;
+        TextView tvcont;
+        LinearLayout layout_cont;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -399,6 +404,8 @@ public class LoadPalletAdapter extends RecyclerView.Adapter<LoadPalletAdapter.Vi
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
+            tvcont = itemView.findViewById(R.id.tvcont);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
 

@@ -44,6 +44,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
     String positonReceive = "";
     String productCd = "";
     String stock = "";
+    String batch_number = "";
     String expDate = "";
     String expDate1 = "";
     String let_down = "";
@@ -199,6 +200,14 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         stock = intent.getStringExtra("returnStock");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
+        if(batch_number==null){
+            batch_number = "";
+        }
+
         // expDate - hiển thị HSD cho người dùng trong list sản phẩm
         expDate = intent.getStringExtra("exp_date");
         id_unique_LD = intent.getStringExtra("id_unique_LD");
@@ -572,7 +581,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZoneLetDown(LetDownActivity.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name ,batch_number);
 
             Dialog dialog = new Dialog(LetDownActivity.this);
 

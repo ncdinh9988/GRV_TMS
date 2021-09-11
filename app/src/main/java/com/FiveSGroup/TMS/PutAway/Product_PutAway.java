@@ -25,6 +25,16 @@ public class Product_PutAway {
     private String POSITION_FROM_DESCRIPTION;
     private String POSITION_TO_DESCRIPTION;
     private String SUGGESTION_POSITION;
+    private String BATCH_NUMBER;
+
+    public String getBATCH_NUMBER() {
+        return BATCH_NUMBER;
+    }
+
+    public void setBATCH_NUMBER(String BATCH_NUMBER) {
+        this.BATCH_NUMBER = BATCH_NUMBER;
+    }
+
 
     public String getAUTOINCREMENT() {
         return AUTOINCREMENT;

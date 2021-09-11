@@ -104,6 +104,12 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
         batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
+        if(batch_number==null){
+            batch_number = "";
+        }
         id_unique_PL = intent.getStringExtra("id_unique_PL");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");

@@ -351,7 +351,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
     }
 
     private void getinformation(final String barcodeData) {
-        int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, CmnFns.readDataAdmin(), "WLD", 0, "");
+        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch(barcodeData, CmnFns.readDataAdmin(), "WLD", 0, "");
         // expiredDate nhận giá trị từ adapter để xử lí position
         if (statusGetCustt != 1) {
             ReturnPosition(barcodeData);
@@ -364,17 +364,17 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
             } else {
                 try {
                     // lấy tất cả hạn sử dụng trong database ra
-                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
+                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue();
 
                     // chia expiredDate ra các trường hợp để quyết định có show dialog hay không
 
                     if (expired_date.size() > 1) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(LetDownQrCodeActivity.this);
-                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
+                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho - Batch Number");
 
                         final ArrayList<String> exp_date = new ArrayList<>();
                         for (int i = 0; i < expired_date.size(); i++) {
-                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
+                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM()+ " - " + expired_date.get(i).getBATCH_NUMBER_TAM());
                             //exp_date.add(expired_date.get(i).getSTOCKIN_DATE_TAM());
 
                         }
@@ -412,9 +412,9 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                                         return;
                                     }
                                     if (!checkBoxGetDVT.isChecked()) {
-                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
                                     } else {
-                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
                                     }
 
                                 }
@@ -428,17 +428,18 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     } else if (expired_date.size() == 1) {
-                        String expDatetemp = "";
+                        String expDatetemp = "" , batch_number = "";
                         try {
                             expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                            batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                         } catch (Exception e) {
 
                         }
                         String chuoi[] = expDatetemp.split(" - ");
                         if (!checkBoxGetDVT.isChecked()) {
-                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                            ReturnProduct(barcodeData, chuoi[0], chuoi[1] ,batch_number);
                         } else {
-                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1] ,batch_number);
                         }
                     } else {
                         Toast.makeText(LetDownQrCodeActivity.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
@@ -494,7 +495,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow) {
+    private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow, String batch_number) {
 
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
@@ -504,6 +505,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
         intentt.putExtra("returnposition", position);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
+        intentt.putExtra("batch_number", batch_number);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
@@ -531,7 +533,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow) {
+    private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow,final String batch_number) {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
@@ -557,6 +559,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                 Intent intentt = new Intent(getApplication(), LetDownActivity.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
+                intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("let_down", "333");

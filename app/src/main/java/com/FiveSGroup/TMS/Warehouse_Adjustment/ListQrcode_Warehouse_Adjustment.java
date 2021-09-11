@@ -48,6 +48,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
     String expDate = "";
     String expDate1 = "";
     String pro_code = "";
+    String batch_number = "";
     String pro_name = "";
     String warehouse_adjustment = "";
     String ea_unit = "";
@@ -97,6 +98,13 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
         id_unique_WA = intent.getStringExtra("id_unique_WA");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
+        if(batch_number==null){
+            batch_number = "";
+        }
 
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
@@ -528,7 +536,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
     public void alert_show_SP(int isLPN) {
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZoneWarehouse_Adjustment(ListQrcode_Warehouse_Adjustment.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, global.getWarehouse_AdjustmentCD(), isLPN,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate, global.getWarehouse_AdjustmentCD(), isLPN,pro_code , pro_name ,batch_number);
 
             Dialog dialog = new Dialog(ListQrcode_Warehouse_Adjustment.this);
 

@@ -97,6 +97,9 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
         if (batch_number.equals("---")){
             batch_number = "";
         }
+        if(batch_number==null){
+            batch_number = "";
+        }
 
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");

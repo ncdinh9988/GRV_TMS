@@ -54,6 +54,8 @@ public class CancelGood_Adapter extends RecyclerView.Adapter<CancelGood_Adapter.
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.edt.setText(listCancelGood.get(position).getQTY());
         holder.tvUnit.setText(product.getUNIT());
+        holder.tvcont.setText(product.getBATCH_NUMBER());
+        holder.layout_cont.setVisibility(View.VISIBLE);
 
 
         if(!product.getLPN_FROM().equals("")){
@@ -258,6 +260,8 @@ public class CancelGood_Adapter extends RecyclerView.Adapter<CancelGood_Adapter.
         TextView tvExpired, tvStockin;
         EditText edt;
         LinearLayout layoutTo;
+        TextView tvcont;
+        LinearLayout layout_cont;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -268,6 +272,8 @@ public class CancelGood_Adapter extends RecyclerView.Adapter<CancelGood_Adapter.
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
             layoutTo = itemView.findViewById(R.id.layoutTo);
+            tvcont = itemView.findViewById(R.id.tvcont);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);

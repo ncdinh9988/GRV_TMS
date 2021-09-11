@@ -55,6 +55,8 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvUnit.setText(product.getUNIT());
+        holder.tvcont.setText(product.getBATCH_NUMBER());
+        holder.layout_cont.setVisibility(View.VISIBLE);
 
 
         if(!product.getLPN_FROM().equals("")){
@@ -213,12 +215,16 @@ public class Return_Warehouse_Adapter extends RecyclerView.Adapter<Return_Wareho
         TextView tvExpired, tvStockin;
         EditText edt;
         LinearLayout layoutTo , layoutFrom;
+        TextView tvcont;
+        LinearLayout layout_cont;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             btnvtden = itemView.findViewById(R.id.btnvtden);
             btnvtdi = itemView.findViewById(R.id.btnvtdi);
             tvFrom = itemView.findViewById(R.id.tvFrom);
+            tvcont = itemView.findViewById(R.id.tvcont);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);

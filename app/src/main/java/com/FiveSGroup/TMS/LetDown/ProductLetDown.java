@@ -25,6 +25,14 @@ public class ProductLetDown {
     private String LPN_TO;
     private String SUGGESTION_POSITION;
     private String SUGGESTION_POSITION_TO;
+    private String BATCH_NUMBER;
+    public String getBATCH_NUMBER() {
+        return BATCH_NUMBER;
+    }
+
+    public void setBATCH_NUMBER(String BATCH_NUMBER) {
+        this.BATCH_NUMBER = BATCH_NUMBER;
+    }
 
     public String getSUGGESTION_POSITION_TO() {
         return SUGGESTION_POSITION_TO;

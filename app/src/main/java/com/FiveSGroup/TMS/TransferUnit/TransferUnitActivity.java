@@ -46,6 +46,7 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
     String value1 = "" , id_unique_TU = "";
     String positonReceive = "";
     String productCd = "";
+    String batch_number = "";
     String stock = "";
     String expDate = "";
     String expDate1 = "";
@@ -251,6 +252,13 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
         // ea_unit : đơn vị trả về từ LetDownQRCodeActivity
         ea_unit = intent.getStringExtra("ea_unit");
         lpn = intent.getStringExtra("lpn");
+        batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
+        if(batch_number==null){
+            batch_number = "";
+        }
 
         stockinDate = intent.getStringExtra("stockin_date");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
@@ -637,7 +645,7 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
     public void alert_show_SP(int isLPN) {
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZoneTransferUnit(TransferUnitActivity.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name ,batch_number);
 
             Dialog dialog = new Dialog(TransferUnitActivity.this);
 

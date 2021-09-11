@@ -447,7 +447,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
     }
 
     private void getinformation(final String barcodeData) {
-        int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, CmnFns.readDataAdmin(), "WPP", 0, "");
+        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch(barcodeData, CmnFns.readDataAdmin(), "WPP", 0, "");
         // expiredDate nhận giá trị từ adapter để xử lí position
         if (statusGetCustt != 1) {
             ReturnPosition(barcodeData);
@@ -460,15 +460,15 @@ public class LoadPalletQRCode extends AppCompatActivity {
             } else {
                 try {
                     // lấy tất cả hạn sử dụng trong database ra
-                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
+                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue();
 
                     if (expired_date.size() > 1) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(LoadPalletQRCode.this);
-                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
+                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho - Batch Number");
 
                         final ArrayList<String> exp_date = new ArrayList<>();
                         for (int i = 0; i < expired_date.size(); i++) {
-                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
+                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM() + " - " + expired_date.get(i).getBATCH_NUMBER_TAM());
                         }
 
                         // chuyển đổi exp_date thành mảng chuỗi String
@@ -504,12 +504,12 @@ public class LoadPalletQRCode extends AppCompatActivity {
                                         return;
                                     }
                                     if (!checkBoxGetDVT.isChecked()) {
-                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
                                         // ReturnProduct(barcodeData, expDateTemp2, "");
 
                                     } else {
                                         //int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
-                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
 
 
                                     }
@@ -525,19 +525,20 @@ public class LoadPalletQRCode extends AppCompatActivity {
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     } else if (expired_date.size() == 1) {
-                        String expDatetemp = "";
+                        String expDatetemp = "", batch_number = "";
                         try {
                             expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                            batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                         } catch (Exception e) {
 
                         }
                         String chuoi[] = expDatetemp.split(" - ");
 
                         if (!checkBoxGetDVT.isChecked()) {
-                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                            ReturnProduct(barcodeData, chuoi[0], chuoi[1],batch_number);
                         } else {
                             //int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
-                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1],batch_number);
                         }
                     } else {
                         Toast.makeText(LoadPalletQRCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
@@ -580,7 +581,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
 
     }
 
-    private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow) {
+    private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow, String batch_number) {
 
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
@@ -596,6 +597,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("load_pallet", "333");
+        intentt.putExtra("batch_number", batch_number);
         if (stockinDate == null) {
             intentt.putExtra("stockin_date", stockinDateShow);
 
@@ -619,7 +621,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
     }
 
 
-    private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow) {
+    private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow,final String batch_number) {
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
@@ -651,6 +653,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
                 Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
+                intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("unique_id", unique_id);
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);

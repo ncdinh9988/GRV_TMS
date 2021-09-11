@@ -93,6 +93,9 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
         if (batch_number.equals("---")){
             batch_number = "";
         }
+        if(batch_number==null){
+            batch_number = "";
+        }
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");

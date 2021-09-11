@@ -89,6 +89,9 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
         if (batch_number.equals("---")){
             batch_number = "";
         }
+        if(batch_number==null){
+            batch_number = "";
+        }
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
         id_unique_STF = intent.getStringExtra("id_unique_STF");

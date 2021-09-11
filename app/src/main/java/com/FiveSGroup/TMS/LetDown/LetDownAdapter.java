@@ -54,6 +54,8 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
         holder.setIsRecyclable(false);
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
+        holder.tvcont.setText(product.getBATCH_NUMBER());
+        holder.layout_cont.setVisibility(View.VISIBLE);
 //        holder.edt.setText(product.getQTY_SET_AVAILABLE());
         holder.edt.setText(listLetDown.get(position).getQTY_SET_AVAILABLE());
         holder.tvUnit.setText(product.getUNIT());
@@ -269,10 +271,14 @@ public class LetDownAdapter extends RecyclerView.Adapter<LetDownAdapter.ViewHold
         TextView tvExpired, tvStockin;
         EditText edt;
         LinearLayout layout__let , layout__goiy;
+        TextView tvcont;
+        LinearLayout layout_cont;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             btnvtden = itemView.findViewById(R.id.btnvtden);
             btnvtdi = itemView.findViewById(R.id.btnvtdi);
+            tvcont = itemView.findViewById(R.id.tvcont);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
             tvFrom = itemView.findViewById(R.id.tvFrom);
             tvTo = itemView.findViewById(R.id.tvTo);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
