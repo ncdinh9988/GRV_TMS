@@ -47,6 +47,8 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
     String expDate1 = "";
     String returnQA = "";
     String ea_unit = "";
+    String pro_code = "";
+    String pro_name = "";
     String ea_unit_position = "";
     String stockinDate = "";
     String batch_number = "";
@@ -88,6 +90,8 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         batch_number = intent.getStringExtra("batch_number");
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
@@ -485,7 +489,8 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneReturn_QA(List_Return_QA.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getReturnQACD(), isLPN ,batch_number);
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneReturn_QA(List_Return_QA.this, value1, CmnFns.readDataAdmin(),
+                    expDate, ea_unit, stockinDate, global.getReturnQACD(), isLPN ,batch_number,pro_code , pro_name);
 
             Dialog dialog = new Dialog(List_Return_QA.this);
 

@@ -44,6 +44,8 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     String positonReceive = "";
     String productCd = "";
     String product_code = "";
+    String pro_code = "";
+    String pro_name = "";
 
     String stock = "";
     String expDate = "";
@@ -99,6 +101,8 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
         transfer_QA = intent.getStringExtra("transfer_QA");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
@@ -404,7 +408,8 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         if(allow != null ){
             try {
 
-                int postitionDes = new CmnFns().synchronizeGETProductByZoneQA(List_QA.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getQACD(), isLPN, batch_number);
+                int postitionDes = new CmnFns().synchronizeGETProductByZoneQA(List_QA.this, value1, CmnFns.readDataAdmin(), expDate,
+                        ea_unit, stockinDate, global.getQACD(), isLPN, batch_number,pro_code , pro_name);
 
                 Dialog dialog = new Dialog(List_QA.this);
 

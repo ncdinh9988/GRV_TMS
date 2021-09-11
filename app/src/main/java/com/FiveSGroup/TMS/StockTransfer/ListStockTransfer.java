@@ -43,10 +43,13 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
     String expDate1 = "";
     String ea_unit = "";
     String ea_unit_position = "";
+    String pro_code = "";
+    String pro_name = "";
     String stockinDate = "";
     String turn_off_alert = "";
     String lpn = "";
     String id_unique_STF = "";
+    String batch_number = "";
 
     int result;
     ArrayList<Product_StockTransfer> stockTransfers;
@@ -82,6 +85,12 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
+        batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         id_unique_STF = intent.getStringExtra("id_unique_STF");
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
@@ -484,7 +493,8 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_STF,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WOI", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_STF,CmnFns.readDataAdmin(), value1, positonReceive,
+                    productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WOI", isLPN);
 
             Dialog dialog = new Dialog(ListStockTransfer.this);
 
@@ -540,7 +550,8 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneStockTransfer(ListStockTransfer.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneStockTransfer(ListStockTransfer.this, value1, CmnFns.readDataAdmin(),
+                    expDate, ea_unit, stockinDate, isLPN, batch_number,pro_code , pro_name);
 
             Dialog dialog = new Dialog(ListStockTransfer.this);
 

@@ -34,6 +34,7 @@ import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
+import com.FiveSGroup.TMS.Warehouse.Product_S_P;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -68,7 +69,9 @@ public class LoadPalletQRCode extends AppCompatActivity {
     private String expDateTemp2 = "";
     View viewScan;
     Button buttonBack, btnSend;
-    private EditText edtBarcode;;
+    private EditText edtBarcode;
+    String pro_code = "";
+    String pro_name = "";
     android.hardware.Camera.Parameters params;
 
     private boolean isUp;
@@ -399,109 +402,156 @@ public class LoadPalletQRCode extends AppCompatActivity {
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WPP", 0, "");
-            // expiredDate nhận giá trị từ adapter để xử lí position
-            if (statusGetCustt != 1) {
-                ReturnPosition(barcodeData);
+            DatabaseHelper.getInstance().deleteallProduct_S_P();
+            int statusGetcode = new CmnFns().getProduct_code(barcodeData);
+            final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
+            if (product_s_ps.size() > 1) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(LoadPalletQRCode.this);
+                builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
+
+                final ArrayList<String> product_code = new ArrayList<>();
+                for (int i = 0; i < product_s_ps.size(); i++) {
+                    product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
+                }
+                // chuyển đổi exp_date thành mảng chuỗi String
+                String[] mStringArray = new String[product_code.size()];
+                mStringArray = product_code.toArray(mStringArray);
+
+                final String[] mString = mStringArray;
+                builder.setItems(mString, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String product_name = mString[which];
+                        String[] chuoi = product_name.split(" - ");
+                        //int vitri = which;
+//                        String product_code = product_s_ps.get(vitri).getPRODUCT_CODE();
+
+                        dialog.dismiss(); // Close Dialog
+                        if (product_name != "") {
+                            pro_code = chuoi[0];
+                            pro_name = chuoi[1];
+                            getinformation(barcodeData);
+                        }
+
+                        // Do some thing....
+
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
             } else {
-                if (expiredDate != null) {
+                getinformation(barcodeData);
+            }
+        }
+    }
 
-                    ReturnPosition(barcodeData);
+    private void getinformation(final String barcodeData) {
+        int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, CmnFns.readDataAdmin(), "WPP", 0, "");
+        // expiredDate nhận giá trị từ adapter để xử lí position
+        if (statusGetCustt != 1) {
+            ReturnPosition(barcodeData);
+        }
+        else {
+            if (expiredDate != null) {
 
-                } else {
-                    try {
-                        // lấy tất cả hạn sử dụng trong database ra
-                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
+                ReturnPosition(barcodeData);
 
-                        if (expired_date.size() > 1) {
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(LoadPalletQRCode.this);
-                            builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
+            } else {
+                try {
+                    // lấy tất cả hạn sử dụng trong database ra
+                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
 
-                            final ArrayList<String> exp_date = new ArrayList<>();
-                            for (int i = 0; i < expired_date.size(); i++) {
-                                exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
-                            }
+                    if (expired_date.size() > 1) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(LoadPalletQRCode.this);
+                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
 
-                            // chuyển đổi exp_date thành mảng chuỗi String
-                            String[] mStringArray = new String[exp_date.size()];
-                            mStringArray = exp_date.toArray(mStringArray);
+                        final ArrayList<String> exp_date = new ArrayList<>();
+                        for (int i = 0; i < expired_date.size(); i++) {
+                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
+                        }
 
-                            final String[] mString = mStringArray;
-                            builder.setItems(mString, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    String expDate = mString[which];
+                        // chuyển đổi exp_date thành mảng chuỗi String
+                        String[] mStringArray = new String[exp_date.size()];
+                        mStringArray = exp_date.toArray(mStringArray);
 
-                                    dialog.dismiss(); // Close Dialog
+                        final String[] mString = mStringArray;
+                        builder.setItems(mString, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String expDate = mString[which];
 
-                                    if (expDate != "") {
-                                        // expDateTemp2 lấy giá trị HSD được người dùng chọn
-                                        expDateTemp2 = expDate;
-                                        String chuoi[] = expDateTemp2.split(" - ");
-                                        if (chuoi[0].equals("Khác")){
-                                            Intent intent = new Intent(LoadPalletQRCode.this, SelectPropertiesProductActivity.class);
-                                            intent.putExtra("typeScan", "scan_from_load_pallet");
-                                            intent.putExtra("btn1", barcodeData);
-                                            intent.putExtra("returnposition", position);
-                                            intent.putExtra("unique_id", unique_id);
-                                            intent.putExtra("returnCD", product_cd);
-                                            intent.putExtra("returnStock", stock);
-                                            DatabaseHelper.getInstance().deleteallExp_date();
-                                            DatabaseHelper.getInstance().deleteallEa_Unit();
-                                            startActivity(intent);
-                                            finish();
-                                            return;
-                                        }
-                                        if (!checkBoxGetDVT.isChecked()) {
-                                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
-                                            // ReturnProduct(barcodeData, expDateTemp2, "");
+                                dialog.dismiss(); // Close Dialog
 
-                                        } else {
-                                            //int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
-                                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                                if (expDate != "") {
+                                    // expDateTemp2 lấy giá trị HSD được người dùng chọn
+                                    expDateTemp2 = expDate;
+                                    String chuoi[] = expDateTemp2.split(" - ");
+                                    if (chuoi[0].equals("Khác")){
+                                        Intent intent = new Intent(LoadPalletQRCode.this, SelectPropertiesProductActivity.class);
+                                        intent.putExtra("typeScan", "scan_from_load_pallet");
+                                        intent.putExtra("btn1", barcodeData);
+                                        intent.putExtra("returnposition", position);
+                                        intent.putExtra("unique_id", unique_id);
+                                        intent.putExtra("pro_code", pro_code);
+                                        intent.putExtra("pro_name", pro_name);
+                                        intent.putExtra("returnCD", product_cd);
+                                        intent.putExtra("returnStock", stock);
+                                        DatabaseHelper.getInstance().deleteallExp_date();
+                                        DatabaseHelper.getInstance().deleteallEa_Unit();
+                                        startActivity(intent);
+                                        finish();
+                                        return;
+                                    }
+                                    if (!checkBoxGetDVT.isChecked()) {
+                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                                        // ReturnProduct(barcodeData, expDateTemp2, "");
 
+                                    } else {
+                                        //int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
+                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
 
-                                        }
 
                                     }
-                                    // Do some thing....
-                                    // For example: Call method of MainActivity.
-                                    Toast.makeText(LoadPalletQRCode.this, "You select: " + expDate,
-                                            Toast.LENGTH_LONG).show();
 
                                 }
-                            });
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
-                        } else if (expired_date.size() == 1) {
-                            String expDatetemp = "";
-                            try {
-                                expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
-                            } catch (Exception e) {
+                                // Do some thing....
+                                // For example: Call method of MainActivity.
+                                Toast.makeText(LoadPalletQRCode.this, "You select: " + expDate,
+                                        Toast.LENGTH_LONG).show();
 
                             }
-                            String chuoi[] = expDatetemp.split(" - ");
-
-                            if (!checkBoxGetDVT.isChecked()) {
-                                ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
-                            } else {
-                                //int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
-                                ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
-                            }
-                        } else {
-                            Toast.makeText(LoadPalletQRCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(LoadPalletQRCode.this, LoadPalletActivity.class);
-                            intent.putExtra("load_pallet", "333");
-                            startActivity(intent);
-                            finish();
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    } else if (expired_date.size() == 1) {
+                        String expDatetemp = "";
+                        try {
+                            expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                        } catch (Exception e) {
 
                         }
-                    } catch (Exception e) {
-                        Toast.makeText(LoadPalletQRCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                        Log.d("#778:", e.getMessage());
-                    }
+                        String chuoi[] = expDatetemp.split(" - ");
 
+                        if (!checkBoxGetDVT.isChecked()) {
+                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                        } else {
+                            //int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
+                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                        }
+                    } else {
+                        Toast.makeText(LoadPalletQRCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(LoadPalletQRCode.this, LoadPalletActivity.class);
+                        intent.putExtra("load_pallet", "333");
+                        startActivity(intent);
+                        finish();
+
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(LoadPalletQRCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                    Log.d("#778:", e.getMessage());
                 }
+
             }
         }
     }
@@ -514,6 +564,8 @@ public class LoadPalletQRCode extends AppCompatActivity {
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("load_pallet", "333");
         intentt.putExtra("stockin_date", stockinDate);
 
@@ -539,6 +591,8 @@ public class LoadPalletQRCode extends AppCompatActivity {
         intentt.putExtra("unique_id", unique_id);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("load_pallet", "333");
@@ -598,6 +652,8 @@ public class LoadPalletQRCode extends AppCompatActivity {
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("unique_id", unique_id);
+                intentt.putExtra("pro_code", pro_code);
+                intentt.putExtra("pro_name", pro_name);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("load_pallet", "333");

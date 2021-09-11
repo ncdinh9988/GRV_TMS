@@ -46,6 +46,8 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
     String positonReceive = "";
     String productCd = "";
     String stock = "";
+    String pro_code = "";
+    String pro_name = "";
     String expDate = "";
     String cont = "";
     String expDate1 = "";
@@ -190,6 +192,8 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
         value1 = intent.getStringExtra("btn1");
         batch = intent.getStringExtra("batch");
         vitri = intent.getStringExtra("vitri");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
@@ -672,8 +676,9 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
                 DatabaseHelper.getInstance().deleteallBatch_Number();
 
             }else{
+                DatabaseHelper.getInstance().deleteallProduct_S_P();
                  statusGetCust = new CmnFns().synchronizeGETProductInfo(saleCode ,value1, stockReceipt, expDate, stockinDate,
-                        ea_unit, positonReceive , cont );
+                        ea_unit, positonReceive , cont ,pro_code , pro_name);
                 Dialog dialog = new Dialog(ListQrcode.this);
                 if (statusGetCust == 1) {
                     return;

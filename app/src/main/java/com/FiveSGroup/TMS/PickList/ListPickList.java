@@ -48,10 +48,12 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     String stock = "";
     String expDate = "";
     String batch_number = "";
+    String pro_code = "";
+    String pro_name = "";
     String expDate1 = "";
     String pick_list = "";
     String ea_unit = "";
-    String ea_unit_position = "" ,id_unique_PL = "";
+    String ea_unit_position = "", id_unique_PL = "";
     String stockinDate = "";
     String lpn = "";
     String postitionDess = "";
@@ -95,7 +97,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         prepareData();
     }
 
-    private void getDataFromIntent(){
+    private void getDataFromIntent() {
         Intent intent = getIntent();
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
@@ -104,16 +106,17 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         batch_number = intent.getStringExtra("batch_number");
         id_unique_PL = intent.getStringExtra("id_unique_PL");
         expDate = intent.getStringExtra("exp_date");
-               expDate1 = intent.getStringExtra("expdate");
+        expDate1 = intent.getStringExtra("expdate");
         pick_list = intent.getStringExtra("pick_list");
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
-
-
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         stockinDate = intent.getStringExtra("stockin_date");
     }
-    private void prepareData(){
+
+    private void prepareData() {
         if (pick_list != null) {
             if (positonReceive == null) {
                 if (lpn != null && value1 != null) {
@@ -132,71 +135,72 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-            pickList = DatabaseHelper.getInstance().getAllProduct_PickList_Show(global.getPickListCD());
-            //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
-            pickListAdapter = new PickListAdapter(this, pickList);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-            listViewProduct.setLayoutManager(layoutManager);
-            listViewProduct.setAdapter(pickListAdapter);
-            pickListAdapter.notifyDataSetChanged();
-            pick_list = "";
-            ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        pickList = DatabaseHelper.getInstance().getAllProduct_PickList_Show(global.getPickListCD());
+        //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
+        pickListAdapter = new PickListAdapter(this, pickList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        listViewProduct.setLayoutManager(layoutManager);
+        listViewProduct.setAdapter(pickListAdapter);
+        pickListAdapter.notifyDataSetChanged();
+        pick_list = "";
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
-                @Override
-                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                    Toast.makeText(ListPickList.this, "on Move", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Toast.makeText(ListPickList.this, "on Move", Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
-                @Override
-                public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                    LayoutInflater factory = LayoutInflater.from(ListPickList.this);
-                    View layout_cus = factory.inflate(R.layout.layout_delete, null);
-                    final AlertDialog dialog = new AlertDialog.Builder(ListPickList.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
-                    InsetDrawable inset = new InsetDrawable(back, 64);
-                    dialog.getWindow().setBackgroundDrawable(inset);
-                    dialog.setView(layout_cus);
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                LayoutInflater factory = LayoutInflater.from(ListPickList.this);
+                View layout_cus = factory.inflate(R.layout.layout_delete, null);
+                final AlertDialog dialog = new AlertDialog.Builder(ListPickList.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                InsetDrawable inset = new InsetDrawable(back, 64);
+                dialog.getWindow().setBackgroundDrawable(inset);
+                dialog.setView(layout_cus);
 
-                    Button btnNo = layout_cus.findViewById(R.id.btnNo);
-                    Button btnYes = layout_cus.findViewById(R.id.btnYes);
-                    TextView textView = layout_cus.findViewById(R.id.tvTextBack);
-
-
-                    btnNo.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
-                            dialog.dismiss();
-                            finish();
-                            Intent i = new Intent(ListPickList.this,ListPickList.class);
-                            startActivity(i);
-
-                        }
-                    });
-                    btnYes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Remove swiped item from list and notify the RecyclerView
-                            dialog.dismiss();
-
-                            int position = viewHolder.getAdapterPosition();
-                            PickList product = pickList.get(position);
-                            pickList.remove(position);
-                            DatabaseHelper.getInstance().deleteProduct_PickList_Specific(product.getAUTOINCREMENT());
-                            pickListAdapter.notifyItemRemoved(position);
-                        }
-                    });
-                    dialog.show();
+                Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                TextView textView = layout_cus.findViewById(R.id.tvTextBack);
 
 
-                }
-            };
-            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-            itemTouchHelper.attachToRecyclerView(listViewProduct);
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
+                        dialog.dismiss();
+                        finish();
+                        Intent i = new Intent(ListPickList.this, ListPickList.class);
+                        startActivity(i);
+
+                    }
+                });
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Remove swiped item from list and notify the RecyclerView
+                        dialog.dismiss();
+
+                        int position = viewHolder.getAdapterPosition();
+                        PickList product = pickList.get(position);
+                        pickList.remove(position);
+                        DatabaseHelper.getInstance().deleteProduct_PickList_Specific(product.getAUTOINCREMENT());
+                        pickListAdapter.notifyItemRemoved(position);
+                    }
+                });
+                dialog.show();
+
+
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(listViewProduct);
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -215,10 +219,10 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             String lpn_from = pickList.getLPN_FROM();
             String lpn_to = pickList.getLPN_TO();
 
-            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+            if ((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))) {
                 check = true;
             }
-            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+            if ((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))) {
                 check = true;
             }
         }
@@ -253,6 +257,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             Log.e("Exception", e.getMessage());
         }
     }
+
     private boolean isQuanityZero() {
         boolean check = false;
         List<PickList> product = DatabaseHelper.getInstance().getAllProduct_PickList(global.getPickListCD());
@@ -270,18 +275,19 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             return false;
         }
     }
-    private void synchronizeToServer(){
+
+    private void synchronizeToServer() {
         Dialog dialog = new Dialog(ListPickList.this);
         if (pick_list != null) {
             String saleCode = CmnFns.readDataAdmin();
-            if(pickList.size() > 0){
+            if (pickList.size() > 0) {
                 if (isNotScanFromOrTo()) {
-                    dialog.showDialog(ListPickList.this,"Chưa có VT Từ hoặc VT Đến");
+                    dialog.showDialog(ListPickList.this, "Chưa có VT Từ hoặc VT Đến");
 
-                } else if(isQuanityZero()){
-                    dialog.showDialog(ListPickList.this,"Số lượng SP không được bằng 0");
+                } else if (isQuanityZero()) {
+                    dialog.showDialog(ListPickList.this, "Số lượng SP không được bằng 0");
 
-                }else{
+                } else {
                     try {
                         result = new CmnFns().synchronizeData(saleCode, "WPL", global.getPickListCD());
 
@@ -292,61 +298,60 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                         } else {
 
                             if (result == -1) {
-                                dialog.showDialog(ListPickList.this,"Lưu thất bại");
-                            }else if(result == -2){
-                                dialog.showDialog(ListPickList.this,"Số lượng không đủ trong tồn kho");
+                                dialog.showDialog(ListPickList.this, "Lưu thất bại");
+                            } else if (result == -2) {
+                                dialog.showDialog(ListPickList.this, "Số lượng không đủ trong tồn kho");
 
-                            }else if(result == -3){
-                                dialog.showDialog(ListPickList.this,"Vị trí từ không hợp lệ");
+                            } else if (result == -3) {
+                                dialog.showDialog(ListPickList.this, "Vị trí từ không hợp lệ");
 
-                            }else if(result == -4){
-                                dialog.showDialog(ListPickList.this,"Trạng thái của phiếu không hợp lệ");
+                            } else if (result == -4) {
+                                dialog.showDialog(ListPickList.this, "Trạng thái của phiếu không hợp lệ");
 
-                            }else if(result == -5){
-                                dialog.showDialog(ListPickList.this,"Vị trí từ trùng vị trí đên");
+                            } else if (result == -5) {
+                                dialog.showDialog(ListPickList.this, "Vị trí từ trùng vị trí đên");
 
-                            }else if(result == -6){
-                                dialog.showDialog(ListPickList.this,"Vị trí đến không hợp lệ");
+                            } else if (result == -6) {
+                                dialog.showDialog(ListPickList.this, "Vị trí đến không hợp lệ");
 
-                            }else if(result == -7){
-                                dialog.showDialog(ListPickList.this,"Cập nhật trạng thái thất bại");
+                            } else if (result == -7) {
+                                dialog.showDialog(ListPickList.this, "Cập nhật trạng thái thất bại");
 
-                            }else if(result == -8){
-                                dialog.showDialog(ListPickList.this,"Sản phẩm không có thông tin trên phiếu ");
+                            } else if (result == -8) {
+                                dialog.showDialog(ListPickList.this, "Sản phẩm không có thông tin trên phiếu ");
 
                             } else if (result == -13) {
-                                dialog.showDialog(ListPickList.this,"Dữ liệu không hợp lệ");
+                                dialog.showDialog(ListPickList.this, "Dữ liệu không hợp lệ");
 
-                            }else if (result == -24) {
+                            } else if (result == -24) {
                                 dialog.showDialog(ListPickList.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
-                            }else if (result == -26) {
+                            } else if (result == -26) {
                                 dialog.showDialog(ListPickList.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
-                            }else if (result == -31) {
+                            } else if (result == -31) {
                                 dialog.showDialog(ListPickList.this, "LPN Này Đã Được sử Dụng Cho SO Khác");
 
-                            }else if (result == -34) {
+                            } else if (result == -34) {
                                 dialog.showDialog(ListPickList.this, "Sản Phẩm Với ĐVT Không Đúng Trên SO");
 
-                            }else {
+                            } else {
                                 dialog.showDialog(ListPickList.this, "Lưu thất bại");
                             }
 
 
                         }
-                    }catch (Exception e){
-                        Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 
                 }
-            }else{
+            } else {
 
-                dialog.showDialog(ListPickList.this,"Không có sản phẩm");
+                dialog.showDialog(ListPickList.this, "Không có sản phẩm");
 
             }
-
 
 
         }
@@ -399,7 +404,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                     finish();
                 }
                 break;
-            case R.id.buttonBack :
+            case R.id.buttonBack:
                 actionBack();
                 break;
             case R.id.buttonOK:
@@ -408,40 +413,40 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void alert_show_position(int isLPN){
+    public void alert_show_position(int isLPN) {
         String positionTo = "";
         String positionFrom = "";
         ArrayList<PickList> pickLists = new ArrayList<>();
         pickLists = DatabaseHelper.getInstance().getAllProduct_PickList_Sync(global.getPickListCD());
-        for(int i = 0; i < pickLists.size(); i++){
+        for (int i = 0; i < pickLists.size(); i++) {
             PickList pickList = pickLists.get(i);
-            if(productCd.equals(pickList.getPRODUCT_CD()) &&
+            if (productCd.equals(pickList.getPRODUCT_CD()) &&
                     expDate1.equals(pickList.getEXPIRED_DATE()) &&
                     stockinDate.equals(pickList.getSTOCKIN_DATE()) &&
-                    ea_unit_position.equals(pickList.getUNIT())){
-                if(!pickList.getLPN_FROM().equals("") || !pickList.getLPN_TO().equals("") ){
+                    ea_unit_position.equals(pickList.getUNIT())) {
+                if (!pickList.getLPN_FROM().equals("") || !pickList.getLPN_TO().equals("")) {
                     positionTo = pickList.getLPN_TO();
                     positionFrom = pickList.getLPN_FROM();
                 }
-                if(!pickList.getPOSITION_FROM_CODE().equals("") || !pickList.getPOSITION_TO_CODE().equals("") ){
+                if (!pickList.getPOSITION_FROM_CODE().equals("") || !pickList.getPOSITION_TO_CODE().equals("")) {
                     positionTo = pickList.getPOSITION_TO_CODE();
                     positionFrom = pickList.getPOSITION_FROM_CODE();
                 }
 
                 // if này là để trả lại giá trị from và to nếu người dùng muốn quét lại VTT và VTĐ
-                if(positonReceive.equals("1")){
-                    if(!positionTo.equals("") && !positionFrom.equals("")){
+                if (positonReceive.equals("1")) {
+                    if (!positionTo.equals("") && !positionFrom.equals("")) {
                         positionFrom = "";
                     }
-                }else {
-                    if(!positionTo.equals("") && !positionFrom.equals("")){
+                } else {
+                    if (!positionTo.equals("") && !positionFrom.equals("")) {
                         positionTo = "";
                     }
                 }
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_PL,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo,"WPL",isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_PL, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPL", isLPN);
 
             Dialog dialog = new Dialog(ListPickList.this);
 
@@ -451,7 +456,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             } else if (postitionDes.equals("-3")) {
                 dialog.showDialog(ListPickList.this, "Vị trí từ không hợp lệ");
 
-            }else if (postitionDes.equals("-6")) {
+            } else if (postitionDes.equals("-6")) {
                 dialog.showDialog(ListPickList.this, "Vị trí đến không hợp lệ");
 
             } else if (postitionDes.equals("-5")) {
@@ -463,42 +468,44 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
             } else if (postitionDes.equals("-15")) {
                 dialog.showDialog(ListPickList.this, "Vị trí từ không có trong hệ thống");
 
-            }else if (postitionDes.equals("-10")) {
+            } else if (postitionDes.equals("-10")) {
                 dialog.showDialog(ListPickList.this, "Mã LPN không có trong hệ thống");
 
-            }else if (postitionDes.equals("-17")) {
+            } else if (postitionDes.equals("-17")) {
                 dialog.showDialog(ListPickList.this, "LPN từ trùng LPN đến");
 
-            }else if (postitionDes.equals("-18")) {
+            } else if (postitionDes.equals("-18")) {
                 dialog.showDialog(ListPickList.this, "LPN đến trùng LPN từ");
 
-            }else if (postitionDes.equals("-19")) {
+            } else if (postitionDes.equals("-19")) {
                 dialog.showDialog(ListPickList.this, "Vị trí đến không có trong hệ thống");
 
             } else if (postitionDes.equals("-12")) {
                 dialog.showDialog(ListPickList.this, "Mã LPN không có trong tồn kho");
 
-            }else if (postitionDes.equals("-27")) {
+            } else if (postitionDes.equals("-27")) {
                 dialog.showDialog(ListPickList.this, "Vị trí từ chưa có sản phẩm");
 
-            }else if (postitionDes.equals("-28")) {
+            } else if (postitionDes.equals("-28")) {
                 dialog.showDialog(ListPickList.this, "LPN đến có vị trí không hợp lệ");
 
             } else {
                 return;
             }
-        }catch (Exception e){
-            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();
         }
 
 
-
     }
 
-    public void alert_show_SP(int isLPN){
+    public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZonePickList(ListPickList.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WPL", global.getPickListCD(), stockinDate ,isLPN,batch_number);
+
+            DatabaseHelper.getInstance().deleteallProduct_S_P();
+            int postitionDes = new CmnFns().synchronizeGETProductByZonePickList(ListPickList.this, value1, CmnFns.readDataAdmin(),
+                    expDate, ea_unit, "WPL", global.getPickListCD(), stockinDate, isLPN, batch_number,pro_code , pro_name);
 
             Dialog dialog = new Dialog(ListPickList.this);
 
@@ -512,7 +519,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                 dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trên phiếu");
 
 
-            }else if (postitionDes == -10) {
+            } else if (postitionDes == -10) {
                 dialog.showDialog(ListPickList.this, "Mã LPN không có trong hệ thống");
 
             } else if (postitionDes == -11) {
@@ -524,7 +531,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
 
                 dialog.showDialog(ListPickList.this, "Mã LPN không có trong kho");
 
-            }else if (postitionDes == -16) {
+            } else if (postitionDes == -16) {
 
                 dialog.showDialog(ListPickList.this, "Sản phẩm đã quét không nằm trong LPN nào");
 
@@ -532,23 +539,23 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
 
                 dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong hệ thống");
 
-            }else if (postitionDes == -21) {
+            } else if (postitionDes == -21) {
 
                 dialog.showDialog(ListPickList.this, "Mã sản phẩm không có trong zone");
 
-            }else if (postitionDes == -22) {
+            } else if (postitionDes == -22) {
 
                 dialog.showDialog(ListPickList.this, "Mã LPN không có trong zone");
 
-            }else if (postitionDes == -31) {
+            } else if (postitionDes == -31) {
                 dialog.showDialog(ListPickList.this, "LPN Này Đã Được sử Dụng ");
 
-            }else if (postitionDes == -33) {
+            } else if (postitionDes == -33) {
                 dialog.showDialog(ListPickList.this, "LPN Có Sản Phẩm Với ĐVT Không Đúng Trên SO");
 
             }
-        }catch (Exception e){
-            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();
         }
 

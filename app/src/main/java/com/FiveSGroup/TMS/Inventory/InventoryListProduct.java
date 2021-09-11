@@ -46,6 +46,8 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
     String expDate = "";
     String expDate1 = "";
     String inventory = "";
+    String pro_code = "";
+    String pro_name = "";
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "", id_unique_IVT = "";
@@ -94,6 +96,8 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
         id_unique_IVT = intent.getStringExtra("id_unique_IVT");
@@ -513,7 +517,9 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneInventory(value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WST", global.getInventoryCD(), stockinDate, isLPN);
+            DatabaseHelper.getInstance().deleteallProduct_S_P();
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneInventory(value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WST",
+                    global.getInventoryCD(), stockinDate, isLPN,pro_code , pro_name);
 
             Dialog dialog = new Dialog(InventoryListProduct.this);
 

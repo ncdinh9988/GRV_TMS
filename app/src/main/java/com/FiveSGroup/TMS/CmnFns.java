@@ -72,6 +72,7 @@ import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
 import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
 import com.FiveSGroup.TMS.Warehouse.Product_Qrcode;
+import com.FiveSGroup.TMS.Warehouse.Product_S_P;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.Product_Warehouse_Adjustment;
 import com.FiveSGroup.TMS.Webservice.CParam;
 import com.FiveSGroup.TMS.Webservice.Webservice;
@@ -376,7 +377,7 @@ public class CmnFns {
         }
     }
 
-    public void showDialog(Context context, String text){
+    public void showDialog(Context context, String text) {
 
         LayoutInflater factory = LayoutInflater.from(context);
         View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
@@ -542,8 +543,9 @@ public class CmnFns {
         }
 
     }
+
     // hàm đồng bộ hình ảnh dữ liệu QA về Server
-    public int synchronizePhoto_QA(Context context ,  String cd ) {
+    public int synchronizePhoto_QA(Context context, String cd) {
 
         try {
 
@@ -555,7 +557,7 @@ public class CmnFns {
 //                    .getAllPhotoForOrders(); // lấy dữ liệu các tấm hình để đồng bộ
 //            // về
 
-            List<OrderPhoto> photos = DatabaseHelper.getInstance().getAllPhoto_QA(cd );  // lấy dữ liệu các tấm hình để đồng bộ
+            List<OrderPhoto> photos = DatabaseHelper.getInstance().getAllPhoto_QA(cd);  // lấy dữ liệu các tấm hình để đồng bộ
             // về
             if (photos == null || photos.size() == 0)
                 return 1;
@@ -1145,7 +1147,7 @@ public class CmnFns {
                 String[] arr = result.split(global.SPLIT_KEY);
                 SharedPreferences sharedPref = getAppContext().getSharedPreferences("setURL", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("urlConnect",arr[0]);
+                editor.putString("urlConnect", arr[0]);
 //            editor.putString("currentTimeIn", a);
                 editor.commit();
 
@@ -1270,7 +1272,8 @@ public class CmnFns {
         return "-1";
     }
 
-    public int synchronizeGETProductByZoneChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd , String expdate ,String batch , String stockindate , String unit_cm ) {
+    public int synchronizeGETProductByZoneChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd, String expdate,
+                                                   String batch, String stockindate, String unit_cm, String product_code , String product_name) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -1312,52 +1315,63 @@ public class CmnFns {
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
 
-                    JSONObject jsonobj = jsonarray.getJSONObject(i);
-                    String pro_code = jsonobj.getString("_PRODUCT_CODE");
-                    String pro_cd = jsonobj.getString("_PRODUCT_CD");
-                    String pro_name = jsonobj.getString("_PRODUCT_NAME");
-                    String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
-                    String quanity_2 = jsonobj.getString("_QTY_SET_AVAILABLE_2");
-                    String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
-                    String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
-                    String ea_unit = jsonobj.getString("_UNIT");
-                    String ea_unit_2 = jsonobj.getString("_UNIT_2");
-                    // VT đến
-                    String position_code = jsonobj.getString("_POSITION_CODE");
-                    String strokinDate = jsonobj.getString("_STOCKIN_DATE");
-                    // Mô tả VT đến
-                    String description = jsonobj.getString("_POSITION_DESCRIPTION");
-                    // VT đến
-                    String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
-                    String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
-                    String batch_number = jsonobj.getString("_BATCH_NUMBER");
-                    String item_basic = jsonobj.getString("_ITEM_BASIC");
-               if((!batch_number.equals(batch))){
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                String pro_code = jsonobj.getString("_PRODUCT_CODE");
+                String pro_cd = jsonobj.getString("_PRODUCT_CD");
+                String pro_name = jsonobj.getString("_PRODUCT_NAME");
+                String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+                String quanity_2 = jsonobj.getString("_QTY_SET_AVAILABLE_2");
+                String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
+                String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
+                String ea_unit = jsonobj.getString("_UNIT");
+                String ea_unit_2 = jsonobj.getString("_UNIT_2");
+                // VT đến
+                String position_code = jsonobj.getString("_POSITION_CODE");
+                String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                // Mô tả VT đến
+                String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                // VT đến
+                String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+                String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
+                String batch_number = jsonobj.getString("_BATCH_NUMBER");
+                String item_basic = jsonobj.getString("_ITEM_BASIC");
+                if ((!batch_number.equals(batch))) {
 
-               }else{
-                   Product_SP sp = new Product_SP();
+                } else {
+                    Product_SP sp = new Product_SP();
 
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
-                   sp.setPRODUCT_CD(pro_cd);
-                   sp.setPRODUCT_CODE(pro_code);
-                   sp.setPRODUCT_NAME(pro_name);
-                   sp.setQTY_SET_AVAILABLE(quanity);
-                   sp.setQTY_SET_AVAILABLE_2(quanity_2);
-                   sp.setQTY_EA_AVAILABLE(quanity_ea);
-                   sp.setEXPIRED_DATE(expdate);
-                   sp.setUNIT(unit_cm);
-                   sp.setUNIT_2(ea_unit_2);
-                   sp.setPOSITION_CODE(position_code);
-                   sp.setSTOCKIN_DATE(stockindate);
-                   sp.setPOSITION_DESCRIPTION(description);
-                   sp.setWAREHOUSE_POSITION_CD(warePosition);
-                   sp.setMANUFACTURING_DATE(manufacturing);
-                   sp.setBATCH_NUMBER(batch);
-                   sp.setITEM_BASIC(item_basic);
+                    sp.setPRODUCT_CD(pro_cd);
+//                    sp.setPRODUCT_CODE(pro_code);
+//                    sp.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        sp.setPRODUCT_CODE(product_code);
+                    }else{
+                        sp.setPRODUCT_CODE(pro_code);
+                    }
 
-                   DatabaseHelper.getInstance().CreateSP(sp);
-                   int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
-               }
+                    if(!product_name.equals("")){
+                        sp.setPRODUCT_NAME(product_name);
+                    }else{
+                        sp.setPRODUCT_NAME(pro_name);
+                    }
+                    sp.setQTY_SET_AVAILABLE(quanity);
+                    sp.setQTY_SET_AVAILABLE_2(quanity_2);
+                    sp.setQTY_EA_AVAILABLE(quanity_ea);
+                    sp.setEXPIRED_DATE(expdate);
+                    sp.setUNIT(unit_cm);
+                    sp.setUNIT_2(ea_unit_2);
+                    sp.setPOSITION_CODE(position_code);
+                    sp.setSTOCKIN_DATE(stockindate);
+                    sp.setPOSITION_DESCRIPTION(description);
+                    sp.setWAREHOUSE_POSITION_CD(warePosition);
+                    sp.setMANUFACTURING_DATE(manufacturing);
+                    sp.setBATCH_NUMBER(batch);
+                    sp.setITEM_BASIC(item_basic);
+
+                    DatabaseHelper.getInstance().CreateSP(sp);
+                    int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
+                }
 
             }
 
@@ -1371,7 +1385,7 @@ public class CmnFns {
         return 1;
     }
 
-    public int getChuyenMaMateril(String barcodeData,  String type) {
+    public int getChuyenMaMateril(String barcodeData, String type) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -1446,6 +1460,7 @@ public class CmnFns {
 
         return 1;
     }
+
     public int getQAFromServer(String barcodeData, String sale_codes, String type, int IsLPN, String cd) {
 
         int status = this.allowSynchronizeBy3G();
@@ -1455,7 +1470,6 @@ public class CmnFns {
         Webservice webService = new Webservice();
         String result = "";
         result = webService.GetSPChuyenMa(barcodeData, sale_codes, type, IsLPN, cd);
-
 
 
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
@@ -1534,8 +1548,6 @@ public class CmnFns {
         result = webService.GetProductByZone(barcodeData, sale_codes, type, IsLPN, cd);
 
 
-
-
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
         if (result.equals("-1")) {
             return -1;
@@ -1580,9 +1592,11 @@ public class CmnFns {
                 } else {
                     exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
                 }
-
+                if(batch.equals("")){
+                    exp_date_tam.setBATCH_NUMBER_TAM("---");
+                }else{
                     exp_date_tam.setBATCH_NUMBER_TAM(batch);
-
+                }
 
                 DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);
 
@@ -1608,8 +1622,6 @@ public class CmnFns {
         String result = "";
 
         result = webService.GetProductByZone(barcodeData, sale_codes, type, IsLPN, cd);
-
-
 
 
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
@@ -1648,7 +1660,7 @@ public class CmnFns {
                 String pro_exp = jsonobj.getString("_EXPIRY_DATE");
                 String pro_stockin = jsonobj.getString("_STOCKIN_DATE");
                 String batch = "";
-                if((type.equals("WPR"))|| (type.equals("WTP"))|| (type.equals("WQA"))|| (type.equals("WQA_Return"))){
+                if ((type.equals("WPR")) || (type.equals("WTP")) || (type.equals("WQA")) || (type.equals("WQA_Return"))) {
                     batch = jsonobj.getString("_BATCH_NUMBER");
                 }
 
@@ -1658,7 +1670,7 @@ public class CmnFns {
                 } else {
                     exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
                 }
-                if((type.equals("WPR"))|| (type.equals("WTP"))|| (type.equals("WQA"))|| (type.equals("WQA_Return"))){
+                if ((type.equals("WPR")) || (type.equals("WTP")) || (type.equals("WQA")) || (type.equals("WQA_Return"))) {
                     exp_date_tam.setBATCH_NUMBER_TAM(batch);
                 }
 
@@ -1762,14 +1774,81 @@ public class CmnFns {
 
     }
 
-    public int getBatch(String usercode ,String barcodeData ,String stock) {
+    public int getProduct_code(String barcodeData) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
 
         Webservice webService = new Webservice();
-        String result = webService.synchronizeGETBatch(usercode , barcodeData , stock);
+        String result = "";
+
+        result = webService.GetProduct_Code(barcodeData);
+
+        // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
+        if (result.equals("-1")) {
+            return -1;
+        } else if (result.equals("1")) {
+            return 1;
+        } else if (result.equals("-8")) {
+            return -8;
+        } else if (result.equals("-11")) {
+            return -11;
+        } else if (result.equals("-12")) {
+            return -12;
+        } else if (result.equals("-16")) {
+            return -16;
+        } else if (result.equals("-20")) {
+            return -20;
+        } else if (result.equals("-21")) {
+            return -21;
+        } else if (result.equals("-22")) {
+            return -22;
+        }
+        if (result.equals("1")) {
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                String pro_code = jsonobj.getString("PRODUCT_CODE");
+                String pro_name = jsonobj.getString("PRODUCT_NAME");
+
+
+                Product_S_P product = new Product_S_P();
+                product.setPRODUCT_CODE(pro_code);
+                product.setPRODUCT_NAME(pro_name);
+
+                DatabaseHelper.getInstance().CreateProduct_SP(product);
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
+
+
+    public int getBatch(String usercode, String barcodeData, String stock) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.synchronizeGETBatch(usercode, barcodeData, stock);
         //
         if (result.equals("-1")) {
             return -1;
@@ -1812,7 +1891,8 @@ public class CmnFns {
                 batch_number_tam.setUNIT(unit);
                 batch_number_tam.setMANUFACTURING_DATE(manufacturing_date);
                 batch_number_tam.setPOSITION_CODE(position_code);
-                batch_number_tam.setPOSITION_DESCRIPTION(position_description); ;
+                batch_number_tam.setPOSITION_DESCRIPTION(position_description);
+                ;
                 batch_number_tam.setWAREHOUSE_POSITION_CD(warehouse_position_cd);
                 batch_number_tam.setAUTOINCREMENT(String.valueOf(i));
 
@@ -1831,14 +1911,14 @@ public class CmnFns {
         return 1;
     }
 
-    public int getBatchAndProduct(String usercode,String barcodeData, String stockReceipt , String batch) {
+    public int getBatchAndProduct(String usercode, String barcodeData, String stockReceipt, String batch) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
 
         Webservice webService = new Webservice();
-        String result = webService.synchronizeGETBatchAndProduct(usercode,barcodeData, stockReceipt, batch);
+        String result = webService.synchronizeGETBatchAndProduct(usercode, barcodeData, stockReceipt, batch);
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
         if (result.equals("-1")) {
             return -1;
@@ -1896,14 +1976,14 @@ public class CmnFns {
     }
 
 
-    public int getExpDateFromServer(String usercode,String barcodeData, String stockReceipt) {
+    public int getExpDateFromServer(String usercode, String barcodeData, String stockReceipt) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
 
         Webservice webService = new Webservice();
-        String result = webService.synchronizeGETProductInfoo(usercode,barcodeData, stockReceipt);
+        String result = webService.synchronizeGETProductInfoo(usercode, barcodeData, stockReceipt);
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
         if (result.equals("-1")) {
             return -1;
@@ -1970,7 +2050,7 @@ public class CmnFns {
         String result = "";
         switch (typeScan) {
             case "scan_from_stock_in":
-                result = webService.synchronizeGETProductInfoo(global.getAdminCode(),barcodeData, cd);
+                result = webService.synchronizeGETProductInfoo(global.getAdminCode(), barcodeData, cd);
                 break;
             case "scan_from_inventory":
                 result = webService.GetProductByZone(barcodeData, global.getAdminCode(), "WST", 0, global.getInventoryCD());
@@ -2041,16 +2121,15 @@ public class CmnFns {
     }
 
 
-
-    public int synchronizeGETProductInfo(String usercode,String qrcode, String stock, String expDate, String stockinDate,
-                                         String unit, String positonReceive , String cont ) {
+    public int synchronizeGETProductInfo(String usercode, String qrcode, String stock, String expDate, String stockinDate,
+                                         String unit, String positonReceive, String cont, String product_code, String product_name) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
 
         Webservice webService = new Webservice();
-        String result = webService.synchronizeGETProductInfoo(usercode,qrcode, stock);
+        String result = webService.synchronizeGETProductInfoo(usercode, qrcode, stock);
         if (result.equals("-1")) {
             return -1;
         } else if (result.equals("-8")) {
@@ -2084,19 +2163,28 @@ public class CmnFns {
 
                     Product_Qrcode qrcode1 = new Product_Qrcode();
                     qrcode1.setPRODUCT_CD(pro_cd);
-                    qrcode1.setPRODUCT_CODE(pro_code);
-                    qrcode1.setPRODUCT_NAME(pro_name);
+                    if (!product_code.equals("")) {
+                        qrcode1.setPRODUCT_CODE(product_code);
+                    } else {
+                        qrcode1.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if (!product_name.equals("")) {
+                        qrcode1.setPRODUCT_NAME(product_name);
+                    } else {
+                        qrcode1.setPRODUCT_NAME(pro_name);
+                    }
+
                     qrcode1.setWAREHOUSE_POSITION_CD(pro_warehouse);
                     qrcode1.setPOSITION_CODE(pro_position_code);
                     qrcode1.setPOSITION_DESCRIPTION(pro_position_des);
                     qrcode1.setSL_SET(String.valueOf(pro_set));
                     qrcode1.setMANUFACTURING_DATE(stockinDate);
-                    if(!cont.equals("")){
+                    if (!cont.equals("")) {
                         qrcode1.setBATCH_NUMBER(cont);
-                    }else{
+                    } else {
                         qrcode1.setBATCH_NUMBER("");
                     }
-
 
 
                     qrcode1.setEA_UNIT(unit);
@@ -2134,7 +2222,7 @@ public class CmnFns {
                                 product_set += pro_set;
                                 product_qrcodes.get(i).setSL_SET(String.valueOf(product_set));
                                 DatabaseHelper.getInstance().updateProduct_Qrcode(updateProductQR, updateProductQR.getPRODUCT_CD(),
-                                        updateProductQR.getSTOCK_RECEIPT_CD(), updateProductQR.getEXPIRED_DATE(), updateProductQR.getEA_UNIT(),updateProductQR.getSTOCKIN_DATE());
+                                        updateProductQR.getSTOCK_RECEIPT_CD(), updateProductQR.getEXPIRED_DATE(), updateProductQR.getEA_UNIT(), updateProductQR.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().CreateProduct_Qrcode(qrcode1);
                             }
@@ -2158,7 +2246,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZoneWarehouse_Adjustment(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String warehouseCD, int isLPN) {
+    public int synchronizeGETProductByZoneWarehouse_Adjustment(Context context, String qrcode, String admin, String expDate, String unit,
+                                                               String stockDate, String warehouseCD, int isLPN, String product_code , String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -2211,8 +2300,19 @@ public class CmnFns {
 
                     Product_Warehouse_Adjustment warehouseAdjustment = new Product_Warehouse_Adjustment();
                     warehouseAdjustment.setPRODUCT_CD(pro_cd);
-                    warehouseAdjustment.setPRODUCT_CODE(pro_code);
-                    warehouseAdjustment.setPRODUCT_NAME(pro_name);
+//                    warehouseAdjustment.setPRODUCT_CODE(pro_code);
+//                    warehouseAdjustment.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        warehouseAdjustment.setPRODUCT_CODE(product_code);
+                    }else{
+                        warehouseAdjustment.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        warehouseAdjustment.setPRODUCT_NAME(product_name);
+                    }else{
+                        warehouseAdjustment.setPRODUCT_NAME(pro_name);
+                    }
                     warehouseAdjustment.setQTY(String.valueOf(pro_set));
                     warehouseAdjustment.setQTY_EA_AVAILABLE(quanity_ea);
                     warehouseAdjustment.setPOSITION_FROM_CD(warePosition);
@@ -2262,7 +2362,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_warehouse_adjustments.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_warehouse_adjustments.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(updateProductQR,updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Warehouse_Adjustment(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), warehouseAdjustment.getSTOCKIN_DATE(), warehouseCD);
                             } else {
                                 DatabaseHelper.getInstance().CreateWAREHOUSE_ADJUSTMENT(warehouseAdjustment);
@@ -2306,7 +2406,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZoneReturnWareHouse(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String returnCD, int isLPN) {
+    public int synchronizeGETProductByZoneReturnWareHouse(Context context, String qrcode, String admin, String expDate, String unit,
+                                                          String stockDate, String returnCD, int isLPN,String product_code , String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -2367,8 +2468,19 @@ public class CmnFns {
                     Product_Return_WareHouse return_wareHouse = new Product_Return_WareHouse();
 //                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     return_wareHouse.setPRODUCT_CD(pro_cd);
-                    return_wareHouse.setPRODUCT_CODE(pro_code);
-                    return_wareHouse.setPRODUCT_NAME(pro_name);
+//                    return_wareHouse.setPRODUCT_CODE(pro_code);
+//                    return_wareHouse.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        return_wareHouse.setPRODUCT_CODE(product_code);
+                    }else{
+                        return_wareHouse.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        return_wareHouse.setPRODUCT_NAME(product_name);
+                    }else{
+                        return_wareHouse.setPRODUCT_NAME(pro_name);
+                    }
                     return_wareHouse.setQTY(String.valueOf(pro_set));
                     return_wareHouse.setQTY_EA_AVAILABLE(quanity_ea);
                     return_wareHouse.setPOSITION_FROM_CD(warePosition);
@@ -2418,7 +2530,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_return_wareHouses.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_return_wareHouses.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Return_WareHouse(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Return_WareHouse(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), return_wareHouse.getSTOCKIN_DATE(), returnCD);
                             } else {
                                 DatabaseHelper.getInstance().Createreturn_warehouse_OUT(return_wareHouse);
@@ -2463,7 +2575,7 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZoneMasterPick_LPN(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String masterPickCD, int isLPN , String vitri) {
+    public int synchronizeGETProductByZoneMasterPick_LPN(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String masterPickCD, int isLPN, String vitri) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -2491,9 +2603,9 @@ public class CmnFns {
             return -21;
         } else if (result.equals("-22")) {
             return -22;
-        }else if (result.equals("-31")) {
+        } else if (result.equals("-31")) {
             return -31;
-        }else if (result.equals("-33")) {
+        } else if (result.equals("-33")) {
             return -33;
         }
 
@@ -2701,7 +2813,8 @@ public class CmnFns {
 //
 //        return 1;
 //    }
-    public int synchronizeGETProductByZoneMasterPick(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String masterPickCD, int isLPN , String batch_number) {
+    public int synchronizeGETProductByZoneMasterPick(Context context, String qrcode, String admin, String expDate, String unit,
+                                                     String stockDate, String masterPickCD, int isLPN, String batch_number, String product_code, String product_name) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -2729,9 +2842,9 @@ public class CmnFns {
             return -21;
         } else if (result.equals("-22")) {
             return -22;
-        }else if (result.equals("-31")) {
+        } else if (result.equals("-31")) {
             return -31;
-        }else if (result.equals("-33")) {
+        } else if (result.equals("-33")) {
             return -33;
         }
 
@@ -2763,8 +2876,19 @@ public class CmnFns {
                     Product_Master_Pick masterPick = new Product_Master_Pick();
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     masterPick.setPRODUCT_CD(pro_cd);
-                    masterPick.setPRODUCT_CODE(pro_code);
-                    masterPick.setPRODUCT_NAME(pro_name);
+//                    masterPick.setPRODUCT_CODE(pro_code);
+//                    masterPick.setPRODUCT_NAME(pro_name);
+                    if (!product_code.equals("")) {
+                        masterPick.setPRODUCT_CODE(product_code);
+                    } else {
+                        masterPick.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if (!product_name.equals("")) {
+                        masterPick.setPRODUCT_NAME(product_name);
+                    } else {
+                        masterPick.setPRODUCT_NAME(pro_name);
+                    }
                     masterPick.setQTY(String.valueOf(pro_set));
                     masterPick.setQTY_EA_AVAILABLE(quanity_ea);
                     masterPick.setPOSITION_FROM_CD(warePosition);
@@ -2815,7 +2939,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(Product_Master_Picks.get(0).getQTY());
                                 int sl = product_set + 1;
                                 Product_Master_Picks.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Master_Pick(updateProductQR,updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Master_Pick(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), masterPick.getSTOCKIN_DATE(), masterPickCD);
                             } else {
                                 DatabaseHelper.getInstance().CreateMaster_Pick(masterPick);
@@ -2862,7 +2986,8 @@ public class CmnFns {
     }
 
 
-    public int synchronizeGETProductByZonePo_Return(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String poreturnCD, int isLPN , String batch_number) {
+    public int synchronizeGETProductByZonePo_Return(Context context, String qrcode, String admin, String expDate, String unit, String stockDate,
+                                                    String poreturnCD, int isLPN, String batch_number, String product_code , String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -2923,11 +3048,23 @@ public class CmnFns {
 
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     poReturn.setPRODUCT_CD(pro_cd);
-                    poReturn.setPRODUCT_CODE(pro_code);
-                    poReturn.setPRODUCT_NAME(pro_name);
+//                    poReturn.setPRODUCT_CODE(pro_code);
+//                    poReturn.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        poReturn.setPRODUCT_CODE(product_code);
+                    }else{
+                        poReturn.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        poReturn.setPRODUCT_NAME(product_name);
+                    }else{
+                        poReturn.setPRODUCT_NAME(pro_name);
+                    }
+
+                    poReturn.setBATCH_NUMBER(batch_number);
                     poReturn.setQTY(String.valueOf(pro_set));
                     poReturn.setQTY_EA_AVAILABLE(quanity_ea);
-                    poReturn.setBATCH_NUMBER(batch_number);
                     poReturn.setMANUFACTURING_DATE(manufacturing);
 
                     poReturn.setPOSITION_TO_CD(warePosition);
@@ -2979,7 +3116,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(Product_PoReturns.get(0).getQTY());
                                 int sl = product_set + 1;
                                 Product_PoReturns.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_PoReturn(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_PoReturn(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), poReturn.getSTOCKIN_DATE(), poreturnCD);
                             } else {
                                 DatabaseHelper.getInstance().CreatePo_Return(poReturn);
@@ -3022,7 +3159,8 @@ public class CmnFns {
 
         return 1;
     }
-    public int GetMaterialInspection(Context context, String barcode , String usercode , String batch , String cd , String product_code, String unit){
+
+    public int GetMaterialInspection(Context context, String barcode, String usercode, String batch, String cd, String product_code, String unit) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -3035,10 +3173,10 @@ public class CmnFns {
             return 1;
         }
         try {
-            ArrayList<Product_Criteria> Product_Criteria = DatabaseHelper.getInstance().getallCriteria(cd,batch, product_code,unit);
-            int check ;
+            ArrayList<Product_Criteria> Product_Criteria = DatabaseHelper.getInstance().getallCriteria(cd, batch, product_code, unit);
+            int check;
             check = Product_Criteria.size();
-            if(check == 0){
+            if (check == 0) {
                 JSONArray jsonarray = new JSONArray(result);
                 for (int i = 0; i < jsonarray.length(); i++) {
 //                 lấy một đối tượng json để
@@ -3061,14 +3199,16 @@ public class CmnFns {
                     DatabaseHelper.getInstance().CreateCriteria(listCriteria);
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
-        return 1 ;
+        return 1;
 
     }
-    public int synchronizeGETProductByZoneQA(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String listQACD, int isLPN , String batch_number) {
+
+    public int synchronizeGETProductByZoneQA(Context context, String qrcode, String admin, String expDate, String unit, String stockDate,
+                                             String listQACD, int isLPN, String batch_number, String product_code , String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -3129,8 +3269,19 @@ public class CmnFns {
 
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     listQA.setPRODUCT_CD(pro_cd);
-                    listQA.setPRODUCT_CODE(pro_code);
-                    listQA.setPRODUCT_NAME(pro_name);
+//                    listQA.setPRODUCT_CODE(pro_code);
+//                    listQA.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        listQA.setPRODUCT_CODE(product_code);
+                    }else{
+                        listQA.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        listQA.setPRODUCT_NAME(product_name);
+                    }else{
+                        listQA.setPRODUCT_NAME(pro_name);
+                    }
                     listQA.setQTY(String.valueOf(pro_set));
                     listQA.setQTY_EA_AVAILABLE(quanity_ea);
                     listQA.setBATCH_NUMBER(batch_number);
@@ -3205,7 +3356,9 @@ public class CmnFns {
 
         return 1;
     }
-    public int synchronizeGETProductByZoneTransfer_Posting(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String transferPostingCD, int isLPN , String batch_number) {
+
+    public int synchronizeGETProductByZoneTransfer_Posting(Context context, String qrcode, String admin, String expDate, String unit,
+                                                           String stockDate, String transferPostingCD, int isLPN, String batch_number, String product_code , String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -3266,8 +3419,19 @@ public class CmnFns {
 
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     transferPosting.setPRODUCT_CD(pro_cd);
-                    transferPosting.setPRODUCT_CODE(pro_code);
-                    transferPosting.setPRODUCT_NAME(pro_name);
+//                    transferPosting.setPRODUCT_CODE(pro_code);
+//                    transferPosting.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        transferPosting.setPRODUCT_CODE(product_code);
+                    }else{
+                        transferPosting.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        transferPosting.setPRODUCT_NAME(product_name);
+                    }else{
+                        transferPosting.setPRODUCT_NAME(pro_name);
+                    }
                     transferPosting.setQTY(String.valueOf(pro_set));
                     transferPosting.setQTY_EA_AVAILABLE(quanity_ea);
                     transferPosting.setBATCH_NUMBER(batch_number);
@@ -3322,7 +3486,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(Product_TransferPostings.get(0).getQTY());
                                 int sl = product_set + 1;
                                 Product_TransferPostings.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_TransferPosting(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_TransferPosting(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), transferPosting.getSTOCKIN_DATE(), transferPostingCD);
                             } else {
                                 DatabaseHelper.getInstance().CreateTransfer_Posting(transferPosting);
@@ -3366,7 +3530,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZonePickup(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String pickupCD, int isLPN , String batch_number) {
+    public int synchronizeGETProductByZonePickup(Context context, String qrcode, String admin, String expDate, String unit, String stockDate,
+                                                 String pickupCD, int isLPN, String batch_number, String product_code , String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -3427,8 +3592,19 @@ public class CmnFns {
 
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     pickUp.setPRODUCT_CD(pro_cd);
-                    pickUp.setPRODUCT_CODE(pro_code);
-                    pickUp.setPRODUCT_NAME(pro_name);
+//                    pickUp.setPRODUCT_CODE(pro_code);
+//                    pickUp.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        pickUp.setPRODUCT_CODE(product_code);
+                    }else{
+                        pickUp.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        pickUp.setPRODUCT_NAME(product_name);
+                    }else{
+                        pickUp.setPRODUCT_NAME(pro_name);
+                    }
                     pickUp.setQTY(String.valueOf(pro_set));
                     pickUp.setQTY_EA_AVAILABLE(quanity_ea);
                     pickUp.setBATCH_NUMBER(batch_number);
@@ -3487,7 +3663,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(Product_Pickups.get(0).getQTY());
                                 int sl = product_set + 1;
                                 Product_Pickups.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Pickup(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Pickup(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), pickUp.getSTOCKIN_DATE(), pickupCD);
                             } else {
                                 DatabaseHelper.getInstance().CreatePickup(pickUp);
@@ -3531,7 +3707,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZoneReturn_QA(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String returnQACD, int isLPN , String batch_number) {
+    public int synchronizeGETProductByZoneReturn_QA(Context context, String qrcode, String admin, String expDate, String unit,
+                                                    String stockDate, String returnQACD, int isLPN, String batch_number, String product_code , String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -3592,8 +3769,19 @@ public class CmnFns {
 
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     returnQA.setPRODUCT_CD(pro_cd);
-                    returnQA.setPRODUCT_CODE(pro_code);
-                    returnQA.setPRODUCT_NAME(pro_name);
+//                    returnQA.setPRODUCT_CODE(pro_code);
+//                    returnQA.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        returnQA.setPRODUCT_CODE(product_code);
+                    }else{
+                        returnQA.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        returnQA.setPRODUCT_NAME(product_name);
+                    }else{
+                        returnQA.setPRODUCT_NAME(pro_name);
+                    }
                     returnQA.setQTY(String.valueOf(pro_set));
                     returnQA.setQTY_EA_AVAILABLE(quanity_ea);
                     returnQA.setBATCH_NUMBER(batch_number);
@@ -3652,7 +3840,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(Product_Return_QAs.get(0).getQTY());
                                 int sl = product_set + 1;
                                 Product_Return_QAs.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Return_QA(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Return_QA(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), returnQA.getSTOCKIN_DATE(), returnQACD);
                             } else {
                                 DatabaseHelper.getInstance().CreatereturnQA(returnQA);
@@ -3696,7 +3884,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZonecancel_Good(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String cancelCD, int isLPN) {
+    public int synchronizeGETProductByZonecancel_Good(Context context, String qrcode, String admin, String expDate, String unit
+            , String stockDate, String cancelCD, int isLPN, String product_code, String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -3756,8 +3945,17 @@ public class CmnFns {
 
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     cancelGood.setPRODUCT_CD(pro_cd);
-                    cancelGood.setPRODUCT_CODE(pro_code);
-                    cancelGood.setPRODUCT_NAME(pro_name);
+                    if (!product_code.equals("")) {
+                        cancelGood.setPRODUCT_CODE(product_code);
+                    } else {
+                        cancelGood.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if (!product_name.equals("")) {
+                        cancelGood.setPRODUCT_NAME(product_name);
+                    } else {
+                        cancelGood.setPRODUCT_NAME(pro_name);
+                    }
                     cancelGood.setQTY(String.valueOf(pro_set));
                     cancelGood.setQTY_EA_AVAILABLE(quanity_ea);
 
@@ -3810,7 +4008,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(Product_CancelGoods.get(0).getQTY());
                                 int sl = product_set + 1;
                                 Product_CancelGoods.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_CancelGood(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_CancelGood(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), cancelGood.getSTOCKIN_DATE(), cancelCD);
                             } else {
                                 DatabaseHelper.getInstance().CreateCANCEL_GOOD(cancelGood);
@@ -3854,7 +4052,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZoneStockout(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, String stockoutCD, int isLPN , String batch_number) {
+    public int synchronizeGETProductByZoneStockout(Context context, String qrcode, String admin, String expDate, String unit,
+                                                   String stockDate, String stockoutCD, int isLPN, String batch_number, String product_code , String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -3914,8 +4113,19 @@ public class CmnFns {
                     Product_StockOut stockOut = new Product_StockOut();
 //                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     stockOut.setPRODUCT_CD(pro_cd);
-                    stockOut.setPRODUCT_CODE(pro_code);
-                    stockOut.setPRODUCT_NAME(pro_name);
+//                    stockOut.setPRODUCT_CODE(pro_code);
+//                    stockOut.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        stockOut.setPRODUCT_CODE(product_code);
+                    }else{
+                        stockOut.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        stockOut.setPRODUCT_NAME(product_name);
+                    }else{
+                        stockOut.setPRODUCT_NAME(pro_name);
+                    }
                     stockOut.setQTY(String.valueOf(pro_set));
                     stockOut.setQTY_EA_AVAILABLE(quanity_ea);
 
@@ -3969,7 +4179,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_stockOuts.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_stockOuts.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Stockout(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Stockout(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), stockOut.getSTOCKIN_DATE(), stockoutCD);
                             } else {
                                 DatabaseHelper.getInstance().CreateSTOCK_OUT(stockOut);
@@ -4013,7 +4223,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZonePutaway( Context context, String qrcode, String admin, String expDate, String unit, String stockDate, int isLNP) {
+    public int synchronizeGETProductByZonePutaway(Context context, String qrcode, String admin, String expDate,
+                                                  String unit, String stockDate, int isLNP, String product_code, String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -4081,8 +4292,19 @@ public class CmnFns {
                     Product_PutAway putAway = new Product_PutAway();
 //                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     putAway.setPRODUCT_CD_PUTAWAY(pro_cd);
-                    putAway.setPRODUCT_CODE_PUTAWAY(pro_code);
-                    putAway.setPRODUCT_NAME_PUTAWAY(pro_name);
+//                    putAway.setPRODUCT_CODE_PUTAWAY(pro_code);
+//                    putAway.setPRODUCT_NAME_PUTAWAY(pro_name);
+                    if (!product_code.equals("")) {
+                        putAway.setPRODUCT_CODE_PUTAWAY(product_code);
+                    } else {
+                        putAway.setPRODUCT_CODE_PUTAWAY(pro_code);
+                    }
+
+                    if (!product_name.equals("")) {
+                        putAway.setPRODUCT_NAME_PUTAWAY(product_name);
+                    } else {
+                        putAway.setPRODUCT_NAME_PUTAWAY(pro_name);
+                    }
 
                     putAway.setQTY_EA_AVAILABLE(quanity_ea);
                     putAway.setPOSITION_FROM_PUTAWAY(warePosition);
@@ -4133,7 +4355,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_putaway.get(0).getQTY_SET_AVAILABLE());
                                 int sl = product_set + 1;
                                 product_putaway.get(i).setQTY_SET_AVAILABLE(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_PutAway(updateProductQR,updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD_PUTAWAY(),
+                                DatabaseHelper.getInstance().updateProduct_PutAway(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD_PUTAWAY(),
                                         String.valueOf(sl), updateProductQR.getEA_UNIT_PUTAWAY(), putAway.getSTOCKIN_DATE_PUTAWAY());
                             } else {
                                 DatabaseHelper.getInstance().CreatePutAway(putAway);
@@ -4178,7 +4400,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZonePickList(Context context, String qrcode, String admin, String expDate, String unit, String type, String PickListCD, String stockDate, int isLPN,String batch_number) {
+    public int synchronizeGETProductByZonePickList(Context context, String qrcode, String admin, String expDate, String unit, String type,
+                                                   String PickListCD, String stockDate, int isLPN, String batch_number, String product_code, String product_name) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -4210,9 +4433,9 @@ public class CmnFns {
             return -21;
         } else if (result.equals("-22")) {
             return -22;
-        }else if (result.equals("-31")) {
+        } else if (result.equals("-31")) {
             return -31;
-        }else if (result.equals("-33")) {
+        } else if (result.equals("-33")) {
             return -33;
         }
 
@@ -4244,8 +4467,19 @@ public class CmnFns {
                     PickList pickList = new PickList();
 //                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     pickList.setPRODUCT_CD(pro_cd);
-                    pickList.setPRODUCT_CODE(pro_code);
-                    pickList.setPRODUCT_NAME(pro_name);
+//                    pickList.setPRODUCT_CODE(pro_code);
+//                    pickList.setPRODUCT_NAME(pro_name);
+                    if (!product_code.equals("")) {
+                        pickList.setPRODUCT_CODE(product_code);
+                    } else {
+                        pickList.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if (!product_name.equals("")) {
+                        pickList.setPRODUCT_NAME(product_name);
+                    } else {
+                        pickList.setPRODUCT_NAME(pro_name);
+                    }
                     pickList.setBATCH_NUMBER(batch_number);
 
                     pickList.setQTY_SET_AVAILABLE(String.valueOf(pro_set));
@@ -4302,7 +4536,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_pickList.get(0).getQTY_SET_AVAILABLE());
                                 int sl = product_set + 1;
                                 product_pickList.get(i).setQTY_SET_AVAILABLE(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_PickList(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_PickList(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), pickList.getSTOCKIN_DATE(), PickListCD);
                             } else {
                                 DatabaseHelper.getInstance().CreatePickList(pickList);
@@ -4346,7 +4580,7 @@ public class CmnFns {
     }
 
 
-    public String synchronizeGETPositionInfoo(String unique_id , String userCode, String barcode, String positionReceive,
+    public String synchronizeGETPositionInfoo(String unique_id, String userCode, String barcode, String positionReceive,
                                               String productCd, String expDate, String ea_unit, String stockin,
                                               String positionFrom, String positionTo, String type, int isLPN) {
 
@@ -4377,12 +4611,11 @@ public class CmnFns {
             return "-19";
         } else if (result.equals("-12")) {
             return "-12";
-        }else if (result.equals("-27")) {
+        } else if (result.equals("-27")) {
             return "-27";
-        }else if (result.equals("-28")) {
+        } else if (result.equals("-28")) {
             return "-28";
         }
-
 
 
         try {
@@ -4410,9 +4643,9 @@ public class CmnFns {
                         //letdown
                         if (type.equals("WLD")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFromLetDown_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFromLetDown_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFromLetDown(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFromLetDown(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WRW")) {
@@ -4426,16 +4659,16 @@ public class CmnFns {
                         } else if (type.equals("WWA")) {
                             //Chỉnh kho
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_warehouse_Adjustment_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_warehouse_Adjustment_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_warehouse_Adjustment(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_warehouse_Adjustment(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WPA")) {
                             //putaway
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_LPN(unique_id ,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WMP")) {
@@ -4443,11 +4676,11 @@ public class CmnFns {
                             ArrayList<Product_Master_Pick> listSP = new ArrayList<>();
                             listSP = DatabaseHelper.getInstance().getoneListSP_Master_Pick(unique_id);
                             String ProductCode = listSP.get(0).getPRODUCT_CODE();
-                            String PositionCode = "" ;
-                            String LPNCode = "" ;
-                            if(isLPN == 1){
+                            String PositionCode = "";
+                            String LPNCode = "";
+                            if (isLPN == 1) {
                                 LPNCode = barcode;
-                            }else{
+                            } else {
                                 PositionCode = barcode;
                             }
 
@@ -4459,102 +4692,97 @@ public class CmnFns {
 //                            }
                             //
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_masterPick_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_masterPick(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_masterPick(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WSO")) {
                             //Xuất kho
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_StockOut_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_StockOut_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_StockOut(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_StockOut(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WOI")) {
                             //Chuyển vị trí
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_StockTransfer(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WPL")) {
                             //picklist
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_PickList_LPN(unique_id ,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_PickList_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_PickList(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_PickList(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WPP")) {
                             //load pallet
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(unique_id ,wareHouse, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet_LPN(unique_id, wareHouse, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_LoadPallet(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WST")) {
                             //Kiểm kho
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_Inventory_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_Inventory_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_Inventory(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_Inventory(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WLP")) {
                             //gỡ pallet
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_Remove_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_Remove_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_Remove(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_Remove(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
-                        }
-                        else if (type.equals("WCG")) {
+                        } else if (type.equals("WCG")) {
                             //Trả Hàng
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_cancelGood_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_cancelGood_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_cancelGood(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_cancelGood(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
-                        }
-                        else if (type.equals("WPR")) {
+                        } else if (type.equals("WPR")) {
                             //Trả Hàng
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_poReturn_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_poReturn_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_poReturn(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_poReturn(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
-                        }
-                        else if (type.equals("WTP")) {
+                        } else if (type.equals("WTP")) {
                             // Phân hàng chuyển mã
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_transferPosting_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_transferPosting_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_transferPosting(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_transferPosting(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
-                        }
-                        else if (type.equals("WQA")) {
+                        } else if (type.equals("WQA")) {
                             //Lấy hàng QA
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_pickup_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_pickup_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_pickup(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_pickup(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
-                        }
-                        else if (type.equals("WQA_Return")) {
+                        } else if (type.equals("WQA_Return")) {
                             //Trả Hàng QA
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionFrom_RETURN_QA_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_RETURN_QA_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionFrom_RETURN_QA(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionFrom_RETURN_QA(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         }
@@ -4562,9 +4790,9 @@ public class CmnFns {
                     } else if (positionReceive.equals("2") && productCd != null) {
                         if (type.equals("WLD")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionToLetDown_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionToLetDown_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionToLetDown(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionToLetDown(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WRW")) {
                             if (isLPN == 1) {
@@ -4575,85 +4803,80 @@ public class CmnFns {
 
                         } else if (type.equals("WMP")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_masterPick_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_masterPick_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_masterPick(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_masterPick(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WPA")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WSO")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_StockOut_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_StockOut_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_StockOut(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_StockOut(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WOI")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer_LPN(unique_id ,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_StockTransfer(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
 
                         } else if (type.equals("WPL")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_PickList_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_PickList_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_PickList(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_PickList(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WPP")) {
 //                            if (isLPN == 1) {
-                            DatabaseHelper.getInstance().updatePositionTo_LoadPallet_LPN(unique_id ,wareHouse ,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                            DatabaseHelper.getInstance().updatePositionTo_LoadPallet_LPN(unique_id, wareHouse, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
 //                            }
 //                            else {
 //                                DatabaseHelper.getInstance().updatePositionTo_LoadPallet(unique_id ,positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
 //                            }
                         } else if (type.equals("WLP")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_Remove_LPN(unique_id , lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_Remove_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_Remove(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_Remove(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         } else if (type.equals("WSI")) {
-                            DatabaseHelper.getInstance().updatePositionTo_Stockin(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
-                        }
-                        else if (type.equals("WCG")) {
+                            DatabaseHelper.getInstance().updatePositionTo_Stockin(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                        } else if (type.equals("WCG")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_cancelGood_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_cancelGood_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_cancelGood(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_cancelGood(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
-                        }
-                        else if (type.equals("WPR")) {
+                        } else if (type.equals("WPR")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_poReturn_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_poReturn_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_poReturn(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_poReturn(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
-                        }
-                        else if (type.equals("WTP")) {
+                        } else if (type.equals("WTP")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_transferPosting_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_transferPosting_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_transferPosting(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_transferPosting(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
-                        }
-                        else if (type.equals("WQA")) {
+                        } else if (type.equals("WQA")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTo_pickup_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_pickup_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTo_pickup(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTo_pickup(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
-                        }
-                        else if (type.equals("WQA_Return")) {
+                        } else if (type.equals("WQA_Return")) {
                             if (isLPN == 1) {
-                                DatabaseHelper.getInstance().updatePositionTO_RETURN_QA_LPN(unique_id,lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTO_RETURN_QA_LPN(unique_id, lpn_code, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             } else {
-                                DatabaseHelper.getInstance().updatePositionTO_RETURN_QA(unique_id , positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
+                                DatabaseHelper.getInstance().updatePositionTO_RETURN_QA(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
                         }
 
@@ -4672,7 +4895,7 @@ public class CmnFns {
         return postitionDes;
     }
 
-    public String synchronizeGETPositionInfooUnit(String unique_id , String userCode, String barcode, String positionReceive,
+    public String synchronizeGETPositionInfooUnit(String unique_id, String userCode, String barcode, String positionReceive,
                                                   String productCd, String expDate, String ea_unit, String stockin,
                                                   String positionFrom, String positionTo, String type, int isLPN) {
 
@@ -4703,12 +4926,11 @@ public class CmnFns {
             return "-19";
         } else if (result.equals("-12")) {
             return "-12";
-        }else if (result.equals("-27")) {
+        } else if (result.equals("-27")) {
             return "-27";
-        }else if (result.equals("-28")) {
+        } else if (result.equals("-28")) {
             return "-28";
         }
-
 
 
         try {
@@ -4759,7 +4981,7 @@ public class CmnFns {
     }
 
 
-    public int synchronizeStockReceiptChecked(Context context , String usercode) {
+    public int synchronizeStockReceiptChecked(Context context, String usercode) {
         try {
 
             int status = this.allowSynchronizeBy3G();
@@ -4806,19 +5028,19 @@ public class CmnFns {
                     }
 
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
-            String result = Webservice.synchronizeStockReceiptChecked(jsonData,usercode);
+            String result = Webservice.synchronizeStockReceiptChecked(jsonData, usercode);
             if (result.equals("1")) {
                 // đã đồng bộ thành công update để lần sau không đồng bộ lại
                 //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
                 return 1;
-            }else if(result.equals("-25")) {
+            } else if (result.equals("-25")) {
                 return -25;
-            }else if(result.equals("-35")) {
+            } else if (result.equals("-35")) {
                 return -35;
-            }else {
+            } else {
                 // đồng bộ không thành công
                 return -1;
             }
@@ -4934,29 +5156,26 @@ public class CmnFns {
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
-            }
-            else if (type.equals("WPP")) {
+            } else if (type.equals("WPP")) {
                 try {
                     int check = DatabaseHelper.getInstance().getDuplicate_LoadPallet();
-                    if (check > 1 ){
+                    if (check > 1) {
                         return -36;
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
                 List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync();
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
-            }
-            else if (type.equals("WST")) {
+            } else if (type.equals("WST")) {
                 List<InventoryProduct> product = DatabaseHelper.getInstance().getAllProduct_Inventory_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);
-            }
-            else if (type.equals("WWA")) {
+            } else if (type.equals("WWA")) {
                 List<Product_Warehouse_Adjustment> product = DatabaseHelper.getInstance().getAllProduct_Warehouse_Adjustment_Sync(CD);
                 if (product == null || product.size() == 0)
                     return 1;
@@ -4965,11 +5184,11 @@ public class CmnFns {
             else if (type.equals("WMP")) {
                 try {
                     int check = DatabaseHelper.getInstance().getDuplicate_MasterPick(CD);
-                    if (check > 1 ){
+                    if (check > 1) {
                         return -36;
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -5019,7 +5238,7 @@ public class CmnFns {
 
             try {
 
-                if((!type.equals("WWA")) || (!type.equals("WST"))) {
+                if ((!type.equals("WWA")) || (!type.equals("WST"))) {
                     JSONArray jsonarray = new JSONArray(jsonData);
                     for (int j = 0; j < jsonarray.length(); j++) {
                         // lấy một đối tượng json để
@@ -5032,7 +5251,7 @@ public class CmnFns {
 
                     }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
 
@@ -5587,7 +5806,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(loadPallets.get(0).getQTY());
                                 int sl = product_set + 1;
                                 loadPallets.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_LoadPallet(updateProduct_loadPallet,updateProduct_loadPallet.getAUTOINCREMENT(), updateProduct_loadPallet.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_LoadPallet(updateProduct_loadPallet, updateProduct_loadPallet.getAUTOINCREMENT(), updateProduct_loadPallet.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProduct_loadPallet.getUNIT(), product_loadPallet.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().CreateLOAD_PALLET(product_loadPallet);
@@ -5631,7 +5850,8 @@ public class CmnFns {
     }
 
 
-    public int synchronizeGETProductByZoneStockTransfer(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, int isLPN) {
+    public int synchronizeGETProductByZoneStockTransfer(Context context, String qrcode, String admin, String expDate, String unit,
+                                                        String stockDate, int isLPN, String batch_number, String product_code , String product_name) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -5685,10 +5905,22 @@ public class CmnFns {
                     Product_StockTransfer productStockTransfer = new Product_StockTransfer();
 //                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     productStockTransfer.setPRODUCT_CD(pro_cd);
-                    productStockTransfer.setPRODUCT_CODE(pro_code);
-                    productStockTransfer.setPRODUCT_NAME(pro_name);
+//                    productStockTransfer.setPRODUCT_CODE(pro_code);
+//                    productStockTransfer.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        productStockTransfer.setPRODUCT_CODE(product_code);
+                    }else{
+                        productStockTransfer.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        productStockTransfer.setPRODUCT_NAME(product_name);
+                    }else{
+                        productStockTransfer.setPRODUCT_NAME(pro_name);
+                    }
                     productStockTransfer.setQTY(String.valueOf(pro_set));
                     productStockTransfer.setQTY_EA_AVAILABLE(quanity_ea);
+                    productStockTransfer.setBATCH_NUMBER(batch_number);
 
                     productStockTransfer.setPOSITION_FROM_CD(warePosition);
                     productStockTransfer.setPOSITION_TO_CD(warePosition);
@@ -5740,7 +5972,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_stockTransfers.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_stockTransfers.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_StockTransfer(updateProduct_stockTransfer,updateProduct_stockTransfer.getAUTOINCREMENT(), updateProduct_stockTransfer.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_StockTransfer(updateProduct_stockTransfer, updateProduct_stockTransfer.getAUTOINCREMENT(), updateProduct_stockTransfer.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProduct_stockTransfer.getUNIT(), productStockTransfer.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().CreateSTOCK_TRANSFER(productStockTransfer);
@@ -5783,7 +6015,8 @@ public class CmnFns {
 
     }
 
-    public int synchronizeGETProductByZoneRemoveLPN(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, int isLPN) {
+    public int synchronizeGETProductByZoneRemoveLPN(Context context, String qrcode, String admin, String expDate, String unit, String stockDate,
+                                                    int isLPN, String batch_number, String product_code , String product_name) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -5837,10 +6070,22 @@ public class CmnFns {
                     Product_Remove_LPN productRemoveLpn = new Product_Remove_LPN();
 //                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     productRemoveLpn.setPRODUCT_CD(pro_cd);
-                    productRemoveLpn.setPRODUCT_CODE(pro_code);
-                    productRemoveLpn.setPRODUCT_NAME(pro_name);
+//                    productRemoveLpn.setPRODUCT_CODE(pro_code);
+//                    productRemoveLpn.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        productRemoveLpn.setPRODUCT_CODE(product_code);
+                    }else{
+                        productRemoveLpn.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        productRemoveLpn.setPRODUCT_NAME(product_name);
+                    }else{
+                        productRemoveLpn.setPRODUCT_NAME(pro_name);
+                    }
                     productRemoveLpn.setQTY(String.valueOf(pro_set));
                     productRemoveLpn.setQTY_EA_AVAILABLE(quanity_ea);
+                    productRemoveLpn.setBATCH_NUMBER(batch_number);
 
                     productRemoveLpn.setPOSITION_FROM_CD(warePosition);
                     productRemoveLpn.setPOSITION_TO_CD(warePosition);
@@ -5893,7 +6138,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_remove_lpn.get(0).getQTY());
                                 int sl = product_set + 1;
                                 product_remove_lpn.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Remove_LPN(updateProduct_remove_lpn, updateProduct_remove_lpn.getAUTOINCREMENT(),updateProduct_remove_lpn.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Remove_LPN(updateProduct_remove_lpn, updateProduct_remove_lpn.getAUTOINCREMENT(), updateProduct_remove_lpn.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProduct_remove_lpn.getUNIT(), productRemoveLpn.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().Create_Remove_LPN(productRemoveLpn);
@@ -5936,7 +6181,8 @@ public class CmnFns {
         return 1;
 
     }
-    public int Block_Function_By_Warehouse(){
+
+    public int Block_Function_By_Warehouse() {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -5948,13 +6194,14 @@ public class CmnFns {
             return -1;
         } else if (result.equals("-29")) {
             return -29;
-        }else if (result.equals("1")) {
+        } else if (result.equals("1")) {
             return 1;
         }
         return 1;
     }
 
-    public int synchronizeGETProductByZoneLetDown(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, int isLPN) {
+    public int synchronizeGETProductByZoneLetDown(Context context, String qrcode, String admin, String expDate, String unit,
+                                                  String stockDate, int isLPN, String product_code, String product_name) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -6012,11 +6259,11 @@ public class CmnFns {
                     String suggestionPosition_from = "";
                     String suggestionPosition_to = "";
                     String chuoi[] = suggestionPosition.split("≡");
-                    if (!suggestionPosition.equals("≡")){
-                        if(chuoi.length > 1){
+                    if (!suggestionPosition.equals("≡")) {
+                        if (chuoi.length > 1) {
                             suggestionPosition_from = chuoi[0];
                             suggestionPosition_to = chuoi[1];
-                        }else{
+                        } else {
                             suggestionPosition_from = chuoi[0];
                         }
                     }
@@ -6026,8 +6273,19 @@ public class CmnFns {
                     ProductLetDown letDown = new ProductLetDown();
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     letDown.setPRODUCT_CD(pro_cd);
-                    letDown.setPRODUCT_CODE(pro_code);
-                    letDown.setPRODUCT_NAME(pro_name);
+//                    letDown.setPRODUCT_CODE(pro_code);
+//                    letDown.setPRODUCT_NAME(pro_name);
+                    if (!product_code.equals("")) {
+                        letDown.setPRODUCT_CODE(product_code);
+                    } else {
+                        letDown.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if (!product_name.equals("")) {
+                        letDown.setPRODUCT_NAME(product_name);
+                    } else {
+                        letDown.setPRODUCT_NAME(pro_name);
+                    }
                     letDown.setQTY_SET_AVAILABLE(String.valueOf(pro_set));
                     letDown.setQTY_EA_AVAILABLE(quanity_ea);
 
@@ -6082,7 +6340,7 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(product_letdown.get(0).getQTY_SET_AVAILABLE());
                                 int sl = product_set + 1;
                                 product_letdown.get(i).setQTY_SET_AVAILABLE(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_LetDown(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_LetDown(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), letDown.getSTOCKIN_DATE());
                             } else {
                                 DatabaseHelper.getInstance().CreateLetDown(letDown);
@@ -6127,7 +6385,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZoneTransferUnit(Context context, String qrcode, String admin, String expDate, String unit, String stockDate, int isLPN) {
+    public int synchronizeGETProductByZoneTransferUnit(Context context, String qrcode, String admin, String expDate, String unit,
+                                                       String stockDate, int isLPN, String product_code , String product_name) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -6200,8 +6459,19 @@ public class CmnFns {
                     TransferUnitProduct transferUnit = new TransferUnitProduct();
 //                if ((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))) {
                     transferUnit.setPRODUCT_CD(pro_cd);
-                    transferUnit.setPRODUCT_CODE(pro_code);
-                    transferUnit.setPRODUCT_NAME(pro_name);
+//                    transferUnit.setPRODUCT_CODE(pro_code);
+//                    transferUnit.setPRODUCT_NAME(pro_name);
+                    if(!product_code.equals("")){
+                        transferUnit.setPRODUCT_CODE(product_code);
+                    }else{
+                        transferUnit.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if(!product_name.equals("")){
+                        transferUnit.setPRODUCT_NAME(product_name);
+                    }else{
+                        transferUnit.setPRODUCT_NAME(pro_name);
+                    }
                     transferUnit.setQTY(String.valueOf(pro_set));
                     transferUnit.setQTY_EA_AVAILABLE(quanity_ea);
 
@@ -6335,8 +6605,6 @@ public class CmnFns {
                 String lpn_date = jsonobj.getString("LPN_DATE");
                 String user_create = jsonobj.getString("USER_CREATE");
                 String storage = jsonobj.getString("STORAGE");
-
-
 
 
                 LPN lpn = new LPN();
@@ -6501,7 +6769,8 @@ public class CmnFns {
         return 1;
     }
 
-    public int synchronizeGETProductByZoneInventory(String qrcode, String admin, String expDate, String unit, String type, String inventoryCD, String stockDate, int isLPN) {
+    public int synchronizeGETProductByZoneInventory(String qrcode, String admin, String expDate, String unit,
+                                                    String type, String inventoryCD, String stockDate, int isLPN, String product_code, String product_name) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -6558,8 +6827,20 @@ public class CmnFns {
                     InventoryProduct inventoryProduct = new InventoryProduct();
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     inventoryProduct.setPRODUCT_CD(pro_cd);
-                    inventoryProduct.setPRODUCT_CODE(pro_code);
-                    inventoryProduct.setPRODUCT_NAME(pro_name);
+//                    inventoryProduct.setPRODUCT_CODE(pro_code);
+//                    inventoryProduct.setPRODUCT_NAME(pro_name);
+
+                    if (!product_code.equals("")) {
+                        inventoryProduct.setPRODUCT_CODE(product_code);
+                    } else {
+                        inventoryProduct.setPRODUCT_CODE(pro_code);
+                    }
+
+                    if (!product_name.equals("")) {
+                        inventoryProduct.setPRODUCT_NAME(product_name);
+                    } else {
+                        inventoryProduct.setPRODUCT_NAME(pro_name);
+                    }
 
                     inventoryProduct.setQTY(String.valueOf(pro_set));
 
@@ -6616,22 +6897,22 @@ public class CmnFns {
                                 int product_set = Integer.parseInt(inventoryProducts.get(0).getQTY());
                                 int sl = product_set + 1;
                                 inventoryProducts.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Inventory(updateProductQR, updateProductQR.getAUTOINCREMENT(),updateProductQR.getPRODUCT_CD(),
+                                DatabaseHelper.getInstance().updateProduct_Inventory(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
                                         String.valueOf(sl), updateProductQR.getUNIT(), inventoryProduct.getSTOCKIN_DATE(), inventoryCD);
                             } else {
                                 ArrayList<InventoryProduct> getpossition_inventory = DatabaseHelper.getInstance().getposition_Inventory();
                                 DatabaseHelper.getInstance().CreateInventory(inventoryProduct);
                                 try {
                                     int id_1 = Integer.parseInt(getpossition_inventory.get(0).getAUTOINCREMENT());
-                                    if (id_1 >= 1){
+                                    if (id_1 >= 1) {
                                         ArrayList<InventoryProduct> getpossition_inventory_2 = DatabaseHelper.getInstance().getautoProduct_Inventory();
                                         String id_3 = getpossition_inventory_2.get(0).getAUTOINCREMENT();
 
-                                        DatabaseHelper.getInstance().updatePositionFrom_Inventory(id_3 , getpossition_inventory.get(0).getPOSITION_FROM_CODE(),
+                                        DatabaseHelper.getInstance().updatePositionFrom_Inventory(id_3, getpossition_inventory.get(0).getPOSITION_FROM_CODE(),
                                                 getpossition_inventory.get(0).getPOSITION_FROM_CD(), "", "",
                                                 getpossition_inventory.get(0).getPOSITION_FROM_DESCRIPTION(), "", "");
                                     }
-                                }catch (Exception e){
+                                } catch (Exception e) {
 
                                 }
 
@@ -6644,15 +6925,15 @@ public class CmnFns {
                             DatabaseHelper.getInstance().CreateInventory(inventoryProduct);
                             try {
                                 int id_1 = Integer.parseInt(getpossition_inventory.get(0).getAUTOINCREMENT());
-                                if (id_1 >= 1){
+                                if (id_1 >= 1) {
                                     ArrayList<InventoryProduct> getpossition_inventory_2 = DatabaseHelper.getInstance().getautoProduct_Inventory();
                                     String id_3 = getpossition_inventory_2.get(0).getAUTOINCREMENT();
 
-                                    DatabaseHelper.getInstance().updatePositionFrom_Inventory(id_3 , getpossition_inventory.get(0).getPOSITION_FROM_CODE(),
+                                    DatabaseHelper.getInstance().updatePositionFrom_Inventory(id_3, getpossition_inventory.get(0).getPOSITION_FROM_CODE(),
                                             getpossition_inventory.get(0).getPOSITION_FROM_CD(), "", "",
                                             getpossition_inventory.get(0).getPOSITION_FROM_DESCRIPTION(), "", "");
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
 
                             }
 //                            return 10 ;
@@ -6687,7 +6968,6 @@ public class CmnFns {
 
         }
     }
-
 
 
 }

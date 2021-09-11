@@ -46,6 +46,8 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
     String value1 = "";
     String positonReceive = "";
     String productCd = "";
+    String pro_code = "";
+    String pro_name = "";
     String batch_number = "";
     String stock = "";
     String expDate = "";
@@ -105,6 +107,8 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         unique_id = intent.getStringExtra("unique_id");
         lpn = intent.getStringExtra("lpn");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
 
         stockinDate = intent.getStringExtra("stockin_date");
         DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -533,7 +537,9 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes  = new CmnFns().synchronizeGETProductByZoneMasterPick(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, batch_number);
+            DatabaseHelper.getInstance().deleteallProduct_S_P();
+            int postitionDes  = new CmnFns().synchronizeGETProductByZoneMasterPick(List_Master_Pick.this, value1, CmnFns.readDataAdmin(),
+                    expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, batch_number,pro_code , pro_name);
 //            int postitionDes ;
 //            if(isLPN==1){
 //                postitionDes = new CmnFns().synchronizeGETProductByZoneMasterPick_LPN(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, vitri);

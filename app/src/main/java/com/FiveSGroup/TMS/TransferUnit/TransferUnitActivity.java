@@ -51,6 +51,8 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
     String expDate1 = "";
     String transfer_unit = "" ,transferunit = "";
     String ea_unit = "";
+    String pro_code = "";
+    String pro_name = "";
     String ea_unit_position = "";
     String stockinDate = "" , id_unique_LD = "";
     TextView tvTitle , VTDen;
@@ -241,6 +243,8 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
         expDate = intent.getStringExtra("exp_date");
         id_unique_LD = intent.getStringExtra("id_unique_LD");
         transferunit = intent.getStringExtra("transferunit");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         //  expdate1 xử lí position from - to
         expDate1 = intent.getStringExtra("expdate");
         transfer_unit = intent.getStringExtra("transfer_unit");
@@ -632,7 +636,8 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneTransferUnit(TransferUnitActivity.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneTransferUnit(TransferUnitActivity.this, value1, CmnFns.readDataAdmin(),
+                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name);
 
             Dialog dialog = new Dialog(TransferUnitActivity.this);
 

@@ -50,6 +50,8 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
     String expDate1 = "";
     String chuyen_ma = "";
     String ea_unit = "";
+    String pro_code = "";
+    String pro_name = "";
     String ea_unit_position = "";
     String check_chuyenma = "";
     String stockinDate = "";
@@ -92,6 +94,8 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         batch_number = intent.getStringExtra("batch_number");
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
@@ -180,7 +184,8 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
     public void alert_show_SP(int isLPN) {
         if(check_chuyenma != null ) {
             try {
-                int postitionDes = new CmnFns().synchronizeGETProductByZoneChuyenMa(value1, CmnFns.readDataAdmin(), "WTP", 0, global.getChuyenMaCD(), expDate , batch_number,stockinDate , ea_unit);
+                int postitionDes = new CmnFns().synchronizeGETProductByZoneChuyenMa(value1, CmnFns.readDataAdmin(), "WTP", 0,
+                        global.getChuyenMaCD(), expDate , batch_number,stockinDate , ea_unit,pro_code , pro_name);
                 Dialog dialog = new Dialog(List_ChuyenMa.this);
 
                 if (postitionDes == 1) {

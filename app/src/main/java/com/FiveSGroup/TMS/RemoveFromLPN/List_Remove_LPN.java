@@ -45,6 +45,9 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
     String expDate1 = "";
     String removeLPN = "";
     String ea_unit = "";
+    String batch_number = "";
+    String pro_code = "";
+    String pro_name = "";
     String ea_unit_position = "";
     String stockinDate = "";
     String lpn = "" , id_unique_RML = "";
@@ -88,6 +91,12 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
         id_unique_RML = intent.getStringExtra("id_unique_RML");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
+        batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
 
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
@@ -552,7 +561,8 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneRemoveLPN(List_Remove_LPN.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneRemoveLPN(List_Remove_LPN.this, value1, CmnFns.readDataAdmin(),
+                    expDate, ea_unit, stockinDate, isLPN, batch_number,pro_code , pro_name);
 
             Dialog dialog = new Dialog(List_Remove_LPN.this);
 

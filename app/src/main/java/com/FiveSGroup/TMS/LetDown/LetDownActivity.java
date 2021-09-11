@@ -53,6 +53,8 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
     TextView tvTitle;
     String fromLetDownSuggestionsActivity = "";
     String lpn = "";
+    String pro_code = "";
+    String pro_name = "";
     int result;
 
 
@@ -195,6 +197,8 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         // expDate - hiển thị HSD cho người dùng trong list sản phẩm
         expDate = intent.getStringExtra("exp_date");
         id_unique_LD = intent.getStringExtra("id_unique_LD");
@@ -566,7 +570,9 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneLetDown(LetDownActivity.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN);
+            DatabaseHelper.getInstance().deleteallProduct_S_P();
+            int postitionDes = new CmnFns().synchronizeGETProductByZoneLetDown(LetDownActivity.this, value1, CmnFns.readDataAdmin(),
+                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name);
 
             Dialog dialog = new Dialog(LetDownActivity.this);
 

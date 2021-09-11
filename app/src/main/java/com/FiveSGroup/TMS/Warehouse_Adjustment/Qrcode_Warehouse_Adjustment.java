@@ -31,6 +31,7 @@ import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
 import com.FiveSGroup.TMS.StockOut.Qrcode_Stock_Out;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
+import com.FiveSGroup.TMS.Warehouse.Product_S_P;
 import com.FiveSGroup.TMS.global;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -52,6 +53,8 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
     boolean check = false;
     Intent intent;
     String position = "";
+    String pro_code = "";
+    String pro_name = "";
     String product_cd = "";
     String stock = "";
     String expiredDate = " ";
@@ -307,105 +310,153 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
             }
 
         } else {
-            int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, texxt, "WWA", 0, global.getWarehouse_AdjustmentCD());
-            if (statusGetCustt != 1) {
-                ReturnPosition(barcodeData, stockinDate);
-            } else {
-                // expiredDate nhận giá trị từ adapter để xử lí position
-                if (expiredDate != null) {
+            DatabaseHelper.getInstance().deleteallProduct_S_P();
 
-                    ReturnPosition(barcodeData, stockinDate);
+            int statusGetcode = new CmnFns().getProduct_code(barcodeData);
+            final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
+            if (product_s_ps.size() > 1) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Warehouse_Adjustment.this);
+                builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
 
-                } else {
-                    try {
-                        // lấy tất cả hạn sử dụng trong database ra
-                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
-
-                        if (expired_date.size() > 1) {
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Warehouse_Adjustment.this);
-                            builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
-
-                            final ArrayList<String> exp_date = new ArrayList<>();
-                            for (int i = 0; i < expired_date.size(); i++) {
-                                exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
-                                //    exp_date.add(expired_date.get(i).getSTOCKIN_DATE_TAM());
-
-                            }
-
-                            // chuyển đổi exp_date thành mảng chuỗi String
-                            String[] mStringArray = new String[exp_date.size()];
-                            mStringArray = exp_date.toArray(mStringArray);
-
-                            final String[] mString = mStringArray;
-                            builder.setItems(mString, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    String expDate = mString[which];
-
-                                    dialog.dismiss(); // Close Dialog
-
-                                    if (expDate != "") {
-                                        // expDateTemp2 lấy giá trị HSD được người dùng chọn
-                                        expDateTemp2 = expDate;
-                                        String[] chuoi = expDateTemp2.split(" - ");
-                                        if (chuoi[0].equals("Khác")){
-                                            Intent intent = new Intent(Qrcode_Warehouse_Adjustment.this, SelectPropertiesProductActivity.class);
-                                            intent.putExtra("typeScan", "scan_from_warehouse_adjustment");
-                                            intent.putExtra("btn1", barcodeData);
-                                            intent.putExtra("returnposition", position);
-                                            intent.putExtra("returnCD", product_cd);
-                                            intent.putExtra("returnStock", stock);
-                                            intent.putExtra("id_unique_WA", id_unique_WA);
-                                            DatabaseHelper.getInstance().deleteallExp_date();
-                                            DatabaseHelper.getInstance().deleteallEa_Unit();
-                                            startActivity(intent);
-                                            finish();
-                                            return;
-                                        }
-                                        if (!checkBoxGetDVT.isChecked()) {
-                                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
-
-                                        } else {
-                                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
-                                        }
-
-                                    }
-                                    Toast.makeText(Qrcode_Warehouse_Adjustment.this, "You select: " + expDate,
-                                            Toast.LENGTH_LONG).show();
-
-                                }
-                            });
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
-                        } else if (expired_date.size() == 1) {
-                            String expDatetemp = "";
-                            try {
-                                expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
-                            } catch (Exception e) {
-
-                            }
-                            String[] chuoi = expDatetemp.split(" - ");
-
-                            if (!checkBoxGetDVT.isChecked()) {
-                                ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
-                            } else {
-                                ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
-                            }
-                        } else {
-                            Toast.makeText(Qrcode_Warehouse_Adjustment.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(Qrcode_Warehouse_Adjustment.this, ListQrcode_Warehouse_Adjustment.class);
-                            intent.putExtra("warehouse_adjustment", "333");
-                            startActivity(intent);
-                            finish();
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(Qrcode_Warehouse_Adjustment.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-                        Log.d("#778:", e.getMessage());
-                    }
-
+                final ArrayList<String> product_code = new ArrayList<>();
+                for (int i = 0; i < product_s_ps.size(); i++) {
+                    product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
                 }
+                // chuyển đổi exp_date thành mảng chuỗi String
+                String[] mStringArray = new String[product_code.size()];
+                mStringArray = product_code.toArray(mStringArray);
+
+                final String[] mString = mStringArray;
+                builder.setItems(mString, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String product_name = mString[which];
+                        String[] chuoi = product_name.split(" - ");
+                        //int vitri = which;
+//                        String product_code = product_s_ps.get(vitri).getPRODUCT_CODE();
+
+                        dialog.dismiss(); // Close Dialog
+                        if (product_name != "") {
+                            pro_code = chuoi[0];
+                            pro_name = chuoi[1];
+                            getinformation(barcodeData);
+                        }
+
+                        // Do some thing....
+
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+            } else {
+                getinformation(barcodeData);
             }
 
+        }
+    }
+
+    private void getinformation(final String barcodeData) {
+        int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, CmnFns.readDataAdmin(), "WWA", 0, global.getWarehouse_AdjustmentCD());
+        if (statusGetCustt != 1) {
+            ReturnPosition(barcodeData, stockinDate);
+        }
+        else {
+            // expiredDate nhận giá trị từ adapter để xử lí position
+            if (expiredDate != null) {
+
+                ReturnPosition(barcodeData, stockinDate);
+
+            } else {
+                try {
+                    // lấy tất cả hạn sử dụng trong database ra
+                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallExp_date();
+
+                    if (expired_date.size() > 1) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Warehouse_Adjustment.this);
+                        builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho");
+
+                        final ArrayList<String> exp_date = new ArrayList<>();
+                        for (int i = 0; i < expired_date.size(); i++) {
+                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM());
+                            //    exp_date.add(expired_date.get(i).getSTOCKIN_DATE_TAM());
+
+                        }
+
+                        // chuyển đổi exp_date thành mảng chuỗi String
+                        String[] mStringArray = new String[exp_date.size()];
+                        mStringArray = exp_date.toArray(mStringArray);
+
+                        final String[] mString = mStringArray;
+                        builder.setItems(mString, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String expDate = mString[which];
+
+                                dialog.dismiss(); // Close Dialog
+
+                                if (expDate != "") {
+                                    // expDateTemp2 lấy giá trị HSD được người dùng chọn
+                                    expDateTemp2 = expDate;
+                                    String[] chuoi = expDateTemp2.split(" - ");
+                                    if (chuoi[0].equals("Khác")){
+                                        Intent intent = new Intent(Qrcode_Warehouse_Adjustment.this, SelectPropertiesProductActivity.class);
+                                        intent.putExtra("typeScan", "scan_from_warehouse_adjustment");
+                                        intent.putExtra("btn1", barcodeData);
+                                        intent.putExtra("returnposition", position);
+                                        intent.putExtra("returnCD", product_cd);
+                                        intent.putExtra("pro_code", pro_code);
+                                        intent.putExtra("pro_name", pro_name);
+                                        intent.putExtra("returnStock", stock);
+                                        intent.putExtra("id_unique_WA", id_unique_WA);
+                                        DatabaseHelper.getInstance().deleteallExp_date();
+                                        DatabaseHelper.getInstance().deleteallEa_Unit();
+                                        startActivity(intent);
+                                        finish();
+                                        return;
+                                    }
+                                    if (!checkBoxGetDVT.isChecked()) {
+                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+
+                                    } else {
+                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                                    }
+
+                                }
+                                Toast.makeText(Qrcode_Warehouse_Adjustment.this, "You select: " + expDate,
+                                        Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    } else if (expired_date.size() == 1) {
+                        String expDatetemp = "";
+                        try {
+                            expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                        } catch (Exception e) {
+
+                        }
+                        String[] chuoi = expDatetemp.split(" - ");
+
+                        if (!checkBoxGetDVT.isChecked()) {
+                            ReturnProduct(barcodeData, chuoi[0], chuoi[1]);
+                        } else {
+                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1]);
+                        }
+                    } else {
+                        Toast.makeText(Qrcode_Warehouse_Adjustment.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Qrcode_Warehouse_Adjustment.this, ListQrcode_Warehouse_Adjustment.class);
+                        intent.putExtra("warehouse_adjustment", "333");
+                        startActivity(intent);
+                        finish();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(Qrcode_Warehouse_Adjustment.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                    Log.d("#778:", e.getMessage());
+                }
+
+            }
         }
     }
     private void ReturnPosition(String barcode, String stockinDateShow) {
@@ -415,6 +466,8 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("id_unique_WA", id_unique_WA);
         intentt.putExtra("warehouse_adjustment", "333");
         intentt.putExtra("stockin_date", stockinDateShow);
@@ -443,6 +496,8 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("id_unique_WA", id_unique_WA);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("warehouse_adjustment", "333");
         if (stockinDate == null) {

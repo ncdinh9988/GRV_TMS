@@ -42,6 +42,8 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
     String positonReceive = "";
     String productCd = "";
     String stock = "";
+    String pro_code = "";
+    String pro_name = "";
     String expDate = "";
     String expDate1 = "";
     String po_return = "";
@@ -88,6 +90,9 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         batch_number = intent.getStringExtra("batch_number");
+        if (batch_number.equals("---")){
+            batch_number = "";
+        }
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
@@ -95,6 +100,8 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         id_unique_SO = intent.getStringExtra("id_unique_SO");
 
 
@@ -484,7 +491,9 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
 
     public void alert_show_SP(int isLPN) {
         try {
-            int postitionDes = new CmnFns().synchronizeGETProductByZonePo_Return(ListQrcode_PoReturn.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getPoReturnCD(), isLPN ,batch_number);
+            DatabaseHelper.getInstance().deleteallProduct_S_P();
+            int postitionDes = new CmnFns().synchronizeGETProductByZonePo_Return(ListQrcode_PoReturn.this, value1, CmnFns.readDataAdmin(),
+                    expDate, ea_unit, stockinDate, global.getPoReturnCD(), isLPN, batch_number,pro_code , pro_name);
 
             Dialog dialog = new Dialog(ListQrcode_PoReturn.this);
 

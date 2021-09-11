@@ -36,6 +36,7 @@ import com.FiveSGroup.TMS.TransferUnit.TransferUnitProduct;
 import com.FiveSGroup.TMS.Warehouse.Batch_number_Tam;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
 import com.FiveSGroup.TMS.Warehouse.Product_Qrcode;
+import com.FiveSGroup.TMS.Warehouse.Product_S_P;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.Product_Warehouse_Adjustment;
 import com.FiveSGroup.TMS.Webservice.CParam;
 
@@ -130,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 156; // version của DB khi thay
+    public static final int DATABASE_VERSION = 158; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -192,6 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_RESULT_QA);
         db.execSQL(CREATE_TABLE_O_PHOTO_QA);
         db.execSQL(CREATE_TABLE_O_RETURN_QA);
+        db.execSQL(CREATE_TABLE_O_PRODUCT_SP);
     }
 
     @Override
@@ -576,6 +578,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             // TODO: handle exception
         }
+        //version DB 158
+        try {
+            db.execSQL(CREATE_TABLE_O_PRODUCT_SP);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
     }
 
     //database from table O_LETDOWN_SUGGEST
@@ -2841,6 +2851,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_REMOVE_LPN = "LPN_CODE_REMOVE_LPN";
     public static final String LPN_FROM_REMOVE_LPN = "LPN_FROM_REMOVE_LPN";
     public static final String LPN_TO_REMOVE_LPN = "LPN_TO_REMOVE_LPN";
+    public static final String BATCH_NUMBER_REMOVE_LPN = "BATCH_NUMBER_REMOVE_LPN";
 
     public static final String CREATE_TABLE_O_REMOVE_LPN = "CREATE TABLE "
             + O_REMOVE_LPN + "("
@@ -2851,6 +2862,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + QTY_EA_AVAILABLE_REMOVE_LPN + " TEXT,"
             + QTY_SET_AVAILABLE_REMOVE_LPN + " TEXT,"
             + EXPIRED_DATE_REMOVE_LPN + " TEXT,"
+            + BATCH_NUMBER_REMOVE_LPN + " TEXT,"
             + STOCKIN_DATE_REMOVE_LPN + " TEXT,"
             + EA_UNIT_REMOVE_LPN + " TEXT,"
             + POSITION_FROM_REMOVE_LPN + " TEXT,"
@@ -2875,6 +2887,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(UNIQUE_CODE_REMOVE_LPN, remove_lpn.getUNIT());
         values.put(PRODUCT_CODE_REMOVE_LPN, remove_lpn.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_remove_TRANSFER, remove_lpn.getPRODUCT_NAME());
+        values.put(BATCH_NUMBER_REMOVE_LPN, remove_lpn.getBATCH_NUMBER());
         values.put(PRODUCT_CD_REMOVE_LPN, remove_lpn.getPRODUCT_CD());
         values.put(QTY_SET_AVAILABLE_REMOVE_LPN, remove_lpn.getQTY());
         values.put(STOCKIN_DATE_REMOVE_LPN, remove_lpn.getSTOCKIN_DATE());
@@ -2914,6 +2927,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_REMOVE_LPN))));
                 remove_lpn.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_REMOVE_LPN))));
+                remove_lpn.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_REMOVE_LPN))));
                 remove_lpn.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_REMOVE_LPN))));
                 remove_lpn.setPRODUCT_NAME((c.getString(c
@@ -2953,6 +2968,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_REMOVE_LPN))));
                 remove.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_REMOVE_LPN))));
+                remove.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_REMOVE_LPN))));
                 remove.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_REMOVE_LPN))));
                 remove.setPRODUCT_NAME((c.getString(c
@@ -3017,6 +3034,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_NAME_remove_TRANSFER))));
                 remove.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_REMOVE_LPN))));
+                remove.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_REMOVE_LPN))));
                 remove.setQTY((c.getString(c
                         .getColumnIndex(QTY_SET_AVAILABLE_REMOVE_LPN))));
                 remove.setSTOCKIN_DATE((c.getString(c
@@ -3161,6 +3180,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_STOCK_TRANSFER = "LPN_CODE_STOCK_TRANSFER";
     public static final String LPN_FROM_STOCK_TRANSFER = "LPN_FROM_STOCK_TRANSFER";
     public static final String LPN_TO_STOCK_TRANSFER = "LPN_TO_STOCK_TRANSFER";
+    public static final String BATCH_NUMBER_STOCK_TRANSFER = "BATCH_NUMBER_STOCK_TRANSFER";
+
 
     public static final String CREATE_TABLE_O_STOCK_TRANSFER = "CREATE TABLE "
             + O_STOCK_TRANSFER + "("
@@ -3172,6 +3193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + QTY_SET_AVAILABLE_STOCK_TRANSFER + " TEXT,"
             + EXPIRED_DATE_STOCK_TRANSFER + " TEXT,"
             + STOCKIN_DATE_STOCK_TRANSFER + " TEXT,"
+            + BATCH_NUMBER_STOCK_TRANSFER + " TEXT,"
             + EA_UNIT_STOCK_TRANSFER + " TEXT,"
             + POSITION_FROM_STOCK_TRANSFER + " TEXT,"
             + POSITION_FROM_CODE_STOCK_TRANSFER + " TEXT,"
@@ -3196,6 +3218,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(PRODUCT_CODE_STOCK_TRANSFER, stockTransfer.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_STOCK_TRANSFER, stockTransfer.getPRODUCT_NAME());
         values.put(PRODUCT_CD_STOCK_TRANSFER, stockTransfer.getPRODUCT_CD());
+        values.put(BATCH_NUMBER_STOCK_TRANSFER, stockTransfer.getBATCH_NUMBER());
         values.put(QTY_SET_AVAILABLE_STOCK_TRANSFER, stockTransfer.getQTY());
         values.put(STOCKIN_DATE_STOCK_TRANSFER, stockTransfer.getSTOCKIN_DATE());
         values.put(QTY_EA_AVAILABLE_STOCK_TRANSFER, stockTransfer.getQTY_EA_AVAILABLE());
@@ -3234,6 +3257,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_STOCK_TRANSFER))));
                 stockTransfer.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_STOCK_TRANSFER))));
+                stockTransfer.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_STOCK_TRANSFER))));
                 stockTransfer.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_STOCK_TRANSFER))));
                 stockTransfer.setPRODUCT_NAME((c.getString(c
@@ -3273,6 +3298,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_STOCK_TRANSFER))));
                 stock.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_STOCK_TRANSFER))));
+                stock.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_STOCK_TRANSFER))));
                 stock.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_STOCK_TRANSFER))));
                 stock.setPRODUCT_NAME((c.getString(c
@@ -3333,6 +3360,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(UNIQUE_CODE_STOCK_TRANSFER))));
                 stock.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_STOCK_TRANSFER))));
+                stock.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_STOCK_TRANSFER))));
                 stock.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_STOCK_TRANSFER))));
                 stock.setPRODUCT_CD((c.getString(c
@@ -6145,6 +6174,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //end table material
+    //Table O_PRODUCT_SP để chứa dữ liệu quét exp lần đầu
+    public static final String O_PRODUCT_SP = "O_PRODUCT_SP";
+    public static final String PRODUCT_CODE_S_P = "PRODUCT_CODE";
+    public static final String PRODUCT_NAME_S_P = "PRODUCT_NAME";
+
+
+    public static final String CREATE_TABLE_O_PRODUCT_SP = "CREATE TABLE "
+            + O_PRODUCT_SP + "("
+            + PRODUCT_NAME_S_P + " TEXT,"
+            + PRODUCT_CODE_S_P + " TEXT" + ")";
+
+    public long CreateProduct_SP(Product_S_P product) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(PRODUCT_CODE_S_P, product.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_S_P, product.getPRODUCT_NAME());
+        // insert row
+        long id = db.insert(O_PRODUCT_SP, null, values);
+        return id;
+    }
+
+    public ArrayList<Product_S_P>
+    getallValueSP() {
+        ArrayList<Product_S_P> listproduct = new ArrayList<Product_S_P>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT * FROM " + O_PRODUCT_SP;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product_S_P product = new Product_S_P();
+                product.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_S_P))));
+                product.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_S_P))));
+                listproduct.add(product);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return listproduct;
+    }
+
+    public void deleteallProduct_S_P() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_PRODUCT_SP);
+    }
+    //End table O_PRODUCT
+
 
 
     //Table O_EXP để chứa dữ liệu quét exp lần đầu

@@ -414,6 +414,41 @@ public class Webservice {
         }
     }
 
+    public String GetProduct_Code(String barcode) {
+
+        String webServiceFunc = "Get_Product_Code_With_Barcode";
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+
+        // Param 2
+        PropertyInfo param4 = new PropertyInfo();
+        param4.setName("Barcode");
+        param4.setValue(barcode);
+        param4.setType(String.class);
+        request.addProperty(param4);
+
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
     public String synchronizeCustomerInfo(String json) {
 
         String webServiceFunc = "synchronizeCustomerInfo";
@@ -458,7 +493,6 @@ public class Webservice {
 
 
     public String synchronizeGETBatch(String usercode , String qrcode , String stock) {
-
 
         String webServiceFunc = "Get_Batch_For_PO";
         SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
