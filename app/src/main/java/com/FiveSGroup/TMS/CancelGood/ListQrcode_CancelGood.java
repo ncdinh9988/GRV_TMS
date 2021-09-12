@@ -94,15 +94,21 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
         expDate1 = intent.getStringExtra("expdate");
         cancel = intent.getStringExtra("cancel");
         ea_unit = intent.getStringExtra("ea_unit");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
         id_unique_SO = intent.getStringExtra("id_unique_SO");
         batch_number = intent.getStringExtra("batch_number");
-        if (batch_number.equals("---")){
-            batch_number = "";
-        }
-        if(batch_number==null){
-            batch_number = "";
+        try {
+            if (batch_number.equals("---")){
+                batch_number = "";
+            }
+            if(batch_number==null){
+                batch_number = "";
+            }
+        }catch (Exception e){
+
         }
 
 

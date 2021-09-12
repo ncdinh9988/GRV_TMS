@@ -104,11 +104,15 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
         batch_number = intent.getStringExtra("batch_number");
-        if (batch_number.equals("---")){
-            batch_number = "";
-        }
-        if(batch_number==null){
-            batch_number = "";
+        try {
+            if (batch_number.equals("---")){
+                batch_number = "";
+            }
+            if(batch_number==null){
+                batch_number = "";
+            }
+        }catch (Exception e){
+
         }
 
         stockinDate = intent.getStringExtra("stockin_date");

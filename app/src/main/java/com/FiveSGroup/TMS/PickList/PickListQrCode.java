@@ -471,8 +471,6 @@ public class PickListQrCode extends AppCompatActivity {
         intentt.putExtra("returnposition", position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
-        intentt.putExtra("pro_code", pro_code);
-        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("pick_list", "333");
         intentt.putExtra("id_unique_PL", id_unique_PL);
         // truyền qua cho ListQRCode để xử lí from - to

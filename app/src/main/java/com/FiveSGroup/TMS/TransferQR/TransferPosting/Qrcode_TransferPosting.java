@@ -405,6 +405,8 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
                                         Intent intent = new Intent(Qrcode_TransferPosting.this, SelectPropertiesProductActivity.class);
                                         intent.putExtra("typeScan", "scan_from_cancel");
                                         intent.putExtra("btn1", barcodeData);
+                                        intent.putExtra("pro_code", pro_code);
+                                        intent.putExtra("pro_name", pro_name);
                                         intent.putExtra("returnposition", position);
                                         intent.putExtra("returnCD", product_cd);
                                         intent.putExtra("returnStock", stock);
@@ -496,6 +498,8 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
         Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("batch_number", batch_number);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
@@ -555,6 +559,8 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
                 Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
+                intentt.putExtra("pro_code", pro_code);
+                intentt.putExtra("pro_name", pro_name);
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);

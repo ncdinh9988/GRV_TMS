@@ -89,12 +89,18 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
+        pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
         batch_number = intent.getStringExtra("batch_number");
-        if (batch_number.equals("---")){
-            batch_number = "";
-        }
-        if(batch_number==null){
-            batch_number = "";
+        try {
+            if (batch_number.equals("---")){
+                batch_number = "";
+            }
+            if(batch_number==null){
+                batch_number = "";
+            }
+        }catch (Exception e){
+
         }
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
@@ -103,8 +109,6 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
         ea_unit = intent.getStringExtra("ea_unit");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
-        pro_code = intent.getStringExtra("pro_code");
-        pro_name = intent.getStringExtra("pro_name");
         id_unique_SO = intent.getStringExtra("id_unique_SO");
 
 

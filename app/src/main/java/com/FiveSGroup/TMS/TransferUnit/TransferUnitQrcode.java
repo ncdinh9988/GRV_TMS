@@ -406,6 +406,8 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
                                         intent.putExtra("typeScan", "scan_from_letdown");
                                         intent.putExtra("btn1", barcodeData);
                                         intent.putExtra("returnposition", position);
+                                        intent.putExtra("pro_code", pro_code);
+                                        intent.putExtra("pro_name", pro_name);
                                         intent.putExtra("returnCD", product_cd);
                                         intent.putExtra("id_unique_LD", id_unique_LD);
                                         intent.putExtra("returnStock", stock);
@@ -505,6 +507,8 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
         intentt.putExtra("returnposition", position);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("stock_in", stockinDate);
@@ -558,6 +562,8 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("batch_number", batch_number);
+                intentt.putExtra("pro_code", pro_code);
+                intentt.putExtra("pro_name", pro_name);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("transfer_unit", "333");

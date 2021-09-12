@@ -201,11 +201,15 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
         batch_number = intent.getStringExtra("batch_number");
-        if (batch_number.equals("---")){
-            batch_number = "";
-        }
-        if(batch_number==null){
-            batch_number = "";
+        try {
+            if (batch_number.equals("---")){
+                batch_number = "";
+            }
+            if(batch_number==null){
+                batch_number = "";
+            }
+        }catch (Exception e){
+
         }
 
         // expDate - hiển thị HSD cho người dùng trong list sản phẩm

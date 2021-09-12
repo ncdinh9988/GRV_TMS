@@ -465,8 +465,6 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
         intentt.putExtra("returnposition", position);
         intentt.putExtra("unique_id", unique_id);
         intentt.putExtra("returnCD", product_cd);
-        intentt.putExtra("pro_code", pro_code);
-        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("master_picklist", "333");
         // truyền qua cho ListQRCode để xử lí from - to

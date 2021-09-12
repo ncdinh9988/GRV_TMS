@@ -107,11 +107,15 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
         batch_number = intent.getStringExtra("batch_number");
-        if (batch_number.equals("---")){
-            batch_number = "";
-        }
-        if(batch_number==null){
-            batch_number = "";
+        try {
+            if (batch_number.equals("---")){
+                batch_number = "";
+            }
+            if(batch_number==null){
+                batch_number = "";
+            }
+        }catch (Exception e){
+
         }
 
 

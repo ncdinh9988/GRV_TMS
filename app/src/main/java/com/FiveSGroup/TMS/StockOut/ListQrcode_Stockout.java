@@ -96,11 +96,15 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
         batch_number = intent.getStringExtra("batch_number");
-        if (batch_number.equals("---")){
-            batch_number = "";
-        }
-        if(batch_number==null){
-            batch_number = "";
+        try {
+            if (batch_number.equals("---")){
+                batch_number = "";
+            }
+            if(batch_number==null){
+                batch_number = "";
+            }
+        }catch (Exception e){
+
         }
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");

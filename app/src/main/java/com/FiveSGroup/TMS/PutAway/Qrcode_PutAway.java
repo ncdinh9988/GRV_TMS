@@ -489,8 +489,6 @@ public class Qrcode_PutAway extends AppCompatActivity {
         intentt.putExtra("returnposition", position);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
-        intentt.putExtra("pro_code", pro_code);
-        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("id_unique_PAW", id_unique_PAW);
         intentt.putExtra("put_away", "333");

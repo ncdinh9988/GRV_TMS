@@ -409,6 +409,8 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                                         intent.putExtra("btn1", barcodeData);
                                         intent.putExtra("returnposition", position);
                                         intent.putExtra("returnCD", product_cd);
+                                        intent.putExtra("pro_code", pro_code);
+                                        intent.putExtra("pro_name", pro_name);
                                         intent.putExtra("returnStock", stock);
                                         intent.putExtra("id_unique_SO", id_unique_SO);
                                         DatabaseHelper.getInstance().deleteallExp_date();
@@ -501,6 +503,8 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
         intentt.putExtra("batch_number", batch_number);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("exp_date", expDatetemp);
@@ -558,6 +562,8 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("batch_number", batch_number);
+                intentt.putExtra("pro_code", pro_code);
+                intentt.putExtra("pro_name", pro_name);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("po_return", "333");

@@ -100,11 +100,15 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         stock = intent.getStringExtra("returnStock");
         vitri = intent.getStringExtra("vitri");
         batch_number = intent.getStringExtra("batch_number");
-        if (batch_number.equals("---")){
-            batch_number = "";
-        }
-        if(batch_number==null){
-            batch_number = "";
+        try {
+            if (batch_number.equals("---")){
+                batch_number = "";
+            }
+            if(batch_number==null){
+                batch_number = "";
+            }
+        }catch (Exception e){
+
         }
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
