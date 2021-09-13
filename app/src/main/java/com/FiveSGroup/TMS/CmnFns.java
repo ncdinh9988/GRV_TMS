@@ -1344,13 +1344,13 @@ public class CmnFns {
                     sp.setPRODUCT_CD(pro_cd);
 //                    sp.setPRODUCT_CODE(pro_code);
 //                    sp.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         sp.setPRODUCT_CODE(product_code);
                     }else{
                         sp.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         sp.setPRODUCT_NAME(product_name);
                     }else{
                         sp.setPRODUCT_NAME(pro_name);
@@ -2163,13 +2163,13 @@ public class CmnFns {
 
                     Product_Qrcode qrcode1 = new Product_Qrcode();
                     qrcode1.setPRODUCT_CD(pro_cd);
-                    if (!product_code.equals("")) {
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         qrcode1.setPRODUCT_CODE(product_code);
                     } else {
                         qrcode1.setPRODUCT_CODE(pro_code);
                     }
 
-                    if (!product_name.equals("")) {
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         qrcode1.setPRODUCT_NAME(product_name);
                     } else {
                         qrcode1.setPRODUCT_NAME(pro_name);
@@ -2303,13 +2303,13 @@ public class CmnFns {
                     warehouseAdjustment.setPRODUCT_CD(pro_cd);
 //                    warehouseAdjustment.setPRODUCT_CODE(pro_code);
 //                    warehouseAdjustment.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         warehouseAdjustment.setPRODUCT_CODE(product_code);
                     }else{
                         warehouseAdjustment.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         warehouseAdjustment.setPRODUCT_NAME(product_name);
                     }else{
                         warehouseAdjustment.setPRODUCT_NAME(pro_name);
@@ -2473,13 +2473,13 @@ public class CmnFns {
                     return_wareHouse.setPRODUCT_CD(pro_cd);
 //                    return_wareHouse.setPRODUCT_CODE(pro_code);
 //                    return_wareHouse.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         return_wareHouse.setPRODUCT_CODE(product_code);
                     }else{
                         return_wareHouse.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         return_wareHouse.setPRODUCT_NAME(product_name);
                     }else{
                         return_wareHouse.setPRODUCT_NAME(pro_name);
@@ -2882,13 +2882,13 @@ public class CmnFns {
                     masterPick.setPRODUCT_CD(pro_cd);
 //                    masterPick.setPRODUCT_CODE(pro_code);
 //                    masterPick.setPRODUCT_NAME(pro_name);
-                    if (!product_code.equals("")) {
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         masterPick.setPRODUCT_CODE(product_code);
                     } else {
                         masterPick.setPRODUCT_CODE(pro_code);
                     }
 
-                    if (!product_name.equals("")) {
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         masterPick.setPRODUCT_NAME(product_name);
                     } else {
                         masterPick.setPRODUCT_NAME(pro_name);
@@ -3054,13 +3054,13 @@ public class CmnFns {
                     poReturn.setPRODUCT_CD(pro_cd);
 //                    poReturn.setPRODUCT_CODE(pro_code);
 //                    poReturn.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         poReturn.setPRODUCT_CODE(product_code);
                     }else{
                         poReturn.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         poReturn.setPRODUCT_NAME(product_name);
                     }else{
                         poReturn.setPRODUCT_NAME(pro_name);
@@ -3275,13 +3275,13 @@ public class CmnFns {
                     listQA.setPRODUCT_CD(pro_cd);
 //                    listQA.setPRODUCT_CODE(pro_code);
 //                    listQA.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         listQA.setPRODUCT_CODE(product_code);
                     }else{
                         listQA.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         listQA.setPRODUCT_NAME(product_name);
                     }else{
                         listQA.setPRODUCT_NAME(pro_name);
@@ -3425,13 +3425,13 @@ public class CmnFns {
                     transferPosting.setPRODUCT_CD(pro_cd);
 //                    transferPosting.setPRODUCT_CODE(pro_code);
 //                    transferPosting.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         transferPosting.setPRODUCT_CODE(product_code);
                     }else{
                         transferPosting.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         transferPosting.setPRODUCT_NAME(product_name);
                     }else{
                         transferPosting.setPRODUCT_NAME(pro_name);
@@ -3598,13 +3598,13 @@ public class CmnFns {
                     pickUp.setPRODUCT_CD(pro_cd);
 //                    pickUp.setPRODUCT_CODE(pro_code);
 //                    pickUp.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         pickUp.setPRODUCT_CODE(product_code);
                     }else{
                         pickUp.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         pickUp.setPRODUCT_NAME(product_name);
                     }else{
                         pickUp.setPRODUCT_NAME(pro_name);
@@ -3775,13 +3775,13 @@ public class CmnFns {
                     returnQA.setPRODUCT_CD(pro_cd);
 //                    returnQA.setPRODUCT_CODE(pro_code);
 //                    returnQA.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         returnQA.setPRODUCT_CODE(product_code);
                     }else{
                         returnQA.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         returnQA.setPRODUCT_NAME(product_name);
                     }else{
                         returnQA.setPRODUCT_NAME(pro_name);
@@ -3949,13 +3949,13 @@ public class CmnFns {
 
 //                    if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
                     cancelGood.setPRODUCT_CD(pro_cd);
-                    if (!product_code.equals("")) {
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         cancelGood.setPRODUCT_CODE(product_code);
                     } else {
                         cancelGood.setPRODUCT_CODE(pro_code);
                     }
 
-                    if (!product_name.equals("")) {
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         cancelGood.setPRODUCT_NAME(product_name);
                     } else {
                         cancelGood.setPRODUCT_NAME(pro_name);
@@ -4120,13 +4120,13 @@ public class CmnFns {
                     stockOut.setPRODUCT_CD(pro_cd);
 //                    stockOut.setPRODUCT_CODE(pro_code);
 //                    stockOut.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         stockOut.setPRODUCT_CODE(product_code);
                     }else{
                         stockOut.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         stockOut.setPRODUCT_NAME(product_name);
                     }else{
                         stockOut.setPRODUCT_NAME(pro_name);
@@ -4300,13 +4300,13 @@ public class CmnFns {
                     putAway.setPRODUCT_CD_PUTAWAY(pro_cd);
 //                    putAway.setPRODUCT_CODE_PUTAWAY(pro_code);
 //                    putAway.setPRODUCT_NAME_PUTAWAY(pro_name);
-                    if (!product_code.equals("")) {
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         putAway.setPRODUCT_CODE_PUTAWAY(product_code);
                     } else {
                         putAway.setPRODUCT_CODE_PUTAWAY(pro_code);
                     }
 
-                    if (!product_name.equals("")) {
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         putAway.setPRODUCT_NAME_PUTAWAY(product_name);
                     } else {
                         putAway.setPRODUCT_NAME_PUTAWAY(pro_name);
@@ -4476,13 +4476,13 @@ public class CmnFns {
                     pickList.setPRODUCT_CD(pro_cd);
 //                    pickList.setPRODUCT_CODE(pro_code);
 //                    pickList.setPRODUCT_NAME(pro_name);
-                    if (!product_code.equals("")) {
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         pickList.setPRODUCT_CODE(product_code);
                     } else {
                         pickList.setPRODUCT_CODE(pro_code);
                     }
 
-                    if (!product_name.equals("")) {
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         pickList.setPRODUCT_NAME(product_name);
                     } else {
                         pickList.setPRODUCT_NAME(pro_name);
@@ -5759,14 +5759,14 @@ public class CmnFns {
                     product_loadPallet.setPRODUCT_CD(pro_cd);
 //                    product_loadPallet.setPRODUCT_CODE(pro_code);
 //                    product_loadPallet.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         product_loadPallet.setPRODUCT_CODE(product_code);
                     }else{
                         product_loadPallet.setPRODUCT_CODE(pro_code);
                     }
                     product_loadPallet.setBATCH_NUMBER(batch_number);
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         product_loadPallet.setPRODUCT_NAME(product_name);
                     }else{
                         product_loadPallet.setPRODUCT_NAME(pro_name);
@@ -5927,13 +5927,13 @@ public class CmnFns {
                     productStockTransfer.setPRODUCT_CD(pro_cd);
 //                    productStockTransfer.setPRODUCT_CODE(pro_code);
 //                    productStockTransfer.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         productStockTransfer.setPRODUCT_CODE(product_code);
                     }else{
                         productStockTransfer.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         productStockTransfer.setPRODUCT_NAME(product_name);
                     }else{
                         productStockTransfer.setPRODUCT_NAME(pro_name);
@@ -6092,13 +6092,13 @@ public class CmnFns {
                     productRemoveLpn.setPRODUCT_CD(pro_cd);
 //                    productRemoveLpn.setPRODUCT_CODE(pro_code);
 //                    productRemoveLpn.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         productRemoveLpn.setPRODUCT_CODE(product_code);
                     }else{
                         productRemoveLpn.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         productRemoveLpn.setPRODUCT_NAME(product_name);
                     }else{
                         productRemoveLpn.setPRODUCT_NAME(pro_name);
@@ -6295,13 +6295,13 @@ public class CmnFns {
                     letDown.setPRODUCT_CD(pro_cd);
 //                    letDown.setPRODUCT_CODE(pro_code);
 //                    letDown.setPRODUCT_NAME(pro_name);
-                    if (!product_code.equals("")) {
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         letDown.setPRODUCT_CODE(product_code);
                     } else {
                         letDown.setPRODUCT_CODE(pro_code);
                     }
 
-                    if (!product_name.equals("")) {
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         letDown.setPRODUCT_NAME(product_name);
                     } else {
                         letDown.setPRODUCT_NAME(pro_name);
@@ -6482,13 +6482,13 @@ public class CmnFns {
                     transferUnit.setPRODUCT_CD(pro_cd);
 //                    transferUnit.setPRODUCT_CODE(pro_code);
 //                    transferUnit.setPRODUCT_NAME(pro_name);
-                    if(!product_code.equals("")){
+                    if((product_code != null) && (!product_code.equals(""))){
                         transferUnit.setPRODUCT_CODE(product_code);
                     }else{
                         transferUnit.setPRODUCT_CODE(pro_code);
                     }
 
-                    if(!product_name.equals("")){
+                    if((product_name != null) && (!product_name.equals(""))){
                         transferUnit.setPRODUCT_NAME(product_name);
                     }else{
                         transferUnit.setPRODUCT_NAME(pro_name);
@@ -6853,13 +6853,13 @@ public class CmnFns {
 //                    inventoryProduct.setPRODUCT_CODE(pro_code);
 //                    inventoryProduct.setPRODUCT_NAME(pro_name);
 
-                    if (!product_code.equals("")) {
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         inventoryProduct.setPRODUCT_CODE(product_code);
                     } else {
                         inventoryProduct.setPRODUCT_CODE(pro_code);
                     }
 
-                    if (!product_name.equals("")) {
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         inventoryProduct.setPRODUCT_NAME(product_name);
                     } else {
                         inventoryProduct.setPRODUCT_NAME(pro_name);
