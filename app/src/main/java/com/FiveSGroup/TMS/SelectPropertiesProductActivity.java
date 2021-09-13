@@ -316,10 +316,10 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
 //        else if((expiredDate.equals(""))&&(!stockinDate.equals(""))&&(shelfLife.equals(""))) {
 //            Toast.makeText(this, "Vui lòng chọn HSD hoặc (NSX và shelflife)", Toast.LENGTH_SHORT).show();
 //        }
-        if(edtcont.getText().toString().isEmpty()){
-            Toast.makeText(this, "Vui Lòng Nhập Batch/Cont ", Toast.LENGTH_SHORT).show();
-        }
-        else {
+//        if(edtcont.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Vui Lòng Nhập Batch/Cont ", Toast.LENGTH_SHORT).show();
+//        }
+//        else {
             try {
                 min_to_date = Integer.parseInt(min_rem_shelf_life);
                 if (!stockinDate.equals("")) {
@@ -565,7 +565,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
                     IntentActivity(activity, type, unit);
                 }
             }
-        }
+//        }
     }
 
     private void IntentActivity(final Class activity, final String type, final String unit) {

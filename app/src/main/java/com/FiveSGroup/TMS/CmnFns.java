@@ -2180,7 +2180,7 @@ public class CmnFns {
                     qrcode1.setPOSITION_DESCRIPTION(pro_position_des);
                     qrcode1.setSL_SET(String.valueOf(pro_set));
                     qrcode1.setMANUFACTURING_DATE(stockinDate);
-                    if (!cont.equals("")) {
+                    if (cont!= null && (!cont.equals(""))) {
                         qrcode1.setBATCH_NUMBER(cont);
                     } else {
                         qrcode1.setBATCH_NUMBER("");
