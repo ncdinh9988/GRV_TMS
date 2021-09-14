@@ -114,6 +114,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
 
 
         stockinDate = intent.getStringExtra("stockin_date");
+        key = intent.getStringExtra("key");
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

@@ -105,6 +105,7 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
 
 
         stockinDate = intent.getStringExtra("stockin_date");
+        key = intent.getStringExtra("key");
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

@@ -84,6 +84,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         unique_id = intent.getStringExtra("unique_id");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        key = intent.getStringExtra("key");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
         pro_code = intent.getStringExtra("pro_code");

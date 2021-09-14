@@ -115,6 +115,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
 
         stockinDate = intent.getStringExtra("stockin_date");
+        key = intent.getStringExtra("key");
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

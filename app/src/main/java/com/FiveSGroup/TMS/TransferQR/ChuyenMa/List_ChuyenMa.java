@@ -120,6 +120,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
 
 
         stockinDate = intent.getStringExtra("stockin_date");
+        key = intent.getStringExtra("key");
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

@@ -125,6 +125,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
         stockinDate = intent.getStringExtra("stockin_date");
+        key = intent.getStringExtra("key");
     }
 
     private void prepareData() {

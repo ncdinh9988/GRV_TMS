@@ -117,6 +117,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
         }
 
         stockinDate = intent.getStringExtra("stockin_date");
+        key = intent.getStringExtra("key");
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

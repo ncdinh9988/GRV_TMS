@@ -274,6 +274,7 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
         stockinDate = intent.getStringExtra("stockin_date");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         fromLetDownSuggestionsActivity = intent.getStringExtra("fromLetDownSuggestionsActivity");
+        key = intent.getStringExtra("key");
     }
 
 

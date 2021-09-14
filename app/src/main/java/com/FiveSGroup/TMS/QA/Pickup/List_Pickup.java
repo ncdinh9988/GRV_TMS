@@ -104,6 +104,7 @@ public class List_Pickup extends AppCompatActivity implements View.OnClickListen
 
 
         stockinDate = intent.getStringExtra("stockin_date");
+        key = intent.getStringExtra("key");
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

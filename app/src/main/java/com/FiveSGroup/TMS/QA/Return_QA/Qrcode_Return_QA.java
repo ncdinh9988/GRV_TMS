@@ -359,7 +359,7 @@ public class Qrcode_Return_QA extends AppCompatActivity implements View.OnClickL
     }
 
     private void getinformation(final String barcodeData) {
-        int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, CmnFns.readDataAdmin(), "WQA_Return", 0, global.getReturnQACD());
+        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch(barcodeData, CmnFns.readDataAdmin(), "WQA_Return", 0, global.getReturnQACD());
         if (statusGetCustt != 1) {
             ReturnPosition(barcodeData, stockinDate);
         }

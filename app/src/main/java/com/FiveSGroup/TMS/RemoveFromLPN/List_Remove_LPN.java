@@ -114,6 +114,7 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
         lpn = intent.getStringExtra("lpn");
 
         stockinDate = intent.getStringExtra("stockin_date");
+        key = intent.getStringExtra("key");
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

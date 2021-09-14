@@ -202,6 +202,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         // xác định vị trí là from hay to
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
+        key = intent.getStringExtra("key");
         stock = intent.getStringExtra("returnStock");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");

@@ -98,6 +98,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        key = intent.getStringExtra("key");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
         expDate = intent.getStringExtra("exp_date");

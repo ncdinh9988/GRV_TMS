@@ -98,6 +98,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
+        key = intent.getStringExtra("key");
         stock = intent.getStringExtra("returnStock");
         vitri = intent.getStringExtra("vitri");
         batch_number = intent.getStringExtra("batch_number");

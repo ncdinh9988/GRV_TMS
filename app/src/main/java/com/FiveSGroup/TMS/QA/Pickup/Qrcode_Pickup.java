@@ -359,7 +359,7 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
     }
 
     private void getinformation(final String barcodeData) {
-        int statusGetCustt = new CmnFns().getPutAwayFromServer(barcodeData, CmnFns.readDataAdmin(), "WQA", 0, global.getPickupCD());
+        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch(barcodeData, CmnFns.readDataAdmin(), "WQA", 0, global.getPickupCD());
         if (statusGetCustt != 1) {
             ReturnPosition(barcodeData, stockinDate);
         }

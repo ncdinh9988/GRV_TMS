@@ -106,6 +106,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
         turn_off_alert = intent.getStringExtra("turn_off_alert");
 
         stockinDate = intent.getStringExtra("stockin_date");
+        key = intent.getStringExtra("key");
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

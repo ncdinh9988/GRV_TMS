@@ -93,6 +93,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
+        key = intent.getStringExtra("key");
         cancel = intent.getStringExtra("cancel");
         ea_unit = intent.getStringExtra("ea_unit");
         pro_code = intent.getStringExtra("pro_code");
