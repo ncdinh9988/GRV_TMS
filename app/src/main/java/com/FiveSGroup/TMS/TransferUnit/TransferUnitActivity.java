@@ -50,6 +50,7 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
     String stock = "";
     String expDate = "";
     String expDate1 = "";
+    String key = "";
     String transfer_unit = "" ,transferunit = "";
     String ea_unit = "";
     String pro_code = "";
@@ -122,12 +123,18 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
     private void prepareData() {
 
         if (positonReceive == null) {
-            if (lpn != null && value1 != null) {
-                alert_show_SP(1);
-            } else if (lpn == null && value1 != null) {
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && value1 != null) {
+                    alert_show_SP(1);
+                } else if (lpn == null && value1 != null) {
+                    alert_show_SP(0);
 
+                }
+            } else {
+                Dialog dialog = new Dialog(TransferUnitActivity.this);
+                dialog.showDialog(TransferUnitActivity.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null && value1 != null) {

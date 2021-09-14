@@ -53,6 +53,7 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
     String stockinDate = "";
     String batch_number = "";
     String lpn = "", id_unique_SO = "";
+    String key = "";
 
     int statusGetCust;
     Product_Return_QA product_qrcode;
@@ -110,14 +111,18 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && returnQA != null) {
-                //TODO
-                alert_show_SP(1);
-            } else if (lpn == null && returnQA != null) {
-                //TODO
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && returnQA != null) {
+                    //TODO
+                    alert_show_SP(1);
+                } else if (lpn == null && returnQA != null) {
+                    //TODO
+                    alert_show_SP(0);
+                }
+            } else {
+                Dialog dialog = new Dialog(List_Return_QA.this);
+                dialog.showDialog(List_Return_QA.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
-
         } else {
             if (lpn != null) {
                 //TODO

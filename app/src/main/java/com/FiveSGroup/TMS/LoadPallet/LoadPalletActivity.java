@@ -49,6 +49,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
     String stockinDate = "";
     String batch_number = "";
     String lpn = "";
+    String key = "";
     String unique_id = "" ;
 
     ArrayList<Product_LoadPallet> loadPallets;
@@ -397,12 +398,18 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && value1 != null) {
-                alert_show_SP(1);
-            } else if (lpn == null && value1 != null) {
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && value1 != null) {
+                    alert_show_SP(1);
+                } else if (lpn == null && value1 != null) {
+                    alert_show_SP(0);
 
+                }
+            } else {
+                Dialog dialog = new Dialog(LoadPalletActivity.this);
+                dialog.showDialog(LoadPalletActivity.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null && value1 != null) {

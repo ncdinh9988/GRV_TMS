@@ -47,6 +47,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
     String pro_code = "";
     String pro_name = "";
     String cancel = "";
+    String key = "";
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
@@ -119,13 +120,19 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && cancel != null) {
-                //TODO
-                alert_show_SP(1);
-            } else if (lpn == null && cancel != null) {
-                //TODO
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && cancel != null) {
+                    //TODO
+                    alert_show_SP(1);
+                } else if (lpn == null && cancel != null) {
+                    //TODO
+                    alert_show_SP(0);
+                }
+            } else {
+                Dialog dialog = new Dialog(ListQrcode_CancelGood.this);
+                dialog.showDialog(ListQrcode_CancelGood.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null) {

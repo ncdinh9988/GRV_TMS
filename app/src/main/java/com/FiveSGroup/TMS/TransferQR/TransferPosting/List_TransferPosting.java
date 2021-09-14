@@ -53,6 +53,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
     String stockinDate = "";
     String batch_number = "";
     String lpn = "", id_unique_SO = "";
+    String key = "";
 
     int statusGetCust;
     Product_TransferPosting product_qrcode;
@@ -120,13 +121,19 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && transfer_posting != null) {
-                //TODO
-                alert_show_SP(1);
-            } else if (lpn == null && transfer_posting != null) {
-                //TODO
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && transfer_posting != null) {
+                    //TODO
+                    alert_show_SP(1);
+                } else if (lpn == null && transfer_posting != null) {
+                    //TODO
+                    alert_show_SP(0);
+                }
+            } else {
+                Dialog dialog = new Dialog(List_TransferPosting.this);
+                dialog.showDialog(List_TransferPosting.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null) {

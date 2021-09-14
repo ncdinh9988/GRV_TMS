@@ -6283,6 +6283,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Table O_EXP để chứa dữ liệu quét exp lần đầu
     public static final String O_EXP = "O_EXP";
     public static final String EXPIRED_DATE_TAM = "EXPIRED_DATE_TAM";
+    public static final String PRODUCT_CODE_TAM = "PRODUCT_CODE_TAM";
     public static final String STOCKIN_DATE_TAM = "STOCKIN_DATE_TAM";
     public static final String TOTAL_SHELF_LIFE = "TOTAL_SHELF_LIFE";
     public static final String SHELF_LIFE_TYPE = "SHELF_LIFE_TYPE";
@@ -6291,6 +6292,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_O_EXP = "CREATE TABLE "
             + O_EXP + "("
+            + PRODUCT_CODE_TAM + " TEXT,"
             + TOTAL_SHELF_LIFE + " TEXT,"
             + BATCH_NUMBER_TAM + " TEXT,"
             + SHELF_LIFE_TYPE + " TEXT,"
@@ -6303,6 +6305,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         //values.put(QRCODE, qrcode.getQRCODE());
         values.put(TOTAL_SHELF_LIFE, exp.getTOTAL_SHELF_LIFE());
+        values.put(PRODUCT_CODE_TAM, exp.getPRODUCT_CODE_TAM());
         values.put(SHELF_LIFE_TYPE, exp.getSHELF_LIFE_TYPE());
         values.put(BATCH_NUMBER_TAM, exp.getBATCH_NUMBER_TAM());
         values.put(MIN_REM_SHELF_LIFE, exp.getMIN_REM_SHELF_LIFE());
@@ -6326,6 +6329,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(EXPIRED_DATE_TAM))));
                 expd.setBATCH_NUMBER_TAM((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_TAM))));
+                expd.setPRODUCT_CODE_TAM((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TAM))));
 
                 exp.add(expd);
             } while (c.moveToNext());

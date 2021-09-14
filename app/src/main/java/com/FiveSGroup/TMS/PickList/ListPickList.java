@@ -53,6 +53,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     String expDate1 = "";
     String pick_list = "";
     String ea_unit = "";
+    String key = "";
     String ea_unit_position = "", id_unique_PL = "";
     String stockinDate = "";
     String lpn = "";
@@ -129,12 +130,18 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     private void prepareData() {
         if (pick_list != null) {
             if (positonReceive == null) {
-                if (lpn != null && value1 != null) {
-                    alert_show_SP(1);
-                } else if (lpn == null && value1 != null) {
-                    alert_show_SP(0);
+                if (key == null || key.equals("")) {
+                    if (lpn != null && value1 != null) {
+                        alert_show_SP(1);
+                    } else if (lpn == null && value1 != null) {
+                        alert_show_SP(0);
 
+                    }
+                } else {
+                    Dialog dialog = new Dialog(ListPickList.this);
+                    dialog.showDialog(ListPickList.this, "Mã Sản Phẩm Không Có Trong Kho");
                 }
+
 
             } else {
                 if (lpn != null && value1 != null) {

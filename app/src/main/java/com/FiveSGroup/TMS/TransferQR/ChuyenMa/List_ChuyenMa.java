@@ -56,6 +56,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
     String check_chuyenma = "";
     String stockinDate = "";
     String batch_number = "";
+    String key = "";
     String lpn = "", id_unique_SO = "";
 
     int statusGetCust;
@@ -124,7 +125,13 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
     }
 
     private void prepareData() {
-        alert_show_SP(0);
+        if (key == null || key.equals("")) {
+            alert_show_SP(0);
+        } else {
+            Dialog dialog = new Dialog(List_ChuyenMa.this);
+            dialog.showDialog(List_ChuyenMa.this, "Mã Sản Phẩm Không Có Trong Kho");
+        }
+
         DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());
         chuyen_Ma = DatabaseHelper.getInstance().getshow_ChuyenMa(global.getChuyenMaCD());
         ChuyenMa_ListAdapter = new ChuyenMa_Adapter(this, chuyen_Ma);

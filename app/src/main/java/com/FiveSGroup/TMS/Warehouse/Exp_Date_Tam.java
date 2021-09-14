@@ -2,11 +2,20 @@ package com.FiveSGroup.TMS.Warehouse;
 
 public class Exp_Date_Tam {
     private String EXPIRED_DATE_TAM;
+    private String PRODUCT_CODE_TAM;
     private String STOCKIN_DATE_TAM;
     private String TOTAL_SHELF_LIFE;
     private String SHELF_LIFE_TYPE;
     private String MIN_REM_SHELF_LIFE;
     private String BATCH_NUMBER_TAM;
+
+    public String getPRODUCT_CODE_TAM() {
+        return PRODUCT_CODE_TAM;
+    }
+
+    public void setPRODUCT_CODE_TAM(String PRODUCT_CODE_TAM) {
+        this.PRODUCT_CODE_TAM = PRODUCT_CODE_TAM;
+    }
 
     public String getBATCH_NUMBER_TAM() {
         return BATCH_NUMBER_TAM;

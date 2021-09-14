@@ -49,6 +49,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
     String stock = "";
     String expDate = "";
+    String key = "";
     String expDate1 = "";
     String transfer_QA = "";
     String ea_unit = "";
@@ -115,25 +116,12 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void prepareData() {
-//        if (positonReceive == null) {
-//            if (lpn != null && transfer_QA != null) {
-//                //TODO
-//                alert_show_SP(1);
-//            } else if (lpn == null && transfer_QA != null) {
-//                //TODO
-        alert_show_SP(0);
-//            }
-//
-//        } else {
-//            if (lpn != null) {
-//                //TODO
-//                alert_show_position(1);
-//            } else {
-//                //TODO
-//                alert_show_position(0);
-//            }
-//
-//        }
+        if (key == null || key.equals("")) {
+            alert_show_SP(0);
+        } else {
+            Dialog dialog = new Dialog(List_QA.this);
+            dialog.showDialog(List_QA.this, "Mã Sản Phẩm Không Có Trong Kho");
+        }
 
         product_QA = DatabaseHelper.getInstance().getAllProduct_QA(global.getQACD());
         QAlistAdapter = new QA_Adapter(this, product_QA);

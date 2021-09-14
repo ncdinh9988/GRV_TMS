@@ -50,6 +50,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
+    String key = "";
     String batch_number = "";
     String lpn = "", id_unique_SO = "";
 
@@ -119,13 +120,19 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && po_return != null) {
-                //TODO
-                alert_show_SP(1);
-            } else if (lpn == null && po_return != null) {
-                //TODO
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && po_return != null) {
+                    //TODO
+                    alert_show_SP(1);
+                } else if (lpn == null && po_return != null) {
+                    //TODO
+                    alert_show_SP(0);
+                }
+            } else {
+                Dialog dialog = new Dialog(ListQrcode_PoReturn.this);
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null) {

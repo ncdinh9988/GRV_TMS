@@ -49,6 +49,7 @@ public class List_Pickup extends AppCompatActivity implements View.OnClickListen
     String pro_name = "";
     String ea_unit = "";
     String ea_unit_position = "";
+    String key = "";
     String stockinDate = "";
     String batch_number = "";
     String lpn = "", id_unique_SO = "";
@@ -109,13 +110,19 @@ public class List_Pickup extends AppCompatActivity implements View.OnClickListen
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && pickup != null) {
-                //TODO
-                alert_show_SP(1);
-            } else if (lpn == null && pickup != null) {
-                //TODO
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && pickup != null) {
+                    //TODO
+                    alert_show_SP(1);
+                } else if (lpn == null && pickup != null) {
+                    //TODO
+                    alert_show_SP(0);
+                }
+            } else {
+                Dialog dialog = new Dialog(List_Pickup.this);
+                dialog.showDialog(List_Pickup.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null) {

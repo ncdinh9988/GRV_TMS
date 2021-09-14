@@ -51,6 +51,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
     String batch_number = "";
     String stock = "";
     String expDate = "";
+    String key = "";
     String expDate1 = "";
     String master_picklist = "";
     String ea_unit = "";
@@ -128,13 +129,19 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
     private void prepareData() {
         if (master_picklist != null) {
             if (positonReceive == null) {
-                if (lpn != null && master_picklist != null) {
-                    //TODO
-                    alert_show_SP(1);
-                } else if (lpn == null && master_picklist != null) {
-                    //TODO
-                    alert_show_SP(0);
+                if (key == null || key.equals("")) {
+                    if (lpn != null && master_picklist != null) {
+                        //TODO
+                        alert_show_SP(1);
+                    } else if (lpn == null && master_picklist != null) {
+                        //TODO
+                        alert_show_SP(0);
+                    }
+                } else {
+                    Dialog dialog = new Dialog(List_Master_Pick.this);
+                    dialog.showDialog(List_Master_Pick.this, "Mã Sản Phẩm Không Có Trong Kho");
                 }
+
 
             } else {
                 if (lpn != null) {

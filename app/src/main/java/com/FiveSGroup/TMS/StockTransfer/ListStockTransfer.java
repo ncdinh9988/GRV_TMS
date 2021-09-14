@@ -50,6 +50,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
     String lpn = "";
     String id_unique_STF = "";
     String batch_number = "";
+    String key = "";
 
     int result;
     ArrayList<Product_StockTransfer> stockTransfers;
@@ -325,11 +326,17 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
 
     private void prepareData() {
         if (positonReceive == null && turn_off_alert == null) {
-            if (lpn != null && value1 != null) {
-                alert_show_SP(1);
-            } else if(lpn == null && value1 != null) {
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && value1 != null) {
+                    alert_show_SP(1);
+                } else if(lpn == null && value1 != null) {
+                    alert_show_SP(0);
+                }
+            } else {
+                Dialog dialog = new Dialog(ListStockTransfer.this);
+                dialog.showDialog(ListStockTransfer.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else if(positonReceive != null){
                 if (lpn != null && value1 != null) {

@@ -46,6 +46,7 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
     String removeLPN = "";
     String ea_unit = "";
     String batch_number = "";
+    String key = "";
     String pro_code = "";
     String pro_name = "";
     String ea_unit_position = "";
@@ -338,12 +339,18 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && value1 != null) {
-                alert_show_SP(1);
-            } else if (lpn == null && value1 != null) {
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && value1 != null) {
+                    alert_show_SP(1);
+                } else if (lpn == null && value1 != null) {
+                    alert_show_SP(0);
 
+                }
+            } else {
+                Dialog dialog = new Dialog(List_Remove_LPN.this);
+                dialog.showDialog(List_Remove_LPN.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null && value1 != null) {

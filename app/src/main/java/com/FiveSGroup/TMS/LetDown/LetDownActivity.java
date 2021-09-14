@@ -49,8 +49,9 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
     String expDate1 = "";
     String let_down = "";
     String ea_unit = "";
+    String key = "";
     String ea_unit_position = "";
-    String stockinDate = "" , id_unique_LD = "";
+    String stockinDate = "", id_unique_LD = "";
     TextView tvTitle;
     String fromLetDownSuggestionsActivity = "";
     String lpn = "";
@@ -93,11 +94,16 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
     private void prepareData() {
 
         if (positonReceive == null) {
-            if (lpn != null && value1 != null) {
-                alert_show_SP(1);
-            } else if (lpn == null && value1 != null) {
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && value1 != null) {
+                    alert_show_SP(1);
+                } else if (lpn == null && value1 != null) {
+                    alert_show_SP(0);
 
+                }
+            } else {
+                Dialog dialog = new Dialog(LetDownActivity.this);
+                dialog.showDialog(LetDownActivity.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
 
         } else {
@@ -144,7 +150,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                         //Khi nhấn no dữ liệu sẽ trả về đơn vị trước đó cần phải chuyển tới màn hình chính nó.
                         dialog.dismiss();
                         finish();
-                        Intent i = new Intent(LetDownActivity.this,LetDownActivity.class);
+                        Intent i = new Intent(LetDownActivity.this, LetDownActivity.class);
                         startActivity(i);
 
                     }
@@ -163,7 +169,6 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 });
                 dialog.show();
-
 
 
             }
@@ -202,13 +207,13 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         pro_name = intent.getStringExtra("pro_name");
         batch_number = intent.getStringExtra("batch_number");
         try {
-            if (batch_number.equals("---")){
+            if (batch_number.equals("---")) {
                 batch_number = "";
             }
-            if(batch_number==null){
+            if (batch_number == null) {
                 batch_number = "";
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -315,10 +320,10 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                         } else if (result == -24) {
                             dialog.showDialog(LetDownActivity.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
-                        }else if (result == -26) {
+                        } else if (result == -26) {
                             dialog.showDialog(LetDownActivity.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
-                        }else {
+                        } else {
                             dialog.showDialog(LetDownActivity.this, "Lưu thất bại");
                         }
 
@@ -406,10 +411,10 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             String lpn_from = letDown.getLPN_FROM();
             String lpn_to = letDown.getLPN_TO();
 
-            if((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))){
+            if ((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))) {
                 check = true;
             }
-            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
+            if ((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))) {
                 check = true;
             }
         }
@@ -454,7 +459,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void actionSyn(){
+    private void actionSyn() {
         try {
             LayoutInflater factory = LayoutInflater.from(LetDownActivity.this);
             View layout_cus = factory.inflate(R.layout.layout_request, null);
@@ -526,7 +531,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_LD,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLD", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_LD, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WLD", isLPN);
 
             Dialog dialog = new Dialog(LetDownActivity.this);
 
@@ -563,20 +568,19 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
             } else if (postitionDes.equals("-12")) {
                 dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong tồn kho");
 
-            }else if (postitionDes.equals("-27")) {
+            } else if (postitionDes.equals("-27")) {
                 dialog.showDialog(LetDownActivity.this, "Vị trí từ chưa có sản phẩm");
 
-            }else if (postitionDes.equals("-28")) {
+            } else if (postitionDes.equals("-28")) {
                 dialog.showDialog(LetDownActivity.this, "LPN đến có vị trí không hợp lệ");
 
-            }  else {
+            } else {
                 return;
             }
-        }catch (Exception e){
-            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();
         }
-
 
 
     }
@@ -585,7 +589,7 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZoneLetDown(LetDownActivity.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name ,batch_number);
+                    expDate, ea_unit, stockinDate, isLPN, pro_code, pro_name, batch_number);
 
             Dialog dialog = new Dialog(LetDownActivity.this);
 
@@ -628,11 +632,10 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                 dialog.showDialog(LetDownActivity.this, "Mã LPN không có trong zone");
 
             }
-        }catch (Exception e){
-            Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();
         }
-
 
 
     }

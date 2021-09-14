@@ -54,6 +54,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
+    String key = "";
     String lpn = "" , id_unique_WA = "" ;
     TextView nameproduct ;
 
@@ -124,13 +125,19 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
 
     private void prepareData() {
         if (positonReceive == null) {
-            if (lpn != null && value1 != null) {
-                //TODO
-                alert_show_SP(1);
-            } else if(lpn == null && value1 != null) {
-                //TODO
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && value1 != null) {
+                    //TODO
+                    alert_show_SP(1);
+                } else if(lpn == null && value1 != null) {
+                    //TODO
+                    alert_show_SP(0);
+                }
+            } else {
+                Dialog dialog = new Dialog(ListQrcode_Warehouse_Adjustment.this);
+                dialog.showDialog(ListQrcode_Warehouse_Adjustment.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null && value1 != null) {

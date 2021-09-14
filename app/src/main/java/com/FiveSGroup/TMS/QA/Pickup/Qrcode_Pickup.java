@@ -395,58 +395,69 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
                             public void onClick(DialogInterface dialog, int which) {
                                 String expDate = mString[which];
 
+                                int vitri = which;
+                                String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
                                 dialog.dismiss(); // Close Dialog
+                                if (pro_code.equals(product_code)) {
+                                    if (expDate != "") {
+                                        // expDateTemp2 lấy giá trị HSD được người dùng chọn
+                                        expDateTemp2 = expDate;
+                                        String[] chuoi = expDateTemp2.split(" - ");
+                                        if (chuoi[0].equals("Khác")) {
+                                            Intent intent = new Intent(Qrcode_Pickup.this, SelectPropertiesProductActivity.class);
+                                            intent.putExtra("typeScan", "scan_from_cancel");
+                                            intent.putExtra("btn1", barcodeData);
+                                            intent.putExtra("returnposition", position);
+                                            intent.putExtra("pro_code", pro_code);
+                                            intent.putExtra("pro_name", pro_name);
+                                            intent.putExtra("returnCD", product_cd);
+                                            intent.putExtra("returnStock", stock);
+                                            intent.putExtra("id_unique_SO", id_unique_SO);
+                                            DatabaseHelper.getInstance().deleteallExp_date();
+                                            DatabaseHelper.getInstance().deleteallEa_Unit();
+                                            startActivity(intent);
+                                            finish();
+                                            return;
+                                        }
+                                        if (!checkBoxGetDVT.isChecked()) {
+                                            ReturnProduct(barcodeData, chuoi[0], chuoi[1] , chuoi[2]);
 
-                                if (expDate != "") {
-                                    // expDateTemp2 lấy giá trị HSD được người dùng chọn
-                                    expDateTemp2 = expDate;
-                                    String[] chuoi = expDateTemp2.split(" - ");
-                                    if (chuoi[0].equals("Khác")) {
-                                        Intent intent = new Intent(Qrcode_Pickup.this, SelectPropertiesProductActivity.class);
-                                        intent.putExtra("typeScan", "scan_from_cancel");
-                                        intent.putExtra("btn1", barcodeData);
-                                        intent.putExtra("returnposition", position);
-                                        intent.putExtra("pro_code", pro_code);
-                                        intent.putExtra("pro_name", pro_name);
-                                        intent.putExtra("returnCD", product_cd);
-                                        intent.putExtra("returnStock", stock);
-                                        intent.putExtra("id_unique_SO", id_unique_SO);
-                                        DatabaseHelper.getInstance().deleteallExp_date();
-                                        DatabaseHelper.getInstance().deleteallEa_Unit();
-                                        startActivity(intent);
-                                        finish();
-                                        return;
+                                        } else {
+                                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
+                                        }
+
                                     }
-                                    if (!checkBoxGetDVT.isChecked()) {
-                                        ReturnProduct(barcodeData, chuoi[0], chuoi[1] , chuoi[2]);
-
-                                    } else {
-                                        ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], chuoi[2]);
-                                    }
-
+                                    Toast.makeText(Qrcode_Pickup.this, "You select: " + expDate,
+                                            Toast.LENGTH_LONG).show();
+                                } else {
+                                    Checkproduct_Code();
                                 }
-                                Toast.makeText(Qrcode_Pickup.this, "You select: " + expDate,
-                                        Toast.LENGTH_LONG).show();
 
                             }
                         });
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     } else if (expired_date.size() == 1) {
-                        String expDatetemp = "" , batch_number = "";
+                        String expDatetemp = "" , batch_number = "", product_code = "";
                         try {
                             expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
+                            product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
                         } catch (Exception e) {
 
                         }
-                        String[] chuoi = expDatetemp.split(" - ");
+                        if (pro_code.equals(product_code)) {
+                            String[] chuoi = expDatetemp.split(" - ");
 
-                        if (!checkBoxGetDVT.isChecked()) {
-                            ReturnProduct(barcodeData, chuoi[0], chuoi[1] , batch_number);
-                        } else {
-                            ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], batch_number);
+                            if (!checkBoxGetDVT.isChecked()) {
+                                ReturnProduct(barcodeData, chuoi[0], chuoi[1] , batch_number);
+                            } else {
+                                ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], batch_number);
+                            }
+                        }else{
+                            Checkproduct_Code();
                         }
+
                     } else {
                         Toast.makeText(Qrcode_Pickup.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_Pickup.this, List_Pickup.class);
@@ -463,6 +474,12 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
 
             }
         }
+    }
+
+    private void Checkproduct_Code(){
+        Intent intentt = new Intent(getApplication(), List_Pickup.class);
+        intentt.putExtra("key", "1");
+        startActivity(intentt);
     }
 
     private void ReturnPosition(String barcode, String stockinDateShow) {

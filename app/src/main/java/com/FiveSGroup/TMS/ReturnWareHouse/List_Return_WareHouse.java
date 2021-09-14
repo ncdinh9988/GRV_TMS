@@ -57,6 +57,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
     String ea_unit_position = "";
     String stockinDate = "";
     String lpn = "";
+    String key = "";
 
     int statusGetCust;
     Product_Return_WareHouse product_return_wareHouse;
@@ -122,13 +123,19 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
 
     private void prepareData(){
         if (positonReceive == null) {
-            if (lpn != null && return_warehouse != null) {
-                //TODO
-                alert_show_SP(1);
-            } else if (lpn == null && return_warehouse != null){
-                //TODO
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && return_warehouse != null) {
+                    //TODO
+                    alert_show_SP(1);
+                } else if (lpn == null && return_warehouse != null){
+                    //TODO
+                    alert_show_SP(0);
+                }
+            } else {
+                Dialog dialog = new Dialog(List_Return_WareHouse.this);
+                dialog.showDialog(List_Return_WareHouse.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null) {

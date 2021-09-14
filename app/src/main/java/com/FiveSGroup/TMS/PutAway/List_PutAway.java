@@ -46,6 +46,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
     String expDate = "";
     String expDate1 = "";
     String put_away = "";
+    String key = "";
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
@@ -89,22 +90,25 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
     }
 
     private void prepareData() {
-
-        if (positonReceive == null) {
-            if (lpn != null && value1 != null) {
-                alert_show_SP(1);
-            } else if (lpn == null && value1 != null) {
-                alert_show_SP(0);
-
+            if (positonReceive == null) {
+                if (key == null || key.equals("")) {
+                    if (lpn != null && value1 != null) {
+                        alert_show_SP(1);
+                    } else if (lpn == null && value1 != null) {
+                        alert_show_SP(0);
+                    }
+                } else {
+                    Dialog dialog = new Dialog(List_PutAway.this);
+                    dialog.showDialog(List_PutAway.this, "Mã Sản Phẩm Không Có Trong Kho");
+                }
+            } else {
+                if (lpn != null && value1 != null) {
+                    alert_show_position(1);
+                } else if (lpn == null && value1 != null) {
+                    alert_show_position(0);
+                }
             }
 
-        } else {
-            if (lpn != null && value1 != null) {
-                alert_show_position(1);
-            } else if (lpn == null && value1 != null) {
-                alert_show_position(0);
-            }
-        }
         putAways = DatabaseHelper.getInstance().getAllProduct_PutAway();
         putAwayAdapter = new PutAwayAdapter(this, putAways);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -195,6 +199,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        key = intent.getStringExtra("key");
         // expDate - hiển thị HSD cho người dùng trong list sản phẩm
         expDate = intent.getStringExtra("exp_date");
         pro_code = intent.getStringExtra("pro_code");
@@ -208,13 +213,13 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
         lpn = intent.getStringExtra("lpn");
         batch_number = intent.getStringExtra("batch_number");
         try {
-            if (batch_number.equals("---")){
+            if (batch_number.equals("---")) {
                 batch_number = "";
             }
-            if(batch_number==null){
+            if (batch_number == null) {
                 batch_number = "";
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         stockinDate = intent.getStringExtra("stockin_date");
@@ -307,10 +312,10 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
                         } else if (result == -24) {
                             dialog.showDialog(List_PutAway.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
 
-                        }else if (result == -26) {
+                        } else if (result == -26) {
                             dialog.showDialog(List_PutAway.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
 
-                        }else {
+                        } else {
                             dialog.showDialog(List_PutAway.this, "Lưu thất bại");
                         }
 
@@ -569,13 +574,11 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
 
     public void alert_show_SP(int isLPN) {
         try {
+
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZonePutaway(List_PutAway.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name ,batch_number);
-
+                    expDate, ea_unit, stockinDate, isLPN, pro_code, pro_name, batch_number);
             Dialog dialog = new Dialog(List_PutAway.this);
-
-
             if (postitionDes == 1) {
                 return;
             } else if (postitionDes == -1) {
@@ -614,6 +617,8 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
                 dialog.showDialog(List_PutAway.this, "Mã LPN không có trong zone");
 
             }
+
+
         } catch (Exception e) {
             Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
             finish();

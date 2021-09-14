@@ -52,6 +52,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
     String pro_code = "";
     String pro_name = "";
     String expDate1 = "";
+    String key = "";
     String stock_out = "";
     String ea_unit = "";
     String ea_unit_position = "";
@@ -124,13 +125,19 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
 
     private void prepareData(){
         if (positonReceive == null) {
-            if (lpn != null && stock_out != null) {
-                //TODO
-                alert_show_SP(1);
-            } else if (lpn == null && stock_out != null){
-                //TODO
-                alert_show_SP(0);
+            if (key == null || key.equals("")) {
+                if (lpn != null && stock_out != null) {
+                    //TODO
+                    alert_show_SP(1);
+                } else if (lpn == null && stock_out != null){
+                    //TODO
+                    alert_show_SP(0);
+                }
+            } else {
+                Dialog dialog = new Dialog(ListQrcode_Stockout.this);
+                dialog.showDialog(ListQrcode_Stockout.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
+
 
         } else {
             if (lpn != null) {
