@@ -129,7 +129,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     }
 
     private void prepareData() {
-        if (pick_list != null) {
+//        if (pick_list != null) {
             if (positonReceive == null) {
                 if (key == null || key.equals("")) {
                     if (lpn != null && value1 != null) {
@@ -140,7 +140,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                     }
                 } else {
                     Dialog dialog = new Dialog(ListPickList.this);
-                    dialog.showDialog(ListPickList.this, "Mã Sản Phẩm Không Có Trong Kho");
+                    dialog.showDialog(ListPickList.this, "Mã Sản Phẩm Không Có Trong Phiếu");
                 }
 
 
@@ -151,7 +151,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                     alert_show_position(0);
                 }
             }
-        }
+//        }
 
         pickList = DatabaseHelper.getInstance().getAllProduct_PickList_Show(global.getPickListCD());
         //putAwayListAdapter = new PutAwayListAdapter(putaway, this);

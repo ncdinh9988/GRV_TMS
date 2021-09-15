@@ -349,7 +349,7 @@ public class List_Remove_LPN extends AppCompatActivity implements View.OnClickLi
                 }
             } else {
                 Dialog dialog = new Dialog(List_Remove_LPN.this);
-                dialog.showDialog(List_Remove_LPN.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(List_Remove_LPN.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 

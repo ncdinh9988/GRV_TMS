@@ -335,7 +335,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
                 }
             } else {
                 Dialog dialog = new Dialog(ListStockTransfer.this);
-                dialog.showDialog(ListStockTransfer.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(ListStockTransfer.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 

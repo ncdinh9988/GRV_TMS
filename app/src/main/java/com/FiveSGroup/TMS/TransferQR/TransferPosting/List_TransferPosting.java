@@ -132,7 +132,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
                 }
             } else {
                 Dialog dialog = new Dialog(List_TransferPosting.this);
-                dialog.showDialog(List_TransferPosting.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(List_TransferPosting.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 

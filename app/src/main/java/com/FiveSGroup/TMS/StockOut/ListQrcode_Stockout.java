@@ -136,7 +136,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
                 }
             } else {
                 Dialog dialog = new Dialog(ListQrcode_Stockout.this);
-                dialog.showDialog(ListQrcode_Stockout.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(ListQrcode_Stockout.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 

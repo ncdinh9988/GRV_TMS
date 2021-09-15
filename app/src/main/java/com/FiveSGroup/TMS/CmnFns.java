@@ -1507,6 +1507,7 @@ public class CmnFns {
                 JSONObject jsonobj = jsonarray.getJSONObject(i);
                 String pro_exp = jsonobj.getString("_EXPIRY_DATE");
                 String pro_stockin = jsonobj.getString("_STOCKIN_DATE");
+                String pro_code = jsonobj.getString("_PRODUCT_CODE");
                 String batch = "";
 
                 batch = jsonobj.getString("_BATCH_NUMBER");
@@ -1520,6 +1521,7 @@ public class CmnFns {
                 }
 
                 exp_date_tam.setBATCH_NUMBER_TAM(batch);
+                exp_date_tam.setPRODUCT_CODE_TAM(pro_code);
 
 
                 DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);

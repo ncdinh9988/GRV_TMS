@@ -136,7 +136,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
                 }
             } else {
                 Dialog dialog = new Dialog(InventoryListProduct.this);
-                dialog.showDialog(InventoryListProduct.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(InventoryListProduct.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 

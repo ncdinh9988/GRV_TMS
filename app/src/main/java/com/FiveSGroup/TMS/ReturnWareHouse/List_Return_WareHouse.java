@@ -134,7 +134,7 @@ public class List_Return_WareHouse extends AppCompatActivity implements View.OnC
                 }
             } else {
                 Dialog dialog = new Dialog(List_Return_WareHouse.this);
-                dialog.showDialog(List_Return_WareHouse.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(List_Return_WareHouse.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 

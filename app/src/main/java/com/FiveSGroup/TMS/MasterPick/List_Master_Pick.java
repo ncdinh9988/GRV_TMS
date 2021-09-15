@@ -128,7 +128,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
     }
 
     private void prepareData() {
-        if (master_picklist != null) {
+//        if (master_picklist != null) {
             if (positonReceive == null) {
                 if (key == null || key.equals("")) {
                     if (lpn != null && master_picklist != null) {
@@ -140,7 +140,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                     }
                 } else {
                     Dialog dialog = new Dialog(List_Master_Pick.this);
-                    dialog.showDialog(List_Master_Pick.this, "Mã Sản Phẩm Không Có Trong Kho");
+                    dialog.showDialog(List_Master_Pick.this, "Mã Sản Phẩm Không Có Trong Phiếu");
                 }
 
 
@@ -154,7 +154,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                 }
 
             }
-        }
+//        }
         masterPicks = DatabaseHelper.getInstance().getAllProduct_Master_Pick(global.getMasterPickCd());
         MasterPickAdapter = new Master_Pick_Adapter(this, masterPicks);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);

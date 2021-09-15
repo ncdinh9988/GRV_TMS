@@ -131,7 +131,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
                 }
             } else {
                 Dialog dialog = new Dialog(ListQrcode_PoReturn.this);
-                dialog.showDialog(ListQrcode_PoReturn.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(ListQrcode_PoReturn.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 

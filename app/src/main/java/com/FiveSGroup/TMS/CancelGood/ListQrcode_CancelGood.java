@@ -131,7 +131,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
                 }
             } else {
                 Dialog dialog = new Dialog(ListQrcode_CancelGood.this);
-                dialog.showDialog(ListQrcode_CancelGood.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(ListQrcode_CancelGood.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 

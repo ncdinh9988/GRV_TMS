@@ -130,7 +130,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
             alert_show_SP(0);
         } else {
             Dialog dialog = new Dialog(List_ChuyenMa.this);
-            dialog.showDialog(List_ChuyenMa.this, "Mã Sản Phẩm Không Có Trong Kho");
+            dialog.showDialog(List_ChuyenMa.this, "Mã Sản Phẩm Không Có Trong Phiếu");
         }
 
         DatabaseHelper.getInstance().getAllProduct_ChuyenMa(global.getChuyenMaCD());

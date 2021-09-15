@@ -122,7 +122,7 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
                 }
             } else {
                 Dialog dialog = new Dialog(List_Return_QA.this);
-                dialog.showDialog(List_Return_QA.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(List_Return_QA.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
         } else {
             if (lpn != null) {

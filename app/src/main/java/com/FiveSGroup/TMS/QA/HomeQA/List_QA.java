@@ -121,7 +121,7 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
             alert_show_SP(0);
         } else {
             Dialog dialog = new Dialog(List_QA.this);
-            dialog.showDialog(List_QA.this, "Mã Sản Phẩm Không Có Trong Kho");
+            dialog.showDialog(List_QA.this, "Mã Sản Phẩm Không Có Trong Phiếu");
         }
 
         product_QA = DatabaseHelper.getInstance().getAllProduct_QA(global.getQACD());
@@ -275,10 +275,11 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         if (product_QA.size() > 0) {
 
             try {
+                new CmnFns().synchronizePhoto_QA(List_QA.this , global.getQACD() );
                 DatabaseHelper.getInstance().getAllProduct_RESULT_QA(global.getQACD());
                 int result = new CmnFns().synchronizeData_RQBT_Final(saleCode, "WQA", global.getQACD());
                 if (result >= 1) {
-                    new CmnFns().synchronizePhoto_QA(List_QA.this , global.getQACD() );
+//                    new CmnFns().synchronizePhoto_QA(List_QA.this , global.getQACD() );
                     DatabaseHelper.getInstance().deleteallResult_QA(global.getQACD());
                     DatabaseHelper.getInstance().deleteProduct_QA(global.getQACD());
                     DatabaseHelper.getInstance().deleteallCriteria(global.getQACD());

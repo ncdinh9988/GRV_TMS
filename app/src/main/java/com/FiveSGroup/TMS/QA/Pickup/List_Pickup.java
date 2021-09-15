@@ -121,7 +121,7 @@ public class List_Pickup extends AppCompatActivity implements View.OnClickListen
                 }
             } else {
                 Dialog dialog = new Dialog(List_Pickup.this);
-                dialog.showDialog(List_Pickup.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(List_Pickup.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 

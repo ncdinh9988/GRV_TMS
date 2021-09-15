@@ -135,7 +135,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
                 }
             } else {
                 Dialog dialog = new Dialog(ListQrcode_Warehouse_Adjustment.this);
-                dialog.showDialog(ListQrcode_Warehouse_Adjustment.this, "Mã Sản Phẩm Không Có Trong Kho");
+                dialog.showDialog(ListQrcode_Warehouse_Adjustment.this, "Mã Sản Phẩm Không Có Trong Phiếu");
             }
 
 
