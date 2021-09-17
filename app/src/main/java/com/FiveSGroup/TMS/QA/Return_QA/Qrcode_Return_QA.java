@@ -448,7 +448,7 @@ public class Qrcode_Return_QA extends AppCompatActivity implements View.OnClickL
                         } catch (Exception e) {
 
                         }
-                        if (pro_code.equals("") || pro_code.equals(product_code)) {
+                        if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                             String[] chuoi = expDatetemp.split(" - ");
 
                             if (!checkBoxGetDVT.isChecked()) {

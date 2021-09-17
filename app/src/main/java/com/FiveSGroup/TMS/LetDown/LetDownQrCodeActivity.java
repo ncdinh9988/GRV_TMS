@@ -441,7 +441,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                         } catch (Exception e) {
 
                         }
-                        if (pro_code.equals("") || pro_code.equals(product_code)) {
+                        if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                             String chuoi[] = expDatetemp.split(" - ");
                             if (!checkBoxGetDVT.isChecked()) {
                                 ReturnProduct(barcodeData, chuoi[0], chuoi[1] ,batch_number);

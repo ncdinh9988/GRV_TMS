@@ -449,7 +449,7 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
                         } catch (Exception e) {
 
                         }
-                        if (pro_code.equals("") || pro_code.equals(product_code)) {
+                        if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                             String chuoi[] = expDatetemp.split(" - ");
                             if (!checkBoxGetDVT.isChecked()) {
                                 ReturnProduct(barcodeData, chuoi[0], chuoi[1] ,batch_number);

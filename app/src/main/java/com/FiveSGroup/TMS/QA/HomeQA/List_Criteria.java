@@ -90,6 +90,17 @@ public class List_Criteria extends AppCompatActivity implements View.OnClickList
         positonReceive = intent.getStringExtra("returnposition");
         product_code = intent.getStringExtra("product_code");
         batch_number = intent.getStringExtra("batch_number");
+        try {
+            if (batch_number.equals("---")){
+                batch_number = "";
+            }
+            if(batch_number==null){
+                batch_number = "";
+            }
+        }catch (Exception e){
+
+        }
+
         barcode = intent.getStringExtra("barcode");
         cd = intent.getStringExtra("cd");
         unit = intent.getStringExtra("unit");

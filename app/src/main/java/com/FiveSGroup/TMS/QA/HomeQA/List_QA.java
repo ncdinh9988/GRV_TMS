@@ -98,6 +98,17 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
         productCd = intent.getStringExtra("returnCD");
         allow = intent.getStringExtra("allow");
         batch_number = intent.getStringExtra("batch_number");
+        try {
+            if (batch_number.equals("---")) {
+                batch_number = "";
+            }
+            if (batch_number == null) {
+                batch_number = "";
+            }
+        } catch (Exception e) {
+
+        }
+
         stock = intent.getStringExtra("returnStock");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
