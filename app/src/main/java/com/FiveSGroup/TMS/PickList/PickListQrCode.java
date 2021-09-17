@@ -451,7 +451,7 @@ public class PickListQrCode extends AppCompatActivity {
                     } catch (Exception e) {
 
                     }
-                    if (pro_code.equals(product_code)) {
+                    if (pro_code.equals("") || pro_code.equals(product_code)) {
                         String chuoi[] = expDatetemp.split(" - ");
 
                         if (!checkBoxGetDVT.isChecked()) {
