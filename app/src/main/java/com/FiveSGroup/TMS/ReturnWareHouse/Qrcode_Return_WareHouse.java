@@ -390,7 +390,7 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
                                 int vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
                                 dialog.dismiss(); // Close Dialog
-                                if (pro_code.equals(product_code)) {
+                                if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                     if (expDate != "") {
                                         // expDateTemp2 lấy giá trị HSD được người dùng chọn
                                         expDateTemp2 = expDate;
