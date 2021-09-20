@@ -207,16 +207,6 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
         batch_number = intent.getStringExtra("batch_number");
-        try {
-            if (batch_number.equals("---")) {
-                batch_number = "";
-            }
-            if (batch_number == null) {
-                batch_number = "";
-            }
-        } catch (Exception e) {
-
-        }
 
         // expDate - hiển thị HSD cho người dùng trong list sản phẩm
         expDate = intent.getStringExtra("exp_date");
@@ -232,6 +222,38 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
         stockinDate = intent.getStringExtra("stockin_date");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         fromLetDownSuggestionsActivity = intent.getStringExtra("fromLetDownSuggestionsActivity");
+
+        try {
+            if (batch_number.equals("---")) {
+                batch_number = "";
+            }
+            if (batch_number == null) {
+                batch_number = "";
+            }
+        } catch (Exception e) {
+
+        }
+        try {
+            if (expDate.equals("---")){
+                expDate = "";
+            }
+            if(expDate==null){
+                expDate = "";
+            }
+        }catch (Exception e){
+
+        }
+
+        try {
+            if (stockinDate.equals("---")){
+                stockinDate = "";
+            }
+            if(stockinDate==null){
+                stockinDate = "";
+            }
+        }catch (Exception e){
+
+        }
     }
 
 

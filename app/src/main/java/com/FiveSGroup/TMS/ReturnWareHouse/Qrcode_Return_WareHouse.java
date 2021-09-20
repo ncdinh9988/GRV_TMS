@@ -346,13 +346,14 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
                 alertDialog.show();
 
             } else {
+                pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                 getinformation(barcodeData);
             }
         }
     }
 
     private void getinformation(final String barcodeData) {
-        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch(barcodeData, CmnFns.readDataAdmin(), "WRW", 0, global.getReturnCD());
+        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch2(barcodeData, CmnFns.readDataAdmin(), "WRW", 0, global.getReturnCD());
         if (statusGetCustt != 1) {
             ReturnPosition(barcodeData, stockinDate);
         }
@@ -365,7 +366,7 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
             } else {
                 try {
                     // lấy tất cả hạn sử dụng trong database ra
-                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue();
+                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue2(pro_code);
 
                     if (expired_date.size() > 1) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Return_WareHouse.this);
@@ -373,8 +374,8 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
 
                         final ArrayList<String> exp_date = new ArrayList<>();
                         for (int i = 0; i < expired_date.size(); i++) {
-                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM()+ " - " + expired_date.get(i).getBATCH_NUMBER_TAM());
-                            //    exp_date.add(expired_date.get(i).getSTOCKIN_DATE_TAM());
+                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM() + " - " + expired_date.get(i).getSTOCKIN_DATE_TAM()
+                                    + " - " + expired_date.get(i).getBATCH_NUMBER_TAM());
 
                         }
 
@@ -429,28 +430,28 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     } else if (expired_date.size() == 1) {
-                        String expDatetemp = "" , batch_number = "", product_code = "";
+                        String expDatetemp = "" , batch_number = "", product_code = "" , stockin_date = "";
                         try {
                             expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                            stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
                         } catch (Exception e) {
 
                         }
                         if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
-                            String[] chuoi = expDatetemp.split(" - ");
-
+//                            String chuoi[] = expDatetemp.split(" - ");
                             if (!checkBoxGetDVT.isChecked()) {
-                                ReturnProduct(barcodeData, chuoi[0], chuoi[1], batch_number);
+                                ReturnProduct(barcodeData, expDatetemp, stockin_date ,batch_number);
                             } else {
-                                ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], batch_number);
+                                ShowDialogUnit(barcodeData, expDatetemp, stockin_date ,batch_number);
                             }
                         }else{
                             Checkproduct_Code();
                         }
 
                     } else {
-                        Toast.makeText(Qrcode_Return_WareHouse.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Qrcode_Return_WareHouse.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_Return_WareHouse.this, List_Return_WareHouse.class);
                         intent.putExtra("return_warehouse", "333");
                         intent.putExtra("btn1", barcodeData);

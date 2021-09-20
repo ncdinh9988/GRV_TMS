@@ -224,6 +224,27 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
         }
         stockinDate = intent.getStringExtra("stockin_date");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
+        try {
+            if (expDate.equals("---")){
+                expDate = "";
+            }
+            if(expDate==null){
+                expDate = "";
+            }
+        }catch (Exception e){
+
+        }
+
+        try {
+            if (stockinDate.equals("---")){
+                stockinDate = "";
+            }
+            if(stockinDate==null){
+                stockinDate = "";
+            }
+        }catch (Exception e){
+
+        }
     }
 
 

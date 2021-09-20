@@ -1514,10 +1514,16 @@ public class CmnFns {
 
 
                 Exp_Date_Tam exp_date_tam = new Exp_Date_Tam();
-                if (pro_stockin.equals("")) {
-                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + "---");
+                if (pro_exp.equals("")) {
+                    exp_date_tam.setEXPIRED_DATE_TAM("---");
                 } else {
-                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp );
+                }
+
+                if(pro_stockin.equals("")){
+                    exp_date_tam.setSTOCKIN_DATE_TAM("---");
+                }else{
+                    exp_date_tam.setSTOCKIN_DATE_TAM(pro_stockin);
                 }
 
                 exp_date_tam.setBATCH_NUMBER_TAM(batch);

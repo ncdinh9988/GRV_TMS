@@ -360,13 +360,14 @@ public class Qrcode_PutAway extends AppCompatActivity {
                 alertDialog.show();
 
             } else {
+                pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                 getinformation(barcodeData);
             }
         }
     }
 
     private void getinformation(final String barcodeData) {
-        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch(barcodeData, CmnFns.readDataAdmin(), "WPA", 0, "");
+        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch2(barcodeData, CmnFns.readDataAdmin(), "WPA", 0, "");
         // expiredDate nhận giá trị từ adapter để xử lí position
         if (statusGetCustt != 1) {
             ReturnPosition(barcodeData);
@@ -378,7 +379,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
             } else {
                 try {
                     // lấy tất cả hạn sử dụng trong database ra
-                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue();
+                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue2(pro_code);
 
                     if (expired_date.size() > 1) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_PutAway.this);
@@ -386,8 +387,8 @@ public class Qrcode_PutAway extends AppCompatActivity {
 
                         final ArrayList<String> exp_date = new ArrayList<>();
                         for (int i = 0; i < expired_date.size(); i++) {
-                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM() + " - " + expired_date.get(i).getBATCH_NUMBER_TAM());
-                            //exp_date.add(expired_date.get(i).getSTOCKIN_DATE_TAM());
+                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM() + " - " + expired_date.get(i).getSTOCKIN_DATE_TAM()
+                                    + " - " + expired_date.get(i).getBATCH_NUMBER_TAM());
 
                         }
 
@@ -449,33 +450,28 @@ public class Qrcode_PutAway extends AppCompatActivity {
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     } else if (expired_date.size() == 1) {
-                        String expDatetemp = "", batch_number = "" , product_code = "";
+                        String expDatetemp = "" , batch_number = "", product_code = "" , stockin_date = "";
                         try {
                             expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                            stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
                         } catch (Exception e) {
 
                         }
                         if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
-                            String[] chuoi = expDatetemp.split(" - ");
-
+//                            String chuoi[] = expDatetemp.split(" - ");
                             if (!checkBoxGetDVT.isChecked()) {
-                                ReturnProduct(barcodeData, chuoi[0], chuoi[1], batch_number);
-//                                                        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
-//                                                        final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
-//                                                        ReturnProduct(barcodeData, expDatetemp, ea_unit_tams.get(0).getEA_UNIT_TAM());
+                                ReturnProduct(barcodeData, expDatetemp, stockin_date ,batch_number);
                             } else {
-                                //int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcodeData);
-                                ShowDialogUnit(barcodeData, chuoi[0], chuoi[1], batch_number);
+                                ShowDialogUnit(barcodeData, expDatetemp, stockin_date ,batch_number);
                             }
-                        }
-                        else {
-                                Checkproduct_Code();
+                        }else{
+                            Checkproduct_Code();
                         }
 
                     } else {
-                        Toast.makeText(Qrcode_PutAway.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Qrcode_PutAway.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_PutAway.this, List_PutAway.class);
                         intent.putExtra("btn1", barcodeData);
                         intent.putExtra("put_away", "333");

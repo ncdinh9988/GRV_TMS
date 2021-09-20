@@ -260,6 +260,11 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
         ea_unit = intent.getStringExtra("ea_unit");
         lpn = intent.getStringExtra("lpn");
         batch_number = intent.getStringExtra("batch_number");
+
+        stockinDate = intent.getStringExtra("stockin_date");
+        ea_unit_position = intent.getStringExtra("return_ea_unit_position");
+        fromLetDownSuggestionsActivity = intent.getStringExtra("fromLetDownSuggestionsActivity");
+        key = intent.getStringExtra("key");
         try {
             if (batch_number.equals("---")){
                 batch_number = "";
@@ -271,10 +276,29 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
 
         }
 
-        stockinDate = intent.getStringExtra("stockin_date");
-        ea_unit_position = intent.getStringExtra("return_ea_unit_position");
-        fromLetDownSuggestionsActivity = intent.getStringExtra("fromLetDownSuggestionsActivity");
-        key = intent.getStringExtra("key");
+        try {
+            if (expDate.equals("---")){
+                expDate = "";
+            }
+            if(expDate==null){
+                expDate = "";
+            }
+        }catch (Exception e){
+
+        }
+
+        try {
+            if (stockinDate.equals("---")){
+                stockinDate = "";
+            }
+            if(stockinDate==null){
+                stockinDate = "";
+            }
+        }catch (Exception e){
+
+        }
+
+
     }
 
 

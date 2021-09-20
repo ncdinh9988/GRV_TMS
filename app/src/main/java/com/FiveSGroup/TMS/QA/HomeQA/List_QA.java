@@ -123,6 +123,27 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
         stockinDate = intent.getStringExtra("stockin_date");
         key = intent.getStringExtra("key");
+        try {
+            if (expDate.equals("---")){
+                expDate = "";
+            }
+            if(expDate==null){
+                expDate = "";
+            }
+        }catch (Exception e){
+
+        }
+
+        try {
+            if (stockinDate.equals("---")){
+                stockinDate = "";
+            }
+            if(stockinDate==null){
+                stockinDate = "";
+            }
+        }catch (Exception e){
+
+        }
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

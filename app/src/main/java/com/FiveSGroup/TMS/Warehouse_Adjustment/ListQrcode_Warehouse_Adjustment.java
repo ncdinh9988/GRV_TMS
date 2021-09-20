@@ -119,6 +119,28 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
         lpn = intent.getStringExtra("lpn");
 
         stockinDate = intent.getStringExtra("stockin_date");
+
+        try {
+            if (expDate.equals("---")){
+                expDate = "";
+            }
+            if(expDate==null){
+                expDate = "";
+            }
+        }catch (Exception e){
+
+        }
+
+        try {
+            if (stockinDate.equals("---")){
+                stockinDate = "";
+            }
+            if(stockinDate==null){
+                stockinDate = "";
+            }
+        }catch (Exception e){
+
+        }
         DatabaseHelper.getInstance().deleteallEa_Unit();
         DatabaseHelper.getInstance().deleteallExp_date();
     }

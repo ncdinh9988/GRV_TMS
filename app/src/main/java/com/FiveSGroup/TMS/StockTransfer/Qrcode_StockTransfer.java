@@ -32,6 +32,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.ReturnWareHouse.Qrcode_Return_WareHouse;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
 import com.FiveSGroup.TMS.Warehouse.Product_S_P;
@@ -435,13 +436,14 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
                 alertDialog.show();
 
             } else {
+                pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                 getinformation(barcodeData);
             }
         }
     }
 
     private void getinformation(final String barcodeData) {
-        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch(barcodeData, CmnFns.readDataAdmin(), "WOI", 0, "");
+        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch2(barcodeData, CmnFns.readDataAdmin(), "WOI", 0, "");
 
         // expiredDate nhận giá trị từ adapter để xử lí position
         if (statusGetCustt != 1) {
@@ -455,7 +457,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
             } else {
                 try {
                     // lấy tất cả hạn sử dụng trong database ra
-                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue();
+                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue2(pro_code);
 
                     if (expired_date.size() > 1) {
                         final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_StockTransfer.this);
@@ -463,8 +465,8 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
 
                         final ArrayList<String> exp_date = new ArrayList<>();
                         for (int i = 0; i < expired_date.size(); i++) {
-                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM()+ " - " + expired_date.get(i).getBATCH_NUMBER_TAM());
-                        }
+                            exp_date.add(expired_date.get(i).getEXPIRED_DATE_TAM() + " - " + expired_date.get(i).getSTOCKIN_DATE_TAM()
+                                    + " - " + expired_date.get(i).getBATCH_NUMBER_TAM());                        }
 
                         // chuyển đổi exp_date thành mảng chuỗi String
                         String[] mStringArray = new String[exp_date.size()];
@@ -525,27 +527,28 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     } else if (expired_date.size() == 1) {
-                        String expDatetemp = "" , batch_number = "", product_code = "";
+                        String expDatetemp = "" , batch_number = "", product_code = "" , stockin_date = "";
                         try {
                             expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+                            stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
                         } catch (Exception e) {
 
                         }
                         if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
-                            String chuoi[] = expDatetemp.split(" - ");
-
+//                            String chuoi[] = expDatetemp.split(" - ");
                             if (!checkBoxGetDVT.isChecked()) {
-                                ReturnProduct(barcodeData, chuoi[0], chuoi[1],batch_number);
+                                ReturnProduct(barcodeData, expDatetemp, stockin_date ,batch_number);
                             } else {
-                                ShowDialogUnit(barcodeData, chuoi[0], chuoi[1],batch_number);
+                                ShowDialogUnit(barcodeData, expDatetemp, stockin_date ,batch_number);
                             }
                         }else{
                             Checkproduct_Code();
                         }
 
                     } else {
+                        Toast.makeText(Qrcode_StockTransfer.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_StockTransfer.this, ListStockTransfer.class);
                         intent.putExtra("btn1", barcodeData);
                         startActivity(intent);
