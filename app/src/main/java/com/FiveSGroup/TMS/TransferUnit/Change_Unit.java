@@ -23,34 +23,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Change_Unit extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-    private TextView tvProductSelectName;
-    private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate, edtSelectShelfLife, edtSelectShelfLifeDate;
     private Spinner spinnerProductUnit;
-    private DatePickerDialog pickerDialog;
     private ArrayList<String> units;
     private ArrayAdapter<String> adapter;
     private Button btnBack, btnConfirm;
-    private Date date, date2, date_exp, date_current, newDate_curent;
-    private Integer shelfLife1, shelfLife2;
-    private CheckBox checkBoxDate, checkBoxMonth;
     private String barcode = "",
-            returnposition = "",
-            returnCD = "",
-            returnStock = "",
-            selectedUnit = "",
-            currentDateandTime = "",
-            stockinDate = "",
-            expiredDate = "",
-            shelfLife = "",
-            shelfLifeDate = "",
-            typeScan = "",
-            stockin = "",
-            id_unique_TU = "",
-            exp_date = "";
-    String total_shelf_life = "";
-    String shelf_life_type = "";
-    String min_rem_shelf_life = "";
-    int min_to_date;
+            id_unique_TU = "";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +64,6 @@ public class Change_Unit extends AppCompatActivity implements View.OnClickListen
         btnConfirm = findViewById(R.id.btnConfirmProductProperties);
         btnBack.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
-
-
 
     }
 

@@ -6293,6 +6293,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String CREATE_TABLE_O_EXP = "CREATE TABLE "
             + O_EXP + "("
             + PRODUCT_CODE_TAM + " TEXT,"
+            + STOCKIN_DATE_TAM + " TEXT,"
             + TOTAL_SHELF_LIFE + " TEXT,"
             + BATCH_NUMBER_TAM + " TEXT,"
             + SHELF_LIFE_TYPE + " TEXT,"
@@ -6305,6 +6306,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         //values.put(QRCODE, qrcode.getQRCODE());
         values.put(TOTAL_SHELF_LIFE, exp.getTOTAL_SHELF_LIFE());
+        values.put(STOCKIN_DATE_TAM, exp.getSTOCKIN_DATE_TAM());
         values.put(PRODUCT_CODE_TAM, exp.getPRODUCT_CODE_TAM());
         values.put(SHELF_LIFE_TYPE, exp.getSHELF_LIFE_TYPE());
         values.put(BATCH_NUMBER_TAM, exp.getBATCH_NUMBER_TAM());
@@ -6327,6 +6329,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Exp_Date_Tam expd = new Exp_Date_Tam();
                 expd.setEXPIRED_DATE_TAM((c.getString(c
                         .getColumnIndex(EXPIRED_DATE_TAM))));
+                expd.setBATCH_NUMBER_TAM((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TAM))));
+                expd.setPRODUCT_CODE_TAM((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TAM))));
+
+                exp.add(expd);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return exp;
+    }
+
+    public ArrayList<Exp_Date_Tam>
+    getallValue2(String pro_code) {
+        ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT DISTINCT STOCKIN_DATE_TAM ,EXPIRED_DATE_TAM , BATCH_NUMBER_TAM , PRODUCT_CODE_TAM  FROM " + O_EXP +
+                " where " + PRODUCT_CODE_TAM + " = '" + pro_code + "' "
+                ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Exp_Date_Tam expd = new Exp_Date_Tam();
+                expd.setEXPIRED_DATE_TAM((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TAM))));
+                expd.setSTOCKIN_DATE_TAM((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_TAM))));
                 expd.setBATCH_NUMBER_TAM((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_TAM))));
                 expd.setPRODUCT_CODE_TAM((c.getString(c

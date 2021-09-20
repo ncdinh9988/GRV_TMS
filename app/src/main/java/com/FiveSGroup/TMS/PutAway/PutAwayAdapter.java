@@ -44,7 +44,7 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
     @Override
     public PutAwayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        view = inflater.inflate(R.layout.new_layout_list, null, false);
+        view = inflater.inflate(R.layout.product_view_masterpick, null, false);
         return new ViewHolder(view);
 
     }
@@ -73,7 +73,7 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
             holder.edt.setEnabled(false);
         }
         holder.tvcont.setText(product.getBATCH_NUMBER());
-//        holder.layout_cont.setVisibility(View.VISIBLE);
+        holder.layout_cont.setVisibility(View.VISIBLE);
 
         holder.tvExpired.setText(product.getEXPIRED_DATE_PUTAWAY());
         holder.tvStockin.setText(product.getSTOCKIN_DATE_PUTAWAY());
@@ -228,7 +228,7 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
         LinearLayout layout__put;
         View layout_putaway , layout__goiy;
         TextView tvcont;
-//        LinearLayout layout_cont;
+        LinearLayout layout_cont;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -237,7 +237,7 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
             tvFrom = itemView.findViewById(R.id.tvFrom);
             tvTo = itemView.findViewById(R.id.tvTo);
             tvcont = itemView.findViewById(R.id.tvcont);
-//            layout_cont = itemView.findViewById(R.id.layout_cont);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
             tvPutAwayPositionSuggest = itemView.findViewById(R.id.tvPositionSuggestput);
