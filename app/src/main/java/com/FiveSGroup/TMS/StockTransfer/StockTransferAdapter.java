@@ -71,13 +71,8 @@ public class StockTransferAdapter extends RecyclerView.Adapter<StockTransferAdap
             holder.tvTo.setText(product.getPOSITION_TO_CODE());
         }
 
-
         holder.tvExpired.setText(product.getEXPIRED_DATE());
-        if(!product.getSTOCKIN_DATE().equals("---")){
-            holder.tvStockin.setText(product.getSTOCKIN_DATE());
-        }else{
-            holder.tvStockin.setText("");
-        }
+        holder.tvStockin.setText(product.getSTOCKIN_DATE());
 
         if(!product.getLPN_CODE().equals("")){
             holder.edt.setEnabled(false);

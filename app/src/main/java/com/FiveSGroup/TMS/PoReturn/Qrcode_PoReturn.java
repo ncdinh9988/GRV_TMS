@@ -26,6 +26,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.PickList.ListPickList;
+import com.FiveSGroup.TMS.PickList.PickListQrCode;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
@@ -316,61 +318,70 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
             DatabaseHelper.getInstance().deleteallProduct_S_P();
 
             int statusGetcode = new CmnFns().getProduct_code(barcodeData);
-            final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
-            if (product_s_ps.size() > 1) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_PoReturn.this);
-                builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
+            if (statusGetcode != 1) {
+                ReturnPosition(barcodeData);
+            } else {
+                final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
+                if (product_s_ps.size() > 1) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_PoReturn.this);
+                    builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
 
-                final ArrayList<String> product_code = new ArrayList<>();
-                for (int i = 0; i < product_s_ps.size(); i++) {
-                    product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
-                }
-                // chuyển đổi exp_date thành mảng chuỗi String
-                String[] mStringArray = new String[product_code.size()];
-                mStringArray = product_code.toArray(mStringArray);
+                    final ArrayList<String> product_code = new ArrayList<>();
+                    for (int i = 0; i < product_s_ps.size(); i++) {
+                        product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
+                    }
+                    // chuyển đổi exp_date thành mảng chuỗi String
+                    String[] mStringArray = new String[product_code.size()];
+                    mStringArray = product_code.toArray(mStringArray);
 
-                final String[] mString = mStringArray;
-                builder.setItems(mString, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String product_name = mString[which];
-                        String[] chuoi = product_name.split(" - ");
-                        //int vitri = which;
+                    final String[] mString = mStringArray;
+                    builder.setItems(mString, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String product_name = mString[which];
+                            String[] chuoi = product_name.split(" - ");
+                            //int vitri = which;
 //                        String product_code = product_s_ps.get(vitri).getPRODUCT_CODE();
 
-                        dialog.dismiss(); // Close Dialog
-                        if (product_name != "") {
-                            pro_code = chuoi[0];
-                            pro_name = chuoi[1];
-                            getinformation(barcodeData);
+                            dialog.dismiss(); // Close Dialog
+                            if (product_name != "") {
+                                pro_code = chuoi[0];
+                                pro_name = chuoi[1];
+                                getinformation(barcodeData);
+                            }
+
+                            // Do some thing....
+
                         }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
-                        // Do some thing....
-
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-
-            } else {
-                pro_code = product_s_ps.get(0).getPRODUCT_CODE();
-                getinformation(barcodeData);
+                }else if(product_s_ps.size() == 1){
+                    pro_code = product_s_ps.get(0).getPRODUCT_CODE();
+                    getinformation(barcodeData);
+                }else{
+                    Toast.makeText(Qrcode_PoReturn.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Qrcode_PoReturn.this, ListQrcode_PoReturn.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }
     }
 
     private void getinformation(final String barcodeData) {
         int statusGetCustt = new CmnFns().getDataFromSeverWithBatch2(barcodeData, CmnFns.readDataAdmin(), "WPR", 0, global.getPoReturnCD());
-        if (statusGetCustt != 1) {
-            ReturnPosition(barcodeData, stockinDate);
-        }
-        else {
-            // expiredDate nhận giá trị từ adapter để xử lí position
-            if (expiredDate != null) {
-
-                ReturnPosition(barcodeData, stockinDate);
-
-            } else {
+//        if (statusGetCustt != 1) {
+//            ReturnPosition(barcodeData, stockinDate);
+//        }
+//        else {
+//            // expiredDate nhận giá trị từ adapter để xử lí position
+//            if (expiredDate != null) {
+//
+//                ReturnPosition(barcodeData, stockinDate);
+//
+//            } else {
                 try {
                     // lấy tất cả hạn sử dụng trong database ra
                     final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue2(pro_code);
@@ -466,9 +477,9 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                     } else {
                         Toast.makeText(Qrcode_PoReturn.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_PoReturn.this, ListQrcode_PoReturn.class);
-                        intent.putExtra("po_return", "333");
-                        intent.putExtra("btn1", barcodeData);
-                        intent.putExtra("id_unique_SO", id_unique_SO);
+//                        intent.putExtra("po_return", "333");
+//                        intent.putExtra("btn1", barcodeData);
+//                        intent.putExtra("id_unique_SO", id_unique_SO);
                         startActivity(intent);
                         finish();
                     }
@@ -477,8 +488,8 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                     Log.d("#778:", e.getMessage());
                 }
 
-            }
-        }
+//            }
+//        }
     }
     private void Checkproduct_Code(){
         Intent intentt = new Intent(getApplication(), ListQrcode_PoReturn.class);
@@ -486,7 +497,7 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
         startActivity(intentt);
     }
 
-    private void ReturnPosition(String barcode, String stockinDateShow) {
+    private void ReturnPosition(String barcode) {
         Intent intentt = new Intent(getApplication(), ListQrcode_PoReturn.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
@@ -494,7 +505,7 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("po_return", "333");
-        intentt.putExtra("stockin_date", stockinDateShow);
+//        intentt.putExtra("stockin_date", stockinDateShow);
         intentt.putExtra("id_unique_SO", id_unique_SO);
 
 
@@ -513,7 +524,7 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow , String batch_number) {
 // khi kh không check vào đơn vị tính mặc định isdefault mặc định là 1 còn khi check vào là 2
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), ListQrcode_PoReturn.class);
@@ -549,7 +560,7 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow ,final String batch_number ) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2",pro_code);
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
         String Ea_Unit_temp = "";

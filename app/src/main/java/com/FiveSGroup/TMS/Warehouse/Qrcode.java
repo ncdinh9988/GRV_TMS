@@ -322,6 +322,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     alertDialog.show();
 
                 } else {
+                    pro_code =product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }
             }
@@ -329,7 +330,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void getinformation(final String barcodeData) {
-        int statusGetBatch = new CmnFns().getBatch(global.getAdminCode(),barcodeData , global.getStockReceiptCd());
+        int statusGetBatch = new CmnFns().getBatch(global.getAdminCode(),barcodeData , global.getStockReceiptCd(),pro_code);
         if(statusGetBatch == 1){
             // lấy tất cả hạn `sử dụng trong database ra
             final ArrayList<Batch_number_Tam> batch_number_tams = DatabaseHelper.getInstance().getallBatch();
@@ -479,7 +480,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), ListQrcode.class);
@@ -510,7 +511,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2",pro_code);
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
         String Ea_Unit_temp = "";

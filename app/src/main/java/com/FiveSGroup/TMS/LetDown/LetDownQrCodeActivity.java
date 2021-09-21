@@ -24,6 +24,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.FiveSGroup.TMS.CancelGood.ListQrcode_CancelGood;
+import com.FiveSGroup.TMS.CancelGood.Qrcode_CancelGood;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
@@ -308,45 +310,54 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
 
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int statusGetcode = new CmnFns().getProduct_code(barcodeData);
-            final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
-            if (product_s_ps.size() > 1) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(LetDownQrCodeActivity.this);
-                builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
+            if (statusGetcode != 1) {
+                ReturnPosition(barcodeData);
+            } else {
+                final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
+                if (product_s_ps.size() > 1) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(LetDownQrCodeActivity.this);
+                    builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
 
-                final ArrayList<String> product_code = new ArrayList<>();
-                for (int i = 0; i < product_s_ps.size(); i++) {
-                    product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
-                }
-                // chuyển đổi exp_date thành mảng chuỗi String
-                String[] mStringArray = new String[product_code.size()];
-                mStringArray = product_code.toArray(mStringArray);
+                    final ArrayList<String> product_code = new ArrayList<>();
+                    for (int i = 0; i < product_s_ps.size(); i++) {
+                        product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
+                    }
+                    // chuyển đổi exp_date thành mảng chuỗi String
+                    String[] mStringArray = new String[product_code.size()];
+                    mStringArray = product_code.toArray(mStringArray);
 
-                final String[] mString = mStringArray;
-                builder.setItems(mString, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String product_name = mString[which];
-                        String[] chuoi = product_name.split(" - ");
-                        //int vitri = which;
+                    final String[] mString = mStringArray;
+                    builder.setItems(mString, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String product_name = mString[which];
+                            String[] chuoi = product_name.split(" - ");
+                            //int vitri = which;
 //                        String product_code = product_s_ps.get(vitri).getPRODUCT_CODE();
 
-                        dialog.dismiss(); // Close Dialog
-                        if (product_name != "") {
-                            pro_code = chuoi[0];
-                            pro_name = chuoi[1];
-                            getinformation(barcodeData);
+                            dialog.dismiss(); // Close Dialog
+                            if (product_name != "") {
+                                pro_code = chuoi[0];
+                                pro_name = chuoi[1];
+                                getinformation(barcodeData);
+                            }
+
+                            // Do some thing....
+
                         }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
-                        // Do some thing....
-
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-
-            } else {
-                pro_code = product_s_ps.get(0).getPRODUCT_CODE();
-                getinformation(barcodeData);
+                }else if(product_s_ps.size() == 1){
+                    pro_code = product_s_ps.get(0).getPRODUCT_CODE();
+                    getinformation(barcodeData);
+                }else{
+                    Toast.makeText(LetDownQrCodeActivity.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(LetDownQrCodeActivity.this, LetDownActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }
     }
@@ -354,15 +365,15 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
     private void getinformation(final String barcodeData) {
         int statusGetCustt = new CmnFns().getDataFromSeverWithBatch2(barcodeData, CmnFns.readDataAdmin(), "WLD", 0, "");
         // expiredDate nhận giá trị từ adapter để xử lí position
-        if (statusGetCustt != 1) {
-            ReturnPosition(barcodeData);
-        }
-        else {
-            if (expiredDate != null) {
-
-                ReturnPosition(barcodeData);
-
-            } else {
+//        if (statusGetCustt != 1) {
+//            ReturnPosition(barcodeData);
+//        }
+//        else {
+//            if (expiredDate != null) {
+//
+//                ReturnPosition(barcodeData);
+//
+//            } else {
                 try {
                     // lấy tất cả hạn sử dụng trong database ra
                     final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue2(pro_code);
@@ -457,19 +468,19 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                     } else {
                         Toast.makeText(LetDownQrCodeActivity.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LetDownQrCodeActivity.this, LetDownActivity.class);
-                        intent.putExtra("btn1", barcodeData);
-                        intent.putExtra("returnposition", position);
-                        intent.putExtra("return_ea_unit_position", ea_unit_position);
-                        intent.putExtra("returnCD", product_cd);
-                        intent.putExtra("returnStock", stock);
-                        intent.putExtra("pro_code", pro_code);
-                        intent.putExtra("pro_name", pro_name);
-                        intent.putExtra("let_down", "333");
-                        intent.putExtra("id_unique_LD", id_unique_LD);
-
-                        // truyền qua cho letdowmQrCode để xử lí from - to
-
-                        intent.putExtra("expdate", expiredDate);
+//                        intent.putExtra("btn1", barcodeData);
+//                        intent.putExtra("returnposition", position);
+//                        intent.putExtra("return_ea_unit_position", ea_unit_position);
+//                        intent.putExtra("returnCD", product_cd);
+//                        intent.putExtra("returnStock", stock);
+//                        intent.putExtra("pro_code", pro_code);
+//                        intent.putExtra("pro_name", pro_name);
+//                        intent.putExtra("let_down", "333");
+//                        intent.putExtra("id_unique_LD", id_unique_LD);
+//
+//                        // truyền qua cho letdowmQrCode để xử lí from - to
+//
+//                        intent.putExtra("expdate", expiredDate);
                         startActivity(intent);
                         finish();
 
@@ -479,8 +490,8 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                     Log.d("#778:", e.getMessage());
                 }
 
-            }
-        }
+//            }
+//        }
     }
 
     private void Checkproduct_Code(){
@@ -516,7 +527,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow, String batch_number) {
 
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), LetDownActivity.class);
@@ -553,7 +564,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow,final String batch_number) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2",pro_code);
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 

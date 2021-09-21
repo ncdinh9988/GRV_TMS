@@ -27,6 +27,8 @@ import androidx.core.app.ActivityCompat;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
+import com.FiveSGroup.TMS.PutAway.List_PutAway;
+import com.FiveSGroup.TMS.PutAway.Qrcode_PutAway;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
@@ -351,9 +353,14 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
-            } else {
+            }else if(product_s_ps.size() == 1){
                 pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                 getinformation(barcodeData);
+            }else{
+                Toast.makeText(Qrcode_QA.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Qrcode_QA.this, List_QA.class);
+                startActivity(intent);
+                finish();
             }
 
         }
@@ -466,9 +473,9 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
                     } else {
                         Toast.makeText(Qrcode_QA.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_QA.this, List_QA.class);
-                        intent.putExtra("qa_info", "333");
-                        intent.putExtra("btn1", barcodeData);
-                        intent.putExtra("id_unique_SO", id_unique_SO);
+//                        intent.putExtra("qa_info", "333");
+//                        intent.putExtra("btn1", barcodeData);
+//                        intent.putExtra("id_unique_SO", id_unique_SO);
                         startActivity(intent);
                         finish();
                     }
@@ -518,7 +525,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow , String batch_number) {
 // khi kh không check vào đơn vị tính mặc định isdefault mặc định là 1 còn khi check vào là 2
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), List_QA.class);
@@ -555,7 +562,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow ,final String batch_number ) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2",pro_code);
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
         String Ea_Unit_temp = "";
