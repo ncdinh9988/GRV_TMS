@@ -27,7 +27,7 @@ public class Change_Unit extends AppCompatActivity implements View.OnClickListen
     private ArrayList<String> units;
     private ArrayAdapter<String> adapter;
     private Button btnBack, btnConfirm;
-    private String barcode = "",
+    private String barcode = "", product_code ="",
             id_unique_TU = "";
 
 
@@ -44,6 +44,7 @@ public class Change_Unit extends AppCompatActivity implements View.OnClickListen
         // value1 : giá trị barcode truyền từ LetDownQrCodeActivity
         id_unique_TU = intent.getStringExtra("id_unique_TU");
         barcode = intent.getStringExtra("barcode");
+        product_code = intent.getStringExtra("product_code");
 
 
         spinnerProductUnit = findViewById(R.id.spinnerProductUnit);
@@ -51,7 +52,7 @@ public class Change_Unit extends AppCompatActivity implements View.OnClickListen
 
         //set unit in adapter
         units = new ArrayList<>();
-        units = new CmnFns().getEa_Unit(barcode, "2");
+        units = new CmnFns().getEa_Unit(barcode, "2",product_code);
         if (units == null) {
             units = new ArrayList<>();
         }

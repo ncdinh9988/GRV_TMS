@@ -515,7 +515,7 @@ public class InventoryScanCode extends AppCompatActivity {
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow, String batch_number) {
         // mặc định đơn vị là 1
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), InventoryListProduct.class);
@@ -548,7 +548,7 @@ public class InventoryScanCode extends AppCompatActivity {
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow,final String batch_number) {
         // không mặc định đơn vị phải chọn
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2",pro_code);
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
         String Ea_Unit_temp = "";

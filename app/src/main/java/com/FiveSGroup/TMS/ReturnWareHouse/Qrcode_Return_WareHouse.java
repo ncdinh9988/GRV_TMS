@@ -457,8 +457,8 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
                     } else {
                         Toast.makeText(Qrcode_Return_WareHouse.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_Return_WareHouse.this, List_Return_WareHouse.class);
-                        intent.putExtra("return_warehouse", "333");
-                        intent.putExtra("btn1", barcodeData);
+//                        intent.putExtra("return_warehouse", "333");
+//                        intent.putExtra("btn1", barcodeData);
                         startActivity(intent);
                         finish();
                     }
@@ -502,7 +502,7 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow, String batch_number) {
 
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(Qrcode_Return_WareHouse.this, List_Return_WareHouse.class);
@@ -537,7 +537,7 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow,final String batch_number) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2",pro_code);
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
         String Ea_Unit_temp = "";

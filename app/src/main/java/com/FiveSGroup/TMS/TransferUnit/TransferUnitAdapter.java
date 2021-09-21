@@ -106,6 +106,7 @@ public class TransferUnitAdapter extends RecyclerView.Adapter<TransferUnitAdapte
             public void onClick(View v) {
                 Intent intent = new Intent(context, Change_Unit.class);
                 intent.putExtra("position", "2");
+                intent.putExtra("product_code", product.getPRODUCT_CODE());
                 intent.putExtra("product_cd", product.getPRODUCT_CD());
                 intent.putExtra("experied_letdown", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getUNIT());

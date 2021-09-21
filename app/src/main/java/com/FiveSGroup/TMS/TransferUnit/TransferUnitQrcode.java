@@ -469,17 +469,17 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
                     } else {
                         Toast.makeText(TransferUnitQrcode.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(TransferUnitQrcode.this, TransferUnitActivity.class);
-                        intent.putExtra("btn1", barcodeData);
-                        intent.putExtra("returnposition", position);
-                        intent.putExtra("return_ea_unit_position", ea_unit_position);
-                        intent.putExtra("returnCD", product_cd);
-                        intent.putExtra("returnStock", stock);
-                        intent.putExtra("transfer_unit", "333");
-                        intent.putExtra("id_unique_LD", id_unique_LD);
-
-                        // truyền qua cho letdowmQrCode để xử lí from - to
-
-                        intent.putExtra("expdate", expiredDate);
+//                        intent.putExtra("btn1", barcodeData);
+//                        intent.putExtra("returnposition", position);
+//                        intent.putExtra("return_ea_unit_position", ea_unit_position);
+//                        intent.putExtra("returnCD", product_cd);
+//                        intent.putExtra("returnStock", stock);
+//                        intent.putExtra("transfer_unit", "333");
+//                        intent.putExtra("id_unique_LD", id_unique_LD);
+//
+//                        // truyền qua cho letdowmQrCode để xử lí from - to
+//
+//                        intent.putExtra("expdate", expiredDate);
                         startActivity(intent);
                         finish();
 
@@ -524,7 +524,7 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow, String batch_number) {
 
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), TransferUnitActivity.class);
@@ -561,7 +561,7 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow,final String batch_number) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2",pro_code);
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 

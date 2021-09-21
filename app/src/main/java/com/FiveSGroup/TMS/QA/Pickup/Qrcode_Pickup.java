@@ -465,9 +465,9 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
                     } else {
                         Toast.makeText(Qrcode_Pickup.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_Pickup.this, List_Pickup.class);
-                        intent.putExtra("pickup", "333");
-                        intent.putExtra("btn1", barcodeData);
-                        intent.putExtra("id_unique_SO", id_unique_SO);
+//                        intent.putExtra("pickup", "333");
+//                        intent.putExtra("btn1", barcodeData);
+//                        intent.putExtra("id_unique_SO", id_unique_SO);
                         startActivity(intent);
                         finish();
                     }
@@ -515,7 +515,7 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow , String batch_number) {
 // khi kh không check vào đơn vị tính mặc định isdefault mặc định là 1 còn khi check vào là 2
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), List_Pickup.class);
@@ -551,7 +551,7 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow ,final String batch_number ) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2",pro_code);
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
         String Ea_Unit_temp = "";

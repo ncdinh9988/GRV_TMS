@@ -63,6 +63,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
     private String barcode = "",
             returnposition = "",
             returnCD = "",
+            pro_code = "",
             returnStock = "",
             selectedUnit = "",
             currentDateandTime = "",
@@ -158,9 +159,13 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         typeScan = intent.getStringExtra("typeScan");
         barcode = intent.getStringExtra("btn1");
         returnposition = intent.getStringExtra("returnposition");
+        pro_code = intent.getStringExtra("pro_code");
         returnCD = global.getStockReceiptCd();
         returnStock = intent.getStringExtra("returnStock");
         stockin = intent.getStringExtra("stockin");
+        if(pro_code==null){
+            pro_code= "";
+        }
 
         total_shelf_life = intent.getStringExtra("total_shelf_life");
         shelf_life_type = intent.getStringExtra("shelf_life_type");
@@ -183,7 +188,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         edtSelectProductExpiredDate.setInputType(InputType.TYPE_NULL);
         //set unit in adapter
         units = new ArrayList<>();
-        units = new CmnFns().getEa_Unit(barcode, "2");
+        units = new CmnFns().getEa_Unit(barcode, "2",pro_code);
         if (units == null) {
             units = new ArrayList<>();
         }

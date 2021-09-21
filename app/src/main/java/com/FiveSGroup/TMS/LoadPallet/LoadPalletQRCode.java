@@ -559,7 +559,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
                     } else {
                         Toast.makeText(LoadPalletQRCode.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LoadPalletQRCode.this, LoadPalletActivity.class);
-                        intent.putExtra("load_pallet", "333");
+//                        intent.putExtra("load_pallet", "333");
                         startActivity(intent);
                         finish();
 
@@ -604,7 +604,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
 
     private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow, String batch_number) {
 
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
 
         Intent intentt = new Intent(getApplication(), LoadPalletActivity.class);
@@ -643,7 +643,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
 
 
     private void ShowDialogUnit(final String barcode, final String expDateTemp2, final String stockinDateShow,final String batch_number) {
-        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2");
+        int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "2",pro_code);
 
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
         String Ea_Unit_temp = "";
