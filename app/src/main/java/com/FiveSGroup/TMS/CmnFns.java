@@ -1942,7 +1942,7 @@ public class CmnFns {
     }
 
 
-    public int getBatch(String usercode, String barcodeData, String stock) {
+    public int getBatch(String usercode, String barcodeData, String stock,String pro_code) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -1982,24 +1982,24 @@ public class CmnFns {
                 String position_description = jsonobj.getString("POSITION_DESCRIPTION");
                 String warehouse_position_cd = jsonobj.getString("WAREHOUSE_POSITION_CD");
 
-                Batch_number_Tam batch_number_tam = new Batch_number_Tam();
-                batch_number_tam.setBATCH_NUMBER(batch_number);
-                batch_number_tam.setPRODUCT_CD(product_cd);
-                batch_number_tam.setPRODUCT_CODE(product_code);
-                batch_number_tam.setPRODUCT_NAME(product_name);
-                batch_number_tam.setSTOCKIN_DATE(stockin_date);
-                batch_number_tam.setEXPIRED_DATE(expired_date);
-                batch_number_tam.setUNIT(unit);
-                batch_number_tam.setMANUFACTURING_DATE(manufacturing_date);
-                batch_number_tam.setPOSITION_CODE(position_code);
-                batch_number_tam.setPOSITION_DESCRIPTION(position_description);
-                ;
-                batch_number_tam.setWAREHOUSE_POSITION_CD(warehouse_position_cd);
-                batch_number_tam.setAUTOINCREMENT(String.valueOf(i));
+                if(pro_code.equals(product_code)){
+                    Batch_number_Tam batch_number_tam = new Batch_number_Tam();
+                    batch_number_tam.setBATCH_NUMBER(batch_number);
+                    batch_number_tam.setPRODUCT_CD(product_cd);
+                    batch_number_tam.setPRODUCT_CODE(product_code);
+                    batch_number_tam.setPRODUCT_NAME(product_name);
+                    batch_number_tam.setSTOCKIN_DATE(stockin_date);
+                    batch_number_tam.setEXPIRED_DATE(expired_date);
+                    batch_number_tam.setUNIT(unit);
+                    batch_number_tam.setMANUFACTURING_DATE(manufacturing_date);
+                    batch_number_tam.setPOSITION_CODE(position_code);
+                    batch_number_tam.setPOSITION_DESCRIPTION(position_description);
+                    batch_number_tam.setWAREHOUSE_POSITION_CD(warehouse_position_cd);
+                    batch_number_tam.setAUTOINCREMENT(String.valueOf(i));
 
-                //exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
-                DatabaseHelper.getInstance().CreateBatch_Number(batch_number_tam);
-
+                    //exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
+                    DatabaseHelper.getInstance().CreateBatch_Number(batch_number_tam);
+                }
             }
 
         } catch (JSONException e) {

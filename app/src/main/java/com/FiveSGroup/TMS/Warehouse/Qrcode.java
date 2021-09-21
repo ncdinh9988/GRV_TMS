@@ -330,7 +330,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void getinformation(final String barcodeData) {
-        int statusGetBatch = new CmnFns().getBatch(global.getAdminCode(),barcodeData , global.getStockReceiptCd());
+        int statusGetBatch = new CmnFns().getBatch(global.getAdminCode(),barcodeData , global.getStockReceiptCd(),pro_code);
         if(statusGetBatch == 1){
             // lấy tất cả hạn `sử dụng trong database ra
             final ArrayList<Batch_number_Tam> batch_number_tams = DatabaseHelper.getInstance().getallBatch();
