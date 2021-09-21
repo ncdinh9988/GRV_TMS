@@ -119,9 +119,29 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         }catch (Exception e){
 
         }
-
-
         stockinDate = intent.getStringExtra("stockin_date");
+
+        try {
+            if (expDate.equals("---")){
+                expDate = "";
+            }
+            if(expDate==null){
+                expDate = "";
+            }
+        }catch (Exception e){
+
+        }
+
+        try {
+            if (stockinDate.equals("---")){
+                stockinDate = "";
+            }
+            if(stockinDate==null){
+                stockinDate = "";
+            }
+        }catch (Exception e){
+
+        }
     }
 
     private void prepareData() {

@@ -503,11 +503,12 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("cancel", "333");
-//        intentt.putExtra("stockin_date", stockinDateShow);
+        intentt.putExtra("stockin_date", stockinDate);
         intentt.putExtra("id_unique_SO", id_unique_SO);
 
 
         // truyền qua cho ListQRCode để xử lí from - to
+        intentt.putExtra("expdate", expiredDate);
         intentt.putExtra("expdate", expiredDate);
 
         Log.e("barcodeData1", "" + barcodeData);
