@@ -315,62 +315,65 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
             DatabaseHelper.getInstance().deleteallProduct_S_P();
 
             int statusGetcode = new CmnFns().getProduct_code(barcodeData);
-            final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
-            if (product_s_ps.size() > 1) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Pickup.this);
-                builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
+            if (statusGetcode != 1) {
+                ReturnPosition(barcodeData);
+            } else {
+                final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
+                if (product_s_ps.size() > 1) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Pickup.this);
+                    builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
 
-                final ArrayList<String> product_code = new ArrayList<>();
-                for (int i = 0; i < product_s_ps.size(); i++) {
-                    product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
-                }
-                // chuyển đổi exp_date thành mảng chuỗi String
-                String[] mStringArray = new String[product_code.size()];
-                mStringArray = product_code.toArray(mStringArray);
+                    final ArrayList<String> product_code = new ArrayList<>();
+                    for (int i = 0; i < product_s_ps.size(); i++) {
+                        product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
+                    }
+                    // chuyển đổi exp_date thành mảng chuỗi String
+                    String[] mStringArray = new String[product_code.size()];
+                    mStringArray = product_code.toArray(mStringArray);
 
-                final String[] mString = mStringArray;
-                builder.setItems(mString, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String product_name = mString[which];
-                        String[] chuoi = product_name.split(" - ");
-                        //int vitri = which;
+                    final String[] mString = mStringArray;
+                    builder.setItems(mString, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String product_name = mString[which];
+                            String[] chuoi = product_name.split(" - ");
+                            //int vitri = which;
 //                        String product_code = product_s_ps.get(vitri).getPRODUCT_CODE();
 
-                        dialog.dismiss(); // Close Dialog
-                        if (product_name != "") {
-                            pro_code = chuoi[0];
-                            pro_name = chuoi[1];
-                            getinformation(barcodeData);
+                            dialog.dismiss(); // Close Dialog
+                            if (product_name != "") {
+                                pro_code = chuoi[0];
+                                pro_name = chuoi[1];
+                                getinformation(barcodeData);
+                            }
+
+                            // Do some thing....
+
                         }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
-                        // Do some thing....
-
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-
-            } else {
-                pro_code = product_s_ps.get(0).getPRODUCT_CODE();
-                getinformation(barcodeData);
+                } else {
+                    pro_code = product_s_ps.get(0).getPRODUCT_CODE();
+                    getinformation(barcodeData);
+                }
             }
-
         }
     }
 
     private void getinformation(final String barcodeData) {
         int statusGetCustt = new CmnFns().getDataFromSeverWithBatch2(barcodeData, CmnFns.readDataAdmin(), "WQA", 0, global.getPickupCD());
-        if (statusGetCustt != 1) {
-            ReturnPosition(barcodeData, stockinDate);
-        }
-        else {
-            // expiredDate nhận giá trị từ adapter để xử lí position
-            if (expiredDate != null) {
-
-                ReturnPosition(barcodeData, stockinDate);
-
-            } else {
+//        if (statusGetCustt != 1) {
+//            ReturnPosition(barcodeData, stockinDate);
+//        }
+//        else {
+//            // expiredDate nhận giá trị từ adapter để xử lí position
+//            if (expiredDate != null) {
+//
+//                ReturnPosition(barcodeData, stockinDate);
+//
+//            } else {
                 try {
                     // lấy tất cả hạn sử dụng trong database ra
                     final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue2(pro_code);
@@ -473,8 +476,8 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
                     Log.d("#778:", e.getMessage());
                 }
 
-            }
-        }
+//            }
+//        }
     }
 
     private void Checkproduct_Code(){
@@ -483,7 +486,7 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
         startActivity(intentt);
     }
 
-    private void ReturnPosition(String barcode, String stockinDateShow) {
+    private void ReturnPosition(String barcode) {
         Intent intentt = new Intent(getApplication(), List_Pickup.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);
@@ -493,7 +496,7 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
         intentt.putExtra("pickup", "333");
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
-        intentt.putExtra("stockin_date", stockinDateShow);
+//        intentt.putExtra("stockin_date", stockinDateShow);
         intentt.putExtra("id_unique_SO", id_unique_SO);
 
 
