@@ -348,9 +348,18 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
 
-            } else {
+            } else if(product_s_ps.size() == 1) {
+
                 pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                 getinformation(barcodeData);
+
+
+            }else {
+                Toast.makeText(TransferUnitQrcode.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(TransferUnitQrcode.this, TransferUnitActivity.class);
+                startActivity(intent);
+                finish();
+
             }
 
         }
@@ -466,17 +475,17 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
                     } else {
                         Toast.makeText(TransferUnitQrcode.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(TransferUnitQrcode.this, TransferUnitActivity.class);
-                        intent.putExtra("btn1", barcodeData);
-                        intent.putExtra("returnposition", position);
-                        intent.putExtra("return_ea_unit_position", ea_unit_position);
-                        intent.putExtra("returnCD", product_cd);
-                        intent.putExtra("returnStock", stock);
-                        intent.putExtra("transfer_unit", "333");
-                        intent.putExtra("id_unique_LD", id_unique_LD);
-
-                        // truyền qua cho letdowmQrCode để xử lí from - to
-
-                        intent.putExtra("expdate", expiredDate);
+//                        intent.putExtra("btn1", barcodeData);
+//                        intent.putExtra("returnposition", position);
+//                        intent.putExtra("return_ea_unit_position", ea_unit_position);
+//                        intent.putExtra("returnCD", product_cd);
+//                        intent.putExtra("returnStock", stock);
+//                        intent.putExtra("transfer_unit", "333");
+//                        intent.putExtra("id_unique_LD", id_unique_LD);
+//
+//                        // truyền qua cho letdowmQrCode để xử lí from - to
+//
+//                        intent.putExtra("expdate", expiredDate);
                         startActivity(intent);
                         finish();
 

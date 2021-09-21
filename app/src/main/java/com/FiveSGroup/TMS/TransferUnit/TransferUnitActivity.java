@@ -60,7 +60,7 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
     TextView tvTitle , VTDen;
     String fromLetDownSuggestionsActivity = "";
     String lpn = "";
-    int result;
+    String result;
 
 
     ArrayList<TransferUnitProduct> transferUnitarr;
@@ -362,39 +362,40 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
                     result = new CmnFns().synchronizeConvert_UOM();
 
 //                            result = new CmnFns().synchronizeData(saleCode, "WLD", "");
-                    if (result >= 1) {
-                        ShowSuccessMessage("Lưu thành công");
+                    if (result.contains("Lưu thành công")) {
+                        ShowSuccessMessage(result);
                     } else {
+                        dialog.showDialog(TransferUnitActivity.this, result);
 
-                        if (result == -2) {
-                            dialog.showDialog(TransferUnitActivity.this, "Số lượng không đủ trong tồn kho");
-                        } else if (result == -3) {
-                            dialog.showDialog(TransferUnitActivity.this, "Vị trí từ không hợp lệ");
-                        } else if (result == -4) {
-                            dialog.showDialog(TransferUnitActivity.this, "Trạng thái của phiếu không hợp lệ");
-                        } else if (result == -5) {
-                            dialog.showDialog(TransferUnitActivity.this, "Vị trí từ trùng vị trí đên");
-                        } else if (result == -6) {
-                            dialog.showDialog(TransferUnitActivity.this, "Vị trí đến không hợp lệ");
-                        } else if (result == -7) {
-                            dialog.showDialog(TransferUnitActivity.this, "Cập nhật trạng thái thất bại");
-                        } else if (result == -8) {
-                            dialog.showDialog(TransferUnitActivity.this, "Sản phẩm không có thông tin trên phiếu ");
-                        } else if (result == -13) {
-                            dialog.showDialog(TransferUnitActivity.this, "Dữ liệu không hợp lệ");
-
-                        } else if (result == -24) {
-                            dialog.showDialog(TransferUnitActivity.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
-
-                        }else if (result == -26) {
-                            dialog.showDialog(TransferUnitActivity.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
-
-                        }else if (result == -32) {
-                            dialog.showDialog(TransferUnitActivity.this, "Số Lượng Quy Đổi Không Đủ");
-
-                        }else {
-                            dialog.showDialog(TransferUnitActivity.this, "Lưu thất bại");
-                        }
+//                        if (result == -2) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Số lượng không đủ trong tồn kho");
+//                        } else if (result == -3) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Vị trí từ không hợp lệ");
+//                        } else if (result == -4) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Trạng thái của phiếu không hợp lệ");
+//                        } else if (result == -5) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Vị trí từ trùng vị trí đên");
+//                        } else if (result == -6) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Vị trí đến không hợp lệ");
+//                        } else if (result == -7) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Cập nhật trạng thái thất bại");
+//                        } else if (result == -8) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Sản phẩm không có thông tin trên phiếu ");
+//                        } else if (result == -13) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Dữ liệu không hợp lệ");
+//
+//                        } else if (result == -24) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+//
+//                        }else if (result == -26) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+//
+//                        }else if (result == -32) {
+//                            dialog.showDialog(TransferUnitActivity.this, "Số Lượng Quy Đổi Không Đủ");
+//
+//                        }else {
+//                            dialog.showDialog(TransferUnitActivity.this, "Lưu thất bại");
+//                        }
 
 
                     }

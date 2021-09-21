@@ -1884,7 +1884,10 @@ public class CmnFns {
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
         if (result.equals("-1")) {
             return -1;
-        } else if (result.equals("1")) {
+        }
+        else if (result.equals("0")) {
+            return 0;
+        }else if (result.equals("1")) {
             return 1;
         } else if (result.equals("-8")) {
             return -8;
@@ -5155,13 +5158,13 @@ public class CmnFns {
 
     }
 
-    public int synchronizeConvert_UOM() {
+    public String synchronizeConvert_UOM() {
 
         try {
 
             int status = this.allowSynchronizeBy3G();
             if (status == 102 || status == -1) {
-                return -1;
+                return "Vui Lòng Kiểm Tra Lại Kết Nối";
             }
 
             String jsonData = "";
@@ -5172,7 +5175,7 @@ public class CmnFns {
 
             List<TransferUnitProduct> product = DatabaseHelper.getInstance().getAllTransferUnitProduct();
             if (product == null || product.size() == 0)
-                return 1;
+                return "Không có dữ liệu của chuyển đơn vị tính";
 
             jsonData = gson.toJson(product);
 
@@ -5183,19 +5186,22 @@ public class CmnFns {
             // phải đồng bộ nữa
 
             String result = Webservice.synchronizeData(jsonData);
-            int resultCovertToInt = Integer.parseInt(result);
-            if (resultCovertToInt >= 1) {
-                // đã đồng bộ thành công update để lần sau không đồng bộ lại
-                //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
-                return resultCovertToInt;
-            } else {
-                // đồng bộ không thành công
-                return Integer.parseInt(result);
-            }
+
+            return result;
+
+//            int resultCovertToInt = Integer.parseInt(result);
+//            if (resultCovertToInt >= 1) {
+//                // đã đồng bộ thành công update để lần sau không đồng bộ lại
+//                //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
+//                return resultCovertToInt;
+//            } else {
+//                // đồng bộ không thành công
+//                return Integer.parseInt(result);
+//            }
         } catch (Exception e) {
             // TODO: handle exception
 
-            return -1;
+            return "Đồng Bộ Không Thành Công";
         }
 
     }
