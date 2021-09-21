@@ -353,7 +353,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(LetDownQrCodeActivity.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LetDownQrCodeActivity.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(LetDownQrCodeActivity.this, LetDownActivity.class);
                     startActivity(intent);
                     finish();

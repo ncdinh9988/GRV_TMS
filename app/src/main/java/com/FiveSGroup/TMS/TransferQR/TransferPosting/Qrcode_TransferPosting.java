@@ -29,6 +29,8 @@ import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
+import com.FiveSGroup.TMS.TransferUnit.TransferUnitActivity;
+import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.Warehouse.Exp_Date_Tam;
 import com.FiveSGroup.TMS.Warehouse.Product_S_P;
 import com.FiveSGroup.TMS.global;
@@ -354,9 +356,14 @@ public class Qrcode_TransferPosting extends AppCompatActivity implements View.On
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
 
-                } else {
+                }else if(product_s_ps.size() == 1){
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
+                }else{
+                    Toast.makeText(Qrcode_TransferPosting.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Qrcode_TransferPosting.this, List_TransferPosting.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         }

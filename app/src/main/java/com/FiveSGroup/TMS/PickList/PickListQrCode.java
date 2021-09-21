@@ -362,7 +362,7 @@ public class PickListQrCode extends AppCompatActivity {
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(PickListQrCode.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PickListQrCode.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(PickListQrCode.this, ListPickList.class);
                     startActivity(intent);
                     finish();

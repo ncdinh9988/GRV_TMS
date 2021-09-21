@@ -358,7 +358,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(Qrcode_Warehouse_Adjustment.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Qrcode_Warehouse_Adjustment.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Qrcode_Warehouse_Adjustment.this, ListQrcode_Warehouse_Adjustment.class);
                     startActivity(intent);
                     finish();

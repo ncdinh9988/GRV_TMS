@@ -443,7 +443,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(Qrcode_StockTransfer.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Qrcode_StockTransfer.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Qrcode_StockTransfer.this, ListStockTransfer.class);
                     startActivity(intent);
                     finish();

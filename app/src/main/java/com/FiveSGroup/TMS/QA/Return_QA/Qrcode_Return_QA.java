@@ -361,7 +361,7 @@ public class Qrcode_Return_QA extends AppCompatActivity implements View.OnClickL
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(Qrcode_Return_QA.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Qrcode_Return_QA.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Qrcode_Return_QA.this, List_Return_QA.class);
                     startActivity(intent);
                     finish();

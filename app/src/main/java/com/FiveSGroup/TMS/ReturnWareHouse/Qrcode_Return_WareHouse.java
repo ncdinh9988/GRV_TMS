@@ -354,7 +354,7 @@ public class Qrcode_Return_WareHouse extends AppCompatActivity implements View.O
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(Qrcode_Return_WareHouse.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Qrcode_Return_WareHouse.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Qrcode_Return_WareHouse.this, List_Return_WareHouse.class);
                     startActivity(intent);
                     finish();

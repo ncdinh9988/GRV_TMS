@@ -373,7 +373,7 @@ public class Qrcode_Remove_LPN extends AppCompatActivity {
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(Qrcode_Remove_LPN.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Qrcode_Remove_LPN.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Qrcode_Remove_LPN.this, List_Remove_LPN.class);
                     startActivity(intent);
                     finish();

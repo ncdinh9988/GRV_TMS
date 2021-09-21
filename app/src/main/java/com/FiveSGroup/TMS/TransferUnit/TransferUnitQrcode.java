@@ -355,7 +355,7 @@ public class TransferUnitQrcode extends AppCompatActivity implements View.OnClic
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(TransferUnitQrcode.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TransferUnitQrcode.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(TransferUnitQrcode.this, TransferUnitActivity.class);
                     startActivity(intent);
                     finish();

@@ -360,7 +360,7 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(Qrcode_Pickup.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Qrcode_Pickup.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Qrcode_Pickup.this, List_Pickup.class);
                     startActivity(intent);
                     finish();

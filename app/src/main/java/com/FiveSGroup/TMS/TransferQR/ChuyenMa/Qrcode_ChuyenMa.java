@@ -357,7 +357,7 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
                 pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                 getinformation(barcodeData);
             }else{
-                Toast.makeText(Qrcode_ChuyenMa.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                Toast.makeText(Qrcode_ChuyenMa.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Qrcode_ChuyenMa.this, List_ChuyenMa.class);
                 startActivity(intent);
                 finish();

@@ -357,7 +357,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
                 pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                 getinformation(barcodeData);
             }else{
-                Toast.makeText(Qrcode_QA.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                Toast.makeText(Qrcode_QA.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Qrcode_QA.this, List_QA.class);
                 startActivity(intent);
                 finish();

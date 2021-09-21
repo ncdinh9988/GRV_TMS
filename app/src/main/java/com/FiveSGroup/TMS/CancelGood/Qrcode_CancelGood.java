@@ -361,7 +361,7 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
-                    Toast.makeText(Qrcode_CancelGood.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Qrcode_CancelGood.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(Qrcode_CancelGood.this, ListQrcode_CancelGood.class);
                     startActivity(intent);
                     finish();
