@@ -35,7 +35,7 @@ import com.FiveSGroup.TMS.global;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryListProduct extends AppCompatActivity implements View.OnClickListener {
+public class    InventoryListProduct extends AppCompatActivity implements View.OnClickListener {
     Button buttonBack, btnok;
     ImageButton btnscan_barcode;
     RecyclerView listViewProduct;
@@ -48,6 +48,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
     String inventory = "";
     String pro_code = "";
     String pro_name = "";
+    String pro_cd = "";
     String key = "";
     String ea_unit = "";
     String batch_number = "";
@@ -101,6 +102,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         key = intent.getStringExtra("key");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        pro_cd = intent.getStringExtra("pro_cd");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
         id_unique_IVT = intent.getStringExtra("id_unique_IVT");
@@ -559,7 +561,7 @@ public class InventoryListProduct extends AppCompatActivity implements View.OnCl
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZoneInventory(value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WST",
-                    global.getInventoryCD(), stockinDate, isLPN,pro_code , pro_name ,batch_number);
+                    global.getInventoryCD(), stockinDate, isLPN,pro_code , pro_name ,batch_number, pro_cd);
 
             Dialog dialog = new Dialog(InventoryListProduct.this);
 

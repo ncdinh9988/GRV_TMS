@@ -57,6 +57,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
     String position = "";
     String pro_code = "";
     String pro_name = "";
+    String pro_cd = "";
     String product_cd = "";
     String stock = "";
     String expiredDate = " ";
@@ -406,6 +407,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
 
                                 int vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                                pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                                 dialog.dismiss(); // Close Dialog
                                 if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                     if (expDate != "") {
@@ -455,6 +457,7 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
                             stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                         } catch (Exception e) {
 
                         }
@@ -500,7 +503,8 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
         intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("id_unique_WA", id_unique_WA);
         intentt.putExtra("warehouse_adjustment", "333");
-//        intentt.putExtra("stockin_date", stockinDateShow);
+        intentt.putExtra("pro_cd", pro_cd);
+        intentt.putExtra("stockin_date", stockinDate);
 
 
         // truyền qua cho ListQRCode để xử lí from - to
@@ -528,6 +532,8 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
         intentt.putExtra("id_unique_WA", id_unique_WA);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("warehouse_adjustment", "333");
         if (stockinDate == null) {
@@ -588,6 +594,9 @@ public class Qrcode_Warehouse_Adjustment extends AppCompatActivity implements Vi
                 intentt.putExtra("id_unique_WA", id_unique_WA);
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("warehouse_adjustment", "333");
+                intentt.putExtra("pro_cd", pro_cd);
+                intentt.putExtra("pro_code", pro_code);
+                intentt.putExtra("pro_name", pro_name);
                 intentt.putExtra("returnStock", stock);
                 if (stockinDate == null) {
                     intentt.putExtra("stockin_date", stockinDateShow);

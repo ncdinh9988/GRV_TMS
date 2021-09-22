@@ -6053,7 +6053,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Product_ChuyenMa> listchuyenma = new ArrayList<Product_ChuyenMa>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "Select * From O_CHUYENMA Where " + TRANSFER_POSTING_CD_CHUYENMA + " = " + chuyenma_cd +
-                " GROUP BY PRODUCT_CODE_FROM_CHUYENMA , PRODUCT_NAME_FROM_CHUYENMA , EXPIRED_DATE_CHUYENMA , BATCH_NUMBER_CHUYENMA ORDER BY " + BATCH_NUMBER_CHUYENMA + " DESC";
+                " GROUP BY PRODUCT_CODE_FROM_CHUYENMA , PRODUCT_NAME_FROM_CHUYENMA , EXPIRED_DATE_CHUYENMA , BATCH_NUMBER_CHUYENMA , UNIT_CHUYENMA ORDER BY "
+                + BATCH_NUMBER_CHUYENMA + " DESC";
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -6285,6 +6286,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String EXPIRED_DATE_TAM = "EXPIRED_DATE_TAM";
     public static final String PRODUCT_CODE_TAM = "PRODUCT_CODE_TAM";
     public static final String STOCKIN_DATE_TAM = "STOCKIN_DATE_TAM";
+    public static final String PRODUCT_CD_TAM = "PRODUCT_CD_TAM";
     public static final String TOTAL_SHELF_LIFE = "TOTAL_SHELF_LIFE";
     public static final String SHELF_LIFE_TYPE = "SHELF_LIFE_TYPE";
     public static final String MIN_REM_SHELF_LIFE = "MIN_REM_SHELF_LIFE";
@@ -6295,6 +6297,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + PRODUCT_CODE_TAM + " TEXT,"
             + STOCKIN_DATE_TAM + " TEXT,"
             + TOTAL_SHELF_LIFE + " TEXT,"
+            + PRODUCT_CD_TAM + " TEXT,"
             + BATCH_NUMBER_TAM + " TEXT,"
             + SHELF_LIFE_TYPE + " TEXT,"
             + MIN_REM_SHELF_LIFE + " TEXT,"
@@ -6307,6 +6310,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //values.put(QRCODE, qrcode.getQRCODE());
         values.put(TOTAL_SHELF_LIFE, exp.getTOTAL_SHELF_LIFE());
         values.put(STOCKIN_DATE_TAM, exp.getSTOCKIN_DATE_TAM());
+        values.put(PRODUCT_CD_TAM, exp.getPRODUCT_CD_TAM());
         values.put(PRODUCT_CODE_TAM, exp.getPRODUCT_CODE_TAM());
         values.put(SHELF_LIFE_TYPE, exp.getSHELF_LIFE_TYPE());
         values.put(BATCH_NUMBER_TAM, exp.getBATCH_NUMBER_TAM());
@@ -6346,7 +6350,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getallValue2(String pro_code) {
         ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT DISTINCT STOCKIN_DATE_TAM ,EXPIRED_DATE_TAM , BATCH_NUMBER_TAM , PRODUCT_CODE_TAM  FROM " + O_EXP +
+        String selectQuery = "SELECT DISTINCT STOCKIN_DATE_TAM ,EXPIRED_DATE_TAM , BATCH_NUMBER_TAM , PRODUCT_CODE_TAM , PRODUCT_CD_TAM FROM " + O_EXP +
                 " where " + PRODUCT_CODE_TAM + " = '" + pro_code + "' "
                 ;
         Cursor c = db.rawQuery(selectQuery, null);
@@ -6356,6 +6360,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Exp_Date_Tam expd = new Exp_Date_Tam();
                 expd.setEXPIRED_DATE_TAM((c.getString(c
                         .getColumnIndex(EXPIRED_DATE_TAM))));
+                expd.setPRODUCT_CD_TAM((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_TAM))));
                 expd.setSTOCKIN_DATE_TAM((c.getString(c
                         .getColumnIndex(STOCKIN_DATE_TAM))));
                 expd.setBATCH_NUMBER_TAM((c.getString(c

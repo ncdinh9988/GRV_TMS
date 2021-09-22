@@ -66,6 +66,7 @@ public class PickListQrCode extends AppCompatActivity {
     String ea_unit_position = " ";
     String stockinDate = "";
     String checkToFinish = "" , id_unique_PL = "";
+    String pro_cd = "";
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
@@ -405,6 +406,7 @@ public class PickListQrCode extends AppCompatActivity {
                             String expDate = mString[which];
                             int vitri = which;
                             String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                             dialog.dismiss(); // Close Dialog
                             if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                 if (expDate != "") {
@@ -460,6 +462,7 @@ public class PickListQrCode extends AppCompatActivity {
                         stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                         batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                         product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                        pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                     } catch (Exception e) {
 
                     }
@@ -505,6 +508,9 @@ public class PickListQrCode extends AppCompatActivity {
         intentt.putExtra("expdate", expiredDate);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("stockin_date", stockinDate);
+        intentt.putExtra("pro_cd", pro_cd);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
 
 
         startActivity(intentt);
@@ -524,6 +530,8 @@ public class PickListQrCode extends AppCompatActivity {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("batch_number", batch_number);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
@@ -579,6 +587,8 @@ public class PickListQrCode extends AppCompatActivity {
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
+                intentt.putExtra("pro_cd", pro_cd);
+
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("id_unique_PL", id_unique_PL);

@@ -64,6 +64,7 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
     String checkToFinish = "", id_unique_SO = "";
     String pro_code = "";
     String pro_name = "";
+    String pro_cd = "";
 
 
     TextView textViewTitle;
@@ -408,6 +409,7 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
 
                                 int vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                                pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                                 dialog.dismiss(); // Close Dialog
                                 if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                     if (expDate != "") {
@@ -455,6 +457,7 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
                             stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                         } catch (Exception e) {
 
                         }
@@ -501,8 +504,11 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("pickup", "333");
+        intentt.putExtra("stockin_date", stockinDate);
+        intentt.putExtra("pro_cd", pro_cd);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+
 //        intentt.putExtra("stockin_date", stockinDateShow);
         intentt.putExtra("id_unique_SO", id_unique_SO);
 
@@ -536,6 +542,8 @@ public class Qrcode_Pickup extends AppCompatActivity implements View.OnClickList
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("pickup", "333");
         if (stockinDate == null) {
             intentt.putExtra("stockin_date", stockinDateShow);

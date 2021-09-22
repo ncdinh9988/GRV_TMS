@@ -47,6 +47,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
     String stock = "";
     String expDate = "";
     String expDate1 = "";
+    String pro_cd = "";
     String transfer_posting = "";
     String ea_unit = "";
     String ea_unit_position = "";
@@ -91,6 +92,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
+        pro_cd = intent.getStringExtra("pro_cd");
         batch_number = intent.getStringExtra("batch_number");
         try {
             if (batch_number.equals("---")){
@@ -529,7 +531,7 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
     public void alert_show_SP(int isLPN) {
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZoneTransfer_Posting(List_TransferPosting.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, global.getTransferPostingCD(), isLPN ,batch_number,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate, global.getTransferPostingCD(), isLPN ,batch_number,pro_code , pro_name, pro_cd);
 
             Dialog dialog = new Dialog(List_TransferPosting.this);
 

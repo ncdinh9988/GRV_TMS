@@ -45,6 +45,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
     String pro_code = "";
     String pro_name = "";
     String ea_unit = "";
+    String pro_cd = "";
     String ea_unit_position = "";
     String stockinDate = "";
     String batch_number = "";
@@ -88,6 +89,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
         pro_code = intent.getStringExtra("pro_code");
+        pro_cd = intent.getStringExtra("pro_cd");
         pro_name = intent.getStringExtra("pro_name");
         load_pallet = intent.getStringExtra("load_pallet");
         ea_unit = intent.getStringExtra("ea_unit");
@@ -637,7 +639,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZoneLoadPallet(LoadPalletActivity.this, value1,
-                    CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN, pro_code,pro_name,batch_number);
+                    CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN, pro_code,pro_name,batch_number , pro_cd);
 
 
             Dialog dialog = new Dialog(LoadPalletActivity.this);

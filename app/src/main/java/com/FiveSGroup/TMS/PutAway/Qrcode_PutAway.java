@@ -63,6 +63,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
     TextView textViewTitle;
     String stockinDate = "";
     String id_unique_PAW = "";
+    String pro_cd = "";
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     View viewScan;
@@ -414,6 +415,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                                 String expDate = mString[which];
                                 int vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                                pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                                 dialog.dismiss(); // Close Dialog
                                 if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                     if (expDate != "") {
@@ -467,6 +469,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
                             stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                         } catch (Exception e) {
 
                         }
@@ -520,6 +523,9 @@ public class Qrcode_PutAway extends AppCompatActivity {
         // truyền qua cho List_PutAway để xử lí from - to
         intentt.putExtra("expdate", expiredDate);
         intentt.putExtra("stockin_date", stockinDate);
+        intentt.putExtra("pro_cd", pro_cd);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
 
         Log.e("barcodeData1", "" + barcodeData);
         Log.e("nhận từ 2 nút", "" + position);
@@ -542,6 +548,8 @@ public class Qrcode_PutAway extends AppCompatActivity {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("id_unique_PAW", id_unique_PAW);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
@@ -607,6 +615,8 @@ public class Qrcode_PutAway extends AppCompatActivity {
                 intentt.putExtra("put_away", "333");
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
+                intentt.putExtra("pro_cd", pro_cd);
+
                 intentt.putExtra("id_unique_PAW", id_unique_PAW);
                 intentt.putExtra("returnStock", stock);
                 // truyền qua cho List_PutAway để add vào text HSD

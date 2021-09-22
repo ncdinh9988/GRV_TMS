@@ -47,6 +47,7 @@ public class List_Pickup extends AppCompatActivity implements View.OnClickListen
     String pickup = "";
     String pro_code = "";
     String pro_name = "";
+    String pro_cd = "";
     String ea_unit = "";
     String ea_unit_position = "";
     String key = "";
@@ -92,6 +93,7 @@ public class List_Pickup extends AppCompatActivity implements View.OnClickListen
         productCd = intent.getStringExtra("returnCD");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        pro_cd = intent.getStringExtra("pro_cd");
         batch_number = intent.getStringExtra("batch_number");
         try {
             if (batch_number.equals("---")){
@@ -529,7 +531,7 @@ public class List_Pickup extends AppCompatActivity implements View.OnClickListen
     public void alert_show_SP(int isLPN) {
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZonePickup(List_Pickup.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, global.getPickupCD(), isLPN ,batch_number,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate, global.getPickupCD(), isLPN ,batch_number,pro_code , pro_name, pro_cd);
 
             Dialog dialog = new Dialog(List_Pickup.this);
 

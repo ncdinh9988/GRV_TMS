@@ -64,6 +64,7 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
     String checkToFinish = "", id_unique_SO = "";
     String pro_code = "";
     String pro_name = "";
+    String pro_cd = "";
 
 
     TextView textViewTitle;
@@ -410,6 +411,7 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                                 String expDate = mString[which];
                                 int vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                                pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                                 dialog.dismiss(); // Close Dialog
                                 if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                     if (expDate != "") {
@@ -460,6 +462,7 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                             stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                         } catch (Exception e) {
 
                         }
@@ -475,7 +478,7 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                         }
 
                     } else {
-                        Toast.makeText(Qrcode_PoReturn.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Qrcode_PoReturn.this, "Sản Phẩm Không Có Trong Phiếu", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_PoReturn.this, ListQrcode_PoReturn.class);
 //                        intent.putExtra("po_return", "333");
 //                        intent.putExtra("btn1", barcodeData);
@@ -507,6 +510,10 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
         intentt.putExtra("po_return", "333");
 //        intentt.putExtra("stockin_date", stockinDateShow);
         intentt.putExtra("id_unique_SO", id_unique_SO);
+        intentt.putExtra("pro_cd", pro_cd);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("stockin_date", stockinDate);
 
 
         // truyền qua cho ListQRCode để xử lí from - to
@@ -535,6 +542,8 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("exp_date", expDatetemp);
@@ -594,6 +603,8 @@ public class Qrcode_PoReturn extends AppCompatActivity implements View.OnClickLi
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
+                intentt.putExtra("pro_cd", pro_cd);
+
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("po_return", "333");

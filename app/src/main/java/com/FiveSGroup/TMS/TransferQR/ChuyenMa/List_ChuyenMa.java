@@ -49,6 +49,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
     String expDate = "";
     String expDate1 = "";
     String chuyen_ma = "";
+    String pro_cd = "";
     String ea_unit = "";
     String pro_code = "";
     String pro_name = "";
@@ -97,6 +98,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
         productCd = intent.getStringExtra("returnCD");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        pro_cd = intent.getStringExtra("pro_cd");
         batch_number = intent.getStringExtra("batch_number");
         try {
             if (batch_number.equals("---")){
@@ -224,7 +226,7 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
         if(check_chuyenma != null ) {
             try {
                 int postitionDes = new CmnFns().synchronizeGETProductByZoneChuyenMa(value1, CmnFns.readDataAdmin(), "WTP", 0,
-                        global.getChuyenMaCD(), expDate , batch_number,stockinDate , ea_unit,pro_code , pro_name);
+                        global.getChuyenMaCD(), expDate , batch_number,stockinDate , ea_unit,pro_code , pro_name, pro_cd);
                 Dialog dialog = new Dialog(List_ChuyenMa.this);
 
                 if (postitionDes == 1) {
@@ -263,6 +265,10 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
                 } else if (postitionDes == -22) {
 
                     dialog.showDialog(List_ChuyenMa.this, "Mã LPN không có trong zone");
+
+                }else if (postitionDes == -100) {
+
+                    dialog.showDialog(List_ChuyenMa.this, "Mã SP Không Có Đơn Vị Tính Đã Chọn");
 
                 }
 

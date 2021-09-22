@@ -46,6 +46,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
     String expDate1 = "";
     String pro_code = "";
     String pro_name = "";
+    String pro_cd = "";
     String cancel = "";
     String key = "";
     String ea_unit = "";
@@ -98,6 +99,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
         ea_unit = intent.getStringExtra("ea_unit");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        pro_cd = intent.getStringExtra("pro_cd");
         ea_unit_position = intent.getStringExtra("return_ea_unit_position");
         lpn = intent.getStringExtra("lpn");
         id_unique_SO = intent.getStringExtra("id_unique_SO");
@@ -529,7 +531,7 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZonecancel_Good(ListQrcode_CancelGood.this, value1, CmnFns.readDataAdmin()
-                    , expDate, ea_unit, stockinDate, global.getCancelCD(), isLPN,pro_code , pro_name , batch_number);
+                    , expDate, ea_unit, stockinDate, global.getCancelCD(), isLPN,pro_code , pro_name , batch_number, pro_cd);
 
             Dialog dialog = new Dialog(ListQrcode_CancelGood.this);
 

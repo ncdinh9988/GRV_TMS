@@ -65,6 +65,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     String ea_unit_position = " ";
     String stockinDate = "" , id_unique_SI = "";
     TextView textViewTitle;
+    String pro_cd = "";
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     private Button buttonBack, btnSend;

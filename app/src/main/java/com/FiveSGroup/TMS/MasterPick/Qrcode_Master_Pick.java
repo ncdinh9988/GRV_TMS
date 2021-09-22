@@ -27,8 +27,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
-import com.FiveSGroup.TMS.LoadPallet.LoadPalletQRCode;
 import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
@@ -67,6 +65,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
     String ea_unit_position = " ";
     String stockinDate = "";
     String checkToFinish = "";
+    String pro_cd = "";
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
@@ -400,6 +399,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
 //                            String vitri = String.valueOf(which);
                             int vitri = which;
                             String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                             dialog.dismiss(); // Close Dialog
                             if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                 if (expDate != "") {
@@ -455,6 +455,7 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
                         stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                         batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                         product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                        pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                     } catch (Exception e) {
 
                     }
@@ -501,6 +502,9 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
         intentt.putExtra("expdate", expiredDate);
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("stockin_date", stockinDate);
+        intentt.putExtra("pro_cd", pro_cd);
+        intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_name", pro_name);
 
 
         startActivity(intentt);
@@ -522,6 +526,8 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("batch_number", batch_number);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("master_picklist", "333");
@@ -575,6 +581,8 @@ public class Qrcode_Master_Pick extends AppCompatActivity {
                 intentt.putExtra("unique_id", unique_id);
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
+                intentt.putExtra("pro_cd", pro_cd);
+
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);

@@ -51,6 +51,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
     String batch_number = "";
     String pro_code = "";
     String pro_name = "";
+    String pro_cd = "";
     String expDate1 = "";
     String key = "";
     String stock_out = "";
@@ -97,6 +98,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
         batch_number = intent.getStringExtra("batch_number");
+        pro_cd = intent.getStringExtra("pro_cd");
         try {
             if (batch_number.equals("---")){
                 batch_number = "";
@@ -539,7 +541,7 @@ public class ListQrcode_Stockout extends AppCompatActivity implements View.OnCli
     public void alert_show_SP(int isLPN){
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZoneStockout(ListQrcode_Stockout.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate,global.getStockoutCD(),isLPN, batch_number,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate,global.getStockoutCD(),isLPN, batch_number,pro_code , pro_name, pro_cd);
 
             Dialog dialog = new Dialog(ListQrcode_Stockout.this);
 

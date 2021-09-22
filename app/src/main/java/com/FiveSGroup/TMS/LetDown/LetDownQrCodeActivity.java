@@ -65,6 +65,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
     String checkToFinish = "";
     String id_unique_LD = "" ;
     TextView textViewTitle;
+    String pro_cd = "";
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     View viewScan;
@@ -402,6 +403,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                                 String expDate = mString[which];
                                 int vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                                pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                                 dialog.dismiss(); // Close Dialog
                                 if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                     if (expDate != "") {
@@ -451,6 +453,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                             stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                         } catch (Exception e) {
 
                         }
@@ -510,6 +513,7 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
         intentt.putExtra("stockin_date", stockinDate);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
         intentt.putExtra("let_down", "333");
         intentt.putExtra("id_unique_LD", id_unique_LD);
         // truyền qua cho letdowmQrCode để xử lí from - to
@@ -539,6 +543,8 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("stock_in", stockinDate);
         intentt.putExtra("id_unique_LD", id_unique_LD);
@@ -595,6 +601,8 @@ public class LetDownQrCodeActivity extends AppCompatActivity implements View.OnC
                 intentt.putExtra("let_down", "333");
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
+                intentt.putExtra("pro_cd", pro_cd);
+
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("stock_in", stockinDate);
                 intentt.putExtra("id_unique_LD", id_unique_LD);

@@ -58,6 +58,7 @@ public class InventoryScanCode extends AppCompatActivity {
     boolean check = false;
     Intent intent;
     String position = "";
+    String pro_cd = "";
     String product_cd = "";
     String stock = "";
     String pro_code = "";
@@ -416,6 +417,7 @@ public class InventoryScanCode extends AppCompatActivity {
                             String expDate = mString[which];
                             int vitri = which;
                             String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                             dialog.dismiss(); // Close Dialog
                             if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                 if (expDate != "") {
@@ -469,6 +471,7 @@ public class InventoryScanCode extends AppCompatActivity {
                         stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                         batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                         product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                        pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                     } catch (Exception e) {
 
                     }
@@ -510,6 +513,7 @@ public class InventoryScanCode extends AppCompatActivity {
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("inventory", "333");
         intentt.putExtra("id_unique_IVT", id_unique_IVT);
@@ -537,6 +541,8 @@ public class InventoryScanCode extends AppCompatActivity {
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("id_unique_IVT", id_unique_IVT);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("inventory", "333");
@@ -591,6 +597,8 @@ public class InventoryScanCode extends AppCompatActivity {
                 intentt.putExtra("btn1", barcode);
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
+                intentt.putExtra("pro_cd", pro_cd);
+
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("returnposition", position);
                 intentt.putExtra("returnCD", product_cd);

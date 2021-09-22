@@ -58,7 +58,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     String stockinDate = "";
     String lpn = "";
     String postitionDess = "";
-
+    String pro_cd = "";
 
     int statusGetCust;
     Product_Qrcode product_qrcode;
@@ -104,6 +104,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        pro_cd = intent.getStringExtra("pro_cd");
         batch_number = intent.getStringExtra("batch_number");
         try {
             if (batch_number.equals("---")){
@@ -545,7 +546,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
 
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZonePickList(ListPickList.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, "WPL", global.getPickListCD(), stockinDate, isLPN, batch_number,pro_code , pro_name);
+                    expDate, ea_unit, "WPL", global.getPickListCD(), stockinDate, isLPN, batch_number,pro_code , pro_name, pro_cd);
 
             Dialog dialog = new Dialog(ListPickList.this);
 

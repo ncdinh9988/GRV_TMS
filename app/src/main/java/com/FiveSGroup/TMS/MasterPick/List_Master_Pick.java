@@ -48,6 +48,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
     String productCd = "";
     String pro_code = "";
     String pro_name = "";
+    String pro_cd = "";
     String batch_number = "";
     String stock = "";
     String expDate = "";
@@ -121,6 +122,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         lpn = intent.getStringExtra("lpn");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        pro_cd = intent.getStringExtra("pro_cd");
 
         stockinDate = intent.getStringExtra("stockin_date");
 
@@ -580,7 +582,7 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes  = new CmnFns().synchronizeGETProductByZoneMasterPick(List_Master_Pick.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, batch_number,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, batch_number,pro_code , pro_name, pro_cd);
 //            int postitionDes ;
 //            if(isLPN==1){
 //                postitionDes = new CmnFns().synchronizeGETProductByZoneMasterPick_LPN(List_Master_Pick.this, value1, CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, global.getMasterPickCd(), isLPN, vitri);

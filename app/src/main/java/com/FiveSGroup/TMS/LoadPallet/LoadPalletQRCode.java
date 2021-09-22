@@ -65,6 +65,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
     String ea_unit_position = " ";
     String stockinDate = "";
     String unique_id = "";
+    String pro_cd = "";
 
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
@@ -141,7 +142,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
         checkBoxGetDVT = findViewById(R.id.checkBoxGetDVT);
         checkBoxGetLPN = findViewById(R.id.checkBoxGetLPN);
         textViewTitle = findViewById(R.id.tvTitle);
-        textViewTitle.setText("QUÉT MÃ - CHUYỂN VỊ TRÍ");
+        textViewTitle.setText("QUÉT MÃ - CHẤT HÀNG LÊN PALLET");
         buttonBack = findViewById(R.id.buttonQRBack);
 //        checkBoxGetLPN.setVisibility(View.INVISIBLE);
     }
@@ -494,6 +495,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
                                 String expDate = mString[which];
                                 int vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                                pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                                 dialog.dismiss(); // Close Dialog
                                 if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                     if (expDate != "") {
@@ -543,12 +545,14 @@ public class LoadPalletQRCode extends AppCompatActivity {
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                     } else if (expired_date.size() == 1) {
-                        String expDatetemp = "" , batch_number = "", product_code = "" , stockin_date = "";
+                        String expDatetemp = "" , batch_number = "", product_code = "" , stockin_date = "" ;
                         try {
                             expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
                             stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
+
                         } catch (Exception e) {
 
                         }
@@ -595,6 +599,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
         intentt.putExtra("load_pallet", "333");
         intentt.putExtra("stockin_date", stockinDate);
 
@@ -609,7 +614,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
 
     }
 
-    private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow, String batch_number) {
+    private void ReturnProduct(String barcode, String expDatetemp, String stockinDateShow, String batch_number ) {
 
         int statusGetEa_Unit = new CmnFns().getEa_UnitFromServer(barcode, "1",pro_code);
         final ArrayList<Ea_Unit_Tam> ea_unit_tams = DatabaseHelper.getInstance().getallEa_Unit();
@@ -621,6 +626,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("pro_code", pro_code);
+        intentt.putExtra("pro_cd", pro_cd);
         intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("exp_date", expDatetemp);
@@ -687,6 +693,7 @@ public class LoadPalletQRCode extends AppCompatActivity {
                 intentt.putExtra("pro_name", pro_name);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
+                intentt.putExtra("pro_cd", pro_cd);
                 intentt.putExtra("load_pallet", "333");
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("stock_in", stockinDate);

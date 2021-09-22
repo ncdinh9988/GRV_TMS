@@ -8,6 +8,15 @@ public class Exp_Date_Tam {
     private String SHELF_LIFE_TYPE;
     private String MIN_REM_SHELF_LIFE;
     private String BATCH_NUMBER_TAM;
+    private String PRODUCT_CD_TAM;
+
+    public String getPRODUCT_CD_TAM() {
+        return PRODUCT_CD_TAM;
+    }
+
+    public void setPRODUCT_CD_TAM(String PRODUCT_CD_TAM) {
+        this.PRODUCT_CD_TAM = PRODUCT_CD_TAM;
+    }
 
     public String getPRODUCT_CODE_TAM() {
         return PRODUCT_CODE_TAM;

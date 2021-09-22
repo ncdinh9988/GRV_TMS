@@ -46,6 +46,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
     String expDate = "";
     String expDate1 = "";
     String put_away = "";
+    String pro_cd = "";
     String key = "";
     String ea_unit = "";
     String ea_unit_position = "";
@@ -199,6 +200,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        pro_cd = intent.getStringExtra("pro_cd");
         key = intent.getStringExtra("key");
         // expDate - hiển thị HSD cho người dùng trong list sản phẩm
         expDate = intent.getStringExtra("exp_date");
@@ -598,7 +600,7 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
 
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZonePutaway(List_PutAway.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, isLPN, pro_code, pro_name, batch_number);
+                    expDate, ea_unit, stockinDate, isLPN, pro_code, pro_name, batch_number, pro_cd);
             Dialog dialog = new Dialog(List_PutAway.this);
             if (postitionDes == 1) {
                 return;

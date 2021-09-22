@@ -57,6 +57,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
     Intent intent;
     String position = "";
     String product_cd = "";
+    String pro_cd = "";
     String stock = "";
     String expiredDate = " ";
     String ea_unit_position = " ";
@@ -405,6 +406,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
 
                                 int vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                                pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                                 dialog.dismiss(); // Close Dialog
                                 if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                     if (expDate != "") {
@@ -455,6 +457,7 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
                             stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                         } catch (Exception e) {
 
                         }
@@ -508,6 +511,8 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
         intentt.putExtra("stockin_date", stockinDateShow);
         intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("allow", "1");
+        intentt.putExtra("pro_cd", pro_cd);
+        intentt.putExtra("stockin_date", stockinDate);
 
 
         // truyền qua cho ListQRCode để xử lí from - to
@@ -538,6 +543,8 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("qa_info", "333");
@@ -596,6 +603,8 @@ public class Qrcode_QA extends AppCompatActivity implements View.OnClickListener
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
+                intentt.putExtra("pro_cd", pro_cd);
+
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("qa_info", "333");

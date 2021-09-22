@@ -47,6 +47,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
     String expDate = "";
     String expDate1 = "";
     String po_return = "";
+    String pro_cd = "";
     String ea_unit = "";
     String ea_unit_position = "";
     String stockinDate = "";
@@ -92,6 +93,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
         productCd = intent.getStringExtra("returnCD");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        pro_cd = intent.getStringExtra("pro_cd");
         batch_number = intent.getStringExtra("batch_number");
         try {
             if (batch_number.equals("---")){
@@ -529,7 +531,7 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZonePo_Return(ListQrcode_PoReturn.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, global.getPoReturnCD(), isLPN, batch_number,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate, global.getPoReturnCD(), isLPN, batch_number,pro_code , pro_name, pro_cd);
 
             Dialog dialog = new Dialog(ListQrcode_PoReturn.this);
 

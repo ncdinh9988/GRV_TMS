@@ -49,6 +49,7 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
     String batch_number = "";
     String stock = "";
     String expDate = "";
+    String pro_cd = "";
     String expDate1 = "";
     String key = "";
     String transfer_unit = "" ,transferunit = "";
@@ -243,6 +244,7 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
         value1 = intent.getStringExtra("btn1");
         global.setBarcode(value1);
         id_unique_TU = intent.getStringExtra("id_unique_TU");
+        pro_cd = intent.getStringExtra("pro_cd");
         // xác định vị trí là from hay to
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
@@ -682,7 +684,7 @@ public class TransferUnitActivity extends AppCompatActivity implements View.OnCl
     public void alert_show_SP(int isLPN) {
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZoneTransferUnit(TransferUnitActivity.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name ,batch_number);
+                    expDate, ea_unit, stockinDate, isLPN,pro_code , pro_name ,batch_number, pro_cd);
 
             Dialog dialog = new Dialog(TransferUnitActivity.this);
 

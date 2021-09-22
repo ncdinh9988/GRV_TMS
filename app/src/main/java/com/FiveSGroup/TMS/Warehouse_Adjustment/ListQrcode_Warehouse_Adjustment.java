@@ -57,6 +57,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
     String key = "";
     String lpn = "" , id_unique_WA = "" ;
     TextView nameproduct ;
+    String pro_cd = "";
 
 
     int statusGetCust;
@@ -100,6 +101,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
         batch_number = intent.getStringExtra("batch_number");
+        pro_cd = intent.getStringExtra("pro_cd");
         try {
             if (batch_number.equals("---")){
                 batch_number = "";
@@ -569,7 +571,7 @@ public class ListQrcode_Warehouse_Adjustment extends AppCompatActivity implement
     public void alert_show_SP(int isLPN) {
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZoneWarehouse_Adjustment(ListQrcode_Warehouse_Adjustment.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, global.getWarehouse_AdjustmentCD(), isLPN,pro_code , pro_name ,batch_number);
+                    expDate, ea_unit, stockinDate, global.getWarehouse_AdjustmentCD(), isLPN,pro_code , pro_name ,batch_number, pro_cd);
 
             Dialog dialog = new Dialog(ListQrcode_Warehouse_Adjustment.this);
 

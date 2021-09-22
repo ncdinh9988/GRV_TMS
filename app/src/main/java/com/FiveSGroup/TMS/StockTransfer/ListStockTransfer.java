@@ -51,6 +51,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
     String id_unique_STF = "";
     String batch_number = "";
     String key = "";
+    String pro_cd = "";
 
     int result;
     ArrayList<Product_StockTransfer> stockTransfers;
@@ -84,6 +85,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
+        pro_cd = intent.getStringExtra("pro_cd");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
         batch_number = intent.getStringExtra("batch_number");
@@ -587,7 +589,7 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
     public void alert_show_SP(int isLPN) {
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZoneStockTransfer(ListStockTransfer.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, isLPN, batch_number,pro_code , pro_name);
+                    expDate, ea_unit, stockinDate, isLPN, batch_number,pro_code , pro_name , pro_cd);
 
             Dialog dialog = new Dialog(ListStockTransfer.this);
 

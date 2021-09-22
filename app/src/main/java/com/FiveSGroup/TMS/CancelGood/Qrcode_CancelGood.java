@@ -58,6 +58,7 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
     boolean check = false;
     Intent intent;
     String position = "";
+    String pro_cd = "";
     String product_cd = "";
     String stock = "";
     String expiredDate = " ";
@@ -407,6 +408,7 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
                                 String expDate = mString[which];
                                 int vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
+                                pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                                 dialog.dismiss(); // Close Dialog
                                 if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                     if (expDate != "") {
@@ -456,6 +458,7 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
                             stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
                             batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                             product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+                            pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
                         } catch (Exception e) {
 
                         }
@@ -502,8 +505,10 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
         intentt.putExtra("returnStock", stock);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
-        intentt.putExtra("cancel", "333");
+        intentt.putExtra("pro_cd", pro_cd);
         intentt.putExtra("stockin_date", stockinDate);
+        intentt.putExtra("cancel", "333");
+
         intentt.putExtra("id_unique_SO", id_unique_SO);
 
 
@@ -535,6 +540,8 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
         intentt.putExtra("returnStock", stock);
+        intentt.putExtra("pro_cd", pro_cd);
+
         intentt.putExtra("id_unique_SO", id_unique_SO);
         intentt.putExtra("exp_date", expDatetemp);
         intentt.putExtra("cancel", "333");
@@ -593,6 +600,8 @@ public class Qrcode_CancelGood extends AppCompatActivity implements View.OnClick
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("pro_name", pro_name);
+                intentt.putExtra("pro_cd", pro_cd);
+
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("cancel", "333");
