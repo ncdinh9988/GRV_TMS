@@ -4433,9 +4433,9 @@ public class CmnFns {
                     int pro_set = 1;
                     Product_PutAway putAway = new Product_PutAway();
                     if((product_cd != null) && (!product_cd.equals(""))){
-                        putAway.setPRODUCT_CODE_PUTAWAY(product_cd);
+                        putAway.setPRODUCT_CD_PUTAWAY(product_cd);
                     }else{
-                        putAway.setPRODUCT_CODE_PUTAWAY(pro_cd);
+                        putAway.setPRODUCT_CD_PUTAWAY(pro_cd);
                     }
                     if ((product_code != null) && (!product_code.equals(""))) {
                         putAway.setPRODUCT_CODE_PUTAWAY(product_code);
@@ -6184,7 +6184,7 @@ public class CmnFns {
     }
 
     public int synchronizeGETProductByZoneRemoveLPN(Context context, String qrcode, String admin, String expDate, String unit, String stockDate,
-                                                    int isLPN, String batch_number, String product_code , String product_name) {
+                                                    int isLPN, String batch_number, String product_code , String product_name,String product_cd) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -6236,10 +6236,12 @@ public class CmnFns {
 
                     int pro_set = 1;
                     Product_Remove_LPN productRemoveLpn = new Product_Remove_LPN();
-//                if((expDate.equals(exxpiredDate)) && (stockDate.equals(stockDate)) && (unit.equals(ea_unit))){
-                    productRemoveLpn.setPRODUCT_CD(pro_cd);
-//                    productRemoveLpn.setPRODUCT_CODE(pro_code);
-//                    productRemoveLpn.setPRODUCT_NAME(pro_name);
+
+                    if((product_cd != null) && (!product_cd.equals(""))){
+                        productRemoveLpn.setPRODUCT_CD(product_cd);
+                    }else{
+                        productRemoveLpn.setPRODUCT_CD(pro_cd);
+                    }
                     if((product_code != null) && (!product_code.equals(""))){
                         productRemoveLpn.setPRODUCT_CODE(product_code);
                     }else{
