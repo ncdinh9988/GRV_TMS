@@ -1315,71 +1315,71 @@ public class CmnFns {
             // DatabaseHelper.getInstance().deleteAllRorateTimes();
             for (int i = 0; i < jsonarray.length(); i++) {
                 // lấy một đối tượng json để
+//                if(i==1){
+//                    return 1;
+//                }else {
 
-                JSONObject jsonobj = jsonarray.getJSONObject(i);
-                String pro_code = jsonobj.getString("_PRODUCT_CODE");
-                String pro_cd = jsonobj.getString("_PRODUCT_CD");
-                String pro_name = jsonobj.getString("_PRODUCT_NAME");
-                String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
-                String quanity_2 = jsonobj.getString("_QTY_SET_AVAILABLE_2");
-                String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
-                String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
-                String ea_unit = jsonobj.getString("_UNIT");
-                String ea_unit_2 = jsonobj.getString("_UNIT_2");
-                // VT đến
-                String position_code = jsonobj.getString("_POSITION_CODE");
-                String strokinDate = jsonobj.getString("_STOCKIN_DATE");
-                // Mô tả VT đến
-                String description = jsonobj.getString("_POSITION_DESCRIPTION");
-                // VT đến
-                String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
-                String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
-                String batch_number = jsonobj.getString("_BATCH_NUMBER");
-                String item_basic = jsonobj.getString("_ITEM_BASIC");
-                if ((!batch_number.equals(batch))) {
+                    JSONObject jsonobj = jsonarray.getJSONObject(i);
+                    String pro_code = jsonobj.getString("_PRODUCT_CODE");
+                    String pro_cd = jsonobj.getString("_PRODUCT_CD");
+                    String pro_name = jsonobj.getString("_PRODUCT_NAME");
+                    String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+                    String quanity_2 = jsonobj.getString("_QTY_SET_AVAILABLE_2");
+                    String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
+                    String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
+                    String ea_unit = jsonobj.getString("_UNIT");
+                    String ea_unit_2 = jsonobj.getString("_UNIT_2");
+                    // VT đến
+                    String position_code = jsonobj.getString("_POSITION_CODE");
+                    String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                    // Mô tả VT đến
+                    String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                    // VT đến
+                    String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+                    String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
+                    String batch_number = jsonobj.getString("_BATCH_NUMBER");
+                    String item_basic = jsonobj.getString("_ITEM_BASIC");
+                    if ((!batch_number.equals(batch))) {
 
-                } else {
-                    if(unit_cm.equals(ea_unit)){
-                        Product_SP sp = new Product_SP();
+                    } else {
+                        if(unit_cm.equals(ea_unit)){
+                            Product_SP sp = new Product_SP();
 
-                        if((product_cd != null) && (!product_cd.equals(""))){
-                            sp.setPRODUCT_CD(product_cd);
-                        }else{
-                            sp.setPRODUCT_CD(pro_cd);
+                            if ((product_cd != null) && (!product_cd.equals(""))) {
+                                sp.setPRODUCT_CD(product_cd);
+                            } else {
+                                sp.setPRODUCT_CD(pro_cd);
+                            }
+                            if ((product_code != null) && (!product_code.equals(""))) {
+                                sp.setPRODUCT_CODE(product_code);
+                            } else {
+                                sp.setPRODUCT_CODE(pro_code);
+                            }
+
+                            if ((product_name != null) && (!product_name.equals(""))) {
+                                sp.setPRODUCT_NAME(product_name);
+                            } else {
+                                sp.setPRODUCT_NAME(pro_name);
+                            }
+                            sp.setQTY_SET_AVAILABLE(quanity);
+                            sp.setQTY_SET_AVAILABLE_2(quanity_2);
+                            sp.setQTY_EA_AVAILABLE(quanity_ea);
+                            sp.setEXPIRED_DATE(expdate);
+                            sp.setUNIT(unit_cm);
+                            sp.setUNIT_2(ea_unit_2);
+                            sp.setPOSITION_CODE(position_code);
+                            sp.setSTOCKIN_DATE(stockindate);
+                            sp.setPOSITION_DESCRIPTION(description);
+                            sp.setWAREHOUSE_POSITION_CD(warePosition);
+                            sp.setMANUFACTURING_DATE(manufacturing);
+                            sp.setBATCH_NUMBER(batch);
+                            sp.setITEM_BASIC(item_basic);
+
+                            DatabaseHelper.getInstance().CreateSP(sp);
+                            int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
                         }
-                        if((product_code != null) && (!product_code.equals(""))){
-                            sp.setPRODUCT_CODE(product_code);
-                        }else{
-                            sp.setPRODUCT_CODE(pro_code);
-                        }
-
-                        if((product_name != null) && (!product_name.equals(""))){
-                            sp.setPRODUCT_NAME(product_name);
-                        }else{
-                            sp.setPRODUCT_NAME(pro_name);
-                        }
-                        sp.setQTY_SET_AVAILABLE(quanity);
-                        sp.setQTY_SET_AVAILABLE_2(quanity_2);
-                        sp.setQTY_EA_AVAILABLE(quanity_ea);
-                        sp.setEXPIRED_DATE(expdate);
-                        sp.setUNIT(unit_cm);
-                        sp.setUNIT_2(ea_unit_2);
-                        sp.setPOSITION_CODE(position_code);
-                        sp.setSTOCKIN_DATE(stockindate);
-                        sp.setPOSITION_DESCRIPTION(description);
-                        sp.setWAREHOUSE_POSITION_CD(warePosition);
-                        sp.setMANUFACTURING_DATE(manufacturing);
-                        sp.setBATCH_NUMBER(batch);
-                        sp.setITEM_BASIC(item_basic);
-
-                        DatabaseHelper.getInstance().CreateSP(sp);
-                        int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
                     }
-                    else {
-                        return -100;
-                    }
-
-                }
+//                }
 
             }
 

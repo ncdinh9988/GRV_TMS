@@ -470,7 +470,7 @@ public class Qrcode_ChuyenMa extends AppCompatActivity implements View.OnClickLi
                         }
 
                     } else {
-                        Toast.makeText(Qrcode_ChuyenMa.this, "Sản Phẩm Không Có Trong Kho", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Qrcode_ChuyenMa.this, "Sản Phẩm Không Có Trong Phiếu", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Qrcode_ChuyenMa.this, List_ChuyenMa.class);
 //                        intent.putExtra("transfer_posting", "333");
 //                        intent.putExtra("btn1", barcodeData);

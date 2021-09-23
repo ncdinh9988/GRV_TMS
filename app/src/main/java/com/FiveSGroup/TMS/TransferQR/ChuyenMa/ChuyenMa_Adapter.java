@@ -83,7 +83,7 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
                     @Override
                     public void afterTextChanged(Editable s) {
 
-                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(0).getPRODUCT_CODE_FROM(), chuyenma.get(0).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER());
+                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(0).getPRODUCT_CODE_FROM(), chuyenma.get(0).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER(),product.getUNIT());
 
                     }
                 });
@@ -104,7 +104,7 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
                     @Override
                     public void afterTextChanged(Editable s) {
 
-                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(1).getPRODUCT_CODE_FROM(), chuyenma.get(1).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER());
+                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(1).getPRODUCT_CODE_FROM(), chuyenma.get(1).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER(),product.getUNIT());
 
                     }
                 });
@@ -125,7 +125,7 @@ public class ChuyenMa_Adapter extends RecyclerView.Adapter<ChuyenMa_Adapter.View
                     @Override
                     public void afterTextChanged(Editable s) {
 
-                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(2).getPRODUCT_CODE_FROM(), chuyenma.get(2).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER());
+                            DatabaseHelper.getInstance().updateProduct_ChuyenMa(chuyenma.get(2).getPRODUCT_CODE_FROM(), chuyenma.get(2).getPRODUCT_CODE_TO(),s.toString(),product.getBATCH_NUMBER(),product.getUNIT());
 
                     }
                 });

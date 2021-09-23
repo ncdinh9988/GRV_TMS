@@ -5970,7 +5970,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getCheckQTy_ChuyenMa(String cd) {
         ArrayList<Product_ChuyenMa> qrcode = new ArrayList<Product_ChuyenMa>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "Select SUM(QTY_SET_AVAILABLE_CHUYENMA) as SUM_QTY_CHUYENMA, QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA From O_CHUYENMA Where " +
+        String selectQuery = "Select SUM(QTY_SET_AVAILABLE_CHUYENMA) as SUM_QTY_CHUYENMA, QTY_SET_AVAILABLE_ORIGINAL_CHUYENMA " +
+                "From O_CHUYENMA Where " +
                 QTY_SET_AVAILABLE_CHUYENMA + " != '' AND " + TRANSFER_POSTING_CD_CHUYENMA + " = " + cd
                 + " GROUP BY PRODUCT_CODE_FROM_CHUYENMA , UNIT_CHUYENMA , BATCH_NUMBER_CHUYENMA , ITEM_BASIC_CHUYENMA " ;
         Cursor c = db.rawQuery(selectQuery, null);
@@ -6039,12 +6040,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return listMaterialChuyenma;
     }
 
-    public int updateProduct_ChuyenMa(String product_code_from, String product_code_to , String qty , String batch ) {
+    public int updateProduct_ChuyenMa(String product_code_from, String product_code_to , String qty , String batch , String unit ) {
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
         ContentValues values = new ContentValues();
         values.put(QTY_SET_AVAILABLE_CHUYENMA, qty);
-        return db.update(O_CHUYENMA, values,  PRODUCT_CODE_FROM_CHUYENMA + " = ? AND " + PRODUCT_CODE_TO_CHUYENMA + " = ? AND " + BATCH_NUMBER_CHUYENMA + " = ? " ,
-                new String[]{String.valueOf(product_code_from),String.valueOf(product_code_to),String.valueOf(batch)});
+        return db.update(O_CHUYENMA, values,  PRODUCT_CODE_FROM_CHUYENMA + " = ? AND " + PRODUCT_CODE_TO_CHUYENMA + " = ? AND " + UNIT_CHUYENMA + " = ? AND " + BATCH_NUMBER_CHUYENMA + " = ? " ,
+                new String[]{String.valueOf(product_code_from),String.valueOf(product_code_to),String.valueOf(unit),String.valueOf(batch)});
 
     }
 
@@ -6053,7 +6054,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Product_ChuyenMa> listchuyenma = new ArrayList<Product_ChuyenMa>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "Select * From O_CHUYENMA Where " + TRANSFER_POSTING_CD_CHUYENMA + " = " + chuyenma_cd +
-                " GROUP BY PRODUCT_CODE_FROM_CHUYENMA , PRODUCT_NAME_FROM_CHUYENMA , EXPIRED_DATE_CHUYENMA , BATCH_NUMBER_CHUYENMA , UNIT_CHUYENMA ORDER BY "
+                " GROUP BY PRODUCT_CODE_FROM_CHUYENMA , PRODUCT_NAME_FROM_CHUYENMA , EXPIRED_DATE_CHUYENMA , BATCH_NUMBER_CHUYENMA ," +
+                " UNIT_CHUYENMA ORDER BY "
                 + BATCH_NUMBER_CHUYENMA + " DESC";
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
