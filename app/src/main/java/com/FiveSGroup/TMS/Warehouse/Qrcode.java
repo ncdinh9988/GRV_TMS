@@ -32,6 +32,8 @@ import com.FiveSGroup.TMS.PutAway.Ea_Unit_Tam;
 import com.FiveSGroup.TMS.PutAway.Qrcode_PutAway;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.SelectPropertiesProductActivity;
+import com.FiveSGroup.TMS.TransferUnit.TransferUnitActivity;
+import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.global;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -322,9 +324,14 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
 
-                } else {
-                    pro_code =product_s_ps.get(0).getPRODUCT_CODE();
+                }else if(product_s_ps.size() == 1){
+                    pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
+                }else{
+                    Toast.makeText(Qrcode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Qrcode.this, ListQrcode.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         }
