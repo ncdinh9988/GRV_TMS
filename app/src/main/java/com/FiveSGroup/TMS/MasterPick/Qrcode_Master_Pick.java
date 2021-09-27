@@ -91,19 +91,19 @@ private CodeScanner mCodeScanner;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_qrcode);
         init();
-        try {
-
-//            initialiseDetectorsAndSources();
-            if (ContextCompat.checkSelfPermission(Qrcode_Master_Pick.this, Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_DENIED){
-                ActivityCompat.requestPermissions(Qrcode_Master_Pick.this, new String[] {Manifest.permission.CAMERA}, 123);
-            } else {
-                startScanning();
+            try {
+    
+    //            initialiseDetectorsAndSources();
+                if (ContextCompat.checkSelfPermission(Qrcode_Master_Pick.this, Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED){
+                    ActivityCompat.requestPermissions(Qrcode_Master_Pick.this, new String[] {Manifest.permission.CAMERA}, 123);
+                } else {
+                    startScanning();
+                }
             }
-        }
-        catch (Exception e) {
-
-        }
+            catch (Exception e) {
+    
+            }
         check = true;
         getDataFromIntent();
 
