@@ -21,6 +21,7 @@ import com.FiveSGroup.TMS.MasterPick.Home_Master_Pick;
 import com.FiveSGroup.TMS.PickList.NewWareHouseActivity;
 import com.FiveSGroup.TMS.PoReturn.Home_PoReturn;
 import com.FiveSGroup.TMS.PutAway.Qrcode_PutAway;
+import com.FiveSGroup.TMS.PutAway.Qrcode_put;
 import com.FiveSGroup.TMS.QA.Home.Home_Show_QA;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.RemoveFromLPN.Qrcode_Remove_LPN;
@@ -84,6 +85,7 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
+//                        Intent intentt = new Intent(context, Qrcode_put.class);
                         Intent intentt = new Intent(context, Qrcode_PutAway.class);
                         context.startActivity(intentt);
                         break;
@@ -215,17 +217,17 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
                         break;
 //                        }
 
-                    case "Trả Hàng":
-//                        if(block_Warehouse == -29){
-//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
-//                            break;
-//                        }else if(block_Warehouse == -1){
-//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
-//                            break;
-//                        }else if(block_Warehouse == 1){
-                        Intent intent_return = new Intent(context, Home_Return_WareHouse.class);
-                        context.startActivity(intent_return);
-                        break;
+//                    case "Trả Hàng":
+////                        if(block_Warehouse == -29){
+////                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+////                            break;
+////                        }else if(block_Warehouse == -1){
+////                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+////                            break;
+////                        }else if(block_Warehouse == 1){
+//                        Intent intent_return = new Intent(context, Home_Return_WareHouse.class);
+//                        context.startActivity(intent_return);
+//                        break;
 //                        }
                     case "Xuất Hủy":
 //                        if(block_Warehouse == -29){

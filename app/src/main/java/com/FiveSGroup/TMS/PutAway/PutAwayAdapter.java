@@ -92,7 +92,6 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
                 intent.putExtra("position", "1");
                 intent.putExtra("product_cd", product.getPRODUCT_CD_PUTAWAY());
                 intent.putExtra("c", holder.tvExpired.getText());
-                intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getEA_UNIT_PUTAWAY());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE_PUTAWAY());
                 intent.putExtra("id_unique_PAW", product.getAUTOINCREMENT());
@@ -112,7 +111,6 @@ public class PutAwayAdapter extends RecyclerView.Adapter<PutAwayAdapter.ViewHold
                 intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("ea_unit_position", product.getEA_UNIT_PUTAWAY());
                 intent.putExtra("stockin_date", product.getSTOCKIN_DATE_PUTAWAY());
-                intent.putExtra("c", holder.tvExpired.getText());
                 intent.putExtra("id_unique_PAW", product.getAUTOINCREMENT());
 
 

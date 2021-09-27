@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonQRBack">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#329cd0"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/checkBoxGetDVT"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#000"
+                    android:text="Chọn Đơn Vị Tính"
+                    android:textColor="#000"
+                    android:checked="true"
+                    android:textSize="@dimen/txt50dp" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxGetLPN"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:buttonTint="#000"
+                    android:text="Quét Theo LPN"
+                    android:textColor="#000"
+
+                    android:textSize="@dimen/txt50dp" />
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_gravity="center">
+
+                <com.budiyev.android.codescanner.CodeScannerView
+                    android:id="@+id/scanner_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:autoFocusButtonColor="@android:color/white"
+                    app:autoFocusButtonVisible="true"
+                    app:flashButtonColor="@android:color/white"
+                    app:flashButtonVisible="true"
+                    app:frameColor="@android:color/white"
+                    app:frameCornersSize="50dp"
+                    app:frameCornersRadius="0dp"
+                    app:frameAspectRatioWidth="1"
+                    app:frameAspectRatioHeight="1"
+                    app:frameSize="0.75"
+                    app:frameThickness="2dp"
+                    app:maskColor="#77000000"/>
+
+            </FrameLayout>
+
+
+            <TextView
+                android:id="@+id/barcode_text"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text=" "
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:visibility="gone" />
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginBottom="20dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingBottom="5dp">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/img"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:src="@drawable/barcode" />-->
+
+<!--            </RelativeLayout>-->
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp">
+
+
+                <EditText
+                    android:id="@+id/edtBarcode"
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:background="@drawable/bg_edittext"/>
+
+
+                <Button
+                    android:id="@+id/btnSend"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_button"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="Gửi" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <Button
+        android:id="@+id/buttonQRBack"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_button"
+        android:gravity="center"
+        android:text="Trở về" />
+
+</RelativeLayout>

@@ -7,9 +7,9 @@ android {
         applicationId "com.FiveSGroup.TMS"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 8003
+        versionCode 8004
         // ngày _ web _ apk
-        versionName "TMS_210923_8547_8003"
+        versionName "TMS_210927_8547_8004"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -71,4 +71,5 @@ dependencies {
 
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
 }
