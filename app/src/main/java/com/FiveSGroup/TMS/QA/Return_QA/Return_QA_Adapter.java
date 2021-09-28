@@ -54,62 +54,50 @@ public class Return_QA_Adapter extends RecyclerView.Adapter<Return_QA_Adapter.Vi
         holder.tvUnit.setText(product.getUNIT());
 
 
-        if(!product.getLPN_FROM().equals("")){
-            holder.tvFrom.setText(product.getLPN_FROM());
-        }else {
-            holder.tvFrom.setText(product.getPOSITION_FROM_CODE() + " - " + product.getPOSITION_FROM_DESCRIPTION());
-        }
+        holder.tvFrom.setText(product.getPOSITION_FROM_CODE());
+        holder.tvTo.setText(product.getPOSITION_TO_CODE());
 
-        if(!product.getLPN_TO().equals("")){
-            holder.tvTo.setText(product.getLPN_TO());
-        }else {
-            holder.tvTo.setText(product.getPOSITION_TO_CODE());
-        }
-
-        if(!product.getLPN_CODE().equals("")){
-            holder.edt.setEnabled(false);
-        }
-
-//        holder.layoutTo.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
+        holder.layoutTo.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
+        holder.layoutFrom.setBackground(context.getDrawable(R.drawable.bg_button_barcode_no_choose));
 
         holder.tvExpired.setText(product.getEXPIRED_DATE());
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
 
 
-        holder.btnvtden.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(context, Qrcode_Return_QA.class);
-                intent.putExtra("position", "1");
-                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                intent.putExtra("c", holder.tvExpired.getText());
-                intent.putExtra("ea_unit_position", product.getUNIT());
-                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
-
-                context.startActivity(intent);
-
-                ((Activity) context).finish();
-            }
-        });
-        holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, Qrcode_Return_QA.class);
-                intent.putExtra("position", "2");
-                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                intent.putExtra("c", holder.tvExpired.getText());
-                intent.putExtra("ea_unit_position", product.getUNIT());
-                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
-
-
-                context.startActivity(intent);
-
-                ((Activity) context).finish();
-            }
-        });
+//        holder.btnvtden.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(context, Qrcode_Return_QA.class);
+//                intent.putExtra("position", "1");
+//                intent.putExtra("product_cd", product.getPRODUCT_CD());
+//                intent.putExtra("c", holder.tvExpired.getText());
+//                intent.putExtra("ea_unit_position", product.getUNIT());
+//                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+//                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+//
+//                context.startActivity(intent);
+//
+//                ((Activity) context).finish();
+//            }
+//        });
+//        holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, Qrcode_Return_QA.class);
+//                intent.putExtra("position", "2");
+//                intent.putExtra("product_cd", product.getPRODUCT_CD());
+//                intent.putExtra("c", holder.tvExpired.getText());
+//                intent.putExtra("ea_unit_position", product.getUNIT());
+//                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+//                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+//
+//
+//                context.startActivity(intent);
+//
+//                ((Activity) context).finish();
+//            }
+//        });
 
 
         holder.edt.addTextChangedListener(new TextWatcher() {
@@ -173,7 +161,7 @@ public class Return_QA_Adapter extends RecyclerView.Adapter<Return_QA_Adapter.Vi
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
         TextView tvExpired, tvStockin;
         EditText edt , edtnote;
-        LinearLayout layoutTo;
+        LinearLayout layoutTo , layoutFrom;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -184,6 +172,7 @@ public class Return_QA_Adapter extends RecyclerView.Adapter<Return_QA_Adapter.Vi
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
             layoutTo = itemView.findViewById(R.id.layoutTo);
+            layoutFrom = itemView.findViewById(R.id.layoutFrom);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);

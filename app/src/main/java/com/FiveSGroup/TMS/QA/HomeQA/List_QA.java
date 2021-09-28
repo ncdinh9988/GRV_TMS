@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.QA.HomeQA.Image_QA.TakePhoto_QA;
+import com.FiveSGroup.TMS.QA.Pickup.List_Pickup;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 
@@ -228,24 +229,18 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    private boolean isNotScanFromOrTo() {
+    private boolean isChecked() {
         boolean check = false;
         List<Product_QA> product = DatabaseHelper.getInstance().getAllProduct_QA(global.getQACD());
 
         for (int i = 0; i < product.size(); i++) {
-            Product_QA cancelGood = product.get(i);
-            String value0 = "---";
-            String valueFromCode = cancelGood.getPOSITION_FROM_CODE();
-            String valueToCode = cancelGood.getPOSITION_TO_CODE();
-            String lpn_from = cancelGood.getLPN_FROM();
-            String lpn_to = cancelGood.getLPN_TO();
+            Product_QA qa = product.get(i);
+            String values = qa.getCHECKED();
 
-            if ((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))) {
+            if (values.equals("No")) {
                 check = true;
             }
-            if ((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))) {
-                check = true;
-            }
+
         }
         if (check == true) {
             return true;
@@ -307,60 +302,64 @@ public class List_QA extends AppCompatActivity implements View.OnClickListener {
 
 
         if (product_QA.size() > 0) {
+            if (isChecked()) {
+                dialog.showDialog(List_QA.this, "Không Có Kết Quả Kiểm Định Để Đồng Bộ");
 
-            try {
-                new CmnFns().synchronizePhoto_QA(List_QA.this , global.getQACD() );
-                DatabaseHelper.getInstance().getAllProduct_RESULT_QA(global.getQACD());
-                int result = new CmnFns().synchronizeData_RQBT_Final(saleCode, "WQA", global.getQACD());
-                if (result >= 1) {
+            }else{
+                try {
+                    new CmnFns().synchronizePhoto_QA(List_QA.this , global.getQACD() );
+                    DatabaseHelper.getInstance().getAllProduct_RESULT_QA(global.getQACD());
+                    int result = new CmnFns().synchronizeData_RQBT_Final(saleCode, "WQA", global.getQACD());
+                    if (result >= 1) {
 //                    new CmnFns().synchronizePhoto_QA(List_QA.this , global.getQACD() );
-                    DatabaseHelper.getInstance().deleteallResult_QA(global.getQACD());
-                    DatabaseHelper.getInstance().deleteProduct_QA(global.getQACD());
-                    DatabaseHelper.getInstance().deleteallCriteria(global.getQACD());
-                    ShowSuccessMessage("Lưu thành công");
+                        DatabaseHelper.getInstance().deleteallResult_QA(global.getQACD());
+                        DatabaseHelper.getInstance().deleteProduct_QA(global.getQACD());
+                        DatabaseHelper.getInstance().deleteallCriteria(global.getQACD());
+                        ShowSuccessMessage("Lưu thành công");
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                } else {
-                    DatabaseHelper.getInstance().deleteallResult_QA(global.getQACD());
-                    if (result == -1) {
-                        dialog.showDialog(List_QA.this, "Lưu thất bại");
-                    } else if (result == -2) {
-                        dialog.showDialog(List_QA.this, "Số lượng không đủ trong tồn kho");
-
-                    } else if (result == -3) {
-                        dialog.showDialog(List_QA.this, "Vị trí từ không hợp lệ");
-
-                    } else if (result == -4) {
-                        dialog.showDialog(List_QA.this, "Trạng thái của phiếu không hợp lệ");
-
-                    } else if (result == -5) {
-                        dialog.showDialog(List_QA.this, "Vị trí từ trùng vị trí đên");
-
-                    } else if (result == -6) {
-                        dialog.showDialog(List_QA.this, "Vị trí đến không hợp lệ");
-
-                    } else if (result == -7) {
-                        dialog.showDialog(List_QA.this, "Cập nhật trạng thái thất bại");
-
-                    } else if (result == -8) {
-                        dialog.showDialog(List_QA.this, "Sản phẩm không có thông tin trên phiếu ");
-
-                    } else if (result == -13) {
-                        dialog.showDialog(List_QA.this, "Dữ liệu không hợp lệ");
-
-                    } else if (result == -24) {
-                        dialog.showDialog(List_QA.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
-
-                    } else if (result == -26) {
-                        dialog.showDialog(List_QA.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
-
                     } else {
-                        dialog.showDialog(List_QA.this, "Lưu thất bại");
-                    }
+                        DatabaseHelper.getInstance().deleteallResult_QA(global.getQACD());
+                        if (result == -1) {
+                            dialog.showDialog(List_QA.this, "Lưu thất bại");
+                        } else if (result == -2) {
+                            dialog.showDialog(List_QA.this, "Số lượng không đủ trong tồn kho");
 
+                        } else if (result == -3) {
+                            dialog.showDialog(List_QA.this, "Vị trí từ không hợp lệ");
+
+                        } else if (result == -4) {
+                            dialog.showDialog(List_QA.this, "Trạng thái của phiếu không hợp lệ");
+
+                        } else if (result == -5) {
+                            dialog.showDialog(List_QA.this, "Vị trí từ trùng vị trí đên");
+
+                        } else if (result == -6) {
+                            dialog.showDialog(List_QA.this, "Vị trí đến không hợp lệ");
+
+                        } else if (result == -7) {
+                            dialog.showDialog(List_QA.this, "Cập nhật trạng thái thất bại");
+
+                        } else if (result == -8) {
+                            dialog.showDialog(List_QA.this, "Sản phẩm không có thông tin trên phiếu ");
+
+                        } else if (result == -13) {
+                            dialog.showDialog(List_QA.this, "Dữ liệu không hợp lệ");
+
+                        } else if (result == -24) {
+                            dialog.showDialog(List_QA.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+
+                        } else if (result == -26) {
+                            dialog.showDialog(List_QA.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+
+                        } else {
+                            dialog.showDialog(List_QA.this, "Lưu thất bại");
+                        }
+
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
-            } catch (Exception e) {
-                Toast.makeText(this, "Vui Lòng Thử Lại ...", Toast.LENGTH_SHORT).show();
-                finish();
             }
 
 

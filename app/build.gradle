@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.FiveSGroup.TMS"
         minSdkVersion 22
-        targetSdkVersion 29
-        versionCode 8005
+        targetSdkVersion 30
+        versionCode 8006
         // ngày _ web _ apk
-        versionName "TMS_210927_8547_8005"
+        versionName "TMS_210927_8547_8006"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
