@@ -72,6 +72,7 @@ private CodeScanner mCodeScanner;
     String stockinDate = "";
     String checkToFinish = "", id_unique_SO = "";
     String pro_cd = "";
+    int vitri = 0 ;
 
 
     TextView textViewTitle;
@@ -457,7 +458,7 @@ private CodeScanner mCodeScanner;
                             public void onClick(DialogInterface dialog, int which) {
                                 String expDate = mString[which];
 
-                                int vitri = which;
+                                vitri = which;
                                 String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
                                 pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
                                 dialog.dismiss(); // Close Dialog
@@ -591,6 +592,7 @@ private CodeScanner mCodeScanner;
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("pro_cd", pro_cd);
+        intentt.putExtra("vitri", vitri);
 
         intentt.putExtra("return_ea_unit_position", ea_unit_position);
         intentt.putExtra("returnCD", product_cd);
@@ -653,6 +655,7 @@ private CodeScanner mCodeScanner;
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("return_ea_unit_position", ea_unit_position);
                 intentt.putExtra("returnCD", product_cd);
+                intentt.putExtra("vitri", vitri);
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
                 intentt.putExtra("pro_cd", pro_cd);

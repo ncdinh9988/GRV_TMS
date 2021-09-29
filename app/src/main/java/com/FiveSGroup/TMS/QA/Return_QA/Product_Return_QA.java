@@ -27,6 +27,24 @@ public class Product_Return_QA {
     private String BATCH_NUMBER;
     private String MANUFACTURING_DATE;
     private String NOTE;
+    private String SUGGEST_POSITION;
+    private String SUGGEST_POSITION_TO;
+
+    public String getSUGGEST_POSITION() {
+        return SUGGEST_POSITION;
+    }
+
+    public void setSUGGEST_POSITION(String SUGGEST_POSITION) {
+        this.SUGGEST_POSITION = SUGGEST_POSITION;
+    }
+
+    public String getSUGGEST_POSITION_TO() {
+        return SUGGEST_POSITION_TO;
+    }
+
+    public void setSUGGEST_POSITION_TO(String SUGGEST_POSITION_TO) {
+        this.SUGGEST_POSITION_TO = SUGGEST_POSITION_TO;
+    }
 
     public String getSTOCK_QA_CD() {
         return STOCK_QA_CD;

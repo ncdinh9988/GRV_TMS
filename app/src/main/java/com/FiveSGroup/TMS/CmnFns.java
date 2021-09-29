@@ -1273,7 +1273,7 @@ public class CmnFns {
     }
 
     public int synchronizeGETProductByZoneChuyenMa(String barcodeData, String sale_codes, String type, int IsLPN, String cd, String expdate,
-                                                   String batch, String stockindate, String unit_cm, String product_code ,
+                                                   String batch, String stockindate, String unit_cm, String product_code,
                                                    String product_name, String product_cd) {
 
         int status = this.allowSynchronizeBy3G();
@@ -1319,66 +1319,66 @@ public class CmnFns {
 //                    return 1;
 //                }else {
 
-                    JSONObject jsonobj = jsonarray.getJSONObject(i);
-                    String pro_code = jsonobj.getString("_PRODUCT_CODE");
-                    String pro_cd = jsonobj.getString("_PRODUCT_CD");
-                    String pro_name = jsonobj.getString("_PRODUCT_NAME");
-                    String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
-                    String quanity_2 = jsonobj.getString("_QTY_SET_AVAILABLE_2");
-                    String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
-                    String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
-                    String ea_unit = jsonobj.getString("_UNIT");
-                    String ea_unit_2 = jsonobj.getString("_UNIT_2");
-                    // VT đến
-                    String position_code = jsonobj.getString("_POSITION_CODE");
-                    String strokinDate = jsonobj.getString("_STOCKIN_DATE");
-                    // Mô tả VT đến
-                    String description = jsonobj.getString("_POSITION_DESCRIPTION");
-                    // VT đến
-                    String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
-                    String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
-                    String batch_number = jsonobj.getString("_BATCH_NUMBER");
-                    String item_basic = jsonobj.getString("_ITEM_BASIC");
-                    if ((!batch_number.equals(batch))) {
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                String pro_code = jsonobj.getString("_PRODUCT_CODE");
+                String pro_cd = jsonobj.getString("_PRODUCT_CD");
+                String pro_name = jsonobj.getString("_PRODUCT_NAME");
+                String quanity = jsonobj.getString("_QTY_SET_AVAILABLE");
+                String quanity_2 = jsonobj.getString("_QTY_SET_AVAILABLE_2");
+                String quanity_ea = jsonobj.getString("_QTY_EA_AVAILABLE");
+                String exxpiredDate = jsonobj.getString("_EXPIRY_DATE");
+                String ea_unit = jsonobj.getString("_UNIT");
+                String ea_unit_2 = jsonobj.getString("_UNIT_2");
+                // VT đến
+                String position_code = jsonobj.getString("_POSITION_CODE");
+                String strokinDate = jsonobj.getString("_STOCKIN_DATE");
+                // Mô tả VT đến
+                String description = jsonobj.getString("_POSITION_DESCRIPTION");
+                // VT đến
+                String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+                String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
+                String batch_number = jsonobj.getString("_BATCH_NUMBER");
+                String item_basic = jsonobj.getString("_ITEM_BASIC");
+                if ((!batch_number.equals(batch))) {
 
-                    } else {
-                        if(unit_cm.equals(ea_unit)){
-                            Product_SP sp = new Product_SP();
+                } else {
+                    if (unit_cm.equals(ea_unit)) {
+                        Product_SP sp = new Product_SP();
 
-                            if ((product_cd != null) && (!product_cd.equals(""))) {
-                                sp.setPRODUCT_CD(product_cd);
-                            } else {
-                                sp.setPRODUCT_CD(pro_cd);
-                            }
-                            if ((product_code != null) && (!product_code.equals(""))) {
-                                sp.setPRODUCT_CODE(product_code);
-                            } else {
-                                sp.setPRODUCT_CODE(pro_code);
-                            }
-
-                            if ((product_name != null) && (!product_name.equals(""))) {
-                                sp.setPRODUCT_NAME(product_name);
-                            } else {
-                                sp.setPRODUCT_NAME(pro_name);
-                            }
-                            sp.setQTY_SET_AVAILABLE(quanity);
-                            sp.setQTY_SET_AVAILABLE_2(quanity_2);
-                            sp.setQTY_EA_AVAILABLE(quanity_ea);
-                            sp.setEXPIRED_DATE(expdate);
-                            sp.setUNIT(unit_cm);
-                            sp.setUNIT_2(ea_unit_2);
-                            sp.setPOSITION_CODE(position_code);
-                            sp.setSTOCKIN_DATE(stockindate);
-                            sp.setPOSITION_DESCRIPTION(description);
-                            sp.setWAREHOUSE_POSITION_CD(warePosition);
-                            sp.setMANUFACTURING_DATE(manufacturing);
-                            sp.setBATCH_NUMBER(batch);
-                            sp.setITEM_BASIC(item_basic);
-
-                            DatabaseHelper.getInstance().CreateSP(sp);
-                            int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
+                        if ((product_cd != null) && (!product_cd.equals(""))) {
+                            sp.setPRODUCT_CD(product_cd);
+                        } else {
+                            sp.setPRODUCT_CD(pro_cd);
                         }
+                        if ((product_code != null) && (!product_code.equals(""))) {
+                            sp.setPRODUCT_CODE(product_code);
+                        } else {
+                            sp.setPRODUCT_CODE(pro_code);
+                        }
+
+                        if ((product_name != null) && (!product_name.equals(""))) {
+                            sp.setPRODUCT_NAME(product_name);
+                        } else {
+                            sp.setPRODUCT_NAME(pro_name);
+                        }
+                        sp.setQTY_SET_AVAILABLE(quanity);
+                        sp.setQTY_SET_AVAILABLE_2(quanity_2);
+                        sp.setQTY_EA_AVAILABLE(quanity_ea);
+                        sp.setEXPIRED_DATE(expdate);
+                        sp.setUNIT(unit_cm);
+                        sp.setUNIT_2(ea_unit_2);
+                        sp.setPOSITION_CODE(position_code);
+                        sp.setSTOCKIN_DATE(stockindate);
+                        sp.setPOSITION_DESCRIPTION(description);
+                        sp.setWAREHOUSE_POSITION_CD(warePosition);
+                        sp.setMANUFACTURING_DATE(manufacturing);
+                        sp.setBATCH_NUMBER(batch);
+                        sp.setITEM_BASIC(item_basic);
+
+                        DatabaseHelper.getInstance().CreateSP(sp);
+                        int statusGetCust2 = new CmnFns().getChuyenMaMateril(barcodeData, "WTP");
                     }
+                }
 //                }
 
             }
@@ -1526,12 +1526,12 @@ public class CmnFns {
                 if (pro_exp.equals("")) {
                     exp_date_tam.setEXPIRED_DATE_TAM("---");
                 } else {
-                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp );
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp);
                 }
 
-                if(pro_stockin.equals("")){
+                if (pro_stockin.equals("")) {
                     exp_date_tam.setSTOCKIN_DATE_TAM("---");
-                }else{
+                } else {
                     exp_date_tam.setSTOCKIN_DATE_TAM(pro_stockin);
                 }
 
@@ -1611,9 +1611,9 @@ public class CmnFns {
                 } else {
                     exp_date_tam.setEXPIRED_DATE_TAM(pro_exp + " - " + pro_stockin);
                 }
-                if(batch.equals("")){
+                if (batch.equals("")) {
                     exp_date_tam.setBATCH_NUMBER_TAM("---");
-                }else{
+                } else {
                     exp_date_tam.setBATCH_NUMBER_TAM(batch);
                 }
                 exp_date_tam.setPRODUCT_CODE_TAM(product_code);
@@ -1688,18 +1688,18 @@ public class CmnFns {
                 if (pro_exp.equals("")) {
                     exp_date_tam.setEXPIRED_DATE_TAM("---");
                 } else {
-                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp );
+                    exp_date_tam.setEXPIRED_DATE_TAM(pro_exp);
                 }
 
-                if(pro_stockin.equals("")){
+                if (pro_stockin.equals("")) {
                     exp_date_tam.setSTOCKIN_DATE_TAM("---");
-                }else{
+                } else {
                     exp_date_tam.setSTOCKIN_DATE_TAM(pro_stockin);
                 }
 
-                if(batch.equals("")){
+                if (batch.equals("")) {
                     exp_date_tam.setBATCH_NUMBER_TAM("---");
-                }else{
+                } else {
                     exp_date_tam.setBATCH_NUMBER_TAM(batch);
                 }
                 exp_date_tam.setPRODUCT_CODE_TAM(product_code);
@@ -1825,7 +1825,7 @@ public class CmnFns {
                 String ea_unit = jsonobj.getString("_UNIT");
                 String pro_code = jsonobj.getString("_PRODUCT_CODE");
 
-                if(pro_code.equals(product_code)){
+                if (pro_code.equals(product_code)) {
                     Ea_Unit_Tam ea_unit_tam = new Ea_Unit_Tam();
                     ea_unit_tam.setEA_UNIT_TAM(ea_unit);
                     DatabaseHelper.getInstance().CreateEa_Unit(ea_unit_tam);
@@ -1842,7 +1842,7 @@ public class CmnFns {
         return 1;
     }
 
-    public ArrayList<String> getEa_Unit(String barcodeData, String IsDefault , String product_code) {
+    public ArrayList<String> getEa_Unit(String barcodeData, String IsDefault, String product_code) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -1872,7 +1872,7 @@ public class CmnFns {
                 String ea_unit = jsonobj.getString("_UNIT");
                 String pro_code = jsonobj.getString("_PRODUCT_CODE");
 
-                if(pro_code.equals(product_code)){
+                if (pro_code.equals(product_code)) {
                     listUnit.add(ea_unit);
                 }
             }
@@ -1901,10 +1901,9 @@ public class CmnFns {
         // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
         if (result.equals("-1")) {
             return -1;
-        }
-        else if (result.equals("0")) {
+        } else if (result.equals("0")) {
             return 0;
-        }else if (result.equals("1")) {
+        } else if (result.equals("1")) {
             return 1;
         } else if (result.equals("-8")) {
             return -8;
@@ -1957,7 +1956,7 @@ public class CmnFns {
     }
 
 
-    public int getBatch(String usercode, String barcodeData, String stock,String pro_code) {
+    public int getBatch(String usercode, String barcodeData, String stock, String pro_code) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -1997,7 +1996,7 @@ public class CmnFns {
                 String position_description = jsonobj.getString("POSITION_DESCRIPTION");
                 String warehouse_position_cd = jsonobj.getString("WAREHOUSE_POSITION_CD");
 
-                if(pro_code.equals(product_code)){
+                if (pro_code.equals(product_code)) {
                     Batch_number_Tam batch_number_tam = new Batch_number_Tam();
                     batch_number_tam.setBATCH_NUMBER(batch_number);
                     batch_number_tam.setPRODUCT_CD(product_cd);
@@ -2296,7 +2295,7 @@ public class CmnFns {
                     qrcode1.setPOSITION_DESCRIPTION(pro_position_des);
                     qrcode1.setSL_SET(String.valueOf(pro_set));
                     qrcode1.setMANUFACTURING_DATE(stockinDate);
-                    if (cont!= null && (!cont.equals(""))) {
+                    if (cont != null && (!cont.equals(""))) {
                         qrcode1.setBATCH_NUMBER(cont);
                     } else {
                         qrcode1.setBATCH_NUMBER("");
@@ -2363,7 +2362,7 @@ public class CmnFns {
     }
 
     public int synchronizeGETProductByZoneWarehouse_Adjustment(Context context, String qrcode, String admin, String expDate, String unit,
-                                                               String stockDate, String warehouseCD, int isLPN, String product_code ,
+                                                               String stockDate, String warehouseCD, int isLPN, String product_code,
                                                                String product_name, String batch_number, String product_cd) {
 
 
@@ -2416,20 +2415,20 @@ public class CmnFns {
 
 
                     Product_Warehouse_Adjustment warehouseAdjustment = new Product_Warehouse_Adjustment();
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         warehouseAdjustment.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         warehouseAdjustment.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         warehouseAdjustment.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         warehouseAdjustment.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         warehouseAdjustment.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         warehouseAdjustment.setPRODUCT_NAME(pro_name);
                     }
                     warehouseAdjustment.setQTY(String.valueOf(pro_set));
@@ -2527,7 +2526,7 @@ public class CmnFns {
     }
 
     public int synchronizeGETProductByZoneReturnWareHouse(Context context, String qrcode, String admin, String expDate, String unit,
-                                                          String stockDate, String returnCD, int isLPN,String product_code ,
+                                                          String stockDate, String returnCD, int isLPN, String product_code,
                                                           String product_name, String batch_number, String product_cd) {
 
 
@@ -2587,20 +2586,20 @@ public class CmnFns {
 
                     int pro_set = 1;
                     Product_Return_WareHouse return_wareHouse = new Product_Return_WareHouse();
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         return_wareHouse.setPRODUCT_CD(product_cd);
-						}else{
+                    } else {
                         return_wareHouse.setPRODUCT_CD(pro_cd);
-						}
-                    if((product_code != null) && (!product_code.equals(""))){
+                    }
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         return_wareHouse.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         return_wareHouse.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         return_wareHouse.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         return_wareHouse.setPRODUCT_NAME(pro_name);
                     }
                     return_wareHouse.setQTY(String.valueOf(pro_set));
@@ -2998,9 +2997,9 @@ public class CmnFns {
 
                     int pro_set = 1;
                     Product_Master_Pick masterPick = new Product_Master_Pick();
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         masterPick.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         masterPick.setPRODUCT_CD(pro_cd);
                     }
                     if ((product_code != null) && (!product_code.equals(""))) {
@@ -3112,7 +3111,7 @@ public class CmnFns {
 
 
     public int synchronizeGETProductByZonePo_Return(Context context, String qrcode, String admin, String expDate, String unit, String stockDate,
-                                                    String poreturnCD, int isLPN, String batch_number, String product_code ,
+                                                    String poreturnCD, int isLPN, String batch_number, String product_code,
                                                     String product_name, String product_cd) {
 
 
@@ -3172,20 +3171,20 @@ public class CmnFns {
 
                     Product_PoReturn poReturn = new Product_PoReturn();
 
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         poReturn.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         poReturn.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         poReturn.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         poReturn.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         poReturn.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         poReturn.setPRODUCT_NAME(pro_name);
                     }
 
@@ -3335,7 +3334,7 @@ public class CmnFns {
     }
 
     public int synchronizeGETProductByZoneQA(Context context, String qrcode, String admin, String expDate, String unit, String stockDate,
-                                             String listQACD, int isLPN, String batch_number, String product_code , String product_name, String product_cd) {
+                                             String listQACD, int isLPN, String batch_number, String product_code, String product_name, String product_cd) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -3394,20 +3393,20 @@ public class CmnFns {
 
                     Product_QA listQA = new Product_QA();
 
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         listQA.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         listQA.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         listQA.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         listQA.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         listQA.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         listQA.setPRODUCT_NAME(pro_name);
                     }
                     listQA.setQTY(String.valueOf(pro_set));
@@ -3487,7 +3486,7 @@ public class CmnFns {
 
     public int synchronizeGETProductByZoneTransfer_Posting(Context context, String qrcode, String admin, String expDate, String unit,
                                                            String stockDate, String transferPostingCD, int isLPN, String batch_number,
-                                                           String product_code , String product_name
+                                                           String product_code, String product_name
             , String product_cd) {
 
 
@@ -3547,20 +3546,20 @@ public class CmnFns {
 
                     Product_TransferPosting transferPosting = new Product_TransferPosting();
 
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         transferPosting.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         transferPosting.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         transferPosting.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         transferPosting.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         transferPosting.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         transferPosting.setPRODUCT_NAME(pro_name);
                     }
                     transferPosting.setQTY(String.valueOf(pro_set));
@@ -3662,7 +3661,7 @@ public class CmnFns {
     }
 
     public int synchronizeGETProductByZonePickup(Context context, String qrcode, String admin, String expDate, String unit, String stockDate,
-                                                 String pickupCD, int isLPN, String batch_number, String product_code ,
+                                                 String pickupCD, int isLPN, String batch_number, String product_code,
                                                  String product_name, String product_cd) {
 
 
@@ -3722,20 +3721,20 @@ public class CmnFns {
 
                     Product_Pickup pickUp = new Product_Pickup();
 
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         pickUp.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         pickUp.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         pickUp.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         pickUp.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         pickUp.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         pickUp.setPRODUCT_NAME(pro_name);
                     }
                     pickUp.setQTY(String.valueOf(pro_set));
@@ -3842,7 +3841,7 @@ public class CmnFns {
 
     public int synchronizeGETProductByZoneReturn_QA(Context context, String qrcode, String admin, String expDate, String unit,
                                                     String stockDate, String returnQACD, int isLPN, String batch_number,
-                                                    String product_code , String product_name, String product_cd) {
+                                                    String product_code, String product_name, String product_cd, int vitri) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -3877,9 +3876,8 @@ public class CmnFns {
             JSONArray jsonarray = new JSONArray(result);
             for (int i = 0; i < jsonarray.length(); i++) {
 //                 lấy một đối tượng json để
-                if (i == 1 && isLPN == 0) {
-                    return 1;
-                } else {
+
+                if(i==vitri){
                     JSONObject jsonobj = jsonarray.getJSONObject(i);
                     String pro_code = jsonobj.getString("_PRODUCT_CODE");
                     String pro_cd = jsonobj.getString("_PRODUCT_CD");
@@ -3897,24 +3895,28 @@ public class CmnFns {
                     String warePosition = jsonobj.getString("_WAREHOUSE_POSITION_CD");
                     String lpnCode = jsonobj.getString("_LPN_CODE");
                     String manufacturing = jsonobj.getString("_MANUFACTURING_DATE");
+
+                    String suggest_position = jsonobj.getString("_Suggest_Position");
+                    String suggest_position_to = jsonobj.getString("_Suggest_Position_To");
+
                     int pro_set = 1;
 
                     Product_Return_QA returnQA = new Product_Return_QA();
 
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         returnQA.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         returnQA.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         returnQA.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         returnQA.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         returnQA.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         returnQA.setPRODUCT_NAME(pro_name);
                     }
                     returnQA.setQTY(String.valueOf(pro_set));
@@ -3925,87 +3927,55 @@ public class CmnFns {
                     returnQA.setPOSITION_TO_CD(warePosition);
                     returnQA.setSTOCK_QA_CD(returnQACD);
                     returnQA.setWAREHOUSE_POSITION_CD(warePosition);
-                    String positionTo = "---";
-                    String positionFrom = "---";
+//                    String positionTo = "---";
+//                    String positionFrom = "---";
                     String lpn_From = "";
                     String lpn_To = "";
 
                     returnQA.setLPN_TO(lpn_To);
                     returnQA.setLPN_CODE(lpnCode);
 
-                    returnQA.setPOSITION_TO_CODE(positionTo);
-                    returnQA.setPOSITION_TO_DESCRIPTION(positionTo);
+                    returnQA.setPOSITION_TO_CODE(suggest_position_to);
+                    returnQA.setPOSITION_TO_DESCRIPTION(suggest_position_to);
                     returnQA.setNOTE(lpn_To);
 
 
-                    if (isLPN == 0) {
-                        if (stockDate != null) {
-                            returnQA.setSTOCKIN_DATE(stockDate);
-                        }
-
-                        returnQA.setEXPIRED_DATE(expDate);
-
-                        returnQA.setUNIT(unit);
-                        returnQA.setQTY(String.valueOf(pro_set));
-                        returnQA.setPOSITION_FROM_CD(warePosition);
-                        // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
-                        returnQA.setPOSITION_FROM_CODE(positionFrom);
-                        returnQA.setLPN_FROM(lpn_From);
-                        returnQA.setPOSITION_FROM_DESCRIPTION("");
-                    } else if (isLPN == 1) {
-                        returnQA.setSTOCKIN_DATE(strokinDate);
-                        returnQA.setEXPIRED_DATE(exxpiredDate);
-                        returnQA.setUNIT(ea_unit);
-                        returnQA.setQTY(quanity);
-                        returnQA.setPOSITION_FROM_CD(lpn_From);
-
-                        returnQA.setPOSITION_FROM_CODE(lpn_From);
-                        returnQA.setLPN_FROM(lpnCode);
-                        returnQA.setPOSITION_FROM_DESCRIPTION(lpn_From);
+                    if (stockDate != null) {
+                        returnQA.setSTOCKIN_DATE(stockDate);
                     }
 
-                    if (isLPN == 0) {
-                        ArrayList<Product_Return_QA> Product_Return_QAs = DatabaseHelper.getInstance().
-                                getoneProduct_Return_QA(returnQA.getPRODUCT_CD(), expDate, returnQA.getUNIT(), returnQA.getSTOCKIN_DATE(), returnQACD);
-                        if (Product_Return_QAs.size() > 0) {
-                            Product_Return_QA product = Product_Return_QAs.get(0);
-                            if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
+                    returnQA.setEXPIRED_DATE(expDate);
 
-                                Product_Return_QA updateProductQR = Product_Return_QAs.get(0);
-                                float product_set = Float.parseFloat((Product_Return_QAs.get(0).getQTY()));
-                                float sl = product_set + 1;
-                                Product_Return_QAs.get(i).setQTY(String.valueOf(product_set));
-                                DatabaseHelper.getInstance().updateProduct_Return_QA(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
-                                        String.valueOf(sl), updateProductQR.getUNIT(), returnQA.getSTOCKIN_DATE(), returnQACD);
-                            } else {
-                                DatabaseHelper.getInstance().CreatereturnQA(returnQA);
-                            }
-//                            return 10 ;
+                    returnQA.setUNIT(unit);
+                    returnQA.setQTY(String.valueOf(pro_set));
+                    returnQA.setPOSITION_FROM_CD(warePosition);
+                    // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
+                    returnQA.setPOSITION_FROM_CODE(suggest_position);
+                    returnQA.setLPN_FROM(lpn_From);
+//                        returnQA.setPOSITION_FROM_DESCRIPTION("");
+
+
+                    ArrayList<Product_Return_QA> Product_Return_QAs = DatabaseHelper.getInstance().
+                            getoneProduct_Return_QA(returnQA.getPRODUCT_CD(), expDate, returnQA.getUNIT(), returnQA.getSTOCKIN_DATE(), returnQACD);
+                    if (Product_Return_QAs.size() > 0) {
+                        Product_Return_QA product = Product_Return_QAs.get(0);
+                        if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
+
+                            Product_Return_QA updateProductQR = Product_Return_QAs.get(0);
+                            float product_set = Float.parseFloat((Product_Return_QAs.get(0).getQTY()));
+                            float sl = product_set + 1;
+                            Product_Return_QAs.get(i).setQTY(String.valueOf(product_set));
+                            DatabaseHelper.getInstance().updateProduct_Return_QA(updateProductQR, updateProductQR.getAUTOINCREMENT(), updateProductQR.getPRODUCT_CD(),
+                                    String.valueOf(sl), updateProductQR.getUNIT(), returnQA.getSTOCKIN_DATE(), returnQACD);
                         } else {
                             DatabaseHelper.getInstance().CreatereturnQA(returnQA);
+                        }
 //                            return 10 ;
-                        }
-                    } else if (isLPN == 1) {
-                        boolean isExistLPN = false;
-                        ArrayList<Product_Return_QA> Product_Return_QA = DatabaseHelper.getInstance().getAllProduct_Return_QA(returnQACD);
-                        if (Product_Return_QA.size() > 0) {
-                            for (int j = 0; j < Product_Return_QA.size(); j++) {
-                                if (Product_Return_QA.get(j).getLPN_CODE().equals(lpnCode)) {
-                                    isExistLPN = true;
-                                }
-                            }
-                        }
-                        if (isExistLPN == false) {
-                            DatabaseHelper.getInstance().CreatereturnQA(returnQA);
+                    } else {
+                        DatabaseHelper.getInstance().CreatereturnQA(returnQA);
 //                            return 10 ;
-                        } else {
-                            Dialog dialog = new Dialog(context);
-                            dialog.showDialog(context, "LPN này đã có trong danh sách");
-                        }
-
                     }
                 }
-
 
             }
 
@@ -4020,7 +3990,7 @@ public class CmnFns {
     }
 
     public int synchronizeGETProductByZonecancel_Good(Context context, String qrcode, String admin, String expDate, String unit
-            , String stockDate, String cancelCD, int isLPN, String product_code, String product_name , String batch_number, String product_cd) {
+            , String stockDate, String cancelCD, int isLPN, String product_code, String product_name, String batch_number, String product_cd) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -4078,9 +4048,9 @@ public class CmnFns {
 
                     Product_CancelGood cancelGood = new Product_CancelGood();
 
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         cancelGood.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         cancelGood.setPRODUCT_CD(pro_cd);
                     }
                     if ((product_code != null) && (!product_code.equals(""))) {
@@ -4193,7 +4163,7 @@ public class CmnFns {
 
     public int synchronizeGETProductByZoneStockout(Context context, String qrcode, String admin, String expDate, String unit,
                                                    String stockDate, String stockoutCD, int isLPN, String batch_number,
-                                                   String product_code , String product_name, String product_cd) {
+                                                   String product_code, String product_name, String product_cd) {
 
 
         int status = this.allowSynchronizeBy3G();
@@ -4251,20 +4221,20 @@ public class CmnFns {
                     String lpnCode = jsonobj.getString("_LPN_CODE");
                     int pro_set = 1;
                     Product_StockOut stockOut = new Product_StockOut();
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         stockOut.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         stockOut.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         stockOut.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         stockOut.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         stockOut.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         stockOut.setPRODUCT_NAME(pro_name);
                     }
                     stockOut.setQTY(String.valueOf(pro_set));
@@ -4432,9 +4402,9 @@ public class CmnFns {
                     //  String pro_set= jsonobj.getString("_SET_UNIT");
                     int pro_set = 1;
                     Product_PutAway putAway = new Product_PutAway();
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         putAway.setPRODUCT_CD_PUTAWAY(product_cd);
-                    }else{
+                    } else {
                         putAway.setPRODUCT_CD_PUTAWAY(pro_cd);
                     }
                     if ((product_code != null) && (!product_code.equals(""))) {
@@ -4610,9 +4580,9 @@ public class CmnFns {
 
                     int pro_set = 1;
                     PickList pickList = new PickList();
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         pickList.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         pickList.setPRODUCT_CD(pro_cd);
                     }
                     if ((product_code != null) && (!product_code.equals(""))) {
@@ -5845,8 +5815,8 @@ public class CmnFns {
 
     //TODO: từ dòng 2155 -> 2280 - đổi thành hàm synchronizeGETProductByZoneLoadPallet
     public int synchronizeGETProductByZoneLoadPallet(Context context, String qrcode, String admin, String expDate, String unit,
-                                                     String stockDate, int isLPN, String product_code , String product_name,
-                                                     String batch_number , String product_cd) {
+                                                     String stockDate, int isLPN, String product_code, String product_name,
+                                                     String batch_number, String product_cd) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -5899,22 +5869,22 @@ public class CmnFns {
                     int pro_set = 1;
                     Product_LoadPallet product_loadPallet = new Product_LoadPallet();
 
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         product_loadPallet.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         product_loadPallet.setPRODUCT_CD(pro_cd);
                     }
 
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         product_loadPallet.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         product_loadPallet.setPRODUCT_CODE(pro_code);
                     }
                     product_loadPallet.setBATCH_NUMBER(batch_number);
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         product_loadPallet.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         product_loadPallet.setPRODUCT_NAME(pro_name);
                     }
                     product_loadPallet.setQTY(String.valueOf(pro_set));
@@ -6018,7 +5988,7 @@ public class CmnFns {
 
     public int synchronizeGETProductByZoneStockTransfer(Context context, String qrcode, String admin, String expDate, String unit,
                                                         String stockDate, int isLPN, String batch_number, String product_code
-            , String product_name , String product_cd) {
+            , String product_name, String product_cd) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -6070,20 +6040,20 @@ public class CmnFns {
 
                     int pro_set = 1;
                     Product_StockTransfer productStockTransfer = new Product_StockTransfer();
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         productStockTransfer.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         productStockTransfer.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         productStockTransfer.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         productStockTransfer.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         productStockTransfer.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         productStockTransfer.setPRODUCT_NAME(pro_name);
                     }
                     productStockTransfer.setQTY(String.valueOf(pro_set));
@@ -6184,7 +6154,7 @@ public class CmnFns {
     }
 
     public int synchronizeGETProductByZoneRemoveLPN(Context context, String qrcode, String admin, String expDate, String unit, String stockDate,
-                                                    int isLPN, String batch_number, String product_code , String product_name,String product_cd) {
+                                                    int isLPN, String batch_number, String product_code, String product_name, String product_cd) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -6237,20 +6207,20 @@ public class CmnFns {
                     int pro_set = 1;
                     Product_Remove_LPN productRemoveLpn = new Product_Remove_LPN();
 
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         productRemoveLpn.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         productRemoveLpn.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         productRemoveLpn.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         productRemoveLpn.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         productRemoveLpn.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         productRemoveLpn.setPRODUCT_NAME(pro_name);
                     }
                     productRemoveLpn.setQTY(String.valueOf(pro_set));
@@ -6442,9 +6412,9 @@ public class CmnFns {
 
                     int pro_set = 1;
                     ProductLetDown letDown = new ProductLetDown();
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         letDown.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         letDown.setPRODUCT_CD(pro_cd);
                     }
                     if ((product_code != null) && (!product_code.equals(""))) {
@@ -6559,7 +6529,7 @@ public class CmnFns {
     }
 
     public int synchronizeGETProductByZoneTransferUnit(Context context, String qrcode, String admin, String expDate, String unit,
-                                                       String stockDate, int isLPN, String product_code , String product_name,
+                                                       String stockDate, int isLPN, String product_code, String product_name,
                                                        String batch_number, String product_cd) {
 
         int status = this.allowSynchronizeBy3G();
@@ -6632,20 +6602,20 @@ public class CmnFns {
 
                     TransferUnitProduct transferUnit = new TransferUnitProduct();
 
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         transferUnit.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         transferUnit.setPRODUCT_CD(pro_cd);
                     }
-                    if((product_code != null) && (!product_code.equals(""))){
+                    if ((product_code != null) && (!product_code.equals(""))) {
                         transferUnit.setPRODUCT_CODE(product_code);
-                    }else{
+                    } else {
                         transferUnit.setPRODUCT_CODE(pro_code);
                     }
 
-                    if((product_name != null) && (!product_name.equals(""))){
+                    if ((product_name != null) && (!product_name.equals(""))) {
                         transferUnit.setPRODUCT_NAME(product_name);
-                    }else{
+                    } else {
                         transferUnit.setPRODUCT_NAME(pro_name);
                     }
                     transferUnit.setQTY(String.valueOf(pro_set));
@@ -6948,7 +6918,7 @@ public class CmnFns {
 
     public int synchronizeGETProductByZoneInventory(String qrcode, String admin, String expDate, String unit,
                                                     String type, String inventoryCD, String stockDate, int isLPN, String product_code,
-                                                    String product_name , String batch_number, String product_cd) {
+                                                    String product_name, String batch_number, String product_cd) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -7003,9 +6973,9 @@ public class CmnFns {
                     int pro_set = 1;
 
                     InventoryProduct inventoryProduct = new InventoryProduct();
-                    if((product_cd != null) && (!product_cd.equals(""))){
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
                         inventoryProduct.setPRODUCT_CD(product_cd);
-                    }else{
+                    } else {
                         inventoryProduct.setPRODUCT_CD(pro_cd);
                     }
 

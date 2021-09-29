@@ -55,6 +55,7 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
     String lpn = "", id_unique_SO = "";
     String key = "";
     String pro_cd = "";
+    int vitri = 0;
 
     int statusGetCust;
     Product_Return_QA product_qrcode;
@@ -95,6 +96,7 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
         pro_cd = intent.getStringExtra("pro_cd");
+        vitri = intent.getIntExtra("vitri",0);
         batch_number = intent.getStringExtra("batch_number");
         try {
             if (batch_number.equals("---")){
@@ -530,7 +532,7 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
     public void alert_show_SP(int isLPN) {
         try {
             int postitionDes = new CmnFns().synchronizeGETProductByZoneReturn_QA(List_Return_QA.this, value1, CmnFns.readDataAdmin(),
-                    expDate, ea_unit, stockinDate, global.getReturnQACD(), isLPN ,batch_number,pro_code , pro_name, pro_cd);
+                    expDate, ea_unit, stockinDate, global.getReturnQACD(), isLPN ,batch_number,pro_code , pro_name, pro_cd,vitri);
 
             Dialog dialog = new Dialog(List_Return_QA.this);
 
