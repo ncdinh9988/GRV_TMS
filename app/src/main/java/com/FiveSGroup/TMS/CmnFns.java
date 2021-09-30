@@ -3899,7 +3899,7 @@ public class CmnFns {
                     String suggest_position = jsonobj.getString("_Suggest_Position");
                     String suggest_position_to = jsonobj.getString("_Suggest_Position_To");
 
-                    int pro_set = 1;
+
 
                     Product_Return_QA returnQA = new Product_Return_QA();
 
@@ -3919,7 +3919,7 @@ public class CmnFns {
                     } else {
                         returnQA.setPRODUCT_NAME(pro_name);
                     }
-                    returnQA.setQTY(String.valueOf(pro_set));
+                    returnQA.setQTY(quanity);
                     returnQA.setQTY_EA_AVAILABLE(quanity_ea);
                     returnQA.setBATCH_NUMBER(batch_number);
                     returnQA.setMANUFACTURING_DATE(manufacturing);
@@ -3947,7 +3947,6 @@ public class CmnFns {
                     returnQA.setEXPIRED_DATE(expDate);
 
                     returnQA.setUNIT(unit);
-                    returnQA.setQTY(String.valueOf(pro_set));
                     returnQA.setPOSITION_FROM_CD(warePosition);
                     // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
                     returnQA.setPOSITION_FROM_CODE(suggest_position);

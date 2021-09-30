@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -50,7 +51,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PickListQrCode extends AppCompatActivity {
-//    private SurfaceView surfaceView;
+    private SurfaceView surfaceView;
 private CodeScanner mCodeScanner;
 
     private BarcodeDetector barcodeDetector;
@@ -91,22 +92,29 @@ private CodeScanner mCodeScanner;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_qrcode);
-        init();
         try {
+            if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
+                setContentView(R.layout.layout_qrcode);
+                init();
+                if (ContextCompat.checkSelfPermission(PickListQrCode.this, Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(PickListQrCode.this, new String[]{Manifest.permission.CAMERA}, 123);
+                } else {
+                    startScanning();
+                }
+            }else {
+                setContentView(R.layout.activity_load_camera);
+                init();
+                initialiseDetectorsAndSources();
 
-//            initialiseDetectorsAndSources();
-            if (ContextCompat.checkSelfPermission(PickListQrCode.this, Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_DENIED){
-                ActivityCompat.requestPermissions(PickListQrCode.this, new String[] {Manifest.permission.CAMERA}, 123);
-            } else {
-                startScanning();
             }
         } catch (Exception e) {
 
         }
-        check = true;
+
         getDataFromIntent();
+        check = true;
+
 
         setCheckBox();
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +186,7 @@ private CodeScanner mCodeScanner;
         edtBarcode = findViewById(R.id.edtBarcode);
         checkBoxGetDVT = findViewById(R.id.checkBoxGetDVT);
         checkBoxGetLPN = findViewById(R.id.checkBoxGetLPN);
-//        surfaceView = findViewById(R.id.surface_view);
+        surfaceView = findViewById(R.id.surface_view);
         barcodeText = findViewById(R.id.barcode_text);
         textViewTitle = findViewById(R.id.tvTitle);
         textViewTitle.setText("QUÉT MÃ - PICKLIST");
@@ -237,96 +245,96 @@ private CodeScanner mCodeScanner;
         }
     }
 
-//    private void initialiseDetectorsAndSources() {
-//
-//        barcodeDetector = new BarcodeDetector.Builder(this)
-//                .setBarcodeFormats(Barcode.ALL_FORMATS)
-//                .build();
-//
-//        cameraSource = new CameraSource.Builder(this, barcodeDetector)
-//                .setRequestedPreviewSize(1920, 1080)
-//                .setAutoFocusEnabled(true) //you should add this feature
-//                .setRequestedFps(30.0f)
-//                .build();
-//
-//        surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
-//            @Override
-//            public void surfaceCreated(SurfaceHolder holder) {
-//                try {
-//                    if (ActivityCompat.checkSelfPermission(PickListQrCode.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-//                        cameraSource.start(surfaceView.getHolder());
-//                    } else {
-//                        ActivityCompat.requestPermissions(PickListQrCode.this, new
-//                                String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
-//                    }
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-//            }
-//
-//            @Override
-//            public void surfaceDestroyed(SurfaceHolder holder) {
-//                cameraSource.stop();
-//            }
-//        });
-//
-//
-//        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-//            @Override
-//            public void release() {
-//            }
-//
-//            @Override
-//            public void receiveDetections(Detector.Detections<Barcode> detections) {
-//                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-//
-//                if (barcodes.size() != 0) {
-//                    if (check == true) {
-//                        check = false;
-//                        Log.d("double", String.valueOf(barcodes.size()));
-//                        barcodeText.post(new Runnable() {
-//
-//                            @Override
-//                            public void run() {
-//
-//                                    try {
-//                                        barcodeData = barcodes.valueAt(0).displayValue;
-//                                        Toast.makeText(PickListQrCode.this, barcodeData + "", Toast.LENGTH_LONG).show();
-//                                        Log.e("barcode2", "" + barcodeData);
-//
-//                                        if (barcodeData != null) {
-//                                            barcodeData = barcodeData.replace("\n","");
-//                                            edtBarcode.setText(barcodeData);
-//                                            GetData(barcodeData);
-//                                        }
-//                                    } catch (Exception e) {
-//                                        Toast.makeText(PickListQrCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
-//                                        Log.d("#777", e.getMessage());
-//                                        Intent intent = new Intent(PickListQrCode.this, ListPickList.class);
-//                                        intent.putExtra("pick_list", "333");
-//                                        intent.putExtra("id_unique_PL", id_unique_PL);
-//
-//                                        startActivity(intent);
-//                                        finish();
-//                                    }
-//
-//
-//                                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-//                                }
-//                        });
-//                    }
-//
-//
-//                }
-//            }
-//        });
-//    }
+    private void initialiseDetectorsAndSources() {
+
+        barcodeDetector = new BarcodeDetector.Builder(this)
+                .setBarcodeFormats(Barcode.ALL_FORMATS)
+                .build();
+
+        cameraSource = new CameraSource.Builder(this, barcodeDetector)
+                .setRequestedPreviewSize(1920, 1080)
+                .setAutoFocusEnabled(true) //you should add this feature
+                .setRequestedFps(30.0f)
+                .build();
+
+        surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                try {
+                    if (ActivityCompat.checkSelfPermission(PickListQrCode.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                        cameraSource.start(surfaceView.getHolder());
+                    } else {
+                        ActivityCompat.requestPermissions(PickListQrCode.this, new
+                                String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                cameraSource.stop();
+            }
+        });
+
+
+        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+            @Override
+            public void release() {
+            }
+
+            @Override
+            public void receiveDetections(Detector.Detections<Barcode> detections) {
+                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+
+                if (barcodes.size() != 0) {
+                    if (check == true) {
+                        check = false;
+                        Log.d("double", String.valueOf(barcodes.size()));
+                        barcodeText.post(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                    try {
+                                        barcodeData = barcodes.valueAt(0).displayValue;
+                                        Toast.makeText(PickListQrCode.this, barcodeData + "", Toast.LENGTH_LONG).show();
+                                        Log.e("barcode2", "" + barcodeData);
+
+                                        if (barcodeData != null) {
+                                            barcodeData = barcodeData.replace("\n","");
+                                            edtBarcode.setText(barcodeData);
+                                            GetData(barcodeData);
+                                        }
+                                    } catch (Exception e) {
+                                        Toast.makeText(PickListQrCode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                                        Log.d("#777", e.getMessage());
+                                        Intent intent = new Intent(PickListQrCode.this, ListPickList.class);
+                                        intent.putExtra("pick_list", "333");
+                                        intent.putExtra("id_unique_PL", id_unique_PL);
+
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+
+                                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+                                }
+                        });
+                    }
+
+
+                }
+            }
+        });
+    }
 
     private void GetData(final String barcodeData){
         String texxt = CmnFns.readDataAdmin();
@@ -668,10 +676,13 @@ private CodeScanner mCodeScanner;
 
     @Override
     protected void onPause() {
-        super.onPause();
-//        cameraSource.release();
-        if(mCodeScanner != null) {
-            mCodeScanner.releaseResources();
+        if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
+            if (mCodeScanner != null) {
+                mCodeScanner.releaseResources();
+            }
+        }else {
+            cameraSource.release();
+
         }
         super.onPause();
     }
@@ -680,9 +691,13 @@ private CodeScanner mCodeScanner;
     @Override
     protected void onResume() {
         super.onResume();
-//        initialiseDetectorsAndSources();
-        if(mCodeScanner != null) {
-            mCodeScanner.startPreview();
+        if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
+            if (mCodeScanner != null) {
+                mCodeScanner.startPreview();
+            }
+
+        }else {
+            initialiseDetectorsAndSources();
         }
 
     }

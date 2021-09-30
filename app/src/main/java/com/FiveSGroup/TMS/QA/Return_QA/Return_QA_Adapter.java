@@ -47,11 +47,13 @@ public class Return_QA_Adapter extends RecyclerView.Adapter<Return_QA_Adapter.Vi
     public void onBindViewHolder(@NonNull final Return_QA_Adapter.ViewHolder holder, final int position) {
         final Product_Return_QA product = listPickup.get(position);
         holder.setIsRecyclable(false);
-        holder.edt.setText(listPickup.get(position).getQTY());
+//        holder.edt.setText(listPickup.get(position).getQTY());
+        holder.edt.setText(product.getQTY());
         holder.edtnote.setText(listPickup.get(position).getNOTE());
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvUnit.setText(product.getUNIT());
+        holder.edt.setEnabled(false);
 
 
         holder.tvFrom.setText(product.getPOSITION_FROM_CODE());
@@ -100,25 +102,25 @@ public class Return_QA_Adapter extends RecyclerView.Adapter<Return_QA_Adapter.Vi
 //        });
 
 
-        holder.edt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
-//                    DatabaseHelper.getInstance().updateProduct_Return_QA(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
-                } else {
-                    DatabaseHelper.getInstance().updateProduct_Return_QA(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_QA_CD());
-                }
-            }
-        });
+//        holder.edt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if ((s.toString().equals(""))|| (s.toString().equals("0")) || (s.toString().equals("00")) || (s.toString().equals("000")) || (s.toString().equals("0000"))|| (s.toString().equals("00000"))) {
+////                    DatabaseHelper.getInstance().updateProduct_Return_QA(product, product.getAUTOINCREMENT(),product.getPRODUCT_CD(), "0", product.getUNIT(), product.getSTOCKIN_DATE(), product.getCANCEL_CD());
+//                } else {
+//                    DatabaseHelper.getInstance().updateProduct_Return_QA(product, product.getAUTOINCREMENT(), product.getPRODUCT_CD(), s.toString(), product.getUNIT(), product.getSTOCKIN_DATE(), product.getSTOCK_QA_CD());
+//                }
+//            }
+//        });
 
         holder.edtnote.addTextChangedListener(new TextWatcher() {
             @Override
@@ -180,23 +182,23 @@ public class Return_QA_Adapter extends RecyclerView.Adapter<Return_QA_Adapter.Vi
             tvExpired = itemView.findViewById(R.id.tvExpired);
             edt = itemView.findViewById(R.id.priceproduct);
             edtnote = itemView.findViewById(R.id.edtnote);
-            edt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    listPickup.get(getAdapterPosition()).setQTY(edt.getText().toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-
-            });
+//            edt.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                    listPickup.get(getAdapterPosition()).setQTY(edt.getText().toString());
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//
+//                }
+//
+//            });
 
             edtnote.addTextChangedListener(new TextWatcher() {
                 @Override
