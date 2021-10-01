@@ -83,7 +83,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         if((!product.getLPN_FROM().equals(""))){
             holder.tvFrom.setText(product.getLPN_FROM());
         }else {
-            holder.tvFrom.setText(product.getPOSITION_FROM_CODE() + " - " + product.getPOSITION_FROM_DESCRIPTION());
+            holder.tvFrom.setText(product.getPOSITION_FROM_CODE());
         }
 
 //        if((!product.getLPN_TO().equals("")) || (!product.getLPN_TO().equals(null))){
