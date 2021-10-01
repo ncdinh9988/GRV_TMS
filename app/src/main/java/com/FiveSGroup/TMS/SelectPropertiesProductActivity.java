@@ -73,8 +73,12 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             shelfLife = "",
             shelfLifeDate = "",
             typeScan = "",
+            batch = "",
             stockin = "",
+            pro_name = "",
             exp_date = "";
+
+
     String total_shelf_life = "";
     String shelf_life_type = "";
     String min_rem_shelf_life = "";
@@ -160,6 +164,14 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         barcode = intent.getStringExtra("btn1");
         returnposition = intent.getStringExtra("returnposition");
         pro_code = intent.getStringExtra("pro_code");
+        pro_name = intent.getStringExtra("pro_name");
+        if(pro_name==null){
+            pro_name = "";
+        }
+        batch = intent.getStringExtra("batch");
+        if (batch==null){
+            batch= "";
+        }
         returnCD = global.getStockReceiptCd();
         returnStock = intent.getStringExtra("returnStock");
         stockin = intent.getStringExtra("stockin");

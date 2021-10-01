@@ -395,7 +395,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     private void getinformation(final String barcodeData) {
         int statusGetBatch = new CmnFns().getBatch(global.getAdminCode(),barcodeData , global.getStockReceiptCd(),pro_code);
         if(statusGetBatch == 1){
-            // lấy tất cả hạn `sử dụng trong database ra
+            // lấy tất cả batch trong database ra
             final ArrayList<Batch_number_Tam> batch_number_tams = DatabaseHelper.getInstance().getallBatch();
 
 
@@ -429,8 +429,18 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                             SharedPreferences.Editor edit = prefs.edit();
                             edit.putString("vitri",vitri );
                             edit.commit();
-                            Intent intentt = new Intent(getApplication(), ListQrcode.class);
+                            Intent intentt = new Intent(getApplication(), SelectPropertiesProductActivity.class);
+                            intentt.putExtra("typeScan", "scan_from_stock_in");
+                            intentt.putExtra("btn1", barcodeData);
+                            intentt.putExtra("stockin", "444");
                             intentt.putExtra("stock_in", "333");
+                            intentt.putExtra("id_unique_SI", id_unique_SI);
+                            intentt.putExtra("total_shelf_life", total_shelf_life);
+                            intentt.putExtra("shelf_life_type", shelf_life_type);
+                            intentt.putExtra("min_rem_shelf_life", min_rem_shelf_life);
+                            intentt.putExtra("returnposition", position);
+                            intentt.putExtra("returnCD", product_cd);
+                            intentt.putExtra("returnStock", stock);
                             intentt.putExtra("pro_code", pro_code);
                             intentt.putExtra("pro_name", pro_name);
                             intentt.putExtra("batch", chuoi[0]);
@@ -459,8 +469,18 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("vitri","0");
                 edit.commit();
-                Intent intentt = new Intent(getApplication(), ListQrcode.class);
+                Intent intentt = new Intent(getApplication(), SelectPropertiesProductActivity.class);
+                intentt.putExtra("typeScan", "scan_from_stock_in");
+                intentt.putExtra("btn1", barcodeData);
+                intentt.putExtra("stockin", "444");
                 intentt.putExtra("stock_in", "333");
+                intentt.putExtra("id_unique_SI", id_unique_SI);
+                intentt.putExtra("total_shelf_life", total_shelf_life);
+                intentt.putExtra("shelf_life_type", shelf_life_type);
+                intentt.putExtra("min_rem_shelf_life", min_rem_shelf_life);
+                intentt.putExtra("returnposition", position);
+                intentt.putExtra("returnCD", product_cd);
+                intentt.putExtra("returnStock", stock);
                 intentt.putExtra("batch", batchTam);
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
