@@ -49,12 +49,14 @@ public class    InventoryListProduct extends AppCompatActivity implements View.O
     String pro_code = "";
     String pro_name = "";
     String pro_cd = "";
+    String vitritu = "";
     String key = "";
     String ea_unit = "";
     String batch_number = "";
     String ea_unit_position = "";
     String stockinDate = "", id_unique_IVT = "";
     String lpn = "";
+    String fromCd = "";
 
 
     int statusGetCust;
@@ -100,8 +102,17 @@ public class    InventoryListProduct extends AppCompatActivity implements View.O
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
         key = intent.getStringExtra("key");
+        vitritu = intent.getStringExtra("vitritu");
+        try {
+            if(vitritu==null){
+                vitritu = "";
+            }
+        }catch (Exception e){
+
+        }
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        fromCd = intent.getStringExtra("fromCd");
         pro_cd = intent.getStringExtra("pro_cd");
         expDate = intent.getStringExtra("exp_date");
         expDate1 = intent.getStringExtra("expdate");
@@ -461,7 +472,7 @@ public class    InventoryListProduct extends AppCompatActivity implements View.O
                 DatabaseHelper.getInstance().deleteallEa_Unit();
                 DatabaseHelper.getInstance().deleteallExp_date();
                 if (inventory != null) {
-                    Intent intent = new Intent(InventoryListProduct.this, InventoryScanCode.class);
+                    Intent intent = new Intent(InventoryListProduct.this, InventoryScanqrcodeViTri.class);
                     intent.putExtra("check_to_finish_at_list", "check");
                     startActivity(intent);
                     finish();
@@ -561,7 +572,7 @@ public class    InventoryListProduct extends AppCompatActivity implements View.O
         try {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
             int postitionDes = new CmnFns().synchronizeGETProductByZoneInventory(value1, CmnFns.readDataAdmin(), expDate, ea_unit, "WST",
-                    global.getInventoryCD(), stockinDate, isLPN,pro_code , pro_name ,batch_number, pro_cd);
+                    global.getInventoryCD(), stockinDate, isLPN,pro_code , pro_name ,batch_number, pro_cd ,vitritu,fromCd);
 
             Dialog dialog = new Dialog(InventoryListProduct.this);
 

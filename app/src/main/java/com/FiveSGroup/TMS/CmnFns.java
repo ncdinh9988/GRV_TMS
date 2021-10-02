@@ -1682,6 +1682,8 @@ public class CmnFns {
                 String batch = jsonobj.getString("_BATCH_NUMBER");
                 String product_code = jsonobj.getString("_PRODUCT_CODE");
                 String product_cd = jsonobj.getString("_PRODUCT_CD");
+                String position_code = jsonobj.getString("_POSITION_CODE");
+                String warehouse_position_cd = jsonobj.getString("_WAREHOUSE_POSITION_CD");
 
 
                 Exp_Date_Tam exp_date_tam = new Exp_Date_Tam();
@@ -1704,6 +1706,10 @@ public class CmnFns {
                 }
                 exp_date_tam.setPRODUCT_CODE_TAM(product_code);
                 exp_date_tam.setPRODUCT_CD_TAM(product_cd);
+                if(type.equals("WST")){
+                    exp_date_tam.setPOSITION_CODE_TAM(position_code);
+                    exp_date_tam.setWAREHOUSE_POSITION_CD_TAM(warehouse_position_cd);
+                }
 
                 DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);
 
@@ -6917,7 +6923,7 @@ public class CmnFns {
 
     public int synchronizeGETProductByZoneInventory(String qrcode, String admin, String expDate, String unit,
                                                     String type, String inventoryCD, String stockDate, int isLPN, String product_code,
-                                                    String product_name, String batch_number, String product_cd) {
+                                                    String product_name, String batch_number, String product_cd ,String vitritu ,String fromCd) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -6995,7 +7001,7 @@ public class CmnFns {
                     inventoryProduct.setQTY_EA_AVAILABLE(quanity_ea);
                     inventoryProduct.setBATCH_NUMBER(batch_number);
 
-                    inventoryProduct.setPOSITION_FROM_CD(warePosition);
+                    inventoryProduct.setPOSITION_FROM_CD(fromCd);
                     inventoryProduct.setPOSITION_TO_CD("");
 
                     inventoryProduct.setSTOCK_TAKE_CD(inventoryCD);
@@ -7022,8 +7028,8 @@ public class CmnFns {
 
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ---
                         inventoryProduct.setLPN_FROM(lpn_From);
-                        inventoryProduct.setPOSITION_FROM_CODE(positionFrom);
-                        inventoryProduct.setPOSITION_FROM_DESCRIPTION("---");
+                        inventoryProduct.setPOSITION_FROM_CODE(vitritu);
+                        inventoryProduct.setPOSITION_FROM_DESCRIPTION(positionTo);
                     } else if (isLPN == 1) {
                         inventoryProduct.setSTOCKIN_DATE(strokinDate);
                         inventoryProduct.setEXPIRED_DATE(exxpiredDate);

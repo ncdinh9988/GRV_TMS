@@ -272,6 +272,9 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
+            android:name=".Inventory.InventoryScanqrcodeViTri"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ReturnWareHouse.Qrcode_Return_WareHouse"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />

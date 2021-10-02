@@ -131,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 158; // version của DB khi thay
+    public static final int DATABASE_VERSION = 162; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -585,6 +585,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             // TODO: handle exception
         }
+
+        //version DB 160
+        try {
+            db.execSQL("ALTER TABLE " + O_EXP + " ADD COLUMN  "
+                    + POSITION_CODE_TAM + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 162
+        try {
+            db.execSQL("ALTER TABLE " + O_EXP + " ADD COLUMN  "
+                    + WAREHOUSE_POSITION_CD_TAM + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
 
     }
 
@@ -6293,10 +6311,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String SHELF_LIFE_TYPE = "SHELF_LIFE_TYPE";
     public static final String MIN_REM_SHELF_LIFE = "MIN_REM_SHELF_LIFE";
     public static final String BATCH_NUMBER_TAM = "BATCH_NUMBER_TAM";
+    public static final String POSITION_CODE_TAM = "POSITION_CODE_TAM";
+    public static final String WAREHOUSE_POSITION_CD_TAM = "WAREHOUSE_POSITION_CD_TAM";
 
     public static final String CREATE_TABLE_O_EXP = "CREATE TABLE "
             + O_EXP + "("
             + PRODUCT_CODE_TAM + " TEXT,"
+            + POSITION_CODE_TAM + " TEXT,"
+            + WAREHOUSE_POSITION_CD_TAM + " TEXT,"
             + STOCKIN_DATE_TAM + " TEXT,"
             + TOTAL_SHELF_LIFE + " TEXT,"
             + PRODUCT_CD_TAM + " TEXT,"
@@ -6311,6 +6333,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         //values.put(QRCODE, qrcode.getQRCODE());
         values.put(TOTAL_SHELF_LIFE, exp.getTOTAL_SHELF_LIFE());
+        values.put(POSITION_CODE_TAM, exp.getPOSITION_CODE_TAM());
+        values.put(WAREHOUSE_POSITION_CD_TAM, exp.getWAREHOUSE_POSITION_CD_TAM());
         values.put(STOCKIN_DATE_TAM, exp.getSTOCKIN_DATE_TAM());
         values.put(PRODUCT_CD_TAM, exp.getPRODUCT_CD_TAM());
         values.put(PRODUCT_CODE_TAM, exp.getPRODUCT_CODE_TAM());
@@ -6339,6 +6363,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(BATCH_NUMBER_TAM))));
                 expd.setPRODUCT_CODE_TAM((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_TAM))));
+
+                exp.add(expd);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return exp;
+    }
+    public ArrayList<Exp_Date_Tam>
+    getallValueinventory(String pro_code , String vitri) {
+        ArrayList<Exp_Date_Tam> exp = new ArrayList<Exp_Date_Tam>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT DISTINCT WAREHOUSE_POSITION_CD_TAM , STOCKIN_DATE_TAM ,EXPIRED_DATE_TAM , POSITION_CODE_TAM,  BATCH_NUMBER_TAM , PRODUCT_CODE_TAM , PRODUCT_CD_TAM FROM " + O_EXP +
+                " where " + PRODUCT_CODE_TAM + " = '" + pro_code + "' AND " + POSITION_CODE_TAM  + " = '" + vitri + "' "
+                ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                Exp_Date_Tam expd = new Exp_Date_Tam();
+                expd.setEXPIRED_DATE_TAM((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_TAM))));
+                expd.setPRODUCT_CD_TAM((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_TAM))));
+                expd.setSTOCKIN_DATE_TAM((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_TAM))));
+                expd.setBATCH_NUMBER_TAM((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_TAM))));
+                expd.setPRODUCT_CODE_TAM((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_TAM))));
+                expd.setWAREHOUSE_POSITION_CD_TAM((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_TAM))));
 
                 exp.add(expd);
             } while (c.moveToNext());

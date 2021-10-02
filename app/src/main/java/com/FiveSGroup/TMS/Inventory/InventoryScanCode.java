@@ -75,12 +75,15 @@ private CodeScanner mCodeScanner;
     String expiredDate = " ";
     String ea_unit_position = " ";
     String stockinDate = "";
+    String fromCd = "";
     String checkToFinish = "" , id_unique_IVT = "";
     TextView textViewTitle;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     private Button buttonBack, btnSend;
     private EditText edtBarcode;
+    String vitritu = "";
+    int vitri = 0 ;
 
 
     @Override
@@ -97,6 +100,7 @@ private CodeScanner mCodeScanner;
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
+                getDataFromIntent();
                 if (ContextCompat.checkSelfPermission(InventoryScanCode.this, Manifest.permission.CAMERA)
                         == PackageManager.PERMISSION_DENIED) {
                     ActivityCompat.requestPermissions(InventoryScanCode.this, new String[]{Manifest.permission.CAMERA}, 123);
@@ -106,6 +110,7 @@ private CodeScanner mCodeScanner;
             }else {
                 setContentView(R.layout.activity_load_camera);
                 init();
+                getDataFromIntent();
                 initialiseDetectorsAndSources();
 
             }
@@ -113,7 +118,7 @@ private CodeScanner mCodeScanner;
 
         }
 
-        getDataFromIntent();
+
         check = true;
 
         setCheckBox();
@@ -221,6 +226,7 @@ private CodeScanner mCodeScanner;
         intent = getIntent();
         checkToFinish = intent.getStringExtra("check_to_finish_at_list");
         ea_unit_position = intent.getStringExtra("ea_unit_position");
+        vitritu = intent.getStringExtra("vitritu");
         // position được truyền qua để định danh nó được bấm from hay to
         position = intent.getStringExtra("position");
         // được tuyền qua từ adapter
@@ -450,7 +456,7 @@ private CodeScanner mCodeScanner;
 //
 //            } else {
                 // lấy tất cả hạn `sử dụng trong database ra
-                final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue2(pro_code);
+                final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValueinventory(pro_code,vitritu);
 
 
                 if (expired_date.size() > 1) {
@@ -471,9 +477,10 @@ private CodeScanner mCodeScanner;
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String expDate = mString[which];
-                            int vitri = which;
+                            vitri = which;
                             String product_code = expired_date.get(vitri).getPRODUCT_CODE_TAM();
                             pro_cd = expired_date.get(vitri).getPRODUCT_CD_TAM();
+                            fromCd = expired_date.get(vitri).getWAREHOUSE_POSITION_CD_TAM();
                             dialog.dismiss(); // Close Dialog
                             if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
                                 if (expDate != "") {
@@ -598,6 +605,8 @@ private CodeScanner mCodeScanner;
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
         intentt.putExtra("pro_cd", pro_cd);
+        intentt.putExtra("vitritu", vitritu);
+        intentt.putExtra("fromCd", fromCd);
 
         intentt.putExtra("id_unique_IVT", id_unique_IVT);
         intentt.putExtra("exp_date", expDatetemp);
@@ -654,6 +663,8 @@ private CodeScanner mCodeScanner;
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
                 intentt.putExtra("pro_cd", pro_cd);
+                intentt.putExtra("vitritu", vitritu);
+                intentt.putExtra("fromCd", fromCd);
 
                 intentt.putExtra("batch_number", batch_number);
                 intentt.putExtra("returnposition", position);

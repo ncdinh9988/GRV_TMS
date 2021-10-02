@@ -71,7 +71,7 @@ public class InventoryHome extends AppCompatActivity{
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InventoryHome.this, InventoryScanCode.class);
+                Intent intent = new Intent(InventoryHome.this, InventoryScanqrcodeViTri.class);
                 intent.putExtra("qrcode1", "qrcode1");
                 // Log.e("barcodeData",""+ barcodeData);
                 startActivity(intent);
@@ -151,11 +151,13 @@ public class InventoryHome extends AppCompatActivity{
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
 
                     //TODO:
-                    if (url.contains("WarehouseStockTakeForAppItem.aspx?StockTakeCD")) {
+                    if (url.contains("WarehouseStockTakePositionForAppItem.aspx?StockTakeCD")) {
 
-                        String chuoi[] = url.split("=");
-                        String code = chuoi[1];
-                        global.setInventoryCD(code);
+                        String chuoi[] = url.split("&");
+                        String code = chuoi[0];
+                        String chuoi1[] = code.split("=");
+                        String code1 = chuoi1[1];
+                        global.setInventoryCD(code1);
                         // Toast.makeText(HomeQRActivity.this, code+"", Toast.LENGTH_SHORT).show();
 
                         btn1.setVisibility(View.VISIBLE);

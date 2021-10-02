@@ -9,6 +9,24 @@ public class Exp_Date_Tam {
     private String MIN_REM_SHELF_LIFE;
     private String BATCH_NUMBER_TAM;
     private String PRODUCT_CD_TAM;
+    private String POSITION_CODE_TAM;
+    private String WAREHOUSE_POSITION_CD_TAM;
+
+    public String getWAREHOUSE_POSITION_CD_TAM() {
+        return WAREHOUSE_POSITION_CD_TAM;
+    }
+
+    public void setWAREHOUSE_POSITION_CD_TAM(String WAREHOUSE_POSITION_CD_TAM) {
+        this.WAREHOUSE_POSITION_CD_TAM = WAREHOUSE_POSITION_CD_TAM;
+    }
+
+    public String getPOSITION_CODE_TAM() {
+        return POSITION_CODE_TAM;
+    }
+
+    public void setPOSITION_CODE_TAM(String POSITION_CODE_TAM) {
+        this.POSITION_CODE_TAM = POSITION_CODE_TAM;
+    }
 
     public String getPRODUCT_CD_TAM() {
         return PRODUCT_CD_TAM;

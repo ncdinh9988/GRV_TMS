@@ -41,8 +41,6 @@ import com.FiveSGroup.TMS.Warehouse_Adjustment.ListQrcode_Warehouse_Adjustment;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -82,7 +80,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
     String total_shelf_life = "";
     String shelf_life_type = "";
     String min_rem_shelf_life = "";
-    int min_to_date;
+    int min_to_date =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +181,10 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         shelf_life_type = intent.getStringExtra("shelf_life_type");
         min_rem_shelf_life = intent.getStringExtra("min_rem_shelf_life");
 
+        if(min_rem_shelf_life.equals("")){
+            min_rem_shelf_life = "0";
+        }
+
     }
 
     private void init() {
@@ -193,6 +195,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         edtSelectProductStockinDate = findViewById(R.id.edtSelectProductStockinDate);
         edtSelectShelfLife = findViewById(R.id.edtSelectShelfLife);
         edtcont = findViewById(R.id.edtcont);
+        edtcont.setText(batch);
         spinnerProductUnit = findViewById(R.id.spinnerProductUnit);
         edtSelectProductExpiredDate.setOnClickListener(this);
         edtSelectProductStockinDate.setOnClickListener(this);
@@ -319,7 +322,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
     private void createProduct(final Class activity, final String type) {
         expiredDate = edtSelectProductExpiredDate.getText().toString().trim();
         stockinDate = edtSelectProductStockinDate.getText().toString().trim();
-        cont = edtcont.getText().toString().trim();
+        cont = edtcont.getText().toString();
         shelfLife = edtSelectShelfLife.getText().toString().trim();
 //            shelfLifeDate = edtSelectShelfLifeDate.getText().toString().trim();
         final String unit = spinnerProductUnit.getSelectedItem().toString();
