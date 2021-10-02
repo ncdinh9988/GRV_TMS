@@ -594,6 +594,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         intent.putExtra("returnposition", returnposition);
         intent.putExtra("returnCD", returnCD);
         intent.putExtra("returnStock", returnStock);
+        intent.putExtra("batch_number", cont);
         intent.putExtra("exp_date", exp_date);
         intent.putExtra("stockin_date", stockinDate);
         intent.putExtra("cont", cont);

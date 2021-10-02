@@ -2,8 +2,10 @@ package com.FiveSGroup.TMS.Inventory;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -91,6 +93,8 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferencess = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
+        sharedPreferencess.edit().remove("vitritu").commit();
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
@@ -157,6 +161,10 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(InventoryScanqrcodeViTri.this, result.getText(), Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("vitritu", result.getText());
+                        editor.apply();
                         Intent intentt = new Intent(getApplication(), InventoryScanCode.class);
                         intentt.putExtra("vitritu", result.getText());
                         startActivity(intentt);

@@ -11,6 +11,15 @@ public class Exp_Date_Tam {
     private String PRODUCT_CD_TAM;
     private String POSITION_CODE_TAM;
     private String WAREHOUSE_POSITION_CD_TAM;
+    private String LPN_CODE_TAM;
+
+    public String getLPN_CODE_TAM() {
+        return LPN_CODE_TAM;
+    }
+
+    public void setLPN_CODE_TAM(String LPN_CODE_TAM) {
+        this.LPN_CODE_TAM = LPN_CODE_TAM;
+    }
 
     public String getWAREHOUSE_POSITION_CD_TAM() {
         return WAREHOUSE_POSITION_CD_TAM;

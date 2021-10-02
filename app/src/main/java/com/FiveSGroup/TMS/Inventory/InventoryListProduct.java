@@ -1,7 +1,9 @@
 package com.FiveSGroup.TMS.Inventory;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.InsetDrawable;
@@ -97,12 +99,14 @@ public class    InventoryListProduct extends AppCompatActivity implements View.O
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
+        SharedPreferences sharedPreferencess = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
+        vitritu = sharedPreferencess.getString("vitritu", "");
         value1 = intent.getStringExtra("btn1");
         positonReceive = intent.getStringExtra("returnposition");
         productCd = intent.getStringExtra("returnCD");
         stock = intent.getStringExtra("returnStock");
         key = intent.getStringExtra("key");
-        vitritu = intent.getStringExtra("vitritu");
+//        vitritu = intent.getStringExtra("vitritu");
         try {
             if(vitritu==null){
                 vitritu = "";
@@ -472,7 +476,7 @@ public class    InventoryListProduct extends AppCompatActivity implements View.O
                 DatabaseHelper.getInstance().deleteallEa_Unit();
                 DatabaseHelper.getInstance().deleteallExp_date();
                 if (inventory != null) {
-                    Intent intent = new Intent(InventoryListProduct.this, InventoryScanqrcodeViTri.class);
+                    Intent intent = new Intent(InventoryListProduct.this, InventoryScanCode.class);
                     intent.putExtra("check_to_finish_at_list", "check");
                     startActivity(intent);
                     finish();

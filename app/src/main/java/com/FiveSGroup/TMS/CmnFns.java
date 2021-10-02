@@ -1684,6 +1684,7 @@ public class CmnFns {
                 String product_cd = jsonobj.getString("_PRODUCT_CD");
                 String position_code = jsonobj.getString("_POSITION_CODE");
                 String warehouse_position_cd = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+                String lpn_code = jsonobj.getString("_LPN_CODE");
 
 
                 Exp_Date_Tam exp_date_tam = new Exp_Date_Tam();
@@ -1709,6 +1710,7 @@ public class CmnFns {
                 if(type.equals("WST")){
                     exp_date_tam.setPOSITION_CODE_TAM(position_code);
                     exp_date_tam.setWAREHOUSE_POSITION_CD_TAM(warehouse_position_cd);
+                    exp_date_tam.setLPN_CODE_TAM(lpn_code);
                 }
 
                 DatabaseHelper.getInstance().CreateExp_date(exp_date_tam);
@@ -7078,19 +7080,19 @@ public class CmnFns {
                         } else {
                             ArrayList<InventoryProduct> getpossition_inventory = DatabaseHelper.getInstance().getposition_Inventory();
                             DatabaseHelper.getInstance().CreateInventory(inventoryProduct);
-                            try {
-                                int id_1 = Integer.parseInt(getpossition_inventory.get(0).getAUTOINCREMENT());
-                                if (id_1 >= 1) {
-                                    ArrayList<InventoryProduct> getpossition_inventory_2 = DatabaseHelper.getInstance().getautoProduct_Inventory();
-                                    String id_3 = getpossition_inventory_2.get(0).getAUTOINCREMENT();
-
-                                    DatabaseHelper.getInstance().updatePositionFrom_Inventory(id_3, getpossition_inventory.get(0).getPOSITION_FROM_CODE(),
-                                            getpossition_inventory.get(0).getPOSITION_FROM_CD(), "", "",
-                                            getpossition_inventory.get(0).getPOSITION_FROM_DESCRIPTION(), "", "");
-                                }
-                            } catch (Exception e) {
-
-                            }
+//                            try {
+//                                int id_1 = Integer.parseInt(getpossition_inventory.get(0).getAUTOINCREMENT());
+//                                if (id_1 >= 1) {
+//                                    ArrayList<InventoryProduct> getpossition_inventory_2 = DatabaseHelper.getInstance().getautoProduct_Inventory();
+//                                    String id_3 = getpossition_inventory_2.get(0).getAUTOINCREMENT();
+//
+//                                    DatabaseHelper.getInstance().updatePositionFrom_Inventory(id_3, getpossition_inventory.get(0).getPOSITION_FROM_CODE(),
+//                                            getpossition_inventory.get(0).getPOSITION_FROM_CD(), "", "",
+//                                            getpossition_inventory.get(0).getPOSITION_FROM_DESCRIPTION(), "", "");
+//                                }
+//                            } catch (Exception e) {
+//
+//                            }
 //                            return 10 ;
                         }
                     } else if (isLPN == 1) {

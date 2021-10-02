@@ -2,8 +2,10 @@ package com.FiveSGroup.TMS.Inventory;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -77,7 +79,7 @@ private CodeScanner mCodeScanner;
     String stockinDate = "";
     String fromCd = "";
     String checkToFinish = "" , id_unique_IVT = "";
-    TextView textViewTitle;
+    TextView textViewTitle , showvitri;
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     private Button buttonBack, btnSend;
@@ -96,6 +98,8 @@ private CodeScanner mCodeScanner;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferencess = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
+        vitritu = sharedPreferencess.getString("vitritu", "");
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
@@ -120,7 +124,6 @@ private CodeScanner mCodeScanner;
 
 
         check = true;
-
         setCheckBox();
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +200,9 @@ private CodeScanner mCodeScanner;
         surfaceView = findViewById(R.id.surface_view);
         barcodeText = findViewById(R.id.barcode_text);
         textViewTitle = findViewById(R.id.tvTitle);
+        showvitri = findViewById(R.id.vitritu);
+        showvitri.setVisibility(View.VISIBLE);
+        showvitri.setText(vitritu);
         textViewTitle.setText("QUÉT MÃ - KIỂM TỒN");
         buttonBack = findViewById(R.id.buttonQRBack);
 
@@ -226,7 +232,7 @@ private CodeScanner mCodeScanner;
         intent = getIntent();
         checkToFinish = intent.getStringExtra("check_to_finish_at_list");
         ea_unit_position = intent.getStringExtra("ea_unit_position");
-        vitritu = intent.getStringExtra("vitritu");
+//        vitritu = intent.getStringExtra("vitritu");
         // position được truyền qua để định danh nó được bấm from hay to
         position = intent.getStringExtra("position");
         // được tuyền qua từ adapter
@@ -240,8 +246,9 @@ private CodeScanner mCodeScanner;
         // stockindate truyền từ adapter để xử lí from - to
         stockinDate = intent.getStringExtra("stockin_date");
         if (!(position == null)) {
-            checkBoxGetDVT.setVisibility(View.INVISIBLE);
+            checkBoxGetDVT.setVisibility(View.GONE);
             checkBoxGetLPN.setVisibility(View.VISIBLE);
+            showvitri.setVisibility(View.GONE);
             checkBoxGetLPN.setChecked(false);
             if (position.equals("1")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
@@ -549,9 +556,8 @@ private CodeScanner mCodeScanner;
                         Checkproduct_Code();
                     }
 
-
                 } else {
-                    Toast.makeText(InventoryScanCode.this, "Sản Phẩm Không Có Trong Phiếu", Toast.LENGTH_LONG).show();
+                    Toast.makeText(InventoryScanCode.this, "Không Tìm Thấy Sản Phẩm ", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(InventoryScanCode.this, InventoryListProduct.class);
 //                    intent.putExtra("inventory", "333");
 //                    intent.putExtra("id_unique_IVT", id_unique_IVT);
