@@ -61,6 +61,7 @@ public class InventoryHome extends AppCompatActivity{
 
         mWebview = (WebView) findViewById(R.id.webview);
         btn1 = (Button) findViewById(R.id.btn1);
+        btn1.setText("QUÉT VỊ TRÍ");
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
         layout = findViewById(R.id.layout);
