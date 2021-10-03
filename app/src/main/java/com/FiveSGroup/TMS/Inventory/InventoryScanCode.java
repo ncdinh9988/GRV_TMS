@@ -542,6 +542,7 @@ private CodeScanner mCodeScanner;
                         batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
                         product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
                         pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
+                        fromCd = expired_date.get(0).getWAREHOUSE_POSITION_CD_TAM();
                     } catch (Exception e) {
 
                     }

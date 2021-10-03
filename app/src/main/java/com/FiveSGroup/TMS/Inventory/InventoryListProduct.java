@@ -266,18 +266,12 @@ public class    InventoryListProduct extends AppCompatActivity implements View.O
 
         for (int i = 0; i < product.size(); i++) {
             InventoryProduct inventory = product.get(i);
-            String value0 = "---";
             String valueFromCode = inventory.getPOSITION_FROM_CODE();
-            String valueToCode = inventory.getPOSITION_TO_CODE();
             String lpn_from = inventory.getLPN_FROM();
-            String lpn_to = inventory.getLPN_TO();
 
-            if ((valueFromCode.equals("") || valueFromCode.equals(value0)) && (lpn_from.equals(""))) {
+            if ((valueFromCode.equals("")) && (lpn_from.equals(""))) {
                 check = true;
             }
-//            if((valueToCode.equals("") || valueToCode.equals(value0)) && (lpn_to.equals(""))){
-//                check = true;
-//            }
         }
         if (check == true) {
             return true;

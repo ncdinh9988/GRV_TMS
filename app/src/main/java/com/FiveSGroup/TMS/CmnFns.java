@@ -7004,8 +7004,8 @@ public class CmnFns {
                     inventoryProduct.setBATCH_NUMBER(batch_number);
 
                     inventoryProduct.setPOSITION_FROM_CD(fromCd);
-                    inventoryProduct.setPOSITION_TO_CD("");
 
+                    inventoryProduct.setPOSITION_TO_CD("");
                     inventoryProduct.setSTOCK_TAKE_CD(inventoryCD);
 
 
@@ -7029,8 +7029,13 @@ public class CmnFns {
                         inventoryProduct.setQTY(String.valueOf(pro_set));
 
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ---
-                        inventoryProduct.setLPN_FROM(lpn_From);
-                        inventoryProduct.setPOSITION_FROM_CODE(vitritu);
+                        if(vitritu.contains("-")){
+                            inventoryProduct.setPOSITION_FROM_CODE(vitritu);
+                            inventoryProduct.setLPN_FROM("");
+                        }else{
+                            inventoryProduct.setPOSITION_FROM_CODE("");
+                            inventoryProduct.setLPN_FROM(vitritu);
+                        }
                         inventoryProduct.setPOSITION_FROM_DESCRIPTION(positionTo);
                     } else if (isLPN == 1) {
                         inventoryProduct.setSTOCKIN_DATE(strokinDate);
