@@ -508,6 +508,7 @@ private CodeScanner mCodeScanner;
                                         intent.putExtra("id_unique_IVT", id_unique_IVT);
                                         intent.putExtra("returnCD", product_cd);
                                         intent.putExtra("returnStock", stock);
+                                        intent.putExtra("fromCd", fromCd);
                                         DatabaseHelper.getInstance().deleteallExp_date();
                                         DatabaseHelper.getInstance().deleteallEa_Unit();
                                         startActivity(intent);

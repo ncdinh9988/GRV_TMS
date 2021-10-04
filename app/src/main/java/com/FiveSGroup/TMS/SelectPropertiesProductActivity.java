@@ -73,8 +73,10 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             typeScan = "",
             batch = "",
             stockin = "",
+            fromCd = "",
             pro_name = "",
             exp_date = "";
+
 
 
     String total_shelf_life = "";
@@ -163,6 +165,10 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         returnposition = intent.getStringExtra("returnposition");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        fromCd = intent.getStringExtra("fromCd");
+        if(fromCd==null){
+            fromCd = "";
+        }
         if(pro_name==null){
             pro_name = "";
         }
@@ -598,6 +604,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         intent.putExtra("exp_date", exp_date);
         intent.putExtra("stockin_date", stockinDate);
         intent.putExtra("cont", cont);
+        intent.putExtra("fromCd", fromCd);
         intent.putExtra("ea_unit", unit);
         intent.putExtra(type, type);
         startActivity(intent);

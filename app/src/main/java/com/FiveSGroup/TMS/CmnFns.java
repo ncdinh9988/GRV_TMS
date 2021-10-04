@@ -7050,7 +7050,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<InventoryProduct> inventoryProducts = DatabaseHelper.getInstance().
-                                getoneProduct_Inventory(inventoryProduct.getPRODUCT_CD(), expDate, inventoryProduct.getUNIT(), inventoryCD, stockDate);
+                                getoneProduct_Inventory(inventoryProduct.getPRODUCT_CD(), expDate, inventoryProduct.getUNIT(), inventoryCD, stockDate ,vitritu);
                         if (inventoryProducts.size() > 0) {
                             InventoryProduct product = inventoryProducts.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {

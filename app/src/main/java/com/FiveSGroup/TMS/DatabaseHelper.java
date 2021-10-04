@@ -6389,11 +6389,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "";
         if(vitri.contains("-")){
             selectQuery = "SELECT DISTINCT WAREHOUSE_POSITION_CD_TAM , STOCKIN_DATE_TAM ,EXPIRED_DATE_TAM , POSITION_CODE_TAM,  BATCH_NUMBER_TAM , PRODUCT_CODE_TAM , PRODUCT_CD_TAM FROM " + O_EXP +
-                    " where " + PRODUCT_CODE_TAM + " = '" + pro_code + "' AND " + POSITION_CODE_TAM  + " = '" + vitri + "' "
+                    " where " + PRODUCT_CODE_TAM + " = '" + pro_code + "' AND ( " + POSITION_CODE_TAM  + " = '" + vitri + "' OR " + EXPIRED_DATE_TAM + " = 'Khác') "
                     ;
         }else{
             selectQuery = "SELECT DISTINCT WAREHOUSE_POSITION_CD_TAM , STOCKIN_DATE_TAM ,EXPIRED_DATE_TAM , LPN_CODE_TAM,  BATCH_NUMBER_TAM , PRODUCT_CODE_TAM , PRODUCT_CD_TAM FROM " + O_EXP +
-                    " where " + PRODUCT_CODE_TAM + " = '" + pro_code + "' AND " + LPN_CODE_TAM  + " = '" + vitri + "' "
+                    " where " + PRODUCT_CODE_TAM + " = '" + pro_code + "' AND " + LPN_CODE_TAM  + " = '" + vitri + "'  OR " + EXPIRED_DATE_TAM + " = 'Khác') "
             ;
         }
 
@@ -8217,7 +8217,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<InventoryProduct>
-    getoneProduct_Inventory(String CD, String expDate, String ea_unit, String INVENTORYCD, String stockindate) {
+    getoneProduct_Inventory(String CD, String expDate, String ea_unit, String INVENTORYCD, String stockindate , String vitritu) {
         ArrayList<InventoryProduct> qrcode = new ArrayList<>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_INVENTORY + " " + " WHERE "
@@ -8225,6 +8225,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + EA_UNIT_INVENTORY + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_INVENTORY + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCK_TAKE_CD + " = " + INVENTORYCD + " AND "
+                + POSITION_FROM_CODE_INVENTORY + " like " + " '%" + vitritu + "%'" + " AND "
                 + STOCKIN_DATE_INVENTORY + " like " + " '%" + stockindate + "%'";
 
         Cursor c = db.rawQuery(selectQuery, null);
