@@ -6393,7 +6393,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ;
         }else{
             selectQuery = "SELECT DISTINCT WAREHOUSE_POSITION_CD_TAM , STOCKIN_DATE_TAM ,EXPIRED_DATE_TAM , LPN_CODE_TAM,  BATCH_NUMBER_TAM , PRODUCT_CODE_TAM , PRODUCT_CD_TAM FROM " + O_EXP +
-                    " where " + PRODUCT_CODE_TAM + " = '" + pro_code + "' AND " + LPN_CODE_TAM  + " = '" + vitri + "'  OR " + EXPIRED_DATE_TAM + " = 'Khác') "
+                    " where " + PRODUCT_CODE_TAM + " = '" + pro_code + "' AND ( " + LPN_CODE_TAM  + " = '" + vitri + "'  OR " + EXPIRED_DATE_TAM + " = 'Khác') "
             ;
         }
 
