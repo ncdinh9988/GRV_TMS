@@ -466,7 +466,7 @@ private CodeScanner mCodeScanner;
                 final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValueinventory(pro_code,vitritu);
 
 
-                if (expired_date.size() > 1) {
+                if (expired_date.size() >= 1) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(InventoryScanCode.this);
                     builder.setTitle("Chọn Hạn Sử Dụng - Ngày Nhập Kho - Batch Number");
 
@@ -535,30 +535,32 @@ private CodeScanner mCodeScanner;
                     });
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
-                } else if (expired_date.size() == 1) {
-                    String expDatetemp = "" , batch_number = "", product_code = "" , stockin_date = "";
-                    try {
-                        expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
-                        stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
-                        batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
-                        product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
-                        pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
-                        fromCd = expired_date.get(0).getWAREHOUSE_POSITION_CD_TAM();
-                    } catch (Exception e) {
-
-                    }
-                    if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
-//                            String chuoi[] = expDatetemp.split(" - ");
-                        if (!checkBoxGetDVT.isChecked()) {
-                            ReturnProduct(barcodeData, expDatetemp, stockin_date ,batch_number);
-                        } else {
-                            ShowDialogUnit(barcodeData, expDatetemp, stockin_date ,batch_number);
-                        }
-                    }else{
-                        Checkproduct_Code();
-                    }
-
-                } else {
+                }
+//                else if (expired_date.size() == 1) {
+//                    String expDatetemp = "" , batch_number = "", product_code = "" , stockin_date = "";
+//                    try {
+//                        expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
+//                        stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
+//                        batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
+//                        product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
+//                        pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
+//                        fromCd = expired_date.get(0).getWAREHOUSE_POSITION_CD_TAM();
+//                    } catch (Exception e) {
+//
+//                    }
+//                    if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
+////                            String chuoi[] = expDatetemp.split(" - ");
+//                        if (!checkBoxGetDVT.isChecked()) {
+//                            ReturnProduct(barcodeData, expDatetemp, stockin_date ,batch_number);
+//                        } else {
+//                            ShowDialogUnit(barcodeData, expDatetemp, stockin_date ,batch_number);
+//                        }
+//                    }else{
+//                        Checkproduct_Code();
+//                    }
+//
+//                }
+                else {
                     Toast.makeText(InventoryScanCode.this, "Không Tìm Thấy Sản Phẩm ", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(InventoryScanCode.this, InventoryListProduct.class);
 //                    intent.putExtra("inventory", "333");

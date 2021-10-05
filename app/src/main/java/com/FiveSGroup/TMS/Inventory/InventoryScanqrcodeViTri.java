@@ -142,6 +142,7 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
 
                 }
                 String barcode = edtBarcode.getText().toString();
+                GetData(barcode);
 
             }
         });
@@ -149,6 +150,18 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
 
+    }
+
+    private void GetData(final String barcodeData) {
+        Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData, Toast.LENGTH_SHORT).show();
+        SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("vitritu", barcodeData);
+        editor.apply();
+        Intent intentt = new Intent(getApplication(), InventoryScanCode.class);
+        intentt.putExtra("vitritu", barcodeData);
+        startActivity(intentt);
+        finish();
     }
 
     private void startScanning() {
@@ -329,6 +342,11 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
                                     if (barcodeData != null) {
                                         barcodeData = barcodeData.replace("\n","");
                                         edtBarcode.setText(barcodeData);
+                                        Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData, Toast.LENGTH_SHORT).show();
+                                        SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("vitritu", barcodeData);
+                                        editor.apply();
                                         Intent intentt = new Intent(getApplication(), InventoryScanCode.class);
                                         intentt.putExtra("vitritu", barcodeData);
                                         startActivity(intentt);
