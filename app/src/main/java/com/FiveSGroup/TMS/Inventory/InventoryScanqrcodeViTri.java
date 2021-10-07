@@ -153,15 +153,21 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
     }
 
     private void GetData(final String barcodeData) {
-        Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData, Toast.LENGTH_SHORT).show();
-        SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("vitritu", barcodeData);
-        editor.apply();
-        Intent intentt = new Intent(getApplication(), InventoryScanCode.class);
-        intentt.putExtra("vitritu", barcodeData);
-        startActivity(intentt);
-        finish();
+        String statusGetcode = new CmnFns().checkPosition(barcodeData);
+        if(statusGetcode.equals("Thành Công")){
+            Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData, Toast.LENGTH_SHORT).show();
+            SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("vitritu", barcodeData);
+            editor.apply();
+            Intent intentt = new Intent(getApplication(), InventoryScanCode.class);
+            intentt.putExtra("vitritu", barcodeData);
+            startActivity(intentt);
+            finish();
+        }else{
+            Toast.makeText(InventoryScanqrcodeViTri.this, statusGetcode , Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void startScanning() {
@@ -173,15 +179,21 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(InventoryScanqrcodeViTri.this, result.getText(), Toast.LENGTH_SHORT).show();
-                        SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("vitritu", result.getText());
-                        editor.apply();
-                        Intent intentt = new Intent(getApplication(), InventoryScanCode.class);
-                        intentt.putExtra("vitritu", result.getText());
-                        startActivity(intentt);
-                        finish();
+                        String statusGetcode = new CmnFns().checkPosition(result.getText());
+                        if(statusGetcode.equals("Thành Công")){
+                            Toast.makeText(InventoryScanqrcodeViTri.this, result.getText(), Toast.LENGTH_SHORT).show();
+                            SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("vitritu", result.getText());
+                            editor.apply();
+                            Intent intentt = new Intent(getApplication(), InventoryScanCode.class);
+                            intentt.putExtra("vitritu", result.getText());
+                            startActivity(intentt);
+                            finish();
+                        }else{
+                            Toast.makeText(InventoryScanqrcodeViTri.this, statusGetcode , Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 });
             }
@@ -334,25 +346,32 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
                             @Override
                             public void run() {
 
+
                                 try {
                                     barcodeData = barcodes.valueAt(0).displayValue;
-                                    Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData + "", Toast.LENGTH_LONG).show();
-                                    Log.e("barcode2", "" + barcodeData);
+                                    String statusGetcode = new CmnFns().checkPosition(barcodeData);
+                                    if(statusGetcode.equals("Thành Công")){
+                                        Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData + "", Toast.LENGTH_LONG).show();
+                                        Log.e("barcode2", "" + barcodeData);
 
-                                    if (barcodeData != null) {
-                                        barcodeData = barcodeData.replace("\n","");
-                                        edtBarcode.setText(barcodeData);
-                                        Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData, Toast.LENGTH_SHORT).show();
-                                        SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString("vitritu", barcodeData);
-                                        editor.apply();
-                                        Intent intentt = new Intent(getApplication(), InventoryScanCode.class);
-                                        intentt.putExtra("vitritu", barcodeData);
-                                        startActivity(intentt);
-                                        finish();
+                                        if (barcodeData != null) {
+                                            barcodeData = barcodeData.replace("\n","");
+                                            edtBarcode.setText(barcodeData);
+                                            Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData, Toast.LENGTH_SHORT).show();
+                                            SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putString("vitritu", barcodeData);
+                                            editor.apply();
+                                            Intent intentt = new Intent(getApplication(), InventoryScanCode.class);
+                                            intentt.putExtra("vitritu", barcodeData);
+                                            startActivity(intentt);
+                                            finish();
 
+                                        }
+                                    }else{
+                                        Toast.makeText(InventoryScanqrcodeViTri.this, statusGetcode , Toast.LENGTH_LONG).show();
                                     }
+
                                 } catch (Exception e) {
                                     Toast.makeText(InventoryScanqrcodeViTri.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                                     Log.d("#777", e.getMessage());

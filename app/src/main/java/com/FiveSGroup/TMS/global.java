@@ -15,6 +15,7 @@ public class global extends Application {
     // tham số này được lấy từ Server
     private static String UserNameAuthWebsevice = "";
     private static String PasswordNameAuthWebsevice = "";
+    private static String FORMAT_DATE = "yyyy-MM-dd HH:mm:ss";
 
 //http:///Webservice/Synchronize.asmx
 //    private static String UrlDeliveryCusomerList = "http://grv.fieldvision.com.vn:54573/TMS/DeliveryCustomerList.aspx?deliverer=";
@@ -365,11 +366,6 @@ public class global extends Application {
     public static void setAppContext(Context appContext) {
         //global.appContext = appContext;
     }
-
-
-
-    private static String FORMAT_DATE = "yyyy-MM-dd HH:mm:ss"; // định dang ngày
-    // giờ
 
 
     public static int getMaxinumKiloByteOfPicture() {

@@ -131,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 163; // version của DB khi thay
+    public static final int DATABASE_VERSION = 165; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -606,6 +606,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_EXP + " ADD COLUMN  "
                     + LPN_CODE_TAM + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 164
+        try {
+            db.execSQL("ALTER TABLE " + O_PUT_AWAY + " ADD COLUMN  "
+                    + CREATE_TIME_PUTAWAY + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 165
+        try {
+            db.execSQL("ALTER TABLE " + O_QRCODE + " ADD COLUMN  "
+                    + CREATE_TIME + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        try {
+            db.execSQL("ALTER TABLE " + O_LET_DOWN + " ADD COLUMN  "
+                    + CREATE_TIME_LETDOWN + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        try {
+            db.execSQL("ALTER TABLE " + O_MASTER_PICK + " ADD COLUMN  "
+                    + CREATE_TIME_MASTER_PICK + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -1704,6 +1735,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_MASTER_PICK = "LPN_CODE_MASTER_PICK";
     public static final String LPN_FROM_MASTER_PICK = "LPN_FROM_MASTER_PICK";
     public static final String LPN_TO_MASTER_PICK = "LPN_TO_MASTER_PICK";
+    public static final String CREATE_TIME_MASTER_PICK = "CREATE_TIME_MASTER_PICK";
     public static final String SUGGESTION_POSITION_MASTER_PICK = "SUGGESTION_POSITION_MASTER_PICK";
 //    public static final String SUGGESTION_POSITION_TO_MASTER_PICK = "SUGGESTION_POSITION_TO_MASTER_PICK";
 
@@ -1726,6 +1758,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + POSITION_TO_CODE_MASTER_PICK + " TEXT,"
             + POSITION_TO_DESCRIPTION_MASTER_PICK + " TEXT,"
             + MASTER_PICK_CD + " TEXT,"
+            + CREATE_TIME_MASTER_PICK + " TEXT,"
             + UNIQUE_CODE_MASTER_PICK + " TEXT ,"
             + LPN_CD_MASTER_PICK + " TEXT ,"
             + LPN_CODE_MASTER_PICK + " TEXT ,"
@@ -1742,6 +1775,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        values.put(AUTOINCREMENT_MASTER_PICK , masterPick.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_MASTER_PICK, masterPick.getUNIT());
         values.put(PRODUCT_CODE_MASTER_PICK, masterPick.getPRODUCT_CODE());
+        values.put(CREATE_TIME_MASTER_PICK, masterPick.getCREATE_TIME());
         values.put(PRODUCT_NAME_MASTER_PICK, masterPick.getPRODUCT_NAME());
         values.put(SUGGESTION_POSITION_MASTER_PICK, masterPick.getSUGGESTION_POSITION());
         values.put(PRODUCT_CD_MASTER_PICK, masterPick.getPRODUCT_CD());
@@ -1855,6 +1889,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(UNIQUE_CODE_MASTER_PICK))));
                 masterPick.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_MASTER_PICK))));
+                masterPick.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_MASTER_PICK))));
                 masterPick.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_MASTER_PICK))));
                 masterPick.setSUGGESTION_POSITION((c.getString(c
@@ -1921,6 +1957,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_MASTER_PICK))));
                 masterPick.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_MASTER_PICK))));
+                masterPick.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_MASTER_PICK))));
                 masterPick.setSUGGESTION_POSITION((c.getString(c
                         .getColumnIndex(SUGGESTION_POSITION_MASTER_PICK))));
                 masterPick.setPRODUCT_CODE((c.getString(c
@@ -1996,6 +2034,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                        .getColumnIndex(AUTOINCREMENT_MASTER_PICK))));
                 masterPick.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_MASTER_PICK))));
+                masterPick.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_MASTER_PICK))));
                 masterPick.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_MASTER_PICK))));
                 masterPick.setSUGGESTION_POSITION((c.getString(c
@@ -2057,6 +2097,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_Master_Pick masterPick = new Product_Master_Pick();
                 masterPick.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_MASTER_PICK))));
+                masterPick.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_MASTER_PICK))));
                 masterPick.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_MASTER_PICK))));
                 masterPick.setPRODUCT_CODE((c.getString(c
@@ -4593,6 +4635,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_LETDOWN = "LPN_CODE_LETDOWN";
     public static final String LPN_FROM_LETDOWN = "LPN_FROM_LETDOWN";
     public static final String LPN_TO_LETDOWN = "LPN_TO_LETDOWN";
+    public static final String CREATE_TIME_LETDOWN = "CREATE_TIME_LETDOWN";
     public static final String SUGGESTION_POSITION_LETDOWN = "SUGGESTION_POSITION";
     public static final String BATCH_NUMBER_LETDOWN = "BATCH_NUMBER_LETDOWN";
 
@@ -4605,6 +4648,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + QTY_EA_AVAILABLE_LETDOWN + " TEXT,"
             + QTY_SET_AVAILABLE_LETDOWN + " TEXT,"
             + BATCH_NUMBER_LETDOWN + " TEXT,"
+            + CREATE_TIME_LETDOWN + " TEXT,"
             + EXPIRED_DATE_LETDOWN + " TEXT,"
             + STOCKIN_DATE_LETDOWN + " TEXT,"
             + EA_UNIT_LETDOWN + " TEXT,"
@@ -4631,6 +4675,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        values.put(AUTOINCREMENT_LETDOWN, qrcode.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_LETDOWN, qrcode.getUNIT());
         values.put(PRODUCT_CODE_LETDOWN, qrcode.getPRODUCT_CODE());
+        values.put(CREATE_TIME_LETDOWN, qrcode.getCREATE_TIME());
         values.put(BATCH_NUMBER_LETDOWN, qrcode.getBATCH_NUMBER());
         values.put(PRODUCT_NAME_LETDOWN, qrcode.getPRODUCT_NAME());
         values.put(PRODUCT_CD_LETDOWN, qrcode.getPRODUCT_CD());
@@ -4718,6 +4763,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_LETDOWN))));
                 qrcode.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_LETDOWN))));
+                qrcode.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_LETDOWN))));
                 qrcode.setUNIQUE_CODE((c.getString(c
                         .getColumnIndex(UNIQUE_CODE_LETDOWN))));
                 qrcode.setPRODUCT_CODE((c.getString(c
@@ -4784,6 +4831,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(UNIQUE_CODE_LETDOWN))));
                 qrcode.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_LETDOWN))));
+                qrcode.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_LETDOWN))));
                 qrcode.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE_LETDOWN))));
                 qrcode.setPRODUCT_NAME((c.getString(c
@@ -5085,6 +5134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_TO_PUTAWAY = "LPN_TO_PUTAWAY";
     public static final String SUGGESTION_POSITION_PUTAWAY = "SUGGESTION_POSITION";
     public static final String BATCH_NUMBER_PUTAWAY = "BATCH_NUMBER_PUTAWAY";
+    public static final String CREATE_TIME_PUTAWAY = "CREATE_TIME_PUTAWAY";
 
 
     public static final String CREATE_TABLE_O_PUT_AWAY = "CREATE TABLE "
@@ -5108,6 +5158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + POSITION_TO_DESCRIPTION + " TEXT ,"
             + SUGGESTION_POSITION_PUTAWAY + " TEXT ,"
             + LPN_CD_PUTAWAY + " TEXT ,"
+            + CREATE_TIME_PUTAWAY + " TEXT ,"
             + LPN_CODE_PUTAWAY + " TEXT ,"
             + LPN_FROM_PUTAWAY + " TEXT ,"
             + LPN_TO_PUTAWAY + " TEXT "
@@ -5121,6 +5172,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        values.put(AUTOINCREMENT_PUT_AWAY,qrcode.getAUTOINCREMENT());
         values.put(UNIQUE_CODE_PUTAWAY, qrcode.getUNIQUE_CODE_PUTAWAY());
         values.put(BATCH_NUMBER_PUTAWAY, qrcode.getBATCH_NUMBER());
+        values.put(CREATE_TIME_PUTAWAY, qrcode.getCREATE_TIME());
         values.put(PRODUCT_CODE_PUTAWAY, qrcode.getPRODUCT_CODE_PUTAWAY());
         values.put(PRODUCT_NAME_PUTAWAY, qrcode.getPRODUCT_NAME_PUTAWAY());
         values.put(PRODUCT_CD_PUTAWAY, qrcode.getPRODUCT_CD_PUTAWAY());
@@ -5197,6 +5249,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_PUT_AWAY))));
                 qrcodeq.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_PUTAWAY))));
+                qrcodeq.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_PUTAWAY))));
                 qrcodeq.setPRODUCT_CD_PUTAWAY((c.getString(c
                         .getColumnIndex(PRODUCT_CD_PUTAWAY))));
                 qrcodeq.setPRODUCT_CODE_PUTAWAY((c.getString(c
@@ -5258,6 +5312,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Product_PutAway qrcode_putaway = new Product_PutAway();
                 qrcode_putaway.setAUTOINCREMENT((c.getString(c
                         .getColumnIndex(AUTOINCREMENT_PUT_AWAY))));
+                qrcode_putaway.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_PUTAWAY))));
                 qrcode_putaway.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_PUTAWAY))));
                 qrcode_putaway.setUNIQUE_CODE_PUTAWAY((c.getString(c
@@ -5330,6 +5386,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_NAME_PUTAWAY))));
                 qrcode_putaway.setPRODUCT_CD_PUTAWAY((c.getString(c
                         .getColumnIndex(PRODUCT_CD_PUTAWAY))));
+                qrcode_putaway.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_PUTAWAY))));
                 qrcode_putaway.setQTY_SET_AVAILABLE((c.getString(c
                         .getColumnIndex(QTY_SET_AVAILABLE))));
                 qrcode_putaway.setSTOCKIN_DATE_PUTAWAY((c.getString(c
@@ -6756,6 +6814,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String POSITION_DESCRIPTION = "POSITION_DESCRIPTION";
     public static final String STOCKIN_DATE = "STOCKIN_DATE";
     public static final String BATCH_NUMBER_CODE = "BATCH_NUMBER_CODE";
+    public static final String CREATE_TIME = "CREATE_TIME";
 
 
     public static final String CREATE_TABLE_O_QRCODE = "CREATE TABLE "
@@ -6765,6 +6824,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + MANUFACTURING_DATE_WST + " TEXT,"
             + PRODUCT_CODE + " TEXT,"
             + PRODUCT_CD + " TEXT,"
+            + CREATE_TIME + " TEXT,"
             + PRODUCT_NAME + " TEXT,"
             + WAREHOUSE_POSITION_CD + " TEXT,"
             + EXPIRED_DATE + " TEXT,"
@@ -6787,6 +6847,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(PRODUCT_CD, qrcode.getPRODUCT_CD());
         values.put(MANUFACTURING_DATE_WST, qrcode.getMANUFACTURING_DATE());
         values.put(STOCK_RECEIPT_CD, qrcode.getSTOCK_RECEIPT_CD());
+        values.put(CREATE_TIME, qrcode.getCREATE_TIME());
         values.put(PRODUCT_CODE, qrcode.getPRODUCT_CODE());
         values.put(PRODUCT_NAME, qrcode.getPRODUCT_NAME());
         values.put(WAREHOUSE_POSITION_CD, qrcode.getWAREHOUSE_POSITION_CD());
@@ -7012,6 +7073,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(AUTOINCREMENT_PO))));
                 qrcodeq.setMANUFACTURING_DATE((c.getString(c
                         .getColumnIndex(MANUFACTURING_DATE_WST))));
+                qrcodeq.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME))));
                 qrcodeq.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_CODE))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
@@ -7073,6 +7136,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(MANUFACTURING_DATE_WST))));
                 qrcodeq.setBATCH_NUMBER((c.getString(c
                         .getColumnIndex(BATCH_NUMBER_CODE))));
+                qrcodeq.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME))));
                 qrcodeq.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
@@ -7129,6 +7194,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_CD))));
                 qrcodeq.setMANUFACTURING_DATE((c.getString(c
                         .getColumnIndex(MANUFACTURING_DATE_WST))));
+                qrcodeq.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME))));
                 qrcodeq.setPRODUCT_CODE((c.getString(c
                         .getColumnIndex(PRODUCT_CODE))));
                 qrcodeq.setPRODUCT_NAME((c.getString(c

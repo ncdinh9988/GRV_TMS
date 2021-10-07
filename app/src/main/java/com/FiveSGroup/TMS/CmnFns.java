@@ -101,6 +101,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -1894,6 +1895,26 @@ public class CmnFns {
         }
 
     }
+    public String checkPosition(String barcodeData) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return "Vui Lòng Kiểm Tra Lại Mạng";
+
+        Webservice webService = new Webservice();
+        String result = "";
+
+        result = webService.Check_Position_With_Usercode_WST(barcodeData);
+
+        // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
+        if (result.equals("1")) {
+            return "Thành Công";
+        } else {
+            return result ;
+        }
+
+    }
+
 
     public int getProduct_code(String barcodeData) {
 
@@ -2297,7 +2318,7 @@ public class CmnFns {
                     } else {
                         qrcode1.setPRODUCT_NAME(pro_name);
                     }
-
+                    qrcode1.setCREATE_TIME(getTimeCreate());
                     qrcode1.setWAREHOUSE_POSITION_CD(pro_warehouse);
                     qrcode1.setPOSITION_CODE(pro_position_code);
                     qrcode1.setPOSITION_DESCRIPTION(pro_position_des);
@@ -3034,6 +3055,7 @@ public class CmnFns {
                     masterPick.setLPN_TO(lpn_To);
                     masterPick.setLPN_CODE(lpnCode);
                     masterPick.setSUGGESTION_POSITION(suggestionPosition);
+                    masterPick.setCREATE_TIME(getTimeCreate());
 
                     masterPick.setPOSITION_TO_CODE(positionTo);
                     masterPick.setPOSITION_TO_DESCRIPTION("");
@@ -4431,6 +4453,7 @@ public class CmnFns {
                     putAway.setPOSITION_FROM_PUTAWAY(warePosition);
                     putAway.setPOSITION_TO_PUTAWAY(warePosition);
 
+
                     String positionTo = "---";
                     String positionFrom = "---";
                     String lpn_From = "";
@@ -4438,6 +4461,7 @@ public class CmnFns {
 
                     putAway.setLPN_TO(lpn_To);
                     putAway.setLPN_CODE(lpnCode);
+                    putAway.setCREATE_TIME(getTimeCreate());
 
                     putAway.setPOSITION_TO_CODE(positionTo);
                     putAway.setPOSITION_TO_DESCRIPTION("");
@@ -4519,6 +4543,12 @@ public class CmnFns {
         }
 
         return 1;
+    }
+
+    public String getTimeCreate() {
+        SimpleDateFormat sdf = new SimpleDateFormat(global.getFormatDate());
+        String currentDateandTime = sdf.format(new Date());
+        return currentDateandTime ;
     }
 
     public int synchronizeGETProductByZonePickList(Context context, String qrcode, String admin, String expDate, String unit, String type,
@@ -6438,6 +6468,7 @@ public class CmnFns {
                     letDown.setQTY_SET_AVAILABLE(String.valueOf(pro_set));
                     letDown.setQTY_EA_AVAILABLE(quanity_ea);
                     letDown.setBATCH_NUMBER(batch_number);
+                    letDown.setCREATE_TIME(getTimeCreate());
 
                     letDown.setPOSITION_FROM_CD(warePosition);
                     letDown.setPOSITION_TO_CD(warePosition);
@@ -7029,13 +7060,13 @@ public class CmnFns {
                         inventoryProduct.setQTY(String.valueOf(pro_set));
 
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ---
-                        if(vitritu.contains("-")){
+//                        if(vitritu.contains("-")){
+//                            inventoryProduct.setPOSITION_FROM_CODE(vitritu);
+//                            inventoryProduct.setLPN_FROM(vitritu);
+//                        }else{
                             inventoryProduct.setPOSITION_FROM_CODE(vitritu);
-                            inventoryProduct.setLPN_FROM("");
-                        }else{
-                            inventoryProduct.setPOSITION_FROM_CODE("");
                             inventoryProduct.setLPN_FROM(vitritu);
-                        }
+//                        }
                         inventoryProduct.setPOSITION_FROM_DESCRIPTION(positionTo);
                     } else if (isLPN == 1) {
                         inventoryProduct.setSTOCKIN_DATE(strokinDate);

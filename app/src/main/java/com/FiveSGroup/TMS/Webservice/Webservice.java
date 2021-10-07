@@ -414,6 +414,55 @@ public class Webservice {
         }
     }
 
+    public String Check_Position_With_Usercode_WST(String barcode) {
+
+        String webServiceFunc = "Check_Position_With_Usercode_WST";
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+
+        // Param 2
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("UserCode");
+        param1.setValue(CmnFns.readDataAdmin());
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+        // Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("Barcode");
+        param2.setValue(barcode);
+        param2.setType(String.class);
+        request.addProperty(param2);
+
+        // Param 2
+        PropertyInfo param4 = new PropertyInfo();
+        param4.setName("Stock_Take_CD");
+        param4.setValue(global.getInventoryCD());
+        param4.setType(String.class);
+        request.addProperty(param4);
+
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
     public String GetProduct_Code(String barcode) {
 
         String webServiceFunc = "Get_Product_Code_With_Barcode";

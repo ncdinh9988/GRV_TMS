@@ -27,6 +27,15 @@ public class Product_Master_Pick {
     private String LPN_TO;
     private String SUGGESTION_POSITION;
     private String SUGGESTION_POSITION_TO;
+    private String CREATE_TIME;
+
+    public String getCREATE_TIME() {
+        return CREATE_TIME;
+    }
+
+    public void setCREATE_TIME(String CREATE_TIME) {
+        this.CREATE_TIME = CREATE_TIME;
+    }
 
     public String getBATCH_NUMBER() {
         return BATCH_NUMBER;

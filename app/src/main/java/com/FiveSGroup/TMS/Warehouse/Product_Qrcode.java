@@ -19,6 +19,15 @@ public class Product_Qrcode {
     private String WAREHOUSE_POSITION_CD;
     private String MANUFACTURING_DATE ;
     private String BATCH_NUMBER ;
+    private String CREATE_TIME;
+
+    public String getCREATE_TIME() {
+        return CREATE_TIME;
+    }
+
+    public void setCREATE_TIME(String CREATE_TIME) {
+        this.CREATE_TIME = CREATE_TIME;
+    }
 
     public String getBATCH_NUMBER() {
         return BATCH_NUMBER;
