@@ -665,6 +665,7 @@ public class ListQrcode extends AppCompatActivity implements View.OnClickListene
 
 
                 qrcode1.setWAREHOUSE_POSITION_CD(warehouse_position_cd);
+                qrcode1.setCREATE_TIME(CmnFns.getTimeCreate());
                 qrcode1.setPOSITION_CODE(position_code);
                 qrcode1.setPOSITION_DESCRIPTION(position_description);
                 qrcode1.setSL_SET("");

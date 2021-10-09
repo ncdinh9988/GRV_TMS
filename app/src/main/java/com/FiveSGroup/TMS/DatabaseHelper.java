@@ -7180,7 +7180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     getAllProduct_Qrcode_Sync(String stock) {
         ArrayList<Product_Qrcode> qrcode = new ArrayList<Product_Qrcode>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT MANUFACTURING_DATE_WST , BATCH_NUMBER_CODE ,  WAREHOUSE_POSITION_CD, STOCK_RECEIPT_CD, PRODUCT_CD, PRODUCT_CODE, PRODUCT_NAME, SET_UNIT, POSITION_FROM, POSITION_TO" +
+        String selectQuery = "SELECT MANUFACTURING_DATE_WST ,  CREATE_TIME , BATCH_NUMBER_CODE ,  WAREHOUSE_POSITION_CD, STOCK_RECEIPT_CD, PRODUCT_CD, PRODUCT_CODE, PRODUCT_NAME, SET_UNIT, POSITION_FROM, POSITION_TO" +
                 ", POSITION_CODE, POSITION_DESCRIPTION, EA_UNIT , REPLACE(EXPIRED_DATE,'------','') as EXPIRED_DATE, REPLACE(STOCKIN_DATE,'------','') as STOCKIN_DATE FROM " + O_QRCODE + " " + " WHERE " + STOCK_RECEIPT_CD + " = " + stock;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list

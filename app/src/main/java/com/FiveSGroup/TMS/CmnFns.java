@@ -4545,7 +4545,7 @@ public class CmnFns {
         return 1;
     }
 
-    public String getTimeCreate() {
+    public static String getTimeCreate() {
         SimpleDateFormat sdf = new SimpleDateFormat(global.getFormatDate());
         String currentDateandTime = sdf.format(new Date());
         return currentDateandTime ;
