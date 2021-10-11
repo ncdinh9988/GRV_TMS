@@ -227,12 +227,13 @@ private CodeScanner mCodeScanner;
             checkBoxGetLPN.setChecked(false);
             if (position.equals("1")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ TỪ");
+                checkBoxGetLPN.setVisibility(View.VISIBLE);
             } else if (position.equals("2")) {
                 textViewTitle.setText("QUÉT VỊ TRÍ ĐẾN");
             }
         } else {
             checkBoxGetDVT.setVisibility(View.VISIBLE);
-            checkBoxGetLPN.setVisibility(View.VISIBLE);
+            checkBoxGetLPN.setVisibility(View.INVISIBLE);
             checkBoxGetDVT.setChecked(true);
             checkBoxGetLPN.setChecked(false);
             textViewTitle.setText("QUÉT MÃ - PHÂN HÀNG");
@@ -552,6 +553,7 @@ private CodeScanner mCodeScanner;
     }
 
     private void ReturnPosition(String barcode) {
+
         Intent intentt = new Intent(getApplication(), List_TransferPosting.class);
         intentt.putExtra("btn1", barcode);
         intentt.putExtra("returnposition", position);

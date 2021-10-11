@@ -142,7 +142,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         if (isNumeric(data)) {
             tvProductSelectName.setText("SẢN PHẨM KHÔNG HỢP LỆ, VUI LÒNG THỰC HIỆN QUÉT LẠI SẢN PHẨM");
         } else {
-            tvProductSelectName.setText(data);
+            tvProductSelectName.setText(pro_name);
         }
     }
 
@@ -601,6 +601,8 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         intent.putExtra("returnCD", returnCD);
         intent.putExtra("returnStock", returnStock);
         intent.putExtra("batch_number", cont);
+        intent.putExtra("pro_code",pro_code);
+        intent.putExtra("pro_name",pro_name);
         intent.putExtra("exp_date", exp_date);
         intent.putExtra("stockin_date", stockinDate);
         intent.putExtra("cont", cont);

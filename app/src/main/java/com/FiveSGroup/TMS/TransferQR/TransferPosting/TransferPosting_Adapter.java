@@ -1,14 +1,21 @@
 package com.FiveSGroup.TMS.TransferQR.TransferPosting;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -18,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
+import com.FiveSGroup.TMS.MasterPick.Qrcode_Master_Pick;
 import com.FiveSGroup.TMS.R;
 
 import java.util.ArrayList;
@@ -51,6 +60,8 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvUnit.setText(product.getUNIT());
+        holder.tvcont.setText(product.getBATCH_NUMBER());
+        holder.layout_cont.setVisibility(View.VISIBLE);
 
 
         if(!product.getLPN_FROM().equals("")){
@@ -73,42 +84,169 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
 
         holder.tvExpired.setText(product.getEXPIRED_DATE());
         holder.tvStockin.setText(product.getSTOCKIN_DATE());
-
-
         holder.btnvtden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!product.getLPN_CODE().equals("")) {
+                    Intent intent = new Intent(context, Qrcode_TransferPosting.class);
+                    intent.putExtra("position", "1");
+                    intent.putExtra("product_cd", product.getPRODUCT_CD());
+                    intent.putExtra("c", holder.tvExpired.getText());
+                    intent.putExtra("ea_unit_position", product.getUNIT());
+                    intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                    intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
 
-                Intent intent = new Intent(context, Qrcode_TransferPosting.class);
-                intent.putExtra("position", "1");
-                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                intent.putExtra("c", holder.tvExpired.getText());
-                intent.putExtra("ea_unit_position", product.getUNIT());
-                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+                    context.startActivity(intent);
 
-                context.startActivity(intent);
+                    ((Activity) context).finish();
+                } else {
+                    if (!product.getPOSITION_FROM_CODE().equals("---")) {
+                        try {
+                            LayoutInflater factory = LayoutInflater.from(context);
+                            View layout_cus = factory.inflate(R.layout.layout_back_putaway, null);
+                            final AlertDialog dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                            InsetDrawable inset = new InsetDrawable(back, 64);
+                            dialog.getWindow().setBackgroundDrawable(inset);
+                            dialog.setView(layout_cus);
 
-                ((Activity) context).finish();
+                            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                            final TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+                            textView.setText("Nhân đôi sản phẩm " + product.getPRODUCT_NAME() + " không?");
+                            btnNo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialog.dismiss();
+                                    Intent intent = new Intent(context, Qrcode_TransferPosting.class);
+                                    intent.putExtra("position", "1");
+                                    intent.putExtra("product_cd", product.getPRODUCT_CD());
+                                    intent.putExtra("c", holder.tvExpired.getText());
+                                    intent.putExtra("ea_unit_position", product.getUNIT());
+                                    intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                                    intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+
+                                    context.startActivity(intent);
+
+                                    ((Activity) context).finish();
+
+                                }
+                            });
+                            btnYes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    DatabaseHelper.getInstance().CreateTransfer_Posting(product);
+                                    Intent intent = new Intent(context, List_TransferPosting.class);
+                                    context.startActivity(intent);
+                                    ((Activity) context).finish();
+                                }
+                            });
+                            dialog.show();
+                        } catch (Exception e) {
+                            Log.e("Exception", e.getMessage());
+                        }
+                    } else {
+                        Intent intent = new Intent(context, Qrcode_TransferPosting.class);
+                        intent.putExtra("position", "1");
+                        intent.putExtra("product_cd", product.getPRODUCT_CD());
+                        intent.putExtra("c", holder.tvExpired.getText());
+                        intent.putExtra("ea_unit_position", product.getUNIT());
+                        intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                        intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+
+                        context.startActivity(intent);
+
+                        ((Activity) context).finish();
+                    }
+                }
             }
         });
         holder.btnvtdi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Qrcode_TransferPosting.class);
-                intent.putExtra("position", "2");
-                intent.putExtra("product_cd", product.getPRODUCT_CD());
-                intent.putExtra("c", holder.tvExpired.getText());
-                intent.putExtra("ea_unit_position", product.getUNIT());
-                intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
-                intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+                if (!product.getLPN_CODE().equals("")) {
+                    Intent intent = new Intent(context, Qrcode_TransferPosting.class);
+                    intent.putExtra("position", "2");
+                    intent.putExtra("product_cd", product.getPRODUCT_CD());
+                    intent.putExtra("c", holder.tvExpired.getText());
+                    intent.putExtra("ea_unit_position", product.getUNIT());
+                    intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                    intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
 
 
-                context.startActivity(intent);
+                    context.startActivity(intent);
 
-                ((Activity) context).finish();
+                    ((Activity) context).finish();
+                } else {
+                    if (!product.getPOSITION_TO_CODE().equals("---")) {
+                        try {
+                            LayoutInflater factory = LayoutInflater.from(context);
+                            View layout_cus = factory.inflate(R.layout.layout_back_putaway, null);
+                            final AlertDialog dialog = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+                            InsetDrawable inset = new InsetDrawable(back, 64);
+                            dialog.getWindow().setBackgroundDrawable(inset);
+                            dialog.setView(layout_cus);
+
+                            Button btnNo = layout_cus.findViewById(R.id.btnNo);
+                            Button btnYes = layout_cus.findViewById(R.id.btnYes);
+                            final TextView textView = layout_cus.findViewById(R.id.tvTextBack);
+                            textView.setText("Nhân đôi sản phẩm " + product.getPRODUCT_NAME() + " không?");
+                            btnNo.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialog.dismiss();
+                                    Intent intent = new Intent(context, Qrcode_TransferPosting.class);
+                                    intent.putExtra("position", "2");
+                                    intent.putExtra("product_cd", product.getPRODUCT_CD());
+                                    intent.putExtra("c", holder.tvExpired.getText());
+                                    intent.putExtra("ea_unit_position", product.getUNIT());
+                                    intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                                    intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+                                    context.startActivity(intent);
+
+                                    ((Activity) context).finish();
+
+                                }
+                            });
+                            btnYes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                    DatabaseHelper.getInstance().CreateTransfer_Posting(product);
+                                    Intent intent = new Intent(context, List_TransferPosting.class);
+                                    context.startActivity(intent);
+                                    ((Activity) context).finish();
+                                }
+                            });
+                            dialog.show();
+                        } catch (Exception e) {
+                            Log.e("Exception", e.getMessage());
+                        }
+                    } else {
+                        Intent intent = new Intent(context, Qrcode_TransferPosting.class);
+                        intent.putExtra("position", "2");
+                        intent.putExtra("product_cd", product.getPRODUCT_CD());
+                        intent.putExtra("c", holder.tvExpired.getText());
+                        intent.putExtra("ea_unit_position", product.getUNIT());
+                        intent.putExtra("stockin_date", product.getSTOCKIN_DATE());
+                        intent.putExtra("id_unique_SO", product.getAUTOINCREMENT());
+
+
+                        context.startActivity(intent);
+
+                        ((Activity) context).finish();
+                    }
+                }
+
             }
         });
+
+
+
         final String oldValue = holder.edt.getText().toString();
 
 //        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -254,6 +392,8 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
         TextView tvExpired, tvStockin;
         EditText edt;
         LinearLayout layoutTo;
+        TextView tvcont;
+        LinearLayout layout_cont;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -264,6 +404,8 @@ public class TransferPosting_Adapter extends RecyclerView.Adapter<TransferPostin
             tvIdProduct = itemView.findViewById(R.id.idproduct);
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
             layoutTo = itemView.findViewById(R.id.layoutTo);
+            tvcont = itemView.findViewById(R.id.tvcont);
+            layout_cont = itemView.findViewById(R.id.layout_cont);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);
