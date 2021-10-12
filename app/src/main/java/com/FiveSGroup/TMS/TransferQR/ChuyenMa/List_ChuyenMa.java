@@ -29,6 +29,7 @@ import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.StockOut.ListQrcode_Stockout;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
+import com.FiveSGroup.TMS.TransferQR.TransferPosting.List_TransferPosting;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
 import com.FiveSGroup.TMS.Warehouse.ProductAdapter;
 import com.FiveSGroup.TMS.global;
@@ -345,49 +346,51 @@ public class List_ChuyenMa extends AppCompatActivity implements View.OnClickList
         }else {
 
             try {
-                int result = new CmnFns().synchronizeData_RQBT_Final(saleCode, "WTP", global.getChuyenMaCD());
-                if (result >= 1) {
+//                int result = new CmnFns().synchronizeData_RQBT_Final(saleCode, "WTP", global.getChuyenMaCD());
+                 String result = new CmnFns().synchronizeData_RQBT_FinalV2(saleCode, "WTP", global.getChuyenMaCD());
+                if (result.contains("Lưu thành công")) {
                     DatabaseHelper.getInstance().deleteallChuyenMa(global.getChuyenMaCD());
-                    ShowSuccessMessage("Lưu thành công");
+                    ShowSuccessMessage(result);
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    dialog.showDialog(List_ChuyenMa.this, result);
 
-                    if (result == -1) {
-                        dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
-                    } else if (result == -2) {
-                        dialog.showDialog(List_ChuyenMa.this, "Số lượng không đủ trong tồn kho");
-
-                    } else if (result == -3) {
-                        dialog.showDialog(List_ChuyenMa.this, "Vị trí từ không hợp lệ");
-
-                    } else if (result == -4) {
-                        dialog.showDialog(List_ChuyenMa.this, "Trạng thái của phiếu không hợp lệ");
-
-                    } else if (result == -5) {
-                        dialog.showDialog(List_ChuyenMa.this, "Vị trí từ trùng vị trí đên");
-
-                    } else if (result == -6) {
-                        dialog.showDialog(List_ChuyenMa.this, "Vị trí đến không hợp lệ");
-
-                    } else if (result == -7) {
-                        dialog.showDialog(List_ChuyenMa.this, "Cập nhật trạng thái thất bại");
-
-                    } else if (result == -8) {
-                        dialog.showDialog(List_ChuyenMa.this, "Sản phẩm không có thông tin trên phiếu ");
-
-                    } else if (result == -13) {
-                        dialog.showDialog(List_ChuyenMa.this, "Dữ liệu không hợp lệ");
-
-                    } else if (result == -24) {
-                        dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
-
-                    } else if (result == -26) {
-                        dialog.showDialog(List_ChuyenMa.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
-
-                    } else {
-                        dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
-                    }
+//                    if (result == -1) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
+//                    } else if (result == -2) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Số lượng không đủ trong tồn kho");
+//
+//                    } else if (result == -3) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Vị trí từ không hợp lệ");
+//
+//                    } else if (result == -4) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Trạng thái của phiếu không hợp lệ");
+//
+//                    } else if (result == -5) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Vị trí từ trùng vị trí đên");
+//
+//                    } else if (result == -6) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Vị trí đến không hợp lệ");
+//
+//                    } else if (result == -7) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Cập nhật trạng thái thất bại");
+//
+//                    } else if (result == -8) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Sản phẩm không có thông tin trên phiếu ");
+//
+//                    } else if (result == -13) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Dữ liệu không hợp lệ");
+//
+//                    } else if (result == -24) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+//
+//                    } else if (result == -26) {
+//                        dialog.showDialog(List_ChuyenMa.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+//
+//                    } else {
+//                        dialog.showDialog(List_ChuyenMa.this, "Lưu thất bại");
+//                    }
 
                 }
             } catch (Exception e) {

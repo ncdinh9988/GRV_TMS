@@ -327,48 +327,51 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
 
             } else {
                 try {
-                    int result = new CmnFns().synchronizeData(saleCode, "WTP", global.getTransferPostingCD());
-                    if (result >= 1) {
-                        ShowSuccessMessage("Lưu thành công");
+                    String result = new CmnFns().synchronizeDataV2(saleCode, "WTP", global.getTransferPostingCD());
+//                    int result = new CmnFns().synchronizeData(saleCode, "WTP", global.getTransferPostingCD());
+                    if (result.contains("Lưu thành công")) {
+                        ShowSuccessMessage(result);
 //                    Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
 
                     } else {
+                        dialog.showDialog(List_TransferPosting.this, result);
 
-                        if (result == -1) {
-                            dialog.showDialog(List_TransferPosting.this, "Lưu thất bại");
-                        } else if (result == -2) {
-                            dialog.showDialog(List_TransferPosting.this, "Số lượng không đủ trong tồn kho");
 
-                        } else if (result == -3) {
-                            dialog.showDialog(List_TransferPosting.this, "Vị trí từ không hợp lệ");
-
-                        } else if (result == -4) {
-                            dialog.showDialog(List_TransferPosting.this, "Trạng thái của phiếu không hợp lệ");
-
-                        } else if (result == -5) {
-                            dialog.showDialog(List_TransferPosting.this, "Vị trí từ trùng vị trí đên");
-
-                        } else if (result == -6) {
-                            dialog.showDialog(List_TransferPosting.this, "Vị trí đến không hợp lệ");
-
-                        } else if (result == -7) {
-                            dialog.showDialog(List_TransferPosting.this, "Cập nhật trạng thái thất bại");
-
-                        } else if (result == -8) {
-                            dialog.showDialog(List_TransferPosting.this, "Sản phẩm không có thông tin trên phiếu ");
-
-                        } else if (result == -13) {
-                            dialog.showDialog(List_TransferPosting.this, "Dữ liệu không hợp lệ");
-
-                        } else if (result == -24) {
-                            dialog.showDialog(List_TransferPosting.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
-
-                        } else if (result == -26) {
-                            dialog.showDialog(List_TransferPosting.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
-
-                        } else {
-                            dialog.showDialog(List_TransferPosting.this, "Lưu thất bại");
-                        }
+//                        if (result == -1) {
+//                            dialog.showDialog(List_TransferPosting.this, "Lưu thất bại");
+//                        } else if (result == -2) {
+//                            dialog.showDialog(List_TransferPosting.this, "Số lượng không đủ trong tồn kho");
+//
+//                        } else if (result == -3) {
+//                            dialog.showDialog(List_TransferPosting.this, "Vị trí từ không hợp lệ");
+//
+//                        } else if (result == -4) {
+//                            dialog.showDialog(List_TransferPosting.this, "Trạng thái của phiếu không hợp lệ");
+//
+//                        } else if (result == -5) {
+//                            dialog.showDialog(List_TransferPosting.this, "Vị trí từ trùng vị trí đên");
+//
+//                        } else if (result == -6) {
+//                            dialog.showDialog(List_TransferPosting.this, "Vị trí đến không hợp lệ");
+//
+//                        } else if (result == -7) {
+//                            dialog.showDialog(List_TransferPosting.this, "Cập nhật trạng thái thất bại");
+//
+//                        } else if (result == -8) {
+//                            dialog.showDialog(List_TransferPosting.this, "Sản phẩm không có thông tin trên phiếu ");
+//
+//                        } else if (result == -13) {
+//                            dialog.showDialog(List_TransferPosting.this, "Dữ liệu không hợp lệ");
+//
+//                        } else if (result == -24) {
+//                            dialog.showDialog(List_TransferPosting.this, "Vui Lòng Kiểm Tra Lại Số Lượng");
+//
+//                        } else if (result == -26) {
+//                            dialog.showDialog(List_TransferPosting.this, "Số Lượng Vượt Quá Yêu Cầu Trên SO");
+//
+//                        } else {
+//                            dialog.showDialog(List_TransferPosting.this, "Lưu thất bại");
+//                        }
 
                     }
                 } catch (Exception e) {

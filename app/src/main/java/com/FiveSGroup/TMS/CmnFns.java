@@ -5252,6 +5252,186 @@ public class CmnFns {
         }
 
     }
+    public String synchronizeDataV2(String usercode, String type, String CD) {
+
+        try {
+
+            int status = this.allowSynchronizeBy3G();
+            if (status == 102 || status == -1) {
+                return "Vui Lòng Kiểm Tra Kết Nối Mạng";
+            }
+
+            String jsonData = "";
+            Webservice Webservice = new Webservice();
+            //String json = convertToJson(customers);
+            Gson gson = new GsonBuilder().create();
+//put away
+            if (type.equals("WPA")) {
+                List<Product_PutAway> product = DatabaseHelper.getInstance().getAllProduct_PutAway_Sync();
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+
+                jsonData = gson.toJson(product);
+            } // tra hang
+            else if (type.equals("WRW")) {
+                List<Product_Return_WareHouse> product = DatabaseHelper.getInstance().getAllProduct_Return_WareHouse_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+
+                jsonData = gson.toJson(product);
+            } //chat hang len lpn
+            else if (type.equals("WLP")) {
+                List<Product_Remove_LPN> product = DatabaseHelper.getInstance().getAllProduct_Remove_LPN_Sync();
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+
+                jsonData = gson.toJson(product);
+            } //let down
+            else if (type.equals("WLD")) {
+                List<ProductLetDown> product = DatabaseHelper.getInstance().getAllProduct_LetDown_Sync();
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+
+                jsonData = gson.toJson(product);
+            } // tra hang
+            else if (type.equals("WSO")) {
+                List<Product_StockOut> product = DatabaseHelper.getInstance().getAllProduct_Stockout_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            } // chuyen vi tri
+            else if (type.equals("WOI")) {
+                List<Product_StockTransfer> product = DatabaseHelper.getInstance().getAllProduct_StockTransfer_Sync();
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }// pick list
+            else if (type.equals("WPL")) {
+                List<PickList> product = DatabaseHelper.getInstance().getAllProduct_PickList_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            } else if (type.equals("WPP")) {
+                try {
+                    int check = DatabaseHelper.getInstance().getDuplicate_LoadPallet();
+                    if (check > 1) {
+                        return "Trùng Dữ Liệu Vui Lòng Kiểm Tra Lại";
+                    }
+
+                } catch (Exception e) {
+
+                }
+                List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync();
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            } else if (type.equals("WST")) {
+                List<InventoryProduct> product = DatabaseHelper.getInstance().getAllProduct_Inventory_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            } else if (type.equals("WWA")) {
+                List<Product_Warehouse_Adjustment> product = DatabaseHelper.getInstance().getAllProduct_Warehouse_Adjustment_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }// masster pick
+            else if (type.equals("WMP")) {
+                try {
+                    int check = DatabaseHelper.getInstance().getDuplicate_MasterPick(CD);
+                    if (check > 1) {
+                        return "Trùng Dữ Liệu Vui Lòng Kiểm Tra Lại";
+                    }
+
+                } catch (Exception e) {
+
+                }
+
+                List<Product_Master_Pick> product = DatabaseHelper.getInstance().getAllProduct_Master_Pick_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+
+            }
+            //cancel good (xuat huy)
+            else if (type.equals("WCG")) {
+                List<Product_CancelGood> product = DatabaseHelper.getInstance().getAllProduct_CancelGood_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }
+            // po return
+            else if (type.equals("WPR")) {
+                List<Product_PoReturn> product = DatabaseHelper.getInstance().getAllProduct_PoReturn_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }
+            // transfer posting
+            else if (type.equals("WTP")) {
+                List<Product_TransferPosting> product = DatabaseHelper.getInstance().getAllProduct_TransferPosting_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }
+
+            // QA
+            else if (type.equals("WQA")) {
+                List<Product_Pickup> product = DatabaseHelper.getInstance().getAllProduct_Pickup_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }
+            // return QA
+            else if (type.equals("WQA_Return")) {
+                List<Product_Return_QA> product = DatabaseHelper.getInstance().getAllProduct_Return_QA_Sync(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }
+
+
+            try {
+
+                if ((!type.equals("WWA")) || (!type.equals("WST"))) {
+                    JSONArray jsonarray = new JSONArray(jsonData);
+                    for (int j = 0; j < jsonarray.length(); j++) {
+                        // lấy một đối tượng json để
+                        JSONObject jsonobj = jsonarray.getJSONObject(j);
+                        String qty = jsonobj.getString("QTY");
+                        Log.d("ddddddd", qty);
+                        if (qty.equals("0") || qty.equals("") || qty.equals("00") || qty.equals("000")) {
+                            return "Vui Lòng Kiểm Tra Lại Số Lượng";
+                        }
+
+                    }
+                }
+            } catch (Exception e) {
+
+            }
+
+            // lấy các khách hàng chưa đồng bộ, đã
+            // đồng bộ về rồi
+            // thì sẽ ko cần
+            // phải đồng bộ nữa
+
+            String result = Webservice.synchronizeData(jsonData, usercode, type);
+
+            if (result.contains("Lưu thành công")) {
+                // đã đồng bộ thành công update để lần sau không đồng bộ lại
+                //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
+                return "Lưu thành công";
+            } else {
+                // đồng bộ không thành công
+                return result;
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            return "Có lỗi xảy ra vui lòng thử lại";
+        }
+
+    }
 
     public int synchronizeData(String usercode, String type, String CD) {
 
@@ -5430,6 +5610,57 @@ public class CmnFns {
             // TODO: handle exception
 
             return -1;
+        }
+
+    }
+    public String synchronizeData_RQBT_FinalV2(String usercode, String type, String CD) {
+
+        try {
+
+            int status = this.allowSynchronizeBy3G();
+            if (status == 102 || status == -1) {
+                return "Vui Lòng Kiểm Tra Kết Nối Mạng";
+            }
+
+            String jsonData = "";
+            Webservice Webservice = new Webservice();
+            //String json = convertToJson(customers);
+            Gson gson = new GsonBuilder().create();
+
+
+            // chuyen ma
+            if (type.equals("WTP")) {
+                List<Product_ChuyenMa> product = DatabaseHelper.getInstance().getAll_ChuyenMa(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }
+            // chuyen ma
+            if (type.equals("WQA")) {
+                List<Product_Result_QA> product = DatabaseHelper.getInstance().getAll_RESULT_QA(CD);
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }
+
+            // lấy các khách hàng chưa đồng bộ, đã
+            // đồng bộ về rồi
+            // thì sẽ ko cần
+            // phải đồng bộ nữa
+
+            String result = Webservice.synchronizeData_RQBT_Final(jsonData, usercode, type);
+            if (result.contains("Lưu thành công")) {
+                // đã đồng bộ thành công update để lần sau không đồng bộ lại
+                //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
+                return "Lưu thành công";
+            } else {
+                // đồng bộ không thành công
+                return result;
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            return "Có lỗi xảy ra vui lòng thử lại";
         }
 
     }
