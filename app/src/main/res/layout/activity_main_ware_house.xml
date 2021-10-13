@@ -21,6 +21,7 @@
     <LinearLayout
         android:id="@+id/layout_name_sale"
         android:layout_width="match_parent"
+        android:weightSum="10"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/tvTitle">
@@ -28,6 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:text="Nhân Viên: "
             android:textSize="25sp"
             android:textStyle="bold"
@@ -37,12 +39,23 @@
             android:id="@+id/tvSale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="4"
             android:text="Tên Nhân Viên "
             android:textSize="25sp"
             android:textColor="@color/black"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"/>
+        <ImageButton
+            android:id="@+id/imgsetting"
+            android:layout_weight="3"
+            android:layout_marginTop="5dp"
+            android:layout_width="10dp"
+            android:layout_height="35dp"
+            android:background="@color/white"
+            android:src="@drawable/icon_setting"
+            android:textColor="@color/black"
+            />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

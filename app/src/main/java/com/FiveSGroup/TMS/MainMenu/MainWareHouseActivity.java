@@ -1,8 +1,11 @@
 package com.FiveSGroup.TMS.MainMenu;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,7 @@ public class MainWareHouseActivity extends AppCompatActivity {
     ArrayList<MenuItemObject> arrItem;
     MenuItemAdpater adpater;
     TextView tvSale, tvVersion;
+    ImageButton imgsetting ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,7 @@ public class MainWareHouseActivity extends AppCompatActivity {
         rvCategory = findViewById(R.id.rvCategory);
         tvSale = findViewById(R.id.tvSale);
         tvVersion = findViewById(R.id.tvVersion);
+        imgsetting = findViewById(R.id.imgsetting);
         String version;
         try {
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
@@ -45,6 +50,15 @@ public class MainWareHouseActivity extends AppCompatActivity {
         }else if(CmnFns.isCheckAdmin()){
             tvSale.setText(CmnFns.readDataShipper());
         }
+
+        imgsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Setting.class);
+                startActivity(intent);
+
+            }
+        });
 
         adpater = new MenuItemAdpater(this, arrItem);
         LinearLayoutManager layoutManager = new GridLayoutManager(this, 3);

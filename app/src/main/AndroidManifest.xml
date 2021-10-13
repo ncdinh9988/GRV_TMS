@@ -48,6 +48,9 @@
         <activity android:name=".LPN.LPNActivity" />
         <activity android:name=".PickList.NewWareHouseActivity" />
         <activity
+            android:name=".MainMenu.Setting"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".MasterPick.Home_Master_Pick"
             android:screenOrientation="portrait" />
         <activity

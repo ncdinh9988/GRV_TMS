@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="App Setting"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:background="@color/blue2"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <LinearLayout
+
+
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:id="@+id/idproduct"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:textStyle="bold"
+            android:gravity="start"
+            android:textSize="16sp"
+            android:text="Chọn Loại Quét : " />
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <RadioGroup
+            android:id="@+id/radioGroup_diffLevel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:checkedButton="@id/radio_default"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <RadioButton
+                android:id="@+id/radio_default"
+                android:layout_weight="3"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:layout_height="match_parent"
+                android:text="Default" />
+
+            <RadioButton
+                android:id="@+id/radio_honeywell"
+                android:layout_width="wrap_content"
+                android:textColor="@color/black"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:text="HoneyWell" />
+
+            <RadioButton
+                android:id="@+id/radio_bluetooth"
+                android:textColor="@color/black"
+                android:layout_weight="3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Bluetooth" />
+        </RadioGroup>
+
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/LoadWebService"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:nestedScrollingEnabled="false"
+        android:layout_weight="9.35">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <!--    <ListView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content" />-->
+
+    <LinearLayout
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:paddingBottom="5dp"
+        android:layout_height="65dp">
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_button"
+            android:text="Thoát"
+            android:id="@+id/button_back"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/bg_button"
+            android:textAllCaps="false"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Lưu"
+            android:textSize="16sp"
+            android:id="@+id/button_save"/>
+
+    </LinearLayout>
+
+</LinearLayout>
