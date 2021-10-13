@@ -68,6 +68,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             stockinDate = "",
             cont = "",
             expiredDate = "",
+            expired_Date = "",
             shelfLife = "",
             shelfLifeDate = "",
             typeScan = "",
@@ -165,6 +166,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         returnposition = intent.getStringExtra("returnposition");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        expired_Date = intent.getStringExtra("expired_Date");
         fromCd = intent.getStringExtra("fromCd");
         if(fromCd==null){
             fromCd = "";
@@ -198,6 +200,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         checkBoxMonth = findViewById(R.id.checkBoxMonth);
         tvProductSelectName = findViewById(R.id.tvSelectProductName);
         edtSelectProductExpiredDate = findViewById(R.id.edtSelectProductExpiredDate);
+        edtSelectProductExpiredDate.setText(expired_Date);
         edtSelectProductStockinDate = findViewById(R.id.edtSelectProductStockinDate);
         edtSelectShelfLife = findViewById(R.id.edtSelectShelfLife);
         edtcont = findViewById(R.id.edtcont);

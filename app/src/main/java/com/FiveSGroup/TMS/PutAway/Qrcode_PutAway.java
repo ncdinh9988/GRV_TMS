@@ -2,8 +2,10 @@ package com.FiveSGroup.TMS.PutAway;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -92,6 +94,13 @@ private CodeScanner mCodeScanner;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        SharedPreferences sharedPreff = this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+//        String setting = sharedPreff.getString("checkedRadioButtonId", "");
+//        if(setting.equals("2131296697")){
+//
+//        }else{
+//
+//        }
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);

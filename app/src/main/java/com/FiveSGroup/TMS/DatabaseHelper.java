@@ -5612,6 +5612,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(BATCH_NUMBER))));
                 batch_number_tam.setUNIT((c.getString(c
                         .getColumnIndex(UNIT_BATCH))));
+                batch_number_tam.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_BATCH))));
 
                 batch.add(batch_number_tam);
             } while (c.moveToNext());

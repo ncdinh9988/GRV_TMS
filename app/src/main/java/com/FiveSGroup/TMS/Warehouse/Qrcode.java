@@ -380,6 +380,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     alertDialog.show();
 
                 }else if(product_s_ps.size() == 1){
+                    pro_name = product_s_ps.get(0).getPRODUCT_NAME();
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     getinformation(barcodeData);
                 }else{
@@ -419,6 +420,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         String bat = mString[which];
                         String vitri = String.valueOf(which);
+                        String expired_Date = batch_number_tams.get(which).getEXPIRED_DATE();
 
                         dialog.dismiss(); // Close Dialog
 
@@ -441,6 +443,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                             intentt.putExtra("returnposition", position);
                             intentt.putExtra("returnCD", product_cd);
                             intentt.putExtra("returnStock", stock);
+                            intentt.putExtra("expired_Date", expired_Date);
                             intentt.putExtra("pro_code", pro_code);
                             intentt.putExtra("pro_name", pro_name);
                             intentt.putExtra("batch", chuoi[0]);
@@ -459,9 +462,10 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             } else if (batch_number_tams.size() == 1) {
-                String batchTam = "";
+                String batchTam = "" ,expired_Date = "";
                 try {
                     batchTam = batch_number_tams.get(0).getBATCH_NUMBER();
+                    expired_Date = batch_number_tams.get(0).getEXPIRED_DATE();
                 } catch (Exception e) {
 
                 }
@@ -479,6 +483,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 intentt.putExtra("shelf_life_type", shelf_life_type);
                 intentt.putExtra("min_rem_shelf_life", min_rem_shelf_life);
                 intentt.putExtra("returnposition", position);
+                intentt.putExtra("expired_Date", expired_Date);
                 intentt.putExtra("returnCD", product_cd);
                 intentt.putExtra("returnStock", stock);
                 intentt.putExtra("batch", batchTam);
