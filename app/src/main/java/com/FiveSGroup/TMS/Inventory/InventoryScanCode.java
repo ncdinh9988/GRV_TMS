@@ -110,7 +110,7 @@ private CodeScanner mCodeScanner;
                 setContentView(R.layout.layout_qrcode);
                 init();
                 getDataFromIntent();
-                if (setting == 2131296697) {
+                if (setting == 2131296696) {
 
                 } else {
                     if (ContextCompat.checkSelfPermission(InventoryScanCode.this, Manifest.permission.CAMERA)
@@ -132,7 +132,7 @@ private CodeScanner mCodeScanner;
 
         }
 
-        if (setting == 2131296697) {
+        if (setting == 2131296696) {
             edtBarcode.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

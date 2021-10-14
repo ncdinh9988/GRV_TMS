@@ -105,7 +105,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
-                if (setting == 2131296697) {
+                if (setting == 2131296696) {
 
                 } else {
                     if (ContextCompat.checkSelfPermission(Qrcode_PutAway.this, Manifest.permission.CAMERA)
@@ -124,7 +124,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-        if (setting == 2131296697) {
+        if (setting == 2131296696) {
             edtBarcode.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -141,6 +141,19 @@ public class Qrcode_PutAway extends AppCompatActivity {
                 }
             });
         }
+
+        edtBarcode.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    GetData(edtBarcode.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
 
         isUp = false;
         getDataFromIntent();
@@ -171,8 +184,6 @@ public class Qrcode_PutAway extends AppCompatActivity {
             }
         });
         setCheckBox();
-
-
     }
 
 

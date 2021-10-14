@@ -107,7 +107,7 @@ private CodeScanner mCodeScanner;
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
-                if (setting == 2131296697) {
+                if (setting == 2131296696) {
 
                 } else {
                     if (ContextCompat.checkSelfPermission(Qrcode_Return_QA.this, Manifest.permission.CAMERA)
@@ -127,7 +127,7 @@ private CodeScanner mCodeScanner;
         } catch (Exception e) {
 
         }
-        if (setting == 2131296697) {
+        if (setting == 2131296696) {
             edtBarcode.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

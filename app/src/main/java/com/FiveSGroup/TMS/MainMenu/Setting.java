@@ -26,7 +26,6 @@ public class Setting extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_setting);
-
         getinit();
         action();
         loadSetting();
@@ -37,7 +36,7 @@ public class Setting extends AppCompatActivity {
         btn_save = findViewById(R.id.button_save);
         btn_back= findViewById(R.id.button_back);
         radioGroup_diffLevel = findViewById(R.id.radioGroup_diffLevel);
-        radio_bluetooth = findViewById(R.id.radio_bluetooth);
+//        radio_bluetooth = findViewById(R.id.radio_bluetooth);
         radio_default = findViewById(R.id.radio_default);
         radio_honeywell = findViewById(R.id.radio_honeywell);
     }
@@ -64,7 +63,7 @@ public class Setting extends AppCompatActivity {
         int checkedRadioButtonId = radioGroup_diffLevel.getCheckedRadioButtonId();
         editor.putInt("checkedRadioButtonId", checkedRadioButtonId);
 
-        // Save with default id : 2131296696 honeywell id : 2131296697  bluetooth id : 2131296695
+        // Save with default id : 2131296695 honeywell id : 2131296696  bluetooth id :
         editor.apply();
         Toast.makeText(this,"App Setting saved!",Toast.LENGTH_LONG).show();
 
