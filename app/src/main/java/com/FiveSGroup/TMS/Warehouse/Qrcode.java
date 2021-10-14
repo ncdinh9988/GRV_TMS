@@ -3,6 +3,7 @@ package com.FiveSGroup.TMS.Warehouse;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,8 @@ import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -88,6 +91,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     String total_shelf_life = "";
     String shelf_life_type = "";
     String min_rem_shelf_life = "";
+    int setting = 0 ;
 
 
 
@@ -101,16 +105,23 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreff = this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+        setting = sharedPreff.getInt("checkedRadioButtonId", 0);
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
-                if (ContextCompat.checkSelfPermission(Qrcode.this, Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_DENIED) {
-                    ActivityCompat.requestPermissions(Qrcode.this, new String[]{Manifest.permission.CAMERA}, 123);
+                if (setting == 2131296697) {
+
                 } else {
-                    startScanning();
+                    if (ContextCompat.checkSelfPermission(Qrcode.this, Manifest.permission.CAMERA)
+                            == PackageManager.PERMISSION_DENIED) {
+                        ActivityCompat.requestPermissions(Qrcode.this, new String[]{Manifest.permission.CAMERA}, 123);
+                    } else {
+                        startScanning();
+                    }
                 }
+
             }else {
                 setContentView(R.layout.activity_load_camera);
                 init();
@@ -120,11 +131,26 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
         } catch (Exception e) {
 
         }
+        if (setting == 2131296697) {
+            edtBarcode.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    GetData(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        }
 
         getDataFromIntent();
         check = true;
-
-
 
         buttonBack.setOnClickListener(this);
         btnSend.setOnClickListener(new View.OnClickListener() {

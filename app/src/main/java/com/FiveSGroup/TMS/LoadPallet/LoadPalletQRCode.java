@@ -2,8 +2,10 @@ package com.FiveSGroup.TMS.LoadPallet;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
 import android.graphics.Rect;
@@ -11,6 +13,8 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -82,6 +86,7 @@ private CodeScanner mCodeScanner;
     private EditText edtBarcode;
     String pro_code = "";
     String pro_name = "";
+    int setting = 0 ;
     android.hardware.Camera.Parameters params;
 
     private boolean isUp;
@@ -97,17 +102,24 @@ private CodeScanner mCodeScanner;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreff = this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+        setting = sharedPreff.getInt("checkedRadioButtonId", 0);
 
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
-                if (ContextCompat.checkSelfPermission(LoadPalletQRCode.this, Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_DENIED) {
-                    ActivityCompat.requestPermissions(LoadPalletQRCode.this, new String[]{Manifest.permission.CAMERA}, 123);
+                if (setting == 2131296697) {
+
                 } else {
-                    startScanning();
+                    if (ContextCompat.checkSelfPermission(LoadPalletQRCode.this, Manifest.permission.CAMERA)
+                            == PackageManager.PERMISSION_DENIED) {
+                        ActivityCompat.requestPermissions(LoadPalletQRCode.this, new String[]{Manifest.permission.CAMERA}, 123);
+                    } else {
+                        startScanning();
+                    }
                 }
+
             }else {
                 setContentView(R.layout.activity_load_camera);
                 init();
@@ -116,6 +128,24 @@ private CodeScanner mCodeScanner;
             }
         } catch (Exception e) {
 
+        }
+
+        if (setting == 2131296697) {
+            edtBarcode.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    GetData(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
         }
 
         getDataFromIntent();

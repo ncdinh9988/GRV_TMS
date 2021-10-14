@@ -34,7 +34,7 @@ public class MainWareHouseActivity extends AppCompatActivity {
         rvCategory = findViewById(R.id.rvCategory);
         tvSale = findViewById(R.id.tvSale);
         tvVersion = findViewById(R.id.tvVersion);
-//        imgsetting = findViewById(R.id.imgsetting);
+        imgsetting = findViewById(R.id.imgsetting);
         String version;
         try {
             PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
@@ -51,14 +51,14 @@ public class MainWareHouseActivity extends AppCompatActivity {
             tvSale.setText(CmnFns.readDataShipper());
         }
 
-//        imgsetting.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(),Setting.class);
-//                startActivity(intent);
-//
-//            }
-//        });
+        imgsetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Setting.class);
+                startActivity(intent);
+
+            }
+        });
 
         adpater = new MenuItemAdpater(this, arrItem);
         LinearLayoutManager layoutManager = new GridLayoutManager(this, 3);

@@ -12,6 +12,8 @@ import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -86,6 +88,7 @@ private CodeScanner mCodeScanner;
     private EditText edtBarcode;
     String vitritu = "";
     int vitri = 0 ;
+    int setting = 0 ;
 
 
     @Override
@@ -100,17 +103,24 @@ private CodeScanner mCodeScanner;
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferencess = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
         vitritu = sharedPreferencess.getString("vitritu", "");
+        SharedPreferences sharedPreff = this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+        setting = sharedPreff.getInt("checkedRadioButtonId", 0);
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
                 getDataFromIntent();
-                if (ContextCompat.checkSelfPermission(InventoryScanCode.this, Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_DENIED) {
-                    ActivityCompat.requestPermissions(InventoryScanCode.this, new String[]{Manifest.permission.CAMERA}, 123);
+                if (setting == 2131296697) {
+
                 } else {
-                    startScanning();
+                    if (ContextCompat.checkSelfPermission(InventoryScanCode.this, Manifest.permission.CAMERA)
+                            == PackageManager.PERMISSION_DENIED) {
+                        ActivityCompat.requestPermissions(InventoryScanCode.this, new String[]{Manifest.permission.CAMERA}, 123);
+                    } else {
+                        startScanning();
+                    }
                 }
+
             }else {
                 setContentView(R.layout.activity_load_camera);
                 init();
@@ -120,6 +130,24 @@ private CodeScanner mCodeScanner;
             }
         } catch (Exception e) {
 
+        }
+
+        if (setting == 2131296697) {
+            edtBarcode.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    GetData(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
         }
 
 
