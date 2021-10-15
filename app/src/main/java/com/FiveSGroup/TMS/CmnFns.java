@@ -2357,7 +2357,7 @@ public class CmnFns {
 
                     if (expDate != null) {
                         ArrayList<Product_Qrcode> product_qrcodes = DatabaseHelper.getInstance().
-                                getoneProduct_Qrcode(qrcode1.getPRODUCT_CD(), qrcode1.getSTOCK_RECEIPT_CD(), expDate, qrcode1.getEA_UNIT(), stockinDate);
+                                getoneProduct_Qrcode(qrcode1.getPRODUCT_CD(), qrcode1.getSTOCK_RECEIPT_CD(), expDate, qrcode1.getEA_UNIT(), stockinDate );
                         if (product_qrcodes.size() > 0) {
                             Product_Qrcode product = product_qrcodes.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getEA_UNIT()))) {
@@ -2501,7 +2501,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_Warehouse_Adjustment> product_warehouse_adjustments = DatabaseHelper.getInstance().
-                                getoneProduct_Warehouse_Adjustment(warehouseAdjustment.getPRODUCT_CD(), expDate, warehouseAdjustment.getUNIT(), warehouseAdjustment.getSTOCKIN_DATE(), warehouseCD);
+                                getoneProduct_Warehouse_Adjustment(warehouseAdjustment.getPRODUCT_CD(), expDate, warehouseAdjustment.getUNIT(), warehouseAdjustment.getSTOCKIN_DATE(), warehouseCD,batch_number);
                         if (product_warehouse_adjustments.size() > 0) {
                             Product_Warehouse_Adjustment product = product_warehouse_adjustments.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -2672,7 +2672,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_Return_WareHouse> product_return_wareHouses = DatabaseHelper.getInstance().
-                                getoneProduct_Return_WareHouse(return_wareHouse.getPRODUCT_CD(), expDate, return_wareHouse.getUNIT(), return_wareHouse.getSTOCKIN_DATE(), returnCD);
+                                getoneProduct_Return_WareHouse(return_wareHouse.getPRODUCT_CD(), expDate, return_wareHouse.getUNIT(), return_wareHouse.getSTOCKIN_DATE(), returnCD,batch_number);
                         if (product_return_wareHouses.size() > 0) {
                             Product_Return_WareHouse product = product_return_wareHouses.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -3084,7 +3084,7 @@ public class CmnFns {
                     }
                     if (isLPN == 0) {
                         ArrayList<Product_Master_Pick> Product_Master_Picks = DatabaseHelper.getInstance().
-                                getoneProduct_Master_Pick(masterPick.getPRODUCT_CD(), expDate, masterPick.getUNIT(), masterPick.getSTOCKIN_DATE(), masterPickCD);
+                                getoneProduct_Master_Pick(masterPick.getPRODUCT_CD(), expDate, masterPick.getUNIT(), masterPick.getSTOCKIN_DATE(), masterPickCD,batch_number);
                         if (Product_Master_Picks.size() > 0) {
                             Product_Master_Pick product = Product_Master_Picks.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -3263,7 +3263,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_PoReturn> Product_PoReturns = DatabaseHelper.getInstance().
-                                getoneProduct_PoReturn(poReturn.getPRODUCT_CD(), expDate, poReturn.getUNIT(), poReturn.getSTOCKIN_DATE(), poreturnCD);
+                                getoneProduct_PoReturn(poReturn.getPRODUCT_CD(), expDate, poReturn.getUNIT(), poReturn.getSTOCKIN_DATE(), poreturnCD,batch_number);
                         if (Product_PoReturns.size() > 0) {
                             Product_PoReturn product = Product_PoReturns.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -3637,7 +3637,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_TransferPosting> Product_TransferPostings = DatabaseHelper.getInstance().
-                                getoneProduct_TransferPosting(transferPosting.getPRODUCT_CD(), expDate, transferPosting.getUNIT(), transferPosting.getSTOCKIN_DATE(), transferPostingCD);
+                                getoneProduct_TransferPosting(transferPosting.getPRODUCT_CD(), expDate, transferPosting.getUNIT(), transferPosting.getSTOCKIN_DATE(), transferPostingCD,batch_number);
                         if (Product_TransferPostings.size() > 0) {
                             Product_TransferPosting product = Product_TransferPostings.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -3816,7 +3816,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_Pickup> Product_Pickups = DatabaseHelper.getInstance().
-                                getoneProduct_Pickup(pickUp.getPRODUCT_CD(), expDate, pickUp.getUNIT(), pickUp.getSTOCKIN_DATE(), pickupCD);
+                                getoneProduct_Pickup(pickUp.getPRODUCT_CD(), expDate, pickUp.getUNIT(), pickUp.getSTOCKIN_DATE(), pickupCD,batch_number);
                         if (Product_Pickups.size() > 0) {
                             Product_Pickup product = Product_Pickups.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -3985,7 +3985,7 @@ public class CmnFns {
 
 
                     ArrayList<Product_Return_QA> Product_Return_QAs = DatabaseHelper.getInstance().
-                            getoneProduct_Return_QA(returnQA.getPRODUCT_CD(), expDate, returnQA.getUNIT(), returnQA.getSTOCKIN_DATE(), returnQACD);
+                            getoneProduct_Return_QA(returnQA.getPRODUCT_CD(), expDate, returnQA.getUNIT(), returnQA.getSTOCKIN_DATE(), returnQACD,batch_number);
                     if (Product_Return_QAs.size() > 0) {
                         Product_Return_QA product = Product_Return_QAs.get(0);
                         if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -4137,7 +4137,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_CancelGood> Product_CancelGoods = DatabaseHelper.getInstance().
-                                getoneProduct_CancelGood(cancelGood.getPRODUCT_CD(), expDate, cancelGood.getUNIT(), cancelGood.getSTOCKIN_DATE(), cancelCD);
+                                getoneProduct_CancelGood(cancelGood.getPRODUCT_CD(), expDate, cancelGood.getUNIT(), cancelGood.getSTOCKIN_DATE(), cancelCD,batch_number);
                         if (Product_CancelGoods.size() > 0) {
                             Product_CancelGood product = Product_CancelGoods.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -4310,7 +4310,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_StockOut> product_stockOuts = DatabaseHelper.getInstance().
-                                getoneProduct_stockout(stockOut.getPRODUCT_CD(), expDate, stockOut.getUNIT(), stockOut.getSTOCKIN_DATE(), stockoutCD);
+                                getoneProduct_stockout(stockOut.getPRODUCT_CD(), expDate, stockOut.getUNIT(), stockOut.getSTOCKIN_DATE(), stockoutCD,batch_number);
                         if (product_stockOuts.size() > 0) {
                             Product_StockOut product = product_stockOuts.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -4491,7 +4491,7 @@ public class CmnFns {
                     }
                     if (isLNP == 0) {
                         ArrayList<Product_PutAway> product_putaway = DatabaseHelper.getInstance().
-                                getoneProduct_PutAway(putAway.getPRODUCT_CD_PUTAWAY(), expDate, putAway.getEA_UNIT_PUTAWAY(), putAway.getSTOCKIN_DATE_PUTAWAY());
+                                getoneProduct_PutAway(putAway.getPRODUCT_CD_PUTAWAY(), expDate, putAway.getEA_UNIT_PUTAWAY(), putAway.getSTOCKIN_DATE_PUTAWAY(),batch_number);
                         if (product_putaway.size() > 0) {
                             Product_PutAway product = product_putaway.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE_PUTAWAY()) && unit.equals(product.getEA_UNIT_PUTAWAY()))) {
@@ -4680,7 +4680,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<PickList> product_pickList = DatabaseHelper.getInstance().
-                                getoneProduct_PickList(pickList.getPRODUCT_CD(), expDate, pickList.getUNIT(), PickListCD, stockDate);
+                                getoneProduct_PickList(pickList.getPRODUCT_CD(), expDate, pickList.getUNIT(), PickListCD, stockDate ,batch_number);
                         if (product_pickList.size() > 0) {
                             PickList product = product_pickList.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -6201,7 +6201,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_LoadPallet> loadPallets = DatabaseHelper.getInstance().
-                                getoneProduct_LoadPallet(product_loadPallet.getPRODUCT_CD(), expDate, product_loadPallet.getUNIT(), product_loadPallet.getSTOCKIN_DATE());
+                                getoneProduct_LoadPallet(product_loadPallet.getPRODUCT_CD(), expDate, product_loadPallet.getUNIT(), product_loadPallet.getSTOCKIN_DATE(),batch_number);
                         if (loadPallets.size() > 0) {
                             Product_LoadPallet product = loadPallets.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -6370,7 +6370,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_StockTransfer> product_stockTransfers = DatabaseHelper.getInstance().
-                                getoneProduct_StockTransfer(productStockTransfer.getPRODUCT_CD(), expDate, productStockTransfer.getUNIT(), productStockTransfer.getSTOCKIN_DATE());
+                                getoneProduct_StockTransfer(productStockTransfer.getPRODUCT_CD(), expDate, productStockTransfer.getUNIT(), productStockTransfer.getSTOCKIN_DATE(),batch_number);
                         if (product_stockTransfers.size() > 0) {
                             Product_StockTransfer product = product_stockTransfers.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -6538,7 +6538,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<Product_Remove_LPN> product_remove_lpn = DatabaseHelper.getInstance().
-                                getoneProduct_Remove_LPN(productRemoveLpn.getPRODUCT_CD(), expDate, productRemoveLpn.getUNIT(), productRemoveLpn.getSTOCKIN_DATE());
+                                getoneProduct_Remove_LPN(productRemoveLpn.getPRODUCT_CD(), expDate, productRemoveLpn.getUNIT(), productRemoveLpn.getSTOCKIN_DATE(),batch_number);
                         if (product_remove_lpn.size() > 0) {
                             Product_Remove_LPN product = product_remove_lpn.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -6744,7 +6744,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<ProductLetDown> product_letdown = DatabaseHelper.getInstance().
-                                getoneProductLetDown(letDown.getPRODUCT_CD(), expDate, letDown.getUNIT(), letDown.getSTOCKIN_DATE());
+                                getoneProductLetDown(letDown.getPRODUCT_CD(), expDate, letDown.getUNIT(), letDown.getSTOCKIN_DATE(),batch_number);
                         if (product_letdown.size() > 0) {
                             ProductLetDown product = product_letdown.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -6938,7 +6938,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<TransferUnitProduct> product_transfer = DatabaseHelper.getInstance().
-                                getoneTransferUnitProduct(transferUnit.getPRODUCT_CD(), expDate, transferUnit.getUNIT(), transferUnit.getSTOCKIN_DATE());
+                                getoneTransferUnitProduct(transferUnit.getPRODUCT_CD(), expDate, transferUnit.getUNIT(), transferUnit.getSTOCKIN_DATE(), batch_number);
                         if (product_transfer.size() > 0) {
                             TransferUnitProduct product = product_transfer.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {
@@ -7313,7 +7313,7 @@ public class CmnFns {
 
                     if (isLPN == 0) {
                         ArrayList<InventoryProduct> inventoryProducts = DatabaseHelper.getInstance().
-                                getoneProduct_Inventory(inventoryProduct.getPRODUCT_CD(), expDate, inventoryProduct.getUNIT(), inventoryCD, stockDate ,vitritu);
+                                getoneProduct_Inventory(inventoryProduct.getPRODUCT_CD(), expDate, inventoryProduct.getUNIT(), inventoryCD, stockDate ,vitritu,batch_number);
                         if (inventoryProducts.size() > 0) {
                             InventoryProduct product = inventoryProducts.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getUNIT()))) {

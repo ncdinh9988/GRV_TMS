@@ -820,12 +820,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_Warehouse_Adjustment>
-    getoneProduct_Warehouse_Adjustment(String CD, String expDate, String ea_unit, String warehouse_AdjustmentinDate, String warehouse_Adjustment_cd) {
+    getoneProduct_Warehouse_Adjustment(String CD, String expDate, String ea_unit, String warehouse_AdjustmentinDate,
+                                       String warehouse_Adjustment_cd, String batch_number) {
         ArrayList<Product_Warehouse_Adjustment> warehouse_Adjustments = new ArrayList<Product_Warehouse_Adjustment>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_WAREHOUSE_ADJUSTMENT + " " + " WHERE "
                 + PRODUCT_CD_WAREHOUSE_ADJUSTMENT + " = " + CD + " AND "
                 + warehouse_Adjustment_CD + " = " + warehouse_Adjustment_cd + " AND "
+                + BATCH_NUMBER_WAREHOUSE_ADJUSTMENT + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_WAREHOUSE_ADJUSTMENT + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_WAREHOUSE_ADJUSTMENT + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_WAREHOUSE_ADJUSTMENT + " like " + " '%" + warehouse_AdjustmentinDate + "%'";
@@ -1528,12 +1530,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_Return_WareHouse>
-    getoneProduct_Return_WareHouse(String CD, String expDate, String ea_unit, String return_warehouseinDate, String returnWarehouse_cd) {
+    getoneProduct_Return_WareHouse(String CD, String expDate, String ea_unit, String return_warehouseinDate, String returnWarehouse_cd,String batch_number) {
         ArrayList<Product_Return_WareHouse> returnWarehouses = new ArrayList<Product_Return_WareHouse>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_RETURN_WAREHOUSE + " " + " WHERE "
                 + PRODUCT_CD_RETURN_WAREHOUSE + " = " + CD + " AND "
                 + RETURN_CD + " = " + returnWarehouse_cd + " AND "
+                + BATCH_NUMBER_RETURN_WAREHOUSE + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_RETURN_WAREHOUSE + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_RETURN_WAREHOUSE + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_RETURN_WAREHOUSE + " like " + " '%" + return_warehouseinDate + "%'";
@@ -1947,12 +1950,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_Master_Pick>
-    getoneProduct_Master_Pick(String CD, String expDate, String ea_unit, String stockinDate, String master_pick_cd) {
+    getoneProduct_Master_Pick(String CD, String expDate, String ea_unit, String stockinDate, String master_pick_cd,String batch_number) {
         ArrayList<Product_Master_Pick> masterPicks = new ArrayList<Product_Master_Pick>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_MASTER_PICK + " " + " WHERE "
                 + PRODUCT_CD_MASTER_PICK + " = " + CD + " AND "
                 + MASTER_PICK_CD + " = " + master_pick_cd + " AND "
+                + BATCH_NUMBER_MASTER_PICK + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_MASTER_PICK + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_MASTER_PICK + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_MASTER_PICK + " like " + " '%" + stockinDate + "%'";
@@ -2268,11 +2272,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<PickList>
-    getoneProduct_PickList(String CD, String expDate, String ea_unit, String PickListCD, String stockindate) {
+    getoneProduct_PickList(String CD, String expDate, String ea_unit, String PickListCD, String stockindate,String batch_number) {
         ArrayList<PickList> qrcode = new ArrayList<PickList>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_PICK_LIST + " " + " WHERE "
                 + PRODUCT_CD_PICKLIST + " = " + CD + " AND "
+                + BATCH_NUMBER_PICKLIST + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_PICKLIST + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_PICKLIST + " like " + " '%" + expDate + "%'" + " AND "
                 + PICKLIST_CD + " = " + PickListCD + " AND "
@@ -2747,11 +2752,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public ArrayList<Product_LoadPallet> getoneProduct_LoadPallet(String CD, String expDate, String ea_unit, String stockinDate) {
+    public ArrayList<Product_LoadPallet> getoneProduct_LoadPallet(String CD, String expDate, String ea_unit, String stockinDate,String batch_number) {
         ArrayList<Product_LoadPallet> loadPallets = new ArrayList<>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_LOAD_PALLET + " " + " WHERE "
                 + PRODUCT_CD_LOAD_PALLET + " = " + CD + " AND "
+                + BATCH_NUMBER_LOAD_PALLET + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_LOAD_PALLET + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_LOAD_PALLET + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_LOAD_PALLET + " like " + " '%" + stockinDate + "%'";
@@ -3010,11 +3016,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Product_Remove_LPN>
-    getoneProduct_Remove_LPN(String CD, String expDate, String ea_unit, String removeinDate) {
+    getoneProduct_Remove_LPN(String CD, String expDate, String ea_unit, String removeinDate,String batch_number) {
         ArrayList<Product_Remove_LPN> remove_lpns = new ArrayList<Product_Remove_LPN>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_REMOVE_LPN + " " + " WHERE "
                 + PRODUCT_CD_REMOVE_LPN + " = " + CD + " AND "
+                + BATCH_NUMBER_REMOVE_LPN + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_REMOVE_LPN + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_REMOVE_LPN + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_REMOVE_LPN + " like " + " '%" + removeinDate + "%'";
@@ -3343,12 +3350,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Product_StockTransfer>
-    getoneProduct_StockTransfer(String CD, String expDate, String ea_unit, String stockinDate) {
+    getoneProduct_StockTransfer(String CD, String expDate, String ea_unit, String stockinDate , String batch_number) {
         ArrayList<Product_StockTransfer> stockTransfers = new ArrayList<Product_StockTransfer>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_STOCK_TRANSFER + " " + " WHERE "
                 + PRODUCT_CD_STOCK_TRANSFER + " = " + CD + " AND "
                 + EA_UNIT_STOCK_TRANSFER + " like " + " '%" + ea_unit + "%'" + " AND "
+                + BATCH_NUMBER_STOCK_TRANSFER + " like " + " '%" + batch_number + "%'" + " AND "
                 + EXPIRED_DATE_STOCK_TRANSFER + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_STOCK_TRANSFER + " like " + " '%" + stockinDate + "%'";
         Cursor c = db.rawQuery(selectQuery, null);
@@ -3694,12 +3702,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_CancelGood>
-    getoneProduct_CancelGood(String CD, String expDate, String ea_unit, String stockinDate, String cancel) {
+    getoneProduct_CancelGood(String CD, String expDate, String ea_unit, String stockinDate, String cancel ,String batch_number) {
         ArrayList<Product_CancelGood> cancelGoods = new ArrayList<Product_CancelGood>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_CANCEL_GOOD + " " + " WHERE "
                 + PRODUCT_CD_CANCEL_GOOD + " = " + CD + " AND "
                 + CANCELGOOD_CD + " = " + cancel + " AND "
+                + BATCH_NUMBER_CANCEL_GOOD + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_CANCEL_GOOD + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_CANCEL_GOOD + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_CANCEL_GOOD + " like " + " '%" + stockinDate + "%'";
@@ -4058,12 +4067,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_PoReturn>
-    getoneProduct_PoReturn(String CD, String expDate, String ea_unit, String stockinDate, String po_return) {
+    getoneProduct_PoReturn(String CD, String expDate, String ea_unit, String stockinDate, String po_return,String batch_number) {
         ArrayList<Product_PoReturn> poReturns = new ArrayList<Product_PoReturn>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_PO_RETURN + " " + " WHERE "
                 + PRODUCT_CD_PO_RETURN + " = " + CD + " AND "
                 + PO_RETURN_CD + " = " + po_return + " AND "
+                + BATCH_NUMBER_PO_RETURN + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_PO_RETURN + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_PO_RETURN + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_PO_RETURN + " like " + " '%" + stockinDate + "%'";
@@ -4426,12 +4436,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_StockOut>
-    getoneProduct_stockout(String CD, String expDate, String ea_unit, String stockinDate, String stockout_cd) {
+    getoneProduct_stockout(String CD, String expDate, String ea_unit, String stockinDate, String stockout_cd ,String batch_number) {
         ArrayList<Product_StockOut> stockOuts = new ArrayList<Product_StockOut>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_STOCK_OUT + " " + " WHERE "
                 + PRODUCT_CD_STOCK_OUT + " = " + CD + " AND "
                 + STOCKOUT_CD + " = " + stockout_cd + " AND "
+                + BATCH_NUMBER_STOCK_OUT + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_STOCK_OUT + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_STOCK_OUT + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_STOCK_OUT + " like " + " '%" + stockinDate + "%'";
@@ -4717,11 +4728,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<ProductLetDown>
-    getoneProductLetDown(String CD, String expDate, String ea_unit, String stockinDate) {
+    getoneProductLetDown(String CD, String expDate, String ea_unit, String stockinDate,String batch_number) {
         ArrayList<ProductLetDown> qrcode = new ArrayList<ProductLetDown>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_LET_DOWN + " " + " WHERE "
                 + PRODUCT_CD_LETDOWN + " = " + CD + " AND "
+                + BATCH_NUMBER_LETDOWN + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_LETDOWN + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_LETDOWN + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_LETDOWN + " like " + " '%" + stockinDate + "%'";
@@ -5246,11 +5258,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Product_PutAway>
-    getoneProduct_PutAway(String CD, String expDate, String ea_unit, String stockinDate) {
+    getoneProduct_PutAway(String CD, String expDate, String ea_unit, String stockinDate,String batch_number) {
         ArrayList<Product_PutAway> qrcode = new ArrayList<Product_PutAway>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_PUT_AWAY + " " + " WHERE "
                 + PRODUCT_CD_PUTAWAY + " = " + CD + " AND "
+                + BATCH_NUMBER_PUTAWAY + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_PUTAWAY + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_PUTAWAY + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_PUTAWAY + " like " + " '%" + stockinDate + "%'";
@@ -8301,11 +8314,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<InventoryProduct>
-    getoneProduct_Inventory(String CD, String expDate, String ea_unit, String INVENTORYCD, String stockindate , String vitritu) {
+    getoneProduct_Inventory(String CD, String expDate, String ea_unit, String INVENTORYCD, String stockindate , String vitritu,String batch_number) {
         ArrayList<InventoryProduct> qrcode = new ArrayList<>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_INVENTORY + " " + " WHERE "
                 + PRODUCT_CD_INVENTORY + " = " + CD + " AND "
+                + BATCH_NUMBER_INVENTORY + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_INVENTORY + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_INVENTORY + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCK_TAKE_CD + " = " + INVENTORYCD + " AND "
@@ -8742,11 +8756,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<TransferUnitProduct>
-    getoneTransferUnitProduct(String CD, String expDate, String ea_unit, String stockinDate) {
+    getoneTransferUnitProduct(String CD, String expDate, String ea_unit, String stockinDate,String batch_number) {
         ArrayList<TransferUnitProduct> qrcode = new ArrayList<TransferUnitProduct>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_TRANSFER_UNIT + " " + " WHERE "
                 + PRODUCT_CD_TRANSFER_UNIT + " = " + CD + " AND "
+                + BATCH_NUMBER_TRANSFER_UNIT + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_TRANSFER_UNIT + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_TRANSFER_UNIT + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_TRANSFER_UNIT + " like " + " '%" + stockinDate + "%'";
@@ -9168,12 +9183,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_TransferPosting>
-    getoneProduct_TransferPosting(String CD, String expDate, String ea_unit, String stockinDate, String po_return) {
+    getoneProduct_TransferPosting(String CD, String expDate, String ea_unit, String stockinDate, String po_return,String batch_number) {
         ArrayList<Product_TransferPosting> transferPostings = new ArrayList<Product_TransferPosting>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_TRANSFER_POSTING + " " + " WHERE "
                 + PRODUCT_CD_TRANSFER_POSTING + " = " + CD + " AND "
                 + TRANSFER_POSTING_CD + " = " + po_return + " AND "
+                + BATCH_NUMBER_TRANSFER_POSTING + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_TRANSFER_POSTING + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_TRANSFER_POSTING + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_TRANSFER_POSTING + " like " + " '%" + stockinDate + "%'";
@@ -9897,12 +9913,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_Pickup>
-    getoneProduct_Pickup(String CD, String expDate, String ea_unit, String stockinDate, String cd) {
+    getoneProduct_Pickup(String CD, String expDate, String ea_unit, String stockinDate, String cd,String batch_number) {
         ArrayList<Product_Pickup> pickups = new ArrayList<Product_Pickup>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_PICKUP + " " + " WHERE "
                 + PRODUCT_CD_PICKUP + " = " + CD + " AND "
                 + STOCK_QA_CD + " = " + cd + " AND "
+                + BATCH_NUMBER_PICKUP + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_PICKUP + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_PICKUP + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_PICKUP + " like " + " '%" + stockinDate + "%'";
@@ -10497,12 +10514,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_Return_QA>
-    getoneProduct_Return_QA(String CD, String expDate, String ea_unit, String stockinDate, String cd) {
+    getoneProduct_Return_QA(String CD, String expDate, String ea_unit, String stockinDate, String cd,String batch_number) {
         ArrayList<Product_Return_QA> returnQAs = new ArrayList<Product_Return_QA>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_RETURN_QA + " " + " WHERE "
                 + PRODUCT_CD_RETURN_QA + " = " + CD + " AND "
                 + STOCK_RETURN_QA_CD + " = " + cd + " AND "
+                + BATCH_NUMBER_RETURN_QA + " like " + " '%" + batch_number + "%'" + " AND "
                 + EA_UNIT_RETURN_QA + " like " + " '%" + ea_unit + "%'" + " AND "
                 + EXPIRED_DATE_RETURN_QA + " like " + " '%" + expDate + "%'" + " AND "
                 + STOCKIN_DATE_RETURN_QA + " like " + " '%" + stockinDate + "%'";
