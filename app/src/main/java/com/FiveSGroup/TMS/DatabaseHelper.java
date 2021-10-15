@@ -131,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 165; // version của DB khi thay
+    public static final int DATABASE_VERSION = 166; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -637,6 +637,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_MASTER_PICK + " ADD COLUMN  "
                     + CREATE_TIME_MASTER_PICK + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 166
+        try {
+            db.execSQL("ALTER TABLE " + O_STOCK_TRANSFER + " ADD COLUMN  "
+                    + CREATE_TIME_STOCK_TRANSFER + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -3273,6 +3281,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_CODE_STOCK_TRANSFER = "LPN_CODE_STOCK_TRANSFER";
     public static final String LPN_FROM_STOCK_TRANSFER = "LPN_FROM_STOCK_TRANSFER";
     public static final String LPN_TO_STOCK_TRANSFER = "LPN_TO_STOCK_TRANSFER";
+    public static final String CREATE_TIME_STOCK_TRANSFER = "CREATE_TIME_STOCK_TRANSFER";
     public static final String BATCH_NUMBER_STOCK_TRANSFER = "BATCH_NUMBER_STOCK_TRANSFER";
 
 
@@ -3295,6 +3304,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + POSITION_TO_CODE_STOCK_TRANSFER + " TEXT,"
             + POSITION_TO_DESCRIPTION_STOCK_TRANSFER + " TEXT,"
             + UNIQUE_CODE_STOCK_TRANSFER + " TEXT ,"
+            + CREATE_TIME_STOCK_TRANSFER + " TEXT ,"
             + LPN_CD_STOCK_TRANSFER + " TEXT ,"
             + LPN_CODE_STOCK_TRANSFER + " TEXT ,"
             + LPN_FROM_STOCK_TRANSFER + " TEXT ,"
@@ -3323,6 +3333,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(POSITION_TO_CODE_STOCK_TRANSFER, stockTransfer.getPOSITION_TO_CODE());
         values.put(POSITION_FROM_DESCRIPTION_STOCK_TRANSFER, stockTransfer.getPOSITION_FROM_DESCRIPTION());
         values.put(POSITION_TO_DESCRIPTION_STOCK_TRANSFER, stockTransfer.getPOSITION_TO_DESCRIPTION());
+        values.put(CREATE_TIME_STOCK_TRANSFER, stockTransfer.getCREATE_TIME());
         values.put(LPN_CODE_STOCK_TRANSFER, stockTransfer.getLPN_CODE());
         values.put(LPN_FROM_STOCK_TRANSFER, stockTransfer.getLPN_FROM());
         values.put(LPN_TO_STOCK_TRANSFER, stockTransfer.getLPN_TO());
@@ -3421,6 +3432,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(POSITION_FROM_DESCRIPTION_STOCK_TRANSFER))));
                 stock.setPOSITION_TO_DESCRIPTION((c.getString(c
                         .getColumnIndex(POSITION_TO_DESCRIPTION_STOCK_TRANSFER))));
+                stock.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_STOCK_TRANSFER))));
                 stock.setLPN_FROM((c.getString(c
                         .getColumnIndex(LPN_FROM_STOCK_TRANSFER))));
                 stock.setLPN_TO((c.getString(c
@@ -3481,6 +3494,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(POSITION_FROM_DESCRIPTION_STOCK_TRANSFER))));
                 stock.setPOSITION_TO_DESCRIPTION((c.getString(c
                         .getColumnIndex(POSITION_TO_DESCRIPTION_STOCK_TRANSFER))));
+                stock.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_STOCK_TRANSFER))));
                 stock.setLPN_FROM((c.getString(c
                         .getColumnIndex(LPN_FROM_STOCK_TRANSFER))));
                 stock.setLPN_TO((c.getString(c

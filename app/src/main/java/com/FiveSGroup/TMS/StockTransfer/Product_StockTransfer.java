@@ -24,6 +24,15 @@ public class Product_StockTransfer {
     private String LPN_FROM;
     private String LPN_TO;
     private String BATCH_NUMBER;
+    private String CREATE_TIME;
+
+    public String getCREATE_TIME() {
+        return CREATE_TIME;
+    }
+
+    public void setCREATE_TIME(String CREATE_TIME) {
+        this.CREATE_TIME = CREATE_TIME;
+    }
 
     public String getBATCH_NUMBER() {
         return BATCH_NUMBER;

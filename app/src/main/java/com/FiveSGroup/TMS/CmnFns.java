@@ -6327,6 +6327,7 @@ public class CmnFns {
                     productStockTransfer.setQTY(String.valueOf(pro_set));
                     productStockTransfer.setQTY_EA_AVAILABLE(quanity_ea);
                     productStockTransfer.setBATCH_NUMBER(batch_number);
+                    productStockTransfer.setCREATE_TIME(getTimeCreate());
 
                     productStockTransfer.setPOSITION_FROM_CD(warePosition);
                     productStockTransfer.setPOSITION_TO_CD(warePosition);
