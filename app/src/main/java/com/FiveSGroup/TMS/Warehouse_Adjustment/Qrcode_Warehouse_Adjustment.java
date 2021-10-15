@@ -395,55 +395,58 @@ private CodeScanner mCodeScanner;
 
         } else {
             DatabaseHelper.getInstance().deleteallProduct_S_P();
-
-            int statusGetcode = new CmnFns().getProduct_code(barcodeData);
-            if (statusGetcode != 1) {
+            if(!(position == null)){
                 ReturnPosition(barcodeData);
-            } else {
-                final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
-                if (product_s_ps.size() > 1) {
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Warehouse_Adjustment.this);
-                    builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
+            }else{
+                int statusGetcode = new CmnFns().getProduct_code(barcodeData);
+                if (statusGetcode != 1) {
+                    ReturnPosition(barcodeData);
+                } else {
+                    final ArrayList<Product_S_P> product_s_ps = DatabaseHelper.getInstance().getallValueSP();
+                    if (product_s_ps.size() > 1) {
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(Qrcode_Warehouse_Adjustment.this);
+                        builder.setTitle("Mã Sản Phẩm - Tên Sản Phẩm");
 
-                    final ArrayList<String> product_code = new ArrayList<>();
-                    for (int i = 0; i < product_s_ps.size(); i++) {
-                        product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
-                    }
-                    // chuyển đổi exp_date thành mảng chuỗi String
-                    String[] mStringArray = new String[product_code.size()];
-                    mStringArray = product_code.toArray(mStringArray);
+                        final ArrayList<String> product_code = new ArrayList<>();
+                        for (int i = 0; i < product_s_ps.size(); i++) {
+                            product_code.add(product_s_ps.get(i).getPRODUCT_CODE() + " - " + product_s_ps.get(i).getPRODUCT_NAME());
+                        }
+                        // chuyển đổi exp_date thành mảng chuỗi String
+                        String[] mStringArray = new String[product_code.size()];
+                        mStringArray = product_code.toArray(mStringArray);
 
-                    final String[] mString = mStringArray;
-                    builder.setItems(mString, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String product_name = mString[which];
-                            String[] chuoi = product_name.split(" - ");
-                            //int vitri = which;
+                        final String[] mString = mStringArray;
+                        builder.setItems(mString, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String product_name = mString[which];
+                                String[] chuoi = product_name.split(" - ");
+                                //int vitri = which;
 //                        String product_code = product_s_ps.get(vitri).getPRODUCT_CODE();
 
-                            dialog.dismiss(); // Close Dialog
-                            if (product_name != "") {
-                                pro_code = chuoi[0];
-                                pro_name = chuoi[1];
-                                getinformation(barcodeData);
+                                dialog.dismiss(); // Close Dialog
+                                if (product_name != "") {
+                                    pro_code = chuoi[0];
+                                    pro_name = chuoi[1];
+                                    getinformation(barcodeData);
+                                }
+
+                                // Do some thing....
+
                             }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
 
-                            // Do some thing....
-
-                        }
-                    });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-
-                }else if(product_s_ps.size() == 1){
-                    pro_code = product_s_ps.get(0).getPRODUCT_CODE();
-                    getinformation(barcodeData);
-                }else{
-                    Toast.makeText(Qrcode_Warehouse_Adjustment.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Qrcode_Warehouse_Adjustment.this, ListQrcode_Warehouse_Adjustment.class);
-                    startActivity(intent);
-                    finish();
+                    }else if(product_s_ps.size() == 1){
+                        pro_code = product_s_ps.get(0).getPRODUCT_CODE();
+                        getinformation(barcodeData);
+                    }else{
+                        Toast.makeText(Qrcode_Warehouse_Adjustment.this, "Mã Barcode Không Có Trong Hệ Thống", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Qrcode_Warehouse_Adjustment.this, ListQrcode_Warehouse_Adjustment.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         }

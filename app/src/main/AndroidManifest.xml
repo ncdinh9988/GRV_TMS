@@ -173,9 +173,6 @@
         <activity
             android:name=".TransferUnit.TransferUnitActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".PutAway.Qrcode_put"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".LetDown.LetDownActivity"
