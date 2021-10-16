@@ -62,6 +62,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
             returnposition = "",
             returnCD = "",
             pro_code = "",
+    pro_cd = "",
             returnStock = "",
             selectedUnit = "",
             currentDateandTime = "",
@@ -166,6 +167,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         returnposition = intent.getStringExtra("returnposition");
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
+        pro_cd = intent.getStringExtra("pro_cd");
         expired_Date = intent.getStringExtra("expired_Date");
         fromCd = intent.getStringExtra("fromCd");
         if(fromCd==null){
@@ -606,6 +608,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         intent.putExtra("batch_number", cont);
         intent.putExtra("pro_code",pro_code);
         intent.putExtra("pro_name",pro_name);
+        intent.putExtra("pro_cd",pro_cd);
         intent.putExtra("exp_date", exp_date);
         intent.putExtra("stockin_date", stockinDate);
         intent.putExtra("cont", cont);

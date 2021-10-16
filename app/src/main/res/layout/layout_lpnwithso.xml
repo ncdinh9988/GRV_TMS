@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="Danh Sách Mã LPN"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:background="@color/blue2"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="10">
+        <TextView
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:id="@+id/tvSTT"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="50dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="STT" />
+        <TextView
+            android:textColor="@color/black"
+            android:paddingLeft="10dp"
+            android:id="@+id/idproduct"
+            android:layout_width="0dp"
+            android:layout_weight="2.5"
+            android:layout_height="50dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="Mã LPN" />
+        <ImageView
+            android:textColor="@color/black"
+            android:id="@+id/imview"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:gravity="left|center"
+            android:background="@drawable/ic_down"
+            android:layout_height="50dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="Mã LPN" />
+        <TextView
+            android:textColor="@color/black"
+            android:layout_weight="2.5"
+            android:textStyle="bold"
+            android:id="@+id/priceproduct"
+            android:layout_width="0dp"
+            android:paddingRight="5dp"
+            android:layout_height="50dp"
+            android:gravity="right|center"
+            android:textSize="16sp"
+            android:text="Ngày Tạo"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:visibility="visible"/>
+        <ImageView
+            android:textColor="@color/black"
+            android:id="@+id/imview2"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/ic_down"
+            android:layout_height="50dp"
+            android:textStyle="bold"
+            android:gravity="left|center"
+            android:textSize="16sp"
+            android:text="Mã LPN" />
+        <TextView
+            android:textColor="@color/black"
+            android:paddingLeft="10dp"
+            android:id="@+id/idwarehouse"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="50dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="Có Hàng" />
+        <!--        <Spinner-->
+        <!--            android:id="@+id/spinner"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:layout_weight="2"-->
+        <!--            android:backgroundTint="@color/black"-->
+        <!--            android:spinnerMode="dropdown"/>-->
+
+
+    </LinearLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefesh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9.35">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvListLPn"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9.35">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!--    <ListView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content" />-->
+
+    <LinearLayout
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:paddingBottom="5dp"
+        android:layout_height="65dp">
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_button"
+            android:text="Trở Về"
+            android:id="@+id/buttonBack"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/bg_button"
+            android:textAllCaps="false"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Gợi Ý SO"
+            android:textSize="16sp"
+            android:id="@+id/btnGoiy"/>
+
+        <Button
+            android:text="Chất hàng lên Pallet"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_button"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/buttonPutToPallet"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+</LinearLayout>

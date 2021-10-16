@@ -6,6 +6,15 @@ public class LPN {
     private String LPN_DATE;
     private String USER_CREATE;
     private String STORAGE;
+    private String ORDER_CODE ;
+
+    public String getORDER_CODE() {
+        return ORDER_CODE;
+    }
+
+    public void setORDER_CODE(String ORDER_CODE) {
+        this.ORDER_CODE = ORDER_CODE;
+    }
 
     public String getUSER_CREATE() {
         return USER_CREATE;

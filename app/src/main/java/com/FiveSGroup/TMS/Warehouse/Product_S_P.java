@@ -3,6 +3,15 @@ package com.FiveSGroup.TMS.Warehouse;
 public class Product_S_P {
     private String PRODUCT_CODE;
     private String PRODUCT_NAME;
+    private String PRODUCT_CD;
+
+    public String getPRODUCT_CD() {
+        return PRODUCT_CD;
+    }
+
+    public void setPRODUCT_CD(String PRODUCT_CD) {
+        this.PRODUCT_CD = PRODUCT_CD;
+    }
 
     public String getPRODUCT_NAME() {
         return PRODUCT_NAME;

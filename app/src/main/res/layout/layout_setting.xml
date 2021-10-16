@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="@color/black"
                 android:layout_height="match_parent"
-                android:text="Camere(Default)" />
+                android:text="Camera (Default)" />
 
             <RadioButton
                 android:id="@+id/radio_honeywell"

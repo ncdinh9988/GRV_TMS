@@ -26,6 +26,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.LPN.LPNActivity;
+import com.FiveSGroup.TMS.LoadPallet.LPNwithSO.LPNandSO;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.ValueEventbus;
@@ -181,7 +182,7 @@ public class Home_Master_Pick extends AppCompatActivity {
                         btnback.setVisibility(View.GONE);
                         SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("stock", code);
+                        editor.putString("masterpick_cd", code);
                         editor.apply();
 
                     } else {

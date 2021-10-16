@@ -1964,11 +1964,13 @@ public class CmnFns {
                 JSONObject jsonobj = jsonarray.getJSONObject(i);
                 String pro_code = jsonobj.getString("PRODUCT_CODE");
                 String pro_name = jsonobj.getString("PRODUCT_NAME");
+                String pro_cd = jsonobj.getString("PRODUCT_CD");
 
 
                 Product_S_P product = new Product_S_P();
                 product.setPRODUCT_CODE(pro_code);
                 product.setPRODUCT_NAME(pro_name);
+                product.setPRODUCT_CD(pro_cd);
 
                 DatabaseHelper.getInstance().CreateProduct_SP(product);
 
@@ -2266,7 +2268,8 @@ public class CmnFns {
 
 
     public int synchronizeGETProductInfo(String usercode, String qrcode, String stock, String expDate, String stockinDate,
-                                         String unit, String positonReceive, String cont, String product_code, String product_name) {
+                                         String unit, String positonReceive, String cont, String product_code, String product_name,
+                                         String product_cd) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
@@ -2306,7 +2309,12 @@ public class CmnFns {
                     int pro_set = 1;
 
                     Product_Qrcode qrcode1 = new Product_Qrcode();
-                    qrcode1.setPRODUCT_CD(pro_cd);
+
+                    if ((product_cd != null) && (!product_cd.equals(""))) {
+                        qrcode1.setPRODUCT_CD(product_cd);
+                    } else {
+                        qrcode1.setPRODUCT_CD(pro_cd);
+                    }
                     if ((product_code != null) && (!product_code.equals(""))) {
                         qrcode1.setPRODUCT_CODE(product_code);
                     } else {
@@ -6980,6 +6988,62 @@ public class CmnFns {
 //                        }
 //                    }
                 }
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
+
+    public int synchronizeGetLPNwithSO(Context context , String master_cd) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.GetParam_LPNwithSO(master_cd);
+        if (result.equals("-1"))
+            return -1;
+
+        if (result.equals("1")) {
+
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+
+                String lpn_code = jsonobj.getString("LPN_CODE");
+                String lpn_date = jsonobj.getString("LPN_DATE");
+                String user_create = jsonobj.getString("USER_CREATE");
+                String storage = jsonobj.getString("STORAGE");
+                String order_code  = jsonobj.getString("ORDER_CODE");
+
+
+                LPN lpn = new LPN();
+                lpn.setLPN_CODE(lpn_code);
+                lpn.setLPN_DATE(lpn_date);
+                lpn.setORDER_CODE(order_code);
+                lpn.setUSER_CREATE(user_create);
+                lpn.setSTORAGE(storage);
+                lpn.setLPN_NUMBER(String.valueOf(i + 1));
+
+                DatabaseHelper.getInstance().CreateLPN(lpn);
+
+                DatabaseHelper.getInstance().CreateLPNDate(lpn_date);
+
             }
 
         } catch (JSONException e) {

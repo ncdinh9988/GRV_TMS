@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_layout_item"
+    android:orientation="vertical"
+    android:id="@+id/layout_item">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_layout_item"
+        android:weightSum="10">
+        <TextView
+            android:id="@+id/tvSTT"
+            android:layout_width="0dp"
+            android:paddingLeft="10dp"
+            android:layout_weight="1.5"
+            android:layout_height="match_parent"
+            android:text="1"
+            android:gravity="center"
+            android:textColor="@color/black" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="3.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tvCode"
+                android:paddingTop="10dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="1111111111"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/tvSO"
+                android:paddingTop="10dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="1111111111"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvuser_create"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="0dp"
+                android:text="Nguyễn Thái Học"
+                android:gravity="center"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <TextView
+
+            android:id="@+id/tvDate"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:paddingLeft="10dp"
+            android:layout_height="match_parent"
+            android:text="Ngày Tạo"
+            android:gravity="center"
+            android:textColor="@color/black"
+            />
+        <TextView
+
+            android:id="@+id/tvstorage"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:text="Có Hàng"
+            android:gravity="center"
+            android:textColor="@color/black"
+            />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey04" />
+
+</LinearLayout>

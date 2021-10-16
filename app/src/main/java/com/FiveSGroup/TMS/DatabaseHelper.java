@@ -131,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 166; // version của DB khi thay
+    public static final int DATABASE_VERSION = 167; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -645,6 +645,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_STOCK_TRANSFER + " ADD COLUMN  "
                     + CREATE_TIME_STOCK_TRANSFER + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 167
+        try {
+            db.execSQL("ALTER TABLE " + O_LPN + " ADD COLUMN  "
+                    + ORDER_CODE + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -1202,12 +1211,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LPN_NUMBER = "LPN_NUMBER";
     public static final String USER_CREATE  = "USER_CREATE";
     public static final String STORAGE  = "STORAGE";
-
+    public static final String ORDER_CODE  = "ORDER_CODE";
 
     public static final String CREATE_TABLE_O_LNP = "CREATE TABLE "
             + O_LPN + "("
             + LPN_NUMBER + " TEXT,"
             + LPN_CODE + " TEXT,"
+            + ORDER_CODE + " TEXT,"
             + USER_CREATE + " TEXT,"
             + STORAGE + " TEXT,"
             + LPN_DATE + " TEXT" + ")";
@@ -1223,19 +1233,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(LPN_NUMBER, lpn.getLPN_NUMBER());
         values.put(STORAGE, lpn.getSTORAGE());
         values.put(USER_CREATE, lpn.getUSER_CREATE());
-        // insert row
-        long id = db.insert(O_LPN, null, values);
-        return id;
-    }
-    public long CreateDateLPN(LPN lpn) {
-        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-
-        ContentValues values = new ContentValues();
-        values.put(LPN_CODE, lpn.getLPN_CODE());
-        values.put(LPN_DATE, lpn.getLPN_DATE());
-        values.put(LPN_NUMBER, lpn.getLPN_NUMBER());
-        values.put(STORAGE, lpn.getSTORAGE());
-        values.put(USER_CREATE, lpn.getUSER_CREATE());
+        values.put(ORDER_CODE, lpn.getORDER_CODE());
         // insert row
         long id = db.insert(O_LPN, null, values);
         return id;
@@ -1269,6 +1267,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<LPN>
+    getAllLpnBarcodewithSO(String barcode) {
+        ArrayList<LPN> lpn = new ArrayList<LPN>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT * FROM " + O_LPN + " WHERE " + LPN_CODE + " like '%" + barcode + "%'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                LPN lpn1 = new LPN();
+                lpn1.setLPN_NUMBER((c.getString(c
+                        .getColumnIndex(LPN_NUMBER))));
+                lpn1.setORDER_CODE((c.getString(c
+                        .getColumnIndex(ORDER_CODE))));
+                lpn1.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE))));
+                lpn1.setLPN_DATE((c.getString(c
+                        .getColumnIndex(LPN_DATE))));
+                lpn1.setUSER_CREATE((c.getString(c
+                        .getColumnIndex(USER_CREATE))));
+                lpn1.setSTORAGE((c.getString(c
+                        .getColumnIndex(STORAGE))));
+                lpn.add(lpn1);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return lpn;
+    }
+
+    public ArrayList<LPN>
     getAllLpn_date(String lpn_date) {
         ArrayList<LPN> lpn = new ArrayList<LPN>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
@@ -1280,6 +1307,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 LPN lpn1 = new LPN();
                 lpn1.setLPN_NUMBER((c.getString(c
                         .getColumnIndex(LPN_NUMBER))));
+                lpn1.setORDER_CODE((c.getString(c
+                        .getColumnIndex(ORDER_CODE))));
                 lpn1.setLPN_CODE((c.getString(c
                         .getColumnIndex(LPN_CODE))));
                 lpn1.setLPN_DATE((c.getString(c
@@ -1310,6 +1339,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(LPN_NUMBER))));
                 lpn1.setLPN_CODE((c.getString(c
                         .getColumnIndex(LPN_CODE))));
+                lpn1.setORDER_CODE((c.getString(c
+                        .getColumnIndex(ORDER_CODE))));
                 lpn1.setLPN_DATE((c.getString(c
                         .getColumnIndex(LPN_DATE))));
                 lpn1.setUSER_CREATE((c.getString(c
@@ -1335,6 +1366,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 LPN lpn1 = new LPN();
                 lpn1.setLPN_NUMBER((c.getString(c
                         .getColumnIndex(LPN_NUMBER))));
+                lpn1.setORDER_CODE((c.getString(c
+                        .getColumnIndex(ORDER_CODE))));
                 lpn1.setLPN_CODE((c.getString(c
                         .getColumnIndex(LPN_CODE))));
                 lpn1.setLPN_DATE((c.getString(c
@@ -6347,11 +6380,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String O_PRODUCT_SP = "O_PRODUCT_SP";
     public static final String PRODUCT_CODE_S_P = "PRODUCT_CODE";
     public static final String PRODUCT_NAME_S_P = "PRODUCT_NAME";
+    public static final String PRODUCT_CD_S_P = "PRODUCT_CD";
 
 
     public static final String CREATE_TABLE_O_PRODUCT_SP = "CREATE TABLE "
             + O_PRODUCT_SP + "("
             + PRODUCT_NAME_S_P + " TEXT,"
+            + PRODUCT_CD_S_P + " TEXT,"
             + PRODUCT_CODE_S_P + " TEXT" + ")";
 
     public long CreateProduct_SP(Product_S_P product) {
@@ -6361,6 +6396,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(PRODUCT_CODE_S_P, product.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_S_P, product.getPRODUCT_NAME());
+        values.put(PRODUCT_CD_S_P, product.getPRODUCT_CD());
         // insert row
         long id = db.insert(O_PRODUCT_SP, null, values);
         return id;
@@ -6380,6 +6416,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_CODE_S_P))));
                 product.setPRODUCT_NAME((c.getString(c
                         .getColumnIndex(PRODUCT_NAME_S_P))));
+                product.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_S_P))));
                 listproduct.add(product);
             } while (c.moveToNext());
         }

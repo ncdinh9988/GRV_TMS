@@ -389,7 +389,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                             String product_name = mString[which];
                             String[] chuoi = product_name.split(" - ");
                             //int vitri = which;
-//                        String product_code = product_s_ps.get(vitri).getPRODUCT_CODE();
+                            pro_cd = product_s_ps.get(which).getPRODUCT_CD();
 
                             dialog.dismiss(); // Close Dialog
                             if (product_name != "") {
@@ -408,6 +408,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 }else if(product_s_ps.size() == 1){
                     pro_name = product_s_ps.get(0).getPRODUCT_NAME();
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
+                    pro_cd = product_s_ps.get(0).getPRODUCT_CD();
                     getinformation(barcodeData);
                 }else{
                     Toast.makeText(Qrcode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
@@ -472,6 +473,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                             intentt.putExtra("expired_Date", expired_Date);
                             intentt.putExtra("pro_code", pro_code);
                             intentt.putExtra("pro_name", pro_name);
+                            intentt.putExtra("pro_cd", pro_cd);
                             intentt.putExtra("batch", chuoi[0]);
                             intentt.putExtra("vitri", vitri);
 
@@ -515,6 +517,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 intentt.putExtra("batch", batchTam);
                 intentt.putExtra("pro_code", pro_code);
                 intentt.putExtra("pro_name", pro_name);
+                intentt.putExtra("pro_cd", pro_cd);
                 startActivity(intentt);
 
                 finish();
@@ -556,6 +559,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     intent.putExtra("returnCD", product_cd);
                     intent.putExtra("pro_code", pro_code);
                     intent.putExtra("pro_name", pro_name);
+                    intent.putExtra("pro_cd", pro_cd);
                     intent.putExtra("returnStock", stock);
                     DatabaseHelper.getInstance().deleteallExp_date();
                     DatabaseHelper.getInstance().deleteallEa_Unit();
@@ -577,6 +581,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
         intentt.putExtra("id_unique_SI", id_unique_SI);
         intentt.putExtra("pro_code", pro_code);
         intentt.putExtra("pro_name", pro_name);
+        intentt.putExtra("pro_cd", pro_cd);
         // truyền qua cho ListQRCode để xử lí from - to
 //        intentt.putExtra("expdate", expiredDate);
 //        intentt.putExtra("stockin_date", stockinDate);
