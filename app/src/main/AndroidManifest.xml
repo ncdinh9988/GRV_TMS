@@ -52,6 +52,9 @@
             android:name=".LoadPallet.LPNwithSO.LPNandSO"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".LoadPallet.LPNwithSO.LPNwithSOSuggest"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".MainMenu.Setting"
             android:screenOrientation="portrait" />
         <activity

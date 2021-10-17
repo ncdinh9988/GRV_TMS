@@ -46,6 +46,7 @@ import com.FiveSGroup.TMS.LPN.LPN;
 import com.FiveSGroup.TMS.LPN.LPNProduct;
 import com.FiveSGroup.TMS.LetDown.LetDownProductSuggest;
 import com.FiveSGroup.TMS.LetDown.ProductLetDown;
+import com.FiveSGroup.TMS.LoadPallet.LPNwithSO.ProductLpnWithSo;
 import com.FiveSGroup.TMS.LoadPallet.Product_LoadPallet;
 import com.FiveSGroup.TMS.MasterPick.Product_Master_Pick;
 import com.FiveSGroup.TMS.PickList.PickList;
@@ -6999,6 +7000,66 @@ public class CmnFns {
 
         return 1;
     }
+    public int GET_SuggetPosition_MasterPick(String master_cd) {
+
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.GET_SuggetPosition_MasterPick(master_cd);
+        if (result.equals("-1"))
+            return -1;
+
+        if (result.equals("1")) {
+
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+
+                String product_cd = jsonobj.getString("PRODUCT_CD");
+                String product_code = jsonobj.getString("PRODUCT_CODE");
+                String product_name = jsonobj.getString("PRODUCT_NAME");
+                String position_code  = jsonobj.getString("POSITION_CODE");
+                String by_order  = jsonobj.getString("BY_ORDER");
+                String so_qty  = jsonobj.getString("SO_QTY");
+                String unit_set  = jsonobj.getString("UNIT_SET");
+                String dvt_set  = jsonobj.getString("DVT_SET");
+
+
+
+                ProductLpnWithSo lpnWithSo = new ProductLpnWithSo();
+                lpnWithSo.setPRODUCT_CD(product_cd);
+                lpnWithSo.setPRODUCT_CODE(product_code);
+                lpnWithSo.setPRODUCT_NAME(product_name);
+                lpnWithSo.setPOSITION_CODE(position_code);
+                lpnWithSo.setBY_ORDER(by_order);
+                lpnWithSo.setSO_QTY(so_qty);
+                lpnWithSo.setUNIT_SET(unit_set);
+                lpnWithSo.setDVT_SET(dvt_set);
+
+                DatabaseHelper.getInstance().CreateLPNwithSO(lpnWithSo);
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
+    }
+
 
     public int synchronizeGetLPNwithSO(Context context , String master_cd) {
 
@@ -7039,6 +7100,7 @@ public class CmnFns {
                 lpn.setUSER_CREATE(user_create);
                 lpn.setSTORAGE(storage);
                 lpn.setLPN_NUMBER(String.valueOf(i + 1));
+
 
                 DatabaseHelper.getInstance().CreateLPN(lpn);
 

@@ -82,7 +82,7 @@ public class Home_Master_Pick extends AppCompatActivity {
         btnLpn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Master_Pick.this, LPNActivity.class);
+                Intent intent = new Intent(Home_Master_Pick.this, LPNandSO.class);
                 startActivity(intent);
             }
         });

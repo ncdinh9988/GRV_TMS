@@ -1290,9 +1290,6 @@ public class Webservice {
         }
     }
 
-
-
-
     public String GetHH_Param_Temp(String saleCode) {
 
         String webServiceFunc = "getInfoParam";
@@ -1344,6 +1341,47 @@ public class Webservice {
             return "-1";
         }
     }
+    public String GET_SuggetPosition_MasterPick(String cd) {
+
+        String webServiceFunc = "GET_SuggetPosition_MasterPick";
+//        String webServiceFunc = "showLPNCode";
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("UserCode");
+        param1.setValue(CmnFns.readDataAdmin());
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+//        // Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("Picklist_CD");
+        param2.setValue(cd);
+        param2.setType(String.class);
+        request.addProperty(param2);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
     public String GetParam_LPNwithSO(String cd) {
 
         String webServiceFunc = "showLPNCode_In_Master_Pick";

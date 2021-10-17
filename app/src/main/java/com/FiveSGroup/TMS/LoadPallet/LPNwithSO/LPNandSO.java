@@ -53,6 +53,7 @@ public class LPNandSO extends AppCompatActivity implements View.OnClickListener 
     private Spinner spinner;
     String number = "100";
     String master_cd = "";
+    String lpn_code = "";
     final Calendar myCalendar = Calendar.getInstance();
 
 
@@ -197,7 +198,6 @@ public class LPNandSO extends AppCompatActivity implements View.OnClickListener 
             // thực thi hàm lấy thông tin LPN
             DatabaseHelper.getInstance().deleteallProduct_LPN();
             int status = new CmnFns().synchronizeGetLPNwithSO(getApplication(),master_cd);
-
             return status;
 
         }
@@ -218,6 +218,7 @@ public class LPNandSO extends AppCompatActivity implements View.OnClickListener 
 
 //                SetDataSpinner();
                 arrListLPN = DatabaseHelper.getInstance().getAllLpnBarcodewithSO(press);
+                lpn_code = arrListLPN.get(0).getLPN_CODE() ;
                 adapter = new LPNwithSOAdapter(LPNandSO.this, arrListLPN);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(LPNandSO.this, RecyclerView.VERTICAL, false);
                 rvListLPN.setLayoutManager(layoutManager);
@@ -430,24 +431,10 @@ public class LPNandSO extends AppCompatActivity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.btnGoiy:
-                try {
-                    int status = new CmnFns().synchronizeCreate_LPN(getApplication());
-                    if (status == -1) {
-                        Toast.makeText(this, "Tạo Barcode Thất Bại", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(this, "Tạo Barcode Thành Công", Toast.LENGTH_LONG).show();
-                        arrListLPN.clear();
-                        arrListLPN = DatabaseHelper.getInstance().getAllLpn();
-                        createDate.setText("Ngày Tạo");
-
-                        adapter = new LPNwithSOAdapter(LPNandSO.this, arrListLPN);
-                        LPNandSO.Syncbarcode syncProgram = new LPNandSO.Syncbarcode();
-                        syncProgram.execute();
-                    }
-                }catch (Exception e){
-                    Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+                Intent intentt = new Intent(LPNandSO.this, LPNwithSOSuggest.class);
+                intentt.putExtra("mastercd",master_cd);
+                intentt.putExtra("lpn_code",lpn_code);
+                startActivity(intentt);
                 break;
             case R.id.buttonPutToPallet:
 //                final int block_Warehouse_WPP = new CmnFns().Block_Function_By_Warehouse();

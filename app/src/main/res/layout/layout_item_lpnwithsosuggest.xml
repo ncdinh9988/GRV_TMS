@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_layout_item"
+    android:orientation="vertical"
+    android:id="@+id/layout_item">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_layout_item"
+        android:weightSum="10">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvname"
+                android:paddingTop="10dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Nguyễn Thái Học"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvSO"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="0dp"
+                android:text="Mã SO"
+                android:gravity="center"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <TextView
+
+            android:id="@+id/tvunit"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:paddingLeft="10dp"
+            android:layout_height="match_parent"
+            android:text="Đơn vị"
+            android:gravity="center"
+            android:textColor="@color/black"
+            />
+        <TextView
+
+            android:id="@+id/tvsuggest"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:text="Gợi Ý"
+            android:gravity="center"
+            android:textColor="@color/black"
+            />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey04" />
+
+</LinearLayout>

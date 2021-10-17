@@ -12,6 +12,7 @@ import com.FiveSGroup.TMS.LPN.LPN;
 import com.FiveSGroup.TMS.LPN.LPNProduct;
 import com.FiveSGroup.TMS.LetDown.LetDownProductSuggest;
 import com.FiveSGroup.TMS.LetDown.ProductLetDown;
+import com.FiveSGroup.TMS.LoadPallet.LPNwithSO.ProductLpnWithSo;
 import com.FiveSGroup.TMS.LoadPallet.Product_LoadPallet;
 import com.FiveSGroup.TMS.MasterPick.Product_Master_Pick;
 import com.FiveSGroup.TMS.PickList.PickList;
@@ -131,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 167; // version của DB khi thay
+    public static final int DATABASE_VERSION = 168; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -194,6 +195,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_PHOTO_QA);
         db.execSQL(CREATE_TABLE_O_RETURN_QA);
         db.execSQL(CREATE_TABLE_O_PRODUCT_SP);
+        db.execSQL(CREATE_TABLE_O_LPN_SO);
     }
 
     @Override
@@ -654,6 +656,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("ALTER TABLE " + O_LPN + " ADD COLUMN  "
                     + ORDER_CODE + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 168
+        try {
+            db.execSQL(CREATE_TABLE_O_LPN_SO);
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -1203,6 +1213,87 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return dates;
     }
+    //database from table O_LPN_SO
+    public static final String O_LPN_SO = "O_LPN_SO";
+    public static final String PRODUCT_CD_LPN_SO = "PRODUCT_CD_LPN_SO";
+    public static final String PRODUCT_CODE_LPN_SO = "PRODUCT_CODE_LPN_SO";
+    public static final String PRODUCT_NAME_LPN_SO = "PRODUCT_NAME_LPN_SO";
+    public static final String POSITION_CODE_LPN_SO= "POSITION_CODE_LPN_SO";
+    public static final String BY_ORDER_LPN_SO  = "BY_ORDER_LPN_SO";
+    public static final String SO_QTY_LPN_SO  = "SO_QTY_LPN_SO";
+    public static final String UNIT_SET_LPN_SO  = "UNIT_SET_LPN_SO";
+    public static final String DVT_SET_LPN_SO  = "DVT_SET_LPN_SO";
+
+    public static final String CREATE_TABLE_O_LPN_SO = "CREATE TABLE "
+            + O_LPN_SO + "("
+            + PRODUCT_CD_LPN_SO + " TEXT,"
+            + PRODUCT_CODE_LPN_SO + " TEXT,"
+            + PRODUCT_NAME_LPN_SO + " TEXT,"
+            + POSITION_CODE_LPN_SO + " TEXT,"
+            + BY_ORDER_LPN_SO + " TEXT,"
+            + SO_QTY_LPN_SO + " TEXT,"
+            + UNIT_SET_LPN_SO + " TEXT,"
+            + DVT_SET_LPN_SO + " TEXT" + ")";
+
+
+
+    public long CreateLPNwithSO(ProductLpnWithSo lpn) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CD_LPN_SO, lpn.getPRODUCT_CD());
+        values.put(PRODUCT_CODE_LPN_SO, lpn.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_LPN_SO, lpn.getPRODUCT_NAME());
+        values.put(POSITION_CODE_LPN_SO, lpn.getPOSITION_CODE());
+        values.put(BY_ORDER_LPN_SO, lpn.getBY_ORDER());
+        values.put(SO_QTY_LPN_SO, lpn.getSO_QTY());
+        values.put(UNIT_SET_LPN_SO, lpn.getUNIT_SET());
+        values.put(DVT_SET_LPN_SO, lpn.getDVT_SET());
+        // insert row
+        long id = db.insert(O_LPN_SO, null, values);
+        return id;
+    }
+
+    public ArrayList<ProductLpnWithSo>
+    getAllLPNSO(String by_order) {
+        ArrayList<ProductLpnWithSo> lpn = new ArrayList<ProductLpnWithSo>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT * FROM " + O_LPN_SO + " WHERE " + BY_ORDER_LPN_SO + " like '%" + by_order + "%'";
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+                ProductLpnWithSo lpn1 = new ProductLpnWithSo();
+                lpn1.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_LPN_SO))));
+                lpn1.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_LPN_SO))));
+                lpn1.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_LPN_SO))));
+                lpn1.setPOSITION_CODE((c.getString(c
+                        .getColumnIndex(POSITION_CODE_LPN_SO))));
+                lpn1.setBY_ORDER((c.getString(c
+                        .getColumnIndex(BY_ORDER_LPN_SO))));
+                lpn1.setSO_QTY((c.getString(c
+                        .getColumnIndex(SO_QTY_LPN_SO))));
+                lpn1.setUNIT_SET((c.getString(c
+                        .getColumnIndex(UNIT_SET_LPN_SO))));
+                lpn1.setDVT_SET((c.getString(c
+                        .getColumnIndex(DVT_SET_LPN_SO))));
+                lpn.add(lpn1);
+            } while (c.moveToNext());
+        }
+        c.close();
+        return lpn;
+    }
+
+    public void deleteallProduct_LPN_SO() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_LPN_SO);
+    }
+
+    //CLose table O_LPN_SO
 
     //database from table O_LPN
     public static final String O_LPN = "O_LPN";

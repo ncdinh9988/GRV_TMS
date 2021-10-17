@@ -69,7 +69,7 @@ private CodeScanner mCodeScanner;
     boolean check = false;
     android.hardware.Camera camera;
     Intent intent;
-    String position = "";
+    String position = "" ;
     String product_cd = "";
     String stock = "";
     String expiredDate = " ";
