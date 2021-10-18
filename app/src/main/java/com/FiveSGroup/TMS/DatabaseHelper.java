@@ -677,8 +677,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             // TODO: handle exception
         }
-
-
     }
 
     //database from table O_LETDOWN_SUGGEST
