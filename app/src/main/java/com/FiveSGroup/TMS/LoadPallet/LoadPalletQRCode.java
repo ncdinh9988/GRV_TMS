@@ -86,7 +86,7 @@ private CodeScanner mCodeScanner;
     private EditText edtBarcode;
     String pro_code = "";
     String pro_name = "";
-    int setting = 0 ;
+    String setting = "";
     android.hardware.Camera.Parameters params;
 
     private boolean isUp;
@@ -103,13 +103,13 @@ private CodeScanner mCodeScanner;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreff = this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
-        setting = sharedPreff.getInt("checkedRadioButtonId", 0);
+        setting = sharedPreff.getString("checked", "");
 
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
-                if (setting == 2131296696) {
+                if (setting.equals("HoneyWell")) {
 
                 } else {
                     if (ContextCompat.checkSelfPermission(LoadPalletQRCode.this, Manifest.permission.CAMERA)
@@ -130,7 +130,7 @@ private CodeScanner mCodeScanner;
 
         }
 
-        if (setting == 2131296696) {
+        if (setting.equals("HoneyWell")) {
             edtBarcode.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

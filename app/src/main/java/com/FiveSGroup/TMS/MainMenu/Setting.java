@@ -19,7 +19,7 @@ import com.FiveSGroup.TMS.R;
 
 public class Setting extends AppCompatActivity {
     Button btn_save , btn_back;
-    RadioButton radio_bluetooth , radio_default , radio_honeywell  ;
+    RadioButton radioButton , radio_default , radio_honeywell  ;
     RadioGroup radioGroup_diffLevel;
 
     @Override
@@ -61,8 +61,11 @@ public class Setting extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         // Checked RadioButton ID.
         int checkedRadioButtonId = radioGroup_diffLevel.getCheckedRadioButtonId();
+        radioButton = (RadioButton) findViewById(checkedRadioButtonId);
+        Toast.makeText(Setting.this,
+                radioButton.getText(), Toast.LENGTH_SHORT).show();
         editor.putInt("checkedRadioButtonId", checkedRadioButtonId);
-
+        editor.putString("checked",radioButton.getText().toString());
         // Save with default id : 2131296695 honeywell id : 2131296696  bluetooth id :
         editor.apply();
         Toast.makeText(this,"App Setting saved!",Toast.LENGTH_LONG).show();

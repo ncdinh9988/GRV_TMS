@@ -63,9 +63,8 @@
                 android:text="HoneyWell" />
 
         </RadioGroup>
-
-
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/LoadWebService"
         android:background="@color/white"

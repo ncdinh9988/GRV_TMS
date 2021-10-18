@@ -88,7 +88,7 @@ private CodeScanner mCodeScanner;
     private EditText edtBarcode;
     String vitritu = "";
     int vitri = 0 ;
-    int setting = 0 ;
+    String setting = "";
 
 
     @Override
@@ -104,13 +104,13 @@ private CodeScanner mCodeScanner;
         SharedPreferences sharedPreferencess = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
         vitritu = sharedPreferencess.getString("vitritu", "");
         SharedPreferences sharedPreff = this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
-        setting = sharedPreff.getInt("checkedRadioButtonId", 0);
+        setting = sharedPreff.getString("checked", "");
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
                 getDataFromIntent();
-                if (setting == 2131296696) {
+                if (setting.equals("HoneyWell")) {
 
                 } else {
                     if (ContextCompat.checkSelfPermission(InventoryScanCode.this, Manifest.permission.CAMERA)
@@ -132,7 +132,7 @@ private CodeScanner mCodeScanner;
 
         }
 
-        if (setting == 2131296696) {
+        if (setting.equals("HoneyWell")) {
             edtBarcode.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

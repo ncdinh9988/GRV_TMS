@@ -132,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 168; // version của DB khi thay
+    public static final int DATABASE_VERSION = 169; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -664,6 +664,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //version DB 168
         try {
             db.execSQL(CREATE_TABLE_O_LPN_SO);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 169
+        try {
+            db.execSQL("ALTER TABLE " + O_PRODUCT_SP + " ADD COLUMN  "
+                    + PRODUCT_CD_S_P + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception

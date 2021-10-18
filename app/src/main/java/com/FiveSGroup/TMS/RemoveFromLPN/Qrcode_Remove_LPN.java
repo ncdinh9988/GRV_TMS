@@ -81,7 +81,7 @@ private CodeScanner mCodeScanner;
     Button buttonBack, btnSend;
     private EditText edtBarcode;;
     String checkToFinish = "" , id_unique_RML = "";
-    int setting = 0 ;
+    String setting = "";
 
 
     private boolean isUp;
@@ -97,12 +97,12 @@ private CodeScanner mCodeScanner;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreff = this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
-        setting = sharedPreff.getInt("checkedRadioButtonId", 0);
+        setting = sharedPreff.getString("checked", "");
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
-                if (setting == 2131296696) {
+                if (setting.equals("HoneyWell")) {
 
                 } else {
                     if (ContextCompat.checkSelfPermission(Qrcode_Remove_LPN.this, Manifest.permission.CAMERA)
@@ -122,7 +122,7 @@ private CodeScanner mCodeScanner;
         } catch (Exception e) {
 
         }
-        if (setting == 2131296696) {
+        if (setting.equals("HoneyWell")) {
             edtBarcode.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

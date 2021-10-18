@@ -77,7 +77,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
     String stockinDate = "";
     String id_unique_PAW = "";
     String pro_cd = "";
-    int setting = 0 ;
+    String setting = "";
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     View viewScan;
@@ -99,13 +99,13 @@ public class Qrcode_PutAway extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreff = this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
-        setting = sharedPreff.getInt("checkedRadioButtonId", 0);
+        setting = sharedPreff.getString("checked", "");
 
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
-                if (setting == 2131296696) {
+                if (setting.equals("HoneyWell")) {
 
                 } else {
                     if (ContextCompat.checkSelfPermission(Qrcode_PutAway.this, Manifest.permission.CAMERA)
@@ -124,7 +124,7 @@ public class Qrcode_PutAway extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-        if (setting == 2131296696) {
+        if (setting.equals("HoneyWell")) {
             edtBarcode.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
