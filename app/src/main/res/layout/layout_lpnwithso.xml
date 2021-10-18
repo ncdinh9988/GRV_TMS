@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/tvTitle"
-        android:text="Danh Sách Mã LPN"
+        android:text="Danh Sách Mã LPN Liên Kết SO"
         android:textColor="@color/white"
         android:textSize="20dp"
         android:background="@color/blue2"
@@ -138,34 +138,6 @@
             android:layout_weight="1"
             android:layout_height="match_parent"/>
 
-        <Button
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:background="@drawable/bg_button"
-            android:textAllCaps="false"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Gợi Ý SO"
-            android:textSize="16sp"
-            android:id="@+id/btnGoiy"/>
-
-        <Button
-            android:text="Chất hàng lên Pallet"
-            android:textSize="16sp"
-            android:textAllCaps="false"
-            android:background="@drawable/bg_button"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonPutToPallet"
-            android:layout_weight="1"
-            />
     </LinearLayout>
 
 </LinearLayout>

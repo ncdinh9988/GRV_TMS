@@ -38,7 +38,6 @@ public class LPNwithSOAdapter extends RecyclerView.Adapter<LPNwithSOAdapter.View
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.layout_item_lpnwithso, null, false);
         return new LPNwithSOAdapter.ViewHolder(view);
-
     }
 
     @Override
@@ -58,8 +57,9 @@ public class LPNwithSOAdapter extends RecyclerView.Adapter<LPNwithSOAdapter.View
 
                 // holder.layout_item.setBackgroundColor(context.getResources().getColor(R.color.grey04));
 //                Toast.makeText(context, ""+lpn.getLPN_NUMBER()+" - "+lpn.getLPN_CODE()+" - "+lpn.getLPN_DATE(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, LPNProductActivity.class);
+                Intent intent = new Intent(context, LPNwithSOInfo.class);
                 intent.putExtra("LPN_CODE", String.valueOf(lpn.getLPN_CODE()));
+                intent.putExtra("order_code", String.valueOf(lpn.getORDER_CODE()));
                 context.startActivity(intent);
             }
         });
@@ -92,8 +92,6 @@ public class LPNwithSOAdapter extends RecyclerView.Adapter<LPNwithSOAdapter.View
             tvstorage = itemView.findViewById(R.id.tvstorage);
             tvSTT = itemView.findViewById(R.id.tvSTT);
             layout_item = itemView.findViewById(R.id.layout_item);
-
-
         }
     }
 

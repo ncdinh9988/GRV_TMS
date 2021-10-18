@@ -45,8 +45,12 @@ public class LPNwithSOSuggestAdapter extends RecyclerView.Adapter<LPNwithSOSugge
         final ProductLpnWithSo lpn = listLPN.get(position);
         holder.tvname.setText(lpn.getPRODUCT_NAME());
         holder.tvSO.setText(lpn.getPRODUCT_CODE());
-        holder.tvunit.setText(lpn.getSO_QTY());
-        holder.tvsuggest.setText(lpn.getPOSITION_CODE());
+        String unit = lpn.getSO_QTY();
+        unit = unit.replace(",","\n");
+        holder.tvunit.setText(unit);
+        String suggest = lpn.getPOSITION_CODE();
+        suggest = suggest.replace("<br>","\n");
+        holder.tvsuggest.setText(suggest);
 //        holder.layout_item.setBackgroundColor(context.getResources().getColor(R.color.white));
     }
 

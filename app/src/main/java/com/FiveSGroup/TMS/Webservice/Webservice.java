@@ -848,6 +848,88 @@ public class Webservice {
             return "-1";
         }
     }
+    public String Check_Quantity_LPN_With_SO(String lpn_code ) {
+        String webServiceFunc = "";
+
+        webServiceFunc = "Check_Quantity_LPN_With_SO";
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("LPN_CODE");
+        param3.setValue(lpn_code);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+        Log.d("checkURL", UrlWebserviceToSynchronize);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
+    public String Check_Product_In_SO(String product_cd, String product_code, String lpn_code ) {
+        String webServiceFunc = "";
+
+        webServiceFunc = "Check_Product_In_SO";
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("PRODUCT_CD");
+        param1.setValue(product_cd);
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+//         Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("PRODUCT_CODE");
+        param2.setValue(product_code);
+        param2.setType(String.class);
+        request.addProperty(param2);
+
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("LPN_CODE");
+        param3.setValue(lpn_code);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+        Log.d("checkURL", UrlWebserviceToSynchronize);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
 
 
     public String GetProductByZone(String qrcode, String salescode, String type , int IsLPN , String CD) {

@@ -6089,11 +6089,29 @@ public class CmnFns {
 
         return 1;
     }
+    public String Check_Quantity_LPN_With_SO (String lpn_code){
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return "Vui Lòng Kiểm Tra Lại Kết Nối Mạng";
+
+        Webservice webService = new Webservice();
+        String result = webService.Check_Quantity_LPN_With_SO(lpn_code);
+        return result;
+    }
+    public String Check_Product_In_SO(String product_cd , String pro_code , String lpn_code){
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+           return "Vui Lòng Kiểm Tra Lại Kết Nối Mạng";
+
+        Webservice webService = new Webservice();
+        String result = webService.Check_Product_In_SO(product_cd, pro_code, lpn_code);
+        return result;
+    }
 
     //TODO: từ dòng 2155 -> 2280 - đổi thành hàm synchronizeGETProductByZoneLoadPallet
     public int synchronizeGETProductByZoneLoadPallet(Context context, String qrcode, String admin, String expDate, String unit,
                                                      String stockDate, int isLPN, String product_code, String product_name,
-                                                     String batch_number, String product_cd) {
+                                                     String batch_number, String product_cd , String lpn_code) {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
             return -1;
@@ -6174,12 +6192,14 @@ public class CmnFns {
                     String positionFrom = "---";
                     String lpn_From = "";
                     String lpn_To = "";
-
-                    product_loadPallet.setLPN_TO(lpn_To);
+                    if ((lpn_code != null) && (!lpn_code.equals(""))) {
+                        product_loadPallet.setLPN_TO(lpn_code);
+                    }else
+                    {
+                        product_loadPallet.setLPN_TO(lpn_To);
+                    }
                     product_loadPallet.setLPN_CODE(lpnCode);
-
                     product_loadPallet.setPOSITION_TO_CODE(positionTo);
-
                     product_loadPallet.setPOSITION_TO_DESCRIPTION("");
 
                     if (isLPN == 0) {

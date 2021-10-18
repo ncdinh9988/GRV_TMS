@@ -31,7 +31,7 @@ public class LPNwithSOSuggest extends AppCompatActivity implements View.OnClickL
     private ProgressDialog progressSyncProgram;
     ArrayList<ProductLpnWithSo> arrListLPN;
     private LPNwithSOSuggestAdapter adapter;
-    String  press ="" ,master_cd = "", lpn_code = "";
+    String  press ="" ,master_cd = "", lpn_code = "" , order_code = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +47,7 @@ public class LPNwithSOSuggest extends AppCompatActivity implements View.OnClickL
     private void getDataFromIntent() {
         Intent intent = getIntent();
         lpn_code = intent.getStringExtra("lpn_code");
+        order_code = intent.getStringExtra("order_code");
     }
     public void updateBarcode(){
         LPNwithSOSuggest.Syncbarcodedata syncbarcodedata = new LPNwithSOSuggest.Syncbarcodedata();
@@ -100,7 +101,7 @@ public class LPNwithSOSuggest extends AppCompatActivity implements View.OnClickL
                 this.cancel(true);
 
 //                SetDataSpinner();
-                arrListLPN = DatabaseHelper.getInstance().getAllLPNSO(press);
+                arrListLPN = DatabaseHelper.getInstance().getAllLPNSO(order_code);
                 adapter = new LPNwithSOSuggestAdapter(LPNwithSOSuggest.this, arrListLPN);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(LPNwithSOSuggest.this, RecyclerView.VERTICAL, false);
                 rvListLPN.setLayoutManager(layoutManager);

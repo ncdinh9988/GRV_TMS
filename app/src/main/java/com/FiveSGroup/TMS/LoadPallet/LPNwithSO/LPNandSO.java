@@ -41,7 +41,7 @@ import java.util.Locale;
 
 public class LPNandSO extends AppCompatActivity implements View.OnClickListener {
 
-    private Button buttonBack, buttonPutToPallet ,btnGoiy;
+    private Button buttonBack;
     private ProgressDialog progressSyncProgram;
     private TextView createDate , idbarcode , idwarehouse;
     String  press ="";
@@ -74,20 +74,16 @@ public class LPNandSO extends AppCompatActivity implements View.OnClickListener 
 
 
     private void init() {
-        buttonPutToPallet = findViewById(R.id.buttonPutToPallet);
         createDate = findViewById(R.id.priceproduct);
         idwarehouse = findViewById(R.id.idwarehouse);
         idbarcode = findViewById(R.id.idproduct);
 //        spinner = findViewById(R.id.spinner);
         buttonBack = findViewById(R.id.buttonBack);
-        btnGoiy = findViewById(R.id.btnGoiy);
         rvListLPN = findViewById(R.id.rvListLPn);
         swipeRefesh = findViewById(R.id.swipeRefesh);
         arrListLPN = new ArrayList<>();
 //        buttonPutToPallet.setEnabled(false);
         buttonBack.setOnClickListener(this);
-        btnGoiy.setOnClickListener(this);
-        buttonPutToPallet.setOnClickListener(this);
 
         idbarcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -430,25 +426,6 @@ public class LPNandSO extends AppCompatActivity implements View.OnClickListener 
             case R.id.buttonBack:
                 finish();
                 break;
-            case R.id.btnGoiy:
-                Intent intentt = new Intent(LPNandSO.this, LPNwithSOSuggest.class);
-                intentt.putExtra("mastercd",master_cd);
-                intentt.putExtra("lpn_code",lpn_code);
-                startActivity(intentt);
-                break;
-            case R.id.buttonPutToPallet:
-//                final int block_Warehouse_WPP = new CmnFns().Block_Function_By_Warehouse();
-//                if(block_Warehouse_WPP == -29){
-//                    Toast.makeText(this,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
-//                    break;
-//                }else if(block_Warehouse_WPP == -1){
-//                    Toast.makeText(this,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
-//                    break;
-//                }else if(block_Warehouse_WPP == 1){
-                Intent intent = new Intent(LPNandSO.this, LoadPalletQRCode.class);
-                startActivity(intent);
-                break;
-//                }
         }
     }
 

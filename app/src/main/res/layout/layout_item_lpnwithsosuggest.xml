@@ -8,61 +8,82 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@drawable/bg_layout_item"
-        android:weightSum="10">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/tvname"
-                android:paddingTop="10dp"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Nguyễn Thái Học"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/tvSO"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="0dp"
-                android:text="Mã SO"
-                android:gravity="center"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
+      >
 
         <TextView
-
-            android:id="@+id/tvunit"
-            android:layout_width="0dp"
-            android:layout_weight="3"
+            android:id="@+id/tvSO"
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:layout_height="match_parent"
-            android:text="Đơn vị"
-            android:gravity="center"
-            android:textColor="@color/black"
-            />
+            android:textSize="15dp"
+            android:text="Mã SO"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:textColor="@color/black" />
         <TextView
+            android:id="@+id/tvname"
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nguyễn Thái Học"
+            android:textSize="15dp"
+            android:paddingLeft="10dp"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số Lượng\nTheo Đơn: "
+                android:textStyle="italic"
+                android:paddingLeft="10dp"
+                android:gravity="left"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/tvunit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:paddingLeft="10dp"
+                android:gravity="left"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            android:id="@+id/tvsuggest"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="match_parent"
-            android:text="Gợi Ý"
-            android:gravity="center"
-            android:textColor="@color/black"
-            />
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:paddingLeft="10dp"
+                android:text="Gợi Ý        : "
+                android:textColor="@color/black"
+                android:textStyle="italic" />
+            <TextView
+                android:id="@+id/tvsuggest"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:gravity="left"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 

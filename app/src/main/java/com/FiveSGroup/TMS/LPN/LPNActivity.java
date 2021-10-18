@@ -8,7 +8,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.InsetDrawable;
@@ -62,6 +64,8 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_l_p_n);
         init();
+        SharedPreferences sharedPreferences = getSharedPreferences("lpn_code", Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
 
 //        Handler handler = new Handler();
 //        TaskSyncProgramCanceler taskCanceler;
@@ -566,6 +570,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 //                    Toast.makeText(this,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                    break;
 //                }else if(block_Warehouse_WPP == 1){
+                    DatabaseHelper.getInstance().deleteProduct_LoadPallet();
                     Intent intent = new Intent(LPNActivity.this, LoadPalletQRCode.class);
                     startActivity(intent);
                     break;

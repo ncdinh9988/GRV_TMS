@@ -1,8 +1,11 @@
 package com.FiveSGroup.TMS.LoadPallet;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.InsetDrawable;
@@ -51,7 +54,8 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
     String batch_number = "";
     String lpn = "";
     String key = "";
-    String unique_id = "" ;
+    String unique_id = "" , lpn_code = "";
+
 
     ArrayList<Product_LoadPallet> loadPallets;
     TextView tvTitle;
@@ -69,6 +73,8 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         getDataFromIntent();
 
         init();
+        SharedPreferences prefs = this.getSharedPreferences("lpn_code", Activity.MODE_PRIVATE);
+        lpn_code = prefs.getString("lpn_code", "");
 
         btnscan_barcode.setOnClickListener(this);
 
@@ -325,12 +331,20 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
 
                 } else {
                     try {
+
+
                         int result = new CmnFns().synchronizeData(saleCode, "WPP", "");
 
                         switch (result) {
                             case 1:
+
                                 ShowSuccessMessage("Lưu Thành Công");
                                 //Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                                //Liên kết giữa master pick và SO
+                                if((lpn_code!= null) && (lpn_code!= "")){
+                                    String checkPosition = new CmnFns().Check_Quantity_LPN_With_SO(lpn_code);
+                                    dialog.showDialog(LoadPalletActivity.this, checkPosition);
+                                }
                                 break;
                             case -1:
                                 ShowErrorMessage("Lưu thất bại");
@@ -433,8 +447,6 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 Dialog dialog = new Dialog(LoadPalletActivity.this);
                 dialog.showDialog(LoadPalletActivity.this, "Mã Sản Phẩm Không Có Trong Kho");
             }
-
-
         } else {
             if (lpn != null && value1 != null) {
                 alert_show_position(1);
@@ -442,6 +454,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 alert_show_position(0);
             }
         }
+
         loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet();
         //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
         loadPalletAdapter = new LoadPalletAdapter(loadPallets, this);
@@ -529,7 +542,11 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 startScan();
                 break;
             case R.id.buttonBack:
-                actionBack();
+                if((lpn_code!=null) && (lpn_code!="")){
+                    finish();
+                }else{
+                    actionBack();
+                }
                 break;
             case R.id.buttonOK:
                 actionSyn();
@@ -637,48 +654,62 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
 
     public void alert_show_SP(int isLPN) {
         try {
-            DatabaseHelper.getInstance().deleteallProduct_S_P();
-            int postitionDes = new CmnFns().synchronizeGETProductByZoneLoadPallet(LoadPalletActivity.this, value1,
-                    CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN, pro_code,pro_name,batch_number , pro_cd);
-
-
-            Dialog dialog = new Dialog(LoadPalletActivity.this);
-
-
-            if (postitionDes == 1) {
-                return;
-            } else if (postitionDes == -1) {
-                dialog.showDialog(LoadPalletActivity.this, "Vui Lòng Thử Lại");
-
-            } else if (postitionDes == -8) {
-                dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trên phiếu");
-
-
-            } else if (postitionDes == -10) {
-                dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong hệ thống");
-
-            } else if (postitionDes == -11) {
-
-                dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trong kho");
-
-
-            } else if (postitionDes == -12) {
-
-                dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong kho");
-
-            } else if (postitionDes == -16) {
-
-                dialog.showDialog(LoadPalletActivity.this, "Sản phẩm đã quét không nằm trong LPN nào");
-
-            } else if (postitionDes == -20) {
-
-                dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trong hệ thống");
-
+            if((lpn_code!= null) && (lpn_code!= "")){
+                String checkPosition = new CmnFns().Check_Product_In_SO(pro_cd,pro_code,lpn_code);
+                if (checkPosition.equals("1")){
+                    getProductByZone(isLPN);
+                }else{
+                    Dialog dialog = new Dialog(LoadPalletActivity.this);
+                    dialog.showDialog(LoadPalletActivity.this, checkPosition);
+                }
+            }else{
+                getProductByZone(isLPN);
             }
+
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
             finish();
         }
 
+    }
+    public void getProductByZone(int isLPN){
+        DatabaseHelper.getInstance().deleteallProduct_S_P();
+        int postitionDes = new CmnFns().synchronizeGETProductByZoneLoadPallet(LoadPalletActivity.this, value1,
+                CmnFns.readDataAdmin(), expDate, ea_unit, stockinDate, isLPN, pro_code,pro_name,batch_number , pro_cd , lpn_code);
+
+
+        Dialog dialog = new Dialog(LoadPalletActivity.this);
+
+
+        if (postitionDes == 1) {
+            return;
+        } else if (postitionDes == -1) {
+            dialog.showDialog(LoadPalletActivity.this, "Vui Lòng Thử Lại");
+
+        } else if (postitionDes == -8) {
+            dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trên phiếu");
+
+
+        } else if (postitionDes == -10) {
+            dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong hệ thống");
+
+        } else if (postitionDes == -11) {
+
+            dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trong kho");
+
+
+        } else if (postitionDes == -12) {
+
+            dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong kho");
+
+        } else if (postitionDes == -16) {
+
+            dialog.showDialog(LoadPalletActivity.this, "Sản phẩm đã quét không nằm trong LPN nào");
+
+        } else if (postitionDes == -20) {
+
+            dialog.showDialog(LoadPalletActivity.this, "Mã sản phẩm không có trong hệ thống");
+
+        }
     }
 }
