@@ -12,8 +12,11 @@ import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -81,6 +84,7 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
     private Button buttonBack, btnSend;
     private EditText edtBarcode;
     String vitritu = "";
+    String setting = "";
 
 
     @Override
@@ -95,17 +99,24 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferencess = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
         sharedPreferencess.edit().remove("vitritu").commit();
+        SharedPreferences sharedPreff = this.getSharedPreferences("appSetting", Context.MODE_PRIVATE);
+        setting = sharedPreff.getString("checked", "");
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
                 setContentView(R.layout.layout_qrcode);
                 init();
                 getDataFromIntent();
-                if (ContextCompat.checkSelfPermission(InventoryScanqrcodeViTri.this, Manifest.permission.CAMERA)
-                        == PackageManager.PERMISSION_DENIED) {
-                    ActivityCompat.requestPermissions(InventoryScanqrcodeViTri.this, new String[]{Manifest.permission.CAMERA}, 123);
+                if (setting.equals("HoneyWell")) {
+
                 } else {
-                    startScanning();
+                    if (ContextCompat.checkSelfPermission(InventoryScanqrcodeViTri.this, Manifest.permission.CAMERA)
+                            == PackageManager.PERMISSION_DENIED) {
+                        ActivityCompat.requestPermissions(InventoryScanqrcodeViTri.this, new String[]{Manifest.permission.CAMERA}, 123);
+                    } else {
+                        startScanning();
+                    }
                 }
+
             }else {
                 setContentView(R.layout.activity_load_camera);
                 init();
@@ -116,6 +127,36 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
         } catch (Exception e) {
 
         }
+        if (setting.equals("HoneyWell")) {
+            edtBarcode.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    GetData(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        }
+        edtBarcode.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    GetData(edtBarcode.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
 
         check = true;

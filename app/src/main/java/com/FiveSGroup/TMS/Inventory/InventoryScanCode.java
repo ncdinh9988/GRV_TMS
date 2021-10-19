@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -65,7 +66,7 @@ private CodeScanner mCodeScanner;
     private ToneGenerator toneGen1;
     private TextView barcodeText;
     private String barcodeData;
-    Button btnTruyCap;
+    Button btnTruyCap ;
     String value1 = "";
     String value2 = "";
     boolean check = false;
@@ -149,6 +150,18 @@ private CodeScanner mCodeScanner;
                 }
             });
         }
+        edtBarcode.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    GetData(edtBarcode.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
 
 
         check = true;
