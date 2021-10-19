@@ -5880,6 +5880,18 @@ public class CmnFns {
                         DatabaseHelper.getInstance().createParam(param);
                     }
 
+//                  global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
+                if (jsonobj.getString("ParamKey").toString().equals("WAREHOUSE_TYPE_CD")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+
 //                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
                 }
                 if (jsonobj.getString("ParamKey").toString().equals("URL_PickListHH")) {

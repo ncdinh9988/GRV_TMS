@@ -41,7 +41,7 @@ public class Home_Master_Pick extends AppCompatActivity {
     LinearLayout layout;
     String value1 = "", value2 = "";
     SharedPreferences sharedPref;
-    String urlStockReceipt = "";
+    String urlStockReceipt = "" , valuewarehouse = "";
     ValueEventbus eventbus;
     static String value = "";
     String value3 = "";
@@ -70,6 +70,7 @@ public class Home_Master_Pick extends AppCompatActivity {
         btnLpn = findViewById(R.id.btnlpn);
         layout = findViewById(R.id.layout);
         urlStockReceipt = DatabaseHelper.getInstance().getParamByKey("URL_PickListHH").getValue();
+        valuewarehouse = DatabaseHelper.getInstance().getParamByKey("WAREHOUSE_TYPE_CD").getValue();;
 
         btnchuyendvt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +83,13 @@ public class Home_Master_Pick extends AppCompatActivity {
         btnLpn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Master_Pick.this, LPNActivity.class);
-                startActivity(intent);
+                if(valuewarehouse.equals("2")){
+                    Intent intent = new Intent(Home_Master_Pick.this, LPNandSO.class);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(Home_Master_Pick.this, LPNActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
