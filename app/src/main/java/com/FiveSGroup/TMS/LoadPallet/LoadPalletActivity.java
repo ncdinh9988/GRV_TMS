@@ -148,7 +148,13 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
 
     private boolean isNotScanFromOrTo() {
         boolean check = false;
-        List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet();
+        List<Product_LoadPallet> product ;
+        if((lpn_code != null)&&(lpn_code != "")){
+            product = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
+        }else{
+            product = DatabaseHelper.getInstance().getAllProduct_LoadPallet("");
+        }
+
 
         for (int i = 0; i < product.size(); i++) {
             Product_LoadPallet product_loadPallet = product.get(i);
@@ -298,7 +304,13 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
 
     private boolean isQuanityZero() {
         boolean check = false;
-        List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet();
+        List<Product_LoadPallet> product ;
+        if((lpn_code != null)&&(lpn_code != "")){
+            product  = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
+        }else{
+            product  = DatabaseHelper.getInstance().getAllProduct_LoadPallet("");
+        }
+
         for (int i = 0; i < product.size(); i++) {
             Product_LoadPallet product_loadPallet = product.get(i);
             String valueQty = product_loadPallet.getQTY();
@@ -343,7 +355,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                                 //Liên kết giữa master pick và SO
                                 if((lpn_code!= null) && (lpn_code!= "")){
                                     String checkPosition = new CmnFns().Check_Quantity_LPN_With_SO(lpn_code);
-                                    dialog.showDialog(LoadPalletActivity.this, checkPosition);
+                                    dialog.showInfofromSever(LoadPalletActivity.this, checkPosition);
                                 }
                                 break;
                             case -1:
@@ -455,7 +467,13 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             }
         }
 
-        loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet();
+        if((lpn_code != null)&&(lpn_code != "")){
+            loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
+        }else{
+            loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet("");
+        }
+
+
         //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
         loadPalletAdapter = new LoadPalletAdapter(loadPallets, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -550,7 +568,12 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.buttonOK:
                 actionSyn();
-                loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet();
+                if((lpn_code != null)&&(lpn_code != "")){
+                    loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
+                }else{
+                    loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet("");
+                }
+
                 //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
                 loadPalletAdapter = new LoadPalletAdapter(loadPallets, this);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);

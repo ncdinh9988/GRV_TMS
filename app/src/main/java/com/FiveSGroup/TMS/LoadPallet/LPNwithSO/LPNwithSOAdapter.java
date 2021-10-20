@@ -2,6 +2,7 @@ package com.FiveSGroup.TMS.LoadPallet.LPNwithSO;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.FiveSGroup.TMS.LPN.ItemLPNAdapter;
 import com.FiveSGroup.TMS.LPN.LPN;
 import com.FiveSGroup.TMS.LPN.LPNProductActivity;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.global;
 
 import java.util.ArrayList;
 
@@ -59,7 +61,9 @@ public class LPNwithSOAdapter extends RecyclerView.Adapter<LPNwithSOAdapter.View
 //                Toast.makeText(context, ""+lpn.getLPN_NUMBER()+" - "+lpn.getLPN_CODE()+" - "+lpn.getLPN_DATE(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, LPNwithSOInfo.class);
                 intent.putExtra("LPN_CODE", String.valueOf(lpn.getLPN_CODE()));
+                global.setLpn_code(String.valueOf(lpn.getLPN_CODE()));
                 intent.putExtra("order_code", String.valueOf(lpn.getORDER_CODE()));
+                global.setOrder_code(String.valueOf(lpn.getORDER_CODE()));
                 context.startActivity(intent);
             }
         });

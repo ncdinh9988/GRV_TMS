@@ -292,7 +292,24 @@ public class global extends Application {
         return UrlWebserviceToSynchronize;
     }
 
+    private static String lpn_code = "";
+    private static String order_code = "";
 
+    public static String getLpn_code() {
+        return lpn_code;
+    }
+
+    public static void setLpn_code(String lpn_code) {
+        global.lpn_code = lpn_code;
+    }
+
+    public static String getOrder_code() {
+        return order_code;
+    }
+
+    public static void setOrder_code(String order_code) {
+        global.order_code = order_code;
+    }
 
     // mặc định 0 là không được chọn , 1 là được chọn
     public static String IsChooseFrom = "0";

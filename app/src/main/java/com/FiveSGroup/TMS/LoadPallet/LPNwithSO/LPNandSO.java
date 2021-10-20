@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -54,6 +55,7 @@ public class LPNandSO extends AppCompatActivity implements View.OnClickListener 
     String number = "100";
     String master_cd = "";
     String lpn_code = "";
+    String order_code = "";
     final Calendar myCalendar = Calendar.getInstance();
 
 
@@ -214,7 +216,6 @@ public class LPNandSO extends AppCompatActivity implements View.OnClickListener 
 
 //                SetDataSpinner();
                 arrListLPN = DatabaseHelper.getInstance().getAllLpnBarcodewithSO(press);
-                lpn_code = arrListLPN.get(0).getLPN_CODE() ;
                 adapter = new LPNwithSOAdapter(LPNandSO.this, arrListLPN);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(LPNandSO.this, RecyclerView.VERTICAL, false);
                 rvListLPN.setLayoutManager(layoutManager);

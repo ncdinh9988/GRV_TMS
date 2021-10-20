@@ -1,5 +1,6 @@
 package com.FiveSGroup.TMS.LoadPallet.LPNwithSO;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,7 @@ import com.FiveSGroup.TMS.LPN.LPNProductAdapter;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletQRCode;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.global;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.Writer;
@@ -37,7 +39,7 @@ public class LPNwithSOInfo extends AppCompatActivity implements View.OnClickList
     private ListView listViewLPNProduct;
     private LPNProductAdapter adapter;
     private ArrayList<LPNProduct> lpnProducts;
-    private TextView tvTitle, tvTitleBarcode, tvLPNBarcodeImage;
+    private TextView tvTitle, tvTitleBarcode, tvLPNBarcodeImage ,tvTitleSO;
     private String lpnCode = "", order_code = "";
     private Button buttonBack , btnSuggest , buttonPutToPallet;
     private ImageView imageViewBarcode;
@@ -46,6 +48,20 @@ public class LPNwithSOInfo extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lpn_so_info);
+        lpnCode = global.getLpn_code();
+        order_code = global.getOrder_code();
+        init();
+        getLPNCode();
+        generateLPNBarcode(lpnCode);
+        getDataProductOfLPN(lpnCode);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_lpn_so_info);
+        lpnCode = global.getLpn_code();
+        order_code = global.getOrder_code();
         init();
         getLPNCode();
         generateLPNBarcode(lpnCode);
@@ -100,12 +116,14 @@ public class LPNwithSOInfo extends AppCompatActivity implements View.OnClickList
 
     private void getLPNCode() {
         Intent intent = getIntent();
-        lpnCode = intent.getStringExtra("LPN_CODE");
-        order_code = intent.getStringExtra("order_code");
+//        lpnCode = intent.getStringExtra("LPN_CODE");
+//        order_code = intent.getStringExtra("order_code");
         tvTitleBarcode.setText("Mã LPN: " + lpnCode);
+        tvTitleSO.setText("Mã Đơn: " + order_code);
     }
 
     private void init() {
+        tvTitleSO = findViewById(R.id.tvTitleSO);
         tvTitleBarcode = findViewById(R.id.tvTitleLPNCode);
         buttonBack = findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(this);

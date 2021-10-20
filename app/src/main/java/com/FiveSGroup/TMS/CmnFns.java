@@ -6265,7 +6265,14 @@ public class CmnFns {
 
                     } else if (isLPN == 1) {
                         boolean isExistLPN = false;
-                        ArrayList<Product_LoadPallet> product_LoadPallet = DatabaseHelper.getInstance().getAllProduct_LoadPallet();
+                        ArrayList<Product_LoadPallet> product_LoadPallet ;
+                        if ((lpn_code != null) && (!lpn_code.equals(""))) {
+                            product_LoadPallet = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
+                        }else
+                        {
+                            product_LoadPallet = DatabaseHelper.getInstance().getAllProduct_LoadPallet("");
+                        }
+
                         if (product_LoadPallet.size() > 0) {
                             for (int j = 0; j < product_LoadPallet.size(); j++) {
                                 if (product_LoadPallet.get(j).getLPN_CODE().equals(lpnCode)) {

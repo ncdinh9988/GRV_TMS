@@ -2927,10 +2927,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return loadPallets;
     }
 
-    public ArrayList<Product_LoadPallet> getAllProduct_LoadPallet() {
+    public ArrayList<Product_LoadPallet> getAllProduct_LoadPallet(String lpn_code) {
         ArrayList<Product_LoadPallet> loadPallets = new ArrayList<>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  *  FROM " + O_LOAD_PALLET;
+        String selectQuery = "SELECT  *  FROM " + O_LOAD_PALLET + " WHERE " + LPN_TO_LOAD_PALLET + " like '%" + lpn_code + "%'";
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
