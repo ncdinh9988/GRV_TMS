@@ -5694,7 +5694,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         //values.put(QRCODE, qrcode.getQRCODE());
-        values.put(AUTOINCREMENT_BATCH, batch.getAUTOINCREMENT());
+//        values.put(AUTOINCREMENT_BATCH, batch.getAUTOINCREMENT());
         values.put(BATCH_NUMBER, batch.getBATCH_NUMBER());
         values.put(PRODUCT_CODE_BATCH, batch.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_BATCH, batch.getPRODUCT_NAME());

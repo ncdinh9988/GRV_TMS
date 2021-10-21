@@ -416,6 +416,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                         }
                     });
                     AlertDialog alertDialog = builder.create();
+                    alertDialog.setCanceledOnTouchOutside(false);
                     alertDialog.show();
 
                 }else if(product_s_ps.size() == 1){
@@ -501,6 +502,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     }
                 });
                 AlertDialog alertDialog = builder.create();
+                alertDialog.setCanceledOnTouchOutside(false);
                 alertDialog.show();
             } else if (batch_number_tams.size() == 1) {
                 String batchTam = "" ,expired_Date = "";

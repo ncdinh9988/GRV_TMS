@@ -90,6 +90,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_properties_product);
+        DatabaseHelper.getInstance().deleteallBatch_Number();
 
         getDataFromWareHouseScanCode();
         init();

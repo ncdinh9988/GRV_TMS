@@ -534,6 +534,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
                             }
                         });
                         AlertDialog alertDialog = builder.create();
+                        alertDialog.setCanceledOnTouchOutside(false);
                         alertDialog.show();
 
                     }else if(product_s_ps.size() == 1){
@@ -635,6 +636,7 @@ public class Qrcode_StockTransfer extends AppCompatActivity {
                             }
                         });
                         AlertDialog alertDialog = builder.create();
+                        alertDialog.setCanceledOnTouchOutside(false);
                         alertDialog.show();
                     } else if (expired_date.size() == 1) {
                         String expDatetemp = "" , batch_number = "", product_code = "" , stockin_date = "";
