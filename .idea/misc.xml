@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="..\:/Source_code/GRV_TMS/app/src/main/res/layout-large/layout_qrcode.xml" value="0.1885245901639344" />
-        <entry key="..\:/Source_code/GRV_TMS/app/src/main/res/layout/activity_list_qrcode.xml" value="0.20153985507246377" />
-        <entry key="..\:/Source_code/GRV_TMS/app/src/main/res/layout/activity_load_camera.xml" value="0.259375" />
-        <entry key="..\:/Source_code/GRV_TMS/app/src/main/res/layout/layout_qrcode.xml" value="0.25" />
-        <entry key="..\:/Source_code/GRV_TMS/app/src/main/res/layout/product_view_pickup.xml" value="0.21467391304347827" />
-      </map>
-    </option>
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -1,17 +1,21 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.FiveSGroup.TMS"
         minSdkVersion 22
-        targetSdkVersion 29
-        versionCode 8060
+        targetSdkVersion 30
+        versionCode 8067
         // ngày _ web _ apk
-        versionName "TMS_211021_8673_8060"
+        versionName "TMS_211022_8673_8067"
         testInstrumentationRunner "androidxx.test.runner.AndroidJUnitRunner"
+        ndk {
+            debugSymbolLevel 'SYMBOL_TABLE'
+        }
     }
+    //21.1.6352462
 
     buildTypes {
         release {
@@ -23,10 +27,11 @@ android {
                     abortOnError false
                 }
             }
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    ndkVersion "21.1.6352462"
 
 }
 
