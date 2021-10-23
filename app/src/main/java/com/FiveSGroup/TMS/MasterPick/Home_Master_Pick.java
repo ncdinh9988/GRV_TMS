@@ -83,13 +83,13 @@ public class Home_Master_Pick extends AppCompatActivity {
         btnLpn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(valuewarehouse.equals("2")){
-//                    Intent intent = new Intent(Home_Master_Pick.this, LPNandSO.class);
-//                    startActivity(intent);
-//                }else{
+                if(valuewarehouse.equals("2")){
+                    Intent intent = new Intent(Home_Master_Pick.this, LPNandSO.class);
+                    startActivity(intent);
+                }else{
                     Intent intent = new Intent(Home_Master_Pick.this, LPNActivity.class);
                     startActivity(intent);
-//                }
+                }
             }
         });
 

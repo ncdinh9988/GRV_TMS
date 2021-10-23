@@ -200,7 +200,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             public void onClick(View view) {
                 dialog.dismiss();
 //                        Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                DatabaseHelper.getInstance().deleteProduct_LoadPallet();
+                DatabaseHelper.getInstance().deleteProduct_LoadPallet(lpn_code);
                 loadPallets.clear();
                 loadPalletAdapter.notifyDataSetChanged();
                 finish();
@@ -288,7 +288,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             btnYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseHelper.getInstance().deleteProduct_LoadPallet();
+                    DatabaseHelper.getInstance().deleteProduct_LoadPallet(lpn_code);
                     DatabaseHelper.getInstance().deleteallEa_Unit();
                     dialog.dismiss();
                     Intent intent = new Intent(LoadPalletActivity.this, MainWareHouseActivity.class);
@@ -344,8 +344,9 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 } else {
                     try {
 
+//                        int result = new CmnFns().synchronizeData(saleCode, "WPP", "");
 
-                        int result = new CmnFns().synchronizeData(saleCode, "WPP", "");
+                        int result = new CmnFns().synchronizeDataLoadPallet(saleCode, "WPP", "" ,lpn_code);
 
                         switch (result) {
                             case 1:
@@ -398,7 +399,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                             default:
                                 if (result >= 1) {
                                     Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                                    DatabaseHelper.getInstance().deleteProduct_LoadPallet();
+                                    DatabaseHelper.getInstance().deleteProduct_LoadPallet(lpn_code);
                                     loadPallets.clear();
                                     loadPalletAdapter.notifyDataSetChanged();
                                     finish();
@@ -588,7 +589,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         String positionTo = "";
         String positionFrom = "";
         ArrayList<Product_LoadPallet> loadPallets = new ArrayList<>();
-        loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync();
+        loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync(lpn_code);
         for (int i = 0; i < loadPallets.size(); i++) {
             Product_LoadPallet loadPallet = loadPallets.get(i);
             if (productCd.equals(loadPallet.getPRODUCT_CD()) &&

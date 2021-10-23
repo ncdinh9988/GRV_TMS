@@ -5330,7 +5330,7 @@ public class CmnFns {
                 } catch (Exception e) {
 
                 }
-                List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync();
+                List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync("");
                 if (product == null || product.size() == 0)
                     return "Không Có Danh Sách Dữ Liệu ";
                 jsonData = gson.toJson(product);
@@ -5441,6 +5441,57 @@ public class CmnFns {
         }
 
     }
+    public int synchronizeDataLoadPallet(String usercode, String type, String CD , String lpn_code) {
+
+        try {
+
+            int status = this.allowSynchronizeBy3G();
+            if (status == 102 || status == -1) {
+                return -1;
+            }
+
+            String jsonData = "";
+            Webservice Webservice = new Webservice();
+            //String json = convertToJson(customers);
+            Gson gson = new GsonBuilder().create();
+            if (type.equals("WPP")) {
+                try {
+                    int check = DatabaseHelper.getInstance().getDuplicate_LoadPallet();
+                    if (check > 1) {
+                        return -36;
+                    }
+
+                } catch (Exception e) {
+
+                }
+                List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync(lpn_code);
+                if (product == null || product.size() == 0)
+                    return 1;
+                jsonData = gson.toJson(product);
+            }
+
+            // lấy các khách hàng chưa đồng bộ, đã
+            // đồng bộ về rồi
+            // thì sẽ ko cần
+            // phải đồng bộ nữa
+
+            String result = Webservice.synchronizeData(jsonData, usercode, type);
+            int resultCovertToInt = Integer.parseInt(result);
+            if (resultCovertToInt >= 1) {
+                // đã đồng bộ thành công update để lần sau không đồng bộ lại
+                //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
+                return resultCovertToInt;
+            } else {
+                // đồng bộ không thành công
+                return Integer.parseInt(result);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            return -1;
+        }
+
+    }
 
     public int synchronizeData(String usercode, String type, String CD) {
 
@@ -5511,7 +5562,7 @@ public class CmnFns {
                 } catch (Exception e) {
 
                 }
-                List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync();
+                List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync("");
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);

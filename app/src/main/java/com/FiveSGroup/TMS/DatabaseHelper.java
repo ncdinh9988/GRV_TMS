@@ -2985,10 +2985,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return loadPallets;
     }
 
-    public ArrayList<Product_LoadPallet> getAllProduct_LoadPallet_Sync() {
+    public ArrayList<Product_LoadPallet> getAllProduct_LoadPallet_Sync(String lpn_code) {
         ArrayList<Product_LoadPallet> loadPallets = new ArrayList<>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_LOAD_PALLET;
+        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') " +
+                "as POSITION_TO_CODE FROM " + O_LOAD_PALLET + " WHERE " + LPN_TO_LOAD_PALLET + " like '%" + lpn_code + "%'";
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -3061,10 +3062,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public void deleteProduct_LoadPallet() {
+    public void deleteProduct_LoadPallet(String lpn_code) {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-        db.execSQL("delete from " + O_LOAD_PALLET);
+        db.execSQL("delete from " + O_LOAD_PALLET + " WHERE " + LPN_TO_LOAD_PALLET + " like '%" + lpn_code + "%'");
     }
 
     //DATABASE remove_lpn

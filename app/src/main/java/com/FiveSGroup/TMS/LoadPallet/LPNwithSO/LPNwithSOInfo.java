@@ -68,6 +68,7 @@ public class LPNwithSOInfo extends AppCompatActivity implements View.OnClickList
         getDataProductOfLPN(lpnCode);
     }
 
+
     private void generateLPNBarcode(String lpnCode) {
         try {
 
