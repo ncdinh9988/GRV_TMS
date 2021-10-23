@@ -33,6 +33,7 @@ import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.LPN.ItemLPNAdapter;
 import com.FiveSGroup.TMS.LPN.LPN;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletQRCode;
+import com.FiveSGroup.TMS.MasterPick.Home_Master_Pick;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.global;
 
@@ -426,6 +427,8 @@ public class LPNandSO extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonBack:
+                Intent intenttt = new Intent(LPNandSO.this, Home_Master_Pick.class);
+                startActivity(intenttt);
                 finish();
                 break;
         }

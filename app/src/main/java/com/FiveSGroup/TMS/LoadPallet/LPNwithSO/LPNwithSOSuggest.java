@@ -123,6 +123,8 @@ public class LPNwithSOSuggest extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buttonBack:
+                Intent intentt = new Intent(LPNwithSOSuggest.this, LPNwithSOInfo.class);
+                startActivity(intentt);
                 finish();
                 break;
             case R.id.buttonPutToPallet:

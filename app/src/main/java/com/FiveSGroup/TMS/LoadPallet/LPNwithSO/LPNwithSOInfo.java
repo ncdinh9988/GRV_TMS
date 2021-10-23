@@ -56,18 +56,6 @@ public class LPNwithSOInfo extends AppCompatActivity implements View.OnClickList
         getDataProductOfLPN(lpnCode);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setContentView(R.layout.activity_lpn_so_info);
-        lpnCode = global.getLpn_code();
-        order_code = global.getOrder_code();
-        init();
-        getLPNCode();
-        generateLPNBarcode(lpnCode);
-        getDataProductOfLPN(lpnCode);
-    }
-
 
     private void generateLPNBarcode(String lpnCode) {
         try {
@@ -149,6 +137,8 @@ public class LPNwithSOInfo extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonBack:
+                Intent intenttt = new Intent(LPNwithSOInfo.this, LPNandSO.class);
+                startActivity(intenttt);
                 finish();
                 break;
             case R.id.btnSuggest:
