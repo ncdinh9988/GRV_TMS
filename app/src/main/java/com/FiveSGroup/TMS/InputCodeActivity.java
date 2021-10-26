@@ -436,7 +436,7 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
             if (aVoid) {
 
                 progressDialogCheckExistCode.dismiss();
-                Intent intentHomeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent intentHomeActivity = new Intent(getApplicationContext(), MainShipper.class);
                 startActivity(intentHomeActivity);
                 finish();
             } else {
@@ -578,7 +578,7 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
 //                        CheckInfo checkInfo = new CheckInfo();
 //                        checkInfo.execute();
                         if (CheckinfoSale()) {
-                            Intent intentHomeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+                            Intent intentHomeActivity = new Intent(getApplicationContext(), MainShipper.class);
                             startActivity(intentHomeActivity);
                             finish();
                         } else {
