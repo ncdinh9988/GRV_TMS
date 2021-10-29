@@ -182,7 +182,9 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.navigation_dashboard:
                     navigation.setVisibility(View.VISIBLE);
-                    fragment = new FragAddCustomer();
+                    Intent intentt = new Intent(HomeActivity.this, MainShipper.class);
+                    startActivity(intentt);
+                    finish();
                     break;
                 case R.id.navigation_map:
 //                    try {

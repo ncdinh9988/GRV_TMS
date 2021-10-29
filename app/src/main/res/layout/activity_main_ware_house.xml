@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:id="@+id/addnewcustomer"
     tools:context=".MainMenu.MainWareHouseActivity">
     <TextView
         android:id="@+id/tvTitle"

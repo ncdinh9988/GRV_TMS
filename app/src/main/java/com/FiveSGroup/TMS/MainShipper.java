@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class MainShipper extends AppCompatActivity {
     ArrayList<MenuItemObject> arrItem;
     MenuItemShipperAdapter adpater;
     TextView tvSale, tvVersion;
+    LinearLayout layout_name_sale ;
     ImageButton imgsetting ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class MainShipper extends AppCompatActivity {
         setContentView(R.layout.activity_main_ware_house);
         rvCategory = findViewById(R.id.rvCategory);
         tvSale = findViewById(R.id.tvSale);
+        layout_name_sale = findViewById(R.id.layout_name_sale);
+        layout_name_sale.setVisibility(View.GONE);
         tvVersion = findViewById(R.id.tvVersion);
         imgsetting = findViewById(R.id.imgsetting);
         String version;
@@ -73,9 +77,9 @@ public class MainShipper extends AppCompatActivity {
 
     private void prepareData(){
         arrItem = new ArrayList<>();
-        String name[] = {"Kéo Công", "Giao Hàng"
+        String name[] = {"Kéo Công", "Giao Hàng" ,"Thêm Khách Hàng"
         };
-        int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho
+        int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho, R.drawable.ic_nhap_kho
         };
         String Lock_Wh_Adjustment = DatabaseHelper.getInstance().getParamByKey("LOCK_WH_Adjustment").getValue();
         for(int i = 0; i < name.length; i ++){

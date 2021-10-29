@@ -169,8 +169,8 @@ public class FCustomerAddNewEdit extends Activity implements View.OnClickListene
         try {
             switch (v.getId()) {
                 case R.id.btnHome:
-                    Intent t = new Intent(FCustomerAddNewEdit.this, HomeActivity.class);
-                    startActivity(t);
+//                    Intent t = new Intent(FCustomerAddNewEdit.this, HomeActivity.class);
+//                    startActivity(t);
 //
 //                    Intent i = new Intent();
 //                    if (customer == null) {

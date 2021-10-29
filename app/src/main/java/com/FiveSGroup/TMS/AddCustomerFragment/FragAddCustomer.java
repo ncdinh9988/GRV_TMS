@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.HomeActivity;
+import com.FiveSGroup.TMS.MainShipper;
 import com.FiveSGroup.TMS.R;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class FragAddCustomer extends androidx.fragment.app.Fragment {
 
     private static final int ACTIVITY_RESULT_ADD_NEW = 1;
 
-    private Button btnEdit, btnAddNew, btnDeleteAll;
+    private Button btnEdit, btnAddNew, btnDeleteAll ,btnback;
 
     private CustomerAdapter adapter;
     ArrayList<CCustomer> arrCustomer;
@@ -52,10 +54,18 @@ public class FragAddCustomer extends androidx.fragment.app.Fragment {
         View view = inflater.inflate(R.layout.frag_add_customer, container, false);
         arrCustomer = new ArrayList<>();
         btnAddNew = (Button) view.findViewById(R.id.btnAddNew);
+        btnback = (Button) view.findViewById(R.id.btnback) ;
         rvCustomer = view.findViewById(R.id.rvCustomer);
         rlAddNew = view.findViewById(R.id.rlAddNew);
         edSearch = view.findViewById(R.id.edSearch);
         arrCustomerFilter = new ArrayList<>();
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentNew = new Intent(getActivity(), MainShipper.class);
+                startActivity(intentNew);
+            }
+        });
 
         btnAddNew.setOnClickListener(new View.OnClickListener() {
             @Override

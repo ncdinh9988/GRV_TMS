@@ -11,8 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.FiveSGroup.TMS.AddCustomerFragment.FragAddCustomer;
 import com.FiveSGroup.TMS.CancelGood.Home_CancelGood;
 import com.FiveSGroup.TMS.Inventory.InventoryHome;
 import com.FiveSGroup.TMS.LPN.LPNActivity;
@@ -76,6 +80,12 @@ public class MenuItemShipperAdapter extends RecyclerView.Adapter<MenuItemShipper
                     case "Giao Hàng":
                         Intent intent = new Intent(context, HomeActivity.class);
                         context.startActivity(intent);
+                        break;
+
+                    case "Thêm Khách Hàng":
+                        AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                        Fragment fragment = new FragAddCustomer();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.addnewcustomer, fragment).addToBackStack(null).commit();
                         break;
 
 
