@@ -77,14 +77,14 @@ public class MainWareHouseActivity extends AppCompatActivity {
                 "Xuất Kho", "Kiểm Tồn", "Chỉnh Kho" , "Gỡ Sản Phẩm",
 //                "Trả Hàng" ,
                 "Xuất Hủy","Chuyển ĐVT"
-               , "PO Return","Phân Loại HH" , "Kiểm Định"
+               , "PO Return","Phân Loại HH" , "Kiểm Định" ,"Kiểm Tra Xe"
         };
         int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho, R.drawable.ic_putaway, R.drawable.ic_letdown,
                 R.drawable.ic_chuyen_vi_tri,  R.drawable.ic_master_pick , R.drawable.ic_picklist, R.drawable.ic_xuat_kho,
                 R.drawable.ic_kiem_ton, R.drawable.ic_chinh_kho , R.drawable.ic_go_san_pham,
 //                R.drawable.ic_tra_hang ,
                 R.drawable.ic_xuat_kho, R.drawable.ic_go_san_pham
-                , R.drawable.ic_chuyen_vi_tri ,R.drawable.ic_nhap_kho, R.drawable.ic_xuat_kho
+                , R.drawable.ic_chuyen_vi_tri ,R.drawable.ic_nhap_kho, R.drawable.ic_xuat_kho , R.drawable.ic_chinh_kho
         };
         String Lock_Wh_Adjustment = DatabaseHelper.getInstance().getParamByKey("LOCK_WH_Adjustment").getValue();
         for(int i = 0; i < name.length; i ++){

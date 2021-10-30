@@ -52,6 +52,9 @@
             android:name=".TowingContainers.Towing_Containers"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".TowingContainers.Check_Containers"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".MainShipper"
             android:screenOrientation="portrait" />
         <activity

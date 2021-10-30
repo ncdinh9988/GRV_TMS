@@ -3062,10 +3062,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public void deleteProduct_LoadPallet(String lpn_code) {
+    public void deleteProduct_LoadPallet() {
         // TODO Auto-generated method stub
         SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
-        db.execSQL("delete from " + O_LOAD_PALLET + " WHERE " + LPN_TO_LOAD_PALLET + " like '%" + lpn_code + "%'");
+        db.execSQL("delete from " + O_LOAD_PALLET );
     }
 
     //DATABASE remove_lpn

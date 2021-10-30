@@ -570,7 +570,7 @@ public class LPNActivity extends AppCompatActivity implements View.OnClickListen
 //                    Toast.makeText(this,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                    break;
 //                }else if(block_Warehouse_WPP == 1){
-                    DatabaseHelper.getInstance().deleteProduct_LoadPallet("");
+                    DatabaseHelper.getInstance().deleteProduct_LoadPallet();
                     Intent intent = new Intent(LPNActivity.this, LoadPalletQRCode.class);
                     startActivity(intent);
                     break;

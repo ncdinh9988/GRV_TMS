@@ -5957,6 +5957,30 @@ public class CmnFns {
 
 //                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
                 }
+                if (jsonobj.getString("ParamKey").toString().equals("URL_StockReceiptCont")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+
+//                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
+                if (jsonobj.getString("ParamKey").toString().equals("URL_Check_Transport")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+
+//                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
                 if (jsonobj.getString("ParamKey").toString().equals("URL_StockQAPerform")) {
                     CParam param = new CParam();
                     param.setKey(jsonobj.getString("ParamKey"));

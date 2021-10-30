@@ -207,7 +207,13 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         edtSelectProductStockinDate = findViewById(R.id.edtSelectProductStockinDate);
         edtSelectShelfLife = findViewById(R.id.edtSelectShelfLife);
         edtcont = findViewById(R.id.edtcont);
-        edtcont.setText(batch);
+        if (batch==null || batch==""){
+            edtcont.setText(batch);
+        }else{
+            edtcont.setFocusable(false);
+            edtcont.setText(batch);
+        }
+
         spinnerProductUnit = findViewById(R.id.spinnerProductUnit);
         edtSelectProductExpiredDate.setOnClickListener(this);
         edtSelectProductStockinDate.setOnClickListener(this);

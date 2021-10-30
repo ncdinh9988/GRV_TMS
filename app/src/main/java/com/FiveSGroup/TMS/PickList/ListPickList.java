@@ -25,6 +25,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.Inventory.InventoryListProduct;
 import com.FiveSGroup.TMS.LoadPallet.LoadPalletActivity;
+import com.FiveSGroup.TMS.LoadPallet.Product_LoadPallet;
 import com.FiveSGroup.TMS.MasterPick.List_Master_Pick;
 import com.FiveSGroup.TMS.MasterPick.Product_Master_Pick;
 import com.FiveSGroup.TMS.PutAway.List_PutAway;
@@ -321,6 +322,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         Dialog dialog = new Dialog(ListPickList.this);
         if (pick_list != null) {
             String saleCode = CmnFns.readDataAdmin();
+            List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync("");
             if (pickList.size() > 0) {
                 if (isNotScanFromOrTo()) {
                     dialog.showDialog(ListPickList.this, "Chưa có VT Từ hoặc VT Đến");
@@ -400,6 +402,7 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
     }
 
     private void ShowSuccessMessage(String message) {
+
         LayoutInflater factory = LayoutInflater.from(ListPickList.this);
         View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
         final AlertDialog dialog = new AlertDialog.Builder(ListPickList.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();

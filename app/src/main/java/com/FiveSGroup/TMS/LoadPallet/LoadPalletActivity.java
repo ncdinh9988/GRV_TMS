@@ -200,7 +200,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             public void onClick(View view) {
                 dialog.dismiss();
 //                        Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                DatabaseHelper.getInstance().deleteProduct_LoadPallet(lpn_code);
+                DatabaseHelper.getInstance().deleteProduct_LoadPallet();
                 loadPallets.clear();
                 loadPalletAdapter.notifyDataSetChanged();
                 finish();
@@ -288,7 +288,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             btnYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseHelper.getInstance().deleteProduct_LoadPallet(lpn_code);
+                    DatabaseHelper.getInstance().deleteProduct_LoadPallet();
                     DatabaseHelper.getInstance().deleteallEa_Unit();
                     dialog.dismiss();
                     Intent intent = new Intent(LoadPalletActivity.this, MainWareHouseActivity.class);
@@ -399,7 +399,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                             default:
                                 if (result >= 1) {
                                     Toast.makeText(getApplication(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                                    DatabaseHelper.getInstance().deleteProduct_LoadPallet(lpn_code);
+                                    DatabaseHelper.getInstance().deleteProduct_LoadPallet();
                                     loadPallets.clear();
                                     loadPalletAdapter.notifyDataSetChanged();
                                     finish();
