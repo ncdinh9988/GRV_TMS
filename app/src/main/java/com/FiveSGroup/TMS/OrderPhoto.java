@@ -20,7 +20,18 @@ public class OrderPhoto {
     private String PRODUCT_CODE;
     private String UNIT;
     private String EXPIRED_DATE;
-    private String STOCK_IN_DATE;;
+    private String STOCK_IN_DATE;
+
+    private String WAREHOUSE_CONTAINER_CD;
+
+
+    public String getWAREHOUSE_CONTAINER_CD() {
+        return WAREHOUSE_CONTAINER_CD;
+    }
+
+    public void setWAREHOUSE_CONTAINER_CD(String WAREHOUSE_CONTAINER_CD) {
+        this.WAREHOUSE_CONTAINER_CD = WAREHOUSE_CONTAINER_CD;
+    }
 
     public String getPRODUCT_CODE() {
         return PRODUCT_CODE;

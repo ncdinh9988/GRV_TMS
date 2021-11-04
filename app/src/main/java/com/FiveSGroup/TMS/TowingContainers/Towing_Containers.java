@@ -33,7 +33,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.FiveSGroup.TMS.AddCustomerFragment.FCustomerAddNewEdit;
 import com.FiveSGroup.TMS.AddCustomerFragment.FragAddCustomer;
+import com.FiveSGroup.TMS.AddCustomerFragment.GpsTracker;
 import com.FiveSGroup.TMS.ChangeCusFragment.ChangeCusFragment;
 import com.FiveSGroup.TMS.ChangeCusFragment.UpdateCustomer;
 import com.FiveSGroup.TMS.CmnFns;
@@ -72,9 +74,10 @@ public class Towing_Containers extends AppCompatActivity {
     String urlStockReceipt = "" , valuewarehouse = "";
     ValueEventbus eventbus;
     static String value = "";
-    String value3 = "";
+    String value3 = "Đã Lấy Được Tọa Độ";
     ProgressBar progressBar;
     SwipeRefreshLayout refreshLayout;
+    GpsTracker gpsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +103,7 @@ public class Towing_Containers extends AppCompatActivity {
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
         btnLpn = findViewById(R.id.btnlpn);
+        btnLpn.setText("Get Location");
         layout = findViewById(R.id.layout);
         btn1.setVisibility(View.GONE);
         btnchuyendvt.setVisibility(View.GONE);
@@ -110,6 +114,30 @@ public class Towing_Containers extends AppCompatActivity {
 
         String urlStockOut =  urlStockReceipt + "?USER_CODE=" + CmnFns.readDataShipper();
         addEvents(urlStockOut);
+        btnShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Towing_Containers.this, TakePhoto_Containers.class);
+                intent.putExtra("qrcode1", "qrcode1");
+                // Log.e("barcodeData",""+ barcodeData);
+                startActivity(intent);
+            }
+        });
+        btnLpn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gpsTracker = new GpsTracker(Towing_Containers.this);
+                if (gpsTracker.canGetLocation()) {
+                    double latitude = gpsTracker.getLatitude();
+                    double longitude = gpsTracker.getLongitude();
+                    mWebview.loadUrl("javascript:Call_MSG('"+latitude+"')");
+                } else {
+                    gpsTracker.showSettingsAlert();
+                }
+
+
+            }
+        });
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,7 +195,6 @@ public class Towing_Containers extends AppCompatActivity {
                 }
 
 
-
                 public void onPageFinished(WebView view, String url) {
                     SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
                     value3 = sharedPref.getString("btn1", "");
@@ -177,42 +204,44 @@ public class Towing_Containers extends AppCompatActivity {
                     //on the webview object and pass in
                     //"javascript:<your javaScript function"
 
-                    // mWebview.loadUrl("javascript:ResusltBarCode('"+value3+"')");
+                     mWebview.loadUrl("javascript:ResusltBarCode('"+value3+"')");
                     //mWebview.loadUrl("javascript:ResusltBarCode('"+value3+"','"+value4+"')");
                     ;//if passing in an object. Mapping may need to take place
                     Log.e("urljavascript", "đã chạy dc");
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
-//                    if (url.contains("WarehousePickListForAppItemV2.aspx?PickListCD")) {
-//
-//                        String chuoi[] = url.split("=");
-//                        String code = chuoi[1];
-//                        global.setMasterPickCd(code);
-//                        // Toast.makeText(HomeQRActivity.this, code+"", Toast.LENGTH_SHORT).show();
-//
+                    if (url.contains("StockReceiptContForAppDetail.aspx?WAREHOUSE_CONTAINER_CD=")) {
+
+                        String chuoi[] = url.split("=");
+                        String code = chuoi[1];
+                        String chuoi2[] = code.split("&");
+                        String code2 = chuoi2[0];
+                        global.setWarehouse_Container_CD(code2);
+                        // Toast.makeText(HomeQRActivity.this, code+"", Toast.LENGTH_SHORT).show();
+
 //                        btn1.setVisibility(View.VISIBLE);
-//                        btnShow.setVisibility(View.VISIBLE);
-//                        btnLpn.setVisibility(View.VISIBLE);
+                        btnShow.setVisibility(View.VISIBLE);
+                        btnLpn.setVisibility(View.VISIBLE);
 //                        btnchuyendvt.setVisibility(View.VISIBLE);
-//                        btnback.setVisibility(View.GONE);
-//                        SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.putString("masterpick_cd", code);
-//                        editor.apply();
-//
-//                    } else {
-//                        btnShow.setVisibility(View.GONE);
+                        btnback.setVisibility(View.GONE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("masterpick_cd", code);
+                        editor.apply();
+
+                    } else {
+                        btnShow.setVisibility(View.GONE);
 //                        btn1.setVisibility(View.GONE);
-//                        btnLpn.setVisibility(View.GONE);
+                        btnLpn.setVisibility(View.GONE);
 //                        btnchuyendvt.setVisibility(View.GONE);
-//                        btnback.setVisibility(View.VISIBLE);
-//                        SharedPreferences settings = getSharedPreferences("name", Context.MODE_PRIVATE);
-//                        settings.edit().clear().apply();
-//                        SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
-//                        sharedPreferences.edit().clear().apply();
-//
-//                    }
-//                    progressBar.setVisibility(View.GONE);
+                        btnback.setVisibility(View.VISIBLE);
+                        SharedPreferences settings = getSharedPreferences("name", Context.MODE_PRIVATE);
+                        settings.edit().clear().apply();
+                        SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
+                        sharedPreferences.edit().clear().apply();
+
+                    }
+                    progressBar.setVisibility(View.GONE);
                 }
             });
 

@@ -294,7 +294,7 @@ public class Webservice {
         // Param 2
         PropertyInfo param2 = new PropertyInfo();
         param2.setName("obj");
-        param2.setValue(obj);
+        param2.setValue(global.getSaleCode());
         param2.setType(String.class);
         request.addProperty(param2);
 

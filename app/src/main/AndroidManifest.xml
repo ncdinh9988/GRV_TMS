@@ -49,6 +49,9 @@
         <activity android:name=".LPN.LPNActivity" />
         <activity android:name=".PickList.NewWareHouseActivity" />
         <activity
+            android:name=".TowingContainers.TakePhoto_Containers"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".TowingContainers.Towing_Containers"
             android:screenOrientation="portrait" />
         <activity
