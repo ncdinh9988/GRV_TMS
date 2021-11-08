@@ -102,6 +102,7 @@ public class Towing_Containers extends AppCompatActivity {
         btnchuyendvt = (Button) findViewById(R.id.btnchuyendvt) ;
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
+        btnShow.setText("CHỤP ẢNH KÉO CÔNG");
         btnLpn = findViewById(R.id.btnlpn);
         btnLpn.setText("Get Location");
         layout = findViewById(R.id.layout);
@@ -130,7 +131,7 @@ public class Towing_Containers extends AppCompatActivity {
                 if (gpsTracker.canGetLocation()) {
                     double latitude = gpsTracker.getLatitude();
                     double longitude = gpsTracker.getLongitude();
-                    mWebview.loadUrl("javascript:Call_MSG('"+latitude+"')");
+                    mWebview.loadUrl("javascript:SetLocation('"+latitude+"','"+longitude+"')");
                 } else {
                     gpsTracker.showSettingsAlert();
                 }
@@ -204,7 +205,7 @@ public class Towing_Containers extends AppCompatActivity {
                     //on the webview object and pass in
                     //"javascript:<your javaScript function"
 
-                     mWebview.loadUrl("javascript:ResusltBarCode('"+value3+"')");
+//                     mWebview.loadUrl("javascript:ResusltBarCode('"+value3+"')");
                     //mWebview.loadUrl("javascript:ResusltBarCode('"+value3+"','"+value4+"')");
                     ;//if passing in an object. Mapping may need to take place
                     Log.e("urljavascript", "đã chạy dc");

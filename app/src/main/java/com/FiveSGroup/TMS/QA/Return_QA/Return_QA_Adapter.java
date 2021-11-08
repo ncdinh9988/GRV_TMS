@@ -53,6 +53,7 @@ public class Return_QA_Adapter extends RecyclerView.Adapter<Return_QA_Adapter.Vi
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvUnit.setText(product.getUNIT());
+        holder.tvbatchnumber.setText(product.getBATCH_NUMBER());
         holder.edt.setEnabled(false);
 
 
@@ -161,7 +162,7 @@ public class Return_QA_Adapter extends RecyclerView.Adapter<Return_QA_Adapter.Vi
 
         ImageButton btnvtden, btnvtdi;
         TextView tvFrom, tvUnit, tvTo, tvIdProduct, tvNameProduct;
-        TextView tvExpired, tvStockin;
+        TextView tvExpired, tvStockin ,tvbatchnumber;
         EditText edt , edtnote;
         LinearLayout layoutTo , layoutFrom;
 
@@ -175,6 +176,7 @@ public class Return_QA_Adapter extends RecyclerView.Adapter<Return_QA_Adapter.Vi
             tvNameProduct = itemView.findViewById(R.id.nameproduct);
             layoutTo = itemView.findViewById(R.id.layoutTo);
             layoutFrom = itemView.findViewById(R.id.layoutFrom);
+            tvbatchnumber = itemView.findViewById(R.id.tvbatchnumber);
 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             tvStockin = itemView.findViewById(R.id.tvStockin);

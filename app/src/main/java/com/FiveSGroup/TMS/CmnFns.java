@@ -2472,7 +2472,7 @@ public class CmnFns {
 
                     if (expDate != null) {
                         ArrayList<Product_Qrcode> product_qrcodes = DatabaseHelper.getInstance().
-                                getoneProduct_Qrcode(qrcode1.getPRODUCT_CD(), qrcode1.getSTOCK_RECEIPT_CD(), expDate, qrcode1.getEA_UNIT(), stockinDate );
+                                getoneProduct_Qrcode(qrcode1.getPRODUCT_CD(), qrcode1.getSTOCK_RECEIPT_CD(), expDate, qrcode1.getEA_UNIT(), stockinDate ,cont);
                         if (product_qrcodes.size() > 0) {
                             Product_Qrcode product = product_qrcodes.get(0);
                             if ((expDate.equals(product.getEXPIRED_DATE()) && unit.equals(product.getEA_UNIT()))) {

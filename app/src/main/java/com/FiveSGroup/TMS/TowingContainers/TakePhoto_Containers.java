@@ -66,7 +66,7 @@ public class TakePhoto_Containers extends AppCompatActivity implements View.OnCl
     String imageFileName;
     LinearLayout linearLayout;
     FrameLayout frameLayout;
-    TextView tvEmptyImage;
+    TextView tvEmptyImage , textmenu;
     String  stockcd = "" ;
     private static final int REQUEST_TAKE_PHOTO = 2;
 
@@ -100,6 +100,8 @@ public class TakePhoto_Containers extends AppCompatActivity implements View.OnCl
 
     private void init() {
         btnCap = findViewById(R.id.btnCap);
+        textmenu = findViewById(R.id.textmenu);
+        textmenu.setText("CHỤP ẢNH KÉO CÔNG");
         btnBack = findViewById(R.id.btnBack);
         imgViewOrder = findViewById(R.id.imagViewOrder);
         linearLayout = findViewById(R.id.layout_capture);

@@ -344,7 +344,7 @@ public class SelectPropertiesProductActivity extends AppCompatActivity implement
         shelfLife = edtSelectShelfLife.getText().toString().trim();
 //            shelfLifeDate = edtSelectShelfLifeDate.getText().toString().trim();
         final String unit = spinnerProductUnit.getSelectedItem().toString();
-//dành cho kho khô
+//      dành cho kho khô
 //        if (spinnerProductUnit.getSelectedItem().toString().isEmpty()) {
 //            Toast.makeText(this, "Vui lòng chọn đơn vị ", Toast.LENGTH_SHORT).show();
 //        }

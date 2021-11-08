@@ -7301,12 +7301,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public ArrayList<Product_Qrcode>
-    getoneProduct_Qrcode(String CD, String stock, String expDate, String ea_unit, String stockinDate) {
+    getoneProduct_Qrcode(String CD, String stock, String expDate, String ea_unit, String stockinDate , String cont ) {
         ArrayList<Product_Qrcode> qrcode = new ArrayList<Product_Qrcode>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
         String selectQuery = "SELECT  * FROM " + O_QRCODE + " " + " WHERE "
                 + PRODUCT_CD + " = " + CD + " AND "
                 + STOCK_RECEIPT_CD + " = " + stock + " AND "
+                + BATCH_NUMBER_CODE + " like " + " '%" + cont + "%' AND "
                 + EA_UNIT + " like " + " '%" + ea_unit + "%' AND "
                 + EXPIRED_DATE + " like " + " '%" + expDate + "%' AND "
                 + STOCKIN_DATE + " like " + " '%" + stockinDate + "%'";
