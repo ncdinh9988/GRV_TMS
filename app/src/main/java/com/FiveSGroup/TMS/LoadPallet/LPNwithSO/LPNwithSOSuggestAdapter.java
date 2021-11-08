@@ -49,7 +49,7 @@ public class LPNwithSOSuggestAdapter extends RecyclerView.Adapter<LPNwithSOSugge
         unit = unit.replace(",","\n");
         holder.tvunit.setText(unit);
         String suggest = lpn.getPOSITION_CODE();
-        suggest = suggest.replace("<br>","\n");
+        suggest = suggest.replace("</br> ","\n");
         holder.tvsuggest.setText(suggest);
 //        holder.layout_item.setBackgroundColor(context.getResources().getColor(R.color.white));
     }

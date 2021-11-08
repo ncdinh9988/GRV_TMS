@@ -1,7 +1,10 @@
 package com.FiveSGroup.TMS;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -74,8 +78,30 @@ public class MenuItemShipperAdapter extends RecyclerView.Adapter<MenuItemShipper
             public void onClick(View v) {
                 switch (object.getNameItem()) {
                     case "Kéo Container":
-                        Intent intentLPN = new Intent(context, Towing_Containers.class);
-                        context.startActivity(intentLPN);
+                        LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+                        boolean gps_enabled = false;
+                        try {
+                            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                        } catch(Exception ex) {}
+
+
+                        if(!gps_enabled) {
+
+                            // notify user
+                            new AlertDialog.Builder(context)
+                                    .setMessage("GPS Chưa Được Bật")
+                                    .setPositiveButton("Vui Lòng Bật GPS", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                            context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                        }
+                                    })
+                                    .setNegativeButton("Hủy Bỏ",null)
+                                    .show();
+                        }else {
+                            Intent intentLPN = new Intent(context, Towing_Containers.class);
+                            context.startActivity(intentLPN);
+                        }
                         break;
                     case "Giao Hàng":
                         Intent intent = new Intent(context, HomeActivity.class);

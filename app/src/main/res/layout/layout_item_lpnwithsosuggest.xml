@@ -12,6 +12,33 @@
         android:orientation="vertical"
         android:background="@drawable/bg_layout_item"
       >
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:paddingLeft="10dp"
+                android:text="Gợi Ý        : "
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/tvsuggest"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textStyle="bold"
+                android:gravity="left"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvSO"
@@ -59,31 +86,7 @@
                 android:textColor="@color/black"
                 />
         </LinearLayout>
-        <LinearLayout
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="left"
-                android:paddingLeft="10dp"
-                android:text="Gợi Ý        : "
-                android:textColor="@color/black"
-                android:textStyle="italic" />
-            <TextView
-                android:id="@+id/tvsuggest"
-                android:paddingLeft="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:gravity="left"
-                android:textColor="@color/black"
-                />
-        </LinearLayout>
 
     </LinearLayout>
 

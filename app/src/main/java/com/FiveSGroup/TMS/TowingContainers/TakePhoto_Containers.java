@@ -160,7 +160,8 @@ public class TakePhoto_Containers extends AppCompatActivity implements View.OnCl
     private void prepareData() {
         if (arrImage.size() > 0) {
             tvEmptyImage.setVisibility(View.GONE);
-            imageOrderAdapter = new ImageOrderAdapter(TakePhoto_Containers.this, arrImage, frameLayout, linearLayout, imgDisplay, imgClose);
+            imageOrderAdapter = new ImageOrderAdapter(TakePhoto_Containers.this, arrImage, frameLayout,
+                    linearLayout, imgDisplay, imgClose);
             GridLayoutManager linearLayoutManager = new GridLayoutManager(TakePhoto_Containers.this, 3);
             rvListImageOrder.setLayoutManager(linearLayoutManager);
             rvListImageOrder.setAdapter(imageOrderAdapter);
@@ -425,9 +426,9 @@ public class TakePhoto_Containers extends AppCompatActivity implements View.OnCl
             textPaint.setTextSize(20);
             textPaint.setTypeface(Typeface.DEFAULT);
 
-            canvas.drawText("Mã Phiếu : " +  stockcd , 10, 20 , strokePaint);
-            canvas.drawText("Ngày chụp: " + obj.getStrDateTakesPhoto(), 10, 170, strokePaint);
-            canvas.drawText("Tên file ảnh : " +  imageFileName , 10, 200, strokePaint);
+
+            canvas.drawText("Ngày chụp: " + obj.getStrDateTakesPhoto(), 10, 20, strokePaint);
+            canvas.drawText("Tên file ảnh : " +  imageFileName , 10, 50, strokePaint);
             // lưu hình ảnh sau khi đã ghi thông tin
             bitmapCanvas = alteredBitmap;
             SaveImage(alteredBitmap, obj.getPhoto_Path());

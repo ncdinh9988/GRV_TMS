@@ -322,7 +322,6 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
         Dialog dialog = new Dialog(ListPickList.this);
         if (pick_list != null) {
             String saleCode = CmnFns.readDataAdmin();
-            List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync("");
             if (pickList.size() > 0) {
                 if (isNotScanFromOrTo()) {
                     dialog.showDialog(ListPickList.this, "Chưa có VT Từ hoặc VT Đến");
