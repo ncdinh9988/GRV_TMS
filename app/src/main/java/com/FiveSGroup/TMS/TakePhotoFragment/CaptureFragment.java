@@ -47,6 +47,7 @@ import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.HomeActivity;
 import com.FiveSGroup.TMS.OrderPhoto;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.TowingContainers.TakePhoto_Containers;
 import com.FiveSGroup.TMS.global;
 
 import org.greenrobot.eventbus.EventBus;
@@ -206,6 +207,8 @@ public class CaptureFragment extends Fragment {
             super.onPostExecute(aVoid);
         }
     }
+
+
 
     private void backToHomeScreen() {
         Intent intentHome = new Intent(getActivity(), HomeActivity.class);

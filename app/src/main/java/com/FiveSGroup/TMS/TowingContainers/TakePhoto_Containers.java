@@ -45,8 +45,12 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.OrderPhoto;
 import com.FiveSGroup.TMS.QA.HomeQA.List_QA;
+import com.FiveSGroup.TMS.QA.Return_QA.Home_Return_QA;
+import com.FiveSGroup.TMS.QA.Return_QA.List_Return_QA;
 import com.FiveSGroup.TMS.R;
+import com.FiveSGroup.TMS.ShowDialog.Dialog;
 import com.FiveSGroup.TMS.TakePhotoFragment.ImageOrderAdapter;
+import com.FiveSGroup.TMS.Warehouse.ListQrcode;
 import com.FiveSGroup.TMS.global;
 
 import java.io.File;
@@ -191,10 +195,40 @@ public class TakePhoto_Containers extends AppCompatActivity implements View.OnCl
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            Toast.makeText(TakePhoto_Containers.this, "Đồng bộ thành công", Toast.LENGTH_SHORT).show();
+            ShowSuccessMessage("Đồng Bộ Thành Công");
+//            Toast.makeText(TakePhoto_Containers.this, "Đồng bộ thành công", Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
             super.onPostExecute(aVoid);
         }
+    }
+
+    private void ShowSuccessMessage(String message) {
+        LayoutInflater factory = LayoutInflater.from(TakePhoto_Containers.this);
+        View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
+        final AlertDialog dialog = new AlertDialog.Builder(TakePhoto_Containers.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+        InsetDrawable inset = new InsetDrawable(back, 64);
+        dialog.getWindow().setBackgroundDrawable(inset);
+        dialog.setView(layout_cus);
+        dialog.setCancelable(false);
+
+        Button btnClose = layout_cus.findViewById(R.id.btnHuy);
+        TextView textView = layout_cus.findViewById(R.id.tvText);
+        btnClose.setText("OK");
+
+
+        textView.setText(message);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                Intent intentToHomeQRActivity = new Intent(TakePhoto_Containers.this, TakePhoto_Containers.class);
+                startActivity(intentToHomeQRActivity);
+                finish();
+            }
+        });
+        dialog.show();
     }
 
 
