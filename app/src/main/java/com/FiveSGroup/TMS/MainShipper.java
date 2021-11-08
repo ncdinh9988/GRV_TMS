@@ -77,7 +77,7 @@ public class MainShipper extends AppCompatActivity {
 
     private void prepareData(){
         arrItem = new ArrayList<>();
-        String name[] = {"Kéo Công", "Giao Hàng" ,"Thêm Khách Hàng"
+        String name[] = {"Kéo Container", "Giao Hàng" ,"Thêm Khách Hàng"
         };
         int images[] = {R.drawable.ic_lpn, R.drawable.ic_nhap_kho, R.drawable.ic_nhap_kho
         };

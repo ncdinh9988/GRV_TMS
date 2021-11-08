@@ -102,7 +102,7 @@ public class Towing_Containers extends AppCompatActivity {
         btnchuyendvt = (Button) findViewById(R.id.btnchuyendvt) ;
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
-        btnShow.setText("CHỤP ẢNH KÉO CÔNG");
+        btnShow.setText("CHỤP ẢNH KÉO CONTAINER");
         btnLpn = findViewById(R.id.btnlpn);
         btnLpn.setText("Get Location");
         layout = findViewById(R.id.layout);

@@ -105,7 +105,7 @@ public class TakePhoto_Containers extends AppCompatActivity implements View.OnCl
     private void init() {
         btnCap = findViewById(R.id.btnCap);
         textmenu = findViewById(R.id.textmenu);
-        textmenu.setText("CHỤP ẢNH KÉO CÔNG");
+        textmenu.setText("CHỤP ẢNH KÉO CONTAINER");
         btnBack = findViewById(R.id.btnBack);
         imgViewOrder = findViewById(R.id.imagViewOrder);
         linearLayout = findViewById(R.id.layout_capture);

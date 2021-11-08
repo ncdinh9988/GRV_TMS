@@ -73,7 +73,7 @@ public class MenuItemShipperAdapter extends RecyclerView.Adapter<MenuItemShipper
             @Override
             public void onClick(View v) {
                 switch (object.getNameItem()) {
-                    case "Kéo Công":
+                    case "Kéo Container":
                         Intent intentLPN = new Intent(context, Towing_Containers.class);
                         context.startActivity(intentLPN);
                         break;
