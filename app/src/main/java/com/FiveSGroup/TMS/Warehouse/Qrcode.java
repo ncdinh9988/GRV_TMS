@@ -462,6 +462,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                         String bat = mString[which];
                         String vitri = String.valueOf(which);
                         String expired_Date = batch_number_tams.get(which).getEXPIRED_DATE();
+                        String unit = batch_number_tams.get(which).getUNIT();
 
                         dialog.dismiss(); // Close Dialog
 
@@ -475,6 +476,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                             Intent intentt = new Intent(getApplication(), SelectPropertiesProductActivity.class);
                             intentt.putExtra("typeScan", "scan_from_stock_in");
                             intentt.putExtra("btn1", barcodeData);
+                            intentt.putExtra("unit", unit);
                             intentt.putExtra("stockin", "444");
                             intentt.putExtra("stock_in", "333");
                             intentt.putExtra("id_unique_SI", id_unique_SI);
@@ -505,10 +507,11 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 alertDialog.setCanceledOnTouchOutside(false);
                 alertDialog.show();
             } else if (batch_number_tams.size() == 1) {
-                String batchTam = "" ,expired_Date = "";
+                String batchTam = "" ,expired_Date = "" , unit = "";
                 try {
                     batchTam = batch_number_tams.get(0).getBATCH_NUMBER();
                     expired_Date = batch_number_tams.get(0).getEXPIRED_DATE();
+                    unit = batch_number_tams.get(0).getUNIT();
                 } catch (Exception e) {
 
                 }
@@ -519,6 +522,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 Intent intentt = new Intent(getApplication(), SelectPropertiesProductActivity.class);
                 intentt.putExtra("typeScan", "scan_from_stock_in");
                 intentt.putExtra("btn1", barcodeData);
+                intentt.putExtra("unit", unit);
                 intentt.putExtra("stockin", "444");
                 intentt.putExtra("stock_in", "333");
                 intentt.putExtra("id_unique_SI", id_unique_SI);
