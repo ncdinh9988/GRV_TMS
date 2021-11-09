@@ -5230,8 +5230,6 @@ public class CmnFns {
                             } else {
                                 DatabaseHelper.getInstance().updatePositionFromTransferUnit(unique_id, positionCode, wareHouse, productCd, expDate, postitionDes, ea_unit, stockin);
                             }
-
-
                             // DatabaseHelper.getInstance().updatePositionTo(positionCode, wareHouse, productCd, expDate, postitionDes);
                         }
                     }
@@ -5570,7 +5568,7 @@ public class CmnFns {
                 } catch (Exception e) {
 
                 }
-                List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync(lpn_code);
+                List<Product_LoadPallet> product = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync("");
                 if (product == null || product.size() == 0)
                     return 1;
                 jsonData = gson.toJson(product);

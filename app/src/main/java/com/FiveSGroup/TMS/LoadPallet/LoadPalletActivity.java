@@ -149,11 +149,11 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
     private boolean isNotScanFromOrTo() {
         boolean check = false;
         List<Product_LoadPallet> product ;
-        if((lpn_code != null)&&(lpn_code != "")){
-            product = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
-        }else{
+//        if((lpn_code != null)&&(lpn_code != "")){
+//            product = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
+//        }else{
             product = DatabaseHelper.getInstance().getAllProduct_LoadPallet("");
-        }
+//        }
 
 
         for (int i = 0; i < product.size(); i++) {
@@ -305,11 +305,11 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
     private boolean isQuanityZero() {
         boolean check = false;
         List<Product_LoadPallet> product ;
-        if((lpn_code != null)&&(lpn_code != "")){
-            product  = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
-        }else{
+//        if((lpn_code != null)&&(lpn_code != "")){
+//            product  = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
+//        }else{
             product  = DatabaseHelper.getInstance().getAllProduct_LoadPallet("");
-        }
+//        }
 
         for (int i = 0; i < product.size(); i++) {
             Product_LoadPallet product_loadPallet = product.get(i);
@@ -468,11 +468,11 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             }
         }
 
-        if((lpn_code != null)&&(lpn_code != "")){
-            loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
-        }else{
+//        if((lpn_code != null)&&(lpn_code != "")){
+//            loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
+//        }else{
             loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet("");
-        }
+//        }
 
 
         //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
@@ -569,11 +569,11 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.buttonOK:
                 actionSyn();
-                if((lpn_code != null)&&(lpn_code != "")){
-                    loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
-                }else{
+//                if((lpn_code != null)&&(lpn_code != "")){
+//                    loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet(lpn_code);
+//                }else{
                     loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet("");
-                }
+//                }
 
                 //putAwayListAdapter = new PutAwayListAdapter(putaway, this);
                 loadPalletAdapter = new LoadPalletAdapter(loadPallets, this);
@@ -589,7 +589,7 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
         String positionTo = "";
         String positionFrom = "";
         ArrayList<Product_LoadPallet> loadPallets = new ArrayList<>();
-        loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync(lpn_code);
+        loadPallets = DatabaseHelper.getInstance().getAllProduct_LoadPallet_Sync("");
         for (int i = 0; i < loadPallets.size(); i++) {
             Product_LoadPallet loadPallet = loadPallets.get(i);
             if (productCd.equals(loadPallet.getPRODUCT_CD()) &&
