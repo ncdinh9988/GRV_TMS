@@ -149,6 +149,54 @@ public class Webservice {
         }
     }
 
+    public String Check_Position_Same_SLOC(String from_cd , String to_cd , String type){
+        String webServiceFunc = "Check_Position_Same_SLOC";
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+
+        //         Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("POSITION_FROM_CD");
+        param1.setValue(from_cd);
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+        //         Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("POSITION_TO_CD");
+        param2.setValue(to_cd);
+        param2.setType(String.class);
+        request.addProperty(param2);
+
+        //         Param 3
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("TYPE");
+        param3.setValue(type);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
 
     public String synchronizeCustomerAddNew(String json) {
 

@@ -5467,6 +5467,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Product_PutAway>
+    getonePosition_PutAway(String id) {
+        ArrayList<Product_PutAway> qrcode = new ArrayList<Product_PutAway>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_PUT_AWAY + " " + " WHERE "
+                + AUTOINCREMENT_PUT_AWAY + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_PutAway qrcode_putaway = new Product_PutAway();
+
+                qrcode_putaway.setPOSITION_FROM_PUTAWAY((c.getString(c
+                        .getColumnIndex(POSITION_FROM_PUTAWAY))));
+                qrcode_putaway.setPOSITION_TO_PUTAWAY((c.getString(c
+                        .getColumnIndex(POSITION_TO_PUTAWAY))));
+
+
+                qrcode.add(qrcode_putaway);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+    public ArrayList<Product_PutAway>
     getautoProduct_PutAway() {
         ArrayList<Product_PutAway> putaway = new ArrayList<Product_PutAway>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);

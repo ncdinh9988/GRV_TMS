@@ -6924,6 +6924,22 @@ public class CmnFns {
 
     }
 
+    public String Check_Position_Same_SLOC(String from_cd , String to_cd ,String type) {
+        int status = this.allowSynchronizeBy3G();
+        if (status != 1)
+            return "Vui lòng kiểm tra kế nối mạng";
+
+        Webservice webService = new Webservice();
+
+        String result = webService.Check_Position_Same_SLOC(from_cd, to_cd, type);
+        if(result.equals("1")){
+            return "Thành Công";
+        }else{
+            return result;
+        }
+
+    }
+
     public int Block_Function_By_Warehouse() {
         int status = this.allowSynchronizeBy3G();
         if (status != 1)
