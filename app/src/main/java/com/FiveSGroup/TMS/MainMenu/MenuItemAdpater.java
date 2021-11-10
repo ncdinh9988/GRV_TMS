@@ -26,7 +26,7 @@ import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.RemoveFromLPN.Qrcode_Remove_LPN;
 import com.FiveSGroup.TMS.StockOut.Home_Stockout;
 import com.FiveSGroup.TMS.StockTransfer.Qrcode_StockTransfer;
-import com.FiveSGroup.TMS.TowingContainers.Check_Containers;
+import com.FiveSGroup.TMS.TowingContainers.Check_Transport;
 import com.FiveSGroup.TMS.TransferQR.Home.Home_PhanloaiHH;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.Warehouse.HomeQRActivity;
@@ -299,7 +299,7 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
 //                            break;
 //                        }else if(block_Warehouse == 1){
-                        Intent intent_check = new Intent(context, Check_Containers.class);
+                        Intent intent_check = new Intent(context, Check_Transport.class);
                         context.startActivity(intent_check);
                         break;
 

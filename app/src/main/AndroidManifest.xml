@@ -49,6 +49,9 @@
         <activity android:name=".LPN.LPNActivity" />
         <activity android:name=".PickList.NewWareHouseActivity" />
         <activity
+            android:name=".TowingContainers.Check_Transport_Photo"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Warehouse.Layout_PO"
             android:screenOrientation="portrait" />
         <activity
@@ -61,7 +64,7 @@
             android:name=".TowingContainers.Towing_Containers"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TowingContainers.Check_Containers"
+            android:name=".TowingContainers.Check_Transport"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainShipper"

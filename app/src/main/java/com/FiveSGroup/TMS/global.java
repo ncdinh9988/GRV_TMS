@@ -182,6 +182,15 @@ public class global extends Application {
     private static String QACD = "";
     private static String ReturnQACD = "";
     private static String Warehouse_Container_CD = "";
+    private static String CHECK_TRANSPORT_CD = "";
+
+    public static String getCheckTransportCd() {
+        return CHECK_TRANSPORT_CD;
+    }
+
+    public static void setCheckTransportCd(String checkTransportCd) {
+        CHECK_TRANSPORT_CD = checkTransportCd;
+    }
 
     public static String getWarehouse_Container_CD() {
         return Warehouse_Container_CD;

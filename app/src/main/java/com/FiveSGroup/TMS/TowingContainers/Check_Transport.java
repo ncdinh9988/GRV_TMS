@@ -3,6 +3,7 @@ package com.FiveSGroup.TMS.TowingContainers;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -31,8 +32,9 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ValueEventbus;
+import com.FiveSGroup.TMS.global;
 
-public class Check_Containers extends AppCompatActivity {
+public class Check_Transport extends AppCompatActivity {
     private WebView mWebview;
     private Button btn1, btnLpn, btn3, btnback, btnShow , btnchuyendvt;
     LinearLayout layout;
@@ -64,6 +66,7 @@ public class Check_Containers extends AppCompatActivity {
         btnchuyendvt = (Button) findViewById(R.id.btnchuyendvt) ;
         btnback = findViewById(R.id.btnback);
         btnShow = findViewById(R.id.btnShow);
+        btnShow.setText("CHỤP ẢNH KIỂM TRA PHƯƠNG TIỆN");
         btnLpn = findViewById(R.id.btnlpn);
         layout = findViewById(R.id.layout);
         btn1.setVisibility(View.GONE);
@@ -75,6 +78,15 @@ public class Check_Containers extends AppCompatActivity {
 
         String urlStockOut =  urlStockReceipt + "?USER_CODE=" + CmnFns.readDataAdmin();
         addEvents(urlStockOut);
+        btnShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Check_Transport.this, Check_Transport_Photo.class);
+                intent.putExtra("qrcode1", "qrcode1");
+                // Log.e("barcodeData",""+ barcodeData);
+                startActivity(intent);
+            }
+        });
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +110,7 @@ public class Check_Containers extends AppCompatActivity {
     }
     private void addEvents(String url) {
         if (CmnFns.isNetworkAvailable()) {
-            mWebview.addJavascriptInterface(new Check_Containers.JavaScriptInterface(Check_Containers.this), "Android");
+            mWebview.addJavascriptInterface(new Check_Transport.JavaScriptInterface(Check_Transport.this), "Android");
             mWebview.getSettings().setJavaScriptEnabled(true); // enable javascript
             mWebview.getSettings().setUseWideViewPort(true);
             mWebview.getSettings().setAppCacheEnabled(true); //cho phép sử dụng cache của webview
@@ -118,7 +130,7 @@ public class Check_Containers extends AppCompatActivity {
 
 
             if (Build.VERSION.SDK_INT >= 23 && (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)) {
-                ActivityCompat.requestPermissions(Check_Containers.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
+                ActivityCompat.requestPermissions(Check_Transport.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
             }
 
             mWebview.setWebViewClient(new WebViewClient() {
@@ -152,10 +164,15 @@ public class Check_Containers extends AppCompatActivity {
                     if (url.contains("CheckTransportListItemForApp.aspx?CHECK_TRANSPORT_CD")) {
                         String chuoi[] = url.split("=");
                         String code = chuoi[1];
-                        btn1.setVisibility(View.GONE);
-                        btnShow.setVisibility(View.GONE);
-                        btnLpn.setVisibility(View.GONE);
-                        btnchuyendvt.setVisibility(View.GONE);
+                        String chuoi2[] = code.split("&");
+                        String code2 = chuoi2[0];
+                        global.setCheckTransportCd(code2);
+                        // Toast.makeText(HomeQRActivity.this, code+"", Toast.LENGTH_SHORT).show();
+
+//                        btn1.setVisibility(View.VISIBLE);
+                        btnShow.setVisibility(View.VISIBLE);
+                        btnLpn.setVisibility(View.VISIBLE);
+//                        btnchuyendvt.setVisibility(View.VISIBLE);
                         btnback.setVisibility(View.GONE);
                         SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -163,12 +180,11 @@ public class Check_Containers extends AppCompatActivity {
                         editor.apply();
 
 
-
                     } else {
-                        btn1.setVisibility(View.GONE);
                         btnShow.setVisibility(View.GONE);
+//                        btn1.setVisibility(View.GONE);
                         btnLpn.setVisibility(View.GONE);
-                        btnchuyendvt.setVisibility(View.GONE);
+//                        btnchuyendvt.setVisibility(View.GONE);
                         btnback.setVisibility(View.VISIBLE);
                         SharedPreferences settings = getSharedPreferences("name", Context.MODE_PRIVATE);
                         settings.edit().clear().apply();

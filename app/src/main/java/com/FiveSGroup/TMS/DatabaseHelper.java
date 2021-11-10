@@ -133,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 172; // version của DB khi thay
+    public static final int DATABASE_VERSION = 174; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -689,10 +689,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
 
+
         //version DB 172
         try {
             db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
                     + WAREHOUSE_CONTAINER_CD_PHOTO + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        //version DB 174
+        try {
+            db.execSQL("ALTER TABLE " + O_SALE_TAKE_PHOTO + " ADD COLUMN  "
+                    + CHECK_TRANSPORT_CD_PHOTO + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -7591,6 +7600,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String EXPIRED_DATE_PHOTO = "EXPIRED_DATE_PHOTO";
     public static final String STOCKIN_DATE_PHOTO = "STOCKIN_DATE_PHOTO";
     public static final String WAREHOUSE_CONTAINER_CD_PHOTO = "WAREHOUSE_CONTAINER_CD_PHOTO";
+    public static final String CHECK_TRANSPORT_CD_PHOTO = "CHECK_TRANSPORT_CD_PHOTO";
+
 
 
     public static final String SALE_TAKES_PHOTO_FULL_PATH_FILE = "SALE_TAKES_PHOTO_FULL_PATH_FILE";
@@ -7682,6 +7693,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + EXPIRED_DATE_PHOTO + " TEXT,"
             + STOCKIN_DATE_PHOTO + " TEXT,"
             + WAREHOUSE_CONTAINER_CD_PHOTO + " TEXT,"
+            + CHECK_TRANSPORT_CD_PHOTO + " TEXT,"
             + SALE_TAKES_PHOTO_FILE_NAME + " TEXT,"
             + SALE_TAKES_PHOTO_FULL_PATH_FILE + " TEXT,"
             + SALE_TAKES_PHOTO_CREATED_DATE + " TEXT" + ")";
@@ -8183,6 +8195,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return files;
     }
 
+    public List<OrderPhoto> getAllPhotoForCheckTransport(String cd ) {
+
+        List<OrderPhoto> files = new ArrayList<OrderPhoto>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_SALE_TAKE_PHOTO  + " Where " + CHECK_TRANSPORT_CD_PHOTO + " = " + cd  ;
+
+        android.database.Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                try {
+                    OrderPhoto file = new OrderPhoto();
+                    file.setCHECK_TRANSPORT_CD((c.getString(c
+                            .getColumnIndex(CHECK_TRANSPORT_CD_PHOTO))));
+                    file.setPhoto_Name((c.getString(c
+                            .getColumnIndex(SALE_TAKES_PHOTO_FILE_NAME))));
+                    file.setPhoto_Path((c.getString(c
+                            .getColumnIndex(SALE_TAKES_PHOTO_FULL_PATH_FILE))));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(
+                            global.getFormatDate());
+                    Date convertedDate = new Date();
+                    try {
+                        convertedDate = dateFormat.parse((c.getString(c
+                                .getColumnIndex(SALE_TAKES_PHOTO_CREATED_DATE))));
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                    file.setPhoto_Date(convertedDate);
+                    files.add(file);
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+
+            } while (c.moveToNext());
+        }
+        c.close();
+        return files;
+    }
+
     public List<OrderPhoto> getAllPhotoForContainers(String cd ) {
 
         List<OrderPhoto> files = new ArrayList<OrderPhoto>();
@@ -8359,6 +8415,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(SALE_ORDER_CD, orderCD);
         values.put(SALE_QA_CD_PHOTO, orderCD);
         values.put(WAREHOUSE_CONTAINER_CD_PHOTO, orderCD);
+        values.put(CHECK_TRANSPORT_CD_PHOTO, orderCD);
+
 
         values.put(PRODUCT_CODE_PHOTO, product);
         values.put(BATCH_NUMBER_PHOTO, batch);

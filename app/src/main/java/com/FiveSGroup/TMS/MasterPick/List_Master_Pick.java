@@ -25,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 
+import com.FiveSGroup.TMS.LoadPallet.LPNwithSO.LPNandSO;
+import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.PickList.ListPickList;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
@@ -465,11 +467,14 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
     }
 
     private void actionBack() {
-        try {
-            List_Master_Pick.this.finish();
-        } catch (Exception e) {
-            Log.e("Exception", e.getMessage());
-        }
+        Intent intenttt = new Intent(List_Master_Pick.this, MainWareHouseActivity.class);
+        startActivity(intenttt);
+        finish();
+//        try {
+//            List_Master_Pick.this.finish();
+//        } catch (Exception e) {
+//            Log.e("Exception", e.getMessage());
+//        }
     }
 
     @Override

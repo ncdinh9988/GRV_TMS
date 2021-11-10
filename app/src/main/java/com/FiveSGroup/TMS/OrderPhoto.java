@@ -22,8 +22,17 @@ public class OrderPhoto {
     private String EXPIRED_DATE;
     private String STOCK_IN_DATE;
 
-    private String WAREHOUSE_CONTAINER_CD;
 
+    private String WAREHOUSE_CONTAINER_CD;
+    private String CHECK_TRANSPORT_CD;
+
+    public String getCHECK_TRANSPORT_CD() {
+        return CHECK_TRANSPORT_CD;
+    }
+
+    public void setCHECK_TRANSPORT_CD(String CHECK_TRANSPORT_CD) {
+        this.CHECK_TRANSPORT_CD = CHECK_TRANSPORT_CD;
+    }
 
     public String getWAREHOUSE_CONTAINER_CD() {
         return WAREHOUSE_CONTAINER_CD;
