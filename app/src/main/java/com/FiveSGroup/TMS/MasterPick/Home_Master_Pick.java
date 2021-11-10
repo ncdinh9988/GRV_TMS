@@ -27,6 +27,7 @@ import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
 import com.FiveSGroup.TMS.LPN.LPNActivity;
 import com.FiveSGroup.TMS.LoadPallet.LPNwithSO.LPNandSO;
+import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.ValueEventbus;
@@ -117,6 +118,8 @@ public class Home_Master_Pick extends AppCompatActivity {
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intenttt = new Intent(Home_Master_Pick.this, MainWareHouseActivity.class);
+                startActivity(intenttt);
                 finish();
             }
         });

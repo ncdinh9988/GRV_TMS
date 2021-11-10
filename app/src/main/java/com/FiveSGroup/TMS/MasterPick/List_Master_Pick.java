@@ -467,14 +467,11 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
     }
 
     private void actionBack() {
-        Intent intenttt = new Intent(List_Master_Pick.this, MainWareHouseActivity.class);
-        startActivity(intenttt);
-        finish();
-//        try {
-//            List_Master_Pick.this.finish();
-//        } catch (Exception e) {
-//            Log.e("Exception", e.getMessage());
-//        }
+        try {
+            List_Master_Pick.this.finish();
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
     }
 
     @Override
