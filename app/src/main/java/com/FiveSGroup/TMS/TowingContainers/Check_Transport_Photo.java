@@ -307,7 +307,7 @@ public class Check_Transport_Photo extends AppCompatActivity implements View.OnC
 
     private void backToHomeScreen() {
         try {
-            Intent intentToHomeQRActivity = new Intent(Check_Transport_Photo.this, Towing_Containers.class);
+            Intent intentToHomeQRActivity = new Intent(Check_Transport_Photo.this, Check_Transport.class);
             startActivity(intentToHomeQRActivity);
             finish();
         } catch (Exception e) {

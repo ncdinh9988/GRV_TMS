@@ -2188,6 +2188,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count_check;
     }
 
+    public ArrayList<Product_Master_Pick>
+    getonePosition_MasterPick(String id) {
+        ArrayList<Product_Master_Pick> qrcode = new ArrayList<Product_Master_Pick>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_MASTER_PICK + " " + " WHERE "
+                + AUTOINCREMENT_MASTER_PICK + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Master_Pick masterPick = new Product_Master_Pick();
+
+                masterPick.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_MASTER_PICK))));
+                masterPick.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_MASTER_PICK))));
+
+
+                qrcode.add(masterPick);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
 
     public ArrayList<Product_Master_Pick>
     getAllProduct_Master_Pick_Sync(String master_pick_cd) {
@@ -2603,10 +2630,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<PickList>
+    getonePosition_Picklist(String id) {
+        ArrayList<PickList> qrcode = new ArrayList<PickList>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_PICK_LIST + " " + " WHERE "
+                + AUTOINCREMENT_PICKLIST + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                PickList product = new PickList();
+
+                product.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_PICKLIST))));
+                product.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_PICKLIST))));
+
+
+                qrcode.add(product);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+    public ArrayList<PickList>
     getAllProduct_PickList_Sync(String pickListCD) {
         ArrayList<PickList> picklist = new ArrayList<PickList>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(STOCKIN_DATE,'---','') as STOCKIN_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_PICK_LIST + " where " + PICKLIST_CD + " = " + pickListCD;
+        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(STOCKIN_DATE,'---','') as" +
+                " STOCKIN_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as" +
+                " POSITION_TO_CODE FROM " + O_PICK_LIST + " where " + PICKLIST_CD + " = " + pickListCD;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -3012,6 +3068,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         c.close();
         return loadPallets;
+    }
+
+    public ArrayList<Product_LoadPallet>
+    getonePosition_Loadpallet(String id) {
+        ArrayList<Product_LoadPallet> qrcode = new ArrayList<Product_LoadPallet>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_LOAD_PALLET + " " + " WHERE "
+                + AUTOINCREMENT_LOAD_PALLET + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_LoadPallet product_loadPallet = new Product_LoadPallet();
+
+                product_loadPallet.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_LOAD_PALLET))));
+                product_loadPallet.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_LOAD_PALLET))));
+
+
+                qrcode.add(product_loadPallet);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
     }
 
     public ArrayList<Product_LoadPallet> getAllProduct_LoadPallet_Sync(String lpn_code) {
@@ -3617,12 +3700,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return stockTransfers;
     }
 
+    public ArrayList<Product_StockTransfer>
+    getonePosition_Stocktransfer(String id) {
+        ArrayList<Product_StockTransfer> qrcode = new ArrayList<Product_StockTransfer>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_STOCK_TRANSFER + " " + " WHERE "
+                + AUTOINCREMENT_STOCK_TRANSFER + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_StockTransfer stock = new Product_StockTransfer();
+
+                stock.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_STOCK_TRANSFER))));
+                stock.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_STOCK_TRANSFER))));
+
+
+                qrcode.add(stock);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
 
     public ArrayList<Product_StockTransfer>
     getAllProduct_StockTransfer_Sync() {
         ArrayList<Product_StockTransfer> stockTransfers = new ArrayList<Product_StockTransfer>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(STOCKIN_DATE,'---','') as STOCKIN_DATE  , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_STOCK_TRANSFER;
+        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(STOCKIN_DATE,'---','') as " +
+                "STOCKIN_DATE  , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as" +
+                " POSITION_TO_CODE FROM " + O_STOCK_TRANSFER;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -3906,6 +4018,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         c.close();
         return cancelGoods;
+    }
+
+    public ArrayList<Product_CancelGood>
+    getonePosition_CancelGood(String id) {
+        ArrayList<Product_CancelGood> qrcode = new ArrayList<Product_CancelGood>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_CANCEL_GOOD + " " + " WHERE "
+                + AUTOINCREMENT_CANCEL_GOOD + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_CancelGood cancelGood = new Product_CancelGood();
+
+                cancelGood.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_CANCEL_GOOD))));
+                cancelGood.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_CANCEL_GOOD))));
+
+
+                qrcode.add(cancelGood);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
     }
 
 
@@ -4275,6 +4414,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return poReturns;
     }
 
+    public ArrayList<Product_PoReturn>
+    getonePosition_PoReturn(String id) {
+        ArrayList<Product_PoReturn> qrcode = new ArrayList<Product_PoReturn>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_PO_RETURN + " " + " WHERE "
+                + AUTOINCREMENT_PO_RETURN + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_PoReturn poReturn = new Product_PoReturn();
+
+                poReturn.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_PO_RETURN))));
+                poReturn.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_PO_RETURN))));
+
+
+                qrcode.add(poReturn);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
 
     public ArrayList<Product_PoReturn>
     getAllProduct_PoReturn_Sync(String po_return) {
@@ -4642,6 +4808,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return stockOuts;
     }
 
+    public ArrayList<Product_StockOut>
+    getonePosition_Stockout(String id) {
+        ArrayList<Product_StockOut> qrcode = new ArrayList<Product_StockOut>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_STOCK_OUT + " " + " WHERE "
+                + AUTOINCREMENT_STOCK_OUT + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_StockOut stockOut = new Product_StockOut();
+
+                stockOut.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_STOCK_OUT))));
+                stockOut.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_STOCK_OUT))));
+
+
+                qrcode.add(stockOut);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
 
     public ArrayList<Product_StockOut>
     getAllProduct_Stockout_Sync(String stockout_cd) {
@@ -5000,13 +5193,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return putaway;
     }
+    public ArrayList<ProductLetDown>
+    getonePosition_Letdown(String id) {
+        ArrayList<ProductLetDown> qrcode = new ArrayList<ProductLetDown>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_LET_DOWN + " " + " WHERE "
+                + AUTOINCREMENT_LETDOWN + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                ProductLetDown qrcodeletdown = new ProductLetDown();
+
+                qrcodeletdown.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_LETDOWN))));
+                qrcodeletdown.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_LETDOWN))));
+
+
+                qrcode.add(qrcodeletdown);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
 
 
     public ArrayList<ProductLetDown>
     getAllProduct_LetDown_Sync() {
         ArrayList<ProductLetDown> letdowns = new ArrayList<ProductLetDown>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_LET_DOWN;
+        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE , REPLACE(POSITION_FROM_CODE,'---','')" +
+                " as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_LET_DOWN;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -5465,6 +5686,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         c.close();
         return qrcode;
     }
+
 
     public ArrayList<Product_PutAway>
     getonePosition_PutAway(String id) {
@@ -8832,10 +9054,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<InventoryProduct>
+    getonePosition_Inventory(String id) {
+        ArrayList<InventoryProduct> qrcode = new ArrayList<InventoryProduct>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_INVENTORY + " " + " WHERE "
+                + AUTOINCREMENT_INVENTORY + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                InventoryProduct product = new InventoryProduct();
+
+                product.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_INVENTORY))));
+                product.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_INVENTORY))));
+
+
+                qrcode.add(product);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+    public ArrayList<InventoryProduct>
     getAllProduct_Inventory_Sync(String INVENTORYCD) {
         ArrayList<InventoryProduct> INVENTORY = new ArrayList<>();
         SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE,  REPLACE(POSITION_FROM_CODE,'---','') as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_INVENTORY + " where " + STOCK_TAKE_CD + " = " + INVENTORYCD;
+        String selectQuery = "SELECT *, REPLACE(EXPIRY_DATE,'------','') as EXPIRY_DATE,  REPLACE(POSITION_FROM_CODE,'---','') " +
+                "as POSITION_FROM_CODE, REPLACE(POSITION_TO_CODE,'---','') as POSITION_TO_CODE FROM " + O_INVENTORY + " where " + STOCK_TAKE_CD + " = " + INVENTORYCD;
         Cursor c = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c != null && c.moveToFirst()) {
@@ -9580,6 +9830,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return transferPostings;
     }
 
+    public ArrayList<Product_TransferPosting>
+    getonePosition_transferposting(String id) {
+        ArrayList<Product_TransferPosting> qrcode = new ArrayList<Product_TransferPosting>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_TRANSFER_POSTING + " " + " WHERE "
+                + AUTOINCREMENT_TRANSFER_POSTING + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_TransferPosting transferPosting = new Product_TransferPosting();
+
+                transferPosting.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_TRANSFER_POSTING))));
+                transferPosting.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_TRANSFER_POSTING))));
+
+
+                qrcode.add(transferPosting);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
 
     public ArrayList<Product_TransferPosting>
     getAllProduct_TransferPosting_Sync(String po_return) {
@@ -10312,6 +10589,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return pickups;
     }
 
+    public ArrayList<Product_Pickup>
+    getonePosition_Pickup(String id) {
+        ArrayList<Product_Pickup> qrcode = new ArrayList<Product_Pickup>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_PICKUP + " " + " WHERE "
+                + AUTOINCREMENT_PICKUP + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Pickup pickup = new Product_Pickup();
+
+                pickup.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_PICKUP))));
+                pickup.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_PICKUP))));
+
+
+                qrcode.add(pickup);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
+    }
+
+
 
     public ArrayList<Product_Pickup>
     getAllProduct_Pickup_Sync(String cd) {
@@ -10911,6 +11216,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         c.close();
         return returnQAs;
+    }
+
+    public ArrayList<Product_Return_QA>
+    getonePosition_Return_QA(String id) {
+        ArrayList<Product_Return_QA> qrcode = new ArrayList<Product_Return_QA>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_RETURN_QA + " " + " WHERE "
+                + AUTOINCREMENT_RETURN_QA + " = " + id ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Return_QA returnQA = new Product_Return_QA();
+
+                returnQA.setPOSITION_FROM_CD((c.getString(c
+                        .getColumnIndex(POSITION_FROM_RETURN_QA))));
+                returnQA.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_RETURN_QA))));
+
+
+                qrcode.add(returnQA);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return qrcode;
     }
 
 

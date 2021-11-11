@@ -621,52 +621,113 @@ public class LoadPalletActivity extends AppCompatActivity implements View.OnClic
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(unique_id ,CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPP", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(unique_id ,CmnFns.readDataAdmin(), value1, positonReceive,
+                    productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPP", isLPN);
+            ArrayList<Product_LoadPallet> listloadPallets = new ArrayList<>();
+            listloadPallets = DatabaseHelper.getInstance().getonePosition_Loadpallet(unique_id);
+            String position_from_cd = listloadPallets.get(0).getPOSITION_FROM_CD();
+            String position_to_cd = listloadPallets.get(0).getPOSITION_TO_CD();
 
-            Dialog dialog = new Dialog(LoadPalletActivity.this);
+            if((!position_from_cd.equals(""))&&(!position_to_cd.equals(""))){
+                String check_position = new CmnFns().Check_Position_Same_SLOC(position_from_cd,position_to_cd,"WPP");
 
-            if (postitionDes.equals("1") || postitionDes.equals("-1")) {
-                dialog.showDialog(LoadPalletActivity.this, "Vui Lòng Thử Lại");
+                if(check_position.equals("Thành Công")){
+                    Dialog dialog = new Dialog(LoadPalletActivity.this);
 
-            } else if (postitionDes.equals("-3")) {
-                dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không hợp lệ");
+                    if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Vui Lòng Thử Lại");
 
-            } else if (postitionDes.equals("-6")) {
-                dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không hợp lệ");
+                    } else if (postitionDes.equals("-3")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không hợp lệ");
 
-            } else if (postitionDes.equals("-5")) {
-                dialog.showDialog(LoadPalletActivity.this, "Vị trí từ trùng vị trí đến");
+                    } else if (postitionDes.equals("-6")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không hợp lệ");
 
-            } else if (postitionDes.equals("-14")) {
-                dialog.showDialog(LoadPalletActivity.this, "Vị trí đến trùng vị trí từ");
+                    } else if (postitionDes.equals("-5")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Vị trí từ trùng vị trí đến");
 
-            } else if (postitionDes.equals("-15")) {
-                dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không có trong hệ thống");
+                    } else if (postitionDes.equals("-14")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Vị trí đến trùng vị trí từ");
 
-            } else if (postitionDes.equals("-10")) {
-                dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong hệ thống");
+                    } else if (postitionDes.equals("-15")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không có trong hệ thống");
 
-            } else if (postitionDes.equals("-17")) {
-                dialog.showDialog(LoadPalletActivity.this, "LPN từ trùng LPN đến");
+                    } else if (postitionDes.equals("-10")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong hệ thống");
 
-            } else if (postitionDes.equals("-18")) {
-                dialog.showDialog(LoadPalletActivity.this, "LPN đến trùng LPN từ");
+                    } else if (postitionDes.equals("-17")) {
+                        dialog.showDialog(LoadPalletActivity.this, "LPN từ trùng LPN đến");
 
-            } else if (postitionDes.equals("-19")) {
-                dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không có trong hệ thống");
+                    } else if (postitionDes.equals("-18")) {
+                        dialog.showDialog(LoadPalletActivity.this, "LPN đến trùng LPN từ");
 
-            } else if (postitionDes.equals("-12")) {
-                dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong tồn kho");
+                    } else if (postitionDes.equals("-19")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không có trong hệ thống");
 
-            }else if (postitionDes.equals("-27")) {
-                dialog.showDialog(LoadPalletActivity.this, "Vị trí từ chưa có sản phẩm");
+                    } else if (postitionDes.equals("-12")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong tồn kho");
 
-            }else if (postitionDes.equals("-28")) {
-                dialog.showDialog(LoadPalletActivity.this, "LPN đến có vị trí không hợp lệ");
+                    }else if (postitionDes.equals("-27")) {
+                        dialog.showDialog(LoadPalletActivity.this, "Vị trí từ chưa có sản phẩm");
 
-            } else {
-                return;
+                    }else if (postitionDes.equals("-28")) {
+                        dialog.showDialog(LoadPalletActivity.this, "LPN đến có vị trí không hợp lệ");
+
+                    } else {
+                        return;
+                    }
+                }else{
+                    Dialog dialog = new Dialog(LoadPalletActivity.this);
+                    dialog.showDialog(LoadPalletActivity.this, check_position);
+                }
+            }else{
+                Dialog dialog = new Dialog(LoadPalletActivity.this);
+
+                if (postitionDes.equals("1") || postitionDes.equals("-1")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Vui Lòng Thử Lại");
+
+                } else if (postitionDes.equals("-3")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không hợp lệ");
+
+                } else if (postitionDes.equals("-6")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không hợp lệ");
+
+                } else if (postitionDes.equals("-5")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Vị trí từ trùng vị trí đến");
+
+                } else if (postitionDes.equals("-14")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Vị trí đến trùng vị trí từ");
+
+                } else if (postitionDes.equals("-15")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Vị trí từ không có trong hệ thống");
+
+                } else if (postitionDes.equals("-10")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong hệ thống");
+
+                } else if (postitionDes.equals("-17")) {
+                    dialog.showDialog(LoadPalletActivity.this, "LPN từ trùng LPN đến");
+
+                } else if (postitionDes.equals("-18")) {
+                    dialog.showDialog(LoadPalletActivity.this, "LPN đến trùng LPN từ");
+
+                } else if (postitionDes.equals("-19")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Vị trí đến không có trong hệ thống");
+
+                } else if (postitionDes.equals("-12")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Mã LPN không có trong tồn kho");
+
+                }else if (postitionDes.equals("-27")) {
+                    dialog.showDialog(LoadPalletActivity.this, "Vị trí từ chưa có sản phẩm");
+
+                }else if (postitionDes.equals("-28")) {
+                    dialog.showDialog(LoadPalletActivity.this, "LPN đến có vị trí không hợp lệ");
+
+                } else {
+                    return;
+                }
+
             }
+
         }catch (Exception e){
             Toast.makeText(this,"Vui Lòng Thử Lại ..." ,Toast.LENGTH_SHORT).show();
             finish();

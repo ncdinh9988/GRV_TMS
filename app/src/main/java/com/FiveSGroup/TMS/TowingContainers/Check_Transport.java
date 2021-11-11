@@ -30,6 +30,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
+import com.FiveSGroup.TMS.MasterPick.Home_Master_Pick;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ValueEventbus;
 import com.FiveSGroup.TMS.global;
@@ -90,6 +92,8 @@ public class Check_Transport extends AppCompatActivity {
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intenttt = new Intent(Check_Transport.this, MainWareHouseActivity.class);
+                startActivity(intenttt);
                 finish();
             }
         });
@@ -171,7 +175,7 @@ public class Check_Transport extends AppCompatActivity {
 
 //                        btn1.setVisibility(View.VISIBLE);
                         btnShow.setVisibility(View.VISIBLE);
-                        btnLpn.setVisibility(View.VISIBLE);
+                        btnLpn.setVisibility(View.GONE);
 //                        btnchuyendvt.setVisibility(View.VISIBLE);
                         btnback.setVisibility(View.GONE);
                         SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);

@@ -541,7 +541,8 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
             }
         }
         try {
-            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_PAW, CmnFns.readDataAdmin(), value1, positonReceive, productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
+            String postitionDes = new CmnFns().synchronizeGETPositionInfoo(id_unique_PAW, CmnFns.readDataAdmin(), value1, positonReceive,
+                    productCd, expDate1, ea_unit_position, stockinDate, positionFrom, positionTo, "WPA", isLPN);
 
             ArrayList<Product_PutAway> listputAway = new ArrayList<>();
             listputAway = DatabaseHelper.getInstance().getonePosition_PutAway(id_unique_PAW);
