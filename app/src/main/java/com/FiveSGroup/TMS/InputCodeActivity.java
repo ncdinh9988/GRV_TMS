@@ -436,9 +436,16 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
             if (aVoid) {
 
                 progressDialogCheckExistCode.dismiss();
-                Intent intentHomeActivity = new Intent(getApplicationContext(), MainShipper.class);
-                startActivity(intentHomeActivity);
-                finish();
+                try {
+                    Intent intentHomeActivity = new Intent(getApplicationContext(), MainShipper.class);
+                    startActivity(intentHomeActivity);
+                    finish();
+                    CmnFns.writeLogError("đồng bộ shipper thành công 1");
+
+                }catch (Exception e){
+                    CmnFns.writeLogError("đồng bộ shipper " + e.getMessage());
+                }
+
             } else {
                 progressDialogCheckExistCode.dismiss();
                 deleteFile("TMS", "fsys_tms.txt");
@@ -483,9 +490,15 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
         protected void onPostExecute(Boolean aVoid) {
             if (aVoid) {
                 progressDialogCheckExistCode.dismiss();
-                Intent intentHomeActivity = new Intent(getApplicationContext(), MainWareHouseActivity.class);
-                startActivity(intentHomeActivity);
-                finish();
+                try {
+                    Intent intentHomeActivity = new Intent(getApplicationContext(), MainWareHouseActivity.class);
+                    startActivity(intentHomeActivity);
+                    finish();
+                    CmnFns.writeLogError("đồng bộ thủ kho thành công 1");
+                }catch (Exception e){
+                    CmnFns.writeLogError("đồng bộ thủ kho " + e.getMessage());
+                }
+
 
             } else {
                 progressDialogCheckExistCode.dismiss();
@@ -522,6 +535,8 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
     public void readData1(File nameFile, int tem) {
         try {
             // Open stream to read file.
+            String fileName = "Log.txt";
+            String folderName = "TMS";
 
             FileInputStream in = new FileInputStream(nameFile);
 
@@ -544,6 +559,8 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
                     CmnFns.setAuth();
                     CheckInfo checkInfo = new CheckInfo();
                     checkInfo.execute();
+                    InitCodeFile(fileName, folderName, "1" + global.getSaleCode());
+
                 }
                 if (ckAdmin.isChecked() == true) {
                     global.setAdminCode(sale_code);
@@ -553,6 +570,7 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
 
                     CheckInfoAdmin checkInfo = new CheckInfoAdmin();
                     checkInfo.execute();
+                    InitCodeFile(fileName, folderName, "1" + global.getAdminCode());
 
                 } else {
                     // hàm else là tự động đăng nhập khi mã nhân viên đã đủ điều kiện để đăng nhập
@@ -561,12 +579,19 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
                         global.setAdminCode(sale_code);
                         global.setIsAdmin("1");
                         CmnFns.setAuth();
+                        CmnFns.writeLogError( "2" + global.getAdminCode());
 //                        CheckInfoAdmin checkInfo = new CheckInfoAdmin();
 //                        checkInfo.execute();
                         if (CheckinfoSaleAdmin()) {
-                            Intent intentHomeActivity = new Intent(getApplicationContext(), MainWareHouseActivity.class);
-                            startActivity(intentHomeActivity);
-                            finish();
+                            try {
+                                Intent intentHomeActivity = new Intent(getApplicationContext(), MainWareHouseActivity.class);
+                                startActivity(intentHomeActivity);
+                                finish();
+                                InitCodeFile(fileName, folderName, "đồng bộ thủ kho thành công " + global.getAdminCode());
+                            }catch (Exception e){
+                                InitCodeFile(fileName, folderName, "đồng bộ thủ kho " + global.getAdminCode() +  e.getMessage());
+                            }
+
                         } else {
                           //  Toast.makeText(InputCodeActivity.this, "Mã nhân viên chưa được kích hoạt", Toast.LENGTH_SHORT).show();
                         }
@@ -577,10 +602,20 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
                         CmnFns.setAuth();
 //                        CheckInfo checkInfo = new CheckInfo();
 //                        checkInfo.execute();
+                        CmnFns.writeLogError("2" + global.getSaleCode());
                         if (CheckinfoSale()) {
-                            Intent intentHomeActivity = new Intent(getApplicationContext(), MainShipper.class);
-                            startActivity(intentHomeActivity);
-                            finish();
+                            try {
+                                Intent intentHomeActivity = new Intent(getApplicationContext(), MainShipper.class);
+                                startActivity(intentHomeActivity);
+                                finish();
+                                InitCodeFile(fileName, folderName, "đồng bộ shipper thành công" + global.getSaleCode());
+
+
+                            }catch (Exception e){
+                                InitCodeFile(fileName, folderName, "đồng bộ shipper " + global.getSaleCode() + e.getMessage());
+
+                            }
+
                         } else {
                            // Toast.makeText(InputCodeActivity.this, "Mã nhân viên chưa được kích hoạt", Toast.LENGTH_SHORT).show();
                         }

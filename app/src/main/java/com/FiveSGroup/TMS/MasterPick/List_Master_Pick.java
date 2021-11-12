@@ -582,6 +582,13 @@ public class List_Master_Pick extends AppCompatActivity implements View.OnClickL
                         return;
                     }
                 }else{
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFrom_masterPick(unique_id,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionTo_masterPick(unique_id,"","","","","","","" );
+
+                    }
                     Dialog dialog = new Dialog(List_Master_Pick.this);
                     dialog.showDialog(List_Master_Pick.this, check_position);
                 }

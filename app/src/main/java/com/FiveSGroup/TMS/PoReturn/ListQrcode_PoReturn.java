@@ -529,6 +529,13 @@ public class ListQrcode_PoReturn extends AppCompatActivity implements View.OnCli
                         return;
                     }
                 }else{
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFrom_poReturn(id_unique_SO,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionTo_poReturn(id_unique_SO,"","","","","","","" );
+
+                    }
                     Dialog dialog = new Dialog(ListQrcode_PoReturn.this);
                     dialog.showDialog(ListQrcode_PoReturn.this, check_position);
                 }

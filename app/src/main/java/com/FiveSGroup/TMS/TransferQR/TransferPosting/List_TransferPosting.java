@@ -533,6 +533,13 @@ public class List_TransferPosting extends AppCompatActivity implements View.OnCl
                         return;
                     }
                 }else{
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFrom_transferPosting(id_unique_SO,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionTo_transferPosting(id_unique_SO,"","","","","","","" );
+
+                    }
                     Dialog dialog = new Dialog(List_TransferPosting.this);
                     dialog.showDialog(List_TransferPosting.this, check_position);
                 }

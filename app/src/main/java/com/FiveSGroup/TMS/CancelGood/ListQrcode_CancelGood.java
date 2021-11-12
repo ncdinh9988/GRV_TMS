@@ -528,6 +528,13 @@ public class ListQrcode_CancelGood extends AppCompatActivity implements View.OnC
                         return;
                     }
                 }else{
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFrom_cancelGood(id_unique_SO,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionTo_cancelGood(id_unique_SO,"","","","","","","" );
+
+                    }
                     Dialog dialog = new Dialog(ListQrcode_CancelGood.this);
                     dialog.showDialog(ListQrcode_CancelGood.this, check_position);
                 }

@@ -343,18 +343,25 @@ public class CmnFns {
         return serial;
     }
 
+    // hàm tạo folder
+    public static void createFolder(String folerPath) {
+        File folder = new File(folerPath);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+    }
 
-//    // hàm ghi nhận log để debug lỗi
-//    public static void writeLogError(String content) {
-//        String folder = global.getAppContext().getString(
-//                R.string.PathFolderCPInputFiles);
-//        FileUtils.writefile(
-//                        folder,
-//                        "Log.txt",
-//                        content + " --> "
-//                                + CmnFns.getTimeOfPDA(global.getFormatDate()),
-//                        true);
-//    }
+    // hàm ghi nhận log để debug lỗi
+    public static void writeLogError(String content) {
+        String folder = global.getAppContext().getString(
+                R.string.PathFolderLog);
+        FileUtils.writefile(
+                        folder,
+                        "Log.txt",
+                        content + " --> "
+                                + CmnFns.getTimeOfPDA(global.getFormatDate()),
+                        true);
+    }
 
 
     // hàm kiểm tra xem máy có đc đồng bộ dữ liệu bằng 3G hay không
@@ -3265,8 +3272,8 @@ public class CmnFns {
                     }
                     masterPick.setQTY(String.valueOf(pro_set));
                     masterPick.setQTY_EA_AVAILABLE(quanity_ea);
-                    masterPick.setPOSITION_FROM_CD(warePosition);
-                    masterPick.setPOSITION_TO_CD(warePosition);
+                    masterPick.setPOSITION_FROM_CD("");
+                    masterPick.setPOSITION_TO_CD("");
                     masterPick.setMASTER_PICK_CD(masterPickCD);
                     String positionTo = "---";
                     String positionFrom = "---";
@@ -3444,7 +3451,7 @@ public class CmnFns {
                     poReturn.setQTY_EA_AVAILABLE(quanity_ea);
                     poReturn.setMANUFACTURING_DATE(manufacturing);
 
-                    poReturn.setPOSITION_TO_CD(warePosition);
+                    poReturn.setPOSITION_TO_CD("");
                     poReturn.setPO_RETURN_CD(poreturnCD);
                     poReturn.setWAREHOUSE_POSITION_CD(warePosition);
                     String positionTo = "---";
@@ -3465,7 +3472,7 @@ public class CmnFns {
                         poReturn.setEXPIRED_DATE(expDate);
                         poReturn.setUNIT(unit);
                         poReturn.setQTY(String.valueOf(pro_set));
-                        poReturn.setPOSITION_FROM_CD(warePosition);
+                        poReturn.setPOSITION_FROM_CD("");
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
                         poReturn.setPOSITION_FROM_CODE(positionFrom);
                         poReturn.setLPN_FROM(lpn_From);
@@ -3818,7 +3825,7 @@ public class CmnFns {
                     transferPosting.setBATCH_NUMBER(batch_number);
                     transferPosting.setMANUFACTURING_DATE(manufacturing);
 
-                    transferPosting.setPOSITION_TO_CD(warePosition);
+                    transferPosting.setPOSITION_TO_CD("");
                     transferPosting.setSTOCK_TRANSFER_POSTING_CD(transferPostingCD);
                     transferPosting.setWAREHOUSE_POSITION_CD(warePosition);
                     String positionTo = "---";
@@ -3839,7 +3846,7 @@ public class CmnFns {
                         transferPosting.setEXPIRED_DATE(expDate);
                         transferPosting.setUNIT(unit);
                         transferPosting.setQTY(String.valueOf(pro_set));
-                        transferPosting.setPOSITION_FROM_CD(warePosition);
+                        transferPosting.setPOSITION_FROM_CD("");
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
                         transferPosting.setPOSITION_FROM_CODE(positionFrom);
                         transferPosting.setLPN_FROM(lpn_From);
@@ -3993,7 +4000,7 @@ public class CmnFns {
                     pickUp.setBATCH_NUMBER(batch_number);
                     pickUp.setMANUFACTURING_DATE(manufacturing);
 
-                    pickUp.setPOSITION_TO_CD(warePosition);
+                    pickUp.setPOSITION_TO_CD("");
                     pickUp.setSTOCK_QA_CD(pickupCD);
                     pickUp.setWAREHOUSE_POSITION_CD(warePosition);
                     String positionTo = "---";
@@ -4018,7 +4025,7 @@ public class CmnFns {
 
                         pickUp.setUNIT(unit);
                         pickUp.setQTY(String.valueOf(pro_set));
-                        pickUp.setPOSITION_FROM_CD(warePosition);
+                        pickUp.setPOSITION_FROM_CD("");
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
                         pickUp.setPOSITION_FROM_CODE(positionFrom);
                         pickUp.setLPN_FROM(lpn_From);
@@ -4175,7 +4182,7 @@ public class CmnFns {
                     returnQA.setBATCH_NUMBER(batch_number);
                     returnQA.setMANUFACTURING_DATE(manufacturing);
 
-                    returnQA.setPOSITION_TO_CD(warePosition);
+                    returnQA.setPOSITION_TO_CD("");
                     returnQA.setSTOCK_QA_CD(returnQACD);
                     returnQA.setWAREHOUSE_POSITION_CD(warePosition);
 //                    String positionTo = "---";
@@ -4198,7 +4205,7 @@ public class CmnFns {
                     returnQA.setEXPIRED_DATE(expDate);
 
                     returnQA.setUNIT(unit);
-                    returnQA.setPOSITION_FROM_CD(warePosition);
+                    returnQA.setPOSITION_FROM_CD("");
                     // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
                     returnQA.setPOSITION_FROM_CODE(suggest_position);
                     returnQA.setLPN_FROM(lpn_From);
@@ -4318,7 +4325,7 @@ public class CmnFns {
                     cancelGood.setQTY_EA_AVAILABLE(quanity_ea);
                     cancelGood.setBATCH_NUMBER(batch_number);
 
-                    cancelGood.setPOSITION_TO_CD(warePosition);
+                    cancelGood.setPOSITION_TO_CD("");
                     cancelGood.setCANCEL_CD(cancelCD);
                     cancelGood.setWAREHOUSE_POSITION_CD(warePosition);
                     String positionTo = "---";
@@ -4339,7 +4346,7 @@ public class CmnFns {
                         cancelGood.setEXPIRED_DATE(expDate);
                         cancelGood.setUNIT(unit);
                         cancelGood.setQTY(String.valueOf(pro_set));
-                        cancelGood.setPOSITION_FROM_CD(warePosition);
+                        cancelGood.setPOSITION_FROM_CD("");
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
                         cancelGood.setPOSITION_FROM_CODE(positionFrom);
                         cancelGood.setLPN_FROM(lpn_From);
@@ -4512,7 +4519,7 @@ public class CmnFns {
                         stockOut.setEXPIRED_DATE(expDate);
                         stockOut.setUNIT(unit);
                         stockOut.setQTY(String.valueOf(pro_set));
-                        stockOut.setPOSITION_FROM_CD(warePosition);
+                        stockOut.setPOSITION_FROM_CD("");
                         // nếu không phải lpn thì position code sẽ trả về "" và gán mặc định là ""
                         stockOut.setPOSITION_FROM_CODE(positionFrom);
                         stockOut.setLPN_FROM(lpn_From);
@@ -4671,8 +4678,8 @@ public class CmnFns {
                     putAway.setBATCH_NUMBER(batch_number);
 
                     putAway.setQTY_EA_AVAILABLE(quanity_ea);
-                    putAway.setPOSITION_FROM_PUTAWAY(warePosition);
-                    putAway.setPOSITION_TO_PUTAWAY(warePosition);
+                    putAway.setPOSITION_FROM_PUTAWAY("");
+                    putAway.setPOSITION_TO_PUTAWAY("");
 
 
                     String positionTo = "---";
@@ -4860,8 +4867,8 @@ public class CmnFns {
 
                     pickList.setQTY_EA_AVAILABLE(quanity_ea);
 
-                    pickList.setPOSITION_FROM_CD(warePosition);
-                    pickList.setPOSITION_TO_CD(warePosition);
+                    pickList.setPOSITION_FROM_CD("");
+                    pickList.setPOSITION_TO_CD("");
 
                     pickList.setPickListCD(PickListCD);
 
@@ -6662,8 +6669,8 @@ public class CmnFns {
                     productStockTransfer.setBATCH_NUMBER(batch_number);
                     productStockTransfer.setCREATE_TIME(getTimeCreate());
 
-                    productStockTransfer.setPOSITION_FROM_CD(warePosition);
-                    productStockTransfer.setPOSITION_TO_CD(warePosition);
+                    productStockTransfer.setPOSITION_FROM_CD("");
+                    productStockTransfer.setPOSITION_TO_CD("");
                     // putAway.setPOSITION_DESCRIPTION(description);
                     String positionTo = "---";
                     String positionFrom = "---";
@@ -7051,8 +7058,8 @@ public class CmnFns {
                     letDown.setBATCH_NUMBER(batch_number);
                     letDown.setCREATE_TIME(getTimeCreate());
 
-                    letDown.setPOSITION_FROM_CD(warePosition);
-                    letDown.setPOSITION_TO_CD(warePosition);
+                    letDown.setPOSITION_FROM_CD("");
+                    letDown.setPOSITION_TO_CD("");
 
                     String positionTo = "---";
                     String positionFrom = "---";

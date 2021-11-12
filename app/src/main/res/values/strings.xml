@@ -388,6 +388,7 @@
     <!-- config -->
     <string name="packageNameDDMS">comColgateDMS.org</string>
     <string name="LocationFileSystem">fsys</string>
+    <string name="PathFolderLog">LogFile</string>
     <string name="PathFolderPicture">ImageTMS</string>
     <string name="PathFolderSalePicture">ImageTMS/imageOrder</string>
     <string name="PathFolderSalePictureQA">ImageTMS/imageQA</string>

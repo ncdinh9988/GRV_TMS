@@ -598,6 +598,14 @@ public class List_PutAway extends AppCompatActivity implements View.OnClickListe
                         return;
                     }
                 }else{
+
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFrom(id_unique_PAW,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionTo(id_unique_PAW,"","","","","","","" );
+
+                    }
                     Dialog dialog = new Dialog(List_PutAway.this);
                     dialog.showDialog(List_PutAway.this, check_position);
                 }

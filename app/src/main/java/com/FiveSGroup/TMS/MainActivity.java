@@ -3,8 +3,11 @@ package com.FiveSGroup.TMS;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +17,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main1);
         loadPage task  = new loadPage();
         task.execute();
+          // khỏi tạo thư mục chứa hình ảnh
+          CmnFns.createFolder(Environment.getExternalStorageDirectory()
+                  + File.separator
+                  + global.getAppContext().getString(
+                  R.string.PathFolderLog));
+
 
 
     }

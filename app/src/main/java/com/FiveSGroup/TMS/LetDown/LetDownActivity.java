@@ -612,6 +612,13 @@ public class LetDownActivity extends AppCompatActivity implements View.OnClickLi
                         return;
                     }
                 }else{
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFromLetDown(id_unique_LD,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionToLetDown(id_unique_LD,"","","","","","","" );
+
+                    }
                     Dialog dialog = new Dialog(LetDownActivity.this);
                     dialog.showDialog(LetDownActivity.this, check_position);
                 }

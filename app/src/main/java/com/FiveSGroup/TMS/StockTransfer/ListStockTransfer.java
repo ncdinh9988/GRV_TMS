@@ -587,6 +587,13 @@ public class ListStockTransfer extends AppCompatActivity implements View.OnClick
                         return;
                     }
                 }else{
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFrom_StockTransfer(id_unique_STF,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionTo_StockTransfer(id_unique_STF,"","","","","","","" );
+
+                    }
                     Dialog dialog = new Dialog(ListStockTransfer.this);
                     dialog.showDialog(ListStockTransfer.this, check_position);
                 }

@@ -530,6 +530,13 @@ public class List_Pickup extends AppCompatActivity implements View.OnClickListen
                         return;
                     }
                 }else{
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFrom_pickup(id_unique_SO,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionTo_pickup(id_unique_SO,"","","","","","","" );
+
+                    }
                     Dialog dialog = new Dialog(List_Pickup.this);
                     dialog.showDialog(List_Pickup.this, check_position);
                 }

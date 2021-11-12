@@ -546,8 +546,17 @@ public class ListPickList extends AppCompatActivity implements View.OnClickListe
                         return;
                     }
                 }else{
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFrom_PickList(id_unique_PL,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionTo_PickList(id_unique_PL,"","","","","","","" );
+
+                    }
+
                     Dialog dialog = new Dialog(ListPickList.this);
                     dialog.showDialog(ListPickList.this, check_position);
+
                 }
             }else{
                 Dialog dialog = new Dialog(ListPickList.this);

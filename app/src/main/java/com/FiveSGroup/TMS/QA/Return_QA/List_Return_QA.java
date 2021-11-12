@@ -531,6 +531,13 @@ public class List_Return_QA extends AppCompatActivity implements View.OnClickLis
                         return;
                     }
                 }else{
+                    if (positonReceive.equals("1") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionFrom_RETURN_QA(id_unique_SO,"","","","","","","" );
+
+                    }else if (positonReceive.equals("2") && productCd != null) {
+                        DatabaseHelper.getInstance().updatePositionTO_RETURN_QA(id_unique_SO,"","","","","","","" );
+
+                    }
                     Dialog dialog = new Dialog(List_Return_QA.this);
                     dialog.showDialog(List_Return_QA.this, check_position);
                 }
