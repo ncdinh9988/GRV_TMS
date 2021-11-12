@@ -78,6 +78,7 @@ import com.FiveSGroup.TMS.Warehouse_Adjustment.Product_Warehouse_Adjustment;
 import com.FiveSGroup.TMS.Webservice.CParam;
 import com.FiveSGroup.TMS.Webservice.Webservice;
 import com.FiveSGroup.TMS.Webservice.WebserviceAuth;
+import com.FiveSGroup.TMS.getData.ParamLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -1377,9 +1378,11 @@ public class CmnFns {
                 global.setPasswordNameAuthWebsevice(arr[2]);
                 if (isCheckAdmin()) {
                     getHH_Param(readDataAdmin());
+                    getHH_Param_Layout(readDataAdmin());
                 }
                 if (isCheckSale()) {
                     getHH_Param(readDataShipper());
+                    getHH_Param_Layout(readDataShipper());
                 }
 //            String linkWebView = "";
 //            String[] linkLoadWebView = arr[0].split("/");
@@ -6098,6 +6101,67 @@ public class CmnFns {
         } catch (IOException e) {
         }
         return texxt;
+    }
+    public static int getHH_Param_Layout(String Salescode) {
+
+
+        int status = allowSynchronizeBy3G();
+        if (status != 1)
+            return -1;
+
+        Webservice webService = new Webservice();
+        String result = webService.GetHH_Param_Layout(Salescode);
+        if (result.equals("-1"))
+            return -1;
+
+        if (result.equals("1")) {
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            return 1;
+        }
+
+        try {
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                if (jsonobj.getString("FUNC_NAME").toString().equals("STOCK_IN_DRY")) {
+                    ParamLayout param = new ParamLayout();
+                    param.setKey(jsonobj.getString("FUNC_NAME"));
+                    param.setValue(jsonobj.getString("ALLOW_USED"));
+                    if (DatabaseHelper.getInstance().checkExistsParam_Layout(jsonobj.getString("FUNC_NAME"))) {
+                        DatabaseHelper.getInstance().updateParam_Layout(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam_Layout(param);
+                    }
+
+//                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
+                if (jsonobj.getString("FUNC_NAME").toString().equals("STOCK_IN_FRESH")) {
+                    ParamLayout param = new ParamLayout();
+                    param.setKey(jsonobj.getString("FUNC_NAME"));
+                    param.setValue(jsonobj.getString("ALLOW_USED"));
+                    if (DatabaseHelper.getInstance().checkExistsParam_Layout(jsonobj.getString("FUNC_NAME"))) {
+                        DatabaseHelper.getInstance().updateParam_Layout(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam_Layout(param);
+                    }
+
+//                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
+
+            }
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+            return -1;
+        }
+
+        return 1;
     }
 
     public static int getHH_Param(String Salescode) {

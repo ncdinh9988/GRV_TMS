@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
@@ -54,8 +56,9 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
     private EditText edtSelectProductExpiredDate, edtSelectProductStockinDate, edtSelectShelfLife, edtSelectShelfLifeDate , edtcont;
     private Spinner spinnerProductUnit;
     private DatePickerDialog pickerDialog;
-    private ArrayList<String> units;
+    private ArrayList<String> units ;
     private ArrayAdapter<String> adapter;
+    LinearLayout layoutself ,layoutnsx ,layouthsd ;
     private Button btnBack, btnConfirm;
     private Date date, date2, date_exp, date_current, newDate_curent;
     private Integer shelfLife1, shelfLife2;
@@ -65,6 +68,7 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
             returnCD = "",
             pro_code = "",
             pro_cd = "",
+            units2 = "",
             returnStock = "",
             selectedUnit = "",
             currentDateandTime = "",
@@ -205,6 +209,9 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
     private void init() {
         checkBoxDate = findViewById(R.id.checkBoxDate);
         checkBoxMonth = findViewById(R.id.checkBoxMonth);
+        layoutself = findViewById(R.id.layoutself);
+        layoutnsx = findViewById(R.id.layoutnsx);
+        layouthsd = findViewById(R.id.layouthsd);
         tvProductSelectName = findViewById(R.id.tvSelectProductName);
         edtSelectProductExpiredDate = findViewById(R.id.edtSelectProductExpiredDate);
         edtSelectProductExpiredDate.setText(expired_Date);
@@ -226,10 +233,10 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
             spinnerProductUnit.setOnItemSelectedListener(this);
         }else{
 
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Integer.parseInt(unit));
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Collections.singletonList(unit));
+            adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             spinnerProductUnit.setAdapter(adapter);
-            int spinnerPosition = adapter.getPosition(unit);
-            spinnerProductUnit.setSelection(spinnerPosition);
+            spinnerProductUnit.setOnItemSelectedListener(this);
             edtcont.setFocusable(false);
             edtcont.setText(batch);
         }
@@ -244,6 +251,9 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
         edtSelectShelfLife.setVisibility(View.GONE);
         checkBoxMonth.setVisibility(View.GONE);
         checkBoxDate.setVisibility(View.GONE);
+        layouthsd.setVisibility(View.GONE);
+        layoutnsx.setVisibility(View.GONE);
+        layoutself.setVisibility(View.GONE);
 
         btnBack = findViewById(R.id.btnBackSelectProductProperties);
         btnConfirm = findViewById(R.id.btnConfirmProductProperties);

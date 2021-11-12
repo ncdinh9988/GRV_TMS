@@ -72,7 +72,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     String position = "";
     String pro_code = "";
     String pro_name = "";
-    String product_cd = "";
+    String product_cd = "" , allow_dry = "" , allow_fresh = "";
     String stock = "";
     String stock_in = "";
     String expiredDate = " ";
@@ -336,7 +336,15 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
 
                                 } catch (Exception e) {
                                     Toast.makeText(Qrcode.this, "Vui Lòng Thử Lại 1", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(Qrcode.this, SelectPropertiesProductActivity.class);
+                                    allow_dry = DatabaseHelper.getInstance().getParamByKey("STOCK_IN_DRY").getValue();
+                                    allow_fresh = DatabaseHelper.getInstance().getParamByKey("STOCK_IN_FRESH").getValue();
+                                    Intent intent = null;
+                                    if(allow_dry.equals("1")){
+                                        intent = new Intent(getApplication(), Layout_PO.class);
+                                    }else if (allow_fresh.equals("1")){
+                                        intent = new Intent(getApplication(), Layout_PO_Fresh.class);
+                                    }
+
                                     intent.putExtra("barcode", barcodeData);
                                     startActivity(intent);
                                     finish();
@@ -473,7 +481,15 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                             SharedPreferences.Editor edit = prefs.edit();
                             edit.putString("vitri",vitri );
                             edit.commit();
-                            Intent intentt = new Intent(getApplication(), SelectPropertiesProductActivity.class);
+                            allow_dry = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_DRY").getValue();
+                            allow_fresh = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_FRESH").getValue();
+                            Intent intentt = null;
+                            if(allow_dry.equals("1")){
+                                intentt = new Intent(getApplication(), Layout_PO.class);
+                            }else if (allow_fresh.equals("1")){
+                                intentt = new Intent(getApplication(), Layout_PO_Fresh.class);
+                            }
+
                             intentt.putExtra("typeScan", "scan_from_stock_in");
                             intentt.putExtra("btn1", barcodeData);
                             intentt.putExtra("unit", unit);
@@ -519,7 +535,15 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString("vitri","0");
                 edit.commit();
-                Intent intentt = new Intent(getApplication(), SelectPropertiesProductActivity.class);
+                allow_dry = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_DRY").getValue();
+                allow_fresh = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_FRESH").getValue();
+                Intent intentt = null;
+                if(allow_dry.equals("1")){
+                    intentt = new Intent(getApplication(), Layout_PO.class);
+                }else if (allow_fresh.equals("1")){
+                    intentt = new Intent(getApplication(), Layout_PO_Fresh.class);
+                }
+
                 intentt.putExtra("typeScan", "scan_from_stock_in");
                 intentt.putExtra("btn1", barcodeData);
                 intentt.putExtra("unit", unit);
@@ -565,7 +589,15 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                         shelf_life_type = expired_date.get(0).getSHELF_LIFE_TYPE();
                         min_rem_shelf_life = expired_date.get(0).getMIN_REM_SHELF_LIFE();
                     }
-                    Intent intent = new Intent(Qrcode.this, SelectPropertiesProductActivity.class);
+                    allow_dry = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_DRY").getValue();
+                    allow_fresh = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_FRESH").getValue();
+
+                    if(allow_dry.equals("1")){
+                        intent = new Intent(getApplication(), Layout_PO.class);
+                    }else if (allow_fresh.equals("1")){
+                        intent = new Intent(getApplication(), Layout_PO_Fresh.class);
+                    }
+
                     intent.putExtra("typeScan", "scan_from_stock_in");
                     intent.putExtra("btn1", barcodeData);
                     intent.putExtra("stockin", "444");

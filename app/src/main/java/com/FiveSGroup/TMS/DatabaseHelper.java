@@ -41,6 +41,7 @@ import com.FiveSGroup.TMS.Warehouse.Product_Qrcode;
 import com.FiveSGroup.TMS.Warehouse.Product_S_P;
 import com.FiveSGroup.TMS.Warehouse_Adjustment.Product_Warehouse_Adjustment;
 import com.FiveSGroup.TMS.Webservice.CParam;
+import com.FiveSGroup.TMS.getData.ParamLayout;
 
 import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
@@ -133,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 174; // version của DB khi thay
+    public static final int DATABASE_VERSION = 176; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -198,6 +199,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_PRODUCT_SP);
         db.execSQL(CREATE_TABLE_O_LPN_SO);
         db.execSQL(CREATE_TABLE_O_PHOTO_CONTAINERS);
+        db.execSQL(CREATE_TABLE_O_PARAM_LAYOUT);
     }
 
     @Override
@@ -706,6 +708,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             // TODO: handle exception
         }
+        //version DB 176
+        try {
+            db.execSQL(CREATE_TABLE_O_PARAM_LAYOUT);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
     }
 
     //database from table O_LETDOWN_SUGGEST
@@ -2813,6 +2823,82 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
     //end table PICK_LIST
+
+    //SQLite Create Table O_PARAM_LAYOUT
+    public static final String O_PARAM_LAYOUT = "O_PARAM_LAYOUT";
+    public static final String PARAM_KEY_LAYOUT = "PARAM_KEY_LAYOUT";
+    public static final String PARAM_VALUES_LAYOUT = "PARAM_VALUES_LAYOUT";
+
+    public static final String CREATE_TABLE_O_PARAM_LAYOUT = "CREATE TABLE " + O_PARAM_LAYOUT + " ("
+            + PARAM_KEY_LAYOUT + " TEXT," + PARAM_VALUES_LAYOUT + " TEXT)";
+
+    public ParamLayout getParamByKey_Layout(String primaryKey) {
+
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_PARAM_LAYOUT + " WHERE "
+                + PARAM_KEY_LAYOUT + " = ?";
+        ParamLayout cParam = new ParamLayout();
+        android.database.Cursor c = db.rawQuery(selectQuery,
+                new String[]{String.valueOf(primaryKey)});
+        if (c != null && c.moveToFirst()) {
+            do {
+                cParam.setKey(c.getString(c.getColumnIndex(PARAM_KEY_LAYOUT)));
+                cParam.setValue(c.getString(c.getColumnIndex(PARAM_VALUES_LAYOUT)));
+            } while (c.moveToNext());
+        }
+        c.close();
+        return cParam;
+    }
+
+    public long updateParam_Layout(ParamLayout ccValue) {
+
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(PARAM_VALUES_LAYOUT, ccValue.getValue());
+
+        // updating row
+        long a = db.update(O_PARAM_LAYOUT, values, PARAM_KEY_LAYOUT + " = '" + ccValue.getKey() + "'", null);
+        return a;
+    }
+
+    public long createParam_Layout(ParamLayout ccValue) {
+
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(PARAM_KEY_LAYOUT, ccValue.getKey());
+        values.put(PARAM_VALUES_LAYOUT, ccValue.getValue());
+
+        long todo_id = db.insert(O_PARAM_LAYOUT, null, values);
+        return todo_id;
+    }
+
+    public boolean checkExistsParam_Layout(String primaryKey) {
+
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  * FROM " + O_PARAM_LAYOUT + " WHERE "
+                + PARAM_KEY_LAYOUT + " = ?";
+
+        android.database.Cursor c = db.rawQuery(selectQuery,
+                new String[]{String.valueOf(primaryKey)});
+        // looping through all rows and adding to list
+        try {
+            if (c != null && c.moveToFirst()) {
+                return true;
+            }
+        } finally {
+            c.close();
+        }
+        return false;
+    }
+
+    public void deleteParam_Layout() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_PARAM_LAYOUT);
+    }
+    //END TABLE O_PARAM_LAYOUT
 
     //SQLite Create Table O_Param
     public static final String O_PARAM = "O_PARAM";
