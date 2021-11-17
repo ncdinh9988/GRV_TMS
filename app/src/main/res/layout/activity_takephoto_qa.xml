@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bg_button"
-                android:text="Đồng Bộ"
+                android:text="Lưu Ảnh"
                 android:textSize="13sp" />
         </LinearLayout>
 

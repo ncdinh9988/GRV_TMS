@@ -382,6 +382,7 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
         if (batch==null || batch==""){
             if(edtcont.getText().toString().isEmpty()){
                 Toast.makeText(this, "Vui Lòng Nhập Batch/Cont ", Toast.LENGTH_SHORT).show();
+                return ;
             }
         }
 
