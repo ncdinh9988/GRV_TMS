@@ -613,7 +613,7 @@ public class CmnFns {
                     // byte
 
                     String result = webService
-                            .synchronizePhotoForOrder(getAdminCode(), "5", jsonData, image); // gửi dữ liệu
+                            .synchronizePhotoForOrder(global.getAdminCode(), "5", jsonData, image); // gửi dữ liệu
                     // về Server
                     if (result.equals("-1")) {
 
@@ -719,7 +719,7 @@ public class CmnFns {
                     // byte
 
                     String result = webService
-                            .synchronizePhotoForOrder(getAdminCode(), "4", jsonData, image); // gửi dữ liệu
+                            .synchronizePhotoForOrder(global.getSaleCode(), "4", jsonData, image); // gửi dữ liệu
                     // về Server
                     if (result.equals("-1")) {
 
@@ -826,7 +826,7 @@ public class CmnFns {
                     // byte
 
                     String result = webService
-                            .synchronizePhotoForOrder(getAdminCode(), "3", jsonData, image); // gửi dữ liệu
+                            .synchronizePhotoForOrder(global.getAdminCode(), "3", jsonData, image); // gửi dữ liệu
                     // về Server
                     if (result.equals("-1")) {
 
@@ -933,7 +933,7 @@ public class CmnFns {
                     // byte
 
                     String result = webService
-                            .synchronizePhotoForOrder(getSaleCode(), "2", jsonData, image); // gửi dữ liệu
+                            .synchronizePhotoForOrder(global.getSaleCode(), "2", jsonData, image); // gửi dữ liệu
                     // về Server
                     if (result.equals("-1")) {
 
