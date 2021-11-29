@@ -2188,12 +2188,14 @@ public class CmnFns {
                 String pro_code = jsonobj.getString("PRODUCT_CODE");
                 String pro_name = jsonobj.getString("PRODUCT_NAME");
                 String pro_cd = jsonobj.getString("PRODUCT_CD");
+                String lot_ind = jsonobj.getString("LOT_IND");
 
 
                 Product_S_P product = new Product_S_P();
                 product.setPRODUCT_CODE(pro_code);
                 product.setPRODUCT_NAME(pro_name);
                 product.setPRODUCT_CD(pro_cd);
+                product.setLOT_IND(lot_ind);
 
                 DatabaseHelper.getInstance().CreateProduct_SP(product);
 

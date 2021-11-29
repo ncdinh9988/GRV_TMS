@@ -83,6 +83,7 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
             stockin = "",
             fromCd = "",
             pro_name = "",
+            lot_ind = "",
             unit = "",
             exp_date = "";
 
@@ -177,6 +178,7 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
         pro_code = intent.getStringExtra("pro_code");
         pro_name = intent.getStringExtra("pro_name");
         pro_cd = intent.getStringExtra("pro_cd");
+        lot_ind = intent.getStringExtra("lot_ind");
         expired_Date = intent.getStringExtra("expired_Date");
         fromCd = intent.getStringExtra("fromCd");
         if(fromCd==null){
@@ -219,8 +221,28 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
         edtSelectShelfLife = findViewById(R.id.edtSelectShelfLife);
         spinnerProductUnit = findViewById(R.id.spinnerProductUnit);
         edtcont = findViewById(R.id.edtcont);
-        if (batch==null || batch==""){
-            edtcont.setText(batch);
+        if(lot_ind.equals("X")){
+            if (batch==null || batch==""){
+                edtcont.setText(batch);
+                //set unit in adapter
+                units = new ArrayList<>();
+                units = new CmnFns().getEa_Unit(barcode, "2",pro_code);
+                if (units == null) {
+                    units = new ArrayList<>();
+                }
+                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, units);
+                adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                spinnerProductUnit.setAdapter(adapter);
+                spinnerProductUnit.setOnItemSelectedListener(this);
+            }else{
+                adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Collections.singletonList(unit));
+                adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                spinnerProductUnit.setAdapter(adapter);
+                spinnerProductUnit.setOnItemSelectedListener(this);
+                edtcont.setFocusable(false);
+                edtcont.setText(batch);
+            }
+        }else{
             //set unit in adapter
             units = new ArrayList<>();
             units = new CmnFns().getEa_Unit(barcode, "2",pro_code);
@@ -231,15 +253,10 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
             adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
             spinnerProductUnit.setAdapter(adapter);
             spinnerProductUnit.setOnItemSelectedListener(this);
-        }else{
-
-            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Collections.singletonList(unit));
-            adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-            spinnerProductUnit.setAdapter(adapter);
-            spinnerProductUnit.setOnItemSelectedListener(this);
             edtcont.setFocusable(false);
             edtcont.setText(batch);
         }
+
 
 
         edtSelectProductExpiredDate.setOnClickListener(this);
@@ -379,12 +396,15 @@ public class Layout_PO_Fresh extends AppCompatActivity implements View.OnClickLi
 //        else if((expiredDate.equals(""))&&(!stockinDate.equals(""))&&(shelfLife.equals(""))) {
 //            Toast.makeText(this, "Vui lòng chọn HSD hoặc (NSX và shelflife)", Toast.LENGTH_SHORT).show();
 //        }
-        if (batch==null || batch==""){
-            if(edtcont.getText().toString().isEmpty()){
-                Toast.makeText(this, "Vui Lòng Nhập Batch/Cont ", Toast.LENGTH_SHORT).show();
-                return ;
+        if(lot_ind.equals("X")){
+            if (batch==null || batch==""){
+                if(edtcont.getText().toString().isEmpty()){
+                    Toast.makeText(this, "Vui Lòng Nhập Batch/Cont ", Toast.LENGTH_SHORT).show();
+                    return ;
+                }
             }
         }
+
 
 //        else {
         try {

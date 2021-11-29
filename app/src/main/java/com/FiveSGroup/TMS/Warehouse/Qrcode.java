@@ -80,6 +80,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
     String stockinDate = "" , id_unique_SI = "";
     TextView textViewTitle;
     String pro_cd = "";
+    String lot_ind = "";
     //biến để test hiển thị dialog đơn vị tính
     private String expDateTemp2 = "";
     private Button buttonBack, btnSend;
@@ -335,7 +336,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                                     }
 
                                 } catch (Exception e) {
-                                    Toast.makeText(Qrcode.this, "Vui Lòng Thử Lại 1", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Qrcode.this, "Tính Năng Này Đang Bị Khóa", Toast.LENGTH_LONG).show();
                                     allow_dry = DatabaseHelper.getInstance().getParamByKey("STOCK_IN_DRY").getValue();
                                     allow_fresh = DatabaseHelper.getInstance().getParamByKey("STOCK_IN_FRESH").getValue();
                                     Intent intent = null;
@@ -411,6 +412,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                             String[] chuoi = product_name.split(" - ");
                             //int vitri = which;
                             pro_cd = product_s_ps.get(which).getPRODUCT_CD();
+                            lot_ind = product_s_ps.get(which).getLOT_IND();
 
                             dialog.dismiss(); // Close Dialog
                             if (product_name != "") {
@@ -431,6 +433,7 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     pro_name = product_s_ps.get(0).getPRODUCT_NAME();
                     pro_code = product_s_ps.get(0).getPRODUCT_CODE();
                     pro_cd = product_s_ps.get(0).getPRODUCT_CD();
+                    lot_ind = product_s_ps.get(0).getLOT_IND();
                     getinformation(barcodeData);
                 }else{
                     Toast.makeText(Qrcode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
@@ -475,45 +478,51 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                         dialog.dismiss(); // Close Dialog
 
                         if (bat != "") {
-                            batch_number_t = bat; //TEST
-                            String[] chuoi = batch_number_t.split(" - ");
-                            SharedPreferences prefs = getBaseContext().getSharedPreferences("vitriPO", Activity.MODE_PRIVATE);
-                            SharedPreferences.Editor edit = prefs.edit();
-                            edit.putString("vitri",vitri );
-                            edit.commit();
-                            allow_dry = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_DRY").getValue();
-                            allow_fresh = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_FRESH").getValue();
-                            Intent intentt = null;
-                            if(allow_dry.equals("1")){
-                                intentt = new Intent(getApplication(), Layout_PO.class);
-                            }else if (allow_fresh.equals("1")){
-                                intentt = new Intent(getApplication(), Layout_PO_Fresh.class);
+                            try{
+                                batch_number_t = bat; //TEST
+                                String[] chuoi = batch_number_t.split(" - ");
+                                SharedPreferences prefs = getBaseContext().getSharedPreferences("vitriPO", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor edit = prefs.edit();
+                                edit.putString("vitri",vitri );
+                                edit.commit();
+                                allow_dry = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_DRY").getValue();
+                                allow_fresh = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_FRESH").getValue();
+                                Intent intentt = null;
+                                if(allow_dry.equals("1")){
+                                    intentt = new Intent(getApplication(), Layout_PO.class);
+                                }else if (allow_fresh.equals("1")){
+                                    intentt = new Intent(getApplication(), Layout_PO_Fresh.class);
+                                }
+
+                                intentt.putExtra("typeScan", "scan_from_stock_in");
+                                intentt.putExtra("btn1", barcodeData);
+                                intentt.putExtra("unit", unit);
+                                intentt.putExtra("stockin", "444");
+                                intentt.putExtra("stock_in", "333");
+                                intentt.putExtra("id_unique_SI", id_unique_SI);
+                                intentt.putExtra("total_shelf_life", total_shelf_life);
+                                intentt.putExtra("shelf_life_type", shelf_life_type);
+                                intentt.putExtra("min_rem_shelf_life", min_rem_shelf_life);
+                                intentt.putExtra("returnposition", position);
+                                intentt.putExtra("returnCD", product_cd);
+                                intentt.putExtra("returnStock", stock);
+                                intentt.putExtra("expired_Date", expired_Date);
+                                intentt.putExtra("pro_code", pro_code);
+                                intentt.putExtra("pro_name", pro_name);
+                                intentt.putExtra("pro_cd", pro_cd);
+                                intentt.putExtra("lot_ind", lot_ind);
+                                intentt.putExtra("batch", chuoi[0]);
+                                intentt.putExtra("vitri", vitri);
+
+                                startActivity(intentt);
+                                finish();
+                                // For example: Call method of MainActivity.
+                                Toast.makeText(Qrcode.this, "You select: " + batch_number_t,
+                                        Toast.LENGTH_LONG).show();
+                            }catch (Exception e){
+                                Toast.makeText(Qrcode.this, "Tính Năng Này Đang Bị Khóa", Toast.LENGTH_LONG).show();
                             }
 
-                            intentt.putExtra("typeScan", "scan_from_stock_in");
-                            intentt.putExtra("btn1", barcodeData);
-                            intentt.putExtra("unit", unit);
-                            intentt.putExtra("stockin", "444");
-                            intentt.putExtra("stock_in", "333");
-                            intentt.putExtra("id_unique_SI", id_unique_SI);
-                            intentt.putExtra("total_shelf_life", total_shelf_life);
-                            intentt.putExtra("shelf_life_type", shelf_life_type);
-                            intentt.putExtra("min_rem_shelf_life", min_rem_shelf_life);
-                            intentt.putExtra("returnposition", position);
-                            intentt.putExtra("returnCD", product_cd);
-                            intentt.putExtra("returnStock", stock);
-                            intentt.putExtra("expired_Date", expired_Date);
-                            intentt.putExtra("pro_code", pro_code);
-                            intentt.putExtra("pro_name", pro_name);
-                            intentt.putExtra("pro_cd", pro_cd);
-                            intentt.putExtra("batch", chuoi[0]);
-                            intentt.putExtra("vitri", vitri);
-
-                            startActivity(intentt);
-                            finish();
-                            // For example: Call method of MainActivity.
-                            Toast.makeText(Qrcode.this, "You select: " + batch_number_t,
-                                    Toast.LENGTH_LONG).show();
                         }
                         // Do some thing....
 
@@ -528,42 +537,44 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     batchTam = batch_number_tams.get(0).getBATCH_NUMBER();
                     expired_Date = batch_number_tams.get(0).getEXPIRED_DATE();
                     unit = batch_number_tams.get(0).getUNIT();
+                    SharedPreferences prefs = getBaseContext().getSharedPreferences("vitriPO", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = prefs.edit();
+                    edit.putString("vitri","0");
+                    edit.commit();
+                    allow_dry = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_DRY").getValue();
+                    allow_fresh = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_FRESH").getValue();
+                    Intent intentt = null;
+                    if(allow_dry.equals("1")){
+                        intentt = new Intent(getApplication(), Layout_PO.class);
+                    }else if (allow_fresh.equals("1")){
+                        intentt = new Intent(getApplication(), Layout_PO_Fresh.class);
+                    }
+
+                    intentt.putExtra("typeScan", "scan_from_stock_in");
+                    intentt.putExtra("btn1", barcodeData);
+                    intentt.putExtra("unit", unit);
+                    intentt.putExtra("stockin", "444");
+                    intentt.putExtra("stock_in", "333");
+                    intentt.putExtra("id_unique_SI", id_unique_SI);
+                    intentt.putExtra("total_shelf_life", total_shelf_life);
+                    intentt.putExtra("shelf_life_type", shelf_life_type);
+                    intentt.putExtra("min_rem_shelf_life", min_rem_shelf_life);
+                    intentt.putExtra("returnposition", position);
+                    intentt.putExtra("expired_Date", expired_Date);
+                    intentt.putExtra("returnCD", product_cd);
+                    intentt.putExtra("returnStock", stock);
+                    intentt.putExtra("batch", batchTam);
+                    intentt.putExtra("pro_code", pro_code);
+                    intentt.putExtra("pro_name", pro_name);
+                    intentt.putExtra("pro_cd", pro_cd);
+                    intentt.putExtra("lot_ind", lot_ind);
+                    startActivity(intentt);
+
+                    finish();
                 } catch (Exception e) {
-
-                }
-                SharedPreferences prefs = getBaseContext().getSharedPreferences("vitriPO", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor edit = prefs.edit();
-                edit.putString("vitri","0");
-                edit.commit();
-                allow_dry = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_DRY").getValue();
-                allow_fresh = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_FRESH").getValue();
-                Intent intentt = null;
-                if(allow_dry.equals("1")){
-                    intentt = new Intent(getApplication(), Layout_PO.class);
-                }else if (allow_fresh.equals("1")){
-                    intentt = new Intent(getApplication(), Layout_PO_Fresh.class);
+                    Toast.makeText(Qrcode.this, "Tính Năng Này Đang Bị Khóa", Toast.LENGTH_LONG).show();
                 }
 
-                intentt.putExtra("typeScan", "scan_from_stock_in");
-                intentt.putExtra("btn1", barcodeData);
-                intentt.putExtra("unit", unit);
-                intentt.putExtra("stockin", "444");
-                intentt.putExtra("stock_in", "333");
-                intentt.putExtra("id_unique_SI", id_unique_SI);
-                intentt.putExtra("total_shelf_life", total_shelf_life);
-                intentt.putExtra("shelf_life_type", shelf_life_type);
-                intentt.putExtra("min_rem_shelf_life", min_rem_shelf_life);
-                intentt.putExtra("returnposition", position);
-                intentt.putExtra("expired_Date", expired_Date);
-                intentt.putExtra("returnCD", product_cd);
-                intentt.putExtra("returnStock", stock);
-                intentt.putExtra("batch", batchTam);
-                intentt.putExtra("pro_code", pro_code);
-                intentt.putExtra("pro_name", pro_name);
-                intentt.putExtra("pro_cd", pro_cd);
-                startActivity(intentt);
-
-                finish();
             } else {
                 Toast.makeText(Qrcode.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Qrcode.this, ListQrcode.class);
@@ -582,39 +593,45 @@ public class Qrcode extends AppCompatActivity implements View.OnClickListener {
                     ReturnPosition(barcodeData);
 
                 } else {
-                    // lấy tất cả hạn `sử dụng trong database ra
-                    final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValueStockin();
-                    for (int i = 0; i < expired_date.size(); i++) {
-                        total_shelf_life = expired_date.get(0).getTOTAL_SHELF_LIFE();
-                        shelf_life_type = expired_date.get(0).getSHELF_LIFE_TYPE();
-                        min_rem_shelf_life = expired_date.get(0).getMIN_REM_SHELF_LIFE();
-                    }
-                    allow_dry = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_DRY").getValue();
-                    allow_fresh = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_FRESH").getValue();
+                    try {
+                        // lấy tất cả hạn `sử dụng trong database ra
+                        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValueStockin();
+                        for (int i = 0; i < expired_date.size(); i++) {
+                            total_shelf_life = expired_date.get(0).getTOTAL_SHELF_LIFE();
+                            shelf_life_type = expired_date.get(0).getSHELF_LIFE_TYPE();
+                            min_rem_shelf_life = expired_date.get(0).getMIN_REM_SHELF_LIFE();
+                        }
+                        allow_dry = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_DRY").getValue();
+                        allow_fresh = DatabaseHelper.getInstance().getParamByKey_Layout("STOCK_IN_FRESH").getValue();
 
-                    if(allow_dry.equals("1")){
-                        intent = new Intent(getApplication(), Layout_PO.class);
-                    }else if (allow_fresh.equals("1")){
-                        intent = new Intent(getApplication(), Layout_PO_Fresh.class);
+                        if(allow_dry.equals("1")){
+                            intent = new Intent(getApplication(), Layout_PO.class);
+                        }else if (allow_fresh.equals("1")){
+                            intent = new Intent(getApplication(), Layout_PO_Fresh.class);
+                        }
+
+                        intent.putExtra("typeScan", "scan_from_stock_in");
+                        intent.putExtra("btn1", barcodeData);
+                        intent.putExtra("stockin", "444");
+                        intent.putExtra("stock_in", "333");
+                        intent.putExtra("id_unique_SI", id_unique_SI);
+                        intent.putExtra("total_shelf_life", total_shelf_life);
+                        intent.putExtra("shelf_life_type", shelf_life_type);
+                        intent.putExtra("min_rem_shelf_life", min_rem_shelf_life);
+                        intent.putExtra("returnposition", position);
+                        intent.putExtra("returnCD", product_cd);
+                        intent.putExtra("pro_code", pro_code);
+                        intent.putExtra("pro_name", pro_name);
+                        intent.putExtra("pro_cd", pro_cd);
+                        intent.putExtra("lot_ind", lot_ind);
+                        intent.putExtra("returnStock", stock);
+                        DatabaseHelper.getInstance().deleteallExp_date();
+                        DatabaseHelper.getInstance().deleteallEa_Unit();
+                        startActivity(intent);
+                    }catch (Exception e){
+                        Toast.makeText(Qrcode.this, "Tính Năng Này Đang Bị Khóa", Toast.LENGTH_LONG).show();
                     }
 
-                    intent.putExtra("typeScan", "scan_from_stock_in");
-                    intent.putExtra("btn1", barcodeData);
-                    intent.putExtra("stockin", "444");
-                    intent.putExtra("stock_in", "333");
-                    intent.putExtra("id_unique_SI", id_unique_SI);
-                    intent.putExtra("total_shelf_life", total_shelf_life);
-                    intent.putExtra("shelf_life_type", shelf_life_type);
-                    intent.putExtra("min_rem_shelf_life", min_rem_shelf_life);
-                    intent.putExtra("returnposition", position);
-                    intent.putExtra("returnCD", product_cd);
-                    intent.putExtra("pro_code", pro_code);
-                    intent.putExtra("pro_name", pro_name);
-                    intent.putExtra("pro_cd", pro_cd);
-                    intent.putExtra("returnStock", stock);
-                    DatabaseHelper.getInstance().deleteallExp_date();
-                    DatabaseHelper.getInstance().deleteallEa_Unit();
-                    startActivity(intent);
                 }
             }
         }

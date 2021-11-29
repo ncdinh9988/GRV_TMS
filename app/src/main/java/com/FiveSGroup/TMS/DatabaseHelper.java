@@ -134,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 176; // version của DB khi thay
+    public static final int DATABASE_VERSION = 178; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -711,6 +711,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //version DB 176
         try {
             db.execSQL(CREATE_TABLE_O_PARAM_LAYOUT);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 178
+        try {
+            db.execSQL("ALTER TABLE " + O_PRODUCT_SP + " ADD COLUMN  "
+                    + LOT_IND_S_P + " TEXT  ");
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -6844,12 +6853,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String PRODUCT_CODE_S_P = "PRODUCT_CODE";
     public static final String PRODUCT_NAME_S_P = "PRODUCT_NAME";
     public static final String PRODUCT_CD_S_P = "PRODUCT_CD";
+    public static final String LOT_IND_S_P = "LOT_IND";
 
 
     public static final String CREATE_TABLE_O_PRODUCT_SP = "CREATE TABLE "
             + O_PRODUCT_SP + "("
             + PRODUCT_NAME_S_P + " TEXT,"
             + PRODUCT_CD_S_P + " TEXT,"
+            + LOT_IND_S_P + " TEXT,"
             + PRODUCT_CODE_S_P + " TEXT" + ")";
 
     public long CreateProduct_SP(Product_S_P product) {
@@ -6860,6 +6871,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(PRODUCT_CODE_S_P, product.getPRODUCT_CODE());
         values.put(PRODUCT_NAME_S_P, product.getPRODUCT_NAME());
         values.put(PRODUCT_CD_S_P, product.getPRODUCT_CD());
+        values.put(LOT_IND_S_P, product.getLOT_IND());
         // insert row
         long id = db.insert(O_PRODUCT_SP, null, values);
         return id;
@@ -6881,6 +6893,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(PRODUCT_NAME_S_P))));
                 product.setPRODUCT_CD((c.getString(c
                         .getColumnIndex(PRODUCT_CD_S_P))));
+                product.setLOT_IND((c.getString(c
+                        .getColumnIndex(LOT_IND_S_P))));
                 listproduct.add(product);
             } while (c.moveToNext());
         }

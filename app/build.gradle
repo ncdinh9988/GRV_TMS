@@ -7,9 +7,9 @@ android {
         applicationId "com.FiveSGroup.TMS"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 8116
+        versionCode 8118
         // ngày _ web _ apk
-        versionName "TMS_211121_108_8116"
+        versionName "TMS_211129_135_8118"
         testInstrumentationRunner "androidxx.test.runner.AndroidJUnitRunner"
         ndk {
             debugSymbolLevel 'SYMBOL_TABLE'
