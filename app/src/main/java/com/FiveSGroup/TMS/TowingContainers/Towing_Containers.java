@@ -132,12 +132,7 @@ public class Towing_Containers extends AppCompatActivity {
         btnLpn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final LocationManager manager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE );
 
-                if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ){
-                    Toast.makeText(context, "Vui lòng bật GPS để lấy vị trí", Toast.LENGTH_LONG).show();
-                }
-                else{
                     gpsTracker = new GpsTracker(Towing_Containers.this);
                     if (gpsTracker.canGetLocation()) {
                         double latitude = gpsTracker.getLatitude();
@@ -146,7 +141,7 @@ public class Towing_Containers extends AppCompatActivity {
                     } else {
                         gpsTracker.showSettingsAlert();
                     }
-                }
+
 
 
 
