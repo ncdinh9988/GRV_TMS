@@ -109,7 +109,8 @@ public class Towing_Containers extends AppCompatActivity {
         btnShow = findViewById(R.id.btnShow);
         btnShow.setText("CHỤP ẢNH KÉO CONTAINER");
         btnLpn = findViewById(R.id.btnlpn);
-        btnLpn.setText("Get Location");
+
+
         layout = findViewById(R.id.layout);
         btn1.setVisibility(View.GONE);
         btnchuyendvt.setVisibility(View.GONE);
@@ -120,6 +121,9 @@ public class Towing_Containers extends AppCompatActivity {
 
         String urlStockOut =  urlStockReceipt + "?USER_CODE=" + CmnFns.readDataShipper();
         addEvents(urlStockOut);
+
+
+
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,12 +136,7 @@ public class Towing_Containers extends AppCompatActivity {
         btnLpn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final LocationManager manager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE );
 
-                if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ){
-                    Toast.makeText(context, "Vui lòng bật GPS để lấy vị trí", Toast.LENGTH_LONG).show();
-                }
-                else{
                     gpsTracker = new GpsTracker(Towing_Containers.this);
                     if (gpsTracker.canGetLocation()) {
                         double latitude = gpsTracker.getLatitude();
@@ -146,10 +145,6 @@ public class Towing_Containers extends AppCompatActivity {
                     } else {
                         gpsTracker.showSettingsAlert();
                     }
-                }
-
-
-
             }
         });
         btnback.setOnClickListener(new View.OnClickListener() {
@@ -225,17 +220,28 @@ public class Towing_Containers extends AppCompatActivity {
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
                     if (url.contains("StockReceiptContForAppDetail.aspx?WAREHOUSE_CONTAINER_CD=")) {
-
+                        btnLpn.setVisibility(View.VISIBLE);
                         String chuoi[] = url.split("=");
                         String code = chuoi[1];
                         String chuoi2[] = code.split("&");
                         String code2 = chuoi2[0];
                         global.setWarehouse_Container_CD(code2);
-                        // Toast.makeText(HomeQRActivity.this, code+"", Toast.LENGTH_SHORT).show();
-
+                        String chuoi5[] = url.split("=");
+                        String code5 = chuoi[3];
+                        if(code5.equals("S")){
+                            btnLpn.setText("Đến Cảng");
+                        }else if(code5.equals("CheckinPort")){
+                            btnLpn.setText("Rời cảng");
+                        }else if(code5.equals("CheckoutPort")){
+                            btnLpn.setText("Đến kho");
+                        }else if(code5.equals("CheckinWarehouse")){
+                            btnLpn.setText("Rời Kho");
+                        }else if(code5.equals("CheckoutWarehouse")){
+                            btnLpn.setVisibility(View.GONE);
+                        }
 //                        btn1.setVisibility(View.VISIBLE);
                         btnShow.setVisibility(View.VISIBLE);
-                        btnLpn.setVisibility(View.VISIBLE);
+
 //                        btnchuyendvt.setVisibility(View.VISIBLE);
                         btnback.setVisibility(View.GONE);
                         SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
