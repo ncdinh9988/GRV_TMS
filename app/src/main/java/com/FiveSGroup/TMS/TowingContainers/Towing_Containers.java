@@ -90,13 +90,7 @@ public class Towing_Containers extends AppCompatActivity {
         setContentView(R.layout.activity_home_picklist);
         progressBar = findViewById(R.id.progressbar);
         refreshLayout = findViewById(R.id.swipeRefesh);
-
         progressBar.setMax(100);
-
-
-//
-//        Log.e("new3","là : " + value3);
-//        Log.e("new4","là : " + value4);
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -136,15 +130,14 @@ public class Towing_Containers extends AppCompatActivity {
         btnLpn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                    gpsTracker = new GpsTracker(Towing_Containers.this);
-                    if (gpsTracker.canGetLocation()) {
-                        double latitude = gpsTracker.getLatitude();
-                        double longitude = gpsTracker.getLongitude();
-                        mWebview.loadUrl("javascript:SetLocation('"+latitude+"','"+longitude+"')");
-                    } else {
-                        gpsTracker.showSettingsAlert();
-                    }
+                gpsTracker = new GpsTracker(Towing_Containers.this);
+                if (gpsTracker.canGetLocation()) {
+                    double latitude = gpsTracker.getLatitude();
+                    double longitude = gpsTracker.getLongitude();
+                    mWebview.loadUrl("javascript:SetLocation('"+latitude+"','"+longitude+"')");
+                } else {
+                    gpsTracker.showSettingsAlert();
+                }
             }
         });
         btnback.setOnClickListener(new View.OnClickListener() {
@@ -153,9 +146,7 @@ public class Towing_Containers extends AppCompatActivity {
                 finish();
             }
         });
-
         RefeshData();
-
     }
     private void RefeshData() {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -163,10 +154,8 @@ public class Towing_Containers extends AppCompatActivity {
             public void onRefresh() {
                 addEvents(urlStockReceipt + "?USER_CODE=" + CmnFns.readDataShipper());
                 refreshLayout.setRefreshing(false);
-
             }
         });
-
     }
     private void addEvents(String url) {
         if (CmnFns.isNetworkAvailable()) {
@@ -181,7 +170,6 @@ public class Towing_Containers extends AppCompatActivity {
             mWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             mWebview.setInitialScale(1);
             mWebview.loadUrl(url);
-
             mWebview.requestFocus();
             mWebview.getSettings().setLightTouchEnabled(true);
             mWebview.setWebChromeClient(new WebChromeClient() {
