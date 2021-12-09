@@ -2119,6 +2119,40 @@ public class CmnFns {
 
     }
     public String checkPosition(String barcodeData) {
+        try{
+            int status = this.allowSynchronizeBy3G();
+            if (status != 1)
+                return "Vui Lòng Kiểm Tra Lại Mạng";
+
+            Webservice webService = new Webservice();
+            String result = "" ,ware = "";
+
+            result = webService.synchronizeGETPositionInfo(global.getAdminCode(), barcodeData, 0 , "WRP","", "", "");
+
+            // [{"_PRODUCT_CODE":"10038935","_PRODUCT_NAME":"TL LG GN-D602BL","_PRODUCT_FACTOR":"1","_SET_UNIT":"THUNG","_EA_UNIT":"THUNG"}]
+            JSONArray jsonarray = new JSONArray(result);
+
+            // DatabaseHelper.getInstance().deleteAllRorateTimes();
+            for (int i = 0; i < jsonarray.length(); i++) {
+                // lấy một đối tượng json để
+                JSONObject jsonobj = jsonarray.getJSONObject(i);
+                ware = jsonobj.getString("_WAREHOUSE_POSITION_CD");
+
+            }
+            if (ware.equals("")) {
+                // đã đồng bộ thành công update để lần sau không đồng bộ lại
+                //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
+                return "error";
+            } else {
+                // đồng bộ không thành công
+                return ware;
+            }
+        }
+        catch (Exception e){
+            return "e";
+        }
+    }
+    public String getPositionRepacking(String barcodeData) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)

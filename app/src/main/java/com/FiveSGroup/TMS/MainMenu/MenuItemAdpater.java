@@ -24,6 +24,7 @@ import com.FiveSGroup.TMS.PutAway.Qrcode_PutAway;
 import com.FiveSGroup.TMS.QA.Home.Home_Show_QA;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.RemoveFromLPN.Qrcode_Remove_LPN;
+import com.FiveSGroup.TMS.Repacking.RepackingScanqrcodeVitri;
 import com.FiveSGroup.TMS.StockOut.Home_Stockout;
 import com.FiveSGroup.TMS.StockTransfer.Qrcode_StockTransfer;
 import com.FiveSGroup.TMS.TowingContainers.Check_Transport;
@@ -301,6 +302,18 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                        }else if(block_Warehouse == 1){
                         Intent intent_check = new Intent(context, Check_Transport.class);
                         context.startActivity(intent_check);
+                        break;
+
+                    case "Repacking":
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                        Intent intent_repack = new Intent(context, RepackingScanqrcodeVitri.class);
+                        context.startActivity(intent_repack);
                         break;
 
 //                    case "Thêm Mã Barcode":

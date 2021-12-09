@@ -48,6 +48,13 @@
         <activity android:name=".LetDown.LetDownSuggestionsActivity" />
         <activity android:name=".LPN.LPNActivity" />
         <activity android:name=".PickList.NewWareHouseActivity" />
+
+        <activity
+            android:name=".Repacking.RepackingScanCode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Repacking.RepackingScanqrcodeVitri"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TowingContainers.Check_Transport_Photo"
             android:screenOrientation="portrait" />
