@@ -157,6 +157,8 @@ public class Towing_Containers extends AppCompatActivity {
             }
         });
     }
+    boolean loadingFinished = true;
+    boolean redirect = false;
     private void addEvents(String url) {
         if (CmnFns.isNetworkAvailable()) {
             mWebview.addJavascriptInterface(new Towing_Containers.JavaScriptInterface(Towing_Containers.this), "Android");
@@ -179,7 +181,9 @@ public class Towing_Containers extends AppCompatActivity {
                 }
             });
 
+
             mWebview.setWebViewClient(new WebViewClient() {
+
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
@@ -191,8 +195,23 @@ public class Towing_Containers extends AppCompatActivity {
                     handler.proceed(); // Ignore SSL certificate errors
                 }
 
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    if (!loadingFinished) {
+                        redirect = true;
+                    }
+                    loadingFinished = false;
+                    mWebview.loadUrl(url);
+                    return true;
+                }
 
                 public void onPageFinished(WebView view, String url) {
+                    if (!redirect) {
+                        loadingFinished = true;
+                        //HIDE LOADING IT HAS FINISHED
+                    } else {
+                        redirect = false;
+                    }
                     SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
                     value3 = sharedPref.getString("btn1", "");
 
@@ -208,35 +227,57 @@ public class Towing_Containers extends AppCompatActivity {
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
                     if (url.contains("StockReceiptContForAppDetail.aspx?WAREHOUSE_CONTAINER_CD=")) {
-                        btnLpn.setVisibility(View.VISIBLE);
-                        String chuoi[] = url.split("=");
-                        String code = chuoi[1];
-                        String chuoi2[] = code.split("&");
-                        String code2 = chuoi2[0];
-                        global.setWarehouse_Container_CD(code2);
-                        String chuoi5[] = url.split("=");
-                        String code5 = chuoi[3];
-                        if(code5.equals("S")){
-                            btnLpn.setText("Đến Cảng");
-                        }else if(code5.equals("CheckinPort")){
-                            btnLpn.setText("Rời cảng");
-                        }else if(code5.equals("CheckoutPort")){
-                            btnLpn.setText("Đến kho");
-                        }else if(code5.equals("CheckinWarehouse")){
-                            btnLpn.setText("Rời Kho");
-                        }else if(code5.equals("CheckoutWarehouse")){
-                            btnLpn.setVisibility(View.GONE);
-                        }
+                        try {
+                            btnLpn.setVisibility(View.VISIBLE);
+                            String chuoi[] = url.split("=");
+                            String code = chuoi[1];
+                            String chuoi2[] = code.split("&");
+                            String code2 = chuoi2[0];
+                            global.setWarehouse_Container_CD(code2);
+
+                            String chuoi4[] = url.split("&");
+                            String code4 = chuoi4[3];
+                            String chuoi5[] = code4.split("=");
+                            String code5 = chuoi5[1];
+
+                            String chuoi6[] = url.split("=");
+                            String code6 = chuoi6[3];
+                            String chuoi7[] = code6.split("&");
+                            String code7 = chuoi7[0];
+
+                            if(code5.equals("S")){
+                                btnLpn.setText("Đến Cảng");
+                            }else if(code5.equals("CheckinPort")){
+                                btnLpn.setText("Rời Cảng");
+                            }else if(code5.equals("CheckoutPort")){
+                                btnLpn.setText("Đến Kho");
+                            }else if(code5.equals("CheckinWarehouse")){
+                                btnLpn.setText("Rời Kho");
+                            }else if(code5.equals("CheckoutWarehouse")){
+                                if(code7.equals("0")){
+                                    btnLpn.setVisibility(View.GONE);
+                                }else{
+                                    btnLpn.setText("Trả Container");
+                                }
+                            }
+                            else if(code5.equals("CheckinPortReturn")){
+                                btnLpn.setText("Kết Thúc");
+                            }
+                            else if(code5.equals("CheckoutPortReturn")){
+                                btnLpn.setVisibility(View.GONE);
+                            }
 //                        btn1.setVisibility(View.VISIBLE);
-                        btnShow.setVisibility(View.VISIBLE);
+                            btnShow.setVisibility(View.VISIBLE);
 
 //                        btnchuyendvt.setVisibility(View.VISIBLE);
-                        btnback.setVisibility(View.GONE);
-                        SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("masterpick_cd", code);
-                        editor.apply();
+                            btnback.setVisibility(View.GONE);
+                            SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("masterpick_cd", code);
+                            editor.apply();
+                        }catch (Exception e){
 
+                        }
                     } else {
                         btnShow.setVisibility(View.GONE);
 //                        btn1.setVisibility(View.GONE);
