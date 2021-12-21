@@ -194,7 +194,7 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
     }
 
     private void GetData(final String barcodeData) {
-        String statusGetcode = new CmnFns().checkPosition(barcodeData);
+        String statusGetcode = new CmnFns().getPositionWST(barcodeData);
         if(statusGetcode.equals("Thành Công")){
             Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData, Toast.LENGTH_SHORT).show();
             SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
@@ -220,7 +220,7 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String statusGetcode = new CmnFns().checkPosition(result.getText());
+                        String statusGetcode = new CmnFns().getPositionWST(result.getText());
                         if(statusGetcode.equals("Thành Công")){
                             Toast.makeText(InventoryScanqrcodeViTri.this, result.getText(), Toast.LENGTH_SHORT).show();
                             SharedPreferences sharedPreferences = getSharedPreferences("vitrituinventory", Context.MODE_PRIVATE);
@@ -390,7 +390,7 @@ public class InventoryScanqrcodeViTri extends AppCompatActivity {
 
                                 try {
                                     barcodeData = barcodes.valueAt(0).displayValue;
-                                    String statusGetcode = new CmnFns().checkPosition(barcodeData);
+                                    String statusGetcode = new CmnFns().getPositionWST(barcodeData);
                                     if(statusGetcode.equals("Thành Công")){
                                         Toast.makeText(InventoryScanqrcodeViTri.this, barcodeData + "", Toast.LENGTH_LONG).show();
                                         Log.e("barcode2", "" + barcodeData);

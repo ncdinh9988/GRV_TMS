@@ -2152,7 +2152,7 @@ public class CmnFns {
             return "e";
         }
     }
-    public String getPositionRepacking(String barcodeData) {
+    public String getPositionWST(String barcodeData) {
 
         int status = this.allowSynchronizeBy3G();
         if (status != 1)

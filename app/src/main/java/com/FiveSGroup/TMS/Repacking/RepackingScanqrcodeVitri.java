@@ -187,7 +187,7 @@ public class RepackingScanqrcodeVitri extends AppCompatActivity {
     }
 
     private void GetData(final String barcodeData) {
-        String statusGetcode = new CmnFns().getPositionRepacking(barcodeData);
+        String statusGetcode = new CmnFns().checkPosition(barcodeData);
         if(!statusGetcode.equals("error")){
             Toast.makeText(RepackingScanqrcodeVitri.this, barcodeData, Toast.LENGTH_SHORT).show();
             SharedPreferences sharedPreferences = getSharedPreferences("vitrituinrepacking", Context.MODE_PRIVATE);
@@ -214,7 +214,7 @@ public class RepackingScanqrcodeVitri extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        String statusGetcode = new CmnFns().getPositionRepacking(result.getText());
+                        String statusGetcode = new CmnFns().checkPosition(result.getText());
                         if(!statusGetcode.equals("error")){
                             Toast.makeText(RepackingScanqrcodeVitri.this, result.getText(), Toast.LENGTH_SHORT).show();
                             SharedPreferences sharedPreferences = getSharedPreferences("vitrituinrepacking", Context.MODE_PRIVATE);
@@ -385,7 +385,7 @@ public class RepackingScanqrcodeVitri extends AppCompatActivity {
 
                                 try {
                                     barcodeData = barcodes.valueAt(0).displayValue;
-                                    String statusGetcode = new CmnFns().getPositionRepacking(barcodeData);
+                                    String statusGetcode = new CmnFns().checkPosition(barcodeData);
                                     if(!statusGetcode.equals("error")){
                                         Toast.makeText(RepackingScanqrcodeVitri.this, barcodeData + "", Toast.LENGTH_LONG).show();
                                         Log.e("barcode2", "" + barcodeData);

@@ -304,17 +304,17 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
                         context.startActivity(intent_check);
                         break;
 
-                    case "Repacking":
-//                        if(block_Warehouse == -29){
-//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
-//                            break;
-//                        }else if(block_Warehouse == -1){
-//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
-//                            break;
-//                        }else if(block_Warehouse == 1){
-                        Intent intent_repack = new Intent(context, RepackingScanqrcodeVitri.class);
-                        context.startActivity(intent_repack);
-                        break;
+//                    case "Repacking":
+////                        if(block_Warehouse == -29){
+////                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+////                            break;
+////                        }else if(block_Warehouse == -1){
+////                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+////                            break;
+////                        }else if(block_Warehouse == 1){
+//                        Intent intent_repack = new Intent(context, RepackingScanqrcodeVitri.class);
+//                        context.startActivity(intent_repack);
+//                        break;
 
 //                    case "Thêm Mã Barcode":
 //                        Toast.makeText(context, "Tính năng đang phát triển trong thời gian tới", Toast.LENGTH_LONG).show();
