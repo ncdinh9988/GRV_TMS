@@ -158,6 +158,33 @@ public class global extends Application {
         Warehouse_AdjustmentCD = warehouse_AdjustmentCD;
     }
     private static String MasterPickCd = "";
+    private static String outbound_Delivery_CD = "";
+    private static String position_CD = "";
+    private static String position_LPN = "";
+
+    public static String getPosition_LPN() {
+        return position_LPN;
+    }
+
+    public static void setPosition_LPN(String position_LPN) {
+        global.position_LPN = position_LPN;
+    }
+
+    public static String getOutbound_Delivery_CD() {
+        return outbound_Delivery_CD;
+    }
+
+    public static void setOutbound_Delivery_CD(String outbound_Delivery_CD) {
+        global.outbound_Delivery_CD = outbound_Delivery_CD;
+    }
+
+    public static String getPosition_CD() {
+        return position_CD;
+    }
+
+    public static void setPosition_CD(String position_CD) {
+        global.position_CD = position_CD;
+    }
 
     public static String getMasterPickCd() {
         return MasterPickCd;

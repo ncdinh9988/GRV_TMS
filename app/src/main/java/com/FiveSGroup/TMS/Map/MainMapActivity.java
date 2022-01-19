@@ -268,9 +268,9 @@ public class MainMapActivity extends AppCompatActivity implements OnMapReadyCall
             // đánh dấu những vị trí giao hàng
             addDestinationPlace();
 
-            if (place2 != null) {
+//            if (place2 != null) {
                 findRoute(place1.getPosition(), place2.getPosition());
-            }
+//            }
         } catch (Exception e) {
             Log.d("Map error", "#005" + e.getMessage());
             Toast.makeText(MainMapActivity.this, "#005", Toast.LENGTH_SHORT).show();

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TMS</string>
-    <string name="google_map_api_key">AIzaSyCS2xm9XB-_87ELqkR9CpDKoER6n8kS2Vs</string>
+    <string name="google_map_api_key">AIzaSyDvEGRFUQwLHEXpLV_PMxZPhRstvFZU9Jk</string>
+<!--    <string name="google_map_api_key">AIzaSyCS2xm9XB-_87ELqkR9CpDKoER6n8kS2Vs</string>-->
     <!-- string-array loại Photo -->
     <string-array name="customerTypePhotoArray">
         <item>Tất cả</item>

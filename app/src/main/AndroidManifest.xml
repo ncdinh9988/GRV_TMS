@@ -50,6 +50,27 @@
         <activity android:name=".PickList.NewWareHouseActivity" />
 
         <activity
+            android:name=".ListOD.Qrcode_OD"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListOD.OutboundOD"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListOD.OutboundOD_Finish"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListOD.LPNOD_Finish"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListOD.ListPickPositionOD"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListOD.LPNOD"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListOD.HomeOD"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Repacking.RepackingScanCode"
             android:screenOrientation="portrait" />
         <activity

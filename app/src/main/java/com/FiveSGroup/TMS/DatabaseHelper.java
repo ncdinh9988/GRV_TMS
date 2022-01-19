@@ -12,6 +12,7 @@ import com.FiveSGroup.TMS.LPN.LPN;
 import com.FiveSGroup.TMS.LPN.LPNProduct;
 import com.FiveSGroup.TMS.LetDown.LetDownProductSuggest;
 import com.FiveSGroup.TMS.LetDown.ProductLetDown;
+import com.FiveSGroup.TMS.ListOD.Product_OD;
 import com.FiveSGroup.TMS.LoadPallet.LPNwithSO.ProductLpnWithSo;
 import com.FiveSGroup.TMS.LoadPallet.Product_LoadPallet;
 import com.FiveSGroup.TMS.MasterPick.Product_Master_Pick;
@@ -52,7 +53,6 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -134,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 178; // version của DB khi thay
+    public static final int DATABASE_VERSION = 195; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -158,6 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CREATE_TABLE_O_OD);
         db.execSQL(CREATE_TABLE_O_CUSTOMER_NEW);
         db.execSQL(CREATE_TABLE_O_TAKES_PHOTO);
         db.execSQL(CREATE_TABLE_O_SALE_TAKES_PHOTO);
@@ -724,8 +725,196 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             // TODO: handle exception
         }
+        //version DB 180
+        try {
+            db.execSQL(CREATE_TABLE_O_OD);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        //version DB 195
+        try {
+            db.execSQL("ALTER TABLE " + CREATE_TABLE_O_OD + " ADD COLUMN  "
+                    + PRODUCT_CD_OD + " TEXT  ");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 
     }
+    public static final String O_OD = "O_OD";
+    public static final String AUTOINCREMENT_OD = "AUTOINCREMENT_OD";
+    public static final String PRODUCT_CD_OD = "PRODUCT_CD_OD";
+    public static final String PRODUCT_CODE_OD = "PRODUCT_CODE_OD";
+    public static final String PRODUCT_NAME_OD = "PRODUCT_NAME_OD";
+    public static final String EXPIRED_DATE_OD = "EXPIRED_DATE_OD";
+    public static final String STOCKIN_DATE_OD = "STOCKIN_DATE_OD";
+    public static final String UNIT_OD = "UNIT_OD";
+    public static final String QTY_OD = "QTY_OD";
+    public static final String BATCH_NUMBER_OD = "BATCH_NUMBER_OD";
+    public static final String QTY_OD_OD = "QTY_OD_OD";
+    public static final String POSITION_CODE_OD = "POSITION_CODE_OD";
+    public static final String WAREHOUSE_POSITION_CD_OD = "WAREHOUSE_POSITION_CD_OD";
+    public static final String SUGGESTION_OD = "SUGGESTION_OD";
+    public static final String CREATE_TIME_OD = "CREATE_TIME_OD";
+
+
+    public static final String CREATE_TABLE_O_OD = "CREATE TABLE "
+            + O_OD + "("
+            + AUTOINCREMENT_OD + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + PRODUCT_CD_OD + " TEXT,"
+            + PRODUCT_CODE_OD + " TEXT,"
+            + PRODUCT_NAME_OD + " TEXT,"
+            + EXPIRED_DATE_OD + " TEXT,"
+            + STOCKIN_DATE_OD + " TEXT,"
+            + UNIT_OD + " TEXT,"
+            + QTY_OD + " TEXT,"
+            + BATCH_NUMBER_OD + " TEXT,"
+            + QTY_OD_OD + " TEXT,"
+            + POSITION_CODE_OD + " TEXT,"
+            + WAREHOUSE_POSITION_CD_OD + " TEXT,"
+            + SUGGESTION_OD + " TEXT,"
+            + CREATE_TIME_OD + " TEXT"  + ")";
+
+
+    public long CreateOD(Product_OD qrcode) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CD_OD, qrcode.getPRODUCT_CD());
+        values.put(PRODUCT_CODE_OD, qrcode.getPRODUCT_CODE());
+        values.put(PRODUCT_NAME_OD, qrcode.getPRODUCT_NAME());
+        values.put(EXPIRED_DATE_OD, qrcode.getEXPIRED_DATE());
+        values.put(STOCKIN_DATE_OD, qrcode.getSTOCKIN_DATE());
+        values.put(UNIT_OD, qrcode.getUNIT());
+        values.put(QTY_OD, "0");
+        values.put(BATCH_NUMBER_OD, qrcode.getBATCH_NUMBER());
+        values.put(QTY_OD_OD, qrcode.getQTY_OD());
+        values.put(POSITION_CODE_OD, qrcode.getPOSITION_CODE());
+        values.put(WAREHOUSE_POSITION_CD_OD, qrcode.getWAREHOUSE_POSITION_CD());
+        values.put(SUGGESTION_OD, qrcode.getSUGGESTION());
+        values.put(CREATE_TIME_OD, qrcode.getCREATE_TIME());
+
+        // insert row
+        long id = db.insert(O_OD, null, values);
+        return id;
+    }
+
+    public int updateProduct_OD(Product_OD od,String unique, String sl) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(PRODUCT_CODE_OD, od.getPRODUCT_CODE());
+        values.put(QTY_OD, sl);
+
+        // updating row
+        return db.update(O_OD, values,  AUTOINCREMENT_OD + " = ?",
+                new String[]{String.valueOf(unique)});
+
+    }
+
+    public ArrayList<Product_OD>
+    getAllProductOD_CD(String CD) {
+        ArrayList<Product_OD> listod = new ArrayList<Product_OD>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *  FROM " + O_OD + " WHERE " + WAREHOUSE_POSITION_CD_OD + " = " + CD;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_OD qrcode = new Product_OD();
+                qrcode.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_OD))));
+                qrcode.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_OD))));
+                qrcode.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_OD))));
+                qrcode.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_OD))));
+                qrcode.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_OD))));
+                qrcode.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_OD))));
+                qrcode.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_OD))));
+                qrcode.setQTY((c.getString(c
+                        .getColumnIndex(QTY_OD))));
+                qrcode.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_OD))));
+                qrcode.setQTY_OD((c.getString(c
+                        .getColumnIndex(QTY_OD_OD))));
+                qrcode.setPOSITION_CODE((c.getString(c
+                        .getColumnIndex(POSITION_CODE_OD))));
+                qrcode.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_OD))));
+                qrcode.setSUGGESTION((c.getString(c
+                        .getColumnIndex(SUGGESTION_OD))));
+                qrcode.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_OD))));
+
+                listod.add(qrcode);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return listod;
+    }
+
+    public ArrayList<Product_OD>
+    getAllProductOD() {
+        ArrayList<Product_OD> listod = new ArrayList<Product_OD>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *  FROM " + O_OD;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_OD qrcode = new Product_OD();
+                qrcode.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_OD))));
+                qrcode.setPRODUCT_CD((c.getString(c
+                        .getColumnIndex(PRODUCT_CD_OD))));
+                qrcode.setPRODUCT_CODE((c.getString(c
+                        .getColumnIndex(PRODUCT_CODE_OD))));
+                qrcode.setPRODUCT_NAME((c.getString(c
+                        .getColumnIndex(PRODUCT_NAME_OD))));
+                qrcode.setEXPIRED_DATE((c.getString(c
+                        .getColumnIndex(EXPIRED_DATE_OD))));
+                qrcode.setSTOCKIN_DATE((c.getString(c
+                        .getColumnIndex(STOCKIN_DATE_OD))));
+                qrcode.setUNIT((c.getString(c
+                        .getColumnIndex(UNIT_OD))));
+                qrcode.setQTY((c.getString(c
+                        .getColumnIndex(QTY_OD))));
+                qrcode.setBATCH_NUMBER((c.getString(c
+                        .getColumnIndex(BATCH_NUMBER_OD))));
+                qrcode.setQTY_OD((c.getString(c
+                        .getColumnIndex(QTY_OD_OD))));
+                qrcode.setPOSITION_CODE((c.getString(c
+                        .getColumnIndex(POSITION_CODE_OD))));
+                qrcode.setWAREHOUSE_POSITION_CD((c.getString(c
+                        .getColumnIndex(WAREHOUSE_POSITION_CD_OD))));
+                qrcode.setSUGGESTION((c.getString(c
+                        .getColumnIndex(SUGGESTION_OD))));
+                qrcode.setCREATE_TIME((c.getString(c
+                        .getColumnIndex(CREATE_TIME_OD))));
+
+                listod.add(qrcode);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return listod;
+    }
+
+    public void deleteProduct_OD() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_OD);
+    }
+
 
     //database from table O_LETDOWN_SUGGEST
     public static final String O_LETDOWN_SUGGEST = "O_LETDOWN_SUGGEST";
@@ -4903,33 +5092,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return stockOuts;
     }
 
-    public ArrayList<Product_StockOut>
-    getonePosition_Stockout(String id) {
-        ArrayList<Product_StockOut> qrcode = new ArrayList<Product_StockOut>();
-        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
-        String selectQuery = "SELECT  * FROM " + O_STOCK_OUT + " " + " WHERE "
-                + AUTOINCREMENT_STOCK_OUT + " = " + id ;
-        Cursor c = db.rawQuery(selectQuery, null);
-        // looping through all rows and adding to list
-        if (c != null && c.moveToFirst()) {
-            do {
-
-                Product_StockOut stockOut = new Product_StockOut();
-
-                stockOut.setPOSITION_FROM_CD((c.getString(c
-                        .getColumnIndex(POSITION_FROM_STOCK_OUT))));
-                stockOut.setPOSITION_TO_CD((c.getString(c
-                        .getColumnIndex(POSITION_TO_STOCK_OUT))));
-
-
-                qrcode.add(stockOut);
-            } while (c.moveToNext());
-        }
-
-        c.close();
-        return qrcode;
-    }
-
 
     public ArrayList<Product_StockOut>
     getAllProduct_Stockout_Sync(String stockout_cd) {
@@ -5086,6 +5248,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //END TABLE O_STOCK_OUT
+
+
+    //END TABLE O_OD
 
     //DATABASE LET_DOWN
     public static final String O_LET_DOWN = "O_LET_DOWN";

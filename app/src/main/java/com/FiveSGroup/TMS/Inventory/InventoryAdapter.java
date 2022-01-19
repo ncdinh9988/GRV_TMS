@@ -357,8 +357,4 @@ public class InventoryAdapter extends RecyclerView.Adapter<InventoryAdapter.View
         }
     }
 
-    private void removeItems(int position) {
-        inventoryList.remove(position);
-        notifyItemRemoved(position);
-    }
 }

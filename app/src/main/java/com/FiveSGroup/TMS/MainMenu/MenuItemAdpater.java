@@ -17,6 +17,7 @@ import com.FiveSGroup.TMS.CancelGood.Home_CancelGood;
 import com.FiveSGroup.TMS.Inventory.InventoryHome;
 import com.FiveSGroup.TMS.LPN.LPNActivity;
 import com.FiveSGroup.TMS.LetDown.LetDownSuggestionsActivity;
+import com.FiveSGroup.TMS.ListOD.HomeOD;
 import com.FiveSGroup.TMS.MasterPick.Home_Master_Pick;
 import com.FiveSGroup.TMS.PickList.NewWareHouseActivity;
 import com.FiveSGroup.TMS.PoReturn.Home_PoReturn;
@@ -24,7 +25,6 @@ import com.FiveSGroup.TMS.PutAway.Qrcode_PutAway;
 import com.FiveSGroup.TMS.QA.Home.Home_Show_QA;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.RemoveFromLPN.Qrcode_Remove_LPN;
-import com.FiveSGroup.TMS.Repacking.RepackingScanqrcodeVitri;
 import com.FiveSGroup.TMS.StockOut.Home_Stockout;
 import com.FiveSGroup.TMS.StockTransfer.Qrcode_StockTransfer;
 import com.FiveSGroup.TMS.TowingContainers.Check_Transport;
@@ -302,6 +302,18 @@ public class MenuItemAdpater extends RecyclerView.Adapter<MenuItemAdpater.ViewHo
 //                        }else if(block_Warehouse == 1){
                         Intent intent_check = new Intent(context, Check_Transport.class);
                         context.startActivity(intent_check);
+                        break;
+
+                    case "OD":
+//                        if(block_Warehouse == -29){
+//                            Toast.makeText(context,"Kho đang thực hiện kiểm tồn",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == -1){
+//                            Toast.makeText(context,"Đã xảy ra lỗi vui lòng thử lại",Toast.LENGTH_LONG).show();
+//                            break;
+//                        }else if(block_Warehouse == 1){
+                        Intent intent_od = new Intent(context, HomeOD.class);
+                        context.startActivity(intent_od);
                         break;
 
 //                    case "Repacking":

@@ -1,6 +1,7 @@
-                 package com.FiveSGroup.TMS.MasterPick;
+package com.FiveSGroup.TMS.ListOD;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +27,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.LPN.LPNActivity;
-import com.FiveSGroup.TMS.LoadPallet.LPNwithSO.LPNandSO;
 import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
@@ -36,23 +36,25 @@ import com.FiveSGroup.TMS.global;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class Home_Master_Pick extends AppCompatActivity {
+public class HomeOD extends AppCompatActivity {
     private WebView mWebview;
-    private Button btn1, btnLpn, btn3, btnback, btnShow , btnchuyendvt;
+    private Button btn1, btnLpn, btn3, btnback, btnOB , btnchuyendvt;
     LinearLayout layout;
+    private ProgressDialog progressSyncProgram;
     String value1 = "", value2 = "";
     SharedPreferences sharedPref;
-    String urlStockReceipt = "" , valuewarehouse = "";
+    String urlOD = "" , valuewarehouse = "";
     ValueEventbus eventbus;
     static String value = "";
     String value3 = "";
+    private TextView tvTitle;
     ProgressBar progressBar;
     SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_picklist);
+        setContentView(R.layout.activity_order_to_compose);
         progressBar = findViewById(R.id.progressbar);
         refreshLayout = findViewById(R.id.swipeRefesh);
 
@@ -67,58 +69,56 @@ public class Home_Master_Pick extends AppCompatActivity {
         btn1 = (Button) findViewById(R.id.btn1);
         btnchuyendvt = (Button) findViewById(R.id.btnchuyendvt) ;
         btnback = findViewById(R.id.btnback);
-        btnShow = findViewById(R.id.btnShow);
+        tvTitle = findViewById(R.id.tvTitle);
+        btnOB = findViewById(R.id.btnOB);
         btnLpn = findViewById(R.id.btnlpn);
         layout = findViewById(R.id.layout);
-        urlStockReceipt = DatabaseHelper.getInstance().getParamByKey("URL_PickListHH").getValue();
-        valuewarehouse = DatabaseHelper.getInstance().getParamByKey("WAREHOUSE_TYPE_CD").getValue();;
+        urlOD = DatabaseHelper.getInstance().getParamByKey("URL_OutboundDelivery").getValue();
 
         btnchuyendvt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Master_Pick.this, TransferUnitQrcode.class);
+                Intent intent = new Intent(HomeOD.this, TransferUnitQrcode.class);
                 startActivity(intent);
-            }
-        });
-
-        btnLpn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseHelper.getInstance().deleteProduct_LoadPallet();
-                if(valuewarehouse.equals("2")){
-                    Intent intent = new Intent(Home_Master_Pick.this, LPNandSO.class);
-                    startActivity(intent);
-                }else{
-                    Intent intent = new Intent(Home_Master_Pick.this, LPNActivity.class);
-                    startActivity(intent);
-                }
             }
         });
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Master_Pick.this, Qrcode_Master_Pick.class);
-                intent.putExtra("qrcode1", "qrcode1");
-                // Log.e("barcodeData",""+ barcodeData);
-                startActivity(intent);
+                mWebview.reload();
             }
         });
-        btnShow.setOnClickListener(new View.OnClickListener() {
+
+        btnLpn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Home_Master_Pick.this, List_Master_Pick.class));
+                Intent intent = new Intent(HomeOD.this, LPNOD.class);
+                intent.putExtra("lpn_od","");
+                startActivity(intent);
                 EventBus.getDefault().postSticky(new CheckEventbus());
 
             }
         });
 
-        String urlStockOut =  urlStockReceipt + "?USER_PICKLIST=" + CmnFns.readDataAdmin();
-        addEvents(urlStockOut);
+
+        btnOB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeOD.this, OutboundOD.class);
+                intent.putExtra("outbound_od","");
+                startActivity(intent);
+                EventBus.getDefault().postSticky(new CheckEventbus());
+
+            }
+        });
+
+
+        addEvents(urlOD+"?USER_CODE="+CmnFns.readDataAdmin());
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intenttt = new Intent(Home_Master_Pick.this, MainWareHouseActivity.class);
+                Intent intenttt = new Intent(HomeOD.this, MainWareHouseActivity.class);
                 startActivity(intenttt);
                 finish();
             }
@@ -126,12 +126,15 @@ public class Home_Master_Pick extends AppCompatActivity {
 
         RefeshData();
 
+
+
     }
+
     private void RefeshData() {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                addEvents(urlStockReceipt + "?USER_PICKLIST=" + CmnFns.readDataAdmin());
+                addEvents(urlOD+"?USER_CODE="+CmnFns.readDataAdmin());
                 refreshLayout.setRefreshing(false);
 
             }
@@ -140,7 +143,7 @@ public class Home_Master_Pick extends AppCompatActivity {
     }
     private void addEvents(String url) {
         if (CmnFns.isNetworkAvailable()) {
-            mWebview.addJavascriptInterface(new JavaScriptInterface(Home_Master_Pick.this), "Android");
+            mWebview.addJavascriptInterface(new HomeOD.JavaScriptInterface(HomeOD.this), "Android");
             mWebview.getSettings().setJavaScriptEnabled(true); // enable javascript
             mWebview.getSettings().setUseWideViewPort(true);
             mWebview.getSettings().setLoadWithOverviewMode(true);
@@ -178,26 +181,76 @@ public class Home_Master_Pick extends AppCompatActivity {
                     Log.e("urljavascript", "đã chạy dc");
 
                     //Toast.makeText(HomeQRActivity.this, url+"", Toast.LENGTH_LONG).show();
-                    if (url.contains("WarehousePickListForAppItemV2.aspx?PickListCD")) {
+                    if (url.contains("OutboundDeliveryListForAppItem") && url.contains("POSITION_CD")) {
+                        try {
+                            String chuoin[] = url.split("=");
+                            String coden = chuoin[2];
+                            String chuoi0[] = url.split("=");
+                            String code0 = chuoi0[3];
+                            if(code0 != null && code0 != ""){
+                                String chuoi[] = url.split("=");
+                                String code = chuoi[2];
+                                String chuoi2[] = code.split("&");
+                                String obdl = chuoi2[0];
+                                String chuoi3[] = code.split("&");
+                                String pick = chuoi3[1];
+                                String position_cd = "";
+                                global.setOutbound_Delivery_CD(obdl);
+                                if(pick.contains("POSITION_CD")){
+                                    String chuoi4[] = url.split("=");
+                                    position_cd = chuoi4[3];
+                                }
+                                if(position_cd != null && position_cd != ""){
+                                    global.setPosition_CD(position_cd);
+                                    Intent intenttt = new Intent(HomeOD.this, ListPickPositionOD.class);
+                                    DatabaseHelper.getInstance().deleteProduct_OD();
+                                    String result = new CmnFns().Suggest_Product_For_OD_With_Position(CmnFns.readDataAdmin(), obdl, position_cd);
+                                    intenttt.putExtra("POSITION_CD" , position_cd);
+                                    startActivity(intenttt);
+                                    finish();
+                                }
+                            }
+                            tvTitle.setText("Thông Tin Chi Tiết OD");
+                            btn1.setVisibility(View.GONE);
+                            btnOB.setVisibility(View.VISIBLE);
+                            btnLpn.setVisibility(View.VISIBLE);
+                            btnchuyendvt.setVisibility(View.VISIBLE);
+                            btnback.setVisibility(View.GONE);
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("masterpick_cd", coden);
+                            editor.apply();
+                        }catch (Exception e){
+                            Log.d("LOG Eror",e.toString());
+                        }
+
+                    }else if(url.contains("OutboundDeliveryListForAppItem")) {
 
                         String chuoi[] = url.split("=");
-                        String code = chuoi[1];
-                        global.setMasterPickCd(code);
-                        // Toast.makeText(HomeQRActivity.this, code+"", Toast.LENGTH_SHORT).show();
+                        String code = chuoi[2];
+                        String chuoi2[] = code.split("&");
+                        String obdl = chuoi2[0];
+                        global.setOutbound_Delivery_CD(obdl);
 
-                        btn1.setVisibility(View.VISIBLE);
-                        btnShow.setVisibility(View.VISIBLE);
+                        tvTitle.setText("Thông Tin Chi Tiết OD");
+                        btn1.setVisibility(View.GONE);
+                        btnOB.setVisibility(View.VISIBLE);
                         btnLpn.setVisibility(View.VISIBLE);
                         btnchuyendvt.setVisibility(View.VISIBLE);
                         btnback.setVisibility(View.GONE);
+
                         SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("masterpick_cd", code);
+                        editor.putString("masterpick_cd", obdl);
                         editor.apply();
 
-                    } else {
-                        btnShow.setVisibility(View.GONE);
-                        btn1.setVisibility(View.GONE);
+
+
+                    }
+                    else {
+                        btnOB.setVisibility(View.GONE);
+                        btn1.setVisibility(View.VISIBLE);
                         btnLpn.setVisibility(View.GONE);
                         btnchuyendvt.setVisibility(View.GONE);
                         btnback.setVisibility(View.VISIBLE);
@@ -234,7 +287,7 @@ public class Home_Master_Pick extends AppCompatActivity {
         }
     }
 
-    public static class JavaScriptInterface {
+    public class JavaScriptInterface {
         Context mContext;
 
         /**
@@ -293,3 +346,4 @@ public class Home_Master_Pick extends AppCompatActivity {
 
     }
 }
+

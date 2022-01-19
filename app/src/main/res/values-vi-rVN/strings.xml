@@ -487,7 +487,8 @@
 
     <string name="Uploading">Đang đồng bộ</string>
     <string name="mapbox_access_token">pk.eyJ1Ijoibmd1eWVudGhhbmh0YW4xMjk4IiwiYSI6ImNraG45Z2kzYTEwNW0yd251czRwZnJucnAifQ.qPHjv3CdOtgNSKHBSOh4WA</string>
-    <string name="google_map_api_key">AIzaSyCS2xm9XB-_87ELqkR9CpDKoER6n8kS2Vs</string>
+<!--    <string name="google_map_api_key">AIzaSyCS2xm9XB-_87ELqkR9CpDKoER6n8kS2Vs</string>-->
+    <string name="google_map_api_key">AIzaSyDvEGRFUQwLHEXpLV_PMxZPhRstvFZU9Jk</string>
 
 
 </resources>

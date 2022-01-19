@@ -76,6 +76,145 @@ public class Webservice {
 //        }
 //    }
 
+    public  String Suggest_Product_For_OD_With_Position(String UserCode ,String OUTBOUND_DELIVERY_CD ,String Warehouse_Position_Cd){
+        String webServiceFunc = "Suggest_Product_For_OD_With_Position";
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        String imei = CmnFns.getImei(getAppContext());
+
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("UserCode");
+        param1.setValue(UserCode);
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+        // Param 1
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("OUTBOUND_DELIVERY_CD");
+        param2.setValue(OUTBOUND_DELIVERY_CD);
+        param2.setType(String.class);
+        request.addProperty(param2);
+
+        // Param 1
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("Warehouse_Position_Cd");
+        param3.setValue(Warehouse_Position_Cd);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Check Stockout : " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Check Stockout : " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+    public  String Scan_Outbound_OD(String Warehouse_Position_CD, String OUTBOUND_DELIVERY_CD){
+        String webServiceFunc = "Scan_Outbound_OD";
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        String imei = CmnFns.getImei(getAppContext());
+
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("Warehouse_Position_CD");
+        param1.setValue(Warehouse_Position_CD);
+        param1.setType(String.class);
+        request.addProperty(param1);
+        // Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("UserCode");
+        param2.setValue(CmnFns.readDataAdmin());
+        param2.setType(String.class);
+        request.addProperty(param2);
+        // Param 3
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("OUTBOUND_DELIVERY_CD");
+        param3.setValue(OUTBOUND_DELIVERY_CD);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Check Stockout : " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Check Stockout : " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
+    public  String Check_LPN_With_OD(String LPN_CODE, String OUTBOUND_DELIVERY_CD){
+        String webServiceFunc = "Check_LPN_With_OD";
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        String imei = CmnFns.getImei(getAppContext());
+
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("LPN_CODE");
+        param1.setValue(LPN_CODE);
+        param1.setType(String.class);
+        request.addProperty(param1);
+        // Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("UserCode");
+        param2.setValue(CmnFns.readDataAdmin());
+        param2.setType(String.class);
+        request.addProperty(param2);
+        // Param 3
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("OUTBOUND_DELIVERY_CD");
+        param3.setValue(OUTBOUND_DELIVERY_CD);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Check Stockout : " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Check Stockout : " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
     public  String Get_Status_Stock_Out(String order_cd){
         String webServiceFunc = "Get_Status_Stock_Out";
 

@@ -46,6 +46,7 @@ import com.FiveSGroup.TMS.LPN.LPN;
 import com.FiveSGroup.TMS.LPN.LPNProduct;
 import com.FiveSGroup.TMS.LetDown.LetDownProductSuggest;
 import com.FiveSGroup.TMS.LetDown.ProductLetDown;
+import com.FiveSGroup.TMS.ListOD.Product_OD;
 import com.FiveSGroup.TMS.LoadPallet.LPNwithSO.ProductLpnWithSo;
 import com.FiveSGroup.TMS.LoadPallet.Product_LoadPallet;
 import com.FiveSGroup.TMS.MasterPick.Product_Master_Pick;
@@ -441,6 +442,60 @@ public class CmnFns {
 //
 //    }
 
+    public String Scan_Outbound_OD(String Warehouse_Position_CD, String OUTBOUND_DELIVERY_CD) {
+        try {
+
+            int status = this.allowSynchronizeBy3G();
+            if (status == 102 || status == -1) {
+                return "-1";
+            }
+
+
+            Webservice Webservice = new Webservice();
+
+            String result = Webservice.Scan_Outbound_OD(Warehouse_Position_CD, OUTBOUND_DELIVERY_CD);
+            if (result.equals("1")) {
+
+                return "1";
+            } else {
+                // đồng bộ không thành công
+                return result;
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            return "-1";
+        }
+
+    }
+
+    public String Check_LPN_With_OD(String LPN_CODE, String OUTBOUND_DELIVERY_CD) {
+        try {
+
+            int status = this.allowSynchronizeBy3G();
+            if (status == 102 || status == -1) {
+                return "-1";
+            }
+
+
+            Webservice Webservice = new Webservice();
+
+            String result = Webservice.Check_LPN_With_OD(LPN_CODE, OUTBOUND_DELIVERY_CD);
+            if (result.equals("1")) {
+
+                return "1";
+            } else {
+                // đồng bộ không thành công
+                return result;
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            return "-1";
+        }
+
+    }
+
     public String synchronizeGet_Status_Stock_Out(String order_Cd) {
         try {
 
@@ -460,6 +515,72 @@ public class CmnFns {
                 // đồng bộ không thành công
                 return "-1";
             }
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            return "-1";
+        }
+
+    }
+
+    public String Suggest_Product_For_OD_With_Position(String UserCode, String OUTBOUND_DELIVERY_CD, String Warehouse_Position_Cd) {
+        try {
+
+            int status = this.allowSynchronizeBy3G();
+            if (status == 102 || status == -1) {
+                return "-1";
+            }
+
+            Webservice Webservice = new Webservice();
+
+            String result = Webservice.Suggest_Product_For_OD_With_Position(UserCode , OUTBOUND_DELIVERY_CD , Warehouse_Position_Cd);
+
+            try {
+                JSONArray jsonarray = new JSONArray(result);
+
+
+                for (int i = 0; i < jsonarray.length(); i++) {
+                    // lấy một đối tượng json để
+
+                    JSONObject jsonobj = jsonarray.getJSONObject(i);
+                    String pro_cd = jsonobj.getString("PRODUCT_CD");
+                    String pro_code = jsonobj.getString("PRODUCT_CODE");
+                    String pro_name = jsonobj.getString("PRODUCT_NAME");
+                    String expired_date = jsonobj.getString("EXPIRED_DATE");
+                    String stockin_date = jsonobj.getString("STOCKIN_DATE");
+                    String unit = jsonobj.getString("UNIT");
+                    String qty = jsonobj.getString("QTY");
+                    String batch_number = jsonobj.getString("BATCH_NUMBER");
+                    String qty_od = jsonobj.getString("QTY_OD");
+                    String position_code = jsonobj.getString("POSITION_CODE");
+                    String warePosition = jsonobj.getString("WAREHOUSE_POSITION_CD");
+                    String suggest = jsonobj.getString("SUGGEST");
+                    // VT đến
+
+                    Product_OD sp = new Product_OD();
+                    sp.setPRODUCT_CD(pro_cd);
+                    sp.setPRODUCT_CODE(pro_code);
+                    sp.setPRODUCT_NAME(pro_name);
+                    sp.setEXPIRED_DATE(expired_date);
+                    sp.setSTOCKIN_DATE(stockin_date);
+                    sp.setUNIT(unit);
+                    sp.setQTY(qty);
+                    sp.setBATCH_NUMBER(batch_number);
+                    sp.setQTY_OD(qty_od);
+                    sp.setPOSITION_CODE(position_code);
+                    sp.setWAREHOUSE_POSITION_CD(warePosition);
+                    sp.setSUGGESTION(suggest);
+
+                    DatabaseHelper.getInstance().CreateOD(sp);
+                }
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+//            CmnFns.writeLogError("Exception "
+//                    + e.getMessage());
+                return "-1";
+            }
+            return "1";
+
         } catch (Exception e) {
             // TODO: handle exception
 
@@ -1252,6 +1373,7 @@ public class CmnFns {
 
         try {
             JSONArray jsonarray = new JSONArray(result);
+
 
             // DatabaseHelper.getInstance().deleteAllRorateTimes();
             for (int i = 0; i < jsonarray.length(); i++) {
@@ -5886,6 +6008,12 @@ public class CmnFns {
                     return 1;
                 jsonData = gson.toJson(product);
             }
+            else if (type.equals("OD")) {
+                List<Product_OD> product = DatabaseHelper.getInstance().getAllProductOD();
+                if (product == null || product.size() == 0)
+                    return 1;
+                jsonData = gson.toJson(product);
+            }
 
 
             try {
@@ -6263,6 +6391,18 @@ public class CmnFns {
 //                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
                 }
                 if (jsonobj.getString("ParamKey").toString().equals("URL_PickListHH")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+
+//                        global.arrPackageAllow = new ArrayList<String>(Arrays.asList(arr));
+                }
+                if (jsonobj.getString("ParamKey").toString().equals("URL_OutboundDelivery")) {
                     CParam param = new CParam();
                     param.setKey(jsonobj.getString("ParamKey"));
                     param.setValue(jsonobj.getString("ParamValue"));
