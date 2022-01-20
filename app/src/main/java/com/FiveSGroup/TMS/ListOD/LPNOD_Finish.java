@@ -211,15 +211,25 @@ public class LPNOD_Finish extends AppCompatActivity {
 
 
         textView.setText(message);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                Intent intentToHomeQRActivity = new Intent(LPNOD_Finish.this, HomeOD.class);
-                startActivity(intentToHomeQRActivity);
-                finish();
-            }
-        });
+        if(message.equals("Lưu thành công")){
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    Intent intentToHomeQRActivity = new Intent(LPNOD_Finish.this, HomeOD.class);
+                    startActivity(intentToHomeQRActivity);
+                    finish();
+                }
+            });
+        }else{
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+
+                }
+            });
+        }
         dialog.show();
     }
 

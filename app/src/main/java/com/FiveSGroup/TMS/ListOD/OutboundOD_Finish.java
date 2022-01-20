@@ -180,7 +180,8 @@ public class OutboundOD_Finish extends AppCompatActivity {
         btndone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String result = new CmnFns().Scan_Outbound_OD(tvOD.getText().toString(), global.getOutbound_Delivery_CD());
+                String statusGetcode = new CmnFns().checkPositionOD(tvOD.getText().toString());
+                String result = new CmnFns().Scan_Outbound_OD(statusGetcode, global.getOutbound_Delivery_CD());
                 Toast.makeText(getApplicationContext(),""+ result,Toast.LENGTH_LONG);
                 if (result.equals("1")) {
                     ShowSuccessMessage("Lưu thành công");
@@ -210,15 +211,25 @@ public class OutboundOD_Finish extends AppCompatActivity {
 
 
         textView.setText(message);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                Intent intentToHomeQRActivity = new Intent(OutboundOD_Finish.this, HomeOD.class);
-                startActivity(intentToHomeQRActivity);
-                finish();
-            }
-        });
+        if(message.equals("Lưu thành công")){
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    Intent intentToHomeQRActivity = new Intent(OutboundOD_Finish.this, HomeOD.class);
+                    startActivity(intentToHomeQRActivity);
+                    finish();
+                }
+            });
+        }else{
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+
+                }
+            });
+        }
         dialog.show();
     }
 

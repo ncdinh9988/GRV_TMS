@@ -758,6 +758,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String WAREHOUSE_POSITION_CD_OD = "WAREHOUSE_POSITION_CD_OD";
     public static final String SUGGESTION_OD = "SUGGESTION_OD";
     public static final String CREATE_TIME_OD = "CREATE_TIME_OD";
+    public static final String POSITION_TO_CD_OD = "POSITION_TO_CD_OD";
+    public static final String LPN_CODE_OD = "LPN_CODE_OD";
+    public static final String LPN_TO_OD = "LPN_TO_OD";
+    public static final String OUTBOUND_DELIVERY_CD_OD = "OUTBOUND_DELIVERY_CD_OD";
+    public static final String ALLOW_OD = "ALLOW_OD";
 
 
     public static final String CREATE_TABLE_O_OD = "CREATE TABLE "
@@ -775,6 +780,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + POSITION_CODE_OD + " TEXT,"
             + WAREHOUSE_POSITION_CD_OD + " TEXT,"
             + SUGGESTION_OD + " TEXT,"
+            + POSITION_TO_CD_OD + " TEXT,"
+            + LPN_CODE_OD + " TEXT,"
+            + LPN_TO_OD + " TEXT,"
+            + ALLOW_OD + " TEXT,"
+            + OUTBOUND_DELIVERY_CD_OD + " TEXT,"
             + CREATE_TIME_OD + " TEXT"  + ")";
 
 
@@ -792,9 +802,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(BATCH_NUMBER_OD, qrcode.getBATCH_NUMBER());
         values.put(QTY_OD_OD, qrcode.getQTY_OD());
         values.put(POSITION_CODE_OD, qrcode.getPOSITION_CODE());
-        values.put(WAREHOUSE_POSITION_CD_OD, qrcode.getWAREHOUSE_POSITION_CD());
+        values.put(WAREHOUSE_POSITION_CD_OD, global.getPosition_CD());
         values.put(SUGGESTION_OD, qrcode.getSUGGESTION());
         values.put(CREATE_TIME_OD, qrcode.getCREATE_TIME());
+        values.put(POSITION_TO_CD_OD, qrcode.getPOSITION_TO_CD());
+        values.put(LPN_CODE_OD, qrcode.getLPN_CODE());
+        values.put(LPN_TO_OD, qrcode.getLPN_TO());
+        values.put(ALLOW_OD, "0");
+        values.put(OUTBOUND_DELIVERY_CD_OD, global.getOutbound_Delivery_CD());
 
         // insert row
         long id = db.insert(O_OD, null, values);
@@ -810,6 +825,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // updating row
         return db.update(O_OD, values,  AUTOINCREMENT_OD + " = ?",
                 new String[]{String.valueOf(unique)});
+
+    }
+
+    public int updateAllow_OD(String product_cd, String product_code,String batch, String unit ) {
+        String allow = "1";
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        ContentValues values = new ContentValues();
+        values.put(ALLOW_OD, allow);
+
+        // updating row
+        return db.update(O_OD, values,  PRODUCT_CD_OD + " = ? AND " + PRODUCT_CODE_OD + " = ? AND "
+                        + BATCH_NUMBER_OD + " = ? AND " +  UNIT_OD + " = ? " ,
+                new String[]{String.valueOf(product_cd),String.valueOf(product_code),
+                        String.valueOf(batch),String.valueOf(unit)});
 
     }
 
@@ -852,6 +881,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(SUGGESTION_OD))));
                 qrcode.setCREATE_TIME((c.getString(c
                         .getColumnIndex(CREATE_TIME_OD))));
+                qrcode.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_CD_OD))));
+                qrcode.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_OD))));
+                qrcode.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_OD))));
+                qrcode.setOUTBOUND_DELIVERY_CD((c.getString(c
+                        .getColumnIndex(OUTBOUND_DELIVERY_CD_OD))));
 
                 listod.add(qrcode);
             } while (c.moveToNext());
@@ -900,6 +937,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         .getColumnIndex(SUGGESTION_OD))));
                 qrcode.setCREATE_TIME((c.getString(c
                         .getColumnIndex(CREATE_TIME_OD))));
+                qrcode.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_CD_OD))));
+                qrcode.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_OD))));
+                qrcode.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_OD))));
+                qrcode.setOUTBOUND_DELIVERY_CD((c.getString(c
+                        .getColumnIndex(OUTBOUND_DELIVERY_CD_OD))));
+                qrcode.setALLOW((c.getString(c
+                        .getColumnIndex(ALLOW_OD))));
 
                 listod.add(qrcode);
             } while (c.moveToNext());

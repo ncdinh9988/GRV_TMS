@@ -135,9 +135,9 @@
                 android:padding="5dp"
                 android:inputType="numberDecimal"
                 android:maxLength="8"
-                android:text="1"
+                android:text="0"
                 android:background="@null"
-                android:textColor="@color/black"
+                android:textColor="@color/browser_actions_bg_grey"
                 android:textSize="18sp"/>
         </LinearLayout>
         <TextView

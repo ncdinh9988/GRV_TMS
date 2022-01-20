@@ -14,23 +14,17 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
-import com.FiveSGroup.TMS.LetDown.LetDownQrCodeActivity;
-import com.FiveSGroup.TMS.LetDown.ProductLetDown;
-import com.FiveSGroup.TMS.MainMenu.MainWareHouseActivity;
+
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
-import com.FiveSGroup.TMS.Warehouse.Wv_ShowResultQrode;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListPickPositionOD extends AppCompatActivity implements View.OnClickListener {
     Button buttonBack, btnok;
@@ -296,9 +290,7 @@ public class ListPickPositionOD extends AppCompatActivity implements View.OnClic
                 productOD.clear();
                 positionAdapter.notifyDataSetChanged();
 
-                Intent intentToHomeQRActivity = new Intent(ListPickPositionOD.this, Wv_ShowResultQrode.class);
-                intentToHomeQRActivity.putExtra("result_WLD", result);
-                intentToHomeQRActivity.putExtra("type_WLD", "WLD");
+                Intent intentToHomeQRActivity = new Intent(ListPickPositionOD.this, HomeOD.class);
                 startActivity(intentToHomeQRActivity);
                 finish();
             }
@@ -326,7 +318,7 @@ public class ListPickPositionOD extends AppCompatActivity implements View.OnClic
                 DatabaseHelper.getInstance().deleteallEa_Unit();
                 DatabaseHelper.getInstance().deleteallExp_date();
                 if (let_down != null) {
-                    Intent intent = new Intent(ListPickPositionOD.this, LetDownQrCodeActivity.class);
+                    Intent intent = new Intent(ListPickPositionOD.this, Qrcode_OD.class);
                     intent.putExtra("check_to_finish_at_list", "check");
                     startActivity(intent);
                     finish();

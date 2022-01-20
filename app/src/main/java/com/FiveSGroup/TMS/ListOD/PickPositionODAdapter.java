@@ -1,6 +1,7 @@
 package com.FiveSGroup.TMS.ListOD;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -45,15 +46,25 @@ public class PickPositionODAdapter extends RecyclerView.Adapter<PickPositionODAd
     public void onBindViewHolder(@NonNull final PickPositionODAdapter.ViewHolder holder, final int position) {
         final Product_OD product = listOD.get(position);
         holder.setIsRecyclable(false);
+
         holder.tvIdProduct.setText(product.getPRODUCT_CODE());
         holder.tvNameProduct.setText(product.getPRODUCT_NAME());
         holder.tvExpired.setText(product.getEXPIRED_DATE());
         holder.tvbatch.setText(product.getBATCH_NUMBER());
         holder.tvOD.setText(product.getQTY_OD());
         holder.edt.setText(listOD.get(position).getQTY());
+
         holder.tvdvt.setText(product.getUNIT());
         holder.tvsuggest.setText(product.getSUGGESTION());
 
+        for(int i = 0 ; i<= listOD.size(); i++){
+            if(product.getALLOW().equals("1")){
+                holder.edt.setTextColor(Color.rgb(0,0,0));
+                holder.edt.setFocusable(true);
+            }else{
+                holder.edt.setFocusable(false);
+            }
+        }
 
         holder.edt.addTextChangedListener(new TextWatcher() {
             @Override

@@ -1,15 +1,21 @@
 package com.FiveSGroup.TMS.ListOD;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
@@ -32,6 +38,7 @@ import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.TransferUnit.TransferUnitQrcode;
 import com.FiveSGroup.TMS.ValueEventbus;
 import com.FiveSGroup.TMS.Warehouse.CheckEventbus;
+import com.FiveSGroup.TMS.Warehouse.Wv_ShowResultQrode;
 import com.FiveSGroup.TMS.global;
 
 import org.greenrobot.eventbus.EventBus;
@@ -141,6 +148,32 @@ public class HomeOD extends AppCompatActivity {
         });
 
     }
+    private void ShowSuccessMessage(String message) {
+        LayoutInflater factory = LayoutInflater.from(HomeOD.this);
+        View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
+        final AlertDialog dialog = new AlertDialog.Builder(HomeOD.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
+        InsetDrawable inset = new InsetDrawable(back, 64);
+        dialog.getWindow().setBackgroundDrawable(inset);
+        dialog.setView(layout_cus);
+        dialog.setCancelable(false);
+
+        Button btnClose = layout_cus.findViewById(R.id.btnHuy);
+        TextView textView = layout_cus.findViewById(R.id.tvText);
+        btnClose.setText("OK");
+
+
+        textView.setText(message);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     private void addEvents(String url) {
         if (CmnFns.isNetworkAvailable()) {
             mWebview.addJavascriptInterface(new HomeOD.JavaScriptInterface(HomeOD.this), "Android");
@@ -202,12 +235,19 @@ public class HomeOD extends AppCompatActivity {
                                 }
                                 if(position_cd != null && position_cd != ""){
                                     global.setPosition_CD(position_cd);
-                                    Intent intenttt = new Intent(HomeOD.this, ListPickPositionOD.class);
-                                    DatabaseHelper.getInstance().deleteProduct_OD();
-                                    String result = new CmnFns().Suggest_Product_For_OD_With_Position(CmnFns.readDataAdmin(), obdl, position_cd);
-                                    intenttt.putExtra("POSITION_CD" , position_cd);
-                                    startActivity(intenttt);
-                                    finish();
+
+                                    String result2 = new CmnFns().Check_OD_Have_LPN(obdl);
+                                    if(result2.equals("1")){
+                                        Intent intenttt = new Intent(HomeOD.this, ListPickPositionOD.class);
+                                        DatabaseHelper.getInstance().deleteProduct_OD();
+                                        String result = new CmnFns().Suggest_Product_For_OD_With_Position(CmnFns.readDataAdmin(), obdl, position_cd);
+                                        intenttt.putExtra("POSITION_CD" , position_cd);
+                                        startActivity(intenttt);
+                                    }else{
+                                        ShowSuccessMessage(result2);
+                                    }
+
+
                                 }
                             }
                             tvTitle.setText("Thông Tin Chi Tiết OD");
@@ -217,10 +257,6 @@ public class HomeOD extends AppCompatActivity {
                             btnchuyendvt.setVisibility(View.VISIBLE);
                             btnback.setVisibility(View.GONE);
 
-                            SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("masterpick_cd", coden);
-                            editor.apply();
                         }catch (Exception e){
                             Log.d("LOG Eror",e.toString());
                         }
@@ -244,8 +280,6 @@ public class HomeOD extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("masterpick_cd", obdl);
                         editor.apply();
-
-
 
                     }
                     else {
@@ -326,7 +360,17 @@ public class HomeOD extends AppCompatActivity {
                 getSharedPreferences("name_master_pick", Activity.MODE_PRIVATE);
         String s = prefs.getString("lastUrl", "");
         if (!s.equals("")) {
-            mWebview.loadUrl(s);
+//            if(s.contains("POSITION_CD")){
+//                String chuoi[] = s.split("&");
+//                String code = chuoi[0];
+//                String chuoi1[] = s.split("&");
+//                String code1 = chuoi1[1];
+//                String link = code + code1;
+//                mWebview.loadUrl(link);
+//            }else{
+                mWebview.loadUrl(s);
+//            }
+
         }
 
     }

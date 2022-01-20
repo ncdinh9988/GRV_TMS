@@ -63,9 +63,6 @@ public class Qrcode_OD extends AppCompatActivity {
     private ToneGenerator toneGen1;
     private TextView barcodeText;
     private String barcodeData;
-    Button btnTruyCap ;
-    String value1 = "";
-    String value2 = "";
     boolean check = false;
     Intent intent;
     String position = "";
@@ -298,7 +295,7 @@ public class Qrcode_OD extends AppCompatActivity {
             checkBoxGetLPN.setVisibility(View.GONE);
             checkBoxGetDVT.setChecked(true);
             checkBoxGetLPN.setChecked(false);
-            textViewTitle.setText("QUÉT MÃ - KIỂM TỒN");
+            textViewTitle.setText("QUÉT MÃ - OD");
         }
     }
 
@@ -496,18 +493,11 @@ public class Qrcode_OD extends AppCompatActivity {
 
     private void getinformation(final String barcodeData) {
 
-        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch2(barcodeData, CmnFns.readDataAdmin(), "WST", 0, global.getInventoryCD());
-//        if (statusGetCustt != 1) {
-//            ReturnPosition(barcodeData);
-//        }
-//        else {
-//            if (expiredDate != null) {
-//
-//                ReturnPosition(barcodeData);
-//
-//            } else {
+//        int statusGetCustt = new CmnFns().getDataFromSeverWithBatch2(barcodeData, CmnFns.readDataAdmin(), "WST", 0, global.getInventoryCD());
+        int statusGetCustt = new CmnFns().GetProductByZone_With_Position(barcodeData, CmnFns.readDataAdmin(), "OD", 0, global.getOutbound_Delivery_CD(),global.getPosition_CD());
+
         // lấy tất cả hạn `sử dụng trong database ra
-        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValueinventory(pro_code,vitritu);
+        final ArrayList<Exp_Date_Tam> expired_date = DatabaseHelper.getInstance().getallValue2(pro_code);
 
 
         if (expired_date.size() >= 1) {
@@ -581,42 +571,12 @@ public class Qrcode_OD extends AppCompatActivity {
             alertDialog.setCanceledOnTouchOutside(false);
             alertDialog.show();
         }
-//                else if (expired_date.size() == 1) {
-//                    String expDatetemp = "" , batch_number = "", product_code = "" , stockin_date = "";
-//                    try {
-//                        expDatetemp = expired_date.get(0).getEXPIRED_DATE_TAM();
-//                        stockin_date = expired_date.get(0).getSTOCKIN_DATE_TAM();
-//                        batch_number = expired_date.get(0).getBATCH_NUMBER_TAM();
-//                        product_code = expired_date.get(0).getPRODUCT_CODE_TAM();
-//                        pro_cd = expired_date.get(0).getPRODUCT_CD_TAM();
-//                        fromCd = expired_date.get(0).getWAREHOUSE_POSITION_CD_TAM();
-//                    } catch (Exception e) {
-//
-//                    }
-//                    if ((pro_code.equals("")) || (pro_code.equals(product_code))) {
-////                            String chuoi[] = expDatetemp.split(" - ");
-//                        if (!checkBoxGetDVT.isChecked()) {
-//                            ReturnProduct(barcodeData, expDatetemp, stockin_date ,batch_number);
-//                        } else {
-//                            ShowDialogUnit(barcodeData, expDatetemp, stockin_date ,batch_number);
-//                        }
-//                    }else{
-//                        Checkproduct_Code();
-//                    }
-//
-//                }
         else {
             Toast.makeText(Qrcode_OD.this, "Không Tìm Thấy Sản Phẩm ", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(Qrcode_OD.this, ListPickPositionOD.class);
-//                    intent.putExtra("inventory", "333");
-//                    intent.putExtra("id_unique_IVT", id_unique_IVT);
             startActivity(intent);
             finish();
         }
-
-//            }
-//        }
-
     }
     private void Checkproduct_Code(){
         Intent intentt = new Intent(getApplication(), ListPickPositionOD.class);
@@ -734,10 +694,12 @@ public class Qrcode_OD extends AppCompatActivity {
                     intentt.putExtra("stockin_date", stockinDate);
                 }
 
+
                 intentt.putExtra("inventory", "333");
                 // truyền qua cho ListQRcode để add vào text HSD
                 intentt.putExtra("exp_date", expDateTemp2);
                 intentt.putExtra("ea_unit", mString[which]);
+                DatabaseHelper.getInstance().updateAllow_OD(pro_cd,pro_code,batch_number,mString[which]);
                 startActivity(intentt);
                 DatabaseHelper.getInstance().deleteallExp_date();
                 DatabaseHelper.getInstance().deleteallEa_Unit();

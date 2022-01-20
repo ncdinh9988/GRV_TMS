@@ -155,13 +155,13 @@ public class LPNOD extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (position != null || checkToFinish != null) {
-                    Intent intent = new Intent(LPNOD.this, HomeOD.class);
-                    startActivity(intent);
+//                if (position != null || checkToFinish != null) {
+//                    Intent intent = new Intent(LPNOD.this, HomeOD.class);
+//                    startActivity(intent);
+//                    finish();
+//                } else {
                     finish();
-                } else {
-                    finish();
-                }
+//                }
             }
         });
 
@@ -215,15 +215,25 @@ public class LPNOD extends AppCompatActivity {
 
 
         textView.setText(message);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                Intent intentToHomeQRActivity = new Intent(LPNOD.this, HomeOD.class);
-                startActivity(intentToHomeQRActivity);
-                finish();
-            }
-        });
+        if(message.equals("Lưu thành công")){
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    Intent intentToHomeQRActivity = new Intent(LPNOD.this, HomeOD.class);
+                    startActivity(intentToHomeQRActivity);
+                    finish();
+                }
+            });
+        }else{
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+
+                }
+            });
+        }
         dialog.show();
     }
 

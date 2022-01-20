@@ -215,6 +215,47 @@ public class Webservice {
         }
     }
 
+    public  String Check_OD_Have_LPN(String OUTBOUND_DELIVERY_CD){
+        String webServiceFunc = "Check_OD_Have_LPN";
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        String imei = CmnFns.getImei(getAppContext());
+
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("UserCode");
+        param1.setValue(CmnFns.readDataAdmin());
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+        // Param 1
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("OUTBOUND_DELIVERY_CD");
+        param2.setValue(OUTBOUND_DELIVERY_CD);
+        param2.setType(String.class);
+        request.addProperty(param2);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Check Stockout : " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Check Stockout : " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
     public  String Get_Status_Stock_Out(String order_cd){
         String webServiceFunc = "Get_Status_Stock_Out";
 
@@ -1095,6 +1136,73 @@ public class Webservice {
         param3.setValue(lpn_code);
         param3.setType(String.class);
         request.addProperty(param3);
+
+        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+                SoapEnvelope.VER11);
+        envelope.dotNet = true;
+        envelope.headerOut = this.getHeader();
+        envelope.setOutputSoapObject(request);
+        HttpTransportSE androidHttpTransport = new HttpTransportSE(
+                UrlWebserviceToSynchronize, timeOut);
+        Log.d("checkURL", UrlWebserviceToSynchronize);
+
+        try {
+            androidHttpTransport.call(SOAP_ACTION + webServiceFunc, envelope);
+            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+            global.lstLogUp.add("Upload: AddNew_Customer Success" + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            return response.toString();
+
+        } catch (Exception e) {
+            global.lstLogUp.add("Upload: AddNew_Customer Failed: " + e.getMessage() + " " + CmnFns.getTimeOfPDA(global.getFormatDate()));
+            //  CmnFns.writeLogError("AddNew:  " + e.getMessage());
+            return "-1";
+        }
+    }
+
+    public String GetProductByZone_With_Position(String qrcode, String salescode, String type , int IsLPN , String CD ,String Warehouse_Position_CD) {
+        String webServiceFunc = "";
+
+        webServiceFunc = "GetProductByZone_With_Position";
+
+
+        SoapObject request = new SoapObject(this.NAMESPACE, webServiceFunc);
+        // Param 1
+        PropertyInfo param1 = new PropertyInfo();
+        param1.setName("BarCode");
+        param1.setValue(qrcode);
+        param1.setType(String.class);
+        request.addProperty(param1);
+
+//         Param 2
+        PropertyInfo param2 = new PropertyInfo();
+        param2.setName("UserCode");
+        param2.setValue(salescode);
+        param2.setType(String.class);
+        request.addProperty(param2);
+
+        PropertyInfo param3 = new PropertyInfo();
+        param3.setName("Type");
+        param3.setValue(type);
+        param3.setType(String.class);
+        request.addProperty(param3);
+
+        PropertyInfo param4 = new PropertyInfo();
+        param4.setName("IsLPN");
+        param4.setValue(IsLPN);
+        param4.setType(String.class);
+        request.addProperty(param4);
+
+        PropertyInfo param5 = new PropertyInfo();
+        param5.setName("CD");
+        param5.setValue(CD);
+        param5.setType(String.class);
+        request.addProperty(param5);
+
+        PropertyInfo param6 = new PropertyInfo();
+        param6.setName("Warehouse_Position_CD");
+        param6.setValue(Warehouse_Position_CD);
+        param6.setType(String.class);
+        request.addProperty(param6);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
                 SoapEnvelope.VER11);
