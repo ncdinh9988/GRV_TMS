@@ -48,7 +48,18 @@
         <activity android:name=".LetDown.LetDownSuggestionsActivity" />
         <activity android:name=".LPN.LPNActivity" />
         <activity android:name=".PickList.NewWareHouseActivity" />
-
+        <activity
+            android:name=".StockOut.OD.Qrcode_Stock_Out_OD"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StockOut.OD.Qrcode_Stock_Out_OD_Finish"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StockOut.OD.Home_Stockout_OD"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StockOut.Home_Stockout_Total"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ListOD.Qrcode_OD"
             android:screenOrientation="portrait" />

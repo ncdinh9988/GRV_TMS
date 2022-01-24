@@ -95,7 +95,7 @@ public class LPNOD extends AppCompatActivity {
         setting = sharedPreff.getString("checked", "");
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
-                setContentView(R.layout.layout_qrcode);
+                setContentView(R.layout.layout_qrcode_od);
                 init();
                 getDataFromIntent();
                 if (setting.equals("HoneyWell")) {
@@ -110,7 +110,7 @@ public class LPNOD extends AppCompatActivity {
                 }
 
             }else {
-                setContentView(R.layout.activity_load_camera);
+                setContentView(R.layout.activity_load_camera_od);
                 init();
                 getDataFromIntent();
                 initialiseDetectorsAndSources();
@@ -289,7 +289,6 @@ public class LPNOD extends AppCompatActivity {
 
     private void init() {
         Intent intent = getIntent();
-
         lpn_od = intent.getStringExtra("lpn_od");
         toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
         btnSend = findViewById(R.id.btnSend);
@@ -323,7 +322,7 @@ public class LPNOD extends AppCompatActivity {
         checkBoxGetDVT.setVisibility(View.GONE);
         checkBoxGetLPN.setVisibility(View.GONE);
         tvOD.setVisibility(View.VISIBLE);
-        textViewTitle.setText("QUÉT MÃ - LPN OD");
+
 
     }
 

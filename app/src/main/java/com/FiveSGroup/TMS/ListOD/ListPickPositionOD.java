@@ -87,7 +87,7 @@ public class ListPickPositionOD extends AppCompatActivity implements View.OnClic
         btnok = findViewById(R.id.buttonOK);
         listViewProduct = findViewById(R.id.LoadWebService);
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText("Danh Sách SP Let Down");
+        tvTitle.setText("Danh Sách SP Pick OD");
         btnscan_barcode.setOnClickListener(this);
         buttonBack.setOnClickListener(this);
         btnok.setOnClickListener(this);

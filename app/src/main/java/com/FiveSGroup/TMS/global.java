@@ -161,6 +161,15 @@ public class global extends Application {
     private static String outbound_Delivery_CD = "";
     private static String position_CD = "";
     private static String position_LPN = "";
+    private static String linkOD = "";
+
+    public static String getLinkOD() {
+        return linkOD;
+    }
+
+    public static void setLinkOD(String linkOD) {
+        global.linkOD = linkOD;
+    }
 
     public static String getPosition_LPN() {
         return position_LPN;
@@ -278,7 +287,24 @@ public class global extends Application {
     }
 
     private static String CancelCD = "";
+    private static String Stockout_od_cd = "";
+    private static String Outbound_od_cd = "";
 
+    public static String getStockout_od_cd() {
+        return Stockout_od_cd;
+    }
+
+    public static void setStockout_od_cd(String stockout_od_cd) {
+        Stockout_od_cd = stockout_od_cd;
+    }
+
+    public static String getOutbound_od_cd() {
+        return Outbound_od_cd;
+    }
+
+    public static void setOutbound_od_cd(String outbound_od_cd) {
+        Outbound_od_cd = outbound_od_cd;
+    }
 
     public static String getCancelCD() {
         return CancelCD;

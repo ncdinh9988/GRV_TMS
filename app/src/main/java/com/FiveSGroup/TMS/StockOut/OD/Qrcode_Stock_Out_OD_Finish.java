@@ -1,4 +1,4 @@
-package com.FiveSGroup.TMS.ListOD;
+package com.FiveSGroup.TMS.StockOut.OD;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -38,6 +38,7 @@ import androidx.core.content.ContextCompat;
 
 import com.FiveSGroup.TMS.CmnFns;
 import com.FiveSGroup.TMS.DatabaseHelper;
+
 import com.FiveSGroup.TMS.R;
 import com.FiveSGroup.TMS.global;
 import com.budiyev.android.codescanner.CodeScanner;
@@ -51,7 +52,7 @@ import com.google.zxing.Result;
 
 import java.io.IOException;
 
-public class OutboundOD extends AppCompatActivity {
+public class Qrcode_Stock_Out_OD_Finish extends AppCompatActivity {
     private SurfaceView surfaceView;
     private CodeScanner mCodeScanner;
     private BarcodeDetector barcodeDetector;
@@ -62,9 +63,9 @@ public class OutboundOD extends AppCompatActivity {
     private TextView barcodeText ,tvOD;
     private String barcodeData;
     Button btndone;
-    String outbound_od = "";
     boolean check = false;
     String position = "" , LPN ="";
+    String lpn_stokout_od = "";
     String positionOD = "";
     String checkToFinish = "" , id_unique_IVT = "";
     TextView textViewTitle;
@@ -97,9 +98,9 @@ public class OutboundOD extends AppCompatActivity {
                 if (setting.equals("HoneyWell")) {
 
                 } else {
-                    if (ContextCompat.checkSelfPermission(OutboundOD.this, Manifest.permission.CAMERA)
+                    if (ContextCompat.checkSelfPermission(Qrcode_Stock_Out_OD_Finish.this, Manifest.permission.CAMERA)
                             == PackageManager.PERMISSION_DENIED) {
-                        ActivityCompat.requestPermissions(OutboundOD.this, new String[]{Manifest.permission.CAMERA}, 123);
+                        ActivityCompat.requestPermissions(Qrcode_Stock_Out_OD_Finish.this, new String[]{Manifest.permission.CAMERA}, 123);
                     } else {
                         startScanning();
                     }
@@ -114,7 +115,6 @@ public class OutboundOD extends AppCompatActivity {
             }
         } catch (Exception e) {
             Log.d("error_od",""+ e.toString());
-
         }
         if (setting.equals("HoneyWell")) {
             edtBarcode.addTextChangedListener(new TextWatcher() {
@@ -152,7 +152,7 @@ public class OutboundOD extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (position != null || checkToFinish != null) {
-                    Intent intent = new Intent(OutboundOD.this, HomeOD.class);
+                    Intent intent = new Intent(Qrcode_Stock_Out_OD_Finish.this, Home_Stockout_OD.class);
                     startActivity(intent);
                     finish();
                 } else {
@@ -165,7 +165,7 @@ public class OutboundOD extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    CmnFns.hideSoftKeyboard(OutboundOD.this);
+                    CmnFns.hideSoftKeyboard(Qrcode_Stock_Out_OD_Finish.this);
                 } catch (Exception e) {
 
                 }
@@ -181,8 +181,7 @@ public class OutboundOD extends AppCompatActivity {
         btndone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String statusGetcode = new CmnFns().checkPositionOD(tvOD.getText().toString());
-                String result = new CmnFns().Scan_Outbound_OD(statusGetcode, global.getOutbound_Delivery_CD());
+                String result = new CmnFns().synchronizeData_With_Message(tvOD.getText().toString(),"OD_WSO");
                 Toast.makeText(getApplicationContext(),""+ result,Toast.LENGTH_LONG);
                 if (result.equals("1")) {
                     ShowSuccessMessage("Lưu thành công");
@@ -196,9 +195,9 @@ public class OutboundOD extends AppCompatActivity {
     }
 
     private void ShowSuccessMessage(String message) {
-        LayoutInflater factory = LayoutInflater.from(OutboundOD.this);
+        LayoutInflater factory = LayoutInflater.from(Qrcode_Stock_Out_OD_Finish.this);
         View layout_cus = factory.inflate(R.layout.layout_show_check_wifi, null);
-        final AlertDialog dialog = new AlertDialog.Builder(OutboundOD.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
+        final AlertDialog dialog = new AlertDialog.Builder(Qrcode_Stock_Out_OD_Finish.this, R.style.Theme_AppCompat_Light_Dialog_MinWidth).create();
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ColorDrawable back = new ColorDrawable(Color.TRANSPARENT);
         InsetDrawable inset = new InsetDrawable(back, 64);
@@ -216,8 +215,9 @@ public class OutboundOD extends AppCompatActivity {
             btnClose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    DatabaseHelper.getInstance().deleteProduct_Stockout_OD();
                     dialog.dismiss();
-                    Intent intentToHomeQRActivity = new Intent(OutboundOD.this, HomeOD.class);
+                    Intent intentToHomeQRActivity = new Intent(Qrcode_Stock_Out_OD_Finish.this, Home_Stockout_OD.class);
                     startActivity(intentToHomeQRActivity);
                     finish();
                 }
@@ -231,15 +231,14 @@ public class OutboundOD extends AppCompatActivity {
                 }
             });
         }
-
         dialog.show();
     }
 
     private void GetData(final String barcodeData) {
         positionOD = barcodeData;
-
-        Intent intent = new Intent(OutboundOD.this,OutboundOD_Finish.class);
-        intent.putExtra("outbound_od",positionOD);
+        global.setPosition_CD(positionOD);
+        Intent intent = new Intent(Qrcode_Stock_Out_OD_Finish.this, Qrcode_Stock_Out_OD.class);
+        intent.putExtra("lpn_stokout_od",positionOD);
         startActivity(intent);
         finish();
 
@@ -255,10 +254,9 @@ public class OutboundOD extends AppCompatActivity {
                     @Override
                     public void run() {
                         positionOD = result.getText();
-
-                        Intent intent = new Intent(OutboundOD.this,OutboundOD_Finish.class);
-
-                        intent.putExtra("outbound_od",positionOD);
+                        global.setPosition_CD(positionOD);
+                        Intent intent = new Intent(Qrcode_Stock_Out_OD_Finish.this,Qrcode_Stock_Out_OD.class);
+                        intent.putExtra("lpn_stokout_od",positionOD);
                         startActivity(intent);
                         finish();
                     }
@@ -288,17 +286,17 @@ public class OutboundOD extends AppCompatActivity {
     private void init() {
         Intent intent = getIntent();
 
-        outbound_od = intent.getStringExtra("outbound_od");
+        lpn_stokout_od = intent.getStringExtra("lpn_stokout_od");
         toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
         btnSend = findViewById(R.id.btnSend);
         edtBarcode = findViewById(R.id.edtBarcode);
         btndone = findViewById(R.id.btndone);
         btndone.setVisibility(View.VISIBLE);
         tvOD = findViewById(R.id.tvOD);
-        if(outbound_od.equals(null) || outbound_od.equals("")){
+        if(lpn_stokout_od.equals(null) || lpn_stokout_od.equals("")){
 
         }else{
-            tvOD.setText(outbound_od);
+            tvOD.setText(lpn_stokout_od);
         }
         checkBoxGetDVT = findViewById(R.id.checkBoxGetDVT);
         checkBoxGetLPN = findViewById(R.id.checkBoxGetLPN);
@@ -307,8 +305,7 @@ public class OutboundOD extends AppCompatActivity {
         barcodeText = findViewById(R.id.barcode_text);
         textViewTitle = findViewById(R.id.tvTitle);
 
-        textViewTitle.setText("QUÉT MÃ - VỊ TRÍ OB OD");
-
+        textViewTitle.setText("QUÉT MÃ - XUẤT KHO LPN OD");
         buttonBack = findViewById(R.id.buttonQRBack);
 
     }
@@ -316,12 +313,9 @@ public class OutboundOD extends AppCompatActivity {
 
 
     private void getDataFromIntent() {
-
-
         checkBoxGetDVT.setVisibility(View.GONE);
         checkBoxGetLPN.setVisibility(View.GONE);
         tvOD.setVisibility(View.VISIBLE);
-        textViewTitle.setText("QUÉT MÃ - LPN OD");
 
     }
 
@@ -342,10 +336,10 @@ public class OutboundOD extends AppCompatActivity {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    if (ActivityCompat.checkSelfPermission(OutboundOD.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(Qrcode_Stock_Out_OD_Finish.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
                     } else {
-                        ActivityCompat.requestPermissions(OutboundOD.this, new
+                        ActivityCompat.requestPermissions(Qrcode_Stock_Out_OD_Finish.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
 
@@ -387,15 +381,14 @@ public class OutboundOD extends AppCompatActivity {
                                 try {
                                     barcodeData = barcodes.valueAt(0).displayValue;
                                     positionOD = barcodeData;
-
-                                    Intent intent = new Intent(OutboundOD.this,OutboundOD_Finish.class);
-                                    intent.putExtra("outbound_od",positionOD);
-                                    global.setPosition_LPN(positionOD);
+                                    global.setPosition_CD(positionOD);
+                                    Intent intent = new Intent(Qrcode_Stock_Out_OD_Finish.this,Qrcode_Stock_Out_OD.class);
+                                    intent.putExtra("lpn_stokout_od",positionOD);
                                     startActivity(intent);
                                     finish();
 
                                 } catch (Exception e) {
-                                    Toast.makeText(OutboundOD.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Qrcode_Stock_Out_OD_Finish.this, "Vui Lòng Thử Lại", Toast.LENGTH_LONG).show();
                                 }
 
 

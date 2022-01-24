@@ -268,6 +268,7 @@ public class HomeOD extends AppCompatActivity {
                         String chuoi2[] = code.split("&");
                         String obdl = chuoi2[0];
                         global.setOutbound_Delivery_CD(obdl);
+                        global.setLinkOD(url);
 
                         tvTitle.setText("Thông Tin Chi Tiết OD");
                         btn1.setVisibility(View.GONE);
@@ -276,9 +277,9 @@ public class HomeOD extends AppCompatActivity {
                         btnchuyendvt.setVisibility(View.VISIBLE);
                         btnback.setVisibility(View.GONE);
 
-                        SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("linkOD", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("masterpick_cd", obdl);
+                        editor.putString("linkOD", url);
                         editor.apply();
 
                     }
@@ -290,8 +291,8 @@ public class HomeOD extends AppCompatActivity {
                         btnback.setVisibility(View.VISIBLE);
                         SharedPreferences settings = getSharedPreferences("name", Context.MODE_PRIVATE);
                         settings.edit().clear().apply();
-                        SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
-                        sharedPreferences.edit().clear().apply();
+//                        SharedPreferences sharedPreferences = getSharedPreferences("masterpick", Context.MODE_PRIVATE);
+//                        sharedPreferences.edit().clear().apply();
 
                     }
                     progressBar.setVisibility(View.GONE);
@@ -344,33 +345,18 @@ public class HomeOD extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        SharedPreferences settings = this.getSharedPreferences("name_master_pick", Context.MODE_PRIVATE);
+        SharedPreferences settings = this.getSharedPreferences("linkOD", Context.MODE_PRIVATE);
         settings.edit().clear().apply();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        eventbus = EventBus.getDefault().getStickyEvent(ValueEventbus.class);
-//        if(eventbus != null){
-//            value = eventbus.getValue();
-//            EventBus.getDefault().removeStickyEvent(ValueEventbus.class);
-//        }
         SharedPreferences prefs = this.
-                getSharedPreferences("name_master_pick", Activity.MODE_PRIVATE);
-        String s = prefs.getString("lastUrl", "");
+                getSharedPreferences("linkOD", Activity.MODE_PRIVATE);
+        String s = prefs.getString("linkOD", "");
         if (!s.equals("")) {
-//            if(s.contains("POSITION_CD")){
-//                String chuoi[] = s.split("&");
-//                String code = chuoi[0];
-//                String chuoi1[] = s.split("&");
-//                String code1 = chuoi1[1];
-//                String link = code + code1;
-//                mWebview.loadUrl(link);
-//            }else{
-                mWebview.loadUrl(s);
-//            }
-
+            mWebview.loadUrl(s);
         }
 
     }
@@ -378,11 +364,11 @@ public class HomeOD extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences prefs = this.
-                getSharedPreferences("name_master_pick", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putString("lastUrl", mWebview.getUrl());
-        edit.commit();   // can use edit.apply() but in this case commit is better
+//        SharedPreferences prefs = this.
+//                getSharedPreferences("name_master_pick", Activity.MODE_PRIVATE);
+//        SharedPreferences.Editor edit = prefs.edit();
+//        edit.putString("lastUrl", mWebview.getUrl());
+//        edit.commit();   // can use edit.apply() but in this case commit is better
     }
 
     @Override

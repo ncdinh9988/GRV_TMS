@@ -28,6 +28,7 @@ import com.FiveSGroup.TMS.QA.Pickup.Product_Pickup;
 import com.FiveSGroup.TMS.QA.Return_QA.Product_Return_QA;
 import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
+import com.FiveSGroup.TMS.StockOut.OD.Product_Stockout_OD;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
 import com.FiveSGroup.TMS.TowingContainers.Product_Photo_Containers;
@@ -134,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Database Version
-    public static final int DATABASE_VERSION = 195; // version của DB khi thay
+    public static final int DATABASE_VERSION = 196; // version của DB khi thay
     // đổi cấu trúc DB phải tăng
     // số version lên
 
@@ -201,6 +202,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_O_LPN_SO);
         db.execSQL(CREATE_TABLE_O_PHOTO_CONTAINERS);
         db.execSQL(CREATE_TABLE_O_PARAM_LAYOUT);
+        db.execSQL(CREATE_TABLE_O_STOCKOUT_OD);
     }
 
     @Override
@@ -741,8 +743,89 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } catch (Exception e) {
             // TODO: handle exception
         }
+        //version DB 196
+        try {
+            db.execSQL(CREATE_TABLE_O_STOCKOUT_OD);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 
     }
+    public static final String O_STOCKOUT_OD = "O_STOCKOUT_OD";
+    public static final String AUTOINCREMENT_STOCKOUT_OD = "AUTOINCREMENT_STOCKOUT_OD";
+    public static final String POSITION_TO_CD_STOCKOUT_OD= "POSITION_TO_CD_STOCKOUT_OD";
+    public static final String POSITION_CODE_STOCKOUT_OD = "POSITION_CODE_STOCKOUT_OD";
+    public static final String LPN_CODE_STOCKOUT_OD = "LPN_CODE_STOCKOUT_OD";
+    public static final String LPN_TO_STOCKOUT_OD = "LPN_TO_STOCKOUT_OD";
+    public static final String OUTBOUND_DELIVERY_CD_STOCKOUT_OD = "OUTBOUND_DELIVERY_CD_STOCKOUT_OD";
+
+
+    public static final String CREATE_TABLE_O_STOCKOUT_OD = "CREATE TABLE "
+            + O_STOCKOUT_OD + "("
+            + AUTOINCREMENT_STOCKOUT_OD + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+            + POSITION_TO_CD_STOCKOUT_OD + " TEXT,"
+            + POSITION_CODE_STOCKOUT_OD + " TEXT,"
+            + LPN_CODE_STOCKOUT_OD + " TEXT,"
+            + LPN_TO_STOCKOUT_OD + " TEXT,"
+            + OUTBOUND_DELIVERY_CD_STOCKOUT_OD + " TEXT"  + ")";
+
+
+    public long Create_Stockout_OD(Product_Stockout_OD qrcode) {
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+
+        ContentValues values = new ContentValues();
+
+        values.put(POSITION_TO_CD_STOCKOUT_OD, qrcode.getPOSITION_TO_CD());
+        values.put(POSITION_CODE_STOCKOUT_OD, qrcode.getPOSITION_CODE());
+        values.put(LPN_CODE_STOCKOUT_OD, qrcode.getLPN_CODE());
+        values.put(LPN_TO_STOCKOUT_OD, qrcode.getLPN_TO());
+        values.put(OUTBOUND_DELIVERY_CD_STOCKOUT_OD,qrcode.getOUTBOUND_DELIVERY_CD());
+
+        // insert row
+        long id = db.insert(O_STOCKOUT_OD, null, values);
+        return id;
+    }
+
+    public ArrayList<Product_Stockout_OD>
+    getAllProduct_Stockout_OD() {
+        ArrayList<Product_Stockout_OD> listod = new ArrayList<Product_Stockout_OD>();
+        SQLiteDatabase db = sInstance.getReadableDatabase(DatabaseHelper.PWD);
+        String selectQuery = "SELECT  *  FROM " + O_STOCKOUT_OD ;
+        Cursor c = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (c != null && c.moveToFirst()) {
+            do {
+
+                Product_Stockout_OD qrcode = new Product_Stockout_OD();
+                qrcode.setAUTOINCREMENT((c.getString(c
+                        .getColumnIndex(AUTOINCREMENT_STOCKOUT_OD))));
+                qrcode.setPOSITION_CODE((c.getString(c
+                        .getColumnIndex(POSITION_CODE_STOCKOUT_OD))));
+                qrcode.setPOSITION_TO_CD((c.getString(c
+                        .getColumnIndex(POSITION_TO_CD_STOCKOUT_OD))));
+                qrcode.setLPN_CODE((c.getString(c
+                        .getColumnIndex(LPN_CODE_STOCKOUT_OD))));
+                qrcode.setLPN_TO((c.getString(c
+                        .getColumnIndex(LPN_TO_STOCKOUT_OD))));
+                qrcode.setOUTBOUND_DELIVERY_CD((c.getString(c
+                        .getColumnIndex(OUTBOUND_DELIVERY_CD_STOCKOUT_OD))));
+
+                listod.add(qrcode);
+            } while (c.moveToNext());
+        }
+
+        c.close();
+        return listod;
+    }
+
+    public void deleteProduct_Stockout_OD() {
+        // TODO Auto-generated method stub
+        SQLiteDatabase db = sInstance.getWritableDatabase(DatabaseHelper.PWD);
+        db.execSQL("delete from " + O_STOCKOUT_OD);
+    }
+
+
     public static final String O_OD = "O_OD";
     public static final String AUTOINCREMENT_OD = "AUTOINCREMENT_OD";
     public static final String PRODUCT_CD_OD = "PRODUCT_CD_OD";

@@ -91,7 +91,7 @@ public class OutboundOD_Finish extends AppCompatActivity {
         setting = sharedPreff.getString("checked", "");
         try {
             if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) && (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)) {
-                setContentView(R.layout.layout_qrcode);
+                setContentView(R.layout.layout_qrcode_od);
                 init();
                 getDataFromIntent();
                 if (setting.equals("HoneyWell")) {
@@ -106,7 +106,7 @@ public class OutboundOD_Finish extends AppCompatActivity {
                 }
 
             }else {
-                setContentView(R.layout.activity_load_camera);
+                setContentView(R.layout.activity_load_camera_od);
                 init();
                 getDataFromIntent();
                 initialiseDetectorsAndSources();

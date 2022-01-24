@@ -64,6 +64,7 @@ import com.FiveSGroup.TMS.RemoveFromLPN.Product_Remove_LPN;
 import com.FiveSGroup.TMS.ReturnWareHouse.Product_Return_WareHouse;
 import com.FiveSGroup.TMS.Security.P5sSecurity;
 import com.FiveSGroup.TMS.ShowDialog.Dialog;
+import com.FiveSGroup.TMS.StockOut.OD.Product_Stockout_OD;
 import com.FiveSGroup.TMS.StockOut.Product_StockOut;
 import com.FiveSGroup.TMS.StockTransfer.Product_StockTransfer;
 import com.FiveSGroup.TMS.TransferQR.ChuyenMa.Product_ChuyenMa;
@@ -6194,20 +6195,24 @@ public class CmnFns {
 
 
             try {
+                if(type.equals("OD")){
 
-                if ((!type.equals("WWA")) || (!type.equals("WST"))) {
-                    JSONArray jsonarray = new JSONArray(jsonData);
-                    for (int j = 0; j < jsonarray.length(); j++) {
-                        // lấy một đối tượng json để
-                        JSONObject jsonobj = jsonarray.getJSONObject(j);
-                        String qty = jsonobj.getString("QTY");
-                        Log.d("ddddddd", qty);
-                        if (qty.equals("0") || qty.equals("") || qty.equals("00") || qty.equals("000")) {
-                            return -24;
+                }else{
+                    if ((!type.equals("WWA")) || (!type.equals("WST"))|| (!type.equals("OD"))) {
+                        JSONArray jsonarray = new JSONArray(jsonData);
+                        for (int j = 0; j < jsonarray.length(); j++) {
+                            // lấy một đối tượng json để
+                            JSONObject jsonobj = jsonarray.getJSONObject(j);
+                            String qty = jsonobj.getString("QTY");
+                            Log.d("ddddddd", qty);
+                            if (qty.equals("0") || qty.equals("") || qty.equals("00") || qty.equals("000")) {
+                                return -24;
+                            }
+
                         }
-
                     }
                 }
+
             } catch (Exception e) {
 
             }
@@ -6275,6 +6280,62 @@ public class CmnFns {
                 //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
                 return "Lưu thành công";
             } else {
+                // đồng bộ không thành công
+                return result;
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            return "Có lỗi xảy ra vui lòng thử lại";
+        }
+
+    }
+
+    public String synchronizeData_With_Message(String barcode, String type ) {
+
+        try {
+            String usercode = CmnFns.readDataAdmin();
+
+            int status = this.allowSynchronizeBy3G();
+            if (status == 102 || status == -1) {
+                return "Vui Lòng Kiểm Tra Kết Nối Mạng";
+            }
+
+            String jsonData = "";
+            Webservice Webservice = new Webservice();
+            //String json = convertToJson(customers);
+            Gson gson = new GsonBuilder().create();
+
+            Product_Stockout_OD sp = new Product_Stockout_OD();
+            sp.setLPN_CODE(barcode);
+            sp.setLPN_TO("");
+            sp.setOUTBOUND_DELIVERY_CD(global.getOutbound_od_cd());
+            sp.setPOSITION_CODE("");
+            sp.setPOSITION_TO_CD(global.getStockout_od_cd());
+
+            DatabaseHelper.getInstance().Create_Stockout_OD(sp);
+
+
+            // xuất kho OD
+            if (type.equals("OD_WSO")) {
+                List<Product_Stockout_OD> product = DatabaseHelper.getInstance().getAllProduct_Stockout_OD();
+                if (product == null || product.size() == 0)
+                    return "Không Có Danh Sách Dữ Liệu ";
+                jsonData = gson.toJson(product);
+            }
+
+            // lấy các khách hàng chưa đồng bộ, đã
+            // đồng bộ về rồi
+            // thì sẽ ko cần
+            // phải đồng bộ nữa
+
+            String result = Webservice.synchronizeData_With_Message(jsonData, usercode, type);
+            if (result.contains("Lưu thành công")) {
+                // đã đồng bộ thành công update để lần sau không đồng bộ lại
+                //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
+                return "Lưu thành công";
+            } else {
+                DatabaseHelper.getInstance().deleteProduct_Stockout_OD();
                 // đồng bộ không thành công
                 return result;
             }
@@ -6730,6 +6791,16 @@ public class CmnFns {
                     }
                 }
                 if (jsonobj.getString("ParamKey").toString().equals("URL_WarehouseAdjust")) {
+                    CParam param = new CParam();
+                    param.setKey(jsonobj.getString("ParamKey"));
+                    param.setValue(jsonobj.getString("ParamValue"));
+                    if (DatabaseHelper.getInstance().checkExistsParam(jsonobj.getString("ParamKey"))) {
+                        DatabaseHelper.getInstance().updateParam(param);
+                    } else {
+                        DatabaseHelper.getInstance().createParam(param);
+                    }
+                }
+                if (jsonobj.getString("ParamKey").toString().equals("URL_StockOutOD")) {
                     CParam param = new CParam();
                     param.setKey(jsonobj.getString("ParamKey"));
                     param.setValue(jsonobj.getString("ParamValue"));
