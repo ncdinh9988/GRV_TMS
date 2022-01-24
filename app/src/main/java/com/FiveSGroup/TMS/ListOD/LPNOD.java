@@ -185,13 +185,18 @@ public class LPNOD extends AppCompatActivity {
         btndone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String result = new CmnFns().Check_LPN_With_OD(tvOD.getText().toString(), global.getOutbound_Delivery_CD());
-                Toast.makeText(getApplicationContext(),""+ result,Toast.LENGTH_LONG);
-                if (result.equals("1")) {
-                    ShowSuccessMessage("Lưu thành công");
-                } else {
-                    ShowSuccessMessage(result);
+                try {
+                    String result = new CmnFns().Check_LPN_With_OD(tvOD.getText().toString(), global.getOutbound_Delivery_CD());
+                    Toast.makeText(getApplicationContext(),""+ result,Toast.LENGTH_LONG);
+                    if (result.equals("1")) {
+                        ShowSuccessMessage("Lưu thành công");
+                    } else {
+                        ShowSuccessMessage(result);
+                    }
+                }catch (Exception e){
+                    Log.d("error" , e.toString());
                 }
+
             }
         });
 

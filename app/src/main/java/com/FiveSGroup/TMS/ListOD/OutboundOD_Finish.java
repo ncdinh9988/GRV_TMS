@@ -180,14 +180,19 @@ public class OutboundOD_Finish extends AppCompatActivity {
         btndone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String statusGetcode = new CmnFns().checkPositionOD(tvOD.getText().toString());
-                String result = new CmnFns().Scan_Outbound_OD(statusGetcode, global.getOutbound_Delivery_CD());
-                Toast.makeText(getApplicationContext(),""+ result,Toast.LENGTH_LONG);
-                if (result.equals("1")) {
-                    ShowSuccessMessage("Lưu thành công");
-                } else {
-                    ShowSuccessMessage(result);
+                try {
+                    String statusGetcode = new CmnFns().checkPositionOD(tvOD.getText().toString());
+                    String result = new CmnFns().Scan_Outbound_OD(statusGetcode, global.getOutbound_Delivery_CD());
+                    Toast.makeText(getApplicationContext(),""+ result,Toast.LENGTH_LONG);
+                    if (result.equals("1")) {
+                        ShowSuccessMessage("Lưu thành công");
+                    } else {
+                        ShowSuccessMessage(result);
+                    }
+                }catch (Exception e){
+                    Log.d("error" , e.toString());
                 }
+
             }
         });
 

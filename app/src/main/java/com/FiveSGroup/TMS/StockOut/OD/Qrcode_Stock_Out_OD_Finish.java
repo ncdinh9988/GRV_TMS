@@ -181,13 +181,18 @@ public class Qrcode_Stock_Out_OD_Finish extends AppCompatActivity {
         btndone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String result = new CmnFns().synchronizeData_With_Message(tvOD.getText().toString(),"OD_WSO");
-                Toast.makeText(getApplicationContext(),""+ result,Toast.LENGTH_LONG);
-                if (result.equals("1")) {
-                    ShowSuccessMessage("Lưu thành công");
-                } else {
-                    ShowSuccessMessage(result);
+                try {
+                    String result = new CmnFns().synchronizeData_With_Message(tvOD.getText().toString(),"OD_WSO");
+                    int new_result = Integer.parseInt(result);
+                    if (new_result >= 1) {
+                        ShowSuccessMessage("Lưu thành công");
+                    } else {
+                        ShowSuccessMessage(result);
+                    }
+                }catch (Exception e){
+                    Log.d("error" , e.toString());
                 }
+
             }
         });
 

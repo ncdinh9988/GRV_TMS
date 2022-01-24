@@ -6330,15 +6330,11 @@ public class CmnFns {
             // phải đồng bộ nữa
 
             String result = Webservice.synchronizeData_With_Message(jsonData, usercode, type);
-            if (result.contains("Lưu thành công")) {
-                // đã đồng bộ thành công update để lần sau không đồng bộ lại
-                //DatabaseHelper.getInstance().updateChangeCustomer(customers,  );
-                return "Lưu thành công";
-            } else {
-                DatabaseHelper.getInstance().deleteProduct_Stockout_OD();
-                // đồng bộ không thành công
-                return result;
-            }
+
+            DatabaseHelper.getInstance().deleteProduct_Stockout_OD();
+            // đồng bộ không thành công
+            return result;
+
         } catch (Exception e) {
             // TODO: handle exception
 
