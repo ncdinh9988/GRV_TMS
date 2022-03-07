@@ -1,5 +1,6 @@
 package com.FiveSGroup.TMS.Webservice;
 
+import android.os.Build;
 import android.util.Log;
 
 import com.FiveSGroup.TMS.CmnFns;
@@ -263,10 +264,20 @@ public class WebserviceAuth {
         String serial = CmnFns.getSerial();
         String code = "";
         if(CmnFns.isCheckSale()){
-            code = CmnFns.readDataShipper();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                code = CmnFns.readDataShipperNew();
+            }else{
+                code = CmnFns.readDataShipper();
+            }
         }
         if(CmnFns.isCheckAdmin()){
-            code = CmnFns.readDataAdmin();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                code = CmnFns.readDataAdminNew();
+            }else{
+                code = CmnFns.readDataAdmin();
+            }
+
         }
 
 //       if(global.getSaleCode() != "") {

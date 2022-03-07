@@ -337,7 +337,17 @@ public class TakePhoto_Containers extends AppCompatActivity implements View.OnCl
 
 
             File file = null;
-            File image = CreateFile(TakePhoto_Containers.this.getApplicationContext().getString(R.string.PathFolderSalePictureContainer), imageFileName, file);
+            File image = null;
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                image = File.createTempFile(imageFileName, /* prefix */
+                        ".jpg", /* suffix */
+                        storageDir /* directory */
+                );
+            }else {
+                image = CreateFile(TakePhoto_Containers.this.getApplicationContext().getString(R.string.PathFolderSalePictureContainer),
+                        imageFileName, file);
+            }
 
             // lưu thông tin hình ảnh đường dẫn để lưu vào DB sau khi người dùng
             // chụp ảnh thành công

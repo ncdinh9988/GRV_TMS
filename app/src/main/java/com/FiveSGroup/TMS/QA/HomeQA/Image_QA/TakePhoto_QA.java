@@ -354,7 +354,17 @@ public class TakePhoto_QA extends AppCompatActivity implements View.OnClickListe
 
 
             File file = null;
-            File image = CreateFile(TakePhoto_QA.this.getApplicationContext().getString(R.string.PathFolderSalePictureQA), imageFileName, file);
+            File image = null;
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                image = File.createTempFile(imageFileName, /* prefix */
+                        ".jpg", /* suffix */
+                        storageDir /* directory */
+                );
+            }else {
+                image = CreateFile(TakePhoto_QA.this.getApplicationContext().getString(R.string.PathFolderSalePictureQA),
+                        imageFileName, file);
+            }
 
             // lưu thông tin hình ảnh đường dẫn để lưu vào DB sau khi người dùng
             // chụp ảnh thành công

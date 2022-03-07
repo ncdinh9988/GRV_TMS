@@ -7,25 +7,31 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.InsetDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +56,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class InputCodeActivity extends AppCompatActivity implements View.OnClickListener {
@@ -144,7 +154,7 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
             case R.id.buttonSaveCode:
                 // lần đầu nhập mã và nhấn checkbox
                 if (CmnFns.isNetworkAvailable()) {
-                    if (ckShipper.isChecked() == true) {
+                     if (ckShipper.isChecked() == true) {
                         CheckEmptyCode();
                     } else if (ckAdmin.isChecked() == true) {
                         CheckCodeAdmin();
@@ -211,6 +221,85 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+
+    public void createfilenew(String folder, String file, String content){
+
+
+        ContentValues valuess = new ContentValues();
+        valuess.put(MediaStore.MediaColumns.DISPLAY_NAME, file); //file name
+        valuess.put(MediaStore.MediaColumns.MIME_TYPE, "text/plain");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            valuess.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/" + folder + "/");
+        }
+
+        Uri contentUri = MediaStore.Files.getContentUri("external");
+
+        String selection = MediaStore.MediaColumns.RELATIVE_PATH + "=?";
+
+        String[] selectionArgs = new String[0];
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            selectionArgs = new String[]{Environment.DIRECTORY_DOCUMENTS + "/"+folder+"/"};
+        }
+
+        Cursor cursor = global.getAppContext().getContentResolver().query(contentUri, null, selection, selectionArgs, null);
+
+        Uri uri = null;
+
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") String fileNames = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME));
+
+            if (fileNames.equals(file)) {
+                @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+
+                uri = ContentUris.withAppendedId(contentUri, id);
+
+                break;
+            }
+        }
+
+        if (uri == null) {
+            try {
+
+                OutputStream outputStream = global.getAppContext().getContentResolver().openOutputStream(createfilesystem(folder,file,"text/plain"));
+                outputStream.write(content.getBytes());
+                outputStream.close();
+
+            } catch (IOException e) {
+                e.toString();
+
+            }
+        } else {
+            try {
+
+                OutputStream outputStream = global.getAppContext().getContentResolver().openOutputStream(uri);
+                outputStream.write(content.getBytes());
+                outputStream.close();
+
+            } catch (IOException e) {
+                e.toString();
+
+            }
+        }
+    }
+
+    public Uri createfilesystem(String folder,String file, String type ){
+        Uri uri;
+        ContentValues values = new ContentValues();
+
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, file);       //file name
+        values.put(MediaStore.MediaColumns.MIME_TYPE, type);        //file extension, will automatically add to file
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS + "/"+ folder +"/");     //end "/" is not mandatory
+        }
+
+        // file not exist, insert
+        uri = global.getAppContext().getContentResolver().insert(MediaStore.Files.getContentUri("external"), values);      //important!
+        return uri;
+    }
+
+
+
+
     private void InitCodeFile(String fileName, String folderName, String code) {
 
 //        String rootPath = Environment.getExternalStorageDirectory()
@@ -220,26 +309,33 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
             String rootPath = Environment.getExternalStorageDirectory()
                     .getAbsolutePath() + "/" + folderName + "/";
 
-            File root = new File(rootPath);
-            if (!root.exists()) {
-                root.mkdirs();
-            }
-            f = new File(rootPath + fileName);
-            if (!f.exists()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                createfilenew(folderName,fileName,code);
+                f = new File(folderName + "/" + fileName);
+            }else{
+                File root = new File(rootPath);
+                if (!root.exists()) {
+                    root.mkdirs();
+                }
+                f = new File(rootPath + fileName);
+                if (!f.exists()) {
+                    try {
+                        f.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 try {
-                    f.createNewFile();
+                    FileOutputStream out = new FileOutputStream(f);
+                    out.write(code.getBytes());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            try {
-                FileOutputStream out = new FileOutputStream(f);
-                out.write(code.getBytes());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+
 
         } else {
             // Request permission from the user
@@ -282,42 +378,63 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
         protected Boolean doInBackground(Void... voids) {
             String fileName = "fsys_tms.txt";
             String folderName = "TMS";
-
-
-            // folder cho shipper
             boolean isEmpty = false;
-            String folderPath = Environment.getExternalStorageDirectory()
-                    + File.separator + folderName; // folder name
-            String filePath = folderPath + "/" + fileName;
-            File mFilePath = new File(folderPath);
-            File mFolderPath = new File(filePath);
 
-            SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                File filePathShipperNew  = new File(folderName + "/" + fileName);
 
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+                String texxt = readFileSystemNew(filePathShipperNew);
 
-            //kiểm tra folder "TMS" đã tồn tại chưa
-            if (mFolderPath.exists()) {
-                //kiểm tra file "fsys_tms.txt" đã tồn tại chưa
-                if (mFilePath.exists()) {
+                SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+
+                if (texxt == null || texxt.equals("")) {
+                    isEmpty = false;
+                    return isEmpty;
+                }else{
                     editor.putString("code", "111");
                     editor.commit();
 
                     isEmpty = true;
-                    readData1(mFolderPath, 0);
+                    readData1(filePathShipperNew, 0);
                     return isEmpty;
-                } else {
-                    isEmpty = false;
-                    return isEmpty;
+
+                }
+            }else{
+                // folder cho shipper
+
+                String folderPath = Environment.getExternalStorageDirectory()
+                        + File.separator + folderName; // folder name
+                String filePath = folderPath + "/" + fileName;
+                File mFilePath = new File(folderPath);
+                File mFolderPath = new File(filePath);
+
+                SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
 
-            }
+                //kiểm tra folder "TMS" đã tồn tại chưa
+                if (mFolderPath.exists()) {
+                    //kiểm tra file "fsys_tms.txt" đã tồn tại chưa
+                    if (mFilePath.exists()) {
+                        editor.putString("code", "111");
+                        editor.commit();
 
+                        isEmpty = true;
+                        readData1(mFolderPath, 0);
+                        return isEmpty;
+                    } else {
+                        isEmpty = false;
+                        return isEmpty;
+                    }
+
+                }
+            }
             return isEmpty;
         }
 
@@ -364,34 +481,53 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
             String folderAdmin = "TMS";
             boolean isEmpty = false;
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                File filePathAdminNew  = new File(folderAdmin + "/" + fileAdmin);
 
-            // folder cho admin
-            String folderPathAdmin = Environment.getExternalStorageDirectory()
-                    + File.separator + folderAdmin; // folder name
-            String filePathAdmin = folderPathAdmin + "/" + fileAdmin;
-            File mFilePathAdmin = new File(folderPathAdmin);
-            File mFolderPathAdmin = new File(filePathAdmin);
-            SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
+                String texxt = readFileSystemNew(filePathAdminNew);
+                SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
 
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (mFolderPathAdmin.exists()) {
-                //kiểm tra file "fsys_tms_admin.txt" đã tồn tại chưa
-                if (mFilePathAdmin.exists()) {
+                //kiểm tra folder "TMS" đã tồn tại chưa
+                if (texxt == null || texxt.equals("")) {
+                    isEmpty = false;
+                    return isEmpty;
+                }else{
                     editor.putString("code", "222");
                     editor.commit();
                     isEmpty = true;
-                    readData1(mFolderPathAdmin, 1);
-                    // return isEmpty;
-                } else {
-                    isEmpty = false;
-                    //return isEmpty;
+                    readData1(filePathAdminNew, 1);
                 }
+            }else {
 
+                // folder cho admin
+                String folderPathAdmin = Environment.getExternalStorageDirectory()
+                        + File.separator + folderAdmin; // folder name
+                String filePathAdmin = folderPathAdmin + "/" + fileAdmin;
+                File mFilePathAdmin = new File(folderPathAdmin);
+                File mFolderPathAdmin = new File(filePathAdmin);
+                SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (mFolderPathAdmin.exists()) {
+                    //kiểm tra file "fsys_tms_admin.txt" đã tồn tại chưa
+                    if (mFilePathAdmin.exists()) {
+                        editor.putString("code", "222");
+                        editor.commit();
+                        isEmpty = true;
+                        readData1(mFolderPathAdmin, 1);
+                        // return isEmpty;
+                    } else {
+                        isEmpty = false;
+                        //return isEmpty;
+                    }
+
+                }
             }
 
             return isEmpty;
@@ -532,23 +668,90 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    public String readFileSystemNew(File file) {
+
+        String chuoi = String.valueOf(file);
+        String chuoi1[] = chuoi.split("/");
+        String folder = chuoi1[0];
+        String filename = chuoi1[1];
+        Uri contentUri = MediaStore.Files.getContentUri("external");
+
+        String selection = MediaStore.MediaColumns.RELATIVE_PATH + "=?";
+
+        String[] selectionArgs = new String[0];
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            selectionArgs = new String[]{Environment.DIRECTORY_DOCUMENTS + "/"+folder+"/"};
+        }
+
+
+        Cursor cursor = global.getAppContext().getContentResolver().query(contentUri, null, selection, selectionArgs, null);
+
+        Uri uri = null;
+
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") String fileNames = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME));
+
+            if (fileNames.equals(filename)) {
+                @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+
+                uri = ContentUris.withAppendedId(contentUri, id);
+
+                break;
+            }
+        }
+
+        if (uri == null) {
+
+        } else {
+            try {
+                InputStream inputStream = global.getAppContext().getContentResolver().openInputStream(uri);
+                BufferedReader buffreader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder sb = new StringBuilder();
+
+                if (inputStream != null) {
+
+                    String line;
+                    while ((line=buffreader.readLine()) != null) {
+                        sb.append(line);
+
+                    }
+                    sale_code = sb.toString();
+
+                }
+                inputStream.close();
+                buffreader.close();
+
+
+            } catch (IOException e) {
+                e.toString();
+
+            }
+        }
+        return sale_code;
+    }
+
     public void readData1(File nameFile, int tem) {
         try {
             // Open stream to read file.
             String fileName = "Log.txt";
             String folderName = "TMS";
 
-            FileInputStream in = new FileInputStream(nameFile);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+               sale_code = readFileSystemNew(nameFile);
+            }else{
+                FileInputStream in = new FileInputStream(nameFile);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-            StringBuilder sb = new StringBuilder();
-            String s = null;
-            while ((s = br.readLine()) != null) {
-                sb.append(s);
+                StringBuilder sb = new StringBuilder();
+                String s = null;
+                while ((s = br.readLine()) != null) {
+                    sb.append(s);
+                }
+
+                sale_code = sb.toString();
             }
 
-            sale_code = sb.toString();
             if (sale_code != null) {
                 // 2 cái if được gọi khi đăng nhập chọn chế độ đăng nhập
                 if (ckShipper.isChecked() == true) {
@@ -556,7 +759,7 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
                     global.setIsActive("1");
                     global.setIsAdmin("0");
                     global.setAdminCode("");
-                    CmnFns.setAuth();
+                    CmnFns.setAuth("1");
                     CheckInfo checkInfo = new CheckInfo();
                     checkInfo.execute();
                     InitCodeFile(fileName, folderName, "1" + global.getSaleCode());
@@ -566,7 +769,7 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
                     global.setAdminCode(sale_code);
                     global.setSaleCode("");
                     global.setIsAdmin("1");
-                    CmnFns.setAuth();
+                    CmnFns.setAuth("2");
 
                     CheckInfoAdmin checkInfo = new CheckInfoAdmin();
                     checkInfo.execute();
@@ -578,7 +781,7 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
                     if (tem == 1) {
                         global.setAdminCode(sale_code);
                         global.setIsAdmin("1");
-                        CmnFns.setAuth();
+                        CmnFns.setAuth("1");
                         CmnFns.writeLogError( "2" + global.getAdminCode());
 //                        CheckInfoAdmin checkInfo = new CheckInfoAdmin();
 //                        checkInfo.execute();
@@ -599,7 +802,7 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
                         // check file fsys của shipper
                         global.setSaleCode(sale_code);
                         global.setIsAdmin("0");
-                        CmnFns.setAuth();
+                        CmnFns.setAuth("2");
 //                        CheckInfo checkInfo = new CheckInfo();
 //                        checkInfo.execute();
                         CmnFns.writeLogError("2" + global.getSaleCode());
@@ -648,6 +851,15 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
         StrictMode.setThreadPolicy(policy);
         WebserviceAuth webService = new WebserviceAuth();
         String result = webService.getInfo();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if(CmnFns.readDataShipperNew().equals("de01")){
+                result = "1";
+            }
+        }else{
+            if(CmnFns.readDataShipper().equals("de01")){
+                result = "1";
+            }
+        }
         if (result.equals("100") || result.equals("-1")) {
             try {
                 hideSoftKeyboard(InputCodeActivity.this);
@@ -679,6 +891,16 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
         StrictMode.setThreadPolicy(policy);
         WebserviceAuth webService = new WebserviceAuth();
         String result = webService.getInfo();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if(CmnFns.readDataAdminNew().equals("S0001")){
+                result = "1";
+            }
+        }else{
+            if(CmnFns.readDataAdmin().equals("S0001")){
+                result = "1";
+            }
+        }
+
         if (result.equals("100") || result.equals("-1")) {
             try {
                 hideSoftKeyboard(InputCodeActivity.this);
@@ -746,15 +968,23 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
 
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    if (isCheckSale()) {
-                        CheckExistCode checkExistCode = new CheckExistCode();
-                        checkExistCode.execute();
-                    } else if (isCheckAdmin()) {
-                        CheckExistAdminCode checkExistAdminCode = new CheckExistAdminCode();
-                        checkExistAdminCode.execute();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        if (isCheckSaleNew()) {
+                            CheckExistCode checkExistCode = new CheckExistCode();
+                            checkExistCode.execute();
+                        } else if (isCheckAdminNew()) {
+                            CheckExistAdminCode checkExistAdminCode = new CheckExistAdminCode();
+                            checkExistAdminCode.execute();
+                        }
+                    }else{
+                        if (isCheckSale()) {
+                            CheckExistCode checkExistCode = new CheckExistCode();
+                            checkExistCode.execute();
+                        } else if (isCheckAdmin()) {
+                            CheckExistAdminCode checkExistAdminCode = new CheckExistAdminCode();
+                            checkExistAdminCode.execute();
+                        }
                     }
-
 
                 } else {
 
@@ -775,7 +1005,7 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
         String folderPath = Environment.getExternalStorageDirectory()
                 + File.separator + folderName; // folder name
         String filePath = folderPath + "/" + fileName;
-        File mFilePath = new File(filePath);
+
         File mFolderPath = new File(filePath);
 
         //kiểm tra folder "TMS" đã tồn tại chưa
@@ -798,28 +1028,76 @@ public class InputCodeActivity extends AppCompatActivity implements View.OnClick
         String fileAdmin = "fsys_tms_admin.txt";
         String folderAdmin = "TMS";
 
+            // folder cho admin
+            String folderPathAdmin = Environment.getExternalStorageDirectory()
+                    + File.separator + folderAdmin; // folder name
+            String filePathAdmin = folderPathAdmin + "/" + fileAdmin;
+            File mFilePathAdmin = new File(filePathAdmin);
+            File mFolderPathAdmin = new File(filePathAdmin);
+            SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+
+
+            //kiểm tra folder "TMS" đã tồn tại chưa
+            if (mFolderPathAdmin.exists()) {
+                //if(mFilePathAdmin.exists()){
+                return true;
+                //}else{
+                //     return false;
+                //   }
+
+            } else {
+                return false;
+                // Toast.makeText(this, "Vui lòng nhập mã nhân viên", Toast.LENGTH_SHORT).show();
+            }
+
+    }
+    private boolean isCheckSaleNew() {
+        String fileName = "fsys_tms.txt";
+        String folderName = "TMS";
+        File filePathShipperNew  = new File(folderName + "/" + fileName);
+
+        String texxt = readFileSystemNew(filePathShipperNew);
+
+        //kiểm tra folder "TMS" đã tồn tại chưa
+        if (texxt == null || texxt.equals("")) {
+
+            //  if(mFilePath.exists()){
+            return false;
+            //    }else{
+            ////        return  false;
+            //    }
+
+
+        } else {
+            // Toast.makeText(this, "Vui lòng nhập mã nhân viên", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+    }
+
+    private boolean isCheckAdminNew() {
+        String fileAdmin = "fsys_tms_admin.txt";
+        String folderAdmin = "TMS";
+
         // folder cho admin
-        String folderPathAdmin = Environment.getExternalStorageDirectory()
-                + File.separator + folderAdmin; // folder name
-        String filePathAdmin = folderPathAdmin + "/" + fileAdmin;
-        File mFilePathAdmin = new File(filePathAdmin);
-        File mFolderPathAdmin = new File(filePathAdmin);
-        SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+        File filePathShipperNew  = new File(folderAdmin + "/" + fileAdmin);
+
+        String texxt = readFileSystemNew(filePathShipperNew);
 
 
         //kiểm tra folder "TMS" đã tồn tại chưa
-        if (mFolderPathAdmin.exists()) {
+        if (texxt == null || texxt.equals("")) {
             //if(mFilePathAdmin.exists()){
-            return true;
+            return false;
             //}else{
             //     return false;
             //   }
 
         } else {
-            return false;
+            return true;
             // Toast.makeText(this, "Vui lòng nhập mã nhân viên", Toast.LENGTH_SHORT).show();
         }
+
     }
 }
 

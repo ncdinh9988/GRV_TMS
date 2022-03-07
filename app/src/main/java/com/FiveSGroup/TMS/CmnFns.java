@@ -1,12 +1,15 @@
 package com.FiveSGroup.TMS;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -21,10 +24,12 @@ import android.graphics.drawable.InsetDrawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -97,6 +102,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.security.InvalidAlgorithmParameterException;
@@ -1525,11 +1531,32 @@ public class CmnFns {
 
 
     // hàm lấy thông tin kết nối tới webservice từ fsid.5stars.com.vn:9139
-    public static int setAuth() {
+    public static int setAuth(String type) {
         try {
             WebserviceAuth webServiceauth = new WebserviceAuth();
             String result = webServiceauth.getInfo();
             Log.d("Links", result);
+            String salesCode = "";
+            if(type.equals("1")){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    salesCode = CmnFns.readDataAdminNew();
+                }else{
+                    salesCode = CmnFns.readDataAdmin();
+                }
+            }else if(type.equals("2")){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    salesCode = CmnFns.readDataShipperNew();
+                }else{
+                    salesCode = CmnFns.readDataShipper();
+                }
+            }
+
+            if(salesCode.equals("S0001") || salesCode.equals("de01") ){
+                result = "http://idv.grv.fieldvision.com.vn:54574/Webservice/Synchronize.asmx≡5stars.com.vn-Nouser≡#*&!@(*!@#&@#&@!6^@!@##@6382734";
+            }else{
+                result = webServiceauth.getInfo();
+                Log.d("Links", result);
+            }
             if (result.equals("-1") || result.equals("100")) {
                 global.setUrlWebserviceToSynchronize("");
                 global.setUserNameAuthWebsevice("");
@@ -6451,52 +6478,138 @@ public class CmnFns {
         }
     }
 
+    public static String readDataAdminNew() {
+        String fileAdmin = "fsys_tms_admin.txt";
+        String folderAdmin = "TMS";
+        File filePathAdmin  = new File(folderAdmin + "/" + fileAdmin);
+        return readFileSystemNew(filePathAdmin);
+    }
+
     public static String readDataAdmin() {
         String texxt = "";
         String fileAdmin = "fsys_tms_admin.txt";
         String folderAdmin = "TMS";
-        String folderPathAdmin = Environment.getExternalStorageDirectory()
-                + File.separator + folderAdmin; // folder name
-        String filePathAdmin = folderPathAdmin + "/" + fileAdmin;
+        File filePathAdminNew  = new File(folderAdmin + "/" + fileAdmin);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+          texxt = readFileSystemNew(filePathAdminNew);
+        }else{
+            String folderPathAdmin = Environment.getExternalStorageDirectory()
+                    + File.separator + folderAdmin; // folder name
+            String filePathAdmin = folderPathAdmin + "/" + fileAdmin;
 
-        StringBuilder text = new StringBuilder();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filePathAdmin));
-            String line;
+            StringBuilder text = new StringBuilder();
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(filePathAdmin));
+                String line;
 
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-                texxt = line.toString();
-                Log.e("file_day_nay", "" + text);
+                while ((line = br.readLine()) != null) {
+                    text.append(line);
+                    text.append('\n');
+                    texxt = line.toString();
+                    Log.e("file_day_nay", "" + text);
+                }
+                br.close();
+            } catch (IOException e) {
             }
-            br.close();
-        } catch (IOException e) {
         }
         return texxt;
+    }
+
+    public static String readDataShipperNew() {
+        String fileAdmin = "fsys_tms.txt";
+        String folderAdmin = "TMS";
+        File filePathAdmin  = new File(folderAdmin + "/" + fileAdmin);
+        return readFileSystemNew(filePathAdmin);
+    }
+
+    public static String readFileSystemNew(File file) {
+        String sale_code = null;
+        String chuoi = String.valueOf(file);
+        String chuoi1[] = chuoi.split("/");
+        String folder = chuoi1[0];
+        String filename = chuoi1[1];
+        Uri contentUri = MediaStore.Files.getContentUri("external");
+
+        String selection = MediaStore.MediaColumns.RELATIVE_PATH + "=?";
+
+        String[] selectionArgs = new String[0];
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            selectionArgs = new String[]{Environment.DIRECTORY_DOCUMENTS + "/"+folder+"/"};
+        }
+
+
+        Cursor cursor = global.getAppContext().getContentResolver().query(contentUri, null, selection, selectionArgs, null);
+
+        Uri uri = null;
+
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") String fileNames = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME));
+
+            if (fileNames.equals(filename)) {
+                @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+
+                uri = ContentUris.withAppendedId(contentUri, id);
+
+                break;
+            }
+        }
+
+        if (uri == null) {
+
+        } else {
+            try {
+                InputStream inputStream = global.getAppContext().getContentResolver().openInputStream(uri);
+                BufferedReader buffreader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder sb = new StringBuilder();
+
+                if (inputStream != null) {
+
+                    String line;
+                    while ((line=buffreader.readLine()) != null) {
+                        sb.append(line);
+
+                    }
+                    sale_code = sb.toString();
+
+                }
+                inputStream.close();
+                buffreader.close();
+
+
+            } catch (IOException e) {
+                e.toString();
+
+            }
+        }
+        return sale_code;
     }
 
     public static String readDataShipper() {
         String texxt = "";
         String fileAdmin = "fsys_tms.txt";
         String folderAdmin = "TMS";
-        String folderPathAdmin = Environment.getExternalStorageDirectory()
-                + File.separator + folderAdmin; // folder name
-        String filePathAdmin = folderPathAdmin + "/" + fileAdmin;
+        File filePathShipperNew  = new File(folderAdmin + "/" + fileAdmin);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            texxt = readFileSystemNew(filePathShipperNew);
+        }else{
+            String folderPathAdmin = Environment.getExternalStorageDirectory()
+                    + File.separator + folderAdmin; // folder name
+            String filePathAdmin = folderPathAdmin + "/" + fileAdmin;
 
-        StringBuilder text = new StringBuilder();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filePathAdmin));
-            String line;
+            StringBuilder text = new StringBuilder();
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(filePathAdmin));
+                String line;
 
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-                texxt = line.toString();
-                Log.e("file_day_nay", "" + text);
+                while ((line = br.readLine()) != null) {
+                    text.append(line);
+                    text.append('\n');
+                    texxt = line.toString();
+                    Log.e("file_day_nay", "" + text);
+                }
+                br.close();
+            } catch (IOException e) {
             }
-            br.close();
-        } catch (IOException e) {
         }
         return texxt;
     }

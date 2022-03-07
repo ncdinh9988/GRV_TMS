@@ -243,7 +243,7 @@ public class Check_Transport_Photo extends AppCompatActivity implements View.OnC
             Intent takePictureIntent = new Intent(
                     MediaStore.ACTION_IMAGE_CAPTURE);
             // Ensure that there's a camera activity to handle the intent
-            if (takePictureIntent.resolveActivity(Check_Transport_Photo.this.getPackageManager()) != null) {
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                 // Create the File where the photo should go
 
                 this.photoFile = createImageQA(); // tạo file hình ảnh trước
@@ -330,7 +330,18 @@ public class Check_Transport_Photo extends AppCompatActivity implements View.OnC
 
 
             File file = null;
-            File image = CreateFile(Check_Transport_Photo.this.getApplicationContext().getString(R.string.PathFolderSalePictureContainer), imageFileName, file);
+            File image = null;
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                image = File.createTempFile(imageFileName, /* prefix */
+                        ".jpg", /* suffix */
+                        storageDir /* directory */
+                );
+            }else{
+                image = CreateFile(Check_Transport_Photo.this.getApplicationContext().getString(R.string.PathFolderSalePictureContainer),
+                        imageFileName, file);
+
+            }
 
             // lưu thông tin hình ảnh đường dẫn để lưu vào DB sau khi người dùng
             // chụp ảnh thành công

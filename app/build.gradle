@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.FiveSGroup.TMS"
         minSdkVersion 22
-        targetSdkVersion 29
-        versionCode 8136
+        targetSdkVersion 30
+        versionCode 8144
         // ngày _ web _ apk
-        versionName "TMS_220124_256_8136"
+        versionName "TMS_220307_382_8144"
         testInstrumentationRunner "androidxx.test.runner.AndroidJUnitRunner"
         ndk {
             debugSymbolLevel 'SYMBOL_TABLE'

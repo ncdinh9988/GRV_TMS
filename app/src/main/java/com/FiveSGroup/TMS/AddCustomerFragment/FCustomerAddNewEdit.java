@@ -314,8 +314,18 @@ public class FCustomerAddNewEdit extends Activity implements View.OnClickListene
 //                    R.string.PathFolderPicture); // folder
 
 
+
             File file = null;
-            File image = CreateFile(getApplicationContext().getString(R.string.PathFolderPicture), imageFileName, file);
+            File image = null;
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                image = File.createTempFile(imageFileName, /* prefix */
+                        ".jpg", /* suffix */
+                        storageDir /* directory */
+                );
+            }else {
+                image = CreateFile(getApplicationContext().getString(R.string.PathFolderPicture), imageFileName, file);
+            }
 
             // lưu thông tin hình ảnh đường dẫn để lưu vào DB sau khi người dùng
             // chụp ảnh thành công
