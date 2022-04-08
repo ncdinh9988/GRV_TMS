@@ -216,10 +216,10 @@ public class Home_Main extends androidx.fragment.app.Fragment {
             return true;
         }
 
-        @Override
-        public void onReceivedSslError(final WebView view, final SslErrorHandler handler, SslError error) {
-            handler.proceed();
-        }
+//        @Override
+//        public void onReceivedSslError(final WebView view, final SslErrorHandler handler, SslError error) {
+//            handler.proceed();
+//        }
 
         @Override
         public void onPageFinished(WebView view, String url) {

@@ -240,7 +240,7 @@ public class MainMapActivity extends AppCompatActivity implements OnMapReadyCall
         // Output format
         String output = "json";
         // Building the url to the web services
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_map_api_key);
+        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=AIzaSyCS2xm9XB-_87ELqkR9CpDKoER6n8kS2Vs";
         Log.d("urlGoogleMap", url);
         return url;
     }

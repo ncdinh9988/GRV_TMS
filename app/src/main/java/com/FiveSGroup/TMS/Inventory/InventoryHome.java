@@ -129,10 +129,10 @@ public class InventoryHome extends AppCompatActivity{
 
                     progressBar.setVisibility(View.VISIBLE);
                 }
-                @Override
-                public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                    handler.proceed(); // Ignore SSL certificate errors
-                }
+//                @Override
+//                public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+//                    handler.proceed(); // Ignore SSL certificate errors
+//                }
 
                 public void onPageFinished(WebView view, String url) {
                     SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);

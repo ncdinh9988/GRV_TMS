@@ -25,6 +25,7 @@
         android:name="com.google.android.gms.vision.DEPENDENCIES"
         android:value="barcode" />
 
+
     <application
         android:name=".global"
         android:fullBackupContent="false"

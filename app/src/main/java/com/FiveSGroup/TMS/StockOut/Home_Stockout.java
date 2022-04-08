@@ -62,11 +62,6 @@ public class Home_Stockout extends AppCompatActivity {
 
         progressBar.setMax(100);
 
-
-//
-//        Log.e("new3","là : " + value3);
-//        Log.e("new4","là : " + value4);
-
         mWebview = (WebView) findViewById(R.id.webview);
         btn1 = (Button) findViewById(R.id.btn1);
         btnback = findViewById(R.id.btnback);
@@ -175,10 +170,10 @@ public class Home_Stockout extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                 }
 
-                @Override
-                public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                    handler.proceed(); // Ignore SSL certificate errors
-                }
+//                @Override
+//                public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+//                    handler.proceed(); // Ignore SSL certificate errors
+//                }
 
                 public void onPageFinished(WebView view, String url) {
                     SharedPreferences sharedPref = getSharedPreferences("name", Context.MODE_PRIVATE);

@@ -190,10 +190,10 @@ public class Towing_Containers extends AppCompatActivity {
 
                     progressBar.setVisibility(View.VISIBLE);
                 }
-                @Override
-                public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                    handler.proceed(); // Ignore SSL certificate errors
-                }
+//                @Override
+//                public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+//                    handler.proceed(); // Ignore SSL certificate errors
+//                }
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
